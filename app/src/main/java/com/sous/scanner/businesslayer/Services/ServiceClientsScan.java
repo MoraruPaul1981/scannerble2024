@@ -50,6 +50,8 @@ public class ServiceClientsScan extends Service {
    private  Bl_forServiceScan blForServiceScan;
    private      NotificationCompat.Builder notificationBuilder;
 
+   private     NotificationManager notificationManager;
+
     public ServiceClientsScan() {
     }
 
@@ -64,9 +66,9 @@ public class ServiceClientsScan extends Service {
                     " метод в процессе... " + Thread.currentThread().getStackTrace()[2].getMethodName());
 
             //For creating the Foreground Service
-            NotificationManager notificationManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
+            notificationManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
             String channelId = Build.VERSION.SDK_INT >= Build.VERSION_CODES.O ? getNotificationChannel(notificationManager) : "";
-            NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(this, channelId);
+              notificationBuilder = new NotificationCompat.Builder(this, channelId);
             Notification notification = notificationBuilder.setOngoing(true)
                     .setSmallIcon(R.drawable.icon_main_scanner_boot1)
                     .setContentText("Последний статус :"+LocalDateTime.now().toString())
@@ -76,8 +78,6 @@ public class ServiceClientsScan extends Service {
                     .build();
 
             startForeground(110, notification);///
-
-
 
 
             locationManager = (LocationManager) getApplicationContext().getSystemService(Context.LOCATION_SERVICE);
@@ -99,7 +99,7 @@ public class ServiceClientsScan extends Service {
                     bluetoothAdapterPhoneClient,
                     version,
                     getApplicationContext(),
-                    notificationBuilder);
+                    notificationBuilder,     notificationManager);
 
 
 
