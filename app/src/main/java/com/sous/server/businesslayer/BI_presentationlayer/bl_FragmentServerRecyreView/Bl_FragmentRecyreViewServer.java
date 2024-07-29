@@ -465,6 +465,7 @@ public class Bl_FragmentRecyreViewServer  {
 
         @Override
         public void onBindViewHolder(@NonNull MyViewHolder holder, int position, @NonNull List<Object> payloads) {
+            super.onBindViewHolder(holder, position, payloads);
             try {
              // TODO: 19.07.2024
                 if (getconcurrentHashMapCursor!=null) {
@@ -498,7 +499,7 @@ public class Bl_FragmentRecyreViewServer  {
                 valuesЗаписываемОшибки.put("whose_error", ЛокальнаяВерсияПОСравнение);
                 new SubClassErrors(context).МетодЗаписиОшибок(valuesЗаписываемОшибки);
             }
-            super.onBindViewHolder(holder, position, payloads);
+
         }
 
         @Override

@@ -121,7 +121,7 @@ public class WtitingAndreadDataForScanGatt {
 
                     Log.i(this.getClass().getName(), " resultAddDeviceToGattaDtabse " + resultAddDeviceToGattaDtabse +
                             " contentValuesВставкаДанных " + contentValuesВставкаДанных + " device.getAddress().toString() " +device.getAddress().toString()+
-                            "  evice.getName().toString()  "+device.getName().toString()+ " concurrentHashMapCursor " +concurrentHashMapCursor+
+                                    concurrentHashMapCursor  +"concurrentHashMapCursor "+
                             " SUCCESS SUCCESS SUCCESS !!!! resultAddDeviceToGattaDtabse " +resultAddDeviceToGattaDtabse);
 
                     // TODO: 19.07.2024 Посылаем Пользователю сообщение что данные изменились
@@ -450,7 +450,7 @@ public class WtitingAndreadDataForScanGatt {
             Uri uri = Uri.parse("content://com.sous.server.providerserver/scannerserversuccess" );
             successfuldevices = contentProviderServer.query(uri, null, СамЗапрос, null,null,null);
             if (successfuldevices.getCount()>0){
-                successfuldevices.move(successfuldevices.getCount());
+                successfuldevices.moveToLast();
                 // TODO: 19.07.2024  Запаопление данными Курсора
                 cursorConcurrentHashMapGatt.compute("Cursor",(x,y)->successfuldevices);
             }

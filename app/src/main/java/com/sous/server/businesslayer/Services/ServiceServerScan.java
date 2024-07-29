@@ -32,6 +32,7 @@ import android.os.Binder;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.IBinder;
+import android.os.Parcel;
 import android.os.ParcelUuid;
 import android.os.VibrationEffect;
 import android.os.Vibrator;
@@ -62,6 +63,7 @@ import java.nio.charset.StandardCharsets;
 import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
+import java.util.Random;
 import java.util.UUID;
 import java.util.concurrent.atomic.AtomicReference;
 import java.util.function.Consumer;
@@ -79,7 +81,7 @@ public class ServiceServerScan extends Service {
     protected SQLiteDatabase sqLiteDatabase;
     public LocalBinderСерверBLE binderScan = new LocalBinderСерверBLE();
 
-
+    private ContentProviderServer contentProviderServer;
     protected BluetoothGattServer getBluetoothGattServer;
     protected BluetoothManager bluetoothManagerServer;
     protected BluetoothAdapter bluetoothAdapter;
@@ -98,7 +100,7 @@ public class ServiceServerScan extends Service {
 
     protected LocationManager locationManager;
 
-    protected   ContentProviderServer contentProviderServer;
+
 
     protected      SharedPreferences sharedPreferencesGatt;
 
@@ -592,18 +594,7 @@ public class ServiceServerScan extends Service {
                     "" + binderScan.isBinderAlive() + " date " + new Date().toString().toString() + "" +
                     "\n" + " POOL " + Thread.currentThread().getName() +
                     "\n" + " ALL POOLS  " + Thread.getAllStackTraces().entrySet().size());
-            // TODO: 26.01.2023 Сервер КОД
-
-        /*    BluetoothServerSocket mServerSocket = null;
-            try {
-                mServerSocket = bluetoothAdapter.listenUsingInsecureRfcommWithServiceRecord("a",UUID.fromString("a60f35f0-b93a-11de-8a39-08002009c666"));
-                int psm = mServerSocket.getPsm();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-
-            BluetoothSocket socket = mServerSocket.accept(2000000000);
-            socket.connect();*/
+            // TODO: 26.01.2023 Сервер КОД зарпуска сервера
             getBluetoothGattServer = bluetoothManagerServer.openGattServer(getApplicationContext(), new BluetoothGattServerCallback() {
 
                 @Override
@@ -620,18 +611,22 @@ public class ServiceServerScan extends Service {
                                 " onConnectionStateChange " + new Date().toLocaleString());
 
 
-    /*                    // TODO: 25.07.2024  запускаем запись в базу
+
+
+
+                        // TODO: 29.07.2024 close current session
+               onNotificationSent(device,status);
+               onMtuChanged(device,451);
+               getBluetoothGattServer.cancelConnection(device);
+                        // TODO: 29.07.2024
+
+                                         // TODO: 25.07.2024  запускаем запись в базу
                         WtitingAndreadDataForScanGatt wtitingAndreadDataForScanGatt = new WtitingAndreadDataForScanGatt(getApplicationContext(),
                                 version,
                                 contentProviderServer,
                                 sharedPreferencesGatt,
                                 successfuldevices);
-                        wtitingAndreadDataForScanGatt.writeDatabaseScanGatt(device, successfuldevices, newState);*/
-
-                        // TODO: 29.07.2024 close current session
-               onNotificationSent(device,status);
-               onExecuteWrite(device,41,true);
-               onPhyUpdate(device,45,12,8);
+                        wtitingAndreadDataForScanGatt.writeDatabaseScanGatt(device, successfuldevices, newState);
 
 
 
@@ -656,6 +651,7 @@ public class ServiceServerScan extends Service {
                     // TODO: 22.07.2024
                     super.onServiceAdded(status, service);
 
+
                     Vibrator v2 = (Vibrator) getApplicationContext().getSystemService(Context.VIBRATOR_SERVICE);
                     v2.vibrate(VibrationEffect.createOneShot(100, VibrationEffect.DEFAULT_AMPLITUDE));
 
@@ -677,9 +673,10 @@ public class ServiceServerScan extends Service {
                 public void onCharacteristicWriteRequest(BluetoothDevice device, int requestId, BluetoothGattCharacteristic characteristic,
                                                          boolean preparedWrite,
                                                          boolean responseNeeded, int offset, byte[] value) {
+                    // TODO: 22.07.2024
+                    super.onCharacteristicWriteRequest(device, requestId, characteristic, preparedWrite, responseNeeded, offset, value);
                     try {
-                        // TODO: 22.07.2024
-                        super.onCharacteristicWriteRequest(device, requestId, characteristic, preparedWrite, responseNeeded, offset, value);
+
                         // TODO: 29.07.2024
                         МетодОтвечаемКлиентуGatt(device, requestId, characteristic, offset, value);
 
@@ -688,6 +685,8 @@ public class ServiceServerScan extends Service {
                         Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                                 " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
                                 " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n");
+
+
                     } catch (Exception e) {
                         e.printStackTrace();
                         Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() + " Линия  :"
@@ -707,10 +706,10 @@ public class ServiceServerScan extends Service {
 
                 @Override
                 public void onNotificationSent(BluetoothDevice device, int status) {
-
+                    super.onNotificationSent(device, status);
                     try {
                         // TODO: 22.07.2024
-                        super.onNotificationSent(device, status);
+
                         /*    TODo*/
                         МетодПодтвержедиеЧтоОперацияУведомленияБыла(device, status);
 
@@ -718,6 +717,8 @@ public class ServiceServerScan extends Service {
                         Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                                 " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
                                 " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n");
+
+
                     } catch (Exception e) {
                         e.printStackTrace();
                         Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() + " Линия  :"
@@ -738,6 +739,7 @@ public class ServiceServerScan extends Service {
                 public void onMtuChanged(BluetoothDevice device, int mtu) {
                     super.onMtuChanged(device, mtu);
                     Log.i(this.getClass().getName(), "  " + Thread.currentThread().getStackTrace()[2].getMethodName() + " время " + new Date().toLocaleString());
+
                 }
 
             });
