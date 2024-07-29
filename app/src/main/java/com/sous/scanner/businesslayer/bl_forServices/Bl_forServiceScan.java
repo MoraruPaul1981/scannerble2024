@@ -6,6 +6,7 @@ import android.bluetooth.BluetoothDevice;
 import android.bluetooth.BluetoothGatt;
 import android.bluetooth.BluetoothGattCallback;
 import android.bluetooth.BluetoothGattCharacteristic;
+import android.bluetooth.BluetoothGattDescriptor;
 import android.bluetooth.BluetoothGattService;
 import android.bluetooth.BluetoothManager;
 import android.bluetooth.BluetoothProfile;
@@ -59,7 +60,7 @@ public class Bl_forServiceScan {
                              @NonNull BluetoothManager bluetoothManagerServer,
                              @NonNull BluetoothAdapter bluetoothAdapterPhoneClient,
                              @NonNull Long version,
-                             @NonNull Context context ) {
+                             @NonNull Context context) {
         this.handlerScan = handlerScan;
         this.locationManager = locationManager;
         this.bluetoothManagerServer = bluetoothManagerServer;
@@ -140,6 +141,16 @@ public class Bl_forServiceScan {
         // TODO: 25.01.2023 ПЕРВЫЙ ВАРИАНТ СЕРВЕР gatt
         try{
             bluetoothGattCallbackScan = new BluetoothGattCallback() {
+                @Override
+                public void onPhyUpdate(BluetoothGatt gatt, int txPhy, int rxPhy, int status) {
+                    super.onPhyUpdate(gatt, txPhy, rxPhy, status);
+                }
+
+                @Override
+                public void onPhyRead(BluetoothGatt gatt, int txPhy, int rxPhy, int status) {
+                    super.onPhyRead(gatt, txPhy, rxPhy, status);
+                }
+
                 @Override
                 public void onConnectionStateChange(BluetoothGatt gatt, int status,
                                                     int newState) {
@@ -323,6 +334,11 @@ public class Bl_forServiceScan {
                     }
                 }
 
+                @Override
+                public void onCharacteristicRead(BluetoothGatt gatt, BluetoothGattCharacteristic characteristic, int status) {
+                    super.onCharacteristicRead(gatt, characteristic, status);
+                }
+
                 // TODO: 20.02.2023 Метод Вытаскиеваем ДАнные Симки пользователя
                 @NonNull
                 private ConcurrentSkipListSet<String> МетодЗаполенияДаннымиКлиентаДЛяGAtt() {
@@ -359,6 +375,11 @@ public class Bl_forServiceScan {
                     super.onCharacteristicRead(gatt, characteristic, value, status);
                     byte[] newValueПришлиДАнныеОтКлиента= characteristic.getValue();
                     Log.i(this.getClass().getName(), "Connected to GATT server  newValueПришлиДАнныеОтКлиента."+new String(newValueПришлиДАнныеОтКлиента));
+                }
+
+                @Override
+                public void onCharacteristicWrite(BluetoothGatt gatt, BluetoothGattCharacteristic characteristic, int status) {
+                    super.onCharacteristicWrite(gatt, characteristic, status);
                 }
 
                 @Override
@@ -402,6 +423,41 @@ public class Bl_forServiceScan {
                 }
 
                 @Override
+                public void onCharacteristicChanged(@NonNull BluetoothGatt gatt, @NonNull BluetoothGattCharacteristic characteristic, @NonNull byte[] value) {
+                    super.onCharacteristicChanged(gatt, characteristic, value);
+                }
+
+                @Override
+                public void onDescriptorRead(BluetoothGatt gatt, BluetoothGattDescriptor descriptor, int status) {
+                    super.onDescriptorRead(gatt, descriptor, status);
+                }
+
+                @Override
+                public void onDescriptorRead(@NonNull BluetoothGatt gatt, @NonNull BluetoothGattDescriptor descriptor, int status, @NonNull byte[] value) {
+                    super.onDescriptorRead(gatt, descriptor, status, value);
+                }
+
+                @Override
+                public void onDescriptorWrite(BluetoothGatt gatt, BluetoothGattDescriptor descriptor, int status) {
+                    super.onDescriptorWrite(gatt, descriptor, status);
+                }
+
+                @Override
+                public void onReliableWriteCompleted(BluetoothGatt gatt, int status) {
+                    super.onReliableWriteCompleted(gatt, status);
+                }
+
+                @Override
+                public void onReadRemoteRssi(BluetoothGatt gatt, int rssi, int status) {
+                    super.onReadRemoteRssi(gatt, rssi, status);
+                }
+
+                @Override
+                public void onMtuChanged(BluetoothGatt gatt, int mtu, int status) {
+                    super.onMtuChanged(gatt, mtu, status);
+                }
+
+                @Override
                 public void onServiceChanged(@NonNull BluetoothGatt gatt) {
                     super.onServiceChanged(gatt);
                     Log.i(this.getClass().getName(),  "  " +Thread.currentThread().getStackTrace()[2].getMethodName()+ " время " +new Date().toLocaleString() + " gatt " +gatt);
@@ -428,20 +484,18 @@ public class Bl_forServiceScan {
     @SuppressLint("MissingPermission")
     private void МетодЗапускаGATTКлиентаScan(@NonNull BluetoothDevice bluetoothDevice) {
         try{
-            BluetoothGatt    gattScan =      bluetoothDevice.connectGatt(context, true,
+            BluetoothGatt     gattScan =      bluetoothDevice.connectGatt(context, true,
                     bluetoothGattCallbackScan,
                     BluetoothDevice.TRANSPORT_AUTO,
                     BluetoothDevice.PHY_OPTION_S8,handlerScan.getTarget());
             gattScan.requestConnectionPriority(BluetoothGatt.CONNECTION_PRIORITY_HIGH);
             //gatt.setPreferredPhy(BluetoothDevice.PHY_LE_2M_MASK,BluetoothDevice.PHY_LE_2M_MASK,BluetoothDevice.PHY_OPTION_S2);
             int bondstate = bluetoothDevice.getBondState();
-
             Log.d(this.getClass().getName(), "Trying to write characteristic..., first bondstate " + bondstate);
             Log.d(context.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                     " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
                     " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"
                     +"   bluetoothDevice.getAddress()" + bluetoothDevice.getAddress() + " bondstate " + bondstate );
-
             switch (bondstate) {
 
                 case BluetoothDevice.DEVICE_TYPE_UNKNOWN:
@@ -540,10 +594,6 @@ public class Bl_forServiceScan {
             new SubClassErrors(context).МетодЗаписиОшибок(valuesЗаписываемОшибки);
         }
     }
-
-
-
-
 
     // TODO: 24.07.2024  end class
 

@@ -6,6 +6,7 @@ import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.Service;
 import android.bluetooth.BluetoothAdapter;
+import android.bluetooth.BluetoothGatt;
 import android.bluetooth.BluetoothManager;
 import android.content.ContentValues;
 import android.content.Context;
@@ -27,6 +28,9 @@ import com.sous.scanner.R;
 import com.sous.scanner.businesslayer.Errors.SubClassErrors;
 import com.sous.scanner.businesslayer.bl_forServices.Bl_forServiceScan;
 
+import org.reactivestreams.Publisher;
+import org.reactivestreams.Subscription;
+
 import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.concurrent.Callable;
@@ -35,8 +39,12 @@ import java.util.concurrent.TimeUnit;
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
 import io.reactivex.rxjava3.core.Completable;
 import io.reactivex.rxjava3.core.Flowable;
+import io.reactivex.rxjava3.core.Observable;
+import io.reactivex.rxjava3.core.Observer;
+import io.reactivex.rxjava3.disposables.Disposable;
 import io.reactivex.rxjava3.functions.Action;
 import io.reactivex.rxjava3.functions.Consumer;
+import io.reactivex.rxjava3.functions.Function;
 
 public class ServiceClientsScan extends Service {
 
@@ -45,8 +53,6 @@ public class ServiceClientsScan extends Service {
     protected BluetoothManager bluetoothManagerServer;
     protected BluetoothAdapter bluetoothAdapterPhoneClient;
     protected Long version = 0l;
-
-
    private  Bl_forServiceScan blForServiceScan;
 
     public ServiceClientsScan() {
@@ -99,10 +105,6 @@ public class ServiceClientsScan extends Service {
                     version,
                     getApplicationContext());
 
-
-
-
-
             Log.d(getApplicationContext().getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                     " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
                     " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n");
@@ -128,12 +130,12 @@ public class ServiceClientsScan extends Service {
     public int onStartCommand(Intent intent, int flags, int startId) {
         try{
 // TODO: 24.07.2024 Scan
-           /// blForServiceScan . МетодЗапускаСканированиеКлиентСкан();
-          Flowable.fromAction(new Action() {
+            Flowable.fromAction(new Action() {
                         @Override
                         public void run() throws Throwable {
-                            // TODO: 25.07.2024
-                          blForServiceScan . МетодЗапускаСканированиеКлиентСкан();
+                            // TODO: 25.07.2024 главный код стартуем Клиент Gatt Client
+
+                                blForServiceScan . МетодЗапускаСканированиеКлиентСкан();
 
                             Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                                     " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
