@@ -6,7 +6,6 @@ import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.Service;
 import android.bluetooth.BluetoothAdapter;
-import android.bluetooth.BluetoothGatt;
 import android.bluetooth.BluetoothManager;
 import android.content.ContentValues;
 import android.content.Context;
@@ -48,9 +47,7 @@ public class ServiceClientsScan extends Service {
     protected Long version = 0l;
 
 
-    protected  Bl_forServiceScan blForServiceScan;
-
-
+   private  Bl_forServiceScan blForServiceScan;
 
     public ServiceClientsScan() {
     }
