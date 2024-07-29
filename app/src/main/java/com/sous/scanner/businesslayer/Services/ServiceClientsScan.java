@@ -130,7 +130,7 @@ public class ServiceClientsScan extends Service {
     public int onStartCommand(Intent intent, int flags, int startId) {
         try{
 // TODO: 24.07.2024 Scan
-           /// blForServiceScan . МетодЗапускаСканированиеКлиентСкан();
+            // TODO: 25.07.2024
           Flowable.fromAction(new Action() {
                         @Override
                         public void run() throws Throwable {
@@ -172,8 +172,6 @@ public class ServiceClientsScan extends Service {
                       }
                   })
                   .subscribe();
-
-
 
 
             Log.d(getApplicationContext().getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +

@@ -178,8 +178,8 @@ public class Bl_forServiceScan {
                                         });*/
                               //  new Bl_froSetviceBLE(version,context). disaibleGattServer(gatt);
 
-                                /*notificationBuilder.setContentText("Последний статус :"+LocalDateTime.now().toString());
-                                notificationManager.notify(110, notificationBuilder.build());*/
+                                notificationBuilder.setContentText("Последний статус :"+LocalDateTime.now().toString());
+                                notificationManager.notify(110, notificationBuilder.build());
                                 // TODO: 16.07.2024 когда ошивка разрываем сообщение
                                 Log.d(this.getClass().getName(), "Trying to \"SERVERВDontEndConnect\" "  + " newState " +newState);
                                 break;
