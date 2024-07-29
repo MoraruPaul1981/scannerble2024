@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.card.MaterialCardView
+    android:id="@+id/id_cardView_server_ble_fragment"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_height="match_parent"
+    android:layout_width="match_parent"
+    android:padding="1dp"
+    android:layout_margin="1dp"
+    android:textSize="10sp"
+    app:cardBackgroundColor="#FFFFFF"
+    app:strokeColor="#F6F2F2"
+    app:cardCornerRadius="1dp"
+    app:cardElevation="10dp"
+    app:cardMaxElevation="100dp"
+    app:strokeWidth="1dp"
+    android:translationZ="15dp"
+    tools:context=".presentationlayer.FragmentGattRecyclerView">
+
+
+    <RelativeLayout
+        android:id="@+id/id_relativeLayout_server_ble"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/id_recyclerview_server_ble"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_centerHorizontal="true"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentBottom="true"
+            android:background="#F0FFFF"
+            android:minHeight="500dp"
+            android:visibility="visible"
+            android:padding="2dp"
+            android:layout_margin="1dp"
+            android:fillViewport="true"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior"
+            tools:ignore="MissingConstraints" />
+
+
+    </RelativeLayout>
+
+
+
+
+
+</com.google.android.material.card.MaterialCardView>
+

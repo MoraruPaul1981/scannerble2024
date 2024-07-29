@@ -1,0 +1,351 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.card.MaterialCardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/id_card_server_success_data_oncreateviewholder"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:theme="@style/Theme.MaterialComponents.DayNight.DarkActionBar"
+    android:textSize="10sp"
+    android:layout_margin="10dp"
+    android:padding="10dp"
+    app:cardBackgroundColor="#FDFEFE"
+    app:strokeColor="#CCD1D1"
+    app:cardCornerRadius="5dp"
+    app:cardElevation="2dp"
+    app:cardMaxElevation="5dp"
+    app:strokeWidth="2dp"
+    android:translationZ="5dp"
+    android:animateLayoutChanges="true"
+    tools:context=".presentationlayer.FragmentGattRecyclerView">
+
+
+    <RelativeLayout
+        android:id="@+id/id_relativeLayout_server_ble"
+        android:layout_height="match_parent"
+        android:layout_width="match_parent"
+
+        android:layout_margin="1dp"
+        android:orientation="vertical">
+
+
+        <com.google.android.material.tabs.TabLayout
+            android:id="@+id/id_tabLayout_server_ble"
+            android:layout_centerHorizontal="true"
+            android:layout_alignParentTop="true"
+            android:layout_width="180dp"
+            android:layout_height="25dp"
+            android:layout_margin="5dp"
+            android:elevation="3dp"
+            app:tabMinWidth="100dp"
+            app:tabIndicatorColor="#E1D9D9"
+            app:tabIndicatorHeight="2dp"
+            app:tabTextColor="#050505"
+            app:tabSelectedTextColor="#10100F"
+            app:tabMode="fixed"
+            app:tabTextAppearance="@style/TextAppearance.AppCompat.Caption"
+            android:padding="2dp">
+            <com.google.android.material.tabs.TabItem
+                android:id="@+id/id_tabItem_server_ble"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="12sp"
+                android:text="девайс" />
+        </com.google.android.material.tabs.TabLayout>
+
+
+        <!-- //TODO:   id currentROW  -->
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/id_textinputlayout_id_currentrow"
+            style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.Dense"
+            android:layout_below="@+id/id_tabLayout_server_ble"
+            android:layout_centerHorizontal="true"
+            android:layout_margin="2dp"
+
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:boxBackgroundMode="outline"
+            android:focusableInTouchMode="true">
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/id_textinputtext_id_currentrow"
+                android:backgroundTint="#707B7C"
+                android:inputType="textCapSentences|textMultiLine"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:textSize="12sp"
+                android:textStyle="bold"
+                android:hint="id"
+                android:text="id value " />
+        </com.google.android.material.textfield.TextInputLayout>
+
+
+
+        <!-- //TODO:   namedevice  -->
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/id_textinputlayout_namedevice"
+            style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.Dense"
+            android:layout_below="@+id/id_textinputlayout_id_currentrow"
+            android:layout_centerHorizontal="true"
+            android:layout_margin="2dp"
+
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:boxBackgroundMode="outline"
+            android:focusableInTouchMode="true">
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/id_textinputtext_namedevice"
+                android:backgroundTint="#707B7C"
+                android:inputType="textCapSentences|textMultiLine"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:layout_width="match_parent"
+                 android:layout_height="50dp"
+                android:textSize="12sp"
+                android:textStyle="bold"
+                android:hint="имя"
+                android:text="namedevice value " />
+        </com.google.android.material.textfield.TextInputLayout>
+
+
+
+        <!-- //TODO:   macdevice  -->
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/id_textinputlayout_macdevice"
+            style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.Dense"
+            android:layout_below="@+id/id_textinputlayout_namedevice"
+            app:boxBackgroundMode="outline"
+            android:layout_centerHorizontal="true"
+            android:layout_margin="2dp"
+
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:focusableInTouchMode="true">
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/id_textinputtext_macdevice"
+                android:backgroundTint="#707B7C"
+                android:inputType="textCapSentences|textMultiLine"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:layout_width="match_parent"
+                 android:layout_height="50dp"
+                android:textSize="12sp"
+                android:textStyle="bold"
+                android:hint="мак-адрес"
+                android:text="macdevice value " />
+        </com.google.android.material.textfield.TextInputLayout>
+
+
+
+        <!-- //TODO:   completedwork  -->
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/id_textinputlayout_completedwork"
+            style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.Dense"
+            app:boxBackgroundMode="outline"
+            android:layout_below="@+id/id_textinputlayout_macdevice"
+            android:layout_centerHorizontal="true"
+            android:layout_margin="2dp"
+
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:focusableInTouchMode="true">
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/id_textinputtext_completedwork"
+                android:backgroundTint="#707B7C"
+                android:layout_width="match_parent"
+                 android:layout_height="50dp"
+                android:inputType="textCapSentences|textMultiLine"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:textSize="12sp"
+                android:textStyle="bold"
+                android:hint="статус"
+                android:text="completedwork value " />
+        </com.google.android.material.textfield.TextInputLayout>
+
+
+
+        <!-- //TODO:   iemi  -->
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/id_textinputlayout_iemi"
+            style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.Dense"
+            app:boxBackgroundMode="outline"
+            android:layout_below="@+id/id_textinputlayout_completedwork"
+            android:layout_centerHorizontal="true"
+            android:layout_margin="2dp"
+
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:focusableInTouchMode="true">
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/id_textinputtext_iemi"
+                android:backgroundTint="#707B7C"
+                android:layout_width="match_parent"
+                 android:layout_height="50dp"
+                android:inputType="textCapSentences|textMultiLine"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:textSize="12sp"
+                android:textStyle="bold"
+                android:hint="iemi"
+                android:text="iemi value " />
+        </com.google.android.material.textfield.TextInputLayout>
+
+
+        <!-- //TODO:   date_update  -->
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/id_textinputlayout_date_update"
+            style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.Dense"
+            app:boxBackgroundMode="outline"
+            android:layout_below="@+id/id_textinputlayout_iemi"
+            android:layout_centerHorizontal="true"
+            android:layout_margin="2dp"
+
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:focusableInTouchMode="true">
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/id_textinputtext_date_update"
+                android:backgroundTint="#707B7C"
+                android:layout_width="match_parent"
+                 android:layout_height="50dp"
+                android:inputType="textCapSentences|textMultiLine"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:textSize="12sp"
+                android:textStyle="bold"
+                android:hint="дата"
+                android:text="date_update value " />
+        </com.google.android.material.textfield.TextInputLayout>
+
+
+
+        <!-- //TODO:   city  -->
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/id_textinputlayout_city"
+            style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.Dense"
+            app:boxBackgroundMode="outline"
+            android:layout_below="@+id/id_textinputlayout_date_update"
+            android:layout_centerHorizontal="true"
+            android:layout_margin="2dp"
+
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:focusableInTouchMode="true">
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/id_textinputtext_city"
+                android:backgroundTint="#707B7C"
+                android:layout_width="match_parent"
+                 android:layout_height="50dp"
+                android:inputType="textCapSentences|textMultiLine"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:textSize="12sp"
+                android:textStyle="bold"
+                android:hint="город"
+                android:text="city value " />
+        </com.google.android.material.textfield.TextInputLayout>
+
+
+
+
+        <!-- //TODO:   adress  -->
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/id_textinputlayout_adress"
+            style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.Dense"
+            app:boxBackgroundMode="outline"
+            android:layout_below="@+id/id_textinputlayout_city"
+            android:layout_centerHorizontal="true"
+            android:layout_margin="2dp"
+
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:focusableInTouchMode="true">
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/id_textinputtext_adress"
+                android:backgroundTint="#707B7C"
+                android:layout_width="match_parent"
+                 android:layout_height="65dp"
+                android:inputType="textCapSentences|textMultiLine"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:textSize="12sp"
+                android:textStyle="bold"
+                android:hint="адрес"
+                android:text="adress value " />
+        </com.google.android.material.textfield.TextInputLayout>
+
+
+
+        <!-- //TODO:   gps1  -->
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/id_textinputlayout_gps1"
+            style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.Dense"
+            app:boxBackgroundMode="outline"
+            android:layout_below="@+id/id_textinputlayout_adress"
+            android:layout_centerHorizontal="true"
+            android:layout_margin="2dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:focusableInTouchMode="true">
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/id_textinputtext_gps1"
+                android:backgroundTint="#707B7C"
+                android:layout_width="match_parent"
+                 android:layout_height="50dp"
+                android:inputType="textCapSentences|textMultiLine"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:textSize="12sp"
+                android:textStyle="bold"
+                android:hint="gps1"
+                android:text="gps1  value " />
+        </com.google.android.material.textfield.TextInputLayout>
+
+
+
+        <!-- //TODO:   gps2  -->
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/id_textinputlayout_gps2"
+            style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.Dense"
+            app:boxBackgroundMode="outline"
+            android:layout_below="@+id/id_textinputlayout_gps1"
+            android:layout_centerHorizontal="true"
+            android:layout_margin="2dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:focusableInTouchMode="true">
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/id_textinputtext_gps2"
+                android:backgroundTint="#707B7C"
+                android:layout_width="match_parent"
+                 android:layout_height="50dp"
+                android:inputType="textCapSentences|textMultiLine"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:textSize="12sp"
+                android:textStyle="bold"
+                android:hint="gps2"
+                android:text="gps2 value " />
+        </com.google.android.material.textfield.TextInputLayout>
+
+    </RelativeLayout>
+</com.google.android.material.card.MaterialCardView>
+
+
+
+
+
+
+
+

@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
+        <com.google.android.material.card.MaterialCardView
+            xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:app="http://schemas.android.com/apk/res-auto"
+            xmlns:tools="http://schemas.android.com/tools"
+            android:id="@+id/id_card_server_dont_data_oncreateviewholder"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:theme="@style/Theme.MaterialComponents.DayNight.DarkActionBar"
+            android:textSize="10sp"
+            android:layout_margin="10dp"
+            android:padding="10dp"
+            app:cardBackgroundColor="#FFFAFA"
+            app:strokeColor="#E3E8E6"
+            app:cardCornerRadius="10dp"
+            app:cardElevation="2dp"
+            app:cardMaxElevation="5dp"
+            app:strokeWidth="2dp"
+            android:translationZ="5dp"
+            android:clickable="false"
+            android:focusable="false"
+            android:animateLayoutChanges="true"
+            tools:context=".presentationlayer.FragmentGattRecyclerView">
+
+
+    <RelativeLayout
+        android:id="@+id/id_relativeLayout_server_ble"
+        android:layout_height="match_parent"
+        android:layout_width="match_parent"
+        android:padding="1dp"
+        android:clickable="false"
+        android:focusable="false"
+        android:layout_margin="1dp"
+        android:orientation="vertical">
+
+
+
+
+
+
+
+
+       <!-- //TODO:   namedevice  -->
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/id_textinputlayout_namedevice"
+            style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.Dense"
+            android:layout_centerInParent="true"
+            android:layout_margin="2dp"
+            android:clickable="false"
+            android:focusable="false"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:boxBackgroundMode="none"
+            android:focusableInTouchMode="true">
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/id_textinputtext_namedevice"
+                android:inputType="textCapSentences|textMultiLine"
+                android:layout_gravity="center"
+                android:clickable="false"
+                android:focusable="false"
+                android:gravity="center"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_margin="20dp"
+                android:textSize="14sp"
+                android:text="Девайс нет !!! " />
+        </com.google.android.material.textfield.TextInputLayout>
+
+
+
+        <!-- //TODO:   macdevice  -->
+
+
+
+
+
+
+
+
+    </RelativeLayout>
+        </com.google.android.material.card.MaterialCardView>
+
+
+
+
+
+
+
+
