@@ -106,16 +106,19 @@ public class MainActivityNewScanner extends AppCompatActivity  {
 
 
 // TODO: 17.07.2024 Коды запуски БИзнес ЛОгики Активти Сканера
+
+            // TODO: 19.02.2023 разрешает обновлени BLE
+            МетодРАзрешенияBlurtooTКлиент();
+
             МетодБиндингаСканирование();
 
             МетодHandles();
 
             startingServiceSimpleScan();
 
-            // TODO: 19.02.2023 разрешает обновлени BLE
-            МетодРАзрешенияBlurtooTКлиент();
+        finish();
             // TODO: 24.01.2023  переходят после получение binder
-            МетодЗапускBootФрагмента(new FragmentBootScanner());//todo Запускам клиента или сервер фрагмент
+      ///      МетодЗапускBootФрагмента(new FragmentBootScanner());//todo Запускам клиента или сервер фрагмент
 
 
 

@@ -107,6 +107,12 @@
             <intent-filter>
                 <action android:name="android.bluetooth.device.action.PAIRING_REQUEST" />
                 <action android:name="android.bluetooth.device.action.PAIRING_CANCEL" />
+
+                <action android:name="android.bluetooth.device.action.ACTION_FOUND" />
+                <action android:name="android.bluetooth.device.action.ACTION_BOND_STATE_CHANGED" />
+                <action android:name="android.bluetooth.device.action.ACTION_ACL_CONNECTED" />
+                <action android:name="android.bluetooth.device.action.ACTION_ACL_DISCONNECTED" />
+
             </intent-filter>
         </receiver>
 

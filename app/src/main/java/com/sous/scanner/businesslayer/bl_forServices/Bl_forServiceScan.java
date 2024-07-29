@@ -15,7 +15,9 @@ import android.content.Context;
 import android.content.Intent;
 import android.location.LocationManager;
 import android.os.Message;
+import android.os.Parcel;
 import android.os.ParcelUuid;
+import android.os.Parcelable;
 import android.provider.Settings;
 import android.util.Log;
 
@@ -35,6 +37,7 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentSkipListSet;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
+import java.util.function.Consumer;
 
 public class Bl_forServiceScan {
 
@@ -51,9 +54,6 @@ public class Bl_forServiceScan {
     private UUID getPublicUUIDScan = ParcelUuid.fromString("70000007-0000-1000-8000-00805f9b34fb").getUuid();
     private      ScheduledExecutorService scheduler = Executors.newSingleThreadScheduledExecutor();
 
-    private   BluetoothGattCallback       bluetoothGattCallbackScan = null;
-
-
     public Bl_forServiceScan(@NonNull Message handlerScan,
                              @NonNull LocationManager locationManager,
                              @NonNull BluetoothManager bluetoothManagerServer,
@@ -66,6 +66,7 @@ public class Bl_forServiceScan {
         this.bluetoothAdapterPhoneClient = bluetoothAdapterPhoneClient;
         this.version = version;
         this.context = context;
+
     }
 
 
@@ -85,31 +86,29 @@ public class Bl_forServiceScan {
 
             ConcurrentSkipListSet<String> concurrentSkipListSetMunualListServerDeviceScan = new ConcurrentSkipListSet();
             concurrentSkipListSetMunualListServerDeviceScan.add("98:2F:F8:19:BC:F7");
-            concurrentSkipListSetMunualListServerDeviceScan.forEach(new java.util.function.Consumer<String>() {
+            concurrentSkipListSetMunualListServerDeviceScan.forEach(new Consumer<String>() {
                 @Override
                 public void accept(String remoteManualServerGatt) {
                     ///TODO:Довавляем Зарание созданные Адреса Сервера Gatt
                     BluetoothDevice bluetoothDeviceScan = bluetoothAdapterPhoneClient.getRemoteDevice(remoteManualServerGatt);//TODO: HUAWEI MatePad SE
-                    // TODO: 26.07.2024
-                    int connectionState = bluetoothManagerServer.getConnectionState(bluetoothDeviceScan, BluetoothProfile.GATT);
-
+                    // TODO: 29.07.2024 удаление возможное GATT
                     bl_BloadcastReceierGatt  blBloadcastReceierGatt = new bl_BloadcastReceierGatt(context, version);
                 blBloadcastReceierGatt.unpairDevice(bluetoothDeviceScan);
                     bluetoothDeviceScan.fetchUuidsWithSdp();
 
 
                     // TODO: 12.02.2023  init CallBack Gatt Client for Scan
-                    МетодРаботыСТекущийСерверомGATTДляScan( );
+                    BluetoothGattCallback             bluetoothGattCallbackScan =     МетодРаботыСТекущийСерверомGATTДляScan( );
 
                     // TODO: 26.01.2023 staring  GATT
-              МетодЗапускаGATTКлиентаScan(bluetoothDeviceScan);
+              МетодЗапускаGATTКлиентаScan(bluetoothDeviceScan,              bluetoothGattCallbackScan );
 
 
                     Log.d(this.getClass().getName(), "\n" + " class " +
                             Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                             " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
                             " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" + "\n" +
-                            " bluetoothDeviceScan " + bluetoothDeviceScan +  " getPublicUUIDScan "+ getPublicUUIDScan+ " connectionState " +connectionState);
+                            " bluetoothDeviceScan " + bluetoothDeviceScan +  " getPublicUUIDScan "+ getPublicUUIDScan);
                 }
             });
             Log.d(this.getClass().getName(), "\n" + " class " +
@@ -138,8 +137,19 @@ public class Bl_forServiceScan {
     @SuppressLint("MissingPermission")
     private BluetoothGattCallback МетодРаботыСТекущийСерверомGATTДляScan(   ) {
         // TODO: 25.01.2023 ПЕРВЫЙ ВАРИАНТ СЕРВЕР gatt
+        BluetoothGattCallback             bluetoothGattCallbackScan = null;
         try{
-            bluetoothGattCallbackScan = new BluetoothGattCallback() {
+            bluetoothGattCallbackScan     = new BluetoothGattCallback() {
+                @Override
+                public void onPhyUpdate(BluetoothGatt gatt, int txPhy, int rxPhy, int status) {
+                    super.onPhyUpdate(gatt, txPhy, rxPhy, status);
+                }
+
+                @Override
+                public void onPhyRead(BluetoothGatt gatt, int txPhy, int rxPhy, int status) {
+                    super.onPhyRead(gatt, txPhy, rxPhy, status);
+                }
+
                 @Override
                 public void onConnectionStateChange(BluetoothGatt gatt, int status,
                                                     int newState) {
@@ -166,8 +176,11 @@ public class Bl_forServiceScan {
                                             mediatorLiveDataGATT.setValue(concurrentHashMap);
                                         });*/
                               //  new Bl_froSetviceBLE(version,context). disaibleGattServer(gatt);
+                                Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                                        " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                                        " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"   +"    Flowable.fromAction(new Action() { "
+                                        +   new Date().toLocaleString()+ " newState " +newState);
                                 // TODO: 16.07.2024 когда ошивка разрываем сообщение
-                                Log.d(this.getClass().getName(), "Trying to \"SERVERВDontEndConnect\" "  + " newState " +newState);
                                 break;
 
 
@@ -194,6 +207,17 @@ public class Bl_forServiceScan {
                             default:{
                                 Log.d(this.getClass().getName(), "Trying to ДанныеОТGATTССевромGATT "  + " newState " +newState);
                             }
+                        }
+                        
+                        
+                        // TODO: 29.07.2024  closeing client gatt
+                        switch (status){
+                            case 133 :
+                                // TODO: 29.07.2024 close Gatt Client  
+                                closeClientGatt(gatt);
+                                Log.d(this.getClass().getName(), "Trying to \"SERVERВDontEndConnect\" "  + " newState " +newState);
+                            break;
+                            
                         }
                     } catch (Exception e) {
                         e.printStackTrace();
@@ -402,6 +426,21 @@ public class Bl_forServiceScan {
                 }
 
                 @Override
+                public void onReliableWriteCompleted(BluetoothGatt gatt, int status) {
+                    super.onReliableWriteCompleted(gatt, status);
+                }
+
+                @Override
+                public void onReadRemoteRssi(BluetoothGatt gatt, int rssi, int status) {
+                    super.onReadRemoteRssi(gatt, rssi, status);
+                }
+
+                @Override
+                public void onMtuChanged(BluetoothGatt gatt, int mtu, int status) {
+                    super.onMtuChanged(gatt, mtu, status);
+                }
+
+                @Override
                 public void onServiceChanged(@NonNull BluetoothGatt gatt) {
                     super.onServiceChanged(gatt);
                     Log.i(this.getClass().getName(),  "  " +Thread.currentThread().getStackTrace()[2].getMethodName()+ " время " +new Date().toLocaleString() + " gatt " +gatt);
@@ -424,107 +463,30 @@ public class Bl_forServiceScan {
         return  bluetoothGattCallbackScan;
     }
 
+    @SuppressLint("MissingPermission")
+    private   void closeClientGatt(BluetoothGatt gatt ) {
+        if (gatt!=null) {
+            gatt.disconnect();
+            gatt.close();
+        }
+        //  new Bl_froSetviceBLE(version,context). disaibleGattServer(gatt);
+        Log.d(context.getClass().getName(), "Trying to \"SERVERВDontEndConnect\" "  + " gatt closeting  ");
+    }
+
     // TODO: 24.07.2024
     @SuppressLint("MissingPermission")
-    private void МетодЗапускаGATTКлиентаScan(@NonNull BluetoothDevice bluetoothDevice) {
+    private void МетодЗапускаGATTКлиентаScan(@NonNull BluetoothDevice bluetoothDevice,@NonNull BluetoothGattCallback             bluetoothGattCallbackScan ) {
         try{
-            BluetoothGatt    gattScan =      bluetoothDevice.connectGatt(context, true,
+                 BluetoothGatt gattScan         =      bluetoothDevice.connectGatt(context, false,
                     bluetoothGattCallbackScan,
                     BluetoothDevice.TRANSPORT_AUTO,
                     BluetoothDevice.PHY_OPTION_S8,handlerScan.getTarget());
             gattScan.requestConnectionPriority(BluetoothGatt.CONNECTION_PRIORITY_HIGH);
-            //gatt.setPreferredPhy(BluetoothDevice.PHY_LE_2M_MASK,BluetoothDevice.PHY_LE_2M_MASK,BluetoothDevice.PHY_OPTION_S2);
-            int bondstate = bluetoothDevice.getBondState();
-
-            Log.d(this.getClass().getName(), "Trying to write characteristic..., first bondstate " + bondstate);
+            int bondstate = gattScan.getDevice().getBondState();
             Log.d(context.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                     " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
                     " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"
                     +"   bluetoothDevice.getAddress()" + bluetoothDevice.getAddress() + " bondstate " + bondstate );
-
-            switch (bondstate) {
-
-                case BluetoothDevice.DEVICE_TYPE_UNKNOWN:
-                    // TODO: 19.07.2024
-                    handlerScan.getTarget().post(()->{
-                        ConcurrentHashMap<String,String> concurrentHashMap=      new ConcurrentHashMap<String,String>();
-                        concurrentHashMap  .put("BluetoothDevice.DEVICE_TYPE_UNKNOWN","9");
-                        mediatorLiveDataScan.setValue(concurrentHashMap);
-                    });
-
-                    Log.d(context.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
-                            " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                            " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"
-                            +"   bluetoothDevice.getAddress()" + bluetoothDevice.getAddress() + " bondstate " + bondstate );
-                    break;
-
-                case BluetoothDevice.BOND_NONE:
-
-                    handlerScan.getTarget().post(()->{
-                        ConcurrentHashMap<String,String> concurrentHashMap=      new ConcurrentHashMap<String,String>();
-                        concurrentHashMap  .put("BluetoothDevice.BOND_NONE","10");
-                        mediatorLiveDataScan.setValue(concurrentHashMap);
-                    });
-                    Log.d(context.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
-                            " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                            " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"
-                            +"   bluetoothDevice.getAddress()" + bluetoothDevice.getAddress() + " bondstate " + bondstate );
-                    break;
-
-
-                case BluetoothDevice.BOND_BONDING:
-                    handlerScan.getTarget().post(()->{
-                        ConcurrentHashMap<String,String> concurrentHashMap=      new ConcurrentHashMap<String,String>();
-                        concurrentHashMap  .put("BluetoothDevice.BOND_BONDING","12");
-                        mediatorLiveDataScan.setValue(concurrentHashMap);
-
-                    });
-
-                    Log.d(context.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
-                            " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                            " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"
-                            +"   bluetoothDevice.getAddress()" + bluetoothDevice.getAddress() + " bondstate " + bondstate );
-                    break;
-
-                case BluetoothDevice.BOND_BONDED:
-                    handlerScan.getTarget().post(()->{
-                        ConcurrentHashMap<String,String> concurrentHashMap=      new ConcurrentHashMap<String,String>();
-                        concurrentHashMap  .put("BluetoothDevice.BOND_BONDING","13");
-                        mediatorLiveDataScan.setValue(concurrentHashMap);
-
-                    });
-                    Log.d(context.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
-                            " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                            " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"
-                            +"   bluetoothDevice.getAddress()" + bluetoothDevice.getAddress() + " bondstate " + bondstate );
-                    break;
-
-
-
-                default:{
-
-
-                    Log.d(context.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
-                            " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                            " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"
-                            +"   bluetoothDevice.getAddress()" + bluetoothDevice.getAddress() + " bondstate " + bondstate );
-
-                }
-
-
-            }
-
-
-
-
-
-
-
-
-            Log.d(context.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
-                    " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                    " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"
-                    +"   bluetoothDevice.getAddress()" + bluetoothDevice.getAddress());
         } catch (Exception e) {
             e.printStackTrace();
             Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() + " Линия  :"
