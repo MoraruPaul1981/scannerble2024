@@ -11,6 +11,8 @@ import android.os.VibrationEffect;
 import android.os.Vibrator;
 import android.util.Log;
 
+import androidx.work.impl.Scheduler;
+
 import com.sous.server.businesslayer.ContentProvoders.ContentProviderServer;
 import com.sous.server.businesslayer.Errors.SubClassErrors;
 import com.sous.server.businesslayer.Eventbus.MessageScannerServer;
@@ -38,6 +40,7 @@ import io.reactivex.rxjava3.annotations.NonNull;
 import io.reactivex.rxjava3.core.Completable;
 import io.reactivex.rxjava3.core.CompletableObserver;
 import io.reactivex.rxjava3.disposables.Disposable;
+import io.reactivex.rxjava3.schedulers.Schedulers;
 
 public class WtitingAndreadDataForScanGatt {
     // TODO: 25.07.2024
@@ -62,7 +65,10 @@ public class WtitingAndreadDataForScanGatt {
 
     // TODO: 25.07.2024 метод Записи  в базу
     public void writeDatabaseScanGatt(@NonNull BluetoothDevice device, @NonNull Cursor successfuldevices,@NonNull Integer newState){
-        Completable.complete().blockingSubscribe(new CompletableObserver() {
+        Completable.complete()
+                .subscribeOn(Schedulers.single())
+                .observeOn(Schedulers.single())
+                .blockingSubscribe(new CompletableObserver() {
             @SuppressLint("MissingPermission")
             @Override
             public void onSubscribe(@NonNull Disposable d) {
