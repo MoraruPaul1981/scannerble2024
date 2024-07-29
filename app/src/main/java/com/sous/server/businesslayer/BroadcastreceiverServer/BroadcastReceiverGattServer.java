@@ -48,6 +48,10 @@ public class BroadcastReceiverGattServer extends BroadcastReceiver {
                 // TODO: 24.07.2024
                 bluetoothDevice = intent.getParcelableExtra(BluetoothDevice.EXTRA_DEVICE);
 
+            // TODO: 29.07.2024
+            bluetoothDevice.fetchUuidsWithSdp();
+
+
                 Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                         " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
                         " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" +

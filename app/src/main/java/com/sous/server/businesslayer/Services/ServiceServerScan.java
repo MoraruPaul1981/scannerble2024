@@ -616,7 +616,6 @@ public class ServiceServerScan extends Service {
 
                         // TODO: 29.07.2024 close current session
                onNotificationSent(device,status);
-               onMtuChanged(device,451);
                getBluetoothGattServer.cancelConnection(device);
                         // TODO: 29.07.2024
 
@@ -744,7 +743,6 @@ public class ServiceServerScan extends Service {
 
             });
             Log.i(this.getClass().getName(), "  " + Thread.currentThread().getStackTrace()[2].getMethodName() + " время " + new Date().toLocaleString());
-
         } catch (Exception e) {
             e.printStackTrace();
             Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() + " Линия  :"

@@ -36,10 +36,13 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentSkipListSet;
 import java.util.concurrent.TimeUnit;
 
+import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
 import io.reactivex.rxjava3.annotations.NonNull;
 import io.reactivex.rxjava3.core.Completable;
 import io.reactivex.rxjava3.core.CompletableObserver;
 import io.reactivex.rxjava3.disposables.Disposable;
+import io.reactivex.rxjava3.functions.Action;
+import io.reactivex.rxjava3.functions.Consumer;
 import io.reactivex.rxjava3.schedulers.Schedulers;
 
 public class WtitingAndreadDataForScanGatt {
@@ -65,126 +68,115 @@ public class WtitingAndreadDataForScanGatt {
 
     // TODO: 25.07.2024 метод Записи  в базу
     public void writeDatabaseScanGatt(@NonNull BluetoothDevice device, @NonNull Cursor successfuldevices,@NonNull Integer newState){
-        Completable.complete()
-                .subscribeOn(Schedulers.single())
-                .observeOn(Schedulers.single())
-                .blockingSubscribe(new CompletableObserver() {
-            @SuppressLint("MissingPermission")
-            @Override
-            public void onSubscribe(@NonNull Disposable d) {
+        Completable.fromAction(new Action() {
+                    @Override
+                    public void run() throws Throwable {
+                        // TODO: 29.07.2024
+                        // TODO: 25.07.2024 Код Записи в базу данных ScanGatt
+                        //TODO:ЗАписываем Новый Успешный Девайс в Базу от Gatt server
+                        ContentValues contentValuesВставкаДанных = addToContevaluesNewSucceesDeviceOtGattServer(device,newState );
 
-                // TODO: 25.07.2024 Код Записи в базу данных ScanGatt
-                //TODO:ЗАписываем Новый Успешный Девайс в Базу от Gatt server
-                ContentValues contentValuesВставкаДанных = addToContevaluesNewSucceesDeviceOtGattServer(device,newState );
-
-                Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
-                        " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                        " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" +
-                        "  contentValuesВставкаДанных " +contentValuesВставкаДанных);
+                        Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                                " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                                " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" +
+                                "  contentValuesВставкаДанных " +contentValuesВставкаДанных);
 
 
-                // TODO: 25.07.2024
+                        // TODO: 25.07.2024
 
-                String   getcurrentDatefromthedatabase =  getDateStoreOperationsDeviceFronDatabase("SELECT    MAX ( date_update )   FROM scannerserversuccess" +
-                        " WHERE   macdevice = '"+contentValuesВставкаДанных.getAsString("macdevice").trim() +"'");
+                        String   getcurrentDatefromthedatabase =  getDateStoreOperationsDeviceFronDatabase("SELECT    MAX ( date_update )   FROM scannerserversuccess" +
+                                " WHERE   macdevice = '"+contentValuesВставкаДанных.getAsString("macdevice").trim() +"'");
 
-                Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
-                        " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                        " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" +
-                        "  getcurrentDatefromthedatabase " +getcurrentDatefromthedatabase);
+                        Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                                " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                                " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" +
+                                "  getcurrentDatefromthedatabase " +getcurrentDatefromthedatabase);
 
 
 // TODO: 25.07.2024  результат дата старше полу часа или нет
-          long getMinute=      findoutthedateDifference(getcurrentDatefromthedatabase,contentValuesВставкаДанных.getAsString("date_update").trim());
+                        long getMinute=      findoutthedateDifference(getcurrentDatefromthedatabase,contentValuesВставкаДанных.getAsString("date_update").trim());
 
 
 
 
-                Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
-                        " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                        " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" +
-                        "  getcurrentDatefromthedatabase " +getcurrentDatefromthedatabase+"\n" + "getMinute  " +getMinute);
+                        Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                                " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                                " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" +
+                                "  getcurrentDatefromthedatabase " +getcurrentDatefromthedatabase+"\n" + "getMinute  " +getMinute);
 
 
-                Integer   resultAddDeviceToGattaDtabse= 0;
+                        Integer   resultAddDeviceToGattaDtabse= 0;
 
 
-                if (getMinute>1 || getMinute==0) {
-                    // TODO: 09.02.2023  запись в базу дивайса Отметка сотрдунка
-                    resultAddDeviceToGattaDtabse = wtireNewSucceesDeviceOtGattServer(contentValuesВставкаДанных);
-                }
+                        if (getMinute>1 || getMinute==0) {
+                            // TODO: 09.02.2023  запись в базу дивайса Отметка сотрдунка
+                            resultAddDeviceToGattaDtabse = wtireNewSucceesDeviceOtGattServer(contentValuesВставкаДанных);
+                        }
 
 
-                // TODO: 18.07.2024 ЕСЛИ Успещно прошла Операция передаем данные на Фрагмент Scanner
-                if (resultAddDeviceToGattaDtabse >0) {
+                        // TODO: 18.07.2024 ЕСЛИ Успещно прошла Операция передаем данные на Фрагмент Scanner
+                        if (resultAddDeviceToGattaDtabse >0) {
 
-                    // TODO: 25.07.2024 closeing Before
-                    getcloseCursorAndHashMap();
-                    //todo ДОполнительный механизм данные упокаываем в Канкаренте СЕТ с Курсором
+                            // TODO: 25.07.2024 closeing Before
+                            getcloseCursorAndHashMap();
+                            //todo ДОполнительный механизм данные упокаываем в Канкаренте СЕТ с Курсором
 
 
-                    ConcurrentHashMap<String, Cursor> concurrentHashMapCursor = getallthedataofsuccessfuldevices("SELECT *    FROM scannerserversuccess");
+                            ConcurrentHashMap<String, Cursor> concurrentHashMapCursor = getallthedataofsuccessfuldevices("SELECT *    FROM scannerserversuccess");
 
-                    Log.i(this.getClass().getName(), " resultAddDeviceToGattaDtabse " + resultAddDeviceToGattaDtabse +
-                            " contentValuesВставкаДанных " + contentValuesВставкаДанных + " device.getAddress().toString() " +device.getAddress().toString()+
+                            Log.i(this.getClass().getName(), " resultAddDeviceToGattaDtabse " + resultAddDeviceToGattaDtabse +
+                                    " contentValuesВставкаДанных " + contentValuesВставкаДанных + " device.getAddress().toString() " +device.getAddress().toString()+
                                     concurrentHashMapCursor  +"concurrentHashMapCursor "+
-                            " SUCCESS SUCCESS SUCCESS !!!! resultAddDeviceToGattaDtabse " +resultAddDeviceToGattaDtabse);
+                                    " SUCCESS SUCCESS SUCCESS !!!! resultAddDeviceToGattaDtabse " +resultAddDeviceToGattaDtabse);
 
-                    // TODO: 19.07.2024 Посылаем Пользователю сообщение что данные изменились
-                    forwardUIAfterSuccessAddDiveceDatBAseScan(concurrentHashMapCursor, contentValuesВставкаДанных);
-
-
-                }
-
-                Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
-                        " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                        " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n");
+                            // TODO: 19.07.2024 Посылаем Пользователю сообщение что данные изменились
+                            forwardUIAfterSuccessAddDiveceDatBAseScan(concurrentHashMapCursor, contentValuesВставкаДанных);
 
 
+                        }
+
+                        Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                                " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                                " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n");
 
 
 
 
 
 
-                Log.d(context.getClass().getName(), "\n"
-                        + " время: " + new Date() + "\n+" +
-                        " Класс в процессе... " + this.getClass().getName() + "\n" +
-                        " метод в процессе... " + Thread.currentThread().getStackTrace()[2].getMethodName()); 
-            }
-
-            @Override
-            public void onComplete() {
-                Log.d(context.getClass().getName(), "\n"
-                        + " время: " + new Date() + "\n+" +
-                        " Класс в процессе... " + this.getClass().getName() + "\n" +
-                        " метод в процессе... " + Thread.currentThread().getStackTrace()[2].getMethodName());
-            }
-
-            @Override
-            public void onError(@NonNull Throwable e) {
-                
-                Log.d(context.getClass().getName(), "\n"
-                        + " время: " + new Date() + "\n+" +
-                        " Класс в процессе... " + this.getClass().getName() + "\n" +
-                        " метод в процессе... " + Thread.currentThread().getStackTrace()[2].getMethodName());
-                
-                e.printStackTrace();
-                Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() + " Линия  :"
-                        + Thread.currentThread().getStackTrace()[2].getLineNumber());
-                ContentValues valuesЗаписываемОшибки = new ContentValues();
-                valuesЗаписываемОшибки.put("Error", e.toString().toLowerCase());
-                valuesЗаписываемОшибки.put("Klass", this.getClass().getName());
-                valuesЗаписываемОшибки.put("Metod", Thread.currentThread().getStackTrace()[2].getMethodName());
-                valuesЗаписываемОшибки.put("LineError", Thread.currentThread().getStackTrace()[2].getLineNumber());
-                final Object ТекущаяВерсияПрограммы = version;
-                Integer ЛокальнаяВерсияПОСравнение = Integer.parseInt(ТекущаяВерсияПрограммы.toString());
-                valuesЗаписываемОшибки.put("whose_error", ЛокальнаяВерсияПОСравнение);
-                new SubClassErrors(context).МетодЗаписиОшибокИзServerGatt(valuesЗаписываемОшибки,contentProviderServer);
 
 
-        }
-        });
+                        Log.d(context.getClass().getName(), "\n"
+                                + " время: " + new Date() + "\n+" +
+                                " Класс в процессе... " + this.getClass().getName() + "\n" +
+                                " метод в процессе... " + Thread.currentThread().getStackTrace()[2].getMethodName());
+                    }
+                })
+                .doOnError(new Consumer<Throwable>() {
+                    @Override
+                    public void accept(Throwable throwable) throws Throwable {
+                        Log.d(context.getClass().getName(), "\n"
+                                + " время: " + new Date() + "\n+" +
+                                " Класс в процессе... " + this.getClass().getName() + "\n" +
+                                " метод в процессе... " + Thread.currentThread().getStackTrace()[2].getMethodName());
+
+                        throwable.printStackTrace();
+                        Log.e(this.getClass().getName(), "Ошибка " + throwable+ " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() + " Линия  :"
+                                + Thread.currentThread().getStackTrace()[2].getLineNumber());
+                        ContentValues valuesЗаписываемОшибки = new ContentValues();
+                        valuesЗаписываемОшибки.put("Error", throwable.toString().toLowerCase());
+                        valuesЗаписываемОшибки.put("Klass", this.getClass().getName());
+                        valuesЗаписываемОшибки.put("Metod", Thread.currentThread().getStackTrace()[2].getMethodName());
+                        valuesЗаписываемОшибки.put("LineError", Thread.currentThread().getStackTrace()[2].getLineNumber());
+                        final Object ТекущаяВерсияПрограммы = version;
+                        Integer ЛокальнаяВерсияПОСравнение = Integer.parseInt(ТекущаяВерсияПрограммы.toString());
+                        valuesЗаписываемОшибки.put("whose_error", ЛокальнаяВерсияПОСравнение);
+                        new SubClassErrors(context).МетодЗаписиОшибокИзServerGatt(valuesЗаписываемОшибки,contentProviderServer);
+                    }
+                })
+                .subscribeOn(Schedulers.single())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe();
     }
 
 
