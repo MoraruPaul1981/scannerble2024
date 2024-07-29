@@ -632,8 +632,7 @@ public class ServiceServerScan extends Service {
                onNotificationSent(device,status);
                onExecuteWrite(device,41,true);
                onPhyUpdate(device,45,12,8);
-
-
+               getBluetoothGattServer.cancelConnection(device);
 
                     } catch (Exception e) {
                         e.printStackTrace();
