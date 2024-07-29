@@ -97,36 +97,12 @@ public class Bl_forServiceScan {
                 blBloadcastReceierGatt.unpairDevice(bluetoothDeviceScan);
                     bluetoothDeviceScan.fetchUuidsWithSdp();
 
-             /*           BluetoothDevice bd = bluetoothAdapterPhoneClient.getRemoteDevice(bluetoothDeviceScan.getAddress());
-                    BluetoothSocket bluetoothSocket = null;
-                    try {
-                        bluetoothSocket = bd.createInsecureRfcommSocketToServiceRecord( UUID.fromString("a60f35f0-b93a-11de-8a39-08002009c666"));
-                    } catch (IOException e) {
-                        throw new RuntimeException(e);
-                    }
-
-                    try {
-                   OutputStream outstr = bluetoothSocket.getOutputStream();
-                 InputStream instr = bluetoothSocket.getInputStream();
-
-
-                        bluetoothSocket.connect( );
-                    } catch (IOException e) {
-                        throw new RuntimeException(e);
-                    }*/
-
-
-
-
-
 
                     // TODO: 12.02.2023  init CallBack Gatt Client for Scan
                     МетодРаботыСТекущийСерверомGATTДляScan( );
 
                     // TODO: 26.01.2023 staring  GATT
               МетодЗапускаGATTКлиентаScan(bluetoothDeviceScan);
-
-
 
 
                     Log.d(this.getClass().getName(), "\n" + " class " +
