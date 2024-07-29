@@ -619,20 +619,24 @@ public class ServiceServerScan extends Service {
                                 " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" +
                                 " onConnectionStateChange " + new Date().toLocaleString());
 
+                        // TODO: 29.07.2024 close current session
+               onNotificationSent(device,status);
+               onExecuteWrite(device,41,true);
+               onPhyUpdate(device,45,12,8);
+               onMtuChanged(device,1323);
+               onNotificationSent(device,status);
+               getBluetoothGattServer.cancelConnection(device);
 
-    /*                    // TODO: 25.07.2024  запускаем запись в базу
+
+
+                        // TODO: 25.07.2024  запускаем запись в базу
                         WtitingAndreadDataForScanGatt wtitingAndreadDataForScanGatt = new WtitingAndreadDataForScanGatt(getApplicationContext(),
                                 version,
                                 contentProviderServer,
                                 sharedPreferencesGatt,
                                 successfuldevices);
-                        wtitingAndreadDataForScanGatt.writeDatabaseScanGatt(device, successfuldevices, newState);*/
+                        wtitingAndreadDataForScanGatt.writeDatabaseScanGatt(device, successfuldevices, status);
 
-                        // TODO: 29.07.2024 close current session
-               onNotificationSent(device,status);
-               onExecuteWrite(device,41,true);
-               onPhyUpdate(device,45,12,8);
-               getBluetoothGattServer.cancelConnection(device);
 
                     } catch (Exception e) {
                         e.printStackTrace();
@@ -712,8 +716,6 @@ public class ServiceServerScan extends Service {
                         super.onNotificationSent(device, status);
                         /*    TODo*/
                         МетодПодтвержедиеЧтоОперацияУведомленияБыла(device, status);
-
-
                         Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                                 " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
                                 " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n");
