@@ -1,6 +1,7 @@
 package com.sous.scanner.businesslayer.bl_forServices;
 
 import android.annotation.SuppressLint;
+import android.app.Notification;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
 import android.bluetooth.BluetoothGatt;
@@ -20,6 +21,7 @@ import android.provider.Settings;
 import android.util.Log;
 
 import androidx.annotation.NonNull;
+import androidx.core.app.NotificationCompat;
 import androidx.lifecycle.MutableLiveData;
 
 import com.sous.scanner.businesslayer.Broadcastreceiver.bl_BloadcastReceierGatt;
@@ -29,6 +31,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.Socket;
+import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
@@ -53,19 +56,21 @@ public class Bl_forServiceScan {
 
     private   BluetoothGattCallback       bluetoothGattCallbackScan = null;
 
-
+  private    NotificationCompat.Builder notificationBuilder;
     public Bl_forServiceScan(@NonNull Message handlerScan,
                              @NonNull LocationManager locationManager,
                              @NonNull BluetoothManager bluetoothManagerServer,
                              @NonNull BluetoothAdapter bluetoothAdapterPhoneClient,
                              @NonNull Long version,
-                             @NonNull Context context ) {
+                             @NonNull Context context ,
+                             @NonNull   NotificationCompat.Builder notificationBuilder) {
         this.handlerScan = handlerScan;
         this.locationManager = locationManager;
         this.bluetoothManagerServer = bluetoothManagerServer;
         this.bluetoothAdapterPhoneClient = bluetoothAdapterPhoneClient;
         this.version = version;
         this.context = context;
+        this.  notificationBuilder =   notificationBuilder;
     }
 
 
@@ -166,6 +171,9 @@ public class Bl_forServiceScan {
                                             mediatorLiveDataGATT.setValue(concurrentHashMap);
                                         });*/
                               //  new Bl_froSetviceBLE(version,context). disaibleGattServer(gatt);
+
+                                notificationBuilder.setContentText("Последний статус :"+LocalDateTime.now().toString());
+                                notificationBuilder.build();
                                 // TODO: 16.07.2024 когда ошивка разрываем сообщение
                                 Log.d(this.getClass().getName(), "Trying to \"SERVERВDontEndConnect\" "  + " newState " +newState);
                                 break;
@@ -446,6 +454,9 @@ public class Bl_forServiceScan {
 
                 case BluetoothDevice.DEVICE_TYPE_UNKNOWN:
                     // TODO: 19.07.2024
+                    notificationBuilder.setContentText("Последний статус :"+LocalDateTime.now().toString());
+                    notificationBuilder.build();
+
                     handlerScan.getTarget().post(()->{
                         ConcurrentHashMap<String,String> concurrentHashMap=      new ConcurrentHashMap<String,String>();
                         concurrentHashMap  .put("BluetoothDevice.DEVICE_TYPE_UNKNOWN","9");
@@ -460,6 +471,9 @@ public class Bl_forServiceScan {
 
                 case BluetoothDevice.BOND_NONE:
 
+                    notificationBuilder.setContentText("Последний статус :"+LocalDateTime.now().toString());
+                    notificationBuilder.build();
+
                     handlerScan.getTarget().post(()->{
                         ConcurrentHashMap<String,String> concurrentHashMap=      new ConcurrentHashMap<String,String>();
                         concurrentHashMap  .put("BluetoothDevice.BOND_NONE","10");
@@ -473,6 +487,10 @@ public class Bl_forServiceScan {
 
 
                 case BluetoothDevice.BOND_BONDING:
+
+                    notificationBuilder.setContentText("Последний статус :"+LocalDateTime.now().toString());
+                    notificationBuilder.build();
+
                     handlerScan.getTarget().post(()->{
                         ConcurrentHashMap<String,String> concurrentHashMap=      new ConcurrentHashMap<String,String>();
                         concurrentHashMap  .put("BluetoothDevice.BOND_BONDING","12");
@@ -487,6 +505,10 @@ public class Bl_forServiceScan {
                     break;
 
                 case BluetoothDevice.BOND_BONDED:
+
+                    notificationBuilder.setContentText("Последний статус :"+LocalDateTime.now().toString());
+                    notificationBuilder.build();
+
                     handlerScan.getTarget().post(()->{
                         ConcurrentHashMap<String,String> concurrentHashMap=      new ConcurrentHashMap<String,String>();
                         concurrentHashMap  .put("BluetoothDevice.BOND_BONDING","13");

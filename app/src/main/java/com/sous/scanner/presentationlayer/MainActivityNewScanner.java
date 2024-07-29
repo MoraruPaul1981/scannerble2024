@@ -75,7 +75,7 @@ public class MainActivityNewScanner extends AppCompatActivity  {
     protected void onCreate(Bundle savedInstanceState) {
         try {
             super.onCreate(savedInstanceState);
-            setContentView(R.layout.activity_main_newscanner);
+            setContentView(R.layout.activity_main_newscanner_empty);
             getSupportActionBar().hide(); ///скрывать тул бар
             setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
             getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
@@ -84,7 +84,7 @@ public class MainActivityNewScanner extends AppCompatActivity  {
                     | WindowManager.LayoutParams.FLAG_TURN_SCREEN_ON
                     | WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
             // TODO: 08.12.2022
-            cardVievscanner = (MaterialCardView) findViewById(R.id.id_cardViewblescanner);
+        /*    cardVievscanner = (MaterialCardView) findViewById(R.id.id_cardViewblescanner);
             RelativeLayout relativecayoutscanner = (RelativeLayout) cardVievscanner. findViewById(R.id.id_relativecayoutscanner);
 
             bottomNavigationView = (NavigationBarView)  relativecayoutscanner.findViewById(R.id.BottomNavigationViewScanner)  ;
@@ -96,7 +96,7 @@ public class MainActivityNewScanner extends AppCompatActivity  {
             bottomNavigationItemViewВыход = bottomNavigationView.findViewById(R.id.id_lback);
             bottomNavigationItemViewИстория = bottomNavigationView.findViewById(R.id.id_scanner_history);
             bottomNavigationItemViewВыход.setItemRippleColor(ColorStateList.valueOf(Color.RED));
-            bottomNavigationItemViewИстория.setItemRippleColor(ColorStateList.valueOf(Color.RED));
+            bottomNavigationItemViewИстория.setItemRippleColor(ColorStateList.valueOf(Color.RED));*/
 
             // TODO: 16.07.2024
             fragmentManagerScanner = getSupportFragmentManager();
@@ -116,7 +116,13 @@ public class MainActivityNewScanner extends AppCompatActivity  {
 
             startingServiceSimpleScan();
 
-        finish();
+
+            handlerScannerGatt.getTarget().postDelayed(()->{
+
+                finish();
+
+            },5000);
+
             // TODO: 24.01.2023  переходят после получение binder
       ///      МетодЗапускBootФрагмента(new FragmentBootScanner());//todo Запускам клиента или сервер фрагмент
 

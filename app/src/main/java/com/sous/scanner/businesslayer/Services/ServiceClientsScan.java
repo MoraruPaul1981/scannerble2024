@@ -48,6 +48,7 @@ public class ServiceClientsScan extends Service {
 
 
    private  Bl_forServiceScan blForServiceScan;
+   private      NotificationCompat.Builder notificationBuilder;
 
     public ServiceClientsScan() {
     }
@@ -67,9 +68,9 @@ public class ServiceClientsScan extends Service {
             String channelId = Build.VERSION.SDK_INT >= Build.VERSION_CODES.O ? getNotificationChannel(notificationManager) : "";
             NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(this, channelId);
             Notification notification = notificationBuilder.setOngoing(true)
-                    .setSmallIcon(R.mipmap.ic_launcher)
-                    .setContentText(LocalDateTime.now().toString() )
-                    .setContentTitle("Клиент контроля Bluetooth")
+                    .setSmallIcon(R.drawable.icon_main_scanner_boot1)
+                    .setContentText("Последний статус :"+LocalDateTime.now().toString())
+                    .setContentTitle("Контроль Bluetooth")
                     // .setPriority(PRIORITY_MIN)
                     .setCategory(NotificationCompat.CATEGORY_SERVICE)
                     .build();
@@ -97,7 +98,8 @@ public class ServiceClientsScan extends Service {
                     bluetoothManagerServer,
                     bluetoothAdapterPhoneClient,
                     version,
-                    getApplicationContext());
+                    getApplicationContext(),
+                    notificationBuilder);
 
 
 
