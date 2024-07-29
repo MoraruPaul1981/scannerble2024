@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.card.MaterialCardView
+    android:id="@+id/fragmentuserscanner"
+    android:layout_height="match_parent"
+    android:layout_width="match_parent"
+    android:translationZ="5dp"
+    android:padding="10dp"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".presentationlayer.MainActivityNewScanner">
+
+
+
+    <RelativeLayout
+        android:id="@+id/id_relativeLayout_fragment_boot"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#FFFFFF"
+        android:orientation="vertical">
+
+
+
+
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/textViewDefaultNameState"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:drawablePadding="5dp"
+            android:gravity="center_vertical"
+            android:hint="Последний Статус:"
+            android:layout_alignParentTop="true"
+            android:padding="2dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="5dp"
+            android:layout_marginEnd="10dp"
+            android:layout_centerHorizontal="true"
+            android:textColor="#AAACAC"
+            android:textColorHint="#A3AAAA"
+            android:textSize="14sp"
+            android:textStyle="bold"
+            android:translationZ="50dp" />
+
+
+
+
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/textView5getstatus"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+
+            android:layout_below ="@+id/textViewDefaultNameState"
+
+            android:drawablePadding="5dp"
+            android:drawableLeft="@drawable/icon_dsu1_scanner_status_last"
+            android:gravity="center_vertical"
+            android:hint="ответ контроля"
+            android:padding="2dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
+            android:layout_centerHorizontal="true"
+
+            android:textColor="#7F8080"
+            android:textColorHint="#7F8080"
+            android:textSize="17sp"
+            android:textStyle="bold"
+            android:translationZ="50dp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/bottomcontrolfragmen2"
+            android:layout_below="@+id/textView5getstatus"
+            android:layout_centerHorizontal="true"
+            style="@style/Widget.MaterialComponents.ExtendedFloatingActionButton.Icon"
+            android:layout_width="220dp"
+            android:layout_height="220dp"
+            android:layout_marginTop="20dp"
+            android:clickable="true"
+            android:focusable="auto"
+            android:fontFamily="serif-monospace"
+            android:gravity="center_vertical|center_horizontal"
+            android:maxLines="5"
+            android:singleLine="false"
+            android:hint="с работы"
+            android:textAlignment="gravity"
+            android:textColor="#0E0E0E"
+            android:textSize="11sp"
+            android:textStyle="bold"
+            android:translationZ="150dp"
+            android:typeface="normal"
+            android:visibility="visible"
+            app:backgroundTint="#009688"
+            app:cardBackgroundColor="#9EAFB3"
+            app:cardCornerRadius="10dp"
+            app:cardElevation="10dp"
+            app:cardMaxElevation="15dp"
+            app:cornerRadius='150dp'
+            app:icon="@drawable/icon_dsu1_scannergattcrabot"
+            app:iconGravity="textStart"
+            app:rippleColor="#C62828"
+            app:strokeColor="#F5FFFA"
+            app:strokeWidth="0dp"
+            tools:visibility="visible" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/bottomcontrolfragmen1"
+            android:layout_below="@+id/bottomcontrolfragmen2"
+            android:layout_centerHorizontal="true"
+            style="@style/Widget.MaterialComponents.ExtendedFloatingActionButton.Icon"
+            android:layout_width="220dp"
+            android:layout_height="220dp"
+
+            android:layout_marginTop="30dp"
+            android:fontFamily="serif-monospace"
+            android:gravity="center_vertical|center_horizontal"
+            android:maxLines="5"
+            android:singleLine="false"
+            android:hint="На работу"
+            android:textAlignment="gravity"
+            android:textColor="#0E0E0E"
+            android:textSize="11sp"
+            android:textStyle="bold"
+            android:translationZ="150dp"
+            android:typeface="normal"
+            android:visibility="visible"
+            app:cardBackgroundColor="#9EAFB3"
+            app:cardCornerRadius="10dp"
+            app:cardElevation="4dp"
+            app:cardMaxElevation="15dp"
+            app:cornerRadius='150dp'
+            app:icon="@drawable/icon_dus1_scanergattaprichot"
+            app:iconGravity="textStart"
+            app:rippleColor="#C62828"
+            app:strokeColor="#F5FFFA"
+            app:strokeWidth="0dp"
+            tools:visibility="visible" />
+
+
+
+
+
+
+    </RelativeLayout>
+
+</com.google.android.material.card.MaterialCardView>
