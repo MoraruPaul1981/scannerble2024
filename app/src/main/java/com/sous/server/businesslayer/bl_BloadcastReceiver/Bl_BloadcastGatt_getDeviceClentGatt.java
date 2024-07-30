@@ -7,7 +7,6 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.content.pm.PackageInfo;
 import android.content.pm.ProviderInfo;
 import android.util.Log;
 
@@ -17,7 +16,6 @@ import com.sous.server.businesslayer.ContentProvoders.ContentProviderServer;
 import com.sous.server.businesslayer.Errors.SubClassErrors;
 import com.sous.server.datalayer.remote.bl_writeandreadScanCatt.WtitingAndreadDataForScanGatt;
 
-import java.lang.reflect.Method;
 import java.util.concurrent.atomic.AtomicReference;
 
 import io.reactivex.rxjava3.core.Completable;
@@ -25,7 +23,7 @@ import io.reactivex.rxjava3.functions.Action;
 import io.reactivex.rxjava3.functions.Consumer;
 import io.reactivex.rxjava3.schedulers.Schedulers;
 
-public class bl_BloadcastGatt_getDeviceClentGatt {
+public class Bl_BloadcastGatt_getDeviceClentGatt {
 
     private  Context context;
     private  Long version;
@@ -33,7 +31,7 @@ public class bl_BloadcastGatt_getDeviceClentGatt {
     private ContentProviderServer contentProviderServer;
     private SharedPreferences sharedPreferencesGatt;
 
-    public bl_BloadcastGatt_getDeviceClentGatt(Context context, Long version) {
+    public Bl_BloadcastGatt_getDeviceClentGatt(Context context, Long version) {
         this.context = context;
         this.version = version;
     }
