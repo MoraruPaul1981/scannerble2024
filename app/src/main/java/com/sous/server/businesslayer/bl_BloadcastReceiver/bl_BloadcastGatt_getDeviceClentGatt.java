@@ -18,6 +18,7 @@ import com.sous.server.businesslayer.Errors.SubClassErrors;
 import com.sous.server.datalayer.remote.bl_writeandreadScanCatt.WtitingAndreadDataForScanGatt;
 
 import java.lang.reflect.Method;
+import java.util.concurrent.atomic.AtomicReference;
 
 import io.reactivex.rxjava3.core.Completable;
 import io.reactivex.rxjava3.functions.Action;
@@ -38,7 +39,9 @@ public class bl_BloadcastGatt_getDeviceClentGatt {
     }
 
     // TODO: 30.07.2024 code for BroaadCastRecever GATT SERVER
-    public void startingGetDeviceBLECkient(  @NonNull Intent intent) {
+    public void startingGetDeviceBLECkient(  @NonNull Intent intent,
+                                             @NonNull AtomicReference<BroadcastReceiver.PendingResult>
+                                                     pendingResultAtomicReference) {
         Completable.fromAction(new Action() {
                     @SuppressLint("MissingPermission")
                     @Override
@@ -77,6 +80,9 @@ public class bl_BloadcastGatt_getDeviceClentGatt {
                 }).doOnComplete(new Action() {
                     @Override
                     public void run() throws Throwable {
+                        // TODO: 30.07.2024
+                 BroadcastReceiver.PendingResult pendingResult= pendingResultAtomicReference.get();
+                        pendingResult.finish();
                         Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                                 " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
                                 " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" +
@@ -102,7 +108,7 @@ public class bl_BloadcastGatt_getDeviceClentGatt {
                     }
                 })
                 .subscribeOn(Schedulers.computation())
-                .blockingSubscribe();
+                .subscribe();
         Log.d(context.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                 " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
                 " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n");

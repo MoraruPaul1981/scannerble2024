@@ -26,6 +26,7 @@ import com.sous.server.businesslayer.BroadcastreceiverServer.BroadcastReceiverGa
 import com.sous.server.businesslayer.Errors.SubClassErrors;
 import com.sous.server.R;
 import com.sous.server.businesslayer.OndeSignal.InitOndeSignal;
+import com.sous.server.businesslayer.Permissions.SetPermissions;
 
 
 import java.util.Date;
@@ -39,31 +40,7 @@ public class ActivityServerScanner extends AppCompatActivity {
     protected AsyncTaskLoader asyncTaskLoaderGatt  ;
     protected  SQLiteDatabase Create_Database_СамаБАзаSQLite;
 
-
-    private static String[] PERMISSIONS_STORAGE = {
-            Manifest.permission.READ_EXTERNAL_STORAGE,
-            Manifest.permission.WRITE_EXTERNAL_STORAGE,
-            Manifest.permission.ACCESS_FINE_LOCATION,
-            Manifest.permission.ACCESS_COARSE_LOCATION,
-            Manifest.permission.ACCESS_LOCATION_EXTRA_COMMANDS,
-            Manifest.permission.BLUETOOTH,
-            Manifest.permission.BLUETOOTH_SCAN,
-            Manifest.permission.BLUETOOTH_CONNECT,
-            Manifest.permission.BLUETOOTH_PRIVILEGED,
-            Manifest.permission.BLUETOOTH_ADVERTISE,
-            Manifest.permission.BLUETOOTH_ADMIN
-    };
-    private static String[] PERMISSIONS_LOCATION = {
-            Manifest.permission.ACCESS_FINE_LOCATION,
-            Manifest.permission.ACCESS_COARSE_LOCATION,
-            Manifest.permission.ACCESS_LOCATION_EXTRA_COMMANDS,
-            Manifest.permission.BLUETOOTH,
-            Manifest.permission.BLUETOOTH_SCAN,
-            Manifest.permission.BLUETOOTH_CONNECT,
-            Manifest.permission.BLUETOOTH_PRIVILEGED,
-            Manifest.permission.BLUETOOTH_ADVERTISE,
-            Manifest.permission.BLUETOOTH_ADMIN
-    };
+    protected  Bi_MainActivityNewServerScanner biMainActivityNewServerScanner;
 
 
 
@@ -91,11 +68,11 @@ public class ActivityServerScanner extends AppCompatActivity {
 
 
 
-            // TODO: 24.07.2024
-            checkPermissions();
+            // TODO: 24.07.2024 устанвливаем разрешения
+
+       new SetPermissions(version).additionalpermissionsBle(this,getApplicationContext());
 
 
-            weresolvetherightstobluetooth();
 
             startinggeregisterReceiver();
 
@@ -104,7 +81,16 @@ public class ActivityServerScanner extends AppCompatActivity {
             OneSignal.setAppId(ONEKEY);
 
             OneSignal.promptForPushNotifications();
+              biMainActivityNewServerScanner=new Bi_MainActivityNewServerScanner(getApplicationContext(), fragmentManager,this);
 
+            version=    biMainActivityNewServerScanner.  getversionCurrentPC();
+
+
+
+            /*  //TODO:Иниицилизуем БАз ДАнных */
+            Create_Database_СамаБАзаSQLite=    biMainActivityNewServerScanner.   МетодInitDataBase();
+
+            getmessageGattServer();
 
             /////TODO создание Мэнеджера Фрагмент
             Log.i(this.getClass().getName(), "  "
@@ -136,16 +122,7 @@ public class ActivityServerScanner extends AppCompatActivity {
         try{
           /*  //TODO: ссылка на класс бизнес логики Сервер Сканирование
           *      */
-        Bi_MainActivityNewServerScanner biMainActivityNewServerScanner=new Bi_MainActivityNewServerScanner(getApplicationContext(), fragmentManager,this);
 
-        version=    biMainActivityNewServerScanner.  getversionCurrentPC();
-
-        biMainActivityNewServerScanner.     МетодРАзрешенияBlurtooTКлиент();
-
-            /*  //TODO:Иниицилизуем БАз ДАнных */
-            Create_Database_СамаБАзаSQLite=    biMainActivityNewServerScanner.   МетодInitDataBase();
-
-            getmessageGattServer();
 
 
         biMainActivityNewServerScanner.   МетодЗапускBootФрагмента(new FragmentBootServer());//todo Запускам клиента или сервер фрагмент
@@ -211,73 +188,8 @@ public class ActivityServerScanner extends AppCompatActivity {
         }
 
     }
-    public void weresolvetherightstobluetooth() {
-        try {
 
 
-
-
-            String[] PERMISSIONS_STORAGE = {
-                    Manifest.permission.READ_EXTERNAL_STORAGE,
-                    Manifest.permission.WRITE_EXTERNAL_STORAGE,
-                    Manifest.permission.ACCESS_FINE_LOCATION,
-                    Manifest.permission.ACCESS_COARSE_LOCATION,
-                    Manifest.permission.BLUETOOTH,
-                    Manifest.permission.BLUETOOTH_SCAN,
-                    Manifest.permission.BLUETOOTH_CONNECT,
-                    Manifest.permission.BLUETOOTH_PRIVILEGED,
-                    Manifest.permission.BLUETOOTH_ADVERTISE,
-                    Manifest.permission.BLUETOOTH_ADMIN,
-                    Manifest.permission.READ_PHONE_STATE,
-                    Manifest.permission.READ_SMS,
-                    Manifest.permission.READ_PHONE_NUMBERS,
-                    Manifest.permission.READ_BASIC_PHONE_STATE,
-                    Manifest.permission.READ_PRECISE_PHONE_STATE,
-                    Manifest.permission.READ_CONTACTS,
-                    Manifest.permission.WRITE_CONTACTS,
-                    Manifest.permission.WRITE_APN_SETTINGS,
-                    Manifest.permission.RECEIVE_SMS,
-                    Manifest.permission.SEND_SMS,
-                    Manifest.permission.MODIFY_PHONE_STATE,
-            };
-            ActivityCompat.requestPermissions(
-                    this,
-                    PERMISSIONS_STORAGE,
-                    1
-            );
-        } catch (Exception e) {
-            e.printStackTrace();
-            Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() + " Линия  :"
-                    + Thread.currentThread().getStackTrace()[2].getLineNumber());
-            ContentValues valuesЗаписываемОшибки = new ContentValues();
-            valuesЗаписываемОшибки.put("Error", e.toString().toLowerCase());
-            valuesЗаписываемОшибки.put("Klass", this.getClass().getName());
-            valuesЗаписываемОшибки.put("Metod", Thread.currentThread().getStackTrace()[2].getMethodName());
-            valuesЗаписываемОшибки.put("LineError", Thread.currentThread().getStackTrace()[2].getLineNumber());
-            final Object ТекущаяВерсияПрограммы = version;
-            Integer ЛокальнаяВерсияПОСравнение = Integer.parseInt(ТекущаяВерсияПрограммы.toString());
-            valuesЗаписываемОшибки.put("whose_error", ЛокальнаяВерсияПОСравнение);
-            new SubClassErrors(getApplicationContext()).МетодЗаписиОшибок(valuesЗаписываемОшибки);
-        }
-    }
-    private void checkPermissions(){
-        int permission1 = ActivityCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE);
-        int permission2 = ActivityCompat.checkSelfPermission(this, Manifest.permission.BLUETOOTH_SCAN);
-        if (permission1 != PackageManager.PERMISSION_GRANTED) {
-            // We don't have permission so prompt the user
-            ActivityCompat.requestPermissions(
-                    this,
-                    PERMISSIONS_STORAGE,
-                    1
-            );
-        } else if (permission2 != PackageManager.PERMISSION_GRANTED){
-            ActivityCompat.requestPermissions(
-                    this,
-                    PERMISSIONS_LOCATION,
-                    1
-            );
-        }
-    }
 
 
 

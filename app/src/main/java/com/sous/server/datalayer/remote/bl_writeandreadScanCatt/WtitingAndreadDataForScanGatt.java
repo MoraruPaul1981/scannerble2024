@@ -639,7 +639,7 @@ public class WtitingAndreadDataForScanGatt {
            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
 
            LocalDateTime   LiveDate = null;
-           if (getLiveDatefromthedatabase.length()>0) {
+           if (getLiveDatefromthedatabase!=null) {
                try {
                    LiveDate = LocalDateTime.parse(getLiveDatefromthedatabase, formatter);
                } catch (Exception e) {
@@ -647,7 +647,7 @@ public class WtitingAndreadDataForScanGatt {
                }
            }
            LocalDateTime   databaseDate = null;
-           if (getcurrentDatefromthedatabase.length()>0) {
+           if (getcurrentDatefromthedatabase!=null) {
                try {
                    databaseDate = LocalDateTime.parse(getcurrentDatefromthedatabase, formatter);
                } catch (Exception e) {
@@ -661,7 +661,7 @@ public class WtitingAndreadDataForScanGatt {
            int getMinute = 0;
            Long getSecund = null;
 
-           if (databaseDate !=null  ) {
+           if (databaseDate !=null  && LiveDate!=null ) {
                // TODO: 30.07.2024 если дата в базе есть Есть с чем сравнивать ,
                getMinute = Math.abs(LiveDate.getMinute() - databaseDate.getMinute());
                // getMinute = TimeUnit.MINUTES.convert(diff, TimeUnit.MILLISECONDS);

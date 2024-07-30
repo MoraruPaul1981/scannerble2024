@@ -52,6 +52,7 @@ import com.sous.server.businesslayer.Errors.SubClassErrors;
 import com.sous.server.businesslayer.Eventbus.MessageScannerServer;
 import com.sous.server.businesslayer.Eventbus.ParamentsScannerServer;
 import com.sous.server.businesslayer.Locations.GattLocationListener;
+import com.sous.server.businesslayer.Permissions.SetPermissions;
 import com.sous.server.datalayer.remote.bl_writeandreadScanCatt.WtitingAndreadDataForScanGatt;
 
 
@@ -103,9 +104,7 @@ public class ServiceServerScan extends Service {
                     " Класс в процессе... " + this.getClass().getName() + "\n" +
                     " метод в процессе... " + Thread.currentThread().getStackTrace()[2].getMethodName());
 
-
-
-
+            // TODO: 24.07.2024 устанвливаем разрешения
             //For creating the Foreground Service
             NotificationManager notificationManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
             String channelId = Build.VERSION.SDK_INT >= Build.VERSION_CODES.O ? getNotificationChannel(notificationManager) : "";
@@ -1110,6 +1109,21 @@ public class ServiceServerScan extends Service {
         notificationManager.createNotificationChannel(channel);
         return channelId;
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 // TODO: 26.07.2024  END class
 

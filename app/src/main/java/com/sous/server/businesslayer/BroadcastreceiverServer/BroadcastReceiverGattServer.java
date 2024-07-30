@@ -18,6 +18,8 @@ import com.sous.server.businesslayer.Errors.SubClassErrors;
 import com.sous.server.businesslayer.bl_BloadcastReceiver.bl_BloadcastGatt_getDeviceClentGatt;
 import com.sous.server.datalayer.remote.bl_writeandreadScanCatt.WtitingAndreadDataForScanGatt;
 
+import java.util.concurrent.atomic.AtomicReference;
+
 import io.reactivex.rxjava3.core.Completable;
 import io.reactivex.rxjava3.functions.Action;
 import io.reactivex.rxjava3.functions.Consumer;
@@ -27,23 +29,21 @@ import io.reactivex.rxjava3.schedulers.Schedulers;
 public class BroadcastReceiverGattServer extends BroadcastReceiver {
     // TODO: 30.07.2024
     private  Long   version;
+    private    AtomicReference<PendingResult> pendingResultAtomicReference=new AtomicReference<>();
     @SuppressLint("MissingPermission")
     @Override
     public void onReceive(Context context, Intent intent) {
         // TODO: This method is called when the BroadcastReceiver is receiving
         try{
             // TODO: 30.07.2024
-        final PendingResult result = goAsync();
+            pendingResultAtomicReference.set(goAsync());
+
 
             final    PackageInfo pInfo = context.getPackageManager().getPackageInfo(context.getPackageName(), 0);
                version = pInfo.getLongVersionCode();
 
-      new bl_BloadcastGatt_getDeviceClentGatt(context,version).startingGetDeviceBLECkient(  intent );
+      new bl_BloadcastGatt_getDeviceClentGatt(context,version).startingGetDeviceBLECkient(  intent ,   pendingResultAtomicReference);
             // TODO: 30.07.2024
-
-            // Do processing
-            result.finish();
-            result.getResultData();
 
 
             Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
