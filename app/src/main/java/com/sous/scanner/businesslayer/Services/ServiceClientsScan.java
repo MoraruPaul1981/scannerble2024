@@ -135,12 +135,16 @@ public class ServiceClientsScan extends Service {
                         @Override
                         public void run() throws Throwable {
                             // TODO: 25.07.2024
-                          blForServiceScan . МетодЗапускаСканированиеКлиентСкан();
+                            if (bluetoothAdapterPhoneClient!=null && bluetoothAdapterPhoneClient.isEnabled()) {
+                                // TODO: 30.07.2024
+                                blForServiceScan . МетодЗапускаСканированиеКлиентСкан();
+                            }
 
                             Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                                     " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
                                     " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"   +"    Flowable.fromAction(new Action() { "
-                                    +   new Date().toLocaleString());
+                                    +   new Date().toLocaleString()
+                                    + " bluetoothAdapterPhoneClient.isEnabled() " +bluetoothAdapterPhoneClient.isEnabled());
                         }
                     })
                     .onBackpressureBuffer(true)

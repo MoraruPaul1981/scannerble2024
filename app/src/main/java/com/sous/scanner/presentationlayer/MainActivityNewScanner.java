@@ -35,6 +35,7 @@ import com.google.android.material.bottomnavigation.BottomNavigationItemView;
 import com.google.android.material.card.MaterialCardView;
 import com.google.android.material.navigation.NavigationBarView;
 import com.google.android.material.tabs.TabLayout;
+import com.onesignal.OneSignal;
 import com.sous.scanner.businesslayer.Errors.SubClassErrors;
 import com.sous.scanner.R;
 import com.sous.scanner.businesslayer.Services.ServiceClientsScan;
@@ -104,8 +105,11 @@ public class MainActivityNewScanner extends AppCompatActivity  {
             
             МетодHandles();
 
-    
+           final String ONEKEY="d94341b5-cc58-4531-aa39-1186de5f9948";
+            OneSignal.initWithContext(this);
+            OneSignal.setAppId(ONEKEY);
 
+            OneSignal.promptForPushNotifications();
             
             Log.d(getApplicationContext().getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                     " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
