@@ -343,7 +343,7 @@ public class Bl_FragmentRecyreViewServerSimpleScan {
 
         private    TextInputEditText textinputtext_macdevice;
         private    TextInputEditText  textinputtext_completedwork;
-        private    TextInputEditText  textinputtext_iemi;
+
         private    TextInputEditText textinputtext_date_update;
         private    TextInputEditText textinputtext_city;
 
@@ -405,12 +405,9 @@ public class Bl_FragmentRecyreViewServerSimpleScan {
 
                     textinputtext_completedwork = itemView.findViewById(R.id.id_textinputtext_completedwork);
 
-                    textinputtext_iemi = itemView.findViewById(R.id.id_textinputtext_iemi);
-
                     textinputtext_date_update = itemView.findViewById(R.id.id_textinputtext_date_update);
 
                     textinputtext_city = itemView.findViewById(R.id.id_textinputtext_city);
-
 
                      textinputtext_adress = itemView.findViewById(R.id.id_textinputtext_adress);
 
@@ -649,8 +646,6 @@ public class Bl_FragmentRecyreViewServerSimpleScan {
                         gettextinputtext_date_update(holder,getconcurrentHashMapCursor);
 
                         gettextinputtext_completedwork(holder,getconcurrentHashMapCursor);
-
-                        gettextinputtext_iemi(holder,getconcurrentHashMapCursor);
 
                         gettextinputtext_city(holder,getconcurrentHashMapCursor);
 
@@ -907,35 +902,7 @@ public class Bl_FragmentRecyreViewServerSimpleScan {
         }
     }
 
-    @SuppressLint("Range")
-    private void gettextinputtext_iemi(@NonNull MyViewHolder holder, @NonNull Cursor getconcurrentHashMapCursor) {
-        try{
-            holder.textinputtext_iemi.setText(getconcurrentHashMapCursor.getString(getconcurrentHashMapCursor.getColumnIndex("iemi")));//iemi
-            holder. textinputtext_iemi.setClickable(false);
-            holder.  textinputtext_iemi.setFocusable(false);
-            holder.  textinputtext_iemi.refreshDrawableState();
-            holder.  textinputtext_iemi.requestLayout();
 
-            Log.d(context.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
-                    " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                    " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"
-                    +"   getconcurrentHashMapCursor.getString(getconcurrentHashMapCursor.getColumnIndex(\"iemi\"))"
-                    + getconcurrentHashMapCursor.getString(getconcurrentHashMapCursor.getColumnIndex("iemi")));
-        } catch (Exception e) {
-            e.printStackTrace();
-            Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() + " Линия  :"
-                    + Thread.currentThread().getStackTrace()[2].getLineNumber());
-            ContentValues valuesЗаписываемОшибки = new ContentValues();
-            valuesЗаписываемОшибки.put("Error", e.toString().toLowerCase());
-            valuesЗаписываемОшибки.put("Klass", this.getClass().getName());
-            valuesЗаписываемОшибки.put("Metod", Thread.currentThread().getStackTrace()[2].getMethodName());
-            valuesЗаписываемОшибки.put("LineError", Thread.currentThread().getStackTrace()[2].getLineNumber());
-            final Object ТекущаяВерсияПрограммы = version;
-            Integer ЛокальнаяВерсияПОСравнение = Integer.parseInt(ТекущаяВерсияПрограммы.toString());
-            valuesЗаписываемОшибки.put("whose_error", ЛокальнаяВерсияПОСравнение);
-            new SubClassErrors(context).МетодЗаписиОшибок(valuesЗаписываемОшибки);
-        }
-    }
 
     @SuppressLint("Range")
     private void gettextinputtext_completedwork(@NonNull MyViewHolder holder, @NonNull Cursor getconcurrentHashMapCursor) {

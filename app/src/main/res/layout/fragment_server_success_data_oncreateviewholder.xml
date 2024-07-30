@@ -171,32 +171,7 @@
 
 
 
-        <!-- //TODO:   iemi  -->
 
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/id_textinputlayout_iemi"
-            style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.Dense"
-            app:boxBackgroundMode="outline"
-            android:layout_below="@+id/id_textinputlayout_completedwork"
-            android:layout_centerHorizontal="true"
-            android:layout_margin="2dp"
-
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:focusableInTouchMode="true">
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/id_textinputtext_iemi"
-                android:backgroundTint="#707B7C"
-                android:layout_width="match_parent"
-                 android:layout_height="50dp"
-                android:inputType="textCapSentences|textMultiLine"
-                android:layout_gravity="center"
-                android:gravity="center"
-                android:textSize="12sp"
-                android:textStyle="bold"
-                android:hint="iemi"
-                android:text="iemi value " />
-        </com.google.android.material.textfield.TextInputLayout>
 
 
         <!-- //TODO:   date_update  -->
@@ -205,7 +180,7 @@
             android:id="@+id/id_textinputlayout_date_update"
             style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.Dense"
             app:boxBackgroundMode="outline"
-            android:layout_below="@+id/id_textinputlayout_iemi"
+            android:layout_below="@+id/id_textinputlayout_completedwork"
             android:layout_centerHorizontal="true"
             android:layout_margin="2dp"
 
