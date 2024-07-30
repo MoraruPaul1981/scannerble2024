@@ -62,15 +62,7 @@ public class MainActivityNewScanner extends AppCompatActivity  {
     protected ServiceClientGatt.LocalBinderСканнер binderСканнер;
 
 
-    @SuppressLint({"RestrictedApi", "MissingInflatedId"})
-    @RequiresPermission(anyOf = {
 
-            Manifest.permission.ACCESS_FINE_LOCATION,
-            Manifest.permission.BLUETOOTH_SCAN,
-            Manifest.permission.BLUETOOTH_CONNECT,
-            Manifest.permission.BLUETOOTH_PRIVILEGED,
-            Manifest.permission.BLUETOOTH_ADVERTISE,
-            Manifest.permission.BLUETOOTH_ADMIN})
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         try {
@@ -149,7 +141,7 @@ public class MainActivityNewScanner extends AppCompatActivity  {
 
             finishAndRemoveTask();
 
-        },5000);
+        },10000);
 
         // TODO: 24.01.2023  переходят после получение binder
         ///      МетодЗапускBootФрагмента(new FragmentBootScanner());//todo Запускам клиента или сервер фрагмент
@@ -270,8 +262,7 @@ public class MainActivityNewScanner extends AppCompatActivity  {
     private void МетодРАзрешенияBlurtooTКлиент() {
         try{
             String[] PERMISSIONS_STORAGE = {
-
-                    Manifest.permission.ACCESS_FINE_LOCATION,
+                    Manifest.permission.BLUETOOTH,
                     Manifest.permission.BLUETOOTH_SCAN,
                     Manifest.permission.BLUETOOTH_CONNECT,
                     Manifest.permission.BLUETOOTH_PRIVILEGED,
@@ -279,7 +270,7 @@ public class MainActivityNewScanner extends AppCompatActivity  {
                     Manifest.permission.BLUETOOTH_ADMIN
             };
             String[] PERMISSIONS_LOCATION = {
-                    Manifest.permission.ACCESS_FINE_LOCATION,
+                    Manifest.permission.BLUETOOTH,
                     Manifest.permission.BLUETOOTH_SCAN,
                     Manifest.permission.BLUETOOTH_CONNECT,
                     Manifest.permission.BLUETOOTH_PRIVILEGED,

@@ -443,102 +443,100 @@ public class Bl_forServiceScan {
     private void МетодЗапускаGATTКлиентаScan(@NonNull BluetoothDevice bluetoothDevice) {
         try{
 
-            BluetoothGatt    gattScan =      bluetoothDevice.connectGatt(context, false,
-                    bluetoothGattCallbackScan, BluetoothDevice.TRANSPORT_AUTO);
-            gattScan.requestConnectionPriority(BluetoothGatt.CONNECTION_PRIORITY_HIGH);
-            //gatt.setPreferredPhy(BluetoothDevice.PHY_LE_2M_MASK,BluetoothDevice.PHY_LE_2M_MASK,BluetoothDevice.PHY_OPTION_S2);
-            int bondstate = bluetoothDevice.getBondState();
+            if (bluetoothAdapterPhoneClient!=null && bluetoothAdapterPhoneClient.isEnabled()) {
+                // TODO: 30.07.2024
+                BluetoothGatt    gattScan =      bluetoothDevice.connectGatt(context, false,
+                        bluetoothGattCallbackScan, BluetoothDevice.TRANSPORT_AUTO);
+                gattScan.requestConnectionPriority(BluetoothGatt.CONNECTION_PRIORITY_HIGH);
+                //gatt.setPreferredPhy(BluetoothDevice.PHY_LE_2M_MASK,BluetoothDevice.PHY_LE_2M_MASK,BluetoothDevice.PHY_OPTION_S2);
+                int bondstate = bluetoothDevice.getBondState();
 
-            Log.d(this.getClass().getName(), "Trying to write characteristic..., first bondstate " + bondstate);
-            Log.d(context.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
-                    " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                    " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"
-                    +"   bluetoothDevice.getAddress()" + bluetoothDevice.getAddress() + " bondstate " + bondstate );
+                Log.d(this.getClass().getName(), "Trying to write characteristic..., first bondstate " + bondstate);
+                Log.d(context.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                        " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                        " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"
+                        +"   bluetoothDevice.getAddress()" + bluetoothDevice.getAddress() + " bondstate " + bondstate );
 
-            switch (bondstate) {
-
-                case BluetoothDevice.DEVICE_TYPE_UNKNOWN:
-                    // TODO: 19.07.2024
-                    handlerScan.getTarget().post(()->{
-                        ConcurrentHashMap<String,String> concurrentHashMap=      new ConcurrentHashMap<String,String>();
-                        concurrentHashMap  .put("BluetoothDevice.DEVICE_TYPE_UNKNOWN","9");
-                        mediatorLiveDataScan.setValue(concurrentHashMap);
-                    });
-
-                    Log.d(context.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
-                            " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                            " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"
-                            +"   bluetoothDevice.getAddress()" + bluetoothDevice.getAddress() + " bondstate " + bondstate );
-                    break;
-
-                case BluetoothDevice.BOND_NONE:
-                    // TODO: 29.07.2024
-                    handlerScan.getTarget().post(()->{
-                        ConcurrentHashMap<String,String> concurrentHashMap=      new ConcurrentHashMap<String,String>();
-                        concurrentHashMap  .put("BluetoothDevice.BOND_NONE","10");
-                        mediatorLiveDataScan.setValue(concurrentHashMap);
-                    });
-                    Log.d(context.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
-                            " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                            " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"
-                            +"   bluetoothDevice.getAddress()" + bluetoothDevice.getAddress() + " bondstate " + bondstate );
-                    break;
-
-
-                case BluetoothDevice.BOND_BONDING:
-                    // TODO: 29.07.2024
-                    handlerScan.getTarget().post(()->{
-                        ConcurrentHashMap<String,String> concurrentHashMap=      new ConcurrentHashMap<String,String>();
-                        concurrentHashMap  .put("BluetoothDevice.BOND_BONDING","12");
-                        mediatorLiveDataScan.setValue(concurrentHashMap);
-
-                    });
-
-                    Log.d(context.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
-                            " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                            " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"
-                            +"   bluetoothDevice.getAddress()" + bluetoothDevice.getAddress() + " bondstate " + bondstate );
-                    break;
-
-                case BluetoothDevice.BOND_BONDED:
-                    handlerScan.getTarget().post(()->{
-                        ConcurrentHashMap<String,String> concurrentHashMap=      new ConcurrentHashMap<String,String>();
-                        concurrentHashMap  .put("BluetoothDevice.BOND_BONDING","13");
-                        mediatorLiveDataScan.setValue(concurrentHashMap);
-
-                    });
-                    Log.d(context.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
-                            " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                            " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"
-                            +"   bluetoothDevice.getAddress()" + bluetoothDevice.getAddress() + " bondstate " + bondstate );
-                    break;
-
-
-
-                default:{
-
-
-                    Log.d(context.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
-                            " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                            " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"
-                            +"   bluetoothDevice.getAddress()" + bluetoothDevice.getAddress() + " bondstate " + bondstate );
-
+                switch (bondstate) {
+    
+                    case BluetoothDevice.DEVICE_TYPE_UNKNOWN:
+                        // TODO: 19.07.2024
+                        handlerScan.getTarget().post(()->{
+                            ConcurrentHashMap<String,String> concurrentHashMap=      new ConcurrentHashMap<String,String>();
+                            concurrentHashMap  .put("BluetoothDevice.DEVICE_TYPE_UNKNOWN","9");
+                            mediatorLiveDataScan.setValue(concurrentHashMap);
+                        });
+    
+                        Log.d(context.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                                " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                                " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"
+                                +"   bluetoothDevice.getAddress()" + bluetoothDevice.getAddress() + " bondstate " + bondstate );
+                        break;
+    
+                    case BluetoothDevice.BOND_NONE:
+                        // TODO: 29.07.2024
+                        handlerScan.getTarget().post(()->{
+                            ConcurrentHashMap<String,String> concurrentHashMap=      new ConcurrentHashMap<String,String>();
+                            concurrentHashMap  .put("BluetoothDevice.BOND_NONE","10");
+                            mediatorLiveDataScan.setValue(concurrentHashMap);
+                        });
+                        Log.d(context.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                                " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                                " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"
+                                +"   bluetoothDevice.getAddress()" + bluetoothDevice.getAddress() + " bondstate " + bondstate );
+                        break;
+    
+    
+                    case BluetoothDevice.BOND_BONDING:
+                        // TODO: 29.07.2024
+                        handlerScan.getTarget().post(()->{
+                            ConcurrentHashMap<String,String> concurrentHashMap=      new ConcurrentHashMap<String,String>();
+                            concurrentHashMap  .put("BluetoothDevice.BOND_BONDING","12");
+                            mediatorLiveDataScan.setValue(concurrentHashMap);
+    
+                        });
+    
+                        Log.d(context.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                                " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                                " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"
+                                +"   bluetoothDevice.getAddress()" + bluetoothDevice.getAddress() + " bondstate " + bondstate );
+                        break;
+    
+                    case BluetoothDevice.BOND_BONDED:
+                        handlerScan.getTarget().post(()->{
+                            ConcurrentHashMap<String,String> concurrentHashMap=      new ConcurrentHashMap<String,String>();
+                            concurrentHashMap  .put("BluetoothDevice.BOND_BONDING","13");
+                            mediatorLiveDataScan.setValue(concurrentHashMap);
+    
+                        });
+                        Log.d(context.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                                " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                                " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"
+                                +"   bluetoothDevice.getAddress()" + bluetoothDevice.getAddress() + " bondstate " + bondstate );
+                        break;
+    
+    
+    
+                    default:{
+    
+    
+                        Log.d(context.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                                " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                                " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"
+                                +"   bluetoothDevice.getAddress()" + bluetoothDevice.getAddress() + " bondstate " + bondstate );
+    
+                    }
+    
+    
                 }
 
 
+                Log.d(context.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                        " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                        " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"
+                        +"   bluetoothDevice.getAddress()" + bluetoothDevice.getAddress());
+            } else {
             }
-
-
-
-
-
-
-
-
-            Log.d(context.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
-                    " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                    " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"
-                    +"   bluetoothDevice.getAddress()" + bluetoothDevice.getAddress());
         } catch (Exception e) {
             e.printStackTrace();
             Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() + " Линия  :"
