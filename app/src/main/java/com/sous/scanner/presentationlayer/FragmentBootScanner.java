@@ -26,6 +26,8 @@ import com.sous.scanner.businesslayer.Errors.SubClassErrors;
 import com.sous.scanner.R;
 import com.sous.scanner.businesslayer.Services.ServiceClientGatt;
 
+import io.reactivex.rxjava3.core.Flowable;
+
 
 public class FragmentBootScanner extends Fragment {
     Long version=0l;

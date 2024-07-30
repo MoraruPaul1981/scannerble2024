@@ -146,7 +146,7 @@ public class ServiceClientsScan extends Service {
                     .onBackpressureBuffer(true)
                     .subscribeOn(AndroidSchedulers.mainThread())
                   .observeOn(AndroidSchedulers.mainThread())
-                    .repeatWhen(repeat->repeat.delay(1, TimeUnit.MINUTES))
+                    .repeatWhen(repeat->repeat.delay(20, TimeUnit.SECONDS))
                     .doOnComplete(new Action() {
                         @Override
                         public void run() throws Throwable {
