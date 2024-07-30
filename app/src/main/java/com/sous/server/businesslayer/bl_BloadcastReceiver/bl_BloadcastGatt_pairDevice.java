@@ -1,27 +1,19 @@
 package com.sous.server.businesslayer.bl_BloadcastReceiver;
 
-import android.annotation.SuppressLint;
 import android.bluetooth.BluetoothDevice;
-import android.content.ContentValues;
 import android.content.Context;
-import android.util.Log;
 
-import androidx.annotation.NonNull;
-
-
-import com.sous.server.businesslayer.Errors.SubClassErrors;
 
 import java.lang.reflect.Method;
-import java.nio.ByteBuffer;
 
-public class bl_BloadcastReceierGatt {
+public class bl_BloadcastGatt_pairDevice {
 
     private  Context context;
 
 
     private  Long version;
 
-    public bl_BloadcastReceierGatt(Context context,   Long version) {
+    public bl_BloadcastGatt_pairDevice(Context context, Long version) {
         this.context = context;
 
         this.version = version;

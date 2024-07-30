@@ -25,11 +25,7 @@ import androidx.annotation.NonNull;
 
 import com.sous.server.businesslayer.ContentProvoders.ContentProviderServer;
 import com.sous.server.businesslayer.Errors.SubClassErrors;
-import com.sous.server.businesslayer.Eventbus.MessageScannerServer;
-import com.sous.server.businesslayer.Eventbus.ParamentsScannerServer;
-import com.sous.server.businesslayer.bl_BloadcastReceiver.bl_BloadcastReceierGatt;
-
-import org.greenrobot.eventbus.EventBus;
+import com.sous.server.businesslayer.bl_BloadcastReceiver.bl_BloadcastGatt_pairDevice;
 
 import java.io.IOException;
 import java.math.BigInteger;
@@ -128,7 +124,7 @@ public class Bl_forServiceGattServerScan {
                                   " line " + Thread.currentThread().getStackTrace()[2].getLineNumber()
                                   + "\n" + " scanResult.getDevice()  " +scanResult.getDevice()+"\n");
                       }else {
-                          bl_BloadcastReceierGatt blBloadcastReceierGatt = new bl_BloadcastReceierGatt(context, version);
+                          bl_BloadcastGatt_pairDevice blBloadcastReceierGatt = new bl_BloadcastGatt_pairDevice(context, version);
                           blBloadcastReceierGatt.unpairDevice(scanResultDevice);
                           blBloadcastReceierGatt.pairDevice(scanResultDevice);
                       }
