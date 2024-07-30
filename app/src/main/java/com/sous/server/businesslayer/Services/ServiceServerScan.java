@@ -601,9 +601,8 @@ public class ServiceServerScan extends Service {
                         WtitingAndreadDataForScanGatt wtitingAndreadDataForScanGatt = new WtitingAndreadDataForScanGatt(getApplicationContext(),
                                 version,
                                 contentProviderServer,
-                                sharedPreferencesGatt,
-                                successfuldevices);
-                        wtitingAndreadDataForScanGatt.writeDatabaseScanGatt(device, successfuldevices, newState);
+                                sharedPreferencesGatt);
+                        wtitingAndreadDataForScanGatt.writeDatabaseScanGatt(device, newState);
 
 
 

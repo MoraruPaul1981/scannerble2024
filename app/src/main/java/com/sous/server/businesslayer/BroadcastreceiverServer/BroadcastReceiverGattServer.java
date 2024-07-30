@@ -22,6 +22,10 @@ import com.sous.server.datalayer.remote.bl_writeandreadScanCatt.WtitingAndreadDa
 import java.util.Date;
 import java.util.Random;
 
+import io.reactivex.rxjava3.core.Completable;
+import io.reactivex.rxjava3.functions.Action;
+import io.reactivex.rxjava3.schedulers.Schedulers;
+
 
 public class BroadcastReceiverGattServer extends BroadcastReceiver {
     private ContentProviderServer contentProviderServer;
@@ -29,27 +33,34 @@ public class BroadcastReceiverGattServer extends BroadcastReceiver {
     protected SharedPreferences sharedPreferencesGatt;
 
  private  Context context;
- private Cursor successfuldevices;
+
     @SuppressLint("MissingPermission")
     @Override
     public void onReceive(Context context, Intent intent) {
         // TODO: This method is called when the BroadcastReceiver is receiving
         try{
             this.context=context;
-            sharedPreferencesGatt =context. getSharedPreferences("gatt", Context.MODE_PRIVATE);
-            // TODO: 29.07.2024
-            getContentProvider();
-            // TODO: 29.07.2024
-            BluetoothDevice bluetoothDevice = null;
-            // TODO: 22.07.2024  Код Брадкаста ресивера
-            PackageInfo pInfo = context.getPackageManager().getPackageInfo(context.getPackageName(), 0);
-            version = pInfo.getLongVersionCode();
+            // TODO: 30.07.2024
+        final PendingResult result = goAsync();
+        Completable.fromAction(new Action() {
+            @Override
+            public void run() throws Throwable {
+
+
+                sharedPreferencesGatt =context. getSharedPreferences("gatt", Context.MODE_PRIVATE);
+                // TODO: 29.07.2024
+                getContentProvider();
+                // TODO: 29.07.2024
+                BluetoothDevice bluetoothDevice = null;
+                // TODO: 22.07.2024  Код Брадкаста ресивера
+                PackageInfo pInfo = context.getPackageManager().getPackageInfo(context.getPackageName(), 0);
+                version = pInfo.getLongVersionCode();
 
                 // TODO: 24.07.2024
                 bluetoothDevice = intent.getParcelableExtra(BluetoothDevice.EXTRA_DEVICE);
 
-            // TODO: 29.07.2024
-            bluetoothDevice.fetchUuidsWithSdp();
+                // TODO: 29.07.2024
+                bluetoothDevice.fetchUuidsWithSdp();
 
 
                 Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
@@ -58,18 +69,39 @@ public class BroadcastReceiverGattServer extends BroadcastReceiver {
                         "Bintent.getAction() "+intent.getAction() + " bluetoothDevice " +bluetoothDevice.getName()+"\n"+
                         " intent.getAction() " +intent.getAction());
 
-            // TODO: 25.07.2024  запускаем запись в базу
-            WtitingAndreadDataForScanGatt wtitingAndreadDataForScanGatt = new WtitingAndreadDataForScanGatt(context,
-                    version,
-                    contentProviderServer,
-                    sharedPreferencesGatt,
-                    successfuldevices);
-            wtitingAndreadDataForScanGatt.writeDatabaseScanGatt(bluetoothDevice, successfuldevices, bluetoothDevice.getBondState());
+                // TODO: 25.07.2024  запускаем запись в базу
+                // TODO: 30.07.2024
+                Integer    resultAddDeviceToGattaDtabse=    new WtitingAndreadDataForScanGatt(context, version, contentProviderServer,
+                        sharedPreferencesGatt).writeDatabaseScanGatt(bluetoothDevice, bluetoothDevice.getBondState());
+
+                Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                        " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                        " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" +
+                        "Bintent.getAction() "+intent.getAction() + " bluetoothDevice " +bluetoothDevice);
+
+                // TODO: 30.07.2024
+                // Do processing
+                result.setResultCode(resultAddDeviceToGattaDtabse);
+                result.finish();
+
+
+            }
+        }).doOnComplete(new Action() {
+            @Override
+            public void run() throws Throwable {
+                Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                        " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                        " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" +
+                        "Bintent.getAction() "+intent.getAction());
+            }
+        }).subscribeOn(Schedulers.computation())
+                .subscribe();
 
             Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                     " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
                     " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" +
-                    "Bintent.getAction() "+intent.getAction() + " bluetoothDevice " +bluetoothDevice);
+                    "Bintent.getAction() "+intent.getAction());
+
 
 
         } catch (Exception e) {
