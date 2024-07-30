@@ -78,43 +78,21 @@ import java.util.function.Consumer;
  * helper methods.
  */
 public class ServiceServerScan extends Service {
+    // TODO: 30.07.2024
     protected SQLiteDatabase sqLiteDatabase;
     public LocalBinderСерверBLE binderScan = new LocalBinderСерверBLE();
-
     private ContentProviderServer contentProviderServer;
     protected BluetoothGattServer getBluetoothGattServer;
     protected BluetoothManager bluetoothManagerServer;
     protected BluetoothAdapter bluetoothAdapter;
     protected  BluetoothAdapter bluetoothAdapterGATT;
-
     protected Long version = 0l;
-
-
-
-    protected List<Address> addressesgetGPS;
     protected UUID  getPublicUUIDScan = ParcelUuid.fromString("70000007-0000-1000-8000-00805f9b34fb").getUuid();
-
-
-    //TODO: Local
-    protected FusedLocationProviderClient fusedLocationClientGoogle;
-
     protected LocationManager locationManager;
-
-
-
     protected      SharedPreferences sharedPreferencesGatt;
-
-
-
-
-
-
-    private    AtomicReference<byte[]> atomicReferenceValue = new AtomicReference<>();
-
-
-
+    protected    AtomicReference<byte[]> atomicReferenceValue = new AtomicReference<>();
     protected     Cursor successfuldevices;
-
+    protected  NotificationCompat.Builder notificationBuilderServer;
 
     @Override
     public void onCreate() {
@@ -131,11 +109,11 @@ public class ServiceServerScan extends Service {
             //For creating the Foreground Service
             NotificationManager notificationManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
             String channelId = Build.VERSION.SDK_INT >= Build.VERSION_CODES.O ? getNotificationChannel(notificationManager) : "";
-            NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(this, channelId);
-            Notification notification = notificationBuilder.setOngoing(true)
+            notificationBuilderServer = new NotificationCompat.Builder(this, channelId);
+            Notification notification = notificationBuilderServer.setOngoing(true)
                     .setSmallIcon(R.mipmap.ic_launcher)
-                    .setContentText(LocalDateTime.now().toString() )
-                    .setContentTitle("Сервер контроля Bluetooth")
+                    .setContentText("запуск:"+LocalDateTime.now().toString() )
+                    .setContentTitle(" Контроль Bluetooth")
                     // .setPriority(PRIORITY_MIN)
                     .setCategory(NotificationCompat.CATEGORY_SERVICE)
                     .build();
