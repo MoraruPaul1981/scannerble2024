@@ -22,6 +22,7 @@ import com.sous.server.datalayer.remote.bl_writeandreadScanCatt.WtitingAndreadDa
 import java.util.Date;
 import java.util.Random;
 
+import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
 import io.reactivex.rxjava3.core.Completable;
 import io.reactivex.rxjava3.functions.Action;
 import io.reactivex.rxjava3.schedulers.Schedulers;
@@ -78,17 +79,15 @@ public class BroadcastReceiverGattServer extends BroadcastReceiver {
                         " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
                         " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" +
                         "Bintent.getAction() "+intent.getAction() + " bluetoothDevice " +bluetoothDevice);
-
-                // TODO: 30.07.2024
-                // Do processing
-                result.setResultCode(resultAddDeviceToGattaDtabse);
-                result.finish();
-
-
             }
         }).doOnComplete(new Action() {
             @Override
             public void run() throws Throwable {
+
+                // Do processing
+                result.finish();
+                result.getResultData();
+
                 Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                         " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
                         " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" +
