@@ -104,8 +104,7 @@ public class Bl_forServiceScan {
 
                /*     bl_BloadcastReceierGatt  blBloadcastReceierGatt = new bl_BloadcastReceierGatt(context, version);
                 blBloadcastReceierGatt.unpairDevice(bluetoothDeviceScan);*/
-                    bluetoothDeviceScan.fetchUuidsWithSdp();
-
+                  
 
                     // TODO: 12.02.2023  init CallBack Gatt Client for Scan
                     МетодРаботыСТекущийСерверомGATTДляScan( );
@@ -444,6 +443,10 @@ public class Bl_forServiceScan {
         try{
 
             if (bluetoothAdapterPhoneClient!=null && bluetoothAdapterPhoneClient.isEnabled()) {
+                // TODO: 30.07.2024
+                bluetoothDevice.fetchUuidsWithSdp();
+                // TODO: 30.07.2024
+
                 // TODO: 30.07.2024
                 BluetoothGatt    gattScan =      bluetoothDevice.connectGatt(context, false,
                         bluetoothGattCallbackScan, BluetoothDevice.TRANSPORT_AUTO);

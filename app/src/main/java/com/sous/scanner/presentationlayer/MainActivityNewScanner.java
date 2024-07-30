@@ -101,12 +101,10 @@ public class MainActivityNewScanner extends AppCompatActivity  {
 
             // TODO: 19.02.2023 разрешает обновлени BLE
             МетодРАзрешенияBlurtooTКлиент();
-
-            МетодБиндингаСканирование();
-
+            
             МетодHandles();
 
-            startingServiceSimpleScan();
+    
 
             
             Log.d(getApplicationContext().getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
@@ -136,12 +134,24 @@ public class MainActivityNewScanner extends AppCompatActivity  {
     protected void onStart() {
         super.onStart();
         try{
+
+            // TODO: 30.07.2024
+            handlerScannerGatt.getTarget().post(()->{
+
+               startingServiceSimpleScan();
+               
+                МетодБиндингаСканирование();
+                
+
+            });
+            
+            
 // TODO: 30.07.2024  
         handlerScannerGatt.getTarget().postDelayed(()->{
 
             finishAndRemoveTask();
 
-        },10000);
+        },3000);
 
         // TODO: 24.01.2023  переходят после получение binder
         ///      МетодЗапускBootФрагмента(new FragmentBootScanner());//todo Запускам клиента или сервер фрагмент
