@@ -35,6 +35,7 @@ import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentSkipListSet;
 import java.util.concurrent.TimeUnit;
+import java.util.function.LongToDoubleFunction;
 
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
 import io.reactivex.rxjava3.annotations.NonNull;
@@ -68,24 +69,28 @@ public class WtitingAndreadDataForScanGatt {
 
     // TODO: 25.07.2024 метод Записи  в базу
     public void writeDatabaseScanGatt(@NonNull BluetoothDevice device, @NonNull Cursor successfuldevices,@NonNull Integer newState){
+
+        // TODO: 30.07.2024
+        final Integer[] resultAddDeviceToGattaDtabse = {0};
+        final ContentValues[] contentValuesВставкаДанных = new ContentValues[1];
         Completable.fromAction(new Action() {
                     @Override
                     public void run() throws Throwable {
                         // TODO: 29.07.2024
                         // TODO: 25.07.2024 Код Записи в базу данных ScanGatt
                         //TODO:ЗАписываем Новый Успешный Девайс в Базу от Gatt server
-                        ContentValues contentValuesВставкаДанных = addToContevaluesNewSucceesDeviceOtGattServer(device,newState );
+                          contentValuesВставкаДанных[0] = addToContevaluesNewSucceesDeviceOtGattServer(device,newState );
 
                         Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                                 " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
                                 " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" +
-                                "  contentValuesВставкаДанных " +contentValuesВставкаДанных);
+                                "  contentValuesВставкаДанных " + contentValuesВставкаДанных[0]);
 
 
                         // TODO: 25.07.2024
 
                         String   getcurrentDatefromthedatabase =  getDateStoreOperationsDeviceFronDatabase("SELECT    MAX ( date_update )   FROM scannerserversuccess" +
-                                " WHERE   macdevice = '"+contentValuesВставкаДанных.getAsString("macdevice").trim() +"'");
+                                " WHERE   macdevice = '"+ contentValuesВставкаДанных[0].getAsString("macdevice").trim() +"'");
 
                         Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                                 " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
@@ -93,64 +98,31 @@ public class WtitingAndreadDataForScanGatt {
                                 "  getcurrentDatefromthedatabase " +getcurrentDatefromthedatabase);
 
 
-// TODO: 25.07.2024  результат дата старше полу часа или нет
-                        long getMinute=      findoutthedateDifference(getcurrentDatefromthedatabase,contentValuesВставкаДанных.getAsString("date_update").trim());
-
-
-
+// TODO: 25.07.2024  результат дата старше полу часа или нет АНАЛИЗ ДАТ
+                        ConcurrentHashMap<Integer,Integer>   analiysMinuteAndSecund =
+                                findoutthedateDifference(getcurrentDatefromthedatabase, contentValuesВставкаДанных[0].getAsString("date_update").trim());
 
                         Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                                 " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
                                 " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" +
-                                "  getcurrentDatefromthedatabase " +getcurrentDatefromthedatabase+"\n" + "getMinute  " +getMinute);
+                                "  getcurrentDatefromthedatabase " +getcurrentDatefromthedatabase+"\n" + "analiysMinuteAndSecund  " +analiysMinuteAndSecund);
 
 
-                        Integer   resultAddDeviceToGattaDtabse= 0;
-
-
-                        if (getMinute>10 || getMinute==0) {
-                            // TODO: 09.02.2023  запись в базу дивайса Отметка сотрдунка
-                            resultAddDeviceToGattaDtabse = wtireNewSucceesDeviceOtGattServer(contentValuesВставкаДанных);
-                        }
-
-
-                        // TODO: 18.07.2024 ЕСЛИ Успещно прошла Операция передаем данные на Фрагмент Scanner
-                        if (resultAddDeviceToGattaDtabse >0) {
-
-                            // TODO: 25.07.2024 closeing Before
-                            getcloseCursorAndHashMap();
-                            //todo ДОполнительный механизм данные упокаываем в Канкаренте СЕТ с Курсором
-
-
-                            ConcurrentHashMap<String, Cursor> concurrentHashMapCursor = getallthedataofsuccessfuldevices("SELECT *    FROM scannerserversuccess");
-
-                            Log.i(this.getClass().getName(), " resultAddDeviceToGattaDtabse " + resultAddDeviceToGattaDtabse +
-                                    " contentValuesВставкаДанных " + contentValuesВставкаДанных + " device.getAddress().toString() " +device.getAddress().toString()+
-                                    concurrentHashMapCursor  +"concurrentHashMapCursor "+
-                                    " SUCCESS SUCCESS SUCCESS !!!! resultAddDeviceToGattaDtabse " +resultAddDeviceToGattaDtabse);
-
-                            // TODO: 19.07.2024 Посылаем Пользователю сообщение что данные изменились
-                            forwardUIAfterSuccessAddDiveceDatBAseScan(concurrentHashMapCursor, contentValuesВставкаДанных);
-
-
-                        }
+// TODO: 30.07.2024 САМА ЗАПИСЬ В БАЗУ
+                             resultAddDeviceToGattaDtabse[0] = entryitselfintothedatabase(analiysMinuteAndSecund, contentValuesВставкаДанных[0],
+                                getcurrentDatefromthedatabase);
 
                         Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                                 " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                                " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n");
-
-
-
-
-
-
-
+                                " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" +
+                                "  getcurrentDatefromthedatabase " +getcurrentDatefromthedatabase+"\n" + "analiysMinuteAndSecund  " +analiysMinuteAndSecund);
 
                         Log.d(context.getClass().getName(), "\n"
                                 + " время: " + new Date() + "\n+" +
                                 " Класс в процессе... " + this.getClass().getName() + "\n" +
                                 " метод в процессе... " + Thread.currentThread().getStackTrace()[2].getMethodName());
                     }
+
                 })
                 .doOnError(new Consumer<Throwable>() {
                     @Override
@@ -173,11 +145,106 @@ public class WtitingAndreadDataForScanGatt {
                         valuesЗаписываемОшибки.put("whose_error", ЛокальнаяВерсияПОСравнение);
                         new SubClassErrors(context).МетодЗаписиОшибокИзServerGatt(valuesЗаписываемОшибки,contentProviderServer);
                     }
+                }).doOnComplete(new Action() {
+                    @Override
+                    public void run() throws Throwable {
+
+                        // TODO: 18.07.2024 ЕСЛИ Успещно прошла Операция передаем данные на Фрагмент Scanner
+                        if (resultAddDeviceToGattaDtabse[0] >0) {
+                            // TODO: 25.07.2024 closeing Before
+                            getcloseCursorAndHashMap();
+                            //todo ДОполнительный механизм данные упокаываем в Канкаренте СЕТ с Курсором
+
+                            ConcurrentHashMap<String, Cursor> concurrentHashMapCursor = getallthedataofsuccessfuldevices("SELECT *    FROM scannerserversuccess");
+
+                            // TODO: 19.07.2024 Посылаем Пользователю сообщение что данные изменились
+                            forwardUIAfterSuccessAddDiveceDatBAseScan(concurrentHashMapCursor, contentValuesВставкаДанных[0]);
+
+
+                        }
+                        Log.d(context.getClass().getName(), "\n"
+                                + " время: " + new Date() + "\n+" +
+                                " Класс в процессе... " + this.getClass().getName() + "\n" +
+                                " метод в процессе... " + Thread.currentThread().getStackTrace()[2].getMethodName()+
+                                " contentValuesВставкаДанных[0] " +contentValuesВставкаДанных[0]+
+                                " resultAddDeviceToGattaDtabse[0] " +resultAddDeviceToGattaDtabse[0]);
+
+
+                    }
                 })
                 .subscribeOn(Schedulers.single())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe();
     }
+
+
+
+
+
+
+    // TODO: 30.07.2024 САМА ЗАПИСЬ В БАЗУ
+    private Integer entryitselfintothedatabase(ConcurrentHashMap<Integer, Integer> analiysMinuteAndSecund,
+                                               ContentValues contentValuesВставкаДанных,
+                                               String getcurrentDatefromthedatabase) {
+        Integer       resultAddDeviceToGattaDtabse=0;
+
+        try{
+        switch (analiysMinuteAndSecund.keySet().stream().findAny().get()) {
+            // TODO: 30.07.2024
+            case 0:
+                // TODO: 09.02.2023  запись в базу дивайса Отметка сотрдунка
+                resultAddDeviceToGattaDtabse = wtireNewSucceesDeviceOtGattServer(contentValuesВставкаДанных);
+
+                Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                        " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                        " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" +
+                        "  getcurrentDatefromthedatabase " + getcurrentDatefromthedatabase +"\n" + "analiysMinuteAndSecund  " + analiysMinuteAndSecund);
+                break;
+            // TODO: 30.07.2024
+            default:{
+                // TODO: 30.07.2024 getMinutes
+                if (analiysMinuteAndSecund.keySet().stream().findAny().get()>10) {
+                    // TODO: 30.07.2024  get Seconds
+                    if (analiysMinuteAndSecund.values().stream().findAny().get()>=5) {
+
+                        // TODO: 09.02.2023  запись в базу дивайса Отметка сотрдунка
+                        resultAddDeviceToGattaDtabse = wtireNewSucceesDeviceOtGattServer(contentValuesВставкаДанных);
+
+                        Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                                " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                                " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" +
+                                "  getcurrentDatefromthedatabase " + getcurrentDatefromthedatabase +"\n" + "analiysMinuteAndSecund  " + analiysMinuteAndSecund);
+                    }
+                }
+                // TODO: 30.07.2024
+                break;
+            }
+        }
+        Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" +
+                " contentValuesВставкаДанных " +contentValuesВставкаДанных
+                + " resultAddDeviceToGattaDtabse " +resultAddDeviceToGattaDtabse );
+    } catch (Exception e) {
+        e.printStackTrace();
+        Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() + " Линия  :"
+                + Thread.currentThread().getStackTrace()[2].getLineNumber());
+        ContentValues valuesЗаписываемОшибки = new ContentValues();
+        valuesЗаписываемОшибки.put("Error", e.toString().toLowerCase());
+        valuesЗаписываемОшибки.put("Klass", this.getClass().getName());
+        valuesЗаписываемОшибки.put("Metod", Thread.currentThread().getStackTrace()[2].getMethodName());
+        valuesЗаписываемОшибки.put("LineError", Thread.currentThread().getStackTrace()[2].getLineNumber());
+        final Object ТекущаяВерсияПрограммы = version;
+        Integer ЛокальнаяВерсияПОСравнение = Integer.parseInt(ТекущаяВерсияПрограммы.toString());
+        valuesЗаписываемОшибки.put("whose_error", ЛокальнаяВерсияПОСравнение);
+        new SubClassErrors(context).МетодЗаписиОшибокИзServerGatt(valuesЗаписываемОшибки,contentProviderServer);
+    }
+
+        return resultAddDeviceToGattaDtabse;
+    }
+
+
+
 
 
     // TODO: 25.07.2024
@@ -596,8 +663,9 @@ public class WtitingAndreadDataForScanGatt {
     }
 
 
-    long findoutthedateDifference(@NonNull String getcurrentDatefromthedatabase,@NonNull String getLiveDatefromthedatabase) {
-        long getMinute=0;
+   ConcurrentHashMap<Integer,Integer>   findoutthedateDifference(@NonNull String getcurrentDatefromthedatabase,@NonNull String getLiveDatefromthedatabase) {
+       // TODO: 30.07.2024 анализ
+       ConcurrentHashMap<Integer,Integer>   analiysMinuteAndSecund=new ConcurrentHashMap<>();
        try {
            Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                    " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
@@ -623,12 +691,17 @@ public class WtitingAndreadDataForScanGatt {
                    " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
                    " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"+ " LiveDate " +LiveDate+"\n" + "databaseDate " +databaseDate);
 
-           getMinute = Math.abs(LiveDate.getMinute() - databaseDate.getMinute());
+          int getMinute = Math.abs(LiveDate.getMinute() - databaseDate.getMinute());
           // getMinute = TimeUnit.MINUTES.convert(diff, TimeUnit.MILLISECONDS);
+
+          int getSecund = Math.abs(LiveDate.getSecond() - databaseDate.getSecond());
+           // TODO: 30.07.2024 add dat analys
+           analiysMinuteAndSecund.putIfAbsent(getMinute, getSecund);
 
            Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                    " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                   " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"+ " getMinute " +getMinute);
+                   " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"+ " getMinute " +getMinute+
+                   " getSecund " +getSecund + "analiysMinuteAndSecund " +analiysMinuteAndSecund );
 
        } catch (Exception e) {
            e.printStackTrace();
@@ -644,7 +717,7 @@ public class WtitingAndreadDataForScanGatt {
            valuesЗаписываемОшибки.put("whose_error", ЛокальнаяВерсияПОСравнение);
            new SubClassErrors(context).МетодЗаписиОшибокИзServerGatt(valuesЗаписываемОшибки, contentProviderServer);
        }
-       return getMinute;
+       return analiysMinuteAndSecund;
 
    }
 
