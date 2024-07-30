@@ -38,6 +38,7 @@ import com.google.android.material.tabs.TabLayout;
 import com.onesignal.OneSignal;
 import com.sous.scanner.businesslayer.Errors.SubClassErrors;
 import com.sous.scanner.R;
+import com.sous.scanner.businesslayer.Permissions.SetPermissions;
 import com.sous.scanner.businesslayer.Services.ServiceClientsScan;
 import com.sous.scanner.businesslayer.Services.ServiceClientGatt;
 
@@ -100,12 +101,16 @@ public class MainActivityNewScanner extends AppCompatActivity  {
 
 // TODO: 17.07.2024 Коды запуски БИзнес ЛОгики Активти Сканера
 
-            // TODO: 19.02.2023 разрешает обновлени BLE
-            МетодРАзрешенияBlurtooTКлиент();
-            
             МетодHandles();
 
-           final String ONEKEY="d94341b5-cc58-4531-aa39-1186de5f9948";
+
+            // TODO: 24.07.2024 устанвливаем разрешения
+
+            new SetPermissions(version).additionalpermissionsBle(this,getApplicationContext());
+
+
+
+            final String ONEKEY="d94341b5-cc58-4531-aa39-1186de5f9948";
             OneSignal.initWithContext(this);
             OneSignal.setAppId(ONEKEY);
 
@@ -273,62 +278,7 @@ public class MainActivityNewScanner extends AppCompatActivity  {
             new SubClassErrors(getApplicationContext()).МетодЗаписиОшибок(valuesЗаписываемОшибки);
         }
     }
-    private void МетодРАзрешенияBlurtooTКлиент() {
-        try{
-            String[] PERMISSIONS_STORAGE = {
-                    Manifest.permission.BLUETOOTH,
-                    Manifest.permission.BLUETOOTH_SCAN,
-                    Manifest.permission.BLUETOOTH_CONNECT,
-                    Manifest.permission.BLUETOOTH_PRIVILEGED,
-                    Manifest.permission.BLUETOOTH_ADVERTISE,
-                    Manifest.permission.BLUETOOTH_ADMIN
-            };
-            String[] PERMISSIONS_LOCATION = {
-                    Manifest.permission.BLUETOOTH,
-                    Manifest.permission.BLUETOOTH_SCAN,
-                    Manifest.permission.BLUETOOTH_CONNECT,
-                    Manifest.permission.BLUETOOTH_PRIVILEGED,
-                    Manifest.permission.BLUETOOTH_ADVERTISE,
-                    Manifest.permission.BLUETOOTH_ADMIN
-            };
-            int permission1 = ActivityCompat.checkSelfPermission(this, Manifest.permission.BLUETOOTH_PRIVILEGED);
-            int permission2 = ActivityCompat.checkSelfPermission(this, Manifest.permission.BLUETOOTH_SCAN);
-            if (permission1 != PackageManager.PERMISSION_GRANTED) {
-                // We don't have permission so prompt the user
-                ActivityCompat.requestPermissions(
-                        this,
-                        PERMISSIONS_STORAGE,
-                        1
-                );
-            } else if (permission2 != PackageManager.PERMISSION_GRANTED){
-                ActivityCompat.requestPermissions(
-                        this,
-                        PERMISSIONS_LOCATION,
-                        1
-                );
-            }
-            // TODO: 19.02.2023 Безконечное Посик Дивайсов РАзрешение
-            Intent discoverableIntent = new Intent();
-            discoverableIntent.setAction(BluetoothAdapter.ACTION_REQUEST_ENABLE);//BluetoothAdapter.ACTION_DISCOVERY_FINISHED
-            discoverableIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-            startActivity(discoverableIntent);
 
-            Log.i(this.getClass().getName(),  "НАстройки BLE " +Thread.currentThread().getStackTrace()[2].getMethodName()+ " время " +new Date().toLocaleString() );
-        } catch (Exception e) {
-            e.printStackTrace();
-            Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() + " Линия  :"
-                    + Thread.currentThread().getStackTrace()[2].getLineNumber());
-            ContentValues valuesЗаписываемОшибки = new ContentValues();
-            valuesЗаписываемОшибки.put("Error", e.toString().toLowerCase());
-            valuesЗаписываемОшибки.put("Klass", this.getClass().getName());
-            valuesЗаписываемОшибки.put("Metod", Thread.currentThread().getStackTrace()[2].getMethodName());
-            valuesЗаписываемОшибки.put("LineError", Thread.currentThread().getStackTrace()[2].getLineNumber());
-            final Object ТекущаяВерсияПрограммы = version;
-            Integer ЛокальнаяВерсияПОСравнение = Integer.parseInt(ТекущаяВерсияПрограммы.toString());
-            valuesЗаписываемОшибки.put("whose_error", ЛокальнаяВерсияПОСравнение);
-            new SubClassErrors(getApplicationContext()).МетодЗаписиОшибок(valuesЗаписываемОшибки);
-        }
-    }
 
     // TODO: 29.11.2022 служба сканирования
     private void МетодБиндингаСканирование() {
