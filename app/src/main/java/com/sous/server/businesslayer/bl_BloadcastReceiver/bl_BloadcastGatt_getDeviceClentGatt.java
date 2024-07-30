@@ -77,11 +77,6 @@ public class bl_BloadcastGatt_getDeviceClentGatt {
                 }).doOnComplete(new Action() {
                     @Override
                     public void run() throws Throwable {
-
-                        // Do processing
-                        result.finish();
-                        result.getResultData();
-
                         Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                                 " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
                                 " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" +
@@ -107,7 +102,7 @@ public class bl_BloadcastGatt_getDeviceClentGatt {
                     }
                 })
                 .subscribeOn(Schedulers.computation())
-                .subscribe();
+                .blockingSubscribe();
         Log.d(context.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                 " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
                 " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n");

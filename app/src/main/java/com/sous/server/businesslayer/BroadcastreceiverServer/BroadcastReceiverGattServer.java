@@ -39,6 +39,11 @@ public class BroadcastReceiverGattServer extends BroadcastReceiver {
                version = pInfo.getLongVersionCode();
 
       new bl_BloadcastGatt_getDeviceClentGatt(context,version).startingGetDeviceBLECkient( result,intent );
+            // TODO: 30.07.2024
+
+            // Do processing
+            result.finish();
+            result.getResultData();
 
 
             Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
