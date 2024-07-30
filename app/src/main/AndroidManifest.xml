@@ -133,19 +133,16 @@
             android:exported="true"
             android:grantUriPermissions="true"
             android:label="Сканер"
-            android:launchMode="standard"
+            android:launchMode="singleTask"
+            android:finishOnTaskLaunch="true"
             android:requestLegacyExternalStorage="true"
             android:showOnLockScreen="true"
             android:theme="@style/Theme.MaterialComponents.DayNight.DarkActionBar">
             <intent-filter>
                 <action android:name="android.app.action.PROVISIONING_SUCCESSFUL" />
-
                 <category android:name="android.intent.category.DEFAULT" />
-
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
-
                 <action android:name="android.permission.BIND_DEVICE_ADMIN" />
                 <action android:name="android.permission.GET_PROVISIONING_MODE" />
                 <action android:name="android.permission.PROFILE_PROVISIONING_COMPLETE" />
