@@ -20,10 +20,12 @@ import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.FragmentManager;
 import androidx.loader.content.AsyncTaskLoader;
 
+import com.onesignal.OneSignal;
 import com.sous.server.businesslayer.BI_presentationlayer.bl_MainActivityNewServerScanner.Bi_MainActivityNewServerScanner;
 import com.sous.server.businesslayer.BroadcastreceiverServer.BroadcastReceiverGattServer;
 import com.sous.server.businesslayer.Errors.SubClassErrors;
 import com.sous.server.R;
+import com.sous.server.businesslayer.OndeSignal.InitOndeSignal;
 
 
 import java.util.Date;
@@ -96,6 +98,12 @@ public class ActivityServerScanner extends AppCompatActivity {
             weresolvetherightstobluetooth();
 
             startinggeregisterReceiver();
+
+           final String ONEKEY="204d790a-7bd5-43ce-948c-81a25803a761";
+            OneSignal.initWithContext(this);
+            OneSignal.setAppId(ONEKEY);
+
+            OneSignal.promptForPushNotifications();
 
 
             /////TODO создание Мэнеджера Фрагмент

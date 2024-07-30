@@ -36,7 +36,7 @@ public class InitOndeSignal {
             // todo OneSignal Initialization
             OneSignal.initWithContext(context);
             ///////todo srating Google Notifications wits PUblic Key
-            OneSignal.setAppId(КлючДляFirebaseNotification);
+            OneSignal.setAppId(КлючДляFirebaseNotification.trim());
             OneSignal.disablePush(false);
             //TODO srating.......... firebase cloud --ПРИШЛО СООБЩЕНИЕ
             FirebaseMessagingService firebaseMessagingService =new MyFirebaseMessagingServiceServerScanners();

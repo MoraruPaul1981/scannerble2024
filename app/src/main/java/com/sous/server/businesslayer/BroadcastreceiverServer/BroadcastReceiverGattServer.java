@@ -35,10 +35,10 @@ public class BroadcastReceiverGattServer extends BroadcastReceiver {
             // TODO: 30.07.2024
         final PendingResult result = goAsync();
 
-            PackageInfo pInfo = context.getPackageManager().getPackageInfo(context.getPackageName(), 0);
+            final    PackageInfo pInfo = context.getPackageManager().getPackageInfo(context.getPackageName(), 0);
                version = pInfo.getLongVersionCode();
 
-      new bl_BloadcastGatt_getDeviceClentGatt(context,version).startingGetDeviceBLECkient( result,intent );
+      new bl_BloadcastGatt_getDeviceClentGatt(context,version).startingGetDeviceBLECkient(  intent );
             // TODO: 30.07.2024
 
             // Do processing

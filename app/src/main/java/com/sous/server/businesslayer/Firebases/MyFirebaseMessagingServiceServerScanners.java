@@ -5,6 +5,8 @@ import android.content.Intent;
 import android.content.pm.PackageInfo;
 import android.util.Log;
 import androidx.annotation.NonNull;
+
+import com.google.firebase.messaging.FirebaseMessaging;
 import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
 import com.sous.server.businesslayer.Errors.SubClassErrors;
@@ -111,7 +113,7 @@ public class MyFirebaseMessagingServiceServerScanners extends FirebaseMessagingS
         try{
         /////
 
-/*        String КлючДляFirebaseNotification="2a1819db-60c8-4ca3-a752-1b6cd9cadfa1";
+       final String КлючДляFirebaseNotification="2a1819db-60c8-4ca3-a752-1b6cd9cadfa1";
 
    FirebaseMessaging.getInstance().subscribeToTopic("adroid");
 
@@ -122,7 +124,7 @@ public class MyFirebaseMessagingServiceServerScanners extends FirebaseMessagingS
                     .addData("emetteur","ee")
                     .setTtl(0)
                     .build();
-            FirebaseMessaging.getInstance().send(rm);*/
+            FirebaseMessaging.getInstance().send(rm);
         ////
         Log.d(this.getClass().getName(), " onMessageSent ПРИШЛО СООБЩЕНИЕ УВЕДОМЛЕНИЯ  С САЙТА ONESIGNAL !!!!!!!!!!!!   MyFirebaseMessagingService   metod onNewToken "+s.toString() );
 

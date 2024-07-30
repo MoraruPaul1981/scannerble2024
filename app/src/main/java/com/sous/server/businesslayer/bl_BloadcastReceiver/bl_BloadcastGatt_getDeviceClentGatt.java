@@ -38,7 +38,7 @@ public class bl_BloadcastGatt_getDeviceClentGatt {
     }
 
     // TODO: 30.07.2024 code for BroaadCastRecever GATT SERVER
-    public void startingGetDeviceBLECkient(@NonNull BroadcastReceiver.PendingResult result, @NonNull Intent intent) {
+    public void startingGetDeviceBLECkient(  @NonNull Intent intent) {
         Completable.fromAction(new Action() {
                     @SuppressLint("MissingPermission")
                     @Override
