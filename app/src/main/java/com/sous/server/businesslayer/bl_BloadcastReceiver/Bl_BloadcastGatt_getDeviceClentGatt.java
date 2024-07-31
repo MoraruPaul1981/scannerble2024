@@ -16,6 +16,7 @@ import com.sous.server.businesslayer.ContentProvoders.ContentProviderServer;
 import com.sous.server.businesslayer.Errors.SubClassErrors;
 import com.sous.server.datalayer.remote.bl_writeandreadScanCatt.WtitingAndreadDataForScanGatt;
 
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicReference;
 
 import io.reactivex.rxjava3.core.Completable;
@@ -65,8 +66,16 @@ public class Bl_BloadcastGatt_getDeviceClentGatt {
 
                         // TODO: 25.07.2024  запускаем запись в базу
                         // TODO: 30.07.2024
-                        Integer    resultAddDeviceToGattaDtabse=    new WtitingAndreadDataForScanGatt(context, version, contentProviderServer,
-                                sharedPreferencesGatt).writeDatabaseScanGatt(bluetoothDevice, bluetoothDevice.getBondState());
+                        // TODO: 25.07.2024  запускаем запись в базу
+                        WtitingAndreadDataForScanGatt wtitingAndreadDataForScanGatt = new WtitingAndreadDataForScanGatt(context,
+                                version,
+                                contentProviderServer,
+                                sharedPreferencesGatt);
+                        ConcurrentHashMap<Integer,ContentValues> writeDatabaseScanGatt  =    wtitingAndreadDataForScanGatt.writeDatabaseScanGatt(bluetoothDevice, bluetoothDevice.getType());
+
+                        // TODO: 31.07.2024  посылаем данные на Франгмент
+                        wtitingAndreadDataForScanGatt. afteruccessfuldataformationweSend(writeDatabaseScanGatt);
+
 
                         Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                                 " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +

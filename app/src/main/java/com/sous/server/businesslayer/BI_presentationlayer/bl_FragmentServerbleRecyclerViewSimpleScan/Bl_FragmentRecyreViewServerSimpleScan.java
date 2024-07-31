@@ -21,6 +21,8 @@ import android.widget.RelativeLayout;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.FragmentManager;
+import androidx.recyclerview.widget.DividerItemDecoration;
+import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -307,9 +309,27 @@ public class Bl_FragmentRecyreViewServerSimpleScan {
     // TODO: 04.03.2022 прозвомжность инициализации RecycleView
     public void setManagerfromRecyclerView() {
         try {
+/*
             LinearLayoutManager linearLayoutManager = new LinearLayoutManager(context);
             linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
             recyclerViewServer.setLayoutManager(linearLayoutManager);
+*/
+
+            DividerItemDecoration dividerItemDecorationHor=
+                    new DividerItemDecoration(context, LinearLayoutManager.HORIZONTAL);
+            /*            dividerItemDecorationHor.setDrawable(getContext().getDrawable(R.drawable.divider_for_order_transport1));///R.dimen.activity_horizontal_margin*/
+            recyclerViewServer.addItemDecoration(dividerItemDecorationHor);
+
+
+            GridLayoutManager layoutManager = new GridLayoutManager(context, 1,
+                    GridLayoutManager.VERTICAL,false);
+            layoutManager.setSpanSizeLookup(new GridLayoutManager.DefaultSpanSizeLookup());
+
+          /*  LinearLayoutManager layoutManager = new LinearLayoutManager(context);
+            linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);*/
+            recyclerViewServer.setLayoutManager(layoutManager);
+
+
 
             Log.d(context.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                     " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
@@ -1125,10 +1145,19 @@ public class Bl_FragmentRecyreViewServerSimpleScan {
          Cursor curcorServerGatt=   concurrentHashMapCursor  .values().stream().findAny().get();
 
             if (curcorServerGatt.getCount()>0) {
-                recyclerViewServer.removeAllViewsInLayout();
-                myRecycleViewAdapterServer.getconcurrentHashMapCursor=curcorServerGatt;
 
-            myRecycleViewAdapterServer.notifyDataSetChanged();
+                recyclerViewServer.removeAllViewsInLayout();
+
+                if ( myRecycleViewAdapterServer.getconcurrentHashMapCursor==null) {
+                    myRecycleViewAdapterServer.getconcurrentHashMapCursor=curcorServerGatt;
+                } else {
+                    myRecycleViewAdapterServer.getconcurrentHashMapCursor.close();
+                    myRecycleViewAdapterServer.getconcurrentHashMapCursor=curcorServerGatt;
+                }
+                // TODO: 31.07.2024
+                  //myRecycleViewAdapterServer.getconcurrentHashMapCursor.requery();
+
+                myRecycleViewAdapterServer.notifyDataSetChanged();
             RecyclerView.Adapter recyclerViewadapter=         recyclerViewServer.getAdapter();
             recyclerViewadapter.notifyDataSetChanged();
             recyclerViewServer.swapAdapter(recyclerViewadapter,true);

@@ -26,7 +26,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.card.MaterialCardView;
 import com.google.android.material.tabs.TabLayout;
-import com.sous.server.businesslayer.BI_presentationlayer.bl_FragmentServerRecyreView.Bl_FragmentRecyreViewServer;
+import com.sous.server.businesslayer.BI_presentationlayer.bl_FragmentServerRecyreView.Bl_FragmentRecyreViewGAATServer;
 import com.sous.server.businesslayer.BI_presentationlayer.bl_navigationView.GetNavigationViews;
 import com.sous.server.businesslayer.Errors.SubClassErrors;
 import com.sous.server.R;
@@ -55,7 +55,7 @@ public class FragmentGattRecyclerView extends Fragment {
     private RecyclerView     recyclerview_server_ble;
     private ProgressBar     progressbar_server_ble;
     private  Animation animation;
-    private Bl_FragmentRecyreViewServer getblFragmentRecyreViewServer;
+    private Bl_FragmentRecyreViewGAATServer getblFragmentRecyreViewServer;
 
     private Message messageGattServer;
     private BottomNavigationView bottomNavigationViewGatt;
@@ -269,7 +269,7 @@ public class FragmentGattRecyclerView extends Fragment {
         try{
 
                 // TODO: 17.07.2024 запуск БИзнес логики Fragment Scanner, Когда Есть Данные НЕТ НЕТ !!!
-                getblFragmentRecyreViewServer=new Bl_FragmentRecyreViewServer( fragmentManager,recyclerview_server_ble,
+                getblFragmentRecyreViewServer=new Bl_FragmentRecyreViewGAATServer( fragmentManager,recyclerview_server_ble,
                         version,maincardView_server_ble_fragment,relativeLayout_server_ble,tabLayout_server_ble,card_server_ble_inner,recyclerview_server_ble,
                         progressbar_server_ble,animation,getContext(),getActivity(),messageGattServer,bottomNavigationViewGatt );
 

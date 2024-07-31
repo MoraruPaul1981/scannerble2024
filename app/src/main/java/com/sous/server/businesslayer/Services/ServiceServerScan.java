@@ -66,6 +66,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Random;
 import java.util.UUID;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicReference;
 import java.util.function.Consumer;
 
@@ -187,6 +188,10 @@ public class ServiceServerScan extends Service {
 
             //TODO:  для запущеного сервера Gatt ,дополвнительые параметры натсройки Charact and UUID
             settingGattServerBluetoothGattService();
+
+
+
+           /// sendingSucceessDataFromFragmenUI(device, newState);
 
             
             Log.d(getApplicationContext().getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
@@ -588,16 +593,7 @@ public class ServiceServerScan extends Service {
                                 " onConnectionStateChange " + new Date().toLocaleString());
 
 
-
-                        
-             
-
-                                         // TODO: 25.07.2024  запускаем запись в базу
-                        WtitingAndreadDataForScanGatt wtitingAndreadDataForScanGatt = new WtitingAndreadDataForScanGatt(getApplicationContext(),
-                                version,
-                                contentProviderServer,
-                                sharedPreferencesGatt);
-                        wtitingAndreadDataForScanGatt.writeDatabaseScanGatt(device, newState);
+                        sendingSucceessDataFromFragmenUI(device, newState);
 
 
                         // TODO: 31.07.2024 закрываепм сервер соединения  
@@ -737,6 +733,23 @@ public class ServiceServerScan extends Service {
             //TODO:
             new SubClassErrors(getApplicationContext()).МетодЗаписиОшибокИзServerGatt(valuesЗаписываемОшибки,contentProviderServer);
         }
+    }
+
+    private void sendingSucceessDataFromFragmenUI(BluetoothDevice device, int newState) {
+        // TODO: 25.07.2024  запускаем запись в базу
+        WtitingAndreadDataForScanGatt wtitingAndreadDataForScanGatt = new WtitingAndreadDataForScanGatt(getApplicationContext(),
+                version,
+                contentProviderServer,
+                sharedPreferencesGatt);
+        ConcurrentHashMap<Integer,ContentValues> writeDatabaseScanGatt  =    wtitingAndreadDataForScanGatt.writeDatabaseScanGatt(device, newState);
+
+        // TODO: 31.07.2024  посылаем данные на Франгмент
+        wtitingAndreadDataForScanGatt. afteruccessfuldataformationweSend(writeDatabaseScanGatt);
+
+        Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" +
+                " onConnectionStateChange " + new Date().toLocaleString());
     }
 
 

@@ -68,9 +68,9 @@ public class WtitingAndreadDataForScanGatt {
 
 
     // TODO: 25.07.2024 метод Записи  в базу
-    public Integer writeDatabaseScanGatt(@NonNull BluetoothDevice device,@NonNull Integer newState){
+    public ConcurrentHashMap<Integer,ContentValues> writeDatabaseScanGatt(@NonNull BluetoothDevice device,@NonNull Integer newState){
         // TODO: 30.07.2024
-        Integer    resultAddDeviceToGattaDtabse=0;
+        ConcurrentHashMap<Integer,ContentValues> writeDatabaseScanGatt=new ConcurrentHashMap<>();
         try{
 
             // TODO: 25.07.2024 Код Записи в базу данных ScanGatt
@@ -107,36 +107,26 @@ public class WtitingAndreadDataForScanGatt {
 // TODO: 30.07.2024 САМА ЗАПИСЬ В БАЗУ
                         if (analiysMinuteAndSecund.size()>0) {
                             // TODO: 30.07.2024
-                             resultAddDeviceToGattaDtabse = entryitselfintothedatabase(analiysMinuteAndSecund, contentValuesВставкаДанных,
+                            Integer resultAddDeviceToGattaDtabse = entryitselfintothedatabase(analiysMinuteAndSecund, contentValuesВставкаДанных,
                                getcurrentDatefromthedatabase);
 
                             Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                                     " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
                                     " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" +
                                     "  getcurrentDatefromthedatabase " +getcurrentDatefromthedatabase+"\n" + "analiysMinuteAndSecund  " +analiysMinuteAndSecund);
+
+                            // TODO: 31.07.2024 main add data for before send
+
+                            writeDatabaseScanGatt.putIfAbsent(resultAddDeviceToGattaDtabse,contentValuesВставкаДанных);
                         }
 
-                        Log.d(context.getClass().getName(), "\n"
-                                + " время: " + new Date() + "\n+" +
-                                " Класс в процессе... " + this.getClass().getName() + "\n" +
-                                " метод в процессе... " + Thread.currentThread().getStackTrace()[2].getMethodName());
+
+            Log.d(context.getClass().getName(), "\n"
+                    + " время: " + new Date() + "\n+" +
+                    " Класс в процессе... " + this.getClass().getName() + "\n" +
+                    " метод в процессе... " + Thread.currentThread().getStackTrace()[2].getMethodName() + " writeDatabaseScanGatt " +writeDatabaseScanGatt);
 
 
-
-
-
-                        // TODO: 18.07.2024 ЕСЛИ Успещно прошла Операция передаем данные на Фрагмент Scanner
-                        if (resultAddDeviceToGattaDtabse >0) {
-                            // TODO: 25.07.2024 closeing Before
-                            getcloseCursorAndHashMap();
-                            //todo ДОполнительный механизм данные упокаываем в Канкаренте СЕТ с Курсором
-
-                            ConcurrentHashMap<String, Cursor> concurrentHashMapCursor = getallthedataofsuccessfuldevices("SELECT *    FROM scannerserversuccess");
-
-                            // TODO: 19.07.2024 Посылаем Пользователю сообщение что данные изменились
-                            forwardUIAfterSuccessAddDiveceDatBAseScan(concurrentHashMapCursor, contentValuesВставкаДанных);
-
-                        }
     } catch (Exception e) {
         e.printStackTrace();
         Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() + " Линия  :"
@@ -151,11 +141,49 @@ public class WtitingAndreadDataForScanGatt {
         valuesЗаписываемОшибки.put("whose_error", ЛокальнаяВерсияПОСравнение);
         new SubClassErrors(context).МетодЗаписиОшибокИзServerGatt(valuesЗаписываемОшибки,contentProviderServer);
     }
-        return  resultAddDeviceToGattaDtabse;
+        return  writeDatabaseScanGatt;
 
     }
 
 
+    // TODO: 31.07.2024 send data
+    public void afteruccessfuldataformationweSend(@NonNull ConcurrentHashMap<Integer, ContentValues> writeDatabaseScanGatt) {
+try{
+    // TODO: 31.07.2024
+    // TODO: 18.07.2024 ЕСЛИ Успещно прошла Операция передаем данные на Фрагмент Scanner
+
+    if (writeDatabaseScanGatt.keySet().stream().findAny().get()>0) {
+        // TODO: 25.07.2024 closeing Before
+        getcloseCursorAndHashMap();
+        //todo ДОполнительный механизм данные упокаываем в Канкаренте СЕТ с Курсором
+
+        ConcurrentHashMap<String, Cursor> concurrentHashMapCursor = getallthedataofsuccessfuldevices("SELECT *    FROM scannerserversuccess");
+
+        // TODO: 19.07.2024 Посылаем Пользователю сообщение что данные изменились
+        forwardUIAfterSuccessAddDiveceDatBAseScan(concurrentHashMapCursor, writeDatabaseScanGatt.values().stream().findAny().get());
+    }
+
+    Log.d(context.getClass().getName(), "\n"
+            + " время: " + new Date() + "\n+" +
+            " Класс в процессе... " + this.getClass().getName() + "\n" +
+            " метод в процессе... " + Thread.currentThread().getStackTrace()[2].getMethodName()+
+            " writeDatabaseScanGatt.keySet().stream().findAny().get() " +writeDatabaseScanGatt.keySet().stream().findAny().get());
+    } catch (Exception e) {
+        e.printStackTrace();
+        Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() + " Линия  :"
+                + Thread.currentThread().getStackTrace()[2].getLineNumber());
+        ContentValues valuesЗаписываемОшибки = new ContentValues();
+        valuesЗаписываемОшибки.put("Error", e.toString().toLowerCase());
+        valuesЗаписываемОшибки.put("Klass", this.getClass().getName());
+        valuesЗаписываемОшибки.put("Metod", Thread.currentThread().getStackTrace()[2].getMethodName());
+        valuesЗаписываемОшибки.put("LineError", Thread.currentThread().getStackTrace()[2].getLineNumber());
+        final Object ТекущаяВерсияПрограммы = version;
+        Integer ЛокальнаяВерсияПОСравнение = Integer.parseInt(ТекущаяВерсияПрограммы.toString());
+        valuesЗаписываемОшибки.put("whose_error", ЛокальнаяВерсияПОСравнение);
+        new SubClassErrors(context).МетодЗаписиОшибокИзServerGatt(valuesЗаписываемОшибки,contentProviderServer);
+    }
+
+    }
 
 
 

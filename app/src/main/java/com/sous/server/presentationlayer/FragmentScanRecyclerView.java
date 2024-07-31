@@ -381,6 +381,9 @@ public class FragmentScanRecyclerView extends Fragment {
                             " CurrentTask  "  +CurrentTask);
                 }
 
+
+
+
             }
 
             Log.d(getContext().getClass().getName(), "\n"

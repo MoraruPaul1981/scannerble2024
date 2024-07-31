@@ -9,10 +9,8 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Color;
 import android.os.Message;
-import android.provider.CalendarContract;
 import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
@@ -31,7 +29,6 @@ import com.google.android.material.card.MaterialCardView;
 import com.google.android.material.tabs.TabLayout;
 import com.google.android.material.textfield.TextInputEditText;
 import com.sous.server.R;
-import com.sous.server.businesslayer.BI_presentationlayer.bl_FragmentBootScannerServer.Bi_FragmentBootScannerServer;
 import com.sous.server.businesslayer.Errors.SubClassErrors;
 
 import org.jetbrains.annotations.NotNull;
@@ -39,7 +36,7 @@ import org.jetbrains.annotations.NotNull;
 import java.util.List;
 import java.util.concurrent.ConcurrentHashMap;
 
-public class Bl_FragmentRecyreViewServer  {
+public class Bl_FragmentRecyreViewGAATServer {
 
     private FragmentManager fragmentManager;
     private  MyRecycleViewAdapterServer myRecycleViewAdapterServer;
@@ -63,20 +60,20 @@ public class Bl_FragmentRecyreViewServer  {
     private Message messageGattServer;
     private  BottomNavigationView bottomNavigationViewGatt;
 
-    public Bl_FragmentRecyreViewServer(FragmentManager fragmentManager,
-                                       RecyclerView recyclerViewServer,
-                                       Long version,
-                                       MaterialCardView maincardView_server_ble_fragment,
-                                       RelativeLayout relativeLayout_server_ble,
-                                       TabLayout tabLayout_server_ble,
-                                       MaterialCardView card_server_ble_inner,
-                                       RecyclerView recyclerview_server_ble,
-                                       ProgressBar progressbar_server_ble,
-                                       Animation animation,
-                                       Context context,
-                                       Activity activity,
-                                       Message messageGattServer,
-                                       BottomNavigationView bottomNavigationViewGatt) {
+    public Bl_FragmentRecyreViewGAATServer(FragmentManager fragmentManager,
+                                           RecyclerView recyclerViewServer,
+                                           Long version,
+                                           MaterialCardView maincardView_server_ble_fragment,
+                                           RelativeLayout relativeLayout_server_ble,
+                                           TabLayout tabLayout_server_ble,
+                                           MaterialCardView card_server_ble_inner,
+                                           RecyclerView recyclerview_server_ble,
+                                           ProgressBar progressbar_server_ble,
+                                           Animation animation,
+                                           Context context,
+                                           Activity activity,
+                                           Message messageGattServer,
+                                           BottomNavigationView bottomNavigationViewGatt) {
         // TODO: 17.07.2024
         this.fragmentManager = fragmentManager;
         this.recyclerViewServer = recyclerViewServer;
