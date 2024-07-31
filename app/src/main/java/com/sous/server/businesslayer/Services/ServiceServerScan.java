@@ -31,6 +31,7 @@ import android.location.LocationManager;
 import android.os.Binder;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
 import android.os.IBinder;
 import android.os.Parcel;
 import android.os.ParcelUuid;
@@ -191,7 +192,13 @@ public class ServiceServerScan extends Service {
 
 
 
-           /// sendingSucceessDataFromFragmenUI(device, newState);
+
+            new Handler(getMainLooper()).postDelayed(()->{
+
+                sendingSucceessDataFromFragmenUI( );
+
+
+            },2000);
 
             
             Log.d(getApplicationContext().getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
@@ -592,8 +599,8 @@ public class ServiceServerScan extends Service {
                                 " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" +
                                 " onConnectionStateChange " + new Date().toLocaleString());
 
-
-                        sendingSucceessDataFromFragmenUI(device, newState);
+// TODO: 31.07.2024 первый запуск когда еще не т пинга и поулчаем Даные Из БАзы
+                        sendingSucceessDataFromFragmenUI( );
 
 
                         // TODO: 31.07.2024 закрываепм сервер соединения  
@@ -735,22 +742,32 @@ public class ServiceServerScan extends Service {
         }
     }
 
-    private void sendingSucceessDataFromFragmenUI(BluetoothDevice device, int newState) {
+    private void sendingSucceessDataFromFragmenUI( ) {
         // TODO: 25.07.2024  запускаем запись в базу
         WtitingAndreadDataForScanGatt wtitingAndreadDataForScanGatt = new WtitingAndreadDataForScanGatt(getApplicationContext(),
                 version,
                 contentProviderServer,
                 sharedPreferencesGatt);
-        ConcurrentHashMap<Integer,ContentValues> writeDatabaseScanGatt  =    wtitingAndreadDataForScanGatt.writeDatabaseScanGatt(device, newState);
 
         // TODO: 31.07.2024  посылаем данные на Франгмент
-        wtitingAndreadDataForScanGatt. afteruccessfuldataformationweSend(writeDatabaseScanGatt);
+         ConcurrentHashMap<String, Cursor> writeDatabaseScanGattDontDevice=  wtitingAndreadDataForScanGatt.writeDatabaseScanGattDontDevice( );
+
+        // TODO: 19.07.2024 Посылаем Пользователю сообщение что данные изменились
+        wtitingAndreadDataForScanGatt.  sendStatusSucessEventBusDONTDevice(writeDatabaseScanGattDontDevice );
 
         Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                 " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
                 " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" +
                 " onConnectionStateChange " + new Date().toLocaleString());
     }
+
+
+
+
+
+
+
+
 
 
     //TODO:  метод после Запуска Сервер добавдяем к ниму  BluetoothGattService
