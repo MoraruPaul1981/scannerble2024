@@ -55,7 +55,7 @@ public class WtitingAndreadDataForScanGatt {
     private  SharedPreferences sharedPreferencesGatt;
     private  Cursor successfuldevices;
     protected ConcurrentHashMap<String,ContentValues>       contentValuesConcurrentHashMap=new ConcurrentHashMap<>();
-    private  Integer dateLimitforrecording=60;
+    private  Integer dateLimitforrecording=600;
 
     public WtitingAndreadDataForScanGatt(Context context, Long version,
                                          ContentProviderServer contentProviderServer,

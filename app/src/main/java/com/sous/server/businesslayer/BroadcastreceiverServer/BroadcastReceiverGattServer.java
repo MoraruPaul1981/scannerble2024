@@ -38,6 +38,7 @@ public class BroadcastReceiverGattServer extends BroadcastReceiver {
             switch (intent.getAction()){
                 // TODO: 31.07.2024
                 case   BluetoothDevice.ACTION_ACL_CONNECTED :
+                case   BluetoothDevice.ACTION_FOUND :
                     // TODO: 31.07.2024
 
                     final Bl_BloadcastGatt_getDeviceClentGatt blBloadcastGattGetDeviceClentGatt=  new Bl_BloadcastGatt_getDeviceClentGatt(context,version);
