@@ -2,8 +2,10 @@ package com.sous.server.presentationlayer;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
+import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
 import android.content.ContentValues;
+import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.pm.ActivityInfo;
 import android.content.pm.PackageManager;
@@ -75,6 +77,8 @@ public class ActivityServerScanner extends AppCompatActivity {
 
 
             startinggeregisterReceiver();
+
+            getDISCOVERABLE_DURATIONs();
 
            final String ONEKEY="204d790a-7bd5-43ce-948c-81a25803a761";
             OneSignal.initWithContext(this);
@@ -250,7 +254,16 @@ public class ActivityServerScanner extends AppCompatActivity {
 
 
 
-
+    @SuppressLint("MissingPermission")
+    public void getDISCOVERABLE_DURATIONs() {
+        Intent discoverableIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_DISCOVERABLE);
+        discoverableIntent.putExtra(BluetoothAdapter.EXTRA_DISCOVERABLE_DURATION, 0);
+   startActivity(discoverableIntent);
+        // TODO: 17.07.2024
+        Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n");
+    }
 
 
 

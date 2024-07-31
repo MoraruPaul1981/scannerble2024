@@ -273,7 +273,7 @@ public class FragmentScanRecyclerView extends Fragment {
                         progressbar_server_ble,animation,getContext(),getActivity(),messageGattServer,bottomnavigationview_server_scan);
 
 
-            getblFragmentRecyreViewServerScan.     getDISCOVERABLE_DURATIONs();
+
             getblFragmentRecyreViewServerScan.     setManagerfromRecyclerView();
             getblFragmentRecyreViewServerScan.     addAdapterServerforRecyreview(null);
             getblFragmentRecyreViewServerScan.     getObserverRecyreView();

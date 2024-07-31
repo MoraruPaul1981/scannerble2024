@@ -25,7 +25,7 @@ public class CREATE_DATABASEServerScanner extends SQLiteOpenHelper{ ///SQLiteOpe
 
     private static  AtomicReference<SQLiteDatabase> atomicstoredEntities = new AtomicReference<>();
    // private static     SQLiteDatabase ССылкаНаСозданнуюБазу;
-    private static final int DATABASE_VERSION = 2;
+    private static final int DATABASE_VERSION = 3;
     private Long version=0l;
     public static SQLiteDatabase getССылкаНаСозданнуюБазу() {
         System.out.println( "atomicstoredEntities "+atomicstoredEntities.toString());;
@@ -163,7 +163,7 @@ public class CREATE_DATABASEServerScanner extends SQLiteOpenHelper{ ///SQLiteOpe
         try{
                         ССылкаНаСозданнуюБазу.execSQL("drop table  if exists   "+"scannerserversuccess"+"");//test
                         ССылкаНаСозданнуюБазу.execSQL("Create table if not exists   "+"scannerserversuccess"+" (" +
-                                "id  INTEGER     ," +
+                                "id  INTEGER  PRIMARY KEY AUTOINCREMENT    ," +
                                 " operations  TEXT ," +
                                 " completedwork TEXT  ," +
                                 " namedevice TEXT  ," +

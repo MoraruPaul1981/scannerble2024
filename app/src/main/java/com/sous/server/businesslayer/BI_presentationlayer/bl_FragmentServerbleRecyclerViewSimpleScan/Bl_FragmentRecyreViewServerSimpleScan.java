@@ -113,16 +113,7 @@ public class Bl_FragmentRecyreViewServerSimpleScan {
 
 
 
-    @SuppressLint("MissingPermission")
-    public void getDISCOVERABLE_DURATIONs() {
-        Intent discoverableIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_DISCOVERABLE);
-        discoverableIntent.putExtra(BluetoothAdapter.EXTRA_DISCOVERABLE_DURATION, 0);
-       activity. startActivity(discoverableIntent);
-        // TODO: 17.07.2024
-        Log.d(context.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
-                " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n");
-    }
+
     public void getObserverRecyreView() {  // TODO: 04.03.2022  класс в котором находяться слушатели
         try {
             myRecycleViewAdapterServer.registerAdapterDataObserver(new RecyclerView.AdapterDataObserver() {
@@ -316,7 +307,7 @@ public class Bl_FragmentRecyreViewServerSimpleScan {
 */
 
             DividerItemDecoration dividerItemDecorationHor=
-                    new DividerItemDecoration(context, LinearLayoutManager.HORIZONTAL);
+                    new DividerItemDecoration(context, LinearLayoutManager.VERTICAL);
             /*            dividerItemDecorationHor.setDrawable(getContext().getDrawable(R.drawable.divider_for_order_transport1));///R.dimen.activity_horizontal_margin*/
             recyclerViewServer.addItemDecoration(dividerItemDecorationHor);
 
@@ -470,7 +461,7 @@ public class Bl_FragmentRecyreViewServerSimpleScan {
     class MyRecycleViewAdapterServer extends RecyclerView.Adapter<MyViewHolder> {
         public  Cursor  getconcurrentHashMapCursor;
 
-        public MyRecycleViewAdapterServer(@NotNull  Cursor  mapconcurrentHashMapCursor) {
+        public MyRecycleViewAdapterServer(@Nullable  Cursor  mapconcurrentHashMapCursor) {
             this.getconcurrentHashMapCursor = mapconcurrentHashMapCursor;
             //TODO
             Log.d(context.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
@@ -731,7 +722,7 @@ public class Bl_FragmentRecyreViewServerSimpleScan {
                 if (getconcurrentHashMapCursor==null) {
                     getFragmentScannerGatt=1;
                 } else {
-                    getFragmentScannerGatt=getconcurrentHashMapCursor.getCount()-1;
+                    getFragmentScannerGatt=getconcurrentHashMapCursor.getCount();
                 }
 
                 Log.d(context.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +

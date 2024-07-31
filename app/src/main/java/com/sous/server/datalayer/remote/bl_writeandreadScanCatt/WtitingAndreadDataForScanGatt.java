@@ -157,7 +157,7 @@ try{
         getcloseCursorAndHashMap();
         //todo ДОполнительный механизм данные упокаываем в Канкаренте СЕТ с Курсором
 
-        ConcurrentHashMap<String, Cursor> concurrentHashMapCursor = getallthedataofsuccessfuldevices("SELECT *    FROM scannerserversuccess");
+        ConcurrentHashMap<String, Cursor> concurrentHashMapCursor = getallthedataofsuccessfuldevices("SELECT *    FROM scannerserversuccess  ORDER BY id DESC");
 
         // TODO: 19.07.2024 Посылаем Пользователю сообщение что данные изменились
         forwardUIAfterSuccessAddDiveceDatBAseScan(concurrentHashMapCursor, writeDatabaseScanGatt.values().stream().findAny().get());
@@ -506,7 +506,7 @@ try{
             Uri uri = Uri.parse("content://com.sous.server.providerserver/scannerserversuccess" );
             successfuldevices = contentProviderServer.query(uri, null, СамЗапрос, null,null,null);
             if (successfuldevices.getCount()>0){
-                successfuldevices.moveToLast();
+                successfuldevices.moveToFirst();
                 // TODO: 19.07.2024  Запаопление данными Курсора
                 cursorConcurrentHashMapGatt.compute("Cursor",(x,y)->successfuldevices);
             }
