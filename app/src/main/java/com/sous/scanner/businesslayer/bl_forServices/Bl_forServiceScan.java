@@ -95,16 +95,12 @@ public class Bl_forServiceScan {
             ConcurrentSkipListSet<String> concurrentSkipListSetMunualListServerDeviceScan = new ConcurrentSkipListSet();
             concurrentSkipListSetMunualListServerDeviceScan.add("98:2F:F8:19:BC:F7");
             concurrentSkipListSetMunualListServerDeviceScan.forEach(new java.util.function.Consumer<String>() {
+                @SuppressLint("NewApi")
                 @Override
                 public void accept(String remoteManualServerGatt) {
                     ///TODO:Довавляем Зарание созданные Адреса Сервера Gatt
                     BluetoothDevice bluetoothDeviceScan = bluetoothAdapterPhoneClient.getRemoteDevice(remoteManualServerGatt);//TODO: HUAWEI MatePad SE
                     // TODO: 26.07.2024
-                    int connectionState = bluetoothManagerServer.getConnectionState(bluetoothDeviceScan, BluetoothProfile.GATT);
-
-               /*     bl_BloadcastReceierGatt  blBloadcastReceierGatt = new bl_BloadcastReceierGatt(context, version);
-                blBloadcastReceierGatt.unpairDevice(bluetoothDeviceScan);*/
-                  
 
                     // TODO: 12.02.2023  init CallBack Gatt Client for Scan
                     МетодРаботыСТекущийСерверомGATTДляScan( );
@@ -117,7 +113,7 @@ public class Bl_forServiceScan {
                             Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                             " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
                             " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" + "\n" +
-                            " bluetoothDeviceScan " + bluetoothDeviceScan +  " getPublicUUIDScan "+ getPublicUUIDScan+ " connectionState " +connectionState);
+                            " bluetoothDeviceScan " + bluetoothDeviceScan +  " getPublicUUIDScan "+ getPublicUUIDScan);
                 }
             });
             Log.d(this.getClass().getName(), "\n" + " class " +

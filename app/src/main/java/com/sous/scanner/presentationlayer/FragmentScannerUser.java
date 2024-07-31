@@ -518,7 +518,7 @@ public class FragmentScannerUser extends Fragment {
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
             try {
-                МетодИнициализацииСканера(itemView);
+                МетодИнициализацииЭкранаСканера(itemView);
                 Log.d(this.getClass().getName(), "  private class MyViewHolderДляЧата extends RecyclerView.ViewHolder  itemView   " + itemView);
             } catch (Exception e) {
                 e.printStackTrace();
@@ -536,7 +536,7 @@ public class FragmentScannerUser extends Fragment {
             }
         }
 
-        private void МетодИнициализацииСканера(@NonNull View itemView) {
+        private void МетодИнициализацииЭкранаСканера(@NonNull View itemView) {
             try {
                 Log.d(this.getClass().getName(), " отработоатл new SubClassBuccessLogin_ГлавныйКлассБизнесЛогикиФрагмент1 itemView   " + itemView);
                 // TODO: 08.02.2023 кнопка на работы

@@ -35,6 +35,7 @@ import java.util.concurrent.TimeUnit;
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
 import io.reactivex.rxjava3.core.Completable;
 import io.reactivex.rxjava3.core.Flowable;
+import io.reactivex.rxjava3.core.Observable;
 import io.reactivex.rxjava3.functions.Action;
 import io.reactivex.rxjava3.functions.Consumer;
 
@@ -131,7 +132,8 @@ public class ServiceClientsScan extends Service {
         try{
 // TODO: 24.07.2024 Scan
             // TODO: 25.07.2024
-          Flowable.fromAction(new Action() {
+            // TODO: 25.07.2024
+       Observable.fromAction(new Action() {
                         @Override
                         public void run() throws Throwable {
                             // TODO: 25.07.2024
@@ -147,7 +149,6 @@ public class ServiceClientsScan extends Service {
                                     + " bluetoothAdapterPhoneClient.isEnabled() " +bluetoothAdapterPhoneClient.isEnabled());
                         }
                     })
-                    .onBackpressureBuffer(true)
                     .subscribeOn(AndroidSchedulers.mainThread())
                   .observeOn(AndroidSchedulers.mainThread())
                     .repeatWhen(repeat->repeat.delay(1, TimeUnit.MINUTES))
