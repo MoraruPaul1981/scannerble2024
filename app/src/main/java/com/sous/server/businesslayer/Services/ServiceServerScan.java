@@ -789,7 +789,6 @@ public class ServiceServerScan extends Service {
                     BluetoothGattCharacteristic.PERMISSION_READ |
                             BluetoothGattCharacteristic.PERMISSION_WRITE |
                             BluetoothGattCharacteristic.PERMISSION_READ_ENCRYPTED |
-                            BluetoothGattCharacteristic.PERMISSION_WRITE_SIGNED |
                             BluetoothGattCharacteristic.PERMISSION_WRITE_ENCRYPTED);
 
             //TODO: Desctpior
@@ -797,13 +796,10 @@ public class ServiceServerScan extends Service {
                     BluetoothGattCharacteristic.PERMISSION_READ |
                             BluetoothGattCharacteristic.PERMISSION_WRITE |
                             BluetoothGattCharacteristic.PERMISSION_READ_ENCRYPTED |
-                            BluetoothGattCharacteristic.PERMISSION_WRITE_SIGNED |
                             BluetoothGattCharacteristic.PERMISSION_WRITE_ENCRYPTED));
             service.addCharacteristic(characteristic);
             // TODO: 12.02.2023 добавлев в сервер
             getBluetoothGattServer.addService(service);
-
-
             Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                     " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
                     " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" +
