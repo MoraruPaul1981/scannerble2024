@@ -476,7 +476,7 @@ public class Bl_FragmentRecyreViewServerSimpleScan {
              // TODO: 19.07.2024
                 if (getconcurrentHashMapCursor!=null) {
                     if (getconcurrentHashMapCursor.getCount()>0) {
-                        getconcurrentHashMapCursor.moveToPosition(position);
+                        getconcurrentHashMapCursor.move(position=+1);
 
                     }
 
@@ -723,6 +723,7 @@ public class Bl_FragmentRecyreViewServerSimpleScan {
                     getFragmentScannerGatt=1;
                 } else {
                     getFragmentScannerGatt=getconcurrentHashMapCursor.getCount();
+                    //getFragmentScannerGatt=+1;
                 }
 
                 Log.d(context.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
@@ -1202,8 +1203,8 @@ public class Bl_FragmentRecyreViewServerSimpleScan {
 
     public void addSetingsRecyclerView(@NonNull  RecyclerView recyclerview_server_ble) {
         try {
-            recyclerview_server_ble.setNestedScrollingEnabled(false);
-            recyclerview_server_ble.setHasFixedSize(false);
+            recyclerview_server_ble.setNestedScrollingEnabled(true);
+            recyclerview_server_ble.setHasFixedSize(true);
             Log.d(context.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                     " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
                     " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"+

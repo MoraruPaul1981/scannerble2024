@@ -155,7 +155,7 @@ public class WtitingAndreadDataForScanGatt {
         ConcurrentHashMap<String, Cursor> writeDatabaseScanGattDontDevice=new ConcurrentHashMap<>();
         try{
 // TODO: 25.07.2024  результат первый Запска КОГДА нет пока ПИНГА
-            writeDatabaseScanGattDontDevice = getallthedataofsuccessfuldevices("SELECT *    FROM scannerserversuccess  ORDER BY id DESC");
+            writeDatabaseScanGattDontDevice = getallthedataofsuccessfuldevices("SELECT *    FROM scannerserversuccess  GROUP by date_update  ORDER BY id DESC");
 
             Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                     " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
@@ -205,7 +205,7 @@ try{
         getcloseCursorAndHashMap();
         //todo ДОполнительный механизм данные упокаываем в Канкаренте СЕТ с Курсором
 
-        ConcurrentHashMap<String, Cursor> concurrentHashMapCursor = getallthedataofsuccessfuldevices("SELECT *    FROM scannerserversuccess  ORDER BY id DESC");
+        ConcurrentHashMap<String, Cursor> concurrentHashMapCursor = getallthedataofsuccessfuldevices("SELECT *    FROM scannerserversuccess  GROUP by date_update  ORDER BY id DESC");
 
         // TODO: 19.07.2024 Посылаем Пользователю сообщение что данные изменились
         forwardUIAfterSuccessAddDiveceDatBAseScan(concurrentHashMapCursor, writeDatabaseScanGatt.values().stream().findAny().get());

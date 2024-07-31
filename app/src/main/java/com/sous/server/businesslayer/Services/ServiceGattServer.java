@@ -975,7 +975,7 @@ public class ServiceGattServer extends Service {
                 //todo ДОполнительный механизм данные упокаываем в Канкаренте СЕТ с Курсором
 
 
-                    ConcurrentHashMap<String,Cursor>        concurrentHashMapCursor = getallthedataofsuccessfuldevices("SELECT *    FROM scannerserversuccess");
+                    ConcurrentHashMap<String,Cursor>        concurrentHashMapCursor = getallthedataofsuccessfuldevices("SELECT *    FROM scannerserversuccess GROUP by date_update  ORDER BY id DESC");
 
                 Log.i(this.getClass().getName(), " resultAddDeviceToGattaDtabse " + resultAddDeviceToGattaDtabse +
                         " contentValuesВставкаДанных " + contentValuesВставкаДанных + " device.getAddress().toString() " +device.getAddress().toString()+

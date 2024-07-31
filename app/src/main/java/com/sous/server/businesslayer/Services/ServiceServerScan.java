@@ -96,6 +96,7 @@ public class ServiceServerScan extends Service {
     protected    AtomicReference<byte[]> atomicReferenceValue = new AtomicReference<>();
     protected     Cursor successfuldevices;
     protected  NotificationCompat.Builder notificationBuilderServer;
+    protected    Boolean getStatusEnableBlueadapter;
 
     @Override
     public void onCreate() {
@@ -132,6 +133,9 @@ public class ServiceServerScan extends Service {
             //TODO методы параменторв Службы Gaat
             launchmanagerBLE();//TODO: запускаем Новый Манаджер BTE
 
+            //TODO:получаем Статус Адаптера Bluetooth true, false  и оптравляем статус в активти
+             getStatusEnableBlueadapter = enableBluetoothAdapter();
+
 
             getContentProvider();
 
@@ -165,18 +169,12 @@ public class ServiceServerScan extends Service {
     public int onStartCommand(Intent intent, int flags, int startId) {
 
         try {
-
-            //TODO:получаем Статус Адаптера Bluetooth true, false  и оптравляем статус в активти
-            Boolean getStatusEnableBlueadapter = enableBluetoothAdapter();
-
-
             Log.d(getApplicationContext().getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                     " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
                     " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" + " getStatusEnableBlueadapter " +getStatusEnableBlueadapter);
 
 // TODO: 28.07.2024 LIster
             getListerBluetoothDevice();
-
 
             // TODO: 26.07.2024 starting Fragment Scan
 
@@ -476,7 +474,7 @@ public class ServiceServerScan extends Service {
                 }
                 getStatusEnableBlueadapter=bluetoothAdapter.isEnabled();
             }
-
+            while (!bluetoothAdapter.isEnabled());
             Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                     " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
                     " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"+ " getStatusEnableBlueadapter  " +getStatusEnableBlueadapter);
