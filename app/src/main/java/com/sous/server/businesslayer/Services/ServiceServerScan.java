@@ -198,7 +198,7 @@ public class ServiceServerScan extends Service {
                 sendingSucceessDataFromFragmenUI( );
 
 
-            },2000);
+            },3000);
 
             
             Log.d(getApplicationContext().getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
