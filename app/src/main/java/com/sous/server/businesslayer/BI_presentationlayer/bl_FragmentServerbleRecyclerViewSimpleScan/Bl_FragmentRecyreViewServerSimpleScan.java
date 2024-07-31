@@ -12,6 +12,7 @@ import android.graphics.drawable.Drawable;
 import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -1313,7 +1314,7 @@ public class Bl_FragmentRecyreViewServerSimpleScan {
 
 
 
-@SuppressLint("RestrictedApi")
+@SuppressLint({"RestrictedApi", "Range"})
 public void settingbottomnavigationview_server_scan(){
  try{
      BadgeDrawable badge =bottomnavigationview_server_scan.getOrCreateBadge(R.id.scan);
@@ -1327,8 +1328,8 @@ public void settingbottomnavigationview_server_scan(){
          badge.setNumber(0);
      }
      badge.onTextSizeChange();
-
      badge.setHotspot(20l,40l);
+     badge.setBadgeGravity(BadgeDrawable.TOP_END);
 
 // TODO: 31.07.2024 Lister
      bottomnavigationview_server_scan.setOnNavigationItemReselectedListener(
