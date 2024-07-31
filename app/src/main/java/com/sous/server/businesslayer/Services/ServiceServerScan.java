@@ -589,12 +589,8 @@ public class ServiceServerScan extends Service {
 
 
 
-
-
-                        // TODO: 29.07.2024 close current session
-               onNotificationSent(device,status);
-               getBluetoothGattServer.cancelConnection(device);
-                        // TODO: 29.07.2024
+                        
+             
 
                                          // TODO: 25.07.2024  запускаем запись в базу
                         WtitingAndreadDataForScanGatt wtitingAndreadDataForScanGatt = new WtitingAndreadDataForScanGatt(getApplicationContext(),
@@ -604,7 +600,14 @@ public class ServiceServerScan extends Service {
                         wtitingAndreadDataForScanGatt.writeDatabaseScanGatt(device, newState);
 
 
+                        // TODO: 31.07.2024 закрываепм сервер соединения  
+                        getBluetoothGattServer.cancelConnection(device);
+                        // TODO: 29.07.2024
 
+                        Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                                " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                                " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" +
+                                " onConnectionStateChange " + new Date().toLocaleString());
                     } catch (Exception e) {
                         e.printStackTrace();
                         Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() + " Линия  :"
