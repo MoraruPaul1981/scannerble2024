@@ -278,6 +278,7 @@ public class FragmentScanRecyclerView extends Fragment {
             getblFragmentRecyreViewServerScan.     addAdapterServerforRecyreview(null);
             getblFragmentRecyreViewServerScan.     getObserverRecyreView();
             getblFragmentRecyreViewServerScan. settingAnimatios(recyclerview_server_ble);
+            getblFragmentRecyreViewServerScan.     addSetingsRecyclerView(recyclerview_server_ble);
 
             //todo  NavigationViewGatt с тремя кнопками Выход .Скан .Контроль
             GetNavigationViews getNavigationViews=new GetNavigationViews(getContext(),

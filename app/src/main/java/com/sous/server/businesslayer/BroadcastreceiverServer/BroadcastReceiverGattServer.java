@@ -1,6 +1,7 @@
 package com.sous.server.businesslayer.BroadcastreceiverServer;
 
 import android.annotation.SuppressLint;
+import android.bluetooth.BluetoothDevice;
 import android.content.BroadcastReceiver;
 import android.content.ContentValues;
 import android.content.Context;
@@ -10,6 +11,7 @@ import android.util.Log;
 
 import com.sous.server.businesslayer.Errors.SubClassErrors;
 import com.sous.server.businesslayer.bl_BloadcastReceiver.Bl_BloadcastGatt_getDeviceClentGatt;
+import com.sous.server.businesslayer.bl_BloadcastReceiver.Bl_BloadcastGatt_pairDevice;
 
 import java.util.concurrent.atomic.AtomicReference;
 
@@ -26,14 +28,68 @@ public class BroadcastReceiverGattServer extends BroadcastReceiver {
             // TODO: 30.07.2024
             pendingResultAtomicReference.set(goAsync());
 
+            // TODO: 31.07.2024 Получаем сам девайс
+         final   BluetoothDevice     bluetoothDevice = intent.getParcelableExtra(BluetoothDevice.EXTRA_DEVICE);
 
             final    PackageInfo pInfo = context.getPackageManager().getPackageInfo(context.getPackageName(), 0);
-               version = pInfo.getLongVersionCode();
+            version = pInfo.getLongVersionCode();
+            // TODO: 31.07.2024 рабочий код
 
-            final Bl_BloadcastGatt_getDeviceClentGatt blBloadcastGattGetDeviceClentGatt=  new Bl_BloadcastGatt_getDeviceClentGatt(context,version);
+            switch (intent.getAction()){
+                // TODO: 31.07.2024
+                case   BluetoothDevice.ACTION_ACL_CONNECTED :
+                    // TODO: 31.07.2024
 
-            blBloadcastGattGetDeviceClentGatt.startingGetDeviceBLECkient(  intent ,   pendingResultAtomicReference);
-            // TODO: 30.07.2024
+                    final Bl_BloadcastGatt_getDeviceClentGatt blBloadcastGattGetDeviceClentGatt=  new Bl_BloadcastGatt_getDeviceClentGatt(context,version);
+
+                    blBloadcastGattGetDeviceClentGatt.startingGetDeviceBLECkient(  intent ,   pendingResultAtomicReference,bluetoothDevice);
+                    // TODO: 30.07.2024
+
+                    // TODO: 31.07.2024
+                    Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                            " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                            " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" +
+                            "intent.getAction() "+intent.getAction() + " intent.getAction() " +intent.getAction());
+                    break;
+                // TODO: 31.07.2024  
+                // TODO: 31.07.2024
+                case   BluetoothDevice.ACTION_ACL_DISCONNECTED :
+                    // TODO: 31.07.2024
+                    Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                            " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                            " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" +
+                            "intent.getAction() "+intent.getAction() + " intent.getAction() " +intent.getAction());
+                    break;
+                // TODO: 31.07.2024
+                // TODO: 31.07.2024
+                case  BluetoothDevice.ACTION_BOND_STATE_CHANGED :
+                    // TODO: 31.07.2024
+                    new Bl_BloadcastGatt_pairDevice(context,version).unpairDevice(bluetoothDevice);
+
+                    Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                            " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                            " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" +
+                            "intent.getAction() "+intent.getAction() + " intent.getAction() " +intent.getAction());
+                    break;
+
+                // TODO: 31.07.2024
+                // TODO: 31.07.2024
+                default:{
+                    Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                            " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                            " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" +
+                            "intent.getAction() "+intent.getAction() + " intent.getAction() " +intent.getAction());
+                    break;
+                }
+            }
+
+
+
+
+
+
+
+
 
 
             Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +

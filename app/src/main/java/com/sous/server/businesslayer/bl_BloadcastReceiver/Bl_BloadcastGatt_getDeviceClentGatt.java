@@ -39,7 +39,8 @@ public class Bl_BloadcastGatt_getDeviceClentGatt {
     // TODO: 30.07.2024 code for BroaadCastRecever GATT SERVER
     public void startingGetDeviceBLECkient(  @NonNull Intent intent,
                                              @NonNull AtomicReference<BroadcastReceiver.PendingResult>
-                                                     pendingResultAtomicReference) {
+                                                     pendingResultAtomicReference,
+                                             @NonNull BluetoothDevice     bluetoothDevice) {
         Completable.fromAction(new Action() {
                     @SuppressLint("MissingPermission")
                     @Override
@@ -50,11 +51,8 @@ public class Bl_BloadcastGatt_getDeviceClentGatt {
                         // TODO: 29.07.2024
                         getContentProvider();
                         // TODO: 29.07.2024
-                        BluetoothDevice bluetoothDevice = null;
-                        // TODO: 22.07.2024  Код Брадкаста ресивера
-                        // TODO: 24.07.2024
-                        bluetoothDevice = intent.getParcelableExtra(BluetoothDevice.EXTRA_DEVICE);
 
+                        // TODO: 22.07.2024  Код Брадкаста ресивера
                         // TODO: 29.07.2024
                         bluetoothDevice.fetchUuidsWithSdp();
 

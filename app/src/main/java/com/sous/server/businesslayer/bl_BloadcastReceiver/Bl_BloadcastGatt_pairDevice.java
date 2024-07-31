@@ -6,14 +6,14 @@ import android.content.Context;
 
 import java.lang.reflect.Method;
 
-public class bl_BloadcastGatt_pairDevice {
+public class Bl_BloadcastGatt_pairDevice {
 
     private  Context context;
 
 
     private  Long version;
 
-    public bl_BloadcastGatt_pairDevice(Context context, Long version) {
+    public Bl_BloadcastGatt_pairDevice(Context context, Long version) {
         this.context = context;
 
         this.version = version;
