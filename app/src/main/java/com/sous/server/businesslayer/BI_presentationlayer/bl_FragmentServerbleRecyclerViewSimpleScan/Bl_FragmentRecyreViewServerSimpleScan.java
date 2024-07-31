@@ -8,9 +8,12 @@ import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Color;
+import android.graphics.drawable.Drawable;
+import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
@@ -26,6 +29,7 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.android.material.badge.BadgeDrawable;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.card.MaterialCardView;
 import com.google.android.material.tabs.TabLayout;
@@ -1309,7 +1313,65 @@ public class Bl_FragmentRecyreViewServerSimpleScan {
 
 
 
+@SuppressLint("RestrictedApi")
+public void settingbottomnavigationview_server_scan(){
+ try{
+     BadgeDrawable badge =bottomnavigationview_server_scan.getOrCreateBadge(R.id.scan);
 
+     // TODO: 31.07.2024
+     if (myRecycleViewAdapterServer.getconcurrentHashMapCursor!=null) {
+         badge.setBackgroundColor(Color.BLACK);
+         badge.setNumber(myRecycleViewAdapterServer.getconcurrentHashMapCursor.getCount());
+     } else {
+         badge.setBackgroundColor(Color.RED);
+         badge.setNumber(0);
+     }
+     badge.onTextSizeChange();
+
+     badge.setHotspot(20l,40l);
+
+// TODO: 31.07.2024 Lister
+     bottomnavigationview_server_scan.setOnNavigationItemReselectedListener(
+            new BottomNavigationView.OnNavigationItemReselectedListener() {
+        @Override
+        public void onNavigationItemReselected(@NonNull MenuItem menuItem) {
+            switch (menuItem.getItemId()) {
+                case R.id.scan:
+                    // TODO: 31.07.2024
+                    Log.d(context.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                            " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                            " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"+" menuItem.getItemId() "+menuItem.getItemId()  );
+                    break;
+
+            }
+        }
+    });
+     // TODO: 31.07.2024
+     bottomnavigationview_server_scan.refreshDrawableState();
+     bottomnavigationview_server_scan.requestLayout();
+
+    Log.d(context.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+            " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+            " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" );
+
+
+} catch (Exception e) {
+        e.printStackTrace();
+        Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() + " Линия  :"
+                + Thread.currentThread().getStackTrace()[2].getLineNumber());
+        ContentValues valuesЗаписываемОшибки = new ContentValues();
+        valuesЗаписываемОшибки.put("Error", e.toString().toLowerCase());
+        valuesЗаписываемОшибки.put("Klass", this.getClass().getName());
+        valuesЗаписываемОшибки.put("Metod", Thread.currentThread().getStackTrace()[2].getMethodName());
+        valuesЗаписываемОшибки.put("LineError", Thread.currentThread().getStackTrace()[2].getLineNumber());
+        final Object ТекущаяВерсияПрограммы = version;
+        Integer ЛокальнаяВерсияПОСравнение = Integer.parseInt(ТекущаяВерсияПрограммы.toString());
+        valuesЗаписываемОшибки.put("whose_error", ЛокальнаяВерсияПОСравнение);
+        new SubClassErrors(context).МетодЗаписиОшибок(valuesЗаписываемОшибки);
+    }
+
+
+}
 
 
 

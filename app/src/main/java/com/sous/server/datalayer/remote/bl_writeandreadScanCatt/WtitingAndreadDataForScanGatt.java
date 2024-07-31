@@ -308,7 +308,7 @@ try{
 
             // TODO: 25.07.2024  Создаем Новую Даты
                 LocalDateTime futureDate = LocalDateTime.now();
-                DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+                DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy.MM.dd HH.mm.ss.SSS");
                   String date_update=   dtf.format(futureDate);
 
             // TODO: 25.07.2024 set date
@@ -755,7 +755,7 @@ try{
                    + "\n"+ " getLiveDatefromthedatabase " +getLiveDatefromthedatabase);
 
            // TODO: 25.07.2024 обрабоатываем даты
-           DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+           DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy.MM.dd HH.mm.ss.SSS");
 
            LocalDateTime   LiveDate = null;
            if (getLiveDatefromthedatabase!=null) {

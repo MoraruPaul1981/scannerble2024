@@ -278,7 +278,6 @@ public class Bl_FragmentRecyreViewGAATServer {
         try {
             myRecycleViewAdapterServer = new MyRecycleViewAdapterServer(concurrentHashMapCursor);
             recyclerViewServer.setAdapter(myRecycleViewAdapterServer);
-
             Log.d(context.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                     " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
                     " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"+

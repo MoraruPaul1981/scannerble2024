@@ -25,7 +25,7 @@ public class CREATE_DATABASEServerScanner extends SQLiteOpenHelper{ ///SQLiteOpe
 
     private static  AtomicReference<SQLiteDatabase> atomicstoredEntities = new AtomicReference<>();
    // private static     SQLiteDatabase ССылкаНаСозданнуюБазу;
-    private static final int DATABASE_VERSION = 4;
+    private static final int DATABASE_VERSION = 5;
     private Long version=0l;
     public static SQLiteDatabase getССылкаНаСозданнуюБазу() {
         System.out.println( "atomicstoredEntities "+atomicstoredEntities.toString());;

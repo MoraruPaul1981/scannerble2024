@@ -287,7 +287,8 @@ public class FragmentScanRecyclerView extends Fragment {
             getNavigationViews.startingbottomNavigationVeiw();
             // TODO: 26.07.2024 reboot reCyreView
             getblFragmentRecyreViewServerScan.     reBootrecyclerView();
-           
+            getblFragmentRecyreViewServerScan.     settingbottomnavigationview_server_scan();
+
 
 
             Log.d(getContext().getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
@@ -355,6 +356,7 @@ public class FragmentScanRecyclerView extends Fragment {
 
                 getblFragmentRecyreViewServerScan.     rebootRecyreViewApdater(  getMapReceivedFromBootFragmentGatta,     concurrentHashMapCursor );
                 getblFragmentRecyreViewServerScan.     getObserverRecyreView();
+                getblFragmentRecyreViewServerScan.     settingbottomnavigationview_server_scan();
                 getblFragmentRecyreViewServerScan.     reBootrecyclerView();
 
 
