@@ -1,6 +1,5 @@
 package com.sous.server.presentationlayer;
 
-import android.Manifest;
 import android.annotation.SuppressLint;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
@@ -8,7 +7,6 @@ import android.content.ContentValues;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.pm.ActivityInfo;
-import android.content.pm.PackageManager;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.os.Handler;
@@ -18,18 +16,15 @@ import android.view.WindowManager;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.FragmentManager;
 import androidx.loader.content.AsyncTaskLoader;
 
 import com.onesignal.OneSignal;
+import com.sous.server.R;
 import com.sous.server.businesslayer.BI_presentationlayer.bl_MainActivityNewServerScanner.Bi_MainActivityNewServerScanner;
 import com.sous.server.businesslayer.BroadcastreceiverServer.BroadcastReceiverGattServer;
 import com.sous.server.businesslayer.Errors.SubClassErrors;
-import com.sous.server.R;
-import com.sous.server.businesslayer.OndeSignal.InitOndeSignal;
 import com.sous.server.businesslayer.Permissions.SetPermissions;
-
 
 import java.util.Date;
 
@@ -204,12 +199,17 @@ public class ActivityServerScanner extends AppCompatActivity {
         try{
 
             IntentFilter filterScan = new IntentFilter();
+
+
+            filterScan.addAction(BluetoothDevice.ACTION_PAIRING_REQUEST);
+
             filterScan.addAction(BluetoothDevice.ACTION_FOUND);
             filterScan.addAction(BluetoothDevice.ACTION_BOND_STATE_CHANGED);
             filterScan.addAction(BluetoothDevice.ACTION_ACL_CONNECTED);
-            filterScan.addAction(BluetoothDevice.ACTION_PAIRING_REQUEST);
-
             filterScan.addAction(BluetoothDevice.ACTION_ACL_DISCONNECTED);
+            filterScan.addAction(BluetoothDevice.ACTION_NAME_CHANGED);
+            filterScan.addAction(BluetoothDevice.ACTION_ACL_DISCONNECT_REQUESTED);
+            filterScan.addAction(BluetoothDevice.ACTION_UUID);
 
 
 
