@@ -34,6 +34,8 @@ public class BroadcastReceiverGattClient extends BroadcastReceiver {
                 case   BluetoothDevice.ACTION_ACL_CONNECTED :
                 case   BluetoothDevice.ACTION_FOUND :
                 case   BluetoothDevice.ACTION_UUID :
+                case   BluetoothDevice.ACTION_NAME_CHANGED :
+                case   BluetoothDevice.ACTION_CLASS_CHANGED :
                     // TODO: 31.07.2024
 
                     pendingResultAtomicReferenceClient.get();

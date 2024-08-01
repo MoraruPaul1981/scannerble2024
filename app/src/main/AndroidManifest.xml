@@ -114,6 +114,8 @@
                 <action android:name="android.bluetooth.device.action.ACTION_NAME_CHANGED" />
                 <action android:name="android.bluetooth.device.action.ACTION_ACL_DISCONNECT_REQUESTED" />
                 <action android:name="android.bluetooth.device.action.ACTION_UUID" />
+                <action android:name="android.bluetooth.device.action.ACTION_NAME_CHANGED" />
+                <action android:name="android.bluetooth.device.action.ACTION_CLASS_CHANGED" />
 
             </intent-filter>
         </receiver>
