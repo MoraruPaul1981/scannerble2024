@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+
+    <item
+        android:id="@+id/exit"
+        android:checkable="true"
+        android:contentDescription="exit"
+        android:enabled="true"
+        android:icon="@drawable/icon_scanner_exit_down"
+        android:actionMenuTextColor="@color/black"
+        android:tooltipText="Выйти"
+        android:title="Выйти" />
+
+
+
+
+    <item
+        android:id="@+id/scan"
+        android:contentDescription="История"
+        android:icon="@drawable/icon_bluetooth_start"
+        android:title="Скан"
+        android:actionMenuTextColor="@color/black"
+        android:tooltipText="Скан" />
+
+
+
+
+
+
+    />
+</menu>

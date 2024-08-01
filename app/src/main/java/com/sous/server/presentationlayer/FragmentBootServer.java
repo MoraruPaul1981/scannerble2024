@@ -259,21 +259,6 @@ public class FragmentBootServer extends Fragment {
 
 // TODO: 25.07.2024 вибираем какой фрагмент загружать
         switch (CurrentTask.trim()) {
-
-            case "bluetootAdapterEnableGatt" :
-            case "bluetootAdapterDisabledGatt"  :
-
-// TODO: 24.07.2024 GATT реакция на событие от Службы GATT
-                reactionFromEventBusFromServiceGatt(CurrentTask, getFladEnableApadaterBTEOtService);
-
-                
-                Log.d(getContext().getClass().getName(), "\n"
-                        + " время: " + new Date() + "\n+" +
-                        " Класс в процессе... " + this.getClass().getName() + "\n" +
-                        " метод в процессе... " + Thread.currentThread().getStackTrace()[2].getMethodName()+
-                        " getFladEnableApadaterBTEOtService " +getFladEnableApadaterBTEOtService);
-                break;
-
             case "bluetootAdapterEnableScan"  :
             case "bluetootAdapterDisabledScan":
 
@@ -313,55 +298,7 @@ public class FragmentBootServer extends Fragment {
     }
     }
 
-    private void reactionFromEventBusFromServiceGatt(String CurrentTask, Boolean getFladEnableApadaterBTEOtService) {
 
-        if (CurrentTask.contentEquals("bluetootAdapterEnableGatt")) {
-////TODO: В зависимтсто какой результат прищели из службы то сообщаем пользоватю об этом , лии сразу переходим на новой  фрагмент RecyreView
-            forwardOtServiceGattEventBus(getFladEnableApadaterBTEOtService);
-            
-            messageGattServer.getTarget().postDelayed(()->{
-                // TODO: 17.07.2024  переходим после успещглй коннекта Обмена между Клиентмо и Сервером BLE  данными
-
-                //TODO: Запускаем Фрагмент Server Fragment
-                biFragmentBootScannerServer.МетодЗапускаФрагментаServer(  new FragmentGattRecyclerView())   ; /// Scan
-
-                Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
-                        " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                        " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" );
-
-
-
-                Log.d(getContext().getClass().getName(), "\n"
-                        + " время: " + new Date() + "\n+" +
-                        " Класс в процессе... " + this.getClass().getName() + "\n" +
-                        " метод в процессе... " + Thread.currentThread().getStackTrace()[2].getMethodName()+
-                        " CurrentTask " + CurrentTask);
-            },1500);
-         
-            Log.d(getContext().getClass().getName(), "\n"
-                    + " время: " + new Date() + "\n+" +
-                    " Класс в процессе... " + this.getClass().getName() + "\n" +
-                    " метод в процессе... " + Thread.currentThread().getStackTrace()[2].getMethodName()+
-                    " CurrentTask " + CurrentTask);
-
-        } else {
-
-            if (CurrentTask.contentEquals("bluetootAdapterDisabledGatt")) {
-                /*   Snackbar.make(id_fragment_boot_scannerserver , "Сервер или Bluetooth не работает !!! ",Snackbar.ANIMATION_MODE_SLIDE)
-                    .setAction("Action",null).show();*/
-                Toast toast = Toast.makeText(getContext(),"Сервер или Bluetooth не работает !!! ", Toast.LENGTH_LONG);
-                toast.setGravity(Gravity.CENTER, toast.getXOffset() / 2, toast.getYOffset() / 2);
-                toast.show();
-
-                Log.d(getContext().getClass().getName(), "\n"
-                        + " время: " + new Date() + "\n+" +
-                        " Класс в процессе... " + this.getClass().getName() + "\n" +
-                        " метод в процессе... " + Thread.currentThread().getStackTrace()[2].getMethodName()+
-                        " CurrentTask " + CurrentTask);
-            }
-
-        }
-    }
 
     private void reactionFromEventBusFromServiceScan(String CurrentTask, Boolean getFladEnableApadaterBTEOtService) {
         if (CurrentTask.contentEquals("bluetootAdapterEnableScan")) {

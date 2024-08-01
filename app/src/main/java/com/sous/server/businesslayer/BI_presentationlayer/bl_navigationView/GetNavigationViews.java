@@ -6,6 +6,7 @@ import android.content.Context;
 import android.os.Message;
 import android.util.Log;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.FragmentManager;
@@ -64,13 +65,7 @@ public class GetNavigationViews {
                                     Log.d(context.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                                             " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
                                             " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"+" bottomNavigationViewAll " +bottomNavigationViewAll );
-                                    break;
-                                case R.id.control:
-                                    // open fragment 3
-                                    Log.d(context.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
-                                            " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                                            " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"+" bottomNavigationViewAll " +bottomNavigationViewAll );
-                                    break;
+
                             }
                             return false;
                         }
@@ -133,6 +128,7 @@ public class GetNavigationViews {
 
             message.getTarget().post(()->{
                 // TODO: 19.07.2024 Запуск Службы
+                Toast.makeText(context, "Перезапуск контроля Bluetooth", Toast.LENGTH_LONG).show();
 
                 biFragmentBootScannerServer.startingServiceScaning() ;
 

@@ -126,7 +126,7 @@
             android:scrollbarFadeDuration="150"
             app:itemIconTint="#F2F5F5"
             app:itemTextColor="@color/black"
-            app:menu="@menu/menufornavigator_scanner_simple"
+            app:menu="@menu/menufornavigator_scanner_only_scan"
             android:layout_margin="5dp"
             android:padding="1dp"
             tools:ignore="MissingConstraints" />
