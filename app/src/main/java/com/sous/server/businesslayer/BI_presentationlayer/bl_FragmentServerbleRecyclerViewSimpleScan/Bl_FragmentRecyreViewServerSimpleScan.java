@@ -462,17 +462,55 @@ public class Bl_FragmentRecyreViewServerSimpleScan {
             super.onBindViewHolder(holder, position, payloads);
             try {
              // TODO: 19.07.2024
-                if (getconcurrentHashMapCursor!=null) {
+                Log.d(context.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                        " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                        " line " + Thread.currentThread().getStackTrace()[2].getLineNumber()
+                        + "\n" + " getMapReceivedFromBootFragmentGatta " +getconcurrentHashMapCursor
+                        + " holder " +holder);
+
+                if(getconcurrentHashMapCursor!=null    ) {
                     if (getconcurrentHashMapCursor.getCount()>0) {
-                            getconcurrentHashMapCursor.move(position);
+
+                        //todo ЗАполеняем Данными пришедешими с севрера
+
+                        tabLayoutClick(holder);
+
+                        // TODO: 18.07.2024  Главные Методы ЗАполения
+
+                        gettextinputtext_id_currentrow(holder,getconcurrentHashMapCursor);
+
+                        gettextinputtext_namedevice(holder,getconcurrentHashMapCursor);
+
+
+                        gettextinputtext_macdevice(holder,getconcurrentHashMapCursor);
+
+                        gettextinputtext_date_update(holder,getconcurrentHashMapCursor);
+
+                        gettextinputtext_completedwork(holder,getconcurrentHashMapCursor);
+
+                        gettextinputtext_city(holder,getconcurrentHashMapCursor);
+
+                        gettextinputtext_adress(holder,getconcurrentHashMapCursor);
+
+                        gettextinputtext_gps1(holder,getconcurrentHashMapCursor);
+
+                        gettextinputtext_gps2(holder,getconcurrentHashMapCursor);
+
+
+                        getAnimationtabLayout_server_ble(holder);
+
+                        getAnimationtabLayout_server_bleparent(holder);
+
+
+                        Log.d(context.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                                " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                                " line " + Thread.currentThread().getStackTrace()[2].getLineNumber()
+                                + "\n" + " getMapReceivedFromBootFragmentGatta " +getconcurrentHashMapCursor
+                                + " holder " +holder);
+
                     }
-
-                    Log.d(context.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
-                            " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                            " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"+
-                            " getconcurrentHashMapCursor " + getconcurrentHashMapCursor.getPosition());
-
                 }
+
                 Log.d(context.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                         " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
                         " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"+
@@ -625,48 +663,20 @@ public class Bl_FragmentRecyreViewServerSimpleScan {
         @Override
         public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
             try {
-                if(getconcurrentHashMapCursor!=null    ) {
+
+                if (getconcurrentHashMapCursor!=null) {
                     if (getconcurrentHashMapCursor.getCount()>0) {
-
-                        //todo ЗАполеняем Данными пришедешими с севрера
-
-                        tabLayoutClick(holder);
-
-                        // TODO: 18.07.2024  Главные Методы ЗАполения
-
-                        gettextinputtext_id_currentrow(holder,getconcurrentHashMapCursor);
-
-                       gettextinputtext_namedevice(holder,getconcurrentHashMapCursor);
-
-
-                        gettextinputtext_macdevice(holder,getconcurrentHashMapCursor);
-
-                        gettextinputtext_date_update(holder,getconcurrentHashMapCursor);
-
-                        gettextinputtext_completedwork(holder,getconcurrentHashMapCursor);
-
-                        gettextinputtext_city(holder,getconcurrentHashMapCursor);
-
-                       gettextinputtext_adress(holder,getconcurrentHashMapCursor);
-
-                        gettextinputtext_gps1(holder,getconcurrentHashMapCursor);
-
-                        gettextinputtext_gps2(holder,getconcurrentHashMapCursor);
-
-
-                        getAnimationtabLayout_server_ble(holder);
-
-                        getAnimationtabLayout_server_bleparent(holder);
-
-
-                        Log.d(context.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
-                                " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                                " line " + Thread.currentThread().getStackTrace()[2].getLineNumber()
-                                + "\n" + " getMapReceivedFromBootFragmentGatta " +getconcurrentHashMapCursor
-                                + " holder " +holder+ " getContentValuesCurrentDivece " +getconcurrentHashMapCursor);
-
+                        getconcurrentHashMapCursor.moveToPosition(position);
                     }
+
+                    Log.d(context.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                            " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                            " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"+
+                            " getconcurrentHashMapCursor " + getconcurrentHashMapCursor.getPosition());
+
                 }
+
+
                 // TODO: 01.08.2024
                 //holder.setIsRecyclable(true);
 
