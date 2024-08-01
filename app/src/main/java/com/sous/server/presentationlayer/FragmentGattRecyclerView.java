@@ -274,7 +274,7 @@ public class FragmentGattRecyclerView extends Fragment {
                         progressbar_server_ble,animation,getContext(),getActivity(),messageGattServer,bottomNavigationViewGatt );
 
 
-            getblFragmentRecyreViewServer.     getDISCOVERABLE_DURATIONs();
+
             getblFragmentRecyreViewServer.     setManagerfromRecyclerView();
             getblFragmentRecyreViewServer.     addAdapterServerforRecyreview(null);
             getblFragmentRecyreViewServer.     getObserverRecyreView();

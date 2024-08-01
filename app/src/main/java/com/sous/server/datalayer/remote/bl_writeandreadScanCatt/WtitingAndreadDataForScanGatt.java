@@ -430,13 +430,10 @@ try{
         try{
             Uri uri = Uri.parse("content://com.sous.server.providerserver/scannerserversuccess" );
 
-
-
             Cursor cursorПолучаемДЛяСевреа = contentProviderServer.query(uri, null, СамЗапрос, null,null,null);
 
-
-            cursorПолучаемДЛяСевреа.moveToFirst();
             if (cursorПолучаемДЛяСевреа.getCount()>0){
+                cursorПолучаемДЛяСевреа.moveToFirst();
                 ВерсияДАнных=      cursorПолучаемДЛяСевреа.getInt(0);
                 Log.i(this.getClass().getName(), "ВерсияДАнных"+ ВерсияДАнных) ;
                 ВерсияДАнных++;
@@ -554,7 +551,6 @@ try{
             Uri uri = Uri.parse("content://com.sous.server.providerserver/scannerserversuccess" );
             successfuldevices = contentProviderServer.query(uri, null, СамЗапрос, null,null,null);
             if (successfuldevices.getCount()>0){
-                successfuldevices.moveToFirst();
                 // TODO: 19.07.2024  Запаопление данными Курсора
                 cursorConcurrentHashMapGatt.compute("Cursor",(x,y)->successfuldevices);
             }

@@ -17,8 +17,7 @@ import androidx.work.WorkerParameters;
 
 
 import com.sous.server.businesslayer.Errors.SubClassErrors;
-import com.sous.server.businesslayer.BI_Services.BindingServiceGattServer;
-import com.sous.server.businesslayer.Services.ServiceGattServer;
+
 
 import java.util.Date;
 
@@ -27,7 +26,7 @@ public class MyWorkAsyncScannerServer extends Worker {
     private Context context;
     private String ИмяСлужбыСинхронизации="WorkManager Synchronizasiy_Data";
 
-    private ServiceGattServer.LocalBinderСерверBLE binderСканнерServer;
+
     private Long version=0l;
     private Message messenger;
     // TODO: 28.09.2022
@@ -61,7 +60,7 @@ public class MyWorkAsyncScannerServer extends Worker {
     @SuppressLint("NewApi")
     private void МетодБиндингаОбщая() throws InterruptedException {
         try {
-            new BindingServiceGattServer().МетодБиндингаСинхронизации(getApplicationContext(),messenger);
+
 ///16,20  ЛОГ ЛОГ ЛОГ  1
             Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                     " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +

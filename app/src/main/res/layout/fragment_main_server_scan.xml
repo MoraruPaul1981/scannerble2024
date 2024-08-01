@@ -81,6 +81,7 @@
                     android:padding="2dp"
                     android:layout_centerInParent="true"
                     android:layout_centerHorizontal="true"
+                    app:layout_behavior="@string/appbar_scrolling_view_behavior"
                     android:layout_below="@+id/tabLayout_server_ble"
                     android:layout_above="@+id/id_progressbar_server_ble">
                 </androidx.recyclerview.widget.RecyclerView>

@@ -112,7 +112,6 @@ public class ContentProviderServer extends android.content.ContentProvider {
             }
             Log.d(this.getClass().getName(), " uri"+uri );
             cursor = Create_Database_СамаБАзаSQLite.rawQuery(s, null);
-            cursor.moveToFirst();
             if (Create_Database_СамаБАзаSQLite.inTransaction()) {
                 Create_Database_СамаБАзаSQLite.endTransaction();
             }

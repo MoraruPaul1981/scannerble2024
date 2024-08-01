@@ -109,17 +109,6 @@ public class Bl_FragmentRecyreViewGAATServer {
 
 
 
-
-    @SuppressLint("MissingPermission")
-    public void getDISCOVERABLE_DURATIONs() {
-        Intent discoverableIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_DISCOVERABLE);
-        discoverableIntent.putExtra(BluetoothAdapter.EXTRA_DISCOVERABLE_DURATION, 0);
-       activity. startActivity(discoverableIntent);
-        // TODO: 17.07.2024
-        Log.d(context.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
-                " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n");
-    }
     public void getObserverRecyreView() {  // TODO: 04.03.2022  класс в котором находяться слушатели
         try {
             myRecycleViewAdapterServer.registerAdapterDataObserver(new RecyclerView.AdapterDataObserver() {

@@ -58,7 +58,6 @@ public class Bl_FragmentRecyreViewServerSimpleScan {
     private RelativeLayout relativeLayout_server_ble;
     private TabLayout tabLayout_server_ble;
     private MaterialCardView     card_server_ble_inner;
-    private RecyclerView     recyclerview_server_ble;
     private ProgressBar progressbar_server_ble;
     private Animation animation;
     private Context context;
@@ -75,7 +74,6 @@ public class Bl_FragmentRecyreViewServerSimpleScan {
                                                  RelativeLayout relativeLayout_server_ble,
                                                  TabLayout tabLayout_server_ble,
                                                  MaterialCardView card_server_ble_inner,
-                                                 RecyclerView recyclerview_server_ble,
                                                  ProgressBar progressbar_server_ble,
                                                  Animation animation,
                                                  Context context,
@@ -84,13 +82,12 @@ public class Bl_FragmentRecyreViewServerSimpleScan {
                                                  BottomNavigationView bottomnavigationview_server_scan) {
         // TODO: 17.07.2024
         this.fragmentManager = fragmentManager;
-        this.recyclerViewServer = recyclerViewServer;
         this.version = version;
         this.maincardView_server_ble_fragment = maincardView_server_ble_fragment;
         this.relativeLayout_server_ble = relativeLayout_server_ble;
         this.tabLayout_server_ble = tabLayout_server_ble;
         this.card_server_ble_inner = card_server_ble_inner;
-        this.recyclerview_server_ble = recyclerview_server_ble;
+        this.recyclerViewServer = recyclerViewServer;
         this.progressbar_server_ble = progressbar_server_ble;
         this.animation = animation;
         this.context = context;
@@ -277,7 +274,6 @@ public class Bl_FragmentRecyreViewServerSimpleScan {
         try {
             myRecycleViewAdapterServer = new MyRecycleViewAdapterServer(concurrentHashMapCursor);
             recyclerViewServer.setAdapter(myRecycleViewAdapterServer);
-
             Log.d(context.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                     " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
                     " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"+
@@ -305,27 +301,14 @@ public class Bl_FragmentRecyreViewServerSimpleScan {
     // TODO: 04.03.2022 прозвомжность инициализации RecycleView
     public void setManagerfromRecyclerView() {
         try {
-/*
-            LinearLayoutManager linearLayoutManager = new LinearLayoutManager(context);
-            linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
-            recyclerViewServer.setLayoutManager(linearLayoutManager);
-*/
 
             DividerItemDecoration dividerItemDecorationHor=
                     new DividerItemDecoration(context, LinearLayoutManager.VERTICAL);
-            /*            dividerItemDecorationHor.setDrawable(getContext().getDrawable(R.drawable.divider_for_order_transport1));///R.dimen.activity_horizontal_margin*/
             recyclerViewServer.addItemDecoration(dividerItemDecorationHor);
-
-
             GridLayoutManager layoutManager = new GridLayoutManager(context, 1,
-                    GridLayoutManager.VERTICAL,false);
+                    GridLayoutManager.HORIZONTAL,false);
             layoutManager.setSpanSizeLookup(new GridLayoutManager.DefaultSpanSizeLookup());
-
-          /*  LinearLayoutManager layoutManager = new LinearLayoutManager(context);
-            linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);*/
             recyclerViewServer.setLayoutManager(layoutManager);
-
-
 
             Log.d(context.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                     " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
@@ -481,8 +464,7 @@ public class Bl_FragmentRecyreViewServerSimpleScan {
              // TODO: 19.07.2024
                 if (getconcurrentHashMapCursor!=null) {
                     if (getconcurrentHashMapCursor.getCount()>0) {
-                        getconcurrentHashMapCursor.move(position=+1);
-
+                            getconcurrentHashMapCursor.move(position);
                     }
 
                     Log.d(context.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
@@ -685,6 +667,8 @@ public class Bl_FragmentRecyreViewServerSimpleScan {
 
                     }
                 }
+                // TODO: 01.08.2024
+                //holder.setIsRecyclable(true);
 
                 Log.d(context.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                         " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
@@ -722,15 +706,11 @@ public class Bl_FragmentRecyreViewServerSimpleScan {
 
         @Override
         public int getItemCount() {
-            Integer getFragmentScannerGatt=0;
+            Integer getFragmentScannerGatt=1;
             try {
-                if (getconcurrentHashMapCursor==null) {
-                    getFragmentScannerGatt=1;
-                } else {
+                if (getconcurrentHashMapCursor!=null) {
                     getFragmentScannerGatt=getconcurrentHashMapCursor.getCount();
-                    //getFragmentScannerGatt=+1;
                 }
-
                 Log.d(context.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                         " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
                         " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"+"     getItemId getconcurrentHashMapCursor "
@@ -1107,12 +1087,11 @@ public class Bl_FragmentRecyreViewServerSimpleScan {
     //TODO метод делает callback с ответом на экран
     public void reBootrecyclerView() {
         try {
-            recyclerViewServer.getAdapter().notifyDataSetChanged();
             recyclerViewServer.setClickable(false);
             recyclerViewServer.setFocusable(false);
-            recyclerViewServer.requestLayout();
-            recyclerViewServer.forceLayout();
             recyclerViewServer.refreshDrawableState();
+            recyclerViewServer.requestLayout();
+
 
             Log.d(context.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                     " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
@@ -1142,22 +1121,17 @@ public class Bl_FragmentRecyreViewServerSimpleScan {
          Cursor curcorServerGatt=   concurrentHashMapCursor  .values().stream().findAny().get();
 
             if (curcorServerGatt.getCount()>0) {
-
-                recyclerViewServer.removeAllViewsInLayout();
-
                 if ( myRecycleViewAdapterServer.getconcurrentHashMapCursor==null) {
                     myRecycleViewAdapterServer.getconcurrentHashMapCursor=curcorServerGatt;
                 } else {
                     myRecycleViewAdapterServer.getconcurrentHashMapCursor.close();
                     myRecycleViewAdapterServer.getconcurrentHashMapCursor=curcorServerGatt;
                 }
-                // TODO: 31.07.2024
-                  //myRecycleViewAdapterServer.getconcurrentHashMapCursor.requery();
 
                 myRecycleViewAdapterServer.notifyDataSetChanged();
             RecyclerView.Adapter recyclerViewadapter=         recyclerViewServer.getAdapter();
-            recyclerViewadapter.notifyDataSetChanged();
             recyclerViewServer.swapAdapter(recyclerViewadapter,true);
+                recyclerViewadapter.notifyDataSetChanged();
 
             }
             Log.d(context.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
@@ -1208,8 +1182,8 @@ public class Bl_FragmentRecyreViewServerSimpleScan {
 
     public void addSetingsRecyclerView(@NonNull  RecyclerView recyclerview_server_ble) {
         try {
-            recyclerview_server_ble.setNestedScrollingEnabled(true);
-            recyclerview_server_ble.setHasFixedSize(true);
+            recyclerview_server_ble.setHasFixedSize(false);
+            recyclerview_server_ble.setNestedScrollingEnabled(false);
             Log.d(context.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                     " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
                     " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"+

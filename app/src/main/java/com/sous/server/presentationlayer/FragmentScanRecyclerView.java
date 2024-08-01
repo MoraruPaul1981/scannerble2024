@@ -108,7 +108,7 @@ public class FragmentScanRecyclerView extends Fragment {
             bottomnavigationview_server_scan = (BottomNavigationView) relativeLayout_server_ble.findViewById(R.id.id_bottomnavigationview_server_scan);
 
 
-            
+
             Log.d(getContext().getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                     " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
                     " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n");
@@ -170,9 +170,10 @@ public class FragmentScanRecyclerView extends Fragment {
                 EventBus.getDefault().register(this);
             }
 
-            //todo Есди Данные Пришли ТО мы Их получаем от службыть
-            selectingwhichdatatodownload();
+            // TODO: 17.07.2024 запуск БИзнес логики Fragment Scanner, Когда Есть Данные НЕТ НЕТ !!!
+            initRecureViewServer();
 
+            installationRecyreViewServer();
 
             Log.d(getContext().getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                     " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
@@ -194,9 +195,38 @@ public class FragmentScanRecyclerView extends Fragment {
 
     }
 
+
+
     @Override
     public void onResume() {
         super.onResume();
+        try{
+
+        //todo Есди Данные Пришли ТО мы Их получаем от службыть
+        // TODO: 26.07.2024 reboot reCyreView
+        getblFragmentRecyreViewServerScan.     settingbottomnavigationview_server_scan();
+        getblFragmentRecyreViewServerScan.     reBootrecyclerView();
+
+        Log.d(getContext().getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"   );
+    } catch (Exception e) {
+        e.printStackTrace();
+        Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() + " Линия  :"
+                + Thread.currentThread().getStackTrace()[2].getLineNumber());
+        ContentValues valuesЗаписываемОшибки = new ContentValues();
+        valuesЗаписываемОшибки.put("Error", e.toString().toLowerCase());
+        valuesЗаписываемОшибки.put("Klass", this.getClass().getName());
+        valuesЗаписываемОшибки.put("Metod", Thread.currentThread().getStackTrace()[2].getMethodName());
+        valuesЗаписываемОшибки.put("LineError", Thread.currentThread().getStackTrace()[2].getLineNumber());
+        final Object ТекущаяВерсияПрограммы = version;
+        Integer ЛокальнаяВерсияПОСравнение = Integer.parseInt(ТекущаяВерсияПрограммы.toString());
+        valuesЗаписываемОшибки.put("whose_error", ЛокальнаяВерсияПОСравнение);
+        new SubClassErrors(getContext()).МетодЗаписиОшибок(valuesЗаписываемОшибки);
+    }
+
+
+
     }
 
     @Override
@@ -262,54 +292,6 @@ public class FragmentScanRecyclerView extends Fragment {
 
 
 
-    // TODO: 18.07.2024 выбор какие даные загружать
-
-    private void selectingwhichdatatodownload( ) {
-        try{
-
-                // TODO: 17.07.2024 запуск БИзнес логики Fragment Scanner, Когда Есть Данные НЕТ НЕТ !!!
-            getblFragmentRecyreViewServerScan=new Bl_FragmentRecyreViewServerSimpleScan( fragmentManager,recyclerview_server_ble,
-                        version,maincardView_server_ble_fragment,relativeLayout_server_ble,tabLayout_server_ble,card_server_ble_inner,recyclerview_server_ble,
-                        progressbar_server_ble,animation,getContext(),getActivity(),messageGattServer,bottomnavigationview_server_scan);
-
-
-
-            getblFragmentRecyreViewServerScan.     setManagerfromRecyclerView();
-            getblFragmentRecyreViewServerScan.     addAdapterServerforRecyreview(null);
-            getblFragmentRecyreViewServerScan.     getObserverRecyreView();
-            getblFragmentRecyreViewServerScan. settingAnimatios(recyclerview_server_ble);
-            getblFragmentRecyreViewServerScan.     addSetingsRecyclerView(recyclerview_server_ble);
-
-            //todo  NavigationViewGatt с тремя кнопками Выход .Скан .Контроль
-            GetNavigationViews getNavigationViews=new GetNavigationViews(getContext(),
-                    messageGattServer,bottomnavigationview_server_scan,
-                    version,getActivity(),fragmentManager);
-            getNavigationViews.startingbottomNavigationVeiw();
-            // TODO: 26.07.2024 reboot reCyreView
-            getblFragmentRecyreViewServerScan.     reBootrecyclerView();
-            getblFragmentRecyreViewServerScan.     settingbottomnavigationview_server_scan();
-
-
-
-            Log.d(getContext().getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
-                    " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                    " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" + "    "   );
-        } catch (Exception e) {
-            e.printStackTrace();
-            Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() + " Линия  :"
-                    + Thread.currentThread().getStackTrace()[2].getLineNumber());
-            ContentValues valuesЗаписываемОшибки = new ContentValues();
-            valuesЗаписываемОшибки.put("Error", e.toString().toLowerCase());
-            valuesЗаписываемОшибки.put("Klass", this.getClass().getName());
-            valuesЗаписываемОшибки.put("Metod", Thread.currentThread().getStackTrace()[2].getMethodName());
-            valuesЗаписываемОшибки.put("LineError", Thread.currentThread().getStackTrace()[2].getLineNumber());
-            final Object ТекущаяВерсияПрограммы = version;
-            Integer ЛокальнаяВерсияПОСравнение = Integer.parseInt(ТекущаяВерсияПрограммы.toString());
-            valuesЗаписываемОшибки.put("whose_error", ЛокальнаяВерсияПОСравнение);
-            new SubClassErrors(getContext()).МетодЗаписиОшибок(valuesЗаписываемОшибки);
-        }
-
-    }
 
 
 
@@ -355,10 +337,10 @@ public class FragmentScanRecyclerView extends Fragment {
 
 
                 getblFragmentRecyreViewServerScan.     rebootRecyreViewApdater(  getMapReceivedFromBootFragmentGatta,     concurrentHashMapCursor );
-                getblFragmentRecyreViewServerScan.     getObserverRecyreView();
-                getblFragmentRecyreViewServerScan.     settingbottomnavigationview_server_scan();
-                getblFragmentRecyreViewServerScan.     reBootrecyclerView();
 
+
+//todo Есди Данные Пришли ТО мы Их получаем от службыть
+             onResume();
 
 
                 Log.d(getContext().getClass().getName(), "\n"
@@ -419,37 +401,27 @@ public class FragmentScanRecyclerView extends Fragment {
 
 
     // TODO: 17.07.2024
+    private void initRecureViewServer() {
+        getblFragmentRecyreViewServerScan=new Bl_FragmentRecyreViewServerSimpleScan( fragmentManager,recyclerview_server_ble,
+                version,maincardView_server_ble_fragment,relativeLayout_server_ble,tabLayout_server_ble,card_server_ble_inner,
+                progressbar_server_ble,animation,getContext(),getActivity(),messageGattServer,bottomnavigationview_server_scan);
+    }
 
+    private void installationRecyreViewServer() {
+        //todo  NavigationViewGatt с тремя кнопками Выход .Скан .Контроль
+        GetNavigationViews getNavigationViews=new GetNavigationViews(getContext(),
+                messageGattServer,bottomnavigationview_server_scan,
+                version,getActivity(),fragmentManager);
+        getNavigationViews.startingbottomNavigationVeiw();
 
+        getblFragmentRecyreViewServerScan.     setManagerfromRecyclerView();
+        getblFragmentRecyreViewServerScan.     addAdapterServerforRecyreview(null);
+        getblFragmentRecyreViewServerScan.     getObserverRecyreView();
+        getblFragmentRecyreViewServerScan. settingAnimatios(recyclerview_server_ble);
+        getblFragmentRecyreViewServerScan.     addSetingsRecyclerView(recyclerview_server_ble);
+    }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+// TODO: 01.08.2024 end
 
 }
 
