@@ -444,7 +444,7 @@ public class Bl_forServiceScan {
                 // TODO: 30.07.2024
 
                 // TODO: 30.07.2024
-                BluetoothGatt    gattScan =      bluetoothDevice.connectGatt(context, false,
+                BluetoothGatt    gattScan =      bluetoothDevice.connectGatt(context, true,
                         bluetoothGattCallbackScan, BluetoothDevice.TRANSPORT_AUTO);
                 gattScan.requestConnectionPriority(BluetoothGatt.CONNECTION_PRIORITY_HIGH);
                 //gatt.setPreferredPhy(BluetoothDevice.PHY_LE_2M_MASK,BluetoothDevice.PHY_LE_2M_MASK,BluetoothDevice.PHY_OPTION_S2);
