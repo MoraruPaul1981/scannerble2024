@@ -19,14 +19,14 @@ import java.util.concurrent.atomic.AtomicReference;
 public class BroadcastReceiverGattServer extends BroadcastReceiver {
     // TODO: 30.07.2024
     private  Long   version;
-    private    AtomicReference<PendingResult> pendingResultAtomicReference=new AtomicReference<>();
+    private    AtomicReference<PendingResult> pendingResultAtomicReferenceServer=new AtomicReference<>();
     @SuppressLint("MissingPermission")
     @Override
     public void onReceive(Context context, Intent intent) {
         // TODO: This method is called when the BroadcastReceiver is receiving
         try{
             // TODO: 30.07.2024
-            pendingResultAtomicReference.set(goAsync());
+            pendingResultAtomicReferenceServer.set(goAsync());
 
             // TODO: 31.07.2024 Получаем сам девайс
          final   BluetoothDevice     bluetoothDevice = intent.getParcelableExtra(BluetoothDevice.EXTRA_DEVICE);
@@ -39,11 +39,12 @@ public class BroadcastReceiverGattServer extends BroadcastReceiver {
                 // TODO: 31.07.2024
                 case   BluetoothDevice.ACTION_ACL_CONNECTED :
                 case   BluetoothDevice.ACTION_FOUND :
+                case   BluetoothDevice.ACTION_UUID :
                     // TODO: 31.07.2024
 
                     final Bl_BloadcastGatt_getDeviceClentGatt blBloadcastGattGetDeviceClentGatt=  new Bl_BloadcastGatt_getDeviceClentGatt(context,version);
 
-                    blBloadcastGattGetDeviceClentGatt.startingGetDeviceBLECkient(  intent ,   pendingResultAtomicReference,bluetoothDevice);
+                    blBloadcastGattGetDeviceClentGatt.startingGetDeviceBLECkient(  intent ,   pendingResultAtomicReferenceServer,bluetoothDevice);
                     // TODO: 30.07.2024
 
                     // TODO: 31.07.2024
