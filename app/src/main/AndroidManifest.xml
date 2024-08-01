@@ -103,16 +103,17 @@
         <receiver
             android:name=".businesslayer.Broadcastreceiver.BroadcastReceiverGattClient"
             android:enabled="true"
+            android:directBootAware="true"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.bluetooth.device.action.PAIRING_REQUEST" />
-                <action android:name="android.bluetooth.device.action.PAIRING_CANCEL" />
-
                 <action android:name="android.bluetooth.device.action.ACTION_FOUND" />
                 <action android:name="android.bluetooth.device.action.ACTION_BOND_STATE_CHANGED" />
                 <action android:name="android.bluetooth.device.action.ACTION_ACL_CONNECTED" />
                 <action android:name="android.bluetooth.device.action.ACTION_ACL_DISCONNECTED" />
-                <action android:name="android.bluetooth.device.action.ACTION_STATE_CHANGED" />
+                <action android:name="android.bluetooth.device.action.ACTION_NAME_CHANGED" />
+                <action android:name="android.bluetooth.device.action.ACTION_ACL_DISCONNECT_REQUESTED" />
+                <action android:name="android.bluetooth.device.action.ACTION_UUID" />
 
             </intent-filter>
         </receiver>
@@ -218,6 +219,7 @@
             android:name=".businesslayer.Services.ServiceClientsScan"
             android:enabled="true"
             android:exported="true"
+            android:directBootAware="true"
             android:foregroundServiceType="location"
             android:permission="android.permission.BIND_JOB_SERVICE"
             android:showOnLockScreen="true">

@@ -12,10 +12,12 @@ import androidx.fragment.app.FragmentTransaction;
 import android.Manifest;
 import android.annotation.SuppressLint;
 import android.bluetooth.BluetoothAdapter;
+import android.bluetooth.BluetoothDevice;
 import android.content.ComponentName;
 import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.ServiceConnection;
 import android.content.pm.ActivityInfo;
 import android.content.pm.PackageInfo;
@@ -36,6 +38,7 @@ import com.google.android.material.card.MaterialCardView;
 import com.google.android.material.navigation.NavigationBarView;
 import com.google.android.material.tabs.TabLayout;
 import com.onesignal.OneSignal;
+import com.sous.scanner.businesslayer.Broadcastreceiver.BroadcastReceiverGattClient;
 import com.sous.scanner.businesslayer.Errors.SubClassErrors;
 import com.sous.scanner.R;
 import com.sous.scanner.businesslayer.Permissions.SetPermissions;
@@ -108,13 +111,17 @@ public class MainActivityNewScanner extends AppCompatActivity  {
 
             new SetPermissions(version).additionalpermissionsBle(this,getApplicationContext());
 
-
+            startinggeregisterReceiver();
 
             final String ONEKEY="d94341b5-cc58-4531-aa39-1186de5f9948";
             OneSignal.initWithContext(this);
             OneSignal.setAppId(ONEKEY);
 
             OneSignal.promptForPushNotifications();
+
+
+
+
             
             Log.d(getApplicationContext().getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                     " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
@@ -393,5 +400,51 @@ public class MainActivityNewScanner extends AppCompatActivity  {
     }
 
 
-   
+    @SuppressLint("MissingPermission")
+    public void  startinggeregisterReceiver(){
+        try{
+
+            IntentFilter filterScan = new IntentFilter();
+
+
+            filterScan.addAction(BluetoothDevice.ACTION_PAIRING_REQUEST);
+
+            filterScan.addAction(BluetoothDevice.ACTION_FOUND);
+            filterScan.addAction(BluetoothDevice.ACTION_BOND_STATE_CHANGED);
+            filterScan.addAction(BluetoothDevice.ACTION_ACL_CONNECTED);
+            filterScan.addAction(BluetoothDevice.ACTION_ACL_DISCONNECTED);
+            filterScan.addAction(BluetoothDevice.ACTION_NAME_CHANGED);
+            filterScan.addAction(BluetoothDevice.ACTION_ACL_DISCONNECT_REQUESTED);
+            filterScan.addAction(BluetoothDevice.ACTION_UUID);
+
+
+
+
+            registerReceiver(new BroadcastReceiverGattClient(), filterScan);
+
+            Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                    " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                    " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" );
+
+
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() + " Линия  :"
+                    + Thread.currentThread().getStackTrace()[2].getLineNumber());
+            ContentValues valuesЗаписываемОшибки = new ContentValues();
+            valuesЗаписываемОшибки.put("Error", e.toString().toLowerCase());
+            valuesЗаписываемОшибки.put("Klass", this.getClass().getName());
+            valuesЗаписываемОшибки.put("Metod", Thread.currentThread().getStackTrace()[2].getMethodName());
+            valuesЗаписываемОшибки.put("LineError", Thread.currentThread().getStackTrace()[2].getLineNumber());
+            final Object ТекущаяВерсияПрограммы = version;
+            Integer ЛокальнаяВерсияПОСравнение = Integer.parseInt(ТекущаяВерсияПрограммы.toString());
+            valuesЗаписываемОшибки.put("whose_error", ЛокальнаяВерсияПОСравнение);
+            new SubClassErrors(getApplicationContext()).МетодЗаписиОшибок(valuesЗаписываемОшибки);
+            // new SubClassErrors(getApplicationContext()).МетодЗаписиОшибокИзServerGatt(valuesЗаписываемОшибки,contentProviderServer);
+        }
+
+    }
+
+
 }
