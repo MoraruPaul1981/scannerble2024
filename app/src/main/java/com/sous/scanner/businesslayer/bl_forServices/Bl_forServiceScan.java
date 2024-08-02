@@ -41,10 +41,15 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentSkipListSet;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
+import java.util.function.Consumer;
 
+import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
 import io.reactivex.rxjava3.core.Flowable;
+import io.reactivex.rxjava3.core.Observable;
+import io.reactivex.rxjava3.core.ObservableSource;
 import io.reactivex.rxjava3.functions.Action;
-import io.reactivex.rxjava3.functions.Consumer;
+import io.reactivex.rxjava3.functions.Function;
 import io.reactivex.rxjava3.parallel.ParallelFlowable;
 import io.reactivex.rxjava3.schedulers.Schedulers;
 
@@ -101,76 +106,39 @@ public class Bl_forServiceScan {
 
             // TODO: 02.08.2024 Заполянем данными
             ConcurrentSkipListSet<String> scanconcurrenSkip = new ConcurrentSkipListSet();
-            scanconcurrenSkip.add("98:2F:F8:19:BC:F7");
+         scanconcurrenSkip.add("98:2F:F8:19:BC:F7");
             scanconcurrenSkip.add("64:03:7F:A2:E2:C2");
             scanconcurrenSkip.add("74:15:75:D8:F5:FA");
 
-            // TODO: 07.04.2024
-            ParallelFlowable flowable=     Flowable.fromIterable( scanconcurrenSkip)
-                    .filter(fil->!fil.toString().isEmpty())
-                    .parallel()
-                    .runOn(Schedulers.from(Executors.newFixedThreadPool(scanconcurrenSkip.size())));
-            flowable.doOnNext(new Consumer<String>() {
+
+            Observable.fromIterable(scanconcurrenSkip)
+                    .concatMap(new Function<String, ObservableSource<?>>() {
                         @Override
-                        public void accept(String ДевайсСканирование) throws Throwable {
-                            // TODO: 06.12.2023  запуск синхризуции по таблице конктерной
+                        public ObservableSource<?> apply(String ДевайсСканирование) throws Throwable {
 
-                            new Handler(Looper.getMainLooper()).post(()->{
-                                // TODO: 02.08.2024
+                            ///TODO:Довавляем Зарание созданные Адреса Сервера Gatt
+                            BluetoothDevice bluetoothDeviceScan = bluetoothAdapterPhoneClient.getRemoteDevice(ДевайсСканирование.trim());//TODO: HUAWEI MatePad SE
+                            // TODO: 26.07.2024
 
-                                ///TODO:Довавляем Зарание созданные Адреса Сервера Gatt
-                                BluetoothDevice bluetoothDeviceScan = bluetoothAdapterPhoneClient.getRemoteDevice(ДевайсСканирование.trim());//TODO: HUAWEI MatePad SE
-                                // TODO: 26.07.2024
+                            // TODO: 12.02.2023  init CallBack Gatt Client for Scan
+                            МетодРаботыСТекущийСерверомGATTДляScan( );
 
-                                // TODO: 12.02.2023  init CallBack Gatt Client for Scan
-                                МетодРаботыСТекущийСерверомGATTДляScan( );
-
-                                // TODO: 26.01.2023 staring  GATT
-                                МетодЗапускаGATTКлиентаScan(bluetoothDeviceScan);
-
-                                Log.d(this.getClass().getName(), "\n" + " class " +
-                                        Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
-                                        " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                                        " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" + "\n" +
-                                        " bluetoothDeviceScan " + bluetoothDeviceScan +  " getPublicUUIDScan "+ getPublicUUIDScan);
-
-                            });
-
-
+                            // TODO: 26.01.2023 staring  GATT
+                            МетодЗапускаGATTКлиентаScan(bluetoothDeviceScan);
 
                             Log.d(this.getClass().getName(), "\n" + " class " +
                                     Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                                     " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                                    " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" + "\n"
-                                    +  " getPublicUUIDScan "+ getPublicUUIDScan);
-
+                                    " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" + "\n" +
+                                    " bluetoothDeviceScan " + bluetoothDeviceScan +  " getPublicUUIDScan "+ getPublicUUIDScan);
+                            return Observable.just(ДевайсСканирование);
                         }
                     })
-                    .doOnError(new Consumer<Throwable>() {
-                        @Override
-                        public void accept(Throwable throwable) throws Throwable {
-                            throwable.printStackTrace();
-                            Log.e(this.getClass().getName(), "Ошибка " +throwable + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() + " Линия  :"
-                                    + Thread.currentThread().getStackTrace()[2].getLineNumber());
-                            ContentValues valuesЗаписываемОшибки = new ContentValues();
-                            valuesЗаписываемОшибки.put("Error", throwable.toString().toLowerCase());
-                            valuesЗаписываемОшибки.put("Klass", this.getClass().getName());
-                            valuesЗаписываемОшибки.put("Metod", Thread.currentThread().getStackTrace()[2].getMethodName());
-                            valuesЗаписываемОшибки.put("LineError", Thread.currentThread().getStackTrace()[2].getLineNumber());
-                            final Object ТекущаяВерсияПрограммы = version;
-                            Integer ЛокальнаяВерсияПОСравнение = Integer.parseInt(ТекущаяВерсияПрограммы.toString());
-                            valuesЗаписываемОшибки.put("whose_error", ЛокальнаяВерсияПОСравнение);
-                            new SubClassErrors(context).МетодЗаписиОшибок(valuesЗаписываемОшибки);
-                        }
-                    }).doOnComplete(new Action() {
-                        @Override
-                        public void run() throws Throwable {
-                            Log.d(this.getClass().getName(), "\n" + " class " +
-                                    Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
-                                    " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                                    " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" + "\n");
-                        }
-                    }).sequential().blockingSubscribe() ;
+                    .subscribeOn(AndroidSchedulers.mainThread())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .repeatWhen(repeat->repeat.delay(3, TimeUnit.SECONDS)).subscribe();
+
+            // TODO: 07.04.2024
 
 
 

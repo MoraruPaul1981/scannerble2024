@@ -12,6 +12,7 @@ import android.util.Log;
 
 import com.sous.scanner.businesslayer.Errors.SubClassErrors;
 
+import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.concurrent.atomic.AtomicReference;
 
@@ -54,8 +55,10 @@ public class BroadcastReceiverGattClient extends BroadcastReceiver {
                     Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                             " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
                             " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" +
-                            "intent.getAction() "+intent.getAction() + " intent.getAction() " +intent.getAction()+
-                            "  uuidlist " + uuidlist);
+                            "intent.getAction() "+intent.getAction().toString().toUpperCase() +"\n"
+                            + " LocalDateTime.now() " + LocalDateTime.now().toString().toUpperCase()+"\n" +
+                            "  bluetoothDevice.getAddress() " + bluetoothDevice.getAddress().toUpperCase()+"\n"+
+                            "  bluetoothDevice.getName() " + bluetoothDevice.getName().toUpperCase()+"\n"  );
                     break;
                 // TODO: 31.07.2024
                 // TODO: 31.07.2024

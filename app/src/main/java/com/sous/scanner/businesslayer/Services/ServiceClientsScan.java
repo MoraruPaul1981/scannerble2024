@@ -149,6 +149,8 @@ public class ServiceClientsScan extends Service {
                                     + " bluetoothAdapterPhoneClient.isEnabled() " +bluetoothAdapterPhoneClient.isEnabled());
                         }
                     })
+                    .subscribeOn(AndroidSchedulers.mainThread())
+                  .observeOn(AndroidSchedulers.mainThread())
                     .repeatWhen(repeat->repeat.delay(1, TimeUnit.MINUTES))
                     .doOnComplete(new Action() {
                         @Override
