@@ -97,7 +97,7 @@
 
 
         <receiver
-            android:name=".businesslayer.BroadcastreceiverServer.BroadcastReceiverGattServer"
+            android:name=".businesslayer.BroadcastreceiverServer.BroadcastReceiverGattServerAlcConn"
             android:enabled="true"
             android:exported="true"
             android:directBootAware="true">
@@ -115,6 +115,55 @@
 
             </intent-filter>
         </receiver>
+
+
+        <receiver
+            android:name=".businesslayer.BroadcastreceiverServer.BroadcastReceiverGattServerName_Changed"
+            android:enabled="true"
+            android:exported="true"
+            android:directBootAware="true">
+            <intent-filter>
+                <action android:name="android.bluetooth.device.action.PAIRING_REQUEST" />
+                <action android:name="android.bluetooth.device.action.ACTION_FOUND" />
+                <action android:name="android.bluetooth.device.action.ACTION_BOND_STATE_CHANGED" />
+                <action android:name="android.bluetooth.device.action.ACTION_ACL_CONNECTED" />
+                <action android:name="android.bluetooth.device.action.ACTION_ACL_DISCONNECTED" />
+                <action android:name="android.bluetooth.device.action.ACTION_NAME_CHANGED" />
+                <action android:name="android.bluetooth.device.action.ACTION_ACL_DISCONNECT_REQUESTED" />
+                <action android:name="android.bluetooth.device.action.ACTION_UUID" />
+                <action android:name="android.bluetooth.device.action.ACTION_NAME_CHANGED" />
+                <action android:name="android.bluetooth.device.action.ACTION_CLASS_CHANGED" />
+
+            </intent-filter>
+        </receiver>
+
+        <receiver
+            android:name=".businesslayer.BroadcastreceiverServer.BroadcastReceiverGattServerOthers"
+            android:enabled="true"
+            android:exported="true"
+            android:directBootAware="true">
+            <intent-filter>
+                <action android:name="android.bluetooth.device.action.PAIRING_REQUEST" />
+                <action android:name="android.bluetooth.device.action.ACTION_FOUND" />
+                <action android:name="android.bluetooth.device.action.ACTION_BOND_STATE_CHANGED" />
+                <action android:name="android.bluetooth.device.action.ACTION_ACL_CONNECTED" />
+                <action android:name="android.bluetooth.device.action.ACTION_ACL_DISCONNECTED" />
+                <action android:name="android.bluetooth.device.action.ACTION_NAME_CHANGED" />
+                <action android:name="android.bluetooth.device.action.ACTION_ACL_DISCONNECT_REQUESTED" />
+                <action android:name="android.bluetooth.device.action.ACTION_UUID" />
+                <action android:name="android.bluetooth.device.action.ACTION_NAME_CHANGED" />
+                <action android:name="android.bluetooth.device.action.ACTION_CLASS_CHANGED" />
+
+            </intent-filter>
+        </receiver>
+
+
+
+
+
+
+
+
 
 
         <activity

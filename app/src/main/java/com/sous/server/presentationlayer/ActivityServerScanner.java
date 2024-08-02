@@ -22,7 +22,9 @@ import androidx.loader.content.AsyncTaskLoader;
 import com.onesignal.OneSignal;
 import com.sous.server.R;
 import com.sous.server.businesslayer.BI_presentationlayer.bl_MainActivityNewServerScanner.Bi_MainActivityNewServerScanner;
-import com.sous.server.businesslayer.BroadcastreceiverServer.BroadcastReceiverGattServer;
+import com.sous.server.businesslayer.BroadcastreceiverServer.BroadcastReceiverGattServerAlcConn;
+import com.sous.server.businesslayer.BroadcastreceiverServer.BroadcastReceiverGattServerName_Changed;
+import com.sous.server.businesslayer.BroadcastreceiverServer.BroadcastReceiverGattServerOthers;
 import com.sous.server.businesslayer.Errors.SubClassErrors;
 import com.sous.server.businesslayer.Permissions.SetPermissions;
 
@@ -197,25 +199,24 @@ public class ActivityServerScanner extends AppCompatActivity {
     @SuppressLint("MissingPermission")
     public void  startinggeregisterReceiver(){
         try{
+// TODO: 02.08.2024
+            IntentFilter filterScanServerAlcConn = new IntentFilter();
+            filterScanServerAlcConn.addAction(BluetoothDevice.ACTION_ACL_CONNECTED);
+            registerReceiver(new BroadcastReceiverGattServerAlcConn(), filterScanServerAlcConn);
 
-            IntentFilter filterScanServer = new IntentFilter();
-
-
-            filterScanServer.addAction(BluetoothDevice.ACTION_PAIRING_REQUEST);
-
-            filterScanServer.addAction(BluetoothDevice.ACTION_FOUND);
-            filterScanServer.addAction(BluetoothDevice.ACTION_BOND_STATE_CHANGED);
-            filterScanServer.addAction(BluetoothDevice.ACTION_ACL_CONNECTED);
-            filterScanServer.addAction(BluetoothDevice.ACTION_ACL_DISCONNECTED);
-            filterScanServer.addAction(BluetoothDevice.ACTION_NAME_CHANGED);
-            filterScanServer.addAction(BluetoothDevice.ACTION_ACL_DISCONNECT_REQUESTED);
-            filterScanServer.addAction(BluetoothDevice.ACTION_CLASS_CHANGED);
+            // TODO: 02.08.2024
+            IntentFilter filterScanServerName_Changed = new IntentFilter();
+            filterScanServerName_Changed.addAction(BluetoothDevice.ACTION_NAME_CHANGED);
+            filterScanServerName_Changed.addAction(BluetoothDevice.ACTION_CLASS_CHANGED);
+            registerReceiver(new BroadcastReceiverGattServerName_Changed(), filterScanServerName_Changed);
 
 
 
-
-
-            registerReceiver(new BroadcastReceiverGattServer(), filterScanServer);
+            // TODO: 02.08.2024
+            IntentFilter filterScanServerOthers = new IntentFilter();
+            filterScanServerOthers.addAction(BluetoothDevice.ACTION_ACL_DISCONNECTED);
+            filterScanServerOthers.addAction(BluetoothDevice.ACTION_ACL_DISCONNECT_REQUESTED);
+            registerReceiver(new BroadcastReceiverGattServerOthers(), filterScanServerOthers);
 
             Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                     " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +

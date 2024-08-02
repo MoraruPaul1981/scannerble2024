@@ -12,13 +12,11 @@ import android.util.Log;
 
 import com.sous.server.businesslayer.Errors.SubClassErrors;
 import com.sous.server.businesslayer.bl_BloadcastReceiver.Bl_BloadcastGatt_getDeviceClentGatt;
-import com.sous.server.businesslayer.bl_BloadcastReceiver.Bl_BloadcastGatt_pairDevice;
 
-import java.util.Arrays;
 import java.util.concurrent.atomic.AtomicReference;
 
 
-public class BroadcastReceiverGattServer extends BroadcastReceiver {
+public class BroadcastReceiverGattServerName_Changed extends BroadcastReceiver {
     // TODO: 30.07.2024
     private  Long   version;
     private    AtomicReference<PendingResult> pendingResultAtomicReferenceServer=new AtomicReference<>();
@@ -42,8 +40,6 @@ public class BroadcastReceiverGattServer extends BroadcastReceiver {
 
             switch (intent.getAction()){
                 // TODO: 31.07.2024
-                case   BluetoothDevice.ACTION_ACL_CONNECTED :
-                case   BluetoothDevice.ACTION_FOUND :
                 case   BluetoothDevice.ACTION_NAME_CHANGED :
                 case   BluetoothDevice.ACTION_CLASS_CHANGED :
                     // TODO: 31.07.2024
@@ -62,46 +58,8 @@ public class BroadcastReceiverGattServer extends BroadcastReceiver {
                             "intent.getAction() "+intent.getAction() + " intent.getAction() " +intent.getAction()+
                             "  uuidlist " +  uuidlist);
                     break;
-                // TODO: 31.07.2024  
-                // TODO: 31.07.2024
-                case   BluetoothDevice.ACTION_ACL_DISCONNECTED :
-                    // TODO: 31.07.2024
-                    Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
-                            " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                            " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" +
-                            "intent.getAction() "+intent.getAction() + " intent.getAction() " +intent.getAction());
-                    break;
-                // TODO: 31.07.2024
-                // TODO: 31.07.2024
-                case  BluetoothDevice.ACTION_BOND_STATE_CHANGED :
-                    // TODO: 31.07.2024
-                    new Bl_BloadcastGatt_pairDevice(context,version).unpairDevice(bluetoothDevice);
 
-                    Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
-                            " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                            " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" +
-                            "intent.getAction() "+intent.getAction() + " intent.getAction() " +intent.getAction());
-                    break;
-
-                // TODO: 31.07.2024
-                // TODO: 31.07.2024
-                default:{
-                    Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
-                            " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                            " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" +
-                            "intent.getAction() "+intent.getAction() + " intent.getAction() " +intent.getAction());
-                    break;
-                }
             }
-
-
-
-
-
-
-
-
-
 
             Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                     " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
