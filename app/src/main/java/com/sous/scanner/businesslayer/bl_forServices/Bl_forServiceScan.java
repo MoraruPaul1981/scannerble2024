@@ -1,7 +1,6 @@
 package com.sous.scanner.businesslayer.bl_forServices;
 
 import android.annotation.SuppressLint;
-import android.app.Notification;
 import android.app.NotificationManager;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
@@ -11,13 +10,9 @@ import android.bluetooth.BluetoothGattCharacteristic;
 import android.bluetooth.BluetoothGattService;
 import android.bluetooth.BluetoothManager;
 import android.bluetooth.BluetoothProfile;
-import android.bluetooth.BluetoothSocket;
 import android.content.ContentValues;
 import android.content.Context;
-import android.content.Intent;
 import android.location.LocationManager;
-import android.os.Handler;
-import android.os.Looper;
 import android.os.Message;
 import android.os.ParcelUuid;
 import android.provider.Settings;
@@ -27,13 +22,11 @@ import androidx.annotation.NonNull;
 import androidx.core.app.NotificationCompat;
 import androidx.lifecycle.MutableLiveData;
 
-import com.sous.scanner.businesslayer.Broadcastreceiver.bl_BloadcastReceierGatt;
 import com.sous.scanner.businesslayer.Errors.SubClassErrors;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
-import java.net.Socket;
+import org.reactivestreams.Publisher;
+import org.reactivestreams.Subscriber;
+
 import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.UUID;
@@ -42,13 +35,11 @@ import java.util.concurrent.ConcurrentSkipListSet;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
-import java.util.function.Consumer;
 
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
 import io.reactivex.rxjava3.core.Flowable;
 import io.reactivex.rxjava3.core.Observable;
-import io.reactivex.rxjava3.core.ObservableSource;
-import io.reactivex.rxjava3.functions.Action;
+import io.reactivex.rxjava3.functions.Consumer;
 import io.reactivex.rxjava3.functions.Function;
 import io.reactivex.rxjava3.parallel.ParallelFlowable;
 import io.reactivex.rxjava3.schedulers.Schedulers;
@@ -111,37 +102,37 @@ public class Bl_forServiceScan {
             scanconcurrenSkip.add("74:15:75:D8:F5:FA");
 
 
-            Observable.fromIterable(scanconcurrenSkip)
-                    .concatMap(new Function<String, ObservableSource<?>>() {
-                        @Override
-                        public ObservableSource<?> apply(String ДевайсСканирование) throws Throwable {
-
-                            ///TODO:Довавляем Зарание созданные Адреса Сервера Gatt
-                            BluetoothDevice bluetoothDeviceScan = bluetoothAdapterPhoneClient.getRemoteDevice(ДевайсСканирование.trim());//TODO: HUAWEI MatePad SE
-                            // TODO: 26.07.2024
-
-                            // TODO: 12.02.2023  init CallBack Gatt Client for Scan
-                            МетодРаботыСТекущийСерверомGATTДляScan( );
-
-                            // TODO: 26.01.2023 staring  GATT
-                            МетодЗапускаGATTКлиентаScan(bluetoothDeviceScan);
-
-                            Log.d(this.getClass().getName(), "\n" + " class " +
-                                    Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
-                                    " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                                    " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" + "\n" +
-                                    " bluetoothDeviceScan " + bluetoothDeviceScan +  " getPublicUUIDScan "+ getPublicUUIDScan);
-                            return Observable.just(ДевайсСканирование);
-                        }
-                    })
-                    .subscribeOn(AndroidSchedulers.mainThread())
-                    .observeOn(AndroidSchedulers.mainThread())
-                    .repeatWhen(repeat->repeat.delay(3, TimeUnit.SECONDS)).subscribe();
+            // TODO: 02.08.2024
 
             // TODO: 07.04.2024
+            ParallelFlowable<String>     flowable= (ParallelFlowable)    Flowable.fromIterable( scanconcurrenSkip )
+                    .filter(fil->!fil.toString().isEmpty())
+                    .repeatWhen(repeat->repeat.delay(2, TimeUnit.SECONDS))
+                    .parallel().runOn(Schedulers.from(Executors.newFixedThreadPool(scanconcurrenSkip.size())));
+                flowable.doOnNext(new Consumer<String>() {
+                    @Override
+                    public void accept(String ДевайсСканирование) throws Throwable {
+                        ///TODO:Довавляем Зарание созданные Адреса Сервера Gatt
+                        BluetoothDevice bluetoothDeviceScan =
+                                bluetoothAdapterPhoneClient.getRemoteDevice(ДевайсСканирование.toString().trim());//TODO: HUAWEI MatePad SE
+                        // TODO: 26.07.2024
 
+                        // TODO: 12.02.2023  init CallBack Gatt Client for Scan
+                        МетодРаботыСТекущийСерверомGATTДляScan( );
 
+                        // TODO: 26.01.2023 staring  GATT
+                        МетодЗапускаGATTКлиентаScan(bluetoothDeviceScan);
 
+                        Log.d(this.getClass().getName(), "\n" + " class " +
+                                Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                                " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                                " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" + "\n" +
+                                " bluetoothDeviceScan " + bluetoothDeviceScan +  " getPublicUUIDScan "+ getPublicUUIDScan);
+
+                    }
+                }).sequential().subscribe();
+
+            // TODO: 07.04.2024
             Log.d(this.getClass().getName(), "\n" + " class " +
                     Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                     " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
@@ -470,7 +461,7 @@ public class Bl_forServiceScan {
                 // TODO: 30.07.2024
 
                 // TODO: 30.07.2024
-                BluetoothGatt    gattScan =      bluetoothDevice.connectGatt(context, true,
+                BluetoothGatt    gattScan =      bluetoothDevice.connectGatt(context, false,
                         bluetoothGattCallbackScan, BluetoothDevice.TRANSPORT_AUTO);
                 gattScan.requestConnectionPriority(BluetoothGatt.CONNECTION_PRIORITY_HIGH);
                 //gatt.setPreferredPhy(BluetoothDevice.PHY_LE_2M_MASK,BluetoothDevice.PHY_LE_2M_MASK,BluetoothDevice.PHY_OPTION_S2);

@@ -137,9 +137,11 @@ public class ServiceClientsScan extends Service {
                         @Override
                         public void run() throws Throwable {
                             // TODO: 25.07.2024
-                            if (bluetoothAdapterPhoneClient!=null && bluetoothAdapterPhoneClient.isEnabled()) {
+                            if (bluetoothAdapterPhoneClient!=null) {
                                 // TODO: 30.07.2024
-                                blForServiceScan . МетодЗапускаСканированиеКлиентСкан();
+                                if (bluetoothAdapterPhoneClient.isEnabled()) {
+                                    blForServiceScan . МетодЗапускаСканированиеКлиентСкан();
+                                }
                             }
 
                             Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
@@ -149,8 +151,6 @@ public class ServiceClientsScan extends Service {
                                     + " bluetoothAdapterPhoneClient.isEnabled() " +bluetoothAdapterPhoneClient.isEnabled());
                         }
                     })
-                    .subscribeOn(AndroidSchedulers.mainThread())
-                  .observeOn(AndroidSchedulers.mainThread())
                     .repeatWhen(repeat->repeat.delay(1, TimeUnit.MINUTES))
                     .doOnComplete(new Action() {
                         @Override
@@ -234,7 +234,7 @@ public class ServiceClientsScan extends Service {
                 }
 
 
-
+           while (!bluetoothAdapterPhoneClient.isEnabled());
 
 
                 Log.i(this.getClass().getName(),  "  " +Thread.currentThread().getStackTrace()[2].getMethodName()+ " время " +new Date().toLocaleString()+

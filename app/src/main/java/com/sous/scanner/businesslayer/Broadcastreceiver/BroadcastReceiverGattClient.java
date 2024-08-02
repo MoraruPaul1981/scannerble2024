@@ -14,6 +14,7 @@ import com.sous.scanner.businesslayer.Errors.SubClassErrors;
 
 import java.time.LocalDateTime;
 import java.util.Arrays;
+import java.util.Optional;
 import java.util.concurrent.atomic.AtomicReference;
 
 public class BroadcastReceiverGattClient extends BroadcastReceiver {
@@ -30,10 +31,6 @@ public class BroadcastReceiverGattClient extends BroadcastReceiver {
 
             // TODO: 31.07.2024 Получаем сам девайс
             final   BluetoothDevice     bluetoothDevice = intent.getParcelableExtra(BluetoothDevice.EXTRA_DEVICE);
-            final   String     bluetoothDeviceNAMe = intent.getParcelableExtra(BluetoothDevice.EXTRA_NAME);
-            final   Long     bluetoothDeviceRSSI = intent.getLongExtra(BluetoothDevice.EXTRA_RSSI,0);
-            final   Long     bluetoothDeviceUUID = intent.getLongExtra(BluetoothDevice.EXTRA_UUID,0);
-
             final    PackageInfo pInfo = context.getPackageManager().getPackageInfo(context.getPackageName(), 0);
             version = pInfo.getLongVersionCode();
             // TODO: 31.07.2024 рабочий код
@@ -42,23 +39,42 @@ public class BroadcastReceiverGattClient extends BroadcastReceiver {
                 // TODO: 31.07.2024
                 case   BluetoothDevice.ACTION_ACL_CONNECTED :
                 case   BluetoothDevice.ACTION_FOUND :
-                case   BluetoothDevice.ACTION_UUID :
                 case   BluetoothDevice.ACTION_NAME_CHANGED :
                 case   BluetoothDevice.ACTION_CLASS_CHANGED :
-                    // TODO: 31.07.2024
 
-                 ParcelUuid[] uuidlist=         bluetoothDevice.getUuids();
+
+
+                    final   String     bluetoothDeviceNAMe = intent.getParcelableExtra(BluetoothDevice.EXTRA_NAME);
+                    final   Long     bluetoothDeviceRSSI = intent.getLongExtra(BluetoothDevice.EXTRA_RSSI,0);
+
+
+                    // TODO: 31.07.2024
+              String getAction=    Optional.ofNullable( intent.getAction().toUpperCase()).map(m->m.toUpperCase()) .orElseGet(()->"");
+              String getAddress=     Optional.ofNullable(bluetoothDevice.getAddress().toUpperCase()) .orElseGet(()->"");
+              String getName= Optional.ofNullable(bluetoothDevice.getName()).map(m->m.toUpperCase()) .orElseGet(()->"");
+
+
+
+
+                    // TODO: 31.07.2024
+                    Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                            " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                            " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"
+                            + " LocalDateTime.now() " + LocalDateTime.now().toString().toUpperCase()+"\n" +
+                            "  getAction " + getAction+"\n"+
+                            "  getAddress " + getAddress+"\n" +
+                            "  getName " + getName+"\n");
+
+
+
 
                 PendingResult pendingResult=    pendingResultAtomicReferenceClient.get();
                 pendingResult.finish();
                     // TODO: 31.07.2024
                     Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                             " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                            " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" +
-                            "intent.getAction() "+intent.getAction().toString().toUpperCase() +"\n"
-                            + " LocalDateTime.now() " + LocalDateTime.now().toString().toUpperCase()+"\n" +
-                            "  bluetoothDevice.getAddress() " + bluetoothDevice.getAddress().toUpperCase()+"\n"+
-                            "  bluetoothDevice.getName() " + bluetoothDevice.getName().toUpperCase()+"\n"  );
+                            " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"
+                            + " LocalDateTime.now() " + LocalDateTime.now().toString().toUpperCase()+"\n" );
                     break;
                 // TODO: 31.07.2024
                 // TODO: 31.07.2024
@@ -80,8 +96,17 @@ public class BroadcastReceiverGattClient extends BroadcastReceiver {
                             " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" +
                             "intent.getAction() "+intent.getAction() + " intent.getAction() " +intent.getAction());
                     break;
-
                 // TODO: 31.07.2024
+                case   BluetoothDevice.ACTION_UUID :
+                    // TODO: 31.07.2024
+                    Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                            " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                            " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" +
+                            "intent.getAction() "+intent.getAction() + " intent.getAction() " +intent.getAction());
+                    break;
+
+
+                // TODO: 31.07.202
                 // TODO: 31.07.2024
                 default:{
                     Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
@@ -92,36 +117,10 @@ public class BroadcastReceiverGattClient extends BroadcastReceiver {
                 }
             }
 
-
-
-
-
-
-
-
-
-
             Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                     " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
                     " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" +
                     "intent.getAction() "+intent.getAction() + " version " +version);
-
-
-
-
-
-
-
-
-
-
-
-
-
-            Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
-                " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" +
-                "Bintent.getAction() "+intent.getAction() + " bluetoothDevice " +bluetoothDevice);
 
     } catch (Exception e) {
         e.printStackTrace();
