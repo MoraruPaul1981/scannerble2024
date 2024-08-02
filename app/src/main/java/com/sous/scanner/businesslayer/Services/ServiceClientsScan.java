@@ -30,6 +30,7 @@ import com.sous.scanner.businesslayer.bl_forServices.Bl_forServiceScan;
 import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.concurrent.Callable;
+import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
 
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
@@ -38,6 +39,7 @@ import io.reactivex.rxjava3.core.Flowable;
 import io.reactivex.rxjava3.core.Observable;
 import io.reactivex.rxjava3.functions.Action;
 import io.reactivex.rxjava3.functions.Consumer;
+import io.reactivex.rxjava3.schedulers.Schedulers;
 
 public class ServiceClientsScan extends Service {
 
@@ -132,8 +134,16 @@ public class ServiceClientsScan extends Service {
         try{
 // TODO: 24.07.2024 Scan
             // TODO: 25.07.2024
+
+        /*    if (bluetoothAdapterPhoneClient!=null) {
+                // TODO: 30.07.2024
+                if (bluetoothAdapterPhoneClient.isEnabled()) {
+                    blForServiceScan . МетодЗапускаСканированиеКлиентСкан();
+                }
+            }*/
+
             // TODO: 25.07.2024
-       Observable.fromAction(new Action() {
+    Observable.fromAction(new Action() {
                         @Override
                         public void run() throws Throwable {
                             // TODO: 25.07.2024
@@ -151,7 +161,9 @@ public class ServiceClientsScan extends Service {
                                     + " bluetoothAdapterPhoneClient.isEnabled() " +bluetoothAdapterPhoneClient.isEnabled());
                         }
                     })
-                    .repeatWhen(repeat->repeat.delay(1, TimeUnit.MINUTES))
+               .subscribeOn(AndroidSchedulers.mainThread())
+               .observeOn(AndroidSchedulers.mainThread())
+               //.repeatWhen(repeat->repeat.delay(2, TimeUnit.MINUTES))
                     .doOnComplete(new Action() {
                         @Override
                         public void run() throws Throwable {
@@ -177,7 +189,6 @@ public class ServiceClientsScan extends Service {
                       }
                   })
                   .subscribe();
-
 
             Log.d(getApplicationContext().getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                     " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
@@ -225,7 +236,7 @@ public class ServiceClientsScan extends Service {
 
 
 
-    @SuppressLint("MissingPermission")
+    @SuppressLint({"MissingPermission", "SuspiciousIndentation"})
     private void setingEnableApapterScan() {
         try{
             if (bluetoothAdapterPhoneClient !=null) {
@@ -233,10 +244,7 @@ public class ServiceClientsScan extends Service {
                     bluetoothAdapterPhoneClient.enable();
                 }
 
-
            while (!bluetoothAdapterPhoneClient.isEnabled());
-
-
                 Log.i(this.getClass().getName(),  "  " +Thread.currentThread().getStackTrace()[2].getMethodName()+ " время " +new Date().toLocaleString()+
                         " bluetoothAdapter  "+ bluetoothAdapterPhoneClient);
             }

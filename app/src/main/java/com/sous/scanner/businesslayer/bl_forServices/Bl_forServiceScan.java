@@ -24,9 +24,6 @@ import androidx.lifecycle.MutableLiveData;
 
 import com.sous.scanner.businesslayer.Errors.SubClassErrors;
 
-import org.reactivestreams.Publisher;
-import org.reactivestreams.Subscriber;
-
 import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.UUID;
@@ -35,14 +32,17 @@ import java.util.concurrent.ConcurrentSkipListSet;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
+import java.util.concurrent.atomic.AtomicInteger;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
 import io.reactivex.rxjava3.core.Flowable;
 import io.reactivex.rxjava3.core.Observable;
+import io.reactivex.rxjava3.core.ObservableSource;
+import io.reactivex.rxjava3.functions.Action;
 import io.reactivex.rxjava3.functions.Consumer;
 import io.reactivex.rxjava3.functions.Function;
-import io.reactivex.rxjava3.parallel.ParallelFlowable;
-import io.reactivex.rxjava3.schedulers.Schedulers;
 
 public class Bl_forServiceScan {
 
@@ -59,10 +59,12 @@ public class Bl_forServiceScan {
     private UUID getPublicUUIDScan = ParcelUuid.fromString("70000007-0000-1000-8000-00805f9b34fb").getUuid();
     private      ScheduledExecutorService scheduler = Executors.newSingleThreadScheduledExecutor();
 
-    private   BluetoothGattCallback       bluetoothGattCallbackScan = null;
+
 
   private    NotificationCompat.Builder notificationBuilder;
   private     NotificationManager notificationManager;
+
+
     public Bl_forServiceScan(@NonNull Message handlerScan,
                              @NonNull LocationManager locationManager,
                              @NonNull BluetoothManager bluetoothManagerServer,
@@ -95,42 +97,64 @@ public class Bl_forServiceScan {
             concurrentHashMap.put("GATTCLIENTProccessing", "1");
             mediatorLiveDataScan.setValue(concurrentHashMap);
 
+            ConcurrentSkipListSet<BluetoothDevice> getCurrentListDevice= new ConcurrentSkipListSet();
+            ConcurrentSkipListSet<BluetoothGattCallback> getListCurrentCallBackGAtt = new ConcurrentSkipListSet();
+
             // TODO: 02.08.2024 Заполянем данными
-            ConcurrentSkipListSet<String> scanconcurrenSkip = new ConcurrentSkipListSet();
-         scanconcurrenSkip.add("98:2F:F8:19:BC:F7");
-            scanconcurrenSkip.add("64:03:7F:A2:E2:C2");
-            scanconcurrenSkip.add("74:15:75:D8:F5:FA");
+            ConcurrentSkipListSet<String> getListMAC = new ConcurrentSkipListSet();
+            getListMAC.add( "98:2F:F8:19:BC:F7");
+            getListMAC.add( "64:03:7F:A2:E2:C2");
+       /*     getListMAC.add( "64:03:7F:A2:E2:C2");
+            getListMAC.add( "74:15:75:D8:F5:FA");*/
 
 
-            // TODO: 02.08.2024
 
-            // TODO: 07.04.2024
-            ParallelFlowable<String>     flowable= (ParallelFlowable)    Flowable.fromIterable( scanconcurrenSkip )
-                    .filter(fil->!fil.toString().isEmpty())
-                    .repeatWhen(repeat->repeat.delay(2, TimeUnit.SECONDS))
-                    .parallel().runOn(Schedulers.from(Executors.newFixedThreadPool(scanconcurrenSkip.size())));
-                flowable.doOnNext(new Consumer<String>() {
-                    @Override
-                    public void accept(String ДевайсСканирование) throws Throwable {
-                        ///TODO:Довавляем Зарание созданные Адреса Сервера Gatt
-                        BluetoothDevice bluetoothDeviceScan =
-                                bluetoothAdapterPhoneClient.getRemoteDevice(ДевайсСканирование.toString().trim());//TODO: HUAWEI MatePad SE
-                        // TODO: 26.07.2024
+            AtomicInteger atomicInteger=new AtomicInteger();
+            Observable.fromAction(new Action() {
+                        @Override
+                        public void run() throws Throwable {
+                            // TODO: 25.07.2024
+                            atomicInteger.incrementAndGet();
 
-                        // TODO: 12.02.2023  init CallBack Gatt Client for Scan
-                        МетодРаботыСТекущийСерверомGATTДляScan( );
+                       String getAddress=     getListMAC.stream().map(m->m).collect(Collectors.toList()).get(atomicInteger.get());
+                            // TODO: 26.07.2024
+                            BluetoothDevice bluetoothDeviceScan = bluetoothAdapterPhoneClient.getRemoteDevice(getAddress.trim());
+                            getCurrentListDevice.add(bluetoothDeviceScan);
+                            // TODO: 12.02.2023  init CallBack Gatt Client for Scan
+                            BluetoothGattCallback  bluetoothGattCallbacks=                   МетодРаботыСТекущийСерверомGATTДляScan( );
+                            getListCurrentCallBackGAtt.add(bluetoothGattCallbacks);
 
-                        // TODO: 26.01.2023 staring  GATT
-                        МетодЗапускаGATTКлиентаScan(bluetoothDeviceScan);
+                            // TODO: 26.01.2023 staring  GATT
+                            МетодЗапускаGATTКлиентаScan(getCurrentListDevice.pollLast(), getListCurrentCallBackGAtt.pollLast());
 
-                        Log.d(this.getClass().getName(), "\n" + " class " +
-                                Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
-                                " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                                " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" + "\n" +
-                                " bluetoothDeviceScan " + bluetoothDeviceScan +  " getPublicUUIDScan "+ getPublicUUIDScan);
+                            // TODO: 02.08.2024
+                            Log.d(this.getClass().getName(), "\n" + " class " +
+                                    Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                                    " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                                    " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" + "\n" +
+                                    " bluetoothDeviceScan " + bluetoothDeviceScan +  " getPublicUUIDScan "+ getPublicUUIDScan);
 
-                    }
-                }).sequential().subscribe();
+
+
+                            Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                                    " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                                    " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"   +"    Flowable.fromAction(new Action() { "
+                                    +   new Date().toLocaleString()
+                                    + " atomicInteger.get()" +atomicInteger.get());
+                        }
+                    })
+                    .subscribeOn(AndroidSchedulers.mainThread())
+                    .observeOn(AndroidSchedulers.mainThread())
+                   .repeatWhen(repeat->repeat.delay(2, TimeUnit.SECONDS))
+                    .doOnComplete(new Action() {
+                        @Override
+                        public void run() throws Throwable {
+                            Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                                    " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                                    " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" );
+                        }
+                    })
+                    .subscribe();
 
             // TODO: 07.04.2024
             Log.d(this.getClass().getName(), "\n" + " class " +
@@ -157,14 +181,18 @@ public class Bl_forServiceScan {
 
 
     @SuppressLint("MissingPermission")
-    private BluetoothGattCallback МетодРаботыСТекущийСерверомGATTДляScan(   ) {
+    private  BluetoothGattCallback МетодРаботыСТекущийСерверомGATTДляScan(   ) {
         // TODO: 25.01.2023 ПЕРВЫЙ ВАРИАНТ СЕРВЕР gatt
+        BluetoothGattCallback   bluetoothGattCallbackScan=null;
         try{
-            bluetoothGattCallbackScan = new BluetoothGattCallback() {
+                bluetoothGattCallbackScan = new BluetoothGattCallback() {
                 @Override
                 public void onConnectionStateChange(BluetoothGatt gatt, int status,
                                                     int newState) {
                     try{
+
+                        error133CloseingGatt(gatt, newState);
+
                         // TODO: 26.07.2024
                         switch (newState){
 
@@ -430,9 +458,15 @@ public class Bl_forServiceScan {
                 @Override
                 public void onServiceChanged(@NonNull BluetoothGatt gatt) {
                     super.onServiceChanged(gatt);
-                    Log.i(this.getClass().getName(),  "  " +Thread.currentThread().getStackTrace()[2].getMethodName()+ " время " +new Date().toLocaleString() + " gatt " +gatt);
+                    Log.i(this.getClass().getName(),  "  " +Thread.currentThread().getStackTrace()[2].getMethodName()+
+                            " время " +new Date().toLocaleString() + " gatt " +gatt);
                 }
             };
+
+            // TODO: 02.08.2024
+            Log.i(this.getClass().getName(),  " " +Thread.currentThread().getStackTrace()[2].getMethodName()
+                    + " время " +new Date().toLocaleString());
+
         } catch (Exception e) {
             e.printStackTrace();
             Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() + " Линия  :"
@@ -450,9 +484,17 @@ public class Bl_forServiceScan {
         return  bluetoothGattCallbackScan;
     }
 
+    @SuppressLint("MissingPermission")
+    private   void error133CloseingGatt(BluetoothGatt gatt, int newState) {
+        if(newState ==113){
+            gatt.disconnect();
+            gatt.close();
+        }
+    }
+
     // TODO: 24.07.2024
     @SuppressLint("MissingPermission")
-    private void МетодЗапускаGATTКлиентаScan(@NonNull BluetoothDevice bluetoothDevice) {
+    private void МетодЗапускаGATTКлиентаScan(@NonNull  BluetoothDevice  bluetoothDevice,@NonNull  BluetoothGattCallback  bluetoothGattCallbacks) {
         try{
 
             if (bluetoothAdapterPhoneClient!=null && bluetoothAdapterPhoneClient.isEnabled()) {
@@ -461,8 +503,8 @@ public class Bl_forServiceScan {
                 // TODO: 30.07.2024
 
                 // TODO: 30.07.2024
-                BluetoothGatt    gattScan =      bluetoothDevice.connectGatt(context, false,
-                        bluetoothGattCallbackScan, BluetoothDevice.TRANSPORT_AUTO);
+            BluetoothGatt     gattScan =      bluetoothDevice.connectGatt(context, false,
+                    bluetoothGattCallbacks, BluetoothDevice.TRANSPORT_AUTO);
                 gattScan.requestConnectionPriority(BluetoothGatt.CONNECTION_PRIORITY_HIGH);
                 //gatt.setPreferredPhy(BluetoothDevice.PHY_LE_2M_MASK,BluetoothDevice.PHY_LE_2M_MASK,BluetoothDevice.PHY_OPTION_S2);
                 int bondstate = bluetoothDevice.getBondState();
