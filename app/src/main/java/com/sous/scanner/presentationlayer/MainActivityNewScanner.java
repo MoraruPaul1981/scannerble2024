@@ -403,7 +403,6 @@ public class MainActivityNewScanner extends AppCompatActivity  {
             // TODO: 02.08.2024
 
             IntentFilter filterScanClientOthets= new IntentFilter();
-            filterScanClientOthets.addAction(BluetoothDevice.ACTION_ACL_DISCONNECTED);
             filterScanClientOthets.addAction(BluetoothDevice.ACTION_NAME_CHANGED);
             filterScanClientOthets.addAction(BluetoothDevice.ACTION_CLASS_CHANGED);
             registerReceiver(new BroadcastReceiverGattClientOthets(), filterScanClientOthets);
