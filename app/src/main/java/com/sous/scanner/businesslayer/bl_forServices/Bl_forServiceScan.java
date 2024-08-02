@@ -29,20 +29,15 @@ import java.util.Date;
 import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentSkipListSet;
+import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicInteger;
-import java.util.stream.Collectors;
-import java.util.stream.IntStream;
 
-import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
-import io.reactivex.rxjava3.core.Flowable;
 import io.reactivex.rxjava3.core.Observable;
-import io.reactivex.rxjava3.core.ObservableSource;
 import io.reactivex.rxjava3.functions.Action;
 import io.reactivex.rxjava3.functions.Consumer;
-import io.reactivex.rxjava3.functions.Function;
 
 public class Bl_forServiceScan {
 
@@ -92,108 +87,7 @@ public class Bl_forServiceScan {
 
 
 
-    @SuppressLint({"MissingPermission"})
-    public void infinityWorkerScanGATT(@NonNull Integer DurectionTimeGatt) {
-        try {
-            ConcurrentHashMap<String, String> concurrentHashMap = new ConcurrentHashMap<String, String>();
-            concurrentHashMap.put("GATTCLIENTProccessing", "1");
-            mediatorLiveDataScan.setValue(concurrentHashMap);
 
-            ConcurrentSkipListSet<BluetoothDevice> getCurrentListDevice= new ConcurrentSkipListSet();
-            ConcurrentSkipListSet<BluetoothGattCallback> getListCurrentCallBackGAtt = new ConcurrentSkipListSet();
-
-            // TODO: 02.08.2024 Заполянем данными
-            ConcurrentSkipListSet<String> getListMAC = new ConcurrentSkipListSet();
-            getListMAC.add( "98:2F:F8:19:BC:F7");
-            getListMAC.add( "64:03:7F:A2:E2:C2");
-       /*     getListMAC.add( "64:03:7F:A2:E2:C2");
-            getListMAC.add( "74:15:75:D8:F5:FA");*/
-
-            AtomicInteger atomicInteger=new AtomicInteger();
-            Observable.fromAction(new Action() {
-                        @Override
-                        public void run() throws Throwable {
-                            // TODO: 25.07.2024
-                            atomicInteger.incrementAndGet();
-
-                            String getAddress=     getListMAC.stream().map(m->m).collect(Collectors.toList()).get(atomicInteger.get());
-                            // TODO: 26.07.2024
-                            BluetoothDevice bluetoothDeviceScan = bluetoothAdapterPhoneClient.getRemoteDevice(getAddress.trim());
-                            getCurrentListDevice.add(bluetoothDeviceScan);
-                            // TODO: 12.02.2023  init CallBack Gatt Client for Scan
-                            BluetoothGattCallback  bluetoothGattCallbacks=                   МетодРаботыСТекущийСерверомGATTДляScan( );
-                            getListCurrentCallBackGAtt.add(bluetoothGattCallbacks);
-
-                            // TODO: 26.01.2023 staring  GATT
-                            МетодЗапускаGATTКлиентаScan(getCurrentListDevice.pollLast(), getListCurrentCallBackGAtt.pollLast());
-
-                            // TODO: 02.08.2024
-                            Log.d(this.getClass().getName(), "\n" + " class " +
-                                    Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
-                                    " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                                    " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" + "\n" +
-                                    " bluetoothDeviceScan " + bluetoothDeviceScan +  " getPublicUUIDScan "+ getPublicUUIDScan);
-
-
-
-                            Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
-                                    " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                                    " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"   +"    Flowable.fromAction(new Action() { "
-                                    +   new Date().toLocaleString()
-                                    + " atomicInteger.get()" +atomicInteger.get());
-                        }
-                    })
-                    .subscribeOn(AndroidSchedulers.mainThread())
-                    .observeOn(AndroidSchedulers.mainThread())
-                    .repeatWhen(repeat->repeat.delay(DurectionTimeGatt, TimeUnit.SECONDS))
-                    .doOnComplete(new Action() {
-                        @Override
-                        public void run() throws Throwable {
-                            Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
-                                    " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                                    " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" );
-                        }
-                    }).doOnError(new Consumer<Throwable>() {
-                        @Override
-                        public void accept(Throwable throwable) throws Throwable {
-                            throwable.printStackTrace();
-                            Log.e(this.getClass().getName(), "Ошибка " +throwable + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() + " Линия  :"
-                                    + Thread.currentThread().getStackTrace()[2].getLineNumber());
-                            ContentValues valuesЗаписываемОшибки = new ContentValues();
-                            valuesЗаписываемОшибки.put("Error", throwable.toString().toLowerCase());
-                            valuesЗаписываемОшибки.put("Klass", this.getClass().getName());
-                            valuesЗаписываемОшибки.put("Metod", Thread.currentThread().getStackTrace()[2].getMethodName());
-                            valuesЗаписываемОшибки.put("LineError", Thread.currentThread().getStackTrace()[2].getLineNumber());
-                            final Object ТекущаяВерсияПрограммы = version;
-                            Integer ЛокальнаяВерсияПОСравнение = Integer.parseInt(ТекущаяВерсияПрограммы.toString());
-                            valuesЗаписываемОшибки.put("whose_error", ЛокальнаяВерсияПОСравнение);
-                            new SubClassErrors(context).МетодЗаписиОшибок(valuesЗаписываемОшибки);
-                        }
-                    })
-                    .subscribe();
-
-            // TODO: 07.04.2024
-            Log.d(this.getClass().getName(), "\n" + " class " +
-                    Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
-                    " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                    " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" + "\n");
-
-        } catch (Exception e) {
-            e.printStackTrace();
-            Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() + " Линия  :"
-                    + Thread.currentThread().getStackTrace()[2].getLineNumber());
-            ContentValues valuesЗаписываемОшибки = new ContentValues();
-            valuesЗаписываемОшибки.put("Error", e.toString().toLowerCase());
-            valuesЗаписываемОшибки.put("Klass", this.getClass().getName());
-            valuesЗаписываемОшибки.put("Metod", Thread.currentThread().getStackTrace()[2].getMethodName());
-            valuesЗаписываемОшибки.put("LineError", Thread.currentThread().getStackTrace()[2].getLineNumber());
-            final Object ТекущаяВерсияПрограммы = version;
-            Integer ЛокальнаяВерсияПОСравнение = Integer.parseInt(ТекущаяВерсияПрограммы.toString());
-            valuesЗаписываемОшибки.put("whose_error", ЛокальнаяВерсияПОСравнение);
-            new SubClassErrors(context).МетодЗаписиОшибок(valuesЗаписываемОшибки);
-        }
-
-    }
 
 
 
@@ -203,20 +97,14 @@ public class Bl_forServiceScan {
             ConcurrentHashMap<String, String> concurrentHashMap = new ConcurrentHashMap<String, String>();
             concurrentHashMap.put("GATTCLIENTProccessing", "1");
             mediatorLiveDataScan.setValue(concurrentHashMap);
-
-            ConcurrentSkipListSet<BluetoothDevice> getCurrentListDevice= new ConcurrentSkipListSet();
-            ConcurrentSkipListSet<BluetoothGattCallback> getListCurrentCallBackGAtt = new ConcurrentSkipListSet();
-
-            // TODO: 02.08.2024 Заполянем данными
-            ConcurrentSkipListSet<String> getListMAC = new ConcurrentSkipListSet();
-            getListMAC.add( "98:2F:F8:19:BC:F7");
-            getListMAC.add( "64:03:7F:A2:E2:C2");
-       /*     getListMAC.add( "64:03:7F:A2:E2:C2");
-            getListMAC.add( "74:15:75:D8:F5:FA");*/
-
+            // TODO: 02.08.2024
             AtomicInteger atomicInteger=new AtomicInteger();
 
-
+            CopyOnWriteArrayList<String> getListMAC=new CopyOnWriteArrayList();
+                    // TODO: 02.08.2024
+            addingQueueListmac(getListMAC);
+            // TODO: 02.08.2024
+            CopyOnWriteArrayList<BluetoothGattCallback>  bluetoothGattCallbacks = new CopyOnWriteArrayList();
 
             Observable.fromAction(new Action() {
                         @Override
@@ -225,35 +113,38 @@ public class Bl_forServiceScan {
                             if (bluetoothAdapterPhoneClient!=null) {
                                 // TODO: 30.07.2024
                                 if (bluetoothAdapterPhoneClient.isEnabled()) {
-                                    // TODO: 02.08.2024
 
 
-                                    // TODO: 25.07.2024
-                                Integer counter=    atomicInteger.incrementAndGet();
-
-                                  /*  String getAddress=     getListMAC.stream().map(m->m).collect(Collectors.toList()).get(atomicInteger.get());
-                                    // TODO: 26.07.2024
-                                    BluetoothDevice bluetoothDeviceScan = bluetoothAdapterPhoneClient.getRemoteDevice(getAddress.trim());
-                                    getCurrentListDevice.add(bluetoothDeviceScan);
-                                    // TODO: 12.02.2023  init CallBack Gatt Client for Scan
-                                    BluetoothGattCallback  bluetoothGattCallbacks=                   МетодРаботыСТекущийСерверомGATTДляScan( );
-                                    getListCurrentCallBackGAtt.add(bluetoothGattCallbacks);
-
-                                    // TODO: 26.01.2023 staring  GATT
-                                    МетодЗапускаGATTКлиентаScan(getCurrentListDevice.pollLast(), getListCurrentCallBackGAtt.pollLast());*/
-
-
-                                    if (counter>getListMAC.size()) {
+                                 // TODO: 02.08.2024 Обгнуляем Счетчик
+                                    if (atomicInteger.get()>=getListMAC.size()) {
+                                        // TODO: 02.08.2024
                                         atomicInteger.set(0);
+                                        // TODO: 02.08.2024
+                                        bluetoothGattCallbacks.clear();
                                     }
 
+                                    // TODO: 25.07.2024
+                                 final     String getAddress=     getListMAC.get(atomicInteger.get());
+                                    // TODO: 02.08.2024
+                                    // TODO: 26.07.2024
+                                      final BluetoothDevice bluetoothDeviceScan = bluetoothAdapterPhoneClient.getRemoteDevice(getAddress.trim());
+
+                                    // TODO: 12.02.2023  init CallBack Gatt Client for Scan
+                                    bluetoothGattCallbacks.addIfAbsent(МетодРаботыСТекущийСерверомGATTДляScan( ));
+
+
+                                  // TODO: 26.01.2023 staring  GATT
+                                 МетодЗапускаGATTКлиентаScan(bluetoothDeviceScan, bluetoothGattCallbacks.get(atomicInteger.get()));
+
+                                    // TODO: 02.08.2024 Увлеичиваем Значение Счетика
+                                    atomicInteger.incrementAndGet();
 
                                     // TODO: 02.08.2024
                                     Log.d(this.getClass().getName(), "\n" + " class " +
                                             Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                                             " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
                                             " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" + "\n"
-                                            +  " getPublicUUIDScan "+ getPublicUUIDScan);
+                                            +  " atomicInteger.get() "+ atomicInteger.get());
 
                                 }
                             }
@@ -265,8 +156,6 @@ public class Bl_forServiceScan {
                                     + " bluetoothAdapterPhoneClient.isEnabled() " +bluetoothAdapterPhoneClient.isEnabled());
                         }
                     })
-                    .subscribeOn(AndroidSchedulers.mainThread())
-                    .observeOn(AndroidSchedulers.mainThread())
                     .repeatWhen(repeat->repeat.delay(DurectionTimeGatt, TimeUnit.SECONDS))
                     .doOnComplete(new Action() {
                         @Override
@@ -317,32 +206,21 @@ public class Bl_forServiceScan {
 
     }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+    private  void addingQueueListmac(CopyOnWriteArrayList<String> getListMAC) {
+        if (getListMAC.size()==0) {
+            getListMAC.addIfAbsent( "98:2F:F8:19:BC:F7");
+            getListMAC.addIfAbsent( "64:03:7F:A2:E2:C2");
+            getListMAC.addIfAbsent( "74:15:75:D8:F5:FA");
+        }
+    }
 
 
     @SuppressLint("MissingPermission")
-    private  BluetoothGattCallback МетодРаботыСТекущийСерверомGATTДляScan(   ) {
+    private BluetoothGattCallback МетодРаботыСТекущийСерверомGATTДляScan(   ) {
         // TODO: 25.01.2023 ПЕРВЫЙ ВАРИАНТ СЕРВЕР gatt
-        BluetoothGattCallback   bluetoothGattCallbackScan=null;
+        BluetoothGattCallback     bluetoothGattCallbackScan = null;
         try{
-                bluetoothGattCallbackScan = new BluetoothGattCallback() {
+           bluetoothGattCallbackScan = new BluetoothGattCallback() {
                 @Override
                 public void onConnectionStateChange(BluetoothGatt gatt, int status,
                                                     int newState) {
@@ -620,10 +498,12 @@ public class Bl_forServiceScan {
                 }
             };
 
+// TODO: 02.08.2024 Добавляем Данные CallBack
             // TODO: 02.08.2024
             Log.i(this.getClass().getName(),  " " +Thread.currentThread().getStackTrace()[2].getMethodName()
-                    + " время " +new Date().toLocaleString());
+                    + " время " +new Date().toLocaleString()  + " bluetoothGattCallbackScan  " +bluetoothGattCallbackScan);
 
+            // TODO: 02.08.2024
         } catch (Exception e) {
             e.printStackTrace();
             Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() + " Линия  :"
