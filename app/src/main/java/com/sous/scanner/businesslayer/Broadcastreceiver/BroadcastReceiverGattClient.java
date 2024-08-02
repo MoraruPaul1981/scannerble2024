@@ -1,21 +1,26 @@
 package com.sous.scanner.businesslayer.Broadcastreceiver;
 
+import android.annotation.SuppressLint;
 import android.bluetooth.BluetoothDevice;
 import android.content.BroadcastReceiver;
 import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageInfo;
+import android.os.ParcelUuid;
 import android.util.Log;
 
 import com.sous.scanner.businesslayer.Errors.SubClassErrors;
 
+import java.util.Arrays;
 import java.util.concurrent.atomic.AtomicReference;
 
 public class BroadcastReceiverGattClient extends BroadcastReceiver {
 
     Long version;
     private AtomicReference<PendingResult> pendingResultAtomicReferenceClient=new AtomicReference<>();
+
+    @SuppressLint({"MissingPermission", "NewApi"})
     @Override
     public void onReceive(Context context, Intent intent) {
         // TODO: This method is called when the BroadcastReceiver is receiving
@@ -24,6 +29,9 @@ public class BroadcastReceiverGattClient extends BroadcastReceiver {
 
             // TODO: 31.07.2024 Получаем сам девайс
             final   BluetoothDevice     bluetoothDevice = intent.getParcelableExtra(BluetoothDevice.EXTRA_DEVICE);
+            final   String     bluetoothDeviceNAMe = intent.getParcelableExtra(BluetoothDevice.EXTRA_NAME);
+            final   Long     bluetoothDeviceRSSI = intent.getLongExtra(BluetoothDevice.EXTRA_RSSI,0);
+            final   Long     bluetoothDeviceUUID = intent.getLongExtra(BluetoothDevice.EXTRA_UUID,0);
 
             final    PackageInfo pInfo = context.getPackageManager().getPackageInfo(context.getPackageName(), 0);
             version = pInfo.getLongVersionCode();
@@ -38,12 +46,16 @@ public class BroadcastReceiverGattClient extends BroadcastReceiver {
                 case   BluetoothDevice.ACTION_CLASS_CHANGED :
                     // TODO: 31.07.2024
 
-                    pendingResultAtomicReferenceClient.get();
+                 ParcelUuid[] uuidlist=         bluetoothDevice.getUuids();
+
+                PendingResult pendingResult=    pendingResultAtomicReferenceClient.get();
+                pendingResult.finish();
                     // TODO: 31.07.2024
                     Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                             " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
                             " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" +
-                            "intent.getAction() "+intent.getAction() + " intent.getAction() " +intent.getAction());
+                            "intent.getAction() "+intent.getAction() + " intent.getAction() " +intent.getAction()+
+                            "  uuidlist " + uuidlist);
                     break;
                 // TODO: 31.07.2024
                 // TODO: 31.07.2024
