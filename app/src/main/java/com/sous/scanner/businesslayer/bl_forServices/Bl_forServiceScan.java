@@ -226,11 +226,10 @@ public class Bl_forServiceScan {
                                                     int newState) {
                     try{
 
-                        error133CloseingGatt(gatt, newState);
+
 
                         // TODO: 26.07.2024
                         switch (newState){
-
                             case BluetoothProfile.STATE_CONNECTED :
                                 Log.i(this.getClass().getName(), "Connected to GATT client. BluetoothProfile.STATE_CONNECTED ###1 onConnectionStateChange  " +
                                         ""+new Date().toLocaleString());
@@ -252,6 +251,7 @@ public class Bl_forServiceScan {
                                             mediatorLiveDataGATT.setValue(concurrentHashMap);
                                         });*/
                               //  new Bl_froSetviceBLE(version,context). disaibleGattServer(gatt);
+                                error133CloseingGatt(gatt, status);
 
                                 notificationBuilder.setContentText("Последний статус :"+LocalDateTime.now().toString());
                                 notificationManager.notify(110, notificationBuilder.build());
@@ -541,7 +541,7 @@ public class Bl_forServiceScan {
 
                 // TODO: 30.07.2024
             BluetoothGatt     gattScan =      bluetoothDevice.connectGatt(context, false,
-                    bluetoothGattCallbacks, BluetoothDevice.TRANSPORT_AUTO);
+                    bluetoothGattCallbacks, BluetoothDevice.TRANSPORT_AUTO,BluetoothDevice.PHY_OPTION_NO_PREFERRED,handlerScan.getTarget());
                 gattScan.requestConnectionPriority(BluetoothGatt.CONNECTION_PRIORITY_HIGH);
                 //gatt.setPreferredPhy(BluetoothDevice.PHY_LE_2M_MASK,BluetoothDevice.PHY_LE_2M_MASK,BluetoothDevice.PHY_OPTION_S2);
                 int bondstate = bluetoothDevice.getBondState();
