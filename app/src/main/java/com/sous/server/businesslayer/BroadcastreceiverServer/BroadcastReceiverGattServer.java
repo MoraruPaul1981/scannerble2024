@@ -7,12 +7,14 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageInfo;
+import android.os.ParcelUuid;
 import android.util.Log;
 
 import com.sous.server.businesslayer.Errors.SubClassErrors;
 import com.sous.server.businesslayer.bl_BloadcastReceiver.Bl_BloadcastGatt_getDeviceClentGatt;
 import com.sous.server.businesslayer.bl_BloadcastReceiver.Bl_BloadcastGatt_pairDevice;
 
+import java.util.Arrays;
 import java.util.concurrent.atomic.AtomicReference;
 
 
@@ -20,7 +22,7 @@ public class BroadcastReceiverGattServer extends BroadcastReceiver {
     // TODO: 30.07.2024
     private  Long   version;
     private    AtomicReference<PendingResult> pendingResultAtomicReferenceServer=new AtomicReference<>();
-    @SuppressLint("MissingPermission")
+    @SuppressLint({"MissingPermission", "NewApi"})
     @Override
     public void onReceive(Context context, Intent intent) {
         // TODO: This method is called when the BroadcastReceiver is receiving
@@ -30,6 +32,9 @@ public class BroadcastReceiverGattServer extends BroadcastReceiver {
 
             // TODO: 31.07.2024 Получаем сам девайс
          final   BluetoothDevice     bluetoothDevice = intent.getParcelableExtra(BluetoothDevice.EXTRA_DEVICE);
+         final   String     bluetoothDeviceNAMe = intent.getParcelableExtra(BluetoothDevice.EXTRA_NAME);
+         final   Long     bluetoothDeviceRSSI = intent.getLongExtra(BluetoothDevice.EXTRA_RSSI,0);
+         final   Long     bluetoothDeviceUUID = intent.getLongExtra(BluetoothDevice.EXTRA_UUID,0);
 
             final    PackageInfo pInfo = context.getPackageManager().getPackageInfo(context.getPackageName(), 0);
             version = pInfo.getLongVersionCode();
@@ -39,7 +44,6 @@ public class BroadcastReceiverGattServer extends BroadcastReceiver {
                 // TODO: 31.07.2024
                 case   BluetoothDevice.ACTION_ACL_CONNECTED :
                 case   BluetoothDevice.ACTION_FOUND :
-                case   BluetoothDevice.ACTION_UUID :
                 case   BluetoothDevice.ACTION_NAME_CHANGED :
                 case   BluetoothDevice.ACTION_CLASS_CHANGED :
                     // TODO: 31.07.2024
@@ -49,11 +53,14 @@ public class BroadcastReceiverGattServer extends BroadcastReceiver {
                     blBloadcastGattGetDeviceClentGatt.startingGetDeviceBLECkient(  intent ,   pendingResultAtomicReferenceServer,bluetoothDevice);
                     // TODO: 30.07.2024
 
+                    ParcelUuid[] uuidlist=         bluetoothDevice.getUuids();
+
                     // TODO: 31.07.2024
                     Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                             " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
                             " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" +
-                            "intent.getAction() "+intent.getAction() + " intent.getAction() " +intent.getAction());
+                            "intent.getAction() "+intent.getAction() + " intent.getAction() " +intent.getAction()+
+                            "  uuidlist " +  uuidlist);
                     break;
                 // TODO: 31.07.2024  
                 // TODO: 31.07.2024

@@ -183,10 +183,10 @@ public class ServiceServerScan extends Service {
 
             //TODO :  главный метод службы запускаем Gatt Server
 
-          //  mainstartingServerScan();
+     mainstartingServerScan();
 
             //TODO:  для запущеного сервера Gatt ,дополвнительые параметры натсройки Charact and UUID
-          //  settingGattServerBluetoothGattService();
+             settingGattServerBluetoothGattService();
 
 
 

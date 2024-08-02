@@ -198,23 +198,24 @@ public class ActivityServerScanner extends AppCompatActivity {
     public void  startinggeregisterReceiver(){
         try{
 
-            IntentFilter filterScan = new IntentFilter();
+            IntentFilter filterScanServer = new IntentFilter();
 
 
-            filterScan.addAction(BluetoothDevice.ACTION_PAIRING_REQUEST);
+            filterScanServer.addAction(BluetoothDevice.ACTION_PAIRING_REQUEST);
 
-            filterScan.addAction(BluetoothDevice.ACTION_FOUND);
-            filterScan.addAction(BluetoothDevice.ACTION_BOND_STATE_CHANGED);
-            filterScan.addAction(BluetoothDevice.ACTION_ACL_CONNECTED);
-            filterScan.addAction(BluetoothDevice.ACTION_ACL_DISCONNECTED);
-            filterScan.addAction(BluetoothDevice.ACTION_NAME_CHANGED);
-            filterScan.addAction(BluetoothDevice.ACTION_ACL_DISCONNECT_REQUESTED);
-            filterScan.addAction(BluetoothDevice.ACTION_UUID);
-
-
+            filterScanServer.addAction(BluetoothDevice.ACTION_FOUND);
+            filterScanServer.addAction(BluetoothDevice.ACTION_BOND_STATE_CHANGED);
+            filterScanServer.addAction(BluetoothDevice.ACTION_ACL_CONNECTED);
+            filterScanServer.addAction(BluetoothDevice.ACTION_ACL_DISCONNECTED);
+            filterScanServer.addAction(BluetoothDevice.ACTION_NAME_CHANGED);
+            filterScanServer.addAction(BluetoothDevice.ACTION_ACL_DISCONNECT_REQUESTED);
+            filterScanServer.addAction(BluetoothDevice.ACTION_CLASS_CHANGED);
 
 
-            registerReceiver(new BroadcastReceiverGattServer(), filterScan);
+
+
+
+            registerReceiver(new BroadcastReceiverGattServer(), filterScanServer);
 
             Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                     " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +

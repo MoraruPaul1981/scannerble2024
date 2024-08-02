@@ -71,7 +71,8 @@ public class Bl_BloadcastGatt_getDeviceClentGatt {
                                 version,
                                 contentProviderServer,
                                 sharedPreferencesGatt);
-                        ConcurrentHashMap<Integer,ContentValues> writeDatabaseScanGatt  =    wtitingAndreadDataForScanGatt.writeDatabaseScanGatt(bluetoothDevice, bluetoothDevice.getType());
+                        ConcurrentHashMap<Integer,ContentValues> writeDatabaseScanGatt  =    wtitingAndreadDataForScanGatt
+                                .writeDatabaseScanGatt(bluetoothDevice,  intent.getAction());
 
                         // TODO: 31.07.2024  посылаем данные на Франгмент
                         wtitingAndreadDataForScanGatt. afteruccessfuldataformationweSend(writeDatabaseScanGatt);

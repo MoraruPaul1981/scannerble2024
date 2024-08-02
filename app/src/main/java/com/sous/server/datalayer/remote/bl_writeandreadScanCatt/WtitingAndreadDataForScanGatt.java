@@ -55,7 +55,7 @@ public class WtitingAndreadDataForScanGatt {
     private  SharedPreferences sharedPreferencesGatt;
     private  Cursor successfuldevices;
     protected ConcurrentHashMap<String,ContentValues>       contentValuesConcurrentHashMap=new ConcurrentHashMap<>();
-    private  Integer dateLimitforrecording=600;
+    private  Integer dateLimitforrecording=6;
 
     public WtitingAndreadDataForScanGatt(Context context, Long version,
                                          ContentProviderServer contentProviderServer,
@@ -68,14 +68,14 @@ public class WtitingAndreadDataForScanGatt {
 
 
     // TODO: 25.07.2024 метод Записи  в базу
-    public ConcurrentHashMap<Integer,ContentValues> writeDatabaseScanGatt(@NonNull BluetoothDevice device,@NonNull Integer newState){
+    public ConcurrentHashMap<Integer,ContentValues> writeDatabaseScanGatt(@NonNull BluetoothDevice device,@NonNull String  getAction){
         // TODO: 30.07.2024
         ConcurrentHashMap<Integer,ContentValues> writeDatabaseScanGatt=new ConcurrentHashMap<>();
         try{
 
             // TODO: 25.07.2024 Код Записи в базу данных ScanGatt
                         //TODO:ЗАписываем Новый Успешный Девайс в Базу от Gatt server
-            ContentValues     contentValuesВставкаДанных= addToContevaluesNewSucceesDeviceOtGattServer(device,newState );
+            ContentValues     contentValuesВставкаДанных= addToContevaluesNewSucceesDeviceOtGattServer(device,getAction );
 
                         Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                                 " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
@@ -290,7 +290,7 @@ try{
 
     // TODO: 14.02.2023 Второй Метод БЕз GPS
     @SuppressLint("MissingPermission")
-    private ContentValues addToContevaluesNewSucceesDeviceOtGattServer(@NonNull BluetoothDevice device,@NonNull Integer newState) {
+    private ContentValues addToContevaluesNewSucceesDeviceOtGattServer(@NonNull BluetoothDevice device,@NonNull String getAction) {
         ContentValues   contentValuesВставкаДанных =   new ContentValues();;
         try {
             Log.i(this.getClass().getName(), "  " + Thread.currentThread().getStackTrace()[2].getMethodName() + " время "
@@ -314,8 +314,8 @@ try{
             // TODO: 25.07.2024 set date
             contentValuesВставкаДанных.put("date_update", date_update.toString());
 
-            contentValuesВставкаДанных.put("completedwork", "простое сканирование...");
-            contentValuesВставкаДанных.put("operations", newState.toString());
+            contentValuesВставкаДанных.put("completedwork", "Успешный контроль");
+            contentValuesВставкаДанных.put("operations", getAction);
 
 
 
