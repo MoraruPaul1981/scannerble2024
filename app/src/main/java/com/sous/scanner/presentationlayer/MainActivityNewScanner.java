@@ -1,17 +1,13 @@
 package com.sous.scanner.presentationlayer;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.RequiresPermission;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
-import android.Manifest;
 import android.annotation.SuppressLint;
-import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
 import android.content.ComponentName;
 import android.content.ContentValues;
@@ -21,9 +17,6 @@ import android.content.IntentFilter;
 import android.content.ServiceConnection;
 import android.content.pm.ActivityInfo;
 import android.content.pm.PackageInfo;
-import android.content.pm.PackageManager;
-import android.content.res.ColorStateList;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.IBinder;
@@ -31,14 +24,13 @@ import android.os.Looper;
 import android.os.Message;
 import android.util.Log;
 import android.view.WindowManager;
-import android.widget.RelativeLayout;
 
 import com.google.android.material.bottomnavigation.BottomNavigationItemView;
-import com.google.android.material.card.MaterialCardView;
 import com.google.android.material.navigation.NavigationBarView;
 import com.google.android.material.tabs.TabLayout;
 import com.onesignal.OneSignal;
-import com.sous.scanner.businesslayer.Broadcastreceiver.BroadcastReceiverGattClient;
+import com.sous.scanner.businesslayer.Broadcastreceiver.BroadcastReceiverGattClientAlcConn;
+import com.sous.scanner.businesslayer.Broadcastreceiver.BroadcastReceiverGattClientOthets;
 import com.sous.scanner.businesslayer.Errors.SubClassErrors;
 import com.sous.scanner.R;
 import com.sous.scanner.businesslayer.Permissions.SetPermissions;
@@ -404,24 +396,21 @@ public class MainActivityNewScanner extends AppCompatActivity  {
     public void  startinggeregisterReceiver(){
         try{
 
-            IntentFilter filterScanClient = new IntentFilter();
+            IntentFilter filterScanClientAlcConn = new IntentFilter();
+            filterScanClientAlcConn.addAction(BluetoothDevice.ACTION_ACL_CONNECTED);
+            registerReceiver(new BroadcastReceiverGattClientAlcConn(), filterScanClientAlcConn);
 
+            // TODO: 02.08.2024
 
-            filterScanClient.addAction(BluetoothDevice.ACTION_PAIRING_REQUEST);
-
-            filterScanClient.addAction(BluetoothDevice.ACTION_FOUND);
-            filterScanClient.addAction(BluetoothDevice.ACTION_BOND_STATE_CHANGED);
-            filterScanClient.addAction(BluetoothDevice.ACTION_ACL_CONNECTED);
-            filterScanClient.addAction(BluetoothDevice.ACTION_ACL_DISCONNECTED);
-            filterScanClient.addAction(BluetoothDevice.ACTION_NAME_CHANGED);
-            filterScanClient.addAction(BluetoothDevice.ACTION_ACL_DISCONNECT_REQUESTED);
-            filterScanClient.addAction(BluetoothDevice.ACTION_CLASS_CHANGED);
-
+            IntentFilter filterScanClientOthets= new IntentFilter();
+            filterScanClientOthets.addAction(BluetoothDevice.ACTION_ACL_DISCONNECTED);
+            filterScanClientOthets.addAction(BluetoothDevice.ACTION_NAME_CHANGED);
+            filterScanClientOthets.addAction(BluetoothDevice.ACTION_CLASS_CHANGED);
+            registerReceiver(new BroadcastReceiverGattClientOthets(), filterScanClientOthets);
 
 
 
 
-            registerReceiver(new BroadcastReceiverGattClient(), filterScanClient);
 
             Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                     " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +

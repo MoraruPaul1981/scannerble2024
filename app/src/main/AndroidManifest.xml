@@ -101,7 +101,7 @@
 
 
         <receiver
-            android:name=".businesslayer.Broadcastreceiver.BroadcastReceiverGattClient"
+            android:name=".businesslayer.Broadcastreceiver.BroadcastReceiverGattClientAlcConn"
             android:enabled="true"
             android:directBootAware="true"
             android:exported="true">
@@ -119,6 +119,28 @@
 
             </intent-filter>
         </receiver>
+
+
+        <receiver
+            android:name=".businesslayer.Broadcastreceiver.BroadcastReceiverGattClientOthets"
+            android:enabled="true"
+            android:directBootAware="true"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.bluetooth.device.action.PAIRING_REQUEST" />
+                <action android:name="android.bluetooth.device.action.ACTION_FOUND" />
+                <action android:name="android.bluetooth.device.action.ACTION_BOND_STATE_CHANGED" />
+                <action android:name="android.bluetooth.device.action.ACTION_ACL_CONNECTED" />
+                <action android:name="android.bluetooth.device.action.ACTION_ACL_DISCONNECTED" />
+                <action android:name="android.bluetooth.device.action.ACTION_NAME_CHANGED" />
+                <action android:name="android.bluetooth.device.action.ACTION_ACL_DISCONNECT_REQUESTED" />
+                <action android:name="android.bluetooth.device.action.ACTION_UUID" />
+                <action android:name="android.bluetooth.device.action.ACTION_NAME_CHANGED" />
+                <action android:name="android.bluetooth.device.action.ACTION_CLASS_CHANGED" />
+
+            </intent-filter>
+        </receiver>
+
 
         <provider
             android:name=".businesslayer.ContentProdiders.ContentProviderScanner"

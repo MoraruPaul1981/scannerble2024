@@ -7,17 +7,15 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageInfo;
-import android.os.ParcelUuid;
 import android.util.Log;
 
 import com.sous.scanner.businesslayer.Errors.SubClassErrors;
 
 import java.time.LocalDateTime;
-import java.util.Arrays;
 import java.util.Optional;
 import java.util.concurrent.atomic.AtomicReference;
 
-public class BroadcastReceiverGattClient extends BroadcastReceiver {
+public class BroadcastReceiverGattClientOthets extends BroadcastReceiver {
 
     Long version;
     private AtomicReference<PendingResult> pendingResultAtomicReferenceClient=new AtomicReference<>();
@@ -37,8 +35,6 @@ public class BroadcastReceiverGattClient extends BroadcastReceiver {
 
             switch (intent.getAction()){
                 // TODO: 31.07.2024
-                case   BluetoothDevice.ACTION_ACL_CONNECTED :
-                case   BluetoothDevice.ACTION_FOUND :
                 case   BluetoothDevice.ACTION_NAME_CHANGED :
                 case   BluetoothDevice.ACTION_CLASS_CHANGED :
 
