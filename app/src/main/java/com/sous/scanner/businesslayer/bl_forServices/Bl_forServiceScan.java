@@ -90,8 +90,10 @@ public class Bl_forServiceScan {
 
 
 
+
+
     @SuppressLint({"MissingPermission"})
-    public Integer МетодЗапускаСканированиеКлиентСкан() {
+    public void infinityWorkerScanGATT(@NonNull Integer DurectionTimeGatt) {
         try {
             ConcurrentHashMap<String, String> concurrentHashMap = new ConcurrentHashMap<String, String>();
             concurrentHashMap.put("GATTCLIENTProccessing", "1");
@@ -107,8 +109,6 @@ public class Bl_forServiceScan {
        /*     getListMAC.add( "64:03:7F:A2:E2:C2");
             getListMAC.add( "74:15:75:D8:F5:FA");*/
 
-
-
             AtomicInteger atomicInteger=new AtomicInteger();
             Observable.fromAction(new Action() {
                         @Override
@@ -116,7 +116,7 @@ public class Bl_forServiceScan {
                             // TODO: 25.07.2024
                             atomicInteger.incrementAndGet();
 
-                       String getAddress=     getListMAC.stream().map(m->m).collect(Collectors.toList()).get(atomicInteger.get());
+                            String getAddress=     getListMAC.stream().map(m->m).collect(Collectors.toList()).get(atomicInteger.get());
                             // TODO: 26.07.2024
                             BluetoothDevice bluetoothDeviceScan = bluetoothAdapterPhoneClient.getRemoteDevice(getAddress.trim());
                             getCurrentListDevice.add(bluetoothDeviceScan);
@@ -145,13 +145,29 @@ public class Bl_forServiceScan {
                     })
                     .subscribeOn(AndroidSchedulers.mainThread())
                     .observeOn(AndroidSchedulers.mainThread())
-                   .repeatWhen(repeat->repeat.delay(2, TimeUnit.SECONDS))
+                    .repeatWhen(repeat->repeat.delay(DurectionTimeGatt, TimeUnit.SECONDS))
                     .doOnComplete(new Action() {
                         @Override
                         public void run() throws Throwable {
                             Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                                     " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
                                     " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" );
+                        }
+                    }).doOnError(new Consumer<Throwable>() {
+                        @Override
+                        public void accept(Throwable throwable) throws Throwable {
+                            throwable.printStackTrace();
+                            Log.e(this.getClass().getName(), "Ошибка " +throwable + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() + " Линия  :"
+                                    + Thread.currentThread().getStackTrace()[2].getLineNumber());
+                            ContentValues valuesЗаписываемОшибки = new ContentValues();
+                            valuesЗаписываемОшибки.put("Error", throwable.toString().toLowerCase());
+                            valuesЗаписываемОшибки.put("Klass", this.getClass().getName());
+                            valuesЗаписываемОшибки.put("Metod", Thread.currentThread().getStackTrace()[2].getMethodName());
+                            valuesЗаписываемОшибки.put("LineError", Thread.currentThread().getStackTrace()[2].getLineNumber());
+                            final Object ТекущаяВерсияПрограммы = version;
+                            Integer ЛокальнаяВерсияПОСравнение = Integer.parseInt(ТекущаяВерсияПрограммы.toString());
+                            valuesЗаписываемОшибки.put("whose_error", ЛокальнаяВерсияПОСравнение);
+                            new SubClassErrors(context).МетодЗаписиОшибок(valuesЗаписываемОшибки);
                         }
                     })
                     .subscribe();
@@ -176,8 +192,102 @@ public class Bl_forServiceScan {
             valuesЗаписываемОшибки.put("whose_error", ЛокальнаяВерсияПОСравнение);
             new SubClassErrors(context).МетодЗаписиОшибок(valuesЗаписываемОшибки);
         }
-        return  0;
+
     }
+
+
+
+    @SuppressLint({"MissingPermission"})
+    public void startingUserFromrUIButtonWorkerScanGATT(@NonNull Integer DurectionTimeGatt) {
+        try {
+            Observable.fromAction(new Action() {
+                        @Override
+                        public void run() throws Throwable {
+                            // TODO: 25.07.2024
+                            if (bluetoothAdapterPhoneClient!=null) {
+                                // TODO: 30.07.2024
+                                if (bluetoothAdapterPhoneClient.isEnabled()) {
+                                    //blForServiceScan . МетодЗапускаСканированиеКлиентСкан();
+                                }
+                            }
+
+                            Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                                    " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                                    " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"   +"    Flowable.fromAction(new Action() { "
+                                    +   new Date().toLocaleString()
+                                    + " bluetoothAdapterPhoneClient.isEnabled() " +bluetoothAdapterPhoneClient.isEnabled());
+                        }
+                    })
+                    .subscribeOn(AndroidSchedulers.mainThread())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .repeatWhen(repeat->repeat.delay(10, TimeUnit.SECONDS))
+                    .doOnComplete(new Action() {
+                        @Override
+                        public void run() throws Throwable {
+                            Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                                    " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                                    " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" );
+                        }
+                    }).doOnError(new Consumer<Throwable>() {
+                        @Override
+                        public void accept(Throwable throwable) throws Throwable {
+                            throwable.printStackTrace();
+                            Log.e(this.getClass().getName(), "Ошибка " +throwable + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() + " Линия  :"
+                                    + Thread.currentThread().getStackTrace()[2].getLineNumber());
+                            ContentValues valuesЗаписываемОшибки = new ContentValues();
+                            valuesЗаписываемОшибки.put("Error", throwable.toString().toLowerCase());
+                            valuesЗаписываемОшибки.put("Klass", this.getClass().getName());
+                            valuesЗаписываемОшибки.put("Metod", Thread.currentThread().getStackTrace()[2].getMethodName());
+                            valuesЗаписываемОшибки.put("LineError", Thread.currentThread().getStackTrace()[2].getLineNumber());
+                            final Object ТекущаяВерсияПрограммы = version;
+                            Integer ЛокальнаяВерсияПОСравнение = Integer.parseInt(ТекущаяВерсияПрограммы.toString());
+                            valuesЗаписываемОшибки.put("whose_error", ЛокальнаяВерсияПОСравнение);
+                            new SubClassErrors(context).МетодЗаписиОшибок(valuesЗаписываемОшибки);
+                        }
+                    })
+                    .subscribe();
+
+            // TODO: 07.04.2024
+            Log.d(this.getClass().getName(), "\n" + " class " +
+                    Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                    " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                    " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" + "\n");
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() + " Линия  :"
+                    + Thread.currentThread().getStackTrace()[2].getLineNumber());
+            ContentValues valuesЗаписываемОшибки = new ContentValues();
+            valuesЗаписываемОшибки.put("Error", e.toString().toLowerCase());
+            valuesЗаписываемОшибки.put("Klass", this.getClass().getName());
+            valuesЗаписываемОшибки.put("Metod", Thread.currentThread().getStackTrace()[2].getMethodName());
+            valuesЗаписываемОшибки.put("LineError", Thread.currentThread().getStackTrace()[2].getLineNumber());
+            final Object ТекущаяВерсияПрограммы = version;
+            Integer ЛокальнаяВерсияПОСравнение = Integer.parseInt(ТекущаяВерсияПрограммы.toString());
+            valuesЗаписываемОшибки.put("whose_error", ЛокальнаяВерсияПОСравнение);
+            new SubClassErrors(context).МетодЗаписиОшибок(valuesЗаписываемОшибки);
+        }
+
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
     @SuppressLint("MissingPermission")
