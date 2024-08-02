@@ -133,70 +133,8 @@ public class ServiceClientsScan extends Service {
     public int onStartCommand(Intent intent, int flags, int startId) {
         try{
 // TODO: 24.07.2024 Scan
-            // TODO: 25.07.2024
             // TODO: 25.07.2024 Бесконечная работа
-      ////  blForServiceScan.    infinityWorkerScanGATT();
-
-  /*    if (bluetoothAdapterPhoneClient!=null) {
-                // TODO: 30.07.2024
-                if (bluetoothAdapterPhoneClient.isEnabled()) {
-                    blForServiceScan . МетодЗапускаСканированиеКлиентСкан();
-                }
-            }*/
-
-            // TODO: 25.07.2024
-
             blForServiceScan.startingUserFromrUIButtonWorkerScanGATT(10);
-
-         /*   Observable.fromAction(new Action() {
-                        @Override
-                        public void run() throws Throwable {
-                            // TODO: 25.07.2024
-                            if (bluetoothAdapterPhoneClient!=null) {
-                                // TODO: 30.07.2024
-                                if (bluetoothAdapterPhoneClient.isEnabled()) {
-                                    //blForServiceScan . МетодЗапускаСканированиеКлиентСкан();
-                                }
-                            }
-
-                            Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
-                                    " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                                    " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"   +"    Flowable.fromAction(new Action() { "
-                                    +   new Date().toLocaleString()
-                                    + " bluetoothAdapterPhoneClient.isEnabled() " +bluetoothAdapterPhoneClient.isEnabled());
-                        }
-                    })
-                    .subscribeOn(AndroidSchedulers.mainThread())
-                    .observeOn(AndroidSchedulers.mainThread())
-                 .repeatWhen(repeat->repeat.delay(10, TimeUnit.SECONDS))
-                    .doOnComplete(new Action() {
-                        @Override
-                        public void run() throws Throwable {
-                            Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
-                                    " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                                    " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" );
-                        }
-                    }).doOnError(new Consumer<Throwable>() {
-                        @Override
-                        public void accept(Throwable throwable) throws Throwable {
-                            throwable.printStackTrace();
-                            Log.e(this.getClass().getName(), "Ошибка " +throwable + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() + " Линия  :"
-                                    + Thread.currentThread().getStackTrace()[2].getLineNumber());
-                            ContentValues valuesЗаписываемОшибки = new ContentValues();
-                            valuesЗаписываемОшибки.put("Error", throwable.toString().toLowerCase());
-                            valuesЗаписываемОшибки.put("Klass", this.getClass().getName());
-                            valuesЗаписываемОшибки.put("Metod", Thread.currentThread().getStackTrace()[2].getMethodName());
-                            valuesЗаписываемОшибки.put("LineError", Thread.currentThread().getStackTrace()[2].getLineNumber());
-                            final Object ТекущаяВерсияПрограммы = version;
-                            Integer ЛокальнаяВерсияПОСравнение = Integer.parseInt(ТекущаяВерсияПрограммы.toString());
-                            valuesЗаписываемОшибки.put("whose_error", ЛокальнаяВерсияПОСравнение);
-                            new SubClassErrors(getApplicationContext()).МетодЗаписиОшибок(valuesЗаписываемОшибки);
-                        }
-                    })
-                    .subscribe();
-*/
-
-
 
             Log.d(getApplicationContext().getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                     " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +

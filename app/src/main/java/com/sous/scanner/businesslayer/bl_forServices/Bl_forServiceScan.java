@@ -200,6 +200,24 @@ public class Bl_forServiceScan {
     @SuppressLint({"MissingPermission"})
     public void startingUserFromrUIButtonWorkerScanGATT(@NonNull Integer DurectionTimeGatt) {
         try {
+            ConcurrentHashMap<String, String> concurrentHashMap = new ConcurrentHashMap<String, String>();
+            concurrentHashMap.put("GATTCLIENTProccessing", "1");
+            mediatorLiveDataScan.setValue(concurrentHashMap);
+
+            ConcurrentSkipListSet<BluetoothDevice> getCurrentListDevice= new ConcurrentSkipListSet();
+            ConcurrentSkipListSet<BluetoothGattCallback> getListCurrentCallBackGAtt = new ConcurrentSkipListSet();
+
+            // TODO: 02.08.2024 Заполянем данными
+            ConcurrentSkipListSet<String> getListMAC = new ConcurrentSkipListSet();
+            getListMAC.add( "98:2F:F8:19:BC:F7");
+            getListMAC.add( "64:03:7F:A2:E2:C2");
+       /*     getListMAC.add( "64:03:7F:A2:E2:C2");
+            getListMAC.add( "74:15:75:D8:F5:FA");*/
+
+            AtomicInteger atomicInteger=new AtomicInteger();
+
+
+
             Observable.fromAction(new Action() {
                         @Override
                         public void run() throws Throwable {
@@ -207,7 +225,36 @@ public class Bl_forServiceScan {
                             if (bluetoothAdapterPhoneClient!=null) {
                                 // TODO: 30.07.2024
                                 if (bluetoothAdapterPhoneClient.isEnabled()) {
-                                    //blForServiceScan . МетодЗапускаСканированиеКлиентСкан();
+                                    // TODO: 02.08.2024
+
+
+                                    // TODO: 25.07.2024
+                                Integer counter=    atomicInteger.incrementAndGet();
+
+                                  /*  String getAddress=     getListMAC.stream().map(m->m).collect(Collectors.toList()).get(atomicInteger.get());
+                                    // TODO: 26.07.2024
+                                    BluetoothDevice bluetoothDeviceScan = bluetoothAdapterPhoneClient.getRemoteDevice(getAddress.trim());
+                                    getCurrentListDevice.add(bluetoothDeviceScan);
+                                    // TODO: 12.02.2023  init CallBack Gatt Client for Scan
+                                    BluetoothGattCallback  bluetoothGattCallbacks=                   МетодРаботыСТекущийСерверомGATTДляScan( );
+                                    getListCurrentCallBackGAtt.add(bluetoothGattCallbacks);
+
+                                    // TODO: 26.01.2023 staring  GATT
+                                    МетодЗапускаGATTКлиентаScan(getCurrentListDevice.pollLast(), getListCurrentCallBackGAtt.pollLast());*/
+
+
+                                    if (counter>getListMAC.size()) {
+                                        atomicInteger.set(0);
+                                    }
+
+
+                                    // TODO: 02.08.2024
+                                    Log.d(this.getClass().getName(), "\n" + " class " +
+                                            Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                                            " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                                            " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" + "\n"
+                                            +  " getPublicUUIDScan "+ getPublicUUIDScan);
+
                                 }
                             }
 
