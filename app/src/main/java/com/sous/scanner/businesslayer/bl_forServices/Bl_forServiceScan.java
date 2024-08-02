@@ -267,7 +267,7 @@ public class Bl_forServiceScan {
                     })
                     .subscribeOn(AndroidSchedulers.mainThread())
                     .observeOn(AndroidSchedulers.mainThread())
-                    .repeatWhen(repeat->repeat.delay(10, TimeUnit.SECONDS))
+                    .repeatWhen(repeat->repeat.delay(DurectionTimeGatt, TimeUnit.SECONDS))
                     .doOnComplete(new Action() {
                         @Override
                         public void run() throws Throwable {
