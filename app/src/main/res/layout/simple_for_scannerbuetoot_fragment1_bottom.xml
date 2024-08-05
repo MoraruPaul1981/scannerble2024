@@ -81,8 +81,8 @@
             app:cardCornerRadius="10dp"
             app:cardElevation="4dp"
             app:cardMaxElevation="15dp"
-            app:cornerRadius='25dp'
-            app:backgroundTint="#939C9E"
+            app:cornerRadius='150dp'
+            app:backgroundTint="#BDC6C8"
             android:translationZ="20dp"
             app:rippleColor="#C62828"
             app:strokeColor="#F5FFFA"
@@ -106,7 +106,7 @@
             app:cardCornerRadius="10dp"
             app:cardElevation="4dp"
             app:cardMaxElevation="15dp"
-            app:cornerRadius='25dp'
+            app:cornerRadius='150dp'
             app:backgroundTint="#939C9E"
             android:translationZ="20dp"
             app:rippleColor="#C62828"
