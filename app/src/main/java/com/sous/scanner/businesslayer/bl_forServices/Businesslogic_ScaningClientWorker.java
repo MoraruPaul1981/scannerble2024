@@ -40,7 +40,7 @@ import io.reactivex.rxjava3.functions.Action;
 import io.reactivex.rxjava3.functions.Consumer;
 import io.reactivex.rxjava3.schedulers.Schedulers;
 
-public class Bl_forServiceScan {
+public class Businesslogic_ScaningClientWorker {
 
     // TODO: 24.07.2024  varibles Service Scan
     private String getWorkerStateClient="Простое сканирование";
@@ -61,14 +61,14 @@ public class Bl_forServiceScan {
   private     NotificationManager notificationManager;
 
 
-    public Bl_forServiceScan(@NonNull Message handlerScan,
-                             @NonNull LocationManager locationManager,
-                             @NonNull BluetoothManager bluetoothManagerServer,
-                             @NonNull BluetoothAdapter bluetoothAdapterPhoneClient,
-                             @NonNull Long version,
-                             @NonNull Context context ,
-                             @NonNull   NotificationCompat.Builder notificationBuilder,
-                             @NonNull NotificationManager notificationManager) {
+    public Businesslogic_ScaningClientWorker(@NonNull Message handlerScan,
+                                             @NonNull LocationManager locationManager,
+                                             @NonNull BluetoothManager bluetoothManagerServer,
+                                             @NonNull BluetoothAdapter bluetoothAdapterPhoneClient,
+                                             @NonNull Long version,
+                                             @NonNull Context context ,
+                                             @NonNull   NotificationCompat.Builder notificationBuilder,
+                                             @NonNull NotificationManager notificationManager) {
         this.handlerScan = handlerScan;
         this.locationManager = locationManager;
         this.bluetoothManagerServer = bluetoothManagerServer;
@@ -252,7 +252,7 @@ public class Bl_forServiceScan {
                                             concurrentHashMap  .put("BluetoothProfile.STATE_DISCONNECTED","3");
                                             mediatorLiveDataGATT.setValue(concurrentHashMap);
                                         });*/
-                              //  new Bl_froSetviceBLE(version,context). disaibleGattServer(gatt);
+                              //  new Businesslogic_GattClinetClose(version,context). disaibleGattServer(gatt);
                                 error133CloseingGatt(gatt, status);
 
                                 notificationBuilder.setContentText("Последний статус :"+LocalDateTime.now().toString());
@@ -268,7 +268,7 @@ public class Bl_forServiceScan {
                                     concurrentHashMap  .put("BluetoothGatt.GATT_FAILURE","4");
                                     mediatorLiveDataScan.setValue(concurrentHashMap);
                                 });
-                              //  new Bl_froSetviceBLE(version,context). disaibleGattServer(gatt);
+                              //  new Businesslogic_GattClinetClose(version,context). disaibleGattServer(gatt);
                                 Log.d(this.getClass().getName(), "Trying to \"SERVERВDontEndConnect\" "  + " newState " +newState);
                                 break;
 
@@ -279,7 +279,7 @@ public class Bl_forServiceScan {
                                     concurrentHashMap  .put("BluetoothGatt.GATT_CONNECTION_CONGESTED","5");
                                     mediatorLiveDataScan.setValue(concurrentHashMap);
                                 });
-                              //  new Bl_froSetviceBLE(version,context). disaibleGattServer(gatt);
+                              //  new Businesslogic_GattClinetClose(version,context). disaibleGattServer(gatt);
                                 Log.d(this.getClass().getName(), "Trying to \"SERVERВDontEndConnect\" "  + " newState " +newState);
                                 break;
                             default:{

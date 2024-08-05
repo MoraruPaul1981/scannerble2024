@@ -32,10 +32,9 @@ import androidx.lifecycle.MutableLiveData;
 
 import com.google.firebase.messaging.FirebaseMessagingService;
 import com.onesignal.OneSignal;
-import com.sous.scanner.businesslayer.Broadcastreceiver.bl_BloadcastReceierGatt;
 import com.sous.scanner.businesslayer.Firebase.MyFirebaseMessagingServiceScanner;
 import com.sous.scanner.businesslayer.Errors.SubClassErrors;
-import com.sous.scanner.businesslayer.bl_forServices.Bl_froSetviceBLE;
+import com.sous.scanner.businesslayer.bl_BroadcastReciver.Businesslogic_GattClinetRemoteBord;
 
 import java.util.Date;
 import java.util.HashMap;
@@ -587,7 +586,7 @@ public class ServiceClientGatt extends IntentService {
                                             concurrentHashMap  .put("BluetoothProfile.STATE_DISCONNECTED","3");
                                             mediatorLiveDataGATT.setValue(concurrentHashMap);
                                         });*/
-                                       new Bl_froSetviceBLE(version,context). disaibleGattServer(gatt);
+                                       new Businesslogic_GattClinetRemoteBord.Businesslogic_GattClinetClose(version,context). disaibleGattServer(gatt);
                                         Log.d(TAG, "Trying to \"SERVERВDontEndConnect\" "  + " newState " +newState);
                                         break;
 
@@ -598,7 +597,7 @@ public class ServiceClientGatt extends IntentService {
                                             concurrentHashMap  .put("BluetoothGatt.GATT_FAILURE","4");
                                             mediatorLiveDataGATT.setValue(concurrentHashMap);
                                         });
-                                        new Bl_froSetviceBLE(version,context). disaibleGattServer(gatt);
+                                        new Businesslogic_GattClinetRemoteBord.Businesslogic_GattClinetClose(version,context). disaibleGattServer(gatt);
                                         Log.d(TAG, "Trying to \"SERVERВDontEndConnect\" "  + " newState " +newState);
                                         break;
 
@@ -609,14 +608,14 @@ public class ServiceClientGatt extends IntentService {
                                             concurrentHashMap  .put("BluetoothGatt.GATT_CONNECTION_CONGESTED","5");
                                             mediatorLiveDataGATT.setValue(concurrentHashMap);
                                         });
-                                        new Bl_froSetviceBLE(version,context). disaibleGattServer(gatt);
+                                        new Businesslogic_GattClinetRemoteBord.Businesslogic_GattClinetClose(version,context). disaibleGattServer(gatt);
                                         Log.d(TAG, "Trying to \"SERVERВDontEndConnect\" "  + " newState " +newState);
                                         break;
 
 
                                     case 133 :
                                         // TODO: 16.07.2024 когда ошивка разрываем сообщение  
-                                        new Bl_froSetviceBLE(version,context). disaibleGattServer(gatt);
+                                        new Businesslogic_GattClinetRemoteBord.Businesslogic_GattClinetClose(version,context). disaibleGattServer(gatt);
                                         Log.d(TAG, "Trying to ДанныеОТGATTССевромGATT "  + " newState " +newState);
                                         break;
 
@@ -855,7 +854,7 @@ public class ServiceClientGatt extends IntentService {
                                 concurrentHashMap  .put("BluetoothDevice.DEVICE_TYPE_UNKNOWN","9");
                                 mediatorLiveDataGATT.setValue(concurrentHashMap);
                             });
-                    /*        bl_BloadcastReceierGatt blBloadcastReceierGatt = new bl_BloadcastReceierGatt(context, version);
+                    /*        Businesslogic_GattClinetRemoteBord blBloadcastReceierGatt = new Businesslogic_GattClinetRemoteBord(context, version);
                             blBloadcastReceierGatt.unpairDevice(bluetoothDevice);*/
 
                             Log.d(context.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
@@ -873,7 +872,7 @@ public class ServiceClientGatt extends IntentService {
 
                             });
                             // TODO: 22.07.2024  Принудительный Запуск Сопрежения
-                       /*         blBloadcastReceierGatt = new bl_BloadcastReceierGatt(context, version);
+                       /*         blBloadcastReceierGatt = new Businesslogic_GattClinetRemoteBord(context, version);
                             blBloadcastReceierGatt.unpairDevice(bluetoothDevice);*/
                             // TODO: 22.07.2024  Принудительный Запуск Сопрежения
 
@@ -1021,7 +1020,7 @@ public class ServiceClientGatt extends IntentService {
 
     public void getCloserClientGattFroFragment(){
 
-        new Bl_froSetviceBLE(version,context). disaibleGattServer(gatt);
+        new Businesslogic_GattClinetRemoteBord.Businesslogic_GattClinetClose(version,context). disaibleGattServer(gatt);
         Log.d(this.getClass().getName(), "  ПОСЛЕ КЛЮЧ ДЛЯ  OneSignal........  56bbe169-ea09-43de-a28c-9623058e43a2 "+"\n"+
                 "   OneSignal.getTriggerValueForKey(\"GT_PLAYER_ID\"); " + OneSignal.getTriggerValueForKey("GT_PLAYER_ID")+
                 "     OneSignal.getTriggers() " +   OneSignal.getTriggers()+"\n"+

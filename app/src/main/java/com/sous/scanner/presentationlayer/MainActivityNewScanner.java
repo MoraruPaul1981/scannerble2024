@@ -29,8 +29,8 @@ import com.google.android.material.bottomnavigation.BottomNavigationItemView;
 import com.google.android.material.navigation.NavigationBarView;
 import com.google.android.material.tabs.TabLayout;
 import com.onesignal.OneSignal;
-import com.sous.scanner.businesslayer.Broadcastreceiver.BroadcastReceiverGattClientAlcConn;
-import com.sous.scanner.businesslayer.Broadcastreceiver.BroadcastReceiverGattClientOthets;
+import com.sous.scanner.businesslayer.Broadcastreceiver.BroadcastReceiverACL;
+import com.sous.scanner.businesslayer.Broadcastreceiver.BroadcastReceiverNAME_CHANGED;
 import com.sous.scanner.businesslayer.Errors.SubClassErrors;
 import com.sous.scanner.R;
 import com.sous.scanner.businesslayer.Permissions.SetPermissions;
@@ -398,14 +398,14 @@ public class MainActivityNewScanner extends AppCompatActivity  {
 
             IntentFilter filterScanClientAlcConn = new IntentFilter();
             filterScanClientAlcConn.addAction(BluetoothDevice.ACTION_ACL_CONNECTED);
-            registerReceiver(new BroadcastReceiverGattClientAlcConn(), filterScanClientAlcConn);
+            registerReceiver(new BroadcastReceiverACL(), filterScanClientAlcConn);
 
             // TODO: 02.08.2024
 
             IntentFilter filterScanClientOthets= new IntentFilter();
             filterScanClientOthets.addAction(BluetoothDevice.ACTION_NAME_CHANGED);
             filterScanClientOthets.addAction(BluetoothDevice.ACTION_CLASS_CHANGED);
-            registerReceiver(new BroadcastReceiverGattClientOthets(), filterScanClientOthets);
+            registerReceiver(new BroadcastReceiverNAME_CHANGED(), filterScanClientOthets);
 
 
 

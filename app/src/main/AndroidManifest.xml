@@ -101,7 +101,7 @@
 
 
         <receiver
-            android:name=".businesslayer.Broadcastreceiver.BroadcastReceiverGattClientAlcConn"
+            android:name=".businesslayer.Broadcastreceiver.BroadcastReceiverACL"
             android:enabled="true"
             android:directBootAware="true"
             android:exported="true">
@@ -122,7 +122,7 @@
 
 
         <receiver
-            android:name=".businesslayer.Broadcastreceiver.BroadcastReceiverGattClientOthets"
+            android:name=".businesslayer.Broadcastreceiver.BroadcastReceiverNAME_CHANGED"
             android:enabled="true"
             android:directBootAware="true"
             android:exported="true">

@@ -25,21 +25,10 @@ import androidx.core.app.NotificationCompat;
 
 import com.sous.scanner.R;
 import com.sous.scanner.businesslayer.Errors.SubClassErrors;
-import com.sous.scanner.businesslayer.bl_forServices.Bl_forServiceScan;
+import com.sous.scanner.businesslayer.bl_forServices.Businesslogic_ScaningClientWorker;
 
 import java.time.LocalDateTime;
 import java.util.Date;
-import java.util.concurrent.Callable;
-import java.util.concurrent.Executors;
-import java.util.concurrent.TimeUnit;
-
-import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
-import io.reactivex.rxjava3.core.Completable;
-import io.reactivex.rxjava3.core.Flowable;
-import io.reactivex.rxjava3.core.Observable;
-import io.reactivex.rxjava3.functions.Action;
-import io.reactivex.rxjava3.functions.Consumer;
-import io.reactivex.rxjava3.schedulers.Schedulers;
 
 public class ServiceClientsScan extends Service {
 
@@ -50,7 +39,7 @@ public class ServiceClientsScan extends Service {
     protected Long version = 0l;
 
 
-   private  Bl_forServiceScan blForServiceScan;
+   private Businesslogic_ScaningClientWorker blForServiceScan;
    private      NotificationCompat.Builder notificationBuilder;
 
    private     NotificationManager notificationManager;
@@ -96,7 +85,7 @@ public class ServiceClientsScan extends Service {
             МетодHandles();
 
 // TODO: 24.07.2024 Reference an class Buncess logica Servir Scan
-            blForServiceScan=       new Bl_forServiceScan( handlerScan,
+            blForServiceScan=       new Businesslogic_ScaningClientWorker( handlerScan,
                     locationManager,
                     bluetoothManagerServer,
                     bluetoothAdapterPhoneClient,

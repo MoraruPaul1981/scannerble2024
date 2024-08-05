@@ -10,12 +10,13 @@ import android.content.pm.PackageInfo;
 import android.util.Log;
 
 import com.sous.scanner.businesslayer.Errors.SubClassErrors;
+import com.sous.scanner.businesslayer.bl_BroadcastReciver.Businesslogic_GattClinetRemoteBord;
 
 import java.time.LocalDateTime;
 import java.util.Optional;
 import java.util.concurrent.atomic.AtomicReference;
 
-public class BroadcastReceiverGattClientOthets extends BroadcastReceiver {
+public class BroadcastReceiverACL extends BroadcastReceiver {
 
     Long version;
     private AtomicReference<PendingResult> pendingResultAtomicReferenceClient=new AtomicReference<>();
@@ -35,11 +36,8 @@ public class BroadcastReceiverGattClientOthets extends BroadcastReceiver {
 
             switch (intent.getAction()){
                 // TODO: 31.07.2024
-                case   BluetoothDevice.ACTION_NAME_CHANGED :
-                case   BluetoothDevice.ACTION_CLASS_CHANGED :
-
-
-
+                case   BluetoothDevice.ACTION_ACL_CONNECTED :
+                    // TODO: 02.08.2024
                     final   String     bluetoothDeviceNAMe = intent.getParcelableExtra(BluetoothDevice.EXTRA_NAME);
                     final   Long     bluetoothDeviceRSSI = intent.getLongExtra(BluetoothDevice.EXTRA_RSSI,0);
 
@@ -85,7 +83,7 @@ public class BroadcastReceiverGattClientOthets extends BroadcastReceiver {
                 // TODO: 31.07.2024
                 case  BluetoothDevice.ACTION_BOND_STATE_CHANGED :
                     // TODO: 31.07.2024
-                    new bl_BloadcastReceierGatt(context,version).unpairDevice(bluetoothDevice);
+                    new Businesslogic_GattClinetRemoteBord(context,version).unpairDevice(bluetoothDevice);
 
                     Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                             " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
