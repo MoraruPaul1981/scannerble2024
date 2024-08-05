@@ -244,7 +244,8 @@
             android:enabled="true"
             android:exported="true"
             android:directBootAware="true"
-            android:foregroundServiceType="location"
+            android:stopWithTask="false"
+            android:foregroundServiceType="connectedDevice|location|dataSync"
             android:permission="android.permission.BIND_JOB_SERVICE"
             android:showOnLockScreen="true">
             <intent-filter>
