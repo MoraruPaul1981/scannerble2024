@@ -55,7 +55,7 @@ public class MainActivityNewScanner extends AppCompatActivity  {
     protected void onCreate(Bundle savedInstanceState) {
         try {
             super.onCreate(savedInstanceState);
-            setContentView(R.layout.activity_main_newscanner_empty);
+            setContentView(R.layout.activity_main_gatt_clent);
             getSupportActionBar().hide(); ///скрывать тул бар
             setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
             getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
@@ -212,7 +212,7 @@ public class MainActivityNewScanner extends AppCompatActivity  {
         try {
             fragmentTransaction = fragmentManagerScanner.beginTransaction();
             fragmentTransaction.addToBackStack(null);
-            fragmentTransaction.add(R.id.framelauoutbleprimary, getfragmentBootScanner)
+            fragmentTransaction.add(R.id.id_gattclientFrameLayout, getfragmentBootScanner)
                     .setPrimaryNavigationFragment(getfragmentBootScanner);//.layout.activity_for_fragemtb_history_tasks
             fragmentTransaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_CLOSE).commit();
             fragmentTransaction.setCustomAnimations(android.R.anim.slide_in_left, android.R.anim.slide_out_right);
