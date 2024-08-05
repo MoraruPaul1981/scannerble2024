@@ -35,7 +35,6 @@ import com.sous.scanner.businesslayer.Errors.SubClassErrors;
 import com.sous.scanner.R;
 import com.sous.scanner.businesslayer.Permissions.SetPermissions;
 import com.sous.scanner.businesslayer.Services.ServiceClientsScan;
-import com.sous.scanner.businesslayer.Services.ServiceClientGatt;
 
 import java.util.Date;
 import java.util.concurrent.Executors;

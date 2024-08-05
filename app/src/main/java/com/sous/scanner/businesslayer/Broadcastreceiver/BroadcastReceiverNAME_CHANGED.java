@@ -11,6 +11,7 @@ import android.util.Log;
 
 import com.sous.scanner.businesslayer.Errors.SubClassErrors;
 import com.sous.scanner.businesslayer.bl_BroadcastReciver.Businesslogic_GattClinetRemoteBord;
+import com.sous.scanner.businesslayer.bl_BroadcastReciver.Businesslogic_GattClinetSuccessfullycompletedClientControl;
 
 import java.time.LocalDateTime;
 import java.util.Optional;
@@ -18,8 +19,9 @@ import java.util.concurrent.atomic.AtomicReference;
 
 public class BroadcastReceiverNAME_CHANGED extends BroadcastReceiver {
 
-    Long version;
+    private Long version;
     private AtomicReference<PendingResult> pendingResultAtomicReferenceClient=new AtomicReference<>();
+
 
     @SuppressLint({"MissingPermission", "NewApi"})
     @Override
@@ -42,8 +44,7 @@ public class BroadcastReceiverNAME_CHANGED extends BroadcastReceiver {
 
 
                     final   String     bluetoothDeviceNAMe = intent.getParcelableExtra(BluetoothDevice.EXTRA_NAME);
-                    final   Long     bluetoothDeviceRSSI = intent.getLongExtra(BluetoothDevice.EXTRA_RSSI,0);
-
+                    int rssi = intent.getShortExtra(BluetoothDevice.EXTRA_RSSI,Short.MIN_VALUE);
 
                     // TODO: 31.07.2024
               String getAction=    Optional.ofNullable( intent.getAction().toUpperCase()).map(m->m.toUpperCase()) .orElseGet(()->"");
@@ -60,7 +61,7 @@ public class BroadcastReceiverNAME_CHANGED extends BroadcastReceiver {
                             + " BroadcastReceiver LocalDateTime.now() " + LocalDateTime.now().toString().toUpperCase()+"\n" +
                             "  getAction " + getAction+"\n"+
                             "  getAddress " + getAddress+"\n" +
-                            "  getName " + getName+"\n");
+                            "  getName " + getName+"\n"+ " rssi " +rssi);
 
 
 

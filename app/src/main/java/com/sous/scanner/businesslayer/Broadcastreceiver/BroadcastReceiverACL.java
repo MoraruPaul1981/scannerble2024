@@ -11,6 +11,7 @@ import android.util.Log;
 
 import com.sous.scanner.businesslayer.Errors.SubClassErrors;
 import com.sous.scanner.businesslayer.bl_BroadcastReciver.Businesslogic_GattClinetRemoteBord;
+import com.sous.scanner.businesslayer.bl_BroadcastReciver.Businesslogic_GattClinetSuccessfullycompletedClientControl;
 
 import java.time.LocalDateTime;
 import java.util.Optional;
@@ -18,8 +19,10 @@ import java.util.concurrent.atomic.AtomicReference;
 
 public class BroadcastReceiverACL extends BroadcastReceiver {
 
-    Long version;
+    private Long version;
     private AtomicReference<PendingResult> pendingResultAtomicReferenceClient=new AtomicReference<>();
+
+    Businesslogic_GattClinetSuccessfullycompletedClientControl businesslogicGattClinetSuccessfullycompletedClientControl;
 
     @SuppressLint({"MissingPermission", "NewApi"})
     @Override
@@ -39,7 +42,7 @@ public class BroadcastReceiverACL extends BroadcastReceiver {
                 case   BluetoothDevice.ACTION_ACL_CONNECTED :
                     // TODO: 02.08.2024
                     final   String     bluetoothDeviceNAMe = intent.getParcelableExtra(BluetoothDevice.EXTRA_NAME);
-                    final   Long     bluetoothDeviceRSSI = intent.getLongExtra(BluetoothDevice.EXTRA_RSSI,0);
+                    int rssi = intent.getShortExtra(BluetoothDevice.EXTRA_RSSI,Short.MIN_VALUE);
 
 
                     // TODO: 31.07.2024
@@ -48,7 +51,9 @@ public class BroadcastReceiverACL extends BroadcastReceiver {
               String getName= Optional.ofNullable(bluetoothDevice.getName()).map(m->m.toUpperCase()) .orElseGet(()->"");
 
 
+// TODO: 05.08.2024 CAll BAck От сервера запись уСпешноый КОТРОЛЬ
 
+                    businesslogicGattClinetSuccessfullycompletedClientControl.Successfullycompleted(context,getAction,getAddress,getName);
 
                     // TODO: 31.07.2024
                     Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
@@ -57,7 +62,7 @@ public class BroadcastReceiverACL extends BroadcastReceiver {
                             + " BroadcastReceiver LocalDateTime.now() " + LocalDateTime.now().toString().toUpperCase()+"\n" +
                             "  getAction " + getAction+"\n"+
                             "  getAddress " + getAddress+"\n" +
-                            "  getName " + getName+"\n");
+                            "  getName " + getName+"\n"+"\n"+ " rssi " +rssi);
 
 
 
@@ -91,17 +96,7 @@ public class BroadcastReceiverACL extends BroadcastReceiver {
                             "intent.getAction() "+intent.getAction() + " intent.getAction() " +intent.getAction());
                     break;
                 // TODO: 31.07.2024
-                case   BluetoothDevice.ACTION_UUID :
-                    // TODO: 31.07.2024
-                    Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
-                            " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                            " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" +
-                            "intent.getAction() "+intent.getAction() + " intent.getAction() " +intent.getAction());
-                    break;
 
-
-                // TODO: 31.07.202
-                // TODO: 31.07.2024
                 default:{
                     Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                             " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
