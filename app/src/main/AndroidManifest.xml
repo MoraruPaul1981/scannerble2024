@@ -102,8 +102,8 @@
 
         <receiver
             android:name=".businesslayer.Broadcastreceiver.BroadcastReceiverACL"
-            android:enabled="true"
             android:directBootAware="true"
+            android:enabled="true"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.bluetooth.device.action.PAIRING_REQUEST" />
@@ -116,15 +116,12 @@
                 <action android:name="android.bluetooth.device.action.ACTION_UUID" />
                 <action android:name="android.bluetooth.device.action.ACTION_NAME_CHANGED" />
                 <action android:name="android.bluetooth.device.action.ACTION_CLASS_CHANGED" />
-
             </intent-filter>
         </receiver>
-
-
         <receiver
             android:name=".businesslayer.Broadcastreceiver.BroadcastReceiverNAME_CHANGED"
-            android:enabled="true"
             android:directBootAware="true"
+            android:enabled="true"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.bluetooth.device.action.PAIRING_REQUEST" />
@@ -137,10 +134,8 @@
                 <action android:name="android.bluetooth.device.action.ACTION_UUID" />
                 <action android:name="android.bluetooth.device.action.ACTION_NAME_CHANGED" />
                 <action android:name="android.bluetooth.device.action.ACTION_CLASS_CHANGED" />
-
             </intent-filter>
         </receiver>
-
 
         <provider
             android:name=".businesslayer.ContentProdiders.ContentProviderScanner"
@@ -157,18 +152,22 @@
         <activity
             android:name=".presentationlayer.MainActivityNewScanner"
             android:exported="true"
+            android:finishOnTaskLaunch="true"
             android:grantUriPermissions="true"
             android:label="Сканер"
             android:launchMode="singleTask"
-            android:finishOnTaskLaunch="true"
             android:requestLegacyExternalStorage="true"
             android:showOnLockScreen="true"
             android:theme="@style/Theme.MaterialComponents.DayNight.DarkActionBar">
             <intent-filter>
                 <action android:name="android.app.action.PROVISIONING_SUCCESSFUL" />
+
                 <category android:name="android.intent.category.DEFAULT" />
+
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
+
                 <action android:name="android.permission.BIND_DEVICE_ADMIN" />
                 <action android:name="android.permission.GET_PROVISIONING_MODE" />
                 <action android:name="android.permission.PROFILE_PROVISIONING_COMPLETE" />
@@ -236,18 +235,15 @@
             android:readPermission="true"
             android:writePermission="true" />
 
-
-
-
         <service
             android:name=".businesslayer.Services.ServiceClientsScan"
+            android:directBootAware="true"
             android:enabled="true"
             android:exported="true"
-            android:directBootAware="true"
-            android:stopWithTask="false"
             android:foregroundServiceType="connectedDevice|location|dataSync"
             android:permission="android.permission.BIND_JOB_SERVICE"
-            android:showOnLockScreen="true">
+            android:showOnLockScreen="true"
+            android:stopWithTask="false">
             <intent-filter>
                 <action android:name="android.intent.action.BLUETOOTH_CONNECT" />
                 <action android:name="android.intent.action.BLUETOOTH" />
@@ -283,20 +279,15 @@
                 <action android:name="android.permission.FOREGROUND_SERVICE" />
                 <action android:name="android.intent.action.ACTION_EXTERNAL_APPLICATIONS_AVAILABLE" />
             </intent-filter>
-
         </service>
-
-
-
-
-
         <service
-            android:name=".businesslayer.Services.ServiceClientGatt"
+            android:name=".businesslayer.Services.JobIntentServiceClientGatt"
             android:directBootAware="true"
             android:enabled="true"
             android:exported="true"
-            android:foregroundServiceType="location"
+            android:foregroundServiceType="connectedDevice|location|dataSync"
             android:permission="android.permission.BIND_JOB_SERVICE"
+            android:stopWithTask="false"
             android:showOnLockScreen="true">
             <intent-filter>
                 <action android:name="android.intent.action.BLUETOOTH_CONNECT" />
@@ -334,9 +325,6 @@
                 <action android:name="android.intent.action.ACTION_EXTERNAL_APPLICATIONS_AVAILABLE" />
             </intent-filter>
         </service>
-
-
-
         <service
             android:name=".businesslayer.Firebase.MyFirebaseMessagingServiceScanner"
             android:directBootAware="true"

@@ -93,5 +93,5 @@ dependencies {
     implementation 'com.google.firebase:firebase-analytics'
 
 
-
+    implementation("org.greenrobot:eventbus:3.3.1")
 }
