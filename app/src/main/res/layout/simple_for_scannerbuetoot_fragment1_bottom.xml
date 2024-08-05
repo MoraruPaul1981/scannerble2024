@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <com.google.android.material.card.MaterialCardView
-    android:id="@+id/fragmentuserscanner"
+    android:id="@+id/id_fragmentuserscanner"
     android:layout_height="match_parent"
     android:layout_width="match_parent"
     android:translationZ="5dp"
@@ -24,7 +24,7 @@
 
 
         <com.google.android.material.textview.MaterialTextView
-            android:id="@+id/textViewDefaultNameState"
+            android:id="@+id/id_textViewDefaultNameState"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:drawablePadding="5dp"
@@ -47,10 +47,10 @@
 
 
         <com.google.android.material.textview.MaterialTextView
-            android:id="@+id/textView5getstatus"
+            android:id="@+id/id_textView5getstatus"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below ="@+id/textViewDefaultNameState"
+            android:layout_below ="@+id/id_textViewDefaultNameState"
             android:drawablePadding="5dp"
             android:drawableLeft="@drawable/icon_dsu1_scanner_status_last"
             android:gravity="center_vertical"
@@ -70,8 +70,8 @@
 
 
         <com.google.android.material.button.MaterialButton
-            android:id="@+id/bottomcontrolfragmen2"
-            android:layout_below="@+id/textView5getstatus"
+            android:id="@+id/id_bottomcontrolfragmen2"
+            android:layout_below="@+id/id_textView5getstatus"
             android:layout_centerHorizontal="true"
             android:layout_width="220dp"
             android:layout_height="220dp"
@@ -96,7 +96,7 @@
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/bottomcontrolfragmen1"
-            android:layout_below="@+id/bottomcontrolfragmen2"
+            android:layout_below="@+id/id_bottomcontrolfragmen2"
             android:layout_centerHorizontal="true"
             android:layout_width="220dp"
             android:layout_height="220dp"
