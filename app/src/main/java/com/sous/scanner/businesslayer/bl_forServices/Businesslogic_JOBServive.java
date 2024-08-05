@@ -1,50 +1,17 @@
 package com.sous.scanner.businesslayer.bl_forServices;
 
-import android.annotation.SuppressLint;
-import android.app.NotificationManager;
-import android.bluetooth.BluetoothAdapter;
-import android.bluetooth.BluetoothDevice;
-import android.bluetooth.BluetoothGatt;
-import android.bluetooth.BluetoothGattCallback;
-import android.bluetooth.BluetoothGattCharacteristic;
-import android.bluetooth.BluetoothGattService;
-import android.bluetooth.BluetoothManager;
-import android.bluetooth.BluetoothProfile;
 import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
-import android.location.LocationManager;
-import android.os.Message;
-import android.os.ParcelUuid;
-import android.provider.Settings;
 import android.util.Log;
 
-import androidx.annotation.NonNull;
-import androidx.core.app.NotificationCompat;
 import androidx.core.content.ContextCompat;
-import androidx.lifecycle.MutableLiveData;
 
 import com.sous.scanner.businesslayer.Errors.SubClassErrors;
-import com.sous.scanner.businesslayer.Services.JobIntentServiceClientGatt;
+import com.sous.scanner.businesslayer.Services.IntentServiceClientGatt;
 import com.sous.scanner.businesslayer.Services.ServiceClientsScan;
 
-import java.time.LocalDateTime;
-import java.util.Date;
-import java.util.UUID;
-import java.util.concurrent.ConcurrentHashMap;
-import java.util.concurrent.ConcurrentSkipListSet;
-import java.util.concurrent.CopyOnWriteArrayList;
-import java.util.concurrent.Executors;
-import java.util.concurrent.ScheduledExecutorService;
-import java.util.concurrent.TimeUnit;
-import java.util.concurrent.atomic.AtomicInteger;
-
 import javax.inject.Inject;
-
-import io.reactivex.rxjava3.core.Observable;
-import io.reactivex.rxjava3.functions.Action;
-import io.reactivex.rxjava3.functions.Consumer;
-import io.reactivex.rxjava3.schedulers.Schedulers;
 
 public class Businesslogic_JOBServive {
 
@@ -59,13 +26,14 @@ long version;
     public void startingServiceJobIntentServiceClientGatt(String taskforJob) {
         try {
 
-            Intent intentJobIntentServiceClientGatt = new Intent(context, JobIntentServiceClientGatt.class);
+            Intent intentJobIntentServiceClientGatt = new Intent(context, IntentServiceClientGatt.class);
             intentJobIntentServiceClientGatt.addFlags(Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
             intentJobIntentServiceClientGatt.setAction(taskforJob);
             intentJobIntentServiceClientGatt.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
             intentJobIntentServiceClientGatt.addFlags(Intent.FLAG_GRANT_PERSISTABLE_URI_PERMISSION);
             // TODO: 24.07.2024
-            JobIntentServiceClientGatt.enqueueWork(context,intentJobIntentServiceClientGatt);
+            // TODO: 24.07.2024
+            context.startService( intentJobIntentServiceClientGatt);
             // TODO: 26.07.2024
             Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                     " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +

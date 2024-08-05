@@ -187,17 +187,6 @@ public class Businesslogic_ScaningClientWorker {
                             new SubClassErrors(context).МетодЗаписиОшибок(valuesЗаписываемОшибки);
                         }
                     })
-                    .doOnSubscribe(new Consumer<Disposable>() {
-                        @Override
-                        public void accept(Disposable disposable) throws Throwable {
-                            // TODO: 05.08.2024  start Fragment SCANNEer
-                            statyingCallBAckFragmentScaner();
-
-                            Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
-                                    " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                                    " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" );
-                        }
-                    })
                     .subscribe();
 
                 }
@@ -235,13 +224,13 @@ public class Businesslogic_ScaningClientWorker {
 
     private  void addingQueueListmac(CopyOnWriteArrayList<String> getListMAC) {
         if (getListMAC.size()==0) {
-            getListMAC.add( "98:2F:F8:19:BC:F7");
-            getListMAC.add( "64:03:7F:A2:E2:C2");
+  /*          getListMAC.add( "98:2F:F8:19:BC:F7");*/
+         /*   getListMAC.add( "64:03:7F:A2:E2:C2");*/
             getListMAC.add( "74:15:75:D8:F5:FA");
         }
     }
 
-    private  void statyingCallBAckFragmentScaner() {
+    public void statyingCallBAckFragmentScaner() {
         try{
             EventB_Clent eventBClentCallBACKfRAGMENTsCANNER= new EventB_Clent( new FragmentScannerUser());
             //TODO: ответ на экран работает ообрубование или нет

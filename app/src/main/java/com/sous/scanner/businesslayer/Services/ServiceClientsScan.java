@@ -125,8 +125,13 @@ public class ServiceClientsScan extends Service {
     public int onStartCommand(Intent intent, int flags, int startId) {
         try{
 // TODO: 24.07.2024 Scan
+
+            // TODO: 05.08.2024  start Fragment SCANNEer
+            blForServiceScan.    statyingCallBAckFragmentScaner();
+
+
             // TODO: 25.07.2024 Бесконечная работа
-            blForServiceScan.startingUserFromrUIButtonWorkerScanGATT(15);
+            //blForServiceScan.startingUserFromrUIButtonWorkerScanGATT(15);
 
             Log.d(getApplicationContext().getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                     " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +

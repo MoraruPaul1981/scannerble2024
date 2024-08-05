@@ -22,7 +22,7 @@ public class BroadcastReceiverACL extends BroadcastReceiver {
     private Long version;
     private AtomicReference<PendingResult> pendingResultAtomicReferenceClient=new AtomicReference<>();
 
-    Businesslogic_GattClinetSuccessfullycompletedClientControl businesslogicGattClinetSuccessfullycompletedClientControl;
+
 
     @SuppressLint({"MissingPermission", "NewApi"})
     @Override
@@ -53,7 +53,7 @@ public class BroadcastReceiverACL extends BroadcastReceiver {
 
 // TODO: 05.08.2024 CAll BAck От сервера запись уСпешноый КОТРОЛЬ
 
-                    businesslogicGattClinetSuccessfullycompletedClientControl.Successfullycompleted(context,getAction,getAddress,getName);
+                    new Businesslogic_GattClinetSuccessfullycompletedClientControl(context,version).Successfullycompleted(context,getAction,getAddress,getName);
 
                     // TODO: 31.07.2024
                     Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +

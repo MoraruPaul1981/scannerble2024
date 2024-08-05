@@ -2,7 +2,6 @@ package com.sous.scanner.presentationlayer;
 
 import android.annotation.SuppressLint;
 import android.content.ContentValues;
-import android.content.Intent;
 import android.content.pm.PackageInfo;
 import android.os.Bundle;
 import android.os.Message;
@@ -12,32 +11,22 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
-import android.widget.RelativeLayout;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentResultListener;
 import androidx.fragment.app.FragmentTransaction;
 
-import com.google.android.material.card.MaterialCardView;
 import com.google.android.material.tabs.TabLayout;
 import com.sous.scanner.businesslayer.Errors.SubClassErrors;
 import com.sous.scanner.R;
-import com.sous.scanner.businesslayer.Services.JobIntentServiceClientGatt;
-import com.sous.scanner.businesslayer.Services.ServiceClientsScan;
 import com.sous.scanner.businesslayer.bl_EvenBus.EventB_Clent;
 import com.sous.scanner.businesslayer.bl_forServices.Businesslogic_JOBServive;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
-
-import javax.inject.Inject;
-
-import kotlinx.coroutines.internal.AtomicOp;
 
 
 public class FragmentBootScanner extends Fragment {
@@ -89,6 +78,13 @@ public class FragmentBootScanner extends Fragment {
             fragmentManager = getActivity().getSupportFragmentManager();
             // TODO: 05.08.2024
             businesslogicJobServive=new Businesslogic_JOBServive(getContext());
+
+            // TODO: 16.07.2024  startting Fragment Scannig
+            businesslogicJobServive.   startingServiceSimpleScan();
+            // TODO: 05.08.2024 JOB Service
+            businesslogicJobServive.startingServiceJobIntentServiceClientGatt("SimpleJob");
+
+
             Log.d(getContext().getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                     " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
                     " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n");
@@ -145,12 +141,6 @@ public class FragmentBootScanner extends Fragment {
         if (!EventBus.getDefault().isRegistered(this)) {
             EventBus.getDefault().register(this);
         }
-
-        // TODO: 16.07.2024  startting Fragment Scannig
-        businesslogicJobServive.   startingServiceSimpleScan();
-        // TODO: 05.08.2024 JOB Service
-        businesslogicJobServive.startingServiceJobIntentServiceClientGatt("SimpleJob");
-
 
         Log.d(getContext().getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                 " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +

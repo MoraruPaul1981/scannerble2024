@@ -15,7 +15,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
-import android.widget.RelativeLayout;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -24,6 +23,8 @@ import androidx.fragment.app.FragmentManager;
 import androidx.lifecycle.Lifecycle;
 import androidx.lifecycle.LifecycleEventObserver;
 import androidx.lifecycle.LifecycleOwner;
+import androidx.recyclerview.widget.DividerItemDecoration;
+import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -35,6 +36,7 @@ import com.jakewharton.rxbinding4.view.RxView;
 import com.sous.scanner.businesslayer.Errors.SubClassErrors;
 import com.sous.scanner.R;
 import com.sous.scanner.businesslayer.bl_forServices.Businesslogic_JOBServive;
+import com.sous.scanner.businesslayer.bl_fragnment_gatt_client.BinessLogicaForfragmentgattclient;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -57,14 +59,13 @@ public class FragmentScannerUser extends Fragment {
     // TODO: 05.08.2024
     private MyRecycleViewAdapter myRecycleViewAdapter;
     private MyViewHolder myViewHolder;
-    private RecyclerView recyclerviewnewscanner;
     private FragmentManager fragmentManager;
     private Message handler;
     private  MaterialCardView materialcardview_gattclientonly_bottom;
     private  MaterialTextView materialtextview_last_state;
     private Long version = 0l;
     private SharedPreferences preferences;
-    private  TabLayout tabLayoutScanner;
+
     private  LifecycleOwner lifecycleOwner ;
     private  Businesslogic_JOBServive businesslogicJobServive;
     private Animation   animation;
@@ -152,8 +153,6 @@ public class FragmentScannerUser extends Fragment {
 
             materialtextview_last_state = (MaterialTextView) materialcardview_gattclientonly_bottom.findViewById(R.id.id_materialtextview_last_state);
 
-            tabLayoutScanner = (TabLayout) ((MainActivityNewScanner) getActivity()).tabLayout;
-
             Log.d(getContext().getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                     " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
                     " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n");
@@ -209,7 +208,6 @@ public class FragmentScannerUser extends Fragment {
     public void onStart() {
         super.onStart();
         try {
-            visilingscannerTaylaut();
             МетодЗаполенияRecycleViewДляЗадач();
             МетодИнициализацииRecycleViewДляЗадач();
             МетодСлушательObserverДляRecycleView();
@@ -434,9 +432,11 @@ public class FragmentScannerUser extends Fragment {
     void МетодЗаполенияRecycleViewДляЗадач() {
         try {
            ArrayList<String> ArrayListСканер = new ArrayList();
-            ArrayListСканер.add("Фрагмент Клиента");
+            ArrayListСканер.add("ExitEmployee");
+            ArrayListСканер.add("InterEmploye");
+
             myRecycleViewAdapter = new MyRecycleViewAdapter(ArrayListСканер);
-            recyclerviewnewscanner.setAdapter(myRecycleViewAdapter);
+            recyclerview_gatt_main.setAdapter(myRecycleViewAdapter);
 
             Log.d(getContext().getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                     " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
@@ -461,12 +461,17 @@ public class FragmentScannerUser extends Fragment {
     // TODO: 04.03.2022 прозвомжность инициализации RecycleView
     void МетодИнициализацииRecycleViewДляЗадач() {
         try {
-            LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity());
-            linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
-            recyclerviewnewscanner.setLayoutManager(linearLayoutManager);
-            recyclerviewnewscanner.setNestedScrollingEnabled(false);
-            recyclerviewnewscanner.setHasFixedSize(false);//TODO new LinearLayoutManager(getContext())
-            recyclerviewnewscanner.getAdapter().notifyDataSetChanged();
+
+            DividerItemDecoration dividerItemDecorationHor=
+                    new DividerItemDecoration(recyclerview_gatt_main.getContext(), LinearLayoutManager.VERTICAL);
+            recyclerview_gatt_main.addItemDecoration(dividerItemDecorationHor);
+            GridLayoutManager layoutManager = new GridLayoutManager(getContext(), 1,
+                    GridLayoutManager.VERTICAL,false);
+            layoutManager.setSpanSizeLookup(new GridLayoutManager.DefaultSpanSizeLookup());
+            recyclerview_gatt_main.setLayoutManager(layoutManager);
+            recyclerview_gatt_main.setNestedScrollingEnabled(false);
+            recyclerview_gatt_main.setHasFixedSize(false);//TODO new LinearLayoutManager(getContext())
+
             Log.d(getContext().getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                     " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
                     " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" );
@@ -491,8 +496,7 @@ public class FragmentScannerUser extends Fragment {
 
     // TODO: 28.02.2022 начало  MyViewHolderДляЧата
     protected class MyViewHolder extends RecyclerView.ViewHolder {
-        private MaterialButton materialButtonКотрольПриход, materialButtonКотрольВыход;
-        private MaterialTextView materialTextViewСтатусПоследнегоДействие;
+        private MaterialButton materialbutton_enter_and_exit_employee;
 
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -519,21 +523,8 @@ public class FragmentScannerUser extends Fragment {
             try {
                 Log.d(this.getClass().getName(), " отработоатл new SubClassBuccessLogin_ГлавныйКлассБизнесЛогикиФрагмент1 itemView   " + itemView);
                 // TODO: 08.02.2023 кнопка на работы
-                materialButtonКотрольПриход = itemView.findViewById(R.id.bottomcontrolfragmen1);
-                materialButtonКотрольПриход.setText("на работу");
-                materialButtonКотрольПриход.setToggleCheckedStateOnClick(true);
-
-
-                // TODO: 08.02.2023 кнопка выхода с работы
-                materialButtonКотрольВыход = itemView.findViewById(R.id.bottomcontrolfragmen2);
-                materialButtonКотрольВыход.setText("с работы");
-
-                materialTextViewСтатусПоследнегоДействие = itemView.findViewById(R.id.textView5getstatus);
-
-
-
+                materialbutton_enter_and_exit_employee = itemView.findViewById(R.id.id_materialbutton_enter_and_exit_employee);
                 // TODO: 17.07.2024
-
                 Log.d(getContext().getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                         " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
                         " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" );
@@ -657,7 +648,9 @@ public class FragmentScannerUser extends Fragment {
         public MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
             View view = null;
             try {
-                view = LayoutInflater.from(parent.getContext()).inflate(R.layout.simple_for_scannerbuetoot_fragment1_bottom, parent, false);//todo old simple_for_takst_cardview1
+                view = LayoutInflater.from(parent.getContext()).inflate(R.layout.simple_for_gattclientonly_bottom, parent, false);//todo old simple_for_takst_cardview1
+                // TODO: 05.08.2024
+
                 myViewHolder = new MyViewHolder(view);
                 Log.i(this.getClass().getName(), "   myViewHolder" + myViewHolder);
             } catch (Exception e) {
@@ -681,21 +674,32 @@ public class FragmentScannerUser extends Fragment {
         public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
             try {
                 // TODO: 17.07.2024  Сотрудник ПРИХОДИТ
-                animationemployeeArrived(holder);
-                eventButtonemployeeArrived(holder);
+                if (position==0) {
+                    animationemployeeArrived(holder);
+                    eventButtonemployeeArrived(holder);
+
+                    Log.d(getContext().getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                            " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                            " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n");
+
+                }else {
+
+                    animationemployeeArrived(holder);
+                    eventButtonemployeeArrived(holder);
+
+
+                    Log.d(getContext().getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                            " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                            " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n");
+
+                }
 
                 Log.d(getContext().getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                         " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
                         " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n");
 
 
-         // TODO: 17.07.2024  Сотрудник ВЫХОДИТ
-                anitatioinButtonEventemployeeExit(holder);
-                eventButtonEventEmployeeExit(holder);
 
-                Log.d(getContext().getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
-                        " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                        " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n");
 
             } catch (Exception e) {
                 e.printStackTrace();
@@ -717,7 +721,7 @@ public class FragmentScannerUser extends Fragment {
             try {
              Animation   animation = AnimationUtils.loadAnimation(getContext(), R.anim.slide_in_row_vibrator2);
                 animation.setDuration(100l);
-                holder.materialButtonКотрольВыход.startAnimation(animation);
+                holder.materialbutton_enter_and_exit_employee.startAnimation(animation);
                 Log.i(this.getClass().getName(), "   создание согласования" + myViewHolder);
                 //TODO
             } catch (Exception e) {
@@ -741,7 +745,7 @@ public class FragmentScannerUser extends Fragment {
             try {
                 Animation   animation2 = AnimationUtils.loadAnimation(getContext(), R.anim.slide_in_row_vibrator2);
                 animation2.setDuration(200l);
-                holder.materialButtonКотрольПриход.startAnimation(animation2);
+                holder.materialbutton_enter_and_exit_employee.startAnimation(animation2);
                 Log.i(this.getClass().getName(), "   создание согласования" + myViewHolder);
                 //TODO
             } catch (Exception e) {
@@ -767,7 +771,7 @@ public class FragmentScannerUser extends Fragment {
                         +new Date().toLocaleString() + " holder " +holder);
                 // TODO: 19.02.2023 Второе Действие
                 // TODO: 22.02.2023 для второй кнопки
-                RxView.clicks(holder.materialButtonКотрольПриход)
+                RxView.clicks(holder.materialbutton_enter_and_exit_employee)
                         .throttleFirst(5, TimeUnit.SECONDS)
                         .observeOn(AndroidSchedulers.mainThread())
                         .subscribe(new io.reactivex.rxjava3.core.Observer<Unit>() {
@@ -859,7 +863,7 @@ public class FragmentScannerUser extends Fragment {
                 Log.i(this.getClass().getName(),  "  " +Thread.currentThread().getStackTrace()[2].getMethodName()+ " время "
                         +new Date().toLocaleString() + " holder " +holder);
                 // TODO: 19.02.2023 Второе Действие
-                RxView.clicks(holder.materialButtonКотрольВыход)
+                RxView.clicks(holder.materialbutton_enter_and_exit_employee)
                         .throttleFirst(5, TimeUnit.SECONDS)
                         .observeOn(AndroidSchedulers.mainThread())
                         .subscribe(new io.reactivex.rxjava3.core.Observer<Unit>() {
@@ -880,7 +884,7 @@ public class FragmentScannerUser extends Fragment {
                                 Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                                         " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
                                         " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" +
-                                        " holder.materialButtonКотрольВыход" +holder.materialButtonКотрольВыход);
+                                        " holder.materialbutton_enter_and_exit_employee" +holder.materialbutton_enter_and_exit_employee);
 
                                 // TODO: 22.02.2023
                             }
@@ -998,8 +1002,12 @@ public class FragmentScannerUser extends Fragment {
         @Override
         public int getItemCount() {
             try {
-
-                Log.d(this.getClass().getName(), "ArrayListДанныеОтСканироваиниеДивайсов " + ArrayListДанныеОтСканироваиниеДивайсов);
+                // TODO: 02.08.2024
+                Log.d(this.getClass().getName(), "\n" + " class " +
+                        Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                        " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                        " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" + "\n" +
+                        " ArrayListДанныеОтСканироваиниеДивайсов.size() " + ArrayListДанныеОтСканироваиниеДивайсов.size());
             } catch (Exception e) {
                 e.printStackTrace();
                 Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() + " Линия  :"
@@ -1021,10 +1029,11 @@ public class FragmentScannerUser extends Fragment {
     //TODO метод делает callback с ответом на экран
     private void МетодПерегрузкаRecyceView() {
         try {
-            recyclerviewnewscanner.getAdapter().notifyDataSetChanged();
-            recyclerviewnewscanner.requestLayout();
-            recyclerviewnewscanner.forceLayout();
-            recyclerviewnewscanner.refreshDrawableState();
+            recyclerview_gatt_main.getAdapter().notifyDataSetChanged();
+            recyclerview_gatt_main.requestLayout();
+            recyclerview_gatt_main.refreshDrawableState();
+            recyclerview_gatt_main.requestLayout();
+
         } catch (Exception e) {
             e.printStackTrace();
             Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() + " Линия  :"
@@ -1069,34 +1078,6 @@ public class FragmentScannerUser extends Fragment {
     }
 
 
-
-
-
-
-
-
-    public void visilingscannerTaylaut() {
-        try{
-            tabLayoutScanner.setVisibility(View.VISIBLE);
-
-            Log.d(getContext().getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
-                    " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                    " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n");
-        } catch (Exception e) {
-            e.printStackTrace();
-            Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() + " Линия  :"
-                    + Thread.currentThread().getStackTrace()[2].getLineNumber());
-            ContentValues valuesЗаписываемОшибки = new ContentValues();
-            valuesЗаписываемОшибки.put("Error", e.toString().toLowerCase());
-            valuesЗаписываемОшибки.put("Klass", this.getClass().getName());
-            valuesЗаписываемОшибки.put("Metod", Thread.currentThread().getStackTrace()[2].getMethodName());
-            valuesЗаписываемОшибки.put("LineError", Thread.currentThread().getStackTrace()[2].getLineNumber());
-            final Object ТекущаяВерсияПрограммы = version;
-            Integer ЛокальнаяВерсияПОСравнение = Integer.parseInt(ТекущаяВерсияПрограммы.toString());
-            valuesЗаписываемОшибки.put("whose_error", ЛокальнаяВерсияПОСравнение);
-            new SubClassErrors(getContext()).МетодЗаписиОшибок(valuesЗаписываемОшибки);
-        }
-    }
 
 
 

@@ -20,10 +20,10 @@
 
 
         <com.google.android.material.button.MaterialButton
-            android:id="@+id/id_bottomcontrolfragmen2"
+            android:id="@+id/id_materialbutton_enter_and_exit_employee"
           android:layout_centerInParent="true"
-            android:layout_width="220dp"
-            android:layout_height="220dp"
+            android:layout_width="230dp"
+            android:layout_height="230dp"
             android:gravity="center"
             android:layout_marginTop="50dp"
             style="@style/Widget.MaterialComponents.ExtendedFloatingActionButton.Icon"
@@ -36,7 +36,7 @@
             app:rippleColor="#C62828"
             app:strokeColor="#F5FFFA"
             app:strokeWidth="1dp"
-            android:text="На работу" />
+            android:hint="#статус задачи" />
 
 
 
