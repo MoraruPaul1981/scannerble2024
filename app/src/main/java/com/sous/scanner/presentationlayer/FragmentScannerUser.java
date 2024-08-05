@@ -5,7 +5,6 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.pm.PackageInfo;
-import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
@@ -20,15 +19,11 @@ import android.widget.RelativeLayout;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.annotation.RequiresApi;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentResultListener;
 import androidx.lifecycle.Lifecycle;
 import androidx.lifecycle.LifecycleEventObserver;
 import androidx.lifecycle.LifecycleOwner;
-import androidx.lifecycle.MediatorLiveData;
-import androidx.lifecycle.MutableLiveData;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -46,21 +41,15 @@ import org.jetbrains.annotations.NotNull;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 
-import javax.inject.Inject;
-
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
-import io.reactivex.rxjava3.core.Flowable;
 import io.reactivex.rxjava3.core.Observable;
 import io.reactivex.rxjava3.disposables.Disposable;
 import io.reactivex.rxjava3.functions.Action;
-import io.reactivex.rxjava3.functions.Consumer;
-import io.reactivex.rxjava3.functions.Predicate;
 import kotlin.Unit;
 
 
@@ -71,14 +60,15 @@ public class FragmentScannerUser extends Fragment {
     private RecyclerView recyclerviewnewscanner;
     private FragmentManager fragmentManager;
     private Message handler;
-    private  MaterialCardView cardView_scannerble_fragment;
-    private  RelativeLayout recyclerviewsccanerble ;
+    private  MaterialCardView materialcardview_gattclientonly_bottom;
+    private  MaterialTextView materialtextview_last_state;
     private Long version = 0l;
     private SharedPreferences preferences;
     private  TabLayout tabLayoutScanner;
     private  LifecycleOwner lifecycleOwner ;
     private  Businesslogic_JOBServive businesslogicJobServive;
     private Animation   animation;
+    private       RecyclerView     recyclerview_gatt_main;
 
 
     @Override
@@ -155,9 +145,13 @@ public class FragmentScannerUser extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         try {
-            cardView_scannerble_fragment = (MaterialCardView) view.findViewById(R.id.id_cardView_scannerble_fragment);
-            recyclerviewsccanerble    = (RelativeLayout) cardView_scannerble_fragment.findViewById(R.id.recyclerviewsccanerble);
-            recyclerviewnewscanner = (RecyclerView) recyclerviewsccanerble.findViewById(R.id.recyclerviewnewscanner);
+
+            materialcardview_gattclientonly_bottom = (MaterialCardView) view.findViewById(R.id.id_materialcardview_gattclientonly_bottom);
+
+            recyclerview_gatt_main = (RecyclerView) materialcardview_gattclientonly_bottom.findViewById(R.id.id_recyclerview_gatt_main);
+
+            materialtextview_last_state = (MaterialTextView) materialcardview_gattclientonly_bottom.findViewById(R.id.id_materialtextview_last_state);
+
             tabLayoutScanner = (TabLayout) ((MainActivityNewScanner) getActivity()).tabLayout;
 
             Log.d(getContext().getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
@@ -185,7 +179,8 @@ public class FragmentScannerUser extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = null;
         try {
-            view = inflater.inflate(R.layout.fragment_scanner_recyreview, container, false);
+            view = inflater.inflate(R.layout.fragment1_gatt_clientfor_scaning, container, false);
+            // TODO: 05.08.2024  
             Log.d(getContext().getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                     " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
                     " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"+" view " +view);

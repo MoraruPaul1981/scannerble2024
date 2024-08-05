@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.card.MaterialCardView
+    android:id="@+id/id_materialcardview_simple_gatt_scan"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:translationZ="2dp"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".presentationlayer.MainActivityNewScanner">
+
+
+
+    <RelativeLayout
+        android:id="@+id/id_relativeLayout_fragment_boot"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#FFFFFF"
+        android:orientation="vertical">
+
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/id_bottomcontrolfragmen2"
+          android:layout_centerInParent="true"
+            android:layout_width="220dp"
+            android:layout_height="220dp"
+            android:gravity="center"
+            android:layout_marginTop="50dp"
+            style="@style/Widget.MaterialComponents.ExtendedFloatingActionButton.Icon"
+            app:cardCornerRadius="10dp"
+            app:cardElevation="4dp"
+            app:cardMaxElevation="15dp"
+            app:cornerRadius='150dp'
+            app:backgroundTint="#BDC6C8"
+            android:translationZ="5dp"
+            app:rippleColor="#C62828"
+            app:strokeColor="#F5FFFA"
+            app:strokeWidth="1dp"
+            android:text="На работу" />
+
+
+
+    </RelativeLayout>
+
+</com.google.android.material.card.MaterialCardView>

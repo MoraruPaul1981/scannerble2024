@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <com.google.android.material.card.MaterialCardView
-    android:id="@+id/id_fragmentuserscanner"
+    android:id="@+id/id_materialcardview_gattclientonly_bottom"
     android:layout_height="match_parent"
     android:layout_width="match_parent"
     android:translationZ="5dp"
@@ -47,7 +47,7 @@
 
 
         <com.google.android.material.textview.MaterialTextView
-            android:id="@+id/id_textView5getstatus"
+            android:id="@+id/id_materialtextview_last_state"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below ="@+id/id_textViewDefaultNameState"
@@ -69,50 +69,21 @@
 
 
 
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/id_bottomcontrolfragmen2"
-            android:layout_below="@+id/id_textView5getstatus"
+
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/id_recyclerview_gatt_main"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
             android:layout_centerHorizontal="true"
-            android:layout_width="220dp"
-            android:layout_height="220dp"
-            android:gravity="center"
-            android:layout_marginTop="50dp"
-            style="@style/Widget.MaterialComponents.ExtendedFloatingActionButton.Icon"
-            app:cardCornerRadius="10dp"
-            app:cardElevation="4dp"
-            app:cardMaxElevation="15dp"
-            app:cornerRadius='150dp'
-            app:backgroundTint="#BDC6C8"
-            android:translationZ="20dp"
-            app:rippleColor="#C62828"
-            app:strokeColor="#F5FFFA"
-            app:strokeWidth="1dp"
-            android:text="На работу" />
-
-
-
-
-
-
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/bottomcontrolfragmen1"
-            android:layout_below="@+id/id_bottomcontrolfragmen2"
-            android:layout_centerHorizontal="true"
-            android:layout_width="220dp"
-            android:layout_height="220dp"
-            android:gravity="center"
-            android:layout_marginTop="50dp"
-            style="@style/Widget.MaterialComponents.ExtendedFloatingActionButton.Icon"
-            app:cardCornerRadius="10dp"
-            app:cardElevation="4dp"
-            app:cardMaxElevation="15dp"
-            app:cornerRadius='150dp'
-            app:backgroundTint="#939C9E"
-            android:translationZ="20dp"
-            app:rippleColor="#C62828"
-            app:strokeColor="#F5FFFA"
-            app:strokeWidth="1dp"
-            android:text="С работы" />
+            android:layout_below ="@+id/id_materialtextview_last_state"
+            android:background="#F0FFFF"
+            android:visibility="visible"
+            android:padding="1dp"
+            android:layout_margin="1dp"
+            android:fillViewport="true"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior"
+            tools:ignore="MissingConstraints" />
 
 
 
