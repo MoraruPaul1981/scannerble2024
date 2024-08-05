@@ -65,29 +65,20 @@ import kotlin.Unit;
 
 
 public class FragmentScannerUser extends Fragment {
+    // TODO: 05.08.2024
     private MyRecycleViewAdapter myRecycleViewAdapter;
     private MyViewHolder myViewHolder;
     private RecyclerView recyclerviewnewscanner;
-
     private FragmentManager fragmentManager;
-
     private Message handler;
     private  MaterialCardView cardView_scannerble_fragment;
     private  RelativeLayout recyclerviewsccanerble ;
-
-
-    private String КлючДляFibaseOneSingnal;
     private Long version = 0l;
     private SharedPreferences preferences;
-
     private  TabLayout tabLayoutScanner;
-
-    // TODO: 30.01.2023 ВТОРАЯ ЧАСТЬ ОТВЕТ ПРОВЕТ GATT SERVER/CLIENT
     private  LifecycleOwner lifecycleOwner ;
-
-    @Inject
-    Businesslogic_JOBServive businesslogicJobServive;
-
+    private  Businesslogic_JOBServive businesslogicJobServive;
+    private Animation   animation;
 
 
     @Override
@@ -98,13 +89,13 @@ public class FragmentScannerUser extends Fragment {
             version = pInfo.getLongVersionCode();
             preferences = getContext().getSharedPreferences("sharedPreferencesХранилище", Context.MODE_MULTI_PROCESS);
             fragmentManager = getActivity().getSupportFragmentManager();
-            КлючДляFibaseOneSingnal = "56bbe169-ea09-43de-a28c-9623058e43a2";
+            // TODO: 05.08.2024
             Animation   animation = AnimationUtils.loadAnimation(getContext(), R.anim.slide_in_row_vibrator2);
 
             // TODO: 05.08.2024
             МетодHandler();
-
             settingGtLifeCyrcyleMutable();
+            businesslogicJobServive=new Businesslogic_JOBServive(getContext());
 
             Log.d(getContext().getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                     " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +

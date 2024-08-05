@@ -50,15 +50,7 @@ public class JobIntentServiceClientGatt extends JobIntentService {
 
 
     // TODO: 05.08.2024
-
-    @Override
-    public void onCreate() {
-        super.onCreate();
-        Log.d(  getApplicationContext().getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
-                " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n");
-
-    }
+ 
 
     @Override
     public IBinder onBind(@NonNull Intent intent) {

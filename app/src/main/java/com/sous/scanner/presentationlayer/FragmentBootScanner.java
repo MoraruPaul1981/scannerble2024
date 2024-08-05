@@ -37,6 +37,8 @@ import org.greenrobot.eventbus.ThreadMode;
 
 import javax.inject.Inject;
 
+import kotlinx.coroutines.internal.AtomicOp;
+
 
 public class FragmentBootScanner extends Fragment {
     Long version=0l;
@@ -49,7 +51,7 @@ public class FragmentBootScanner extends Fragment {
     private Message handlerScanner;
     private  TabLayout tabLayoutScanner;
 
-    @Inject
+
     Businesslogic_JOBServive businesslogicJobServive;
 
     @SuppressLint("RestrictedApi")
@@ -85,6 +87,8 @@ public class FragmentBootScanner extends Fragment {
             PackageInfo     pInfo = getContext().getPackageManager().getPackageInfo(getContext().getPackageName(), 0);
             version = pInfo.getLongVersionCode();
             fragmentManager = getActivity().getSupportFragmentManager();
+            // TODO: 05.08.2024
+            businesslogicJobServive=new Businesslogic_JOBServive(getContext());
             Log.d(getContext().getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                     " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
                     " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n");

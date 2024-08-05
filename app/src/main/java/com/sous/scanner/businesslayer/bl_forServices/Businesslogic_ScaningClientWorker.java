@@ -17,12 +17,17 @@ import android.os.Message;
 import android.os.ParcelUuid;
 import android.provider.Settings;
 import android.util.Log;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.core.app.NotificationCompat;
 import androidx.lifecycle.MutableLiveData;
 
 import com.sous.scanner.businesslayer.Errors.SubClassErrors;
+import com.sous.scanner.businesslayer.bl_EvenBus.EventB_Clent;
+import com.sous.scanner.presentationlayer.FragmentScannerUser;
+
+import org.greenrobot.eventbus.EventBus;
 
 import java.time.LocalDateTime;
 import java.util.Date;
@@ -36,6 +41,7 @@ import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicInteger;
 
 import io.reactivex.rxjava3.core.Observable;
+import io.reactivex.rxjava3.disposables.Disposable;
 import io.reactivex.rxjava3.functions.Action;
 import io.reactivex.rxjava3.functions.Consumer;
 import io.reactivex.rxjava3.schedulers.Schedulers;
@@ -107,14 +113,15 @@ public class Businesslogic_ScaningClientWorker {
             // TODO: 02.08.2024
             CopyOnWriteArrayList<BluetoothGattCallback>  bluetoothGattCallbacks = new CopyOnWriteArrayList();
 
+
+            // TODO: 25.07.2024
+            if (bluetoothAdapterPhoneClient!=null) {
+                // TODO: 30.07.2024
+                if (bluetoothAdapterPhoneClient.isEnabled()) {
+                    // TODO: 05.08.2024
             Observable.fromAction(new Action() {
                         @Override
                         public void run() throws Throwable {
-                            // TODO: 25.07.2024
-                            if (bluetoothAdapterPhoneClient!=null) {
-                                // TODO: 30.07.2024
-                                if (bluetoothAdapterPhoneClient.isEnabled()) {
-
 
                                  // TODO: 02.08.2024 Обгнуляем Счетчик
                                     if (atomicInteger.get()>=getListMAC.size()) {
@@ -131,7 +138,7 @@ public class Businesslogic_ScaningClientWorker {
                                       final BluetoothDevice bluetoothDeviceScan = bluetoothAdapterPhoneClient.getRemoteDevice(getAddress.trim());
 
                                     // TODO: 12.02.2023  init CallBack Gatt Client for Scan
-                                    bluetoothGattCallbacks.addIfAbsent(МетодРаботыСТекущийСерверомGATTДляScan( ));
+                                    bluetoothGattCallbacks.add(МетодРаботыСТекущийСерверомGATTДляScan( ));
 
 
                                   // TODO: 26.01.2023 staring  GATT
@@ -146,9 +153,6 @@ public class Businesslogic_ScaningClientWorker {
                                             " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
                                             " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" + "\n"
                                             +  " atomicInteger.get() "+ atomicInteger.get());
-
-                                }
-                            }
 
                             Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                                     " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
@@ -183,7 +187,28 @@ public class Businesslogic_ScaningClientWorker {
                             new SubClassErrors(context).МетодЗаписиОшибок(valuesЗаписываемОшибки);
                         }
                     })
+                    .doOnSubscribe(new Consumer<Disposable>() {
+                        @Override
+                        public void accept(Disposable disposable) throws Throwable {
+                            // TODO: 05.08.2024  start Fragment SCANNEer
+                            statyingCallBAckFragmentScaner();
+
+                            Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                                    " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                                    " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" );
+                        }
+                    })
                     .subscribe();
+
+                }
+            }else{
+
+                Toast.makeText(context, "Bluetooth нет !!! ", Toast.LENGTH_SHORT).show();
+
+                Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                        " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                        " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" );
+            }
 
             // TODO: 07.04.2024
             Log.d(this.getClass().getName(), "\n" + " class " +
@@ -210,13 +235,37 @@ public class Businesslogic_ScaningClientWorker {
 
     private  void addingQueueListmac(CopyOnWriteArrayList<String> getListMAC) {
         if (getListMAC.size()==0) {
-            getListMAC.addIfAbsent( "98:2F:F8:19:BC:F7");
-            getListMAC.addIfAbsent( "64:03:7F:A2:E2:C2");
-            getListMAC.addIfAbsent( "74:15:75:D8:F5:FA");
+            getListMAC.add( "98:2F:F8:19:BC:F7");
+            getListMAC.add( "64:03:7F:A2:E2:C2");
+            getListMAC.add( "74:15:75:D8:F5:FA");
         }
     }
 
+    private  void statyingCallBAckFragmentScaner() {
+        try{
+            EventB_Clent eventBClentCallBACKfRAGMENTsCANNER= new EventB_Clent( new FragmentScannerUser());
+            //TODO: ответ на экран работает ообрубование или нет
+            EventBus.getDefault().post(eventBClentCallBACKfRAGMENTsCANNER);
 
+            Log.d(context.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                    " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                    " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n");
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() + " Линия  :"
+                    + Thread.currentThread().getStackTrace()[2].getLineNumber());
+            ContentValues valuesЗаписываемОшибки = new ContentValues();
+            valuesЗаписываемОшибки.put("Error", e.toString().toLowerCase());
+            valuesЗаписываемОшибки.put("Klass", this.getClass().getName());
+            valuesЗаписываемОшибки.put("Metod", Thread.currentThread().getStackTrace()[2].getMethodName());
+            valuesЗаписываемОшибки.put("LineError", Thread.currentThread().getStackTrace()[2].getLineNumber());
+            final Object ТекущаяВерсияПрограммы = version;
+            Integer ЛокальнаяВерсияПОСравнение = Integer.parseInt(ТекущаяВерсияПрограммы.toString());
+            valuesЗаписываемОшибки.put("whose_error", ЛокальнаяВерсияПОСравнение);
+            new SubClassErrors(context).МетодЗаписиОшибок(valuesЗаписываемОшибки);
+        }
+    }
     @SuppressLint("MissingPermission")
     private BluetoothGattCallback МетодРаботыСТекущийСерверомGATTДляScan(   ) {
         // TODO: 25.01.2023 ПЕРВЫЙ ВАРИАНТ СЕРВЕР gatt
