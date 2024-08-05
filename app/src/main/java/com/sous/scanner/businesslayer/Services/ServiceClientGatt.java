@@ -34,6 +34,7 @@ import com.google.firebase.messaging.FirebaseMessagingService;
 import com.onesignal.OneSignal;
 import com.sous.scanner.businesslayer.Firebase.MyFirebaseMessagingServiceScanner;
 import com.sous.scanner.businesslayer.Errors.SubClassErrors;
+import com.sous.scanner.businesslayer.bl_BroadcastReciver.Businesslogic_GattClinetClose;
 import com.sous.scanner.businesslayer.bl_BroadcastReciver.Businesslogic_GattClinetRemoteBord;
 
 import java.util.Date;
@@ -586,7 +587,7 @@ public class ServiceClientGatt extends IntentService {
                                             concurrentHashMap  .put("BluetoothProfile.STATE_DISCONNECTED","3");
                                             mediatorLiveDataGATT.setValue(concurrentHashMap);
                                         });*/
-                                       new Businesslogic_GattClinetRemoteBord.Businesslogic_GattClinetClose(version,context). disaibleGattServer(gatt);
+                                       new Businesslogic_GattClinetClose(version,context). disaibleGattServer(gatt);
                                         Log.d(TAG, "Trying to \"SERVERВDontEndConnect\" "  + " newState " +newState);
                                         break;
 
@@ -597,7 +598,7 @@ public class ServiceClientGatt extends IntentService {
                                             concurrentHashMap  .put("BluetoothGatt.GATT_FAILURE","4");
                                             mediatorLiveDataGATT.setValue(concurrentHashMap);
                                         });
-                                        new Businesslogic_GattClinetRemoteBord.Businesslogic_GattClinetClose(version,context). disaibleGattServer(gatt);
+                                        new  Businesslogic_GattClinetClose(version,context). disaibleGattServer(gatt);
                                         Log.d(TAG, "Trying to \"SERVERВDontEndConnect\" "  + " newState " +newState);
                                         break;
 
@@ -608,7 +609,7 @@ public class ServiceClientGatt extends IntentService {
                                             concurrentHashMap  .put("BluetoothGatt.GATT_CONNECTION_CONGESTED","5");
                                             mediatorLiveDataGATT.setValue(concurrentHashMap);
                                         });
-                                        new Businesslogic_GattClinetRemoteBord.Businesslogic_GattClinetClose(version,context). disaibleGattServer(gatt);
+                                        new  Businesslogic_GattClinetClose(version,context). disaibleGattServer(gatt);
                                         Log.d(TAG, "Trying to \"SERVERВDontEndConnect\" "  + " newState " +newState);
                                         break;
 
