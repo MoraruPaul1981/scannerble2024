@@ -14,6 +14,7 @@ import com.sous.scanner.businesslayer.bl_BroadcastReciver.Businesslogic_GattClin
 import com.sous.scanner.businesslayer.bl_BroadcastReciver.Businesslogic_GattClinetSuccessfullycompletedClientControl;
 
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Optional;
 import java.util.concurrent.atomic.AtomicReference;
 
@@ -51,6 +52,9 @@ public class BroadcastReceiverNAME_CHANGED extends BroadcastReceiver {
               String getAddress=     Optional.ofNullable(bluetoothDevice.getAddress().toUpperCase()) .orElseGet(()->"");
               String getName= Optional.ofNullable(bluetoothDevice.getName()).map(m->m.toUpperCase()) .orElseGet(()->"");
 
+                    LocalDateTime futureDate = LocalDateTime.now();
+                    DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy.MM.dd HH.mm.ss.SSS");
+                    String getBremy=   dtf.format(futureDate);
 
 
 
@@ -61,7 +65,9 @@ public class BroadcastReceiverNAME_CHANGED extends BroadcastReceiver {
                             + " BroadcastReceiver LocalDateTime.now() " + LocalDateTime.now().toString().toUpperCase()+"\n" +
                             "  getAction " + getAction+"\n"+
                             "  getAddress " + getAddress+"\n" +
-                            "  getName " + getName+"\n"+ " rssi " +rssi);
+                            "  getName " + getName+"\n"
+                            + " rssi " +rssi+"\n"+
+                            " getBremy " +getBremy);
 
 
 

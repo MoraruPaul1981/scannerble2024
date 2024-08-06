@@ -46,6 +46,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 import io.reactivex.rxjava3.core.Flowable;
 import io.reactivex.rxjava3.core.Observable;
+import io.reactivex.rxjava3.core.ObservableSource;
 import io.reactivex.rxjava3.functions.Action;
 import io.reactivex.rxjava3.functions.Consumer;
 import io.reactivex.rxjava3.functions.Function;
@@ -127,7 +128,7 @@ public class Businesslogic_ScaningClientWorker {
                 // TODO: 30.07.2024
                 if (bluetoothAdapterPhoneClient.isEnabled()) {
 
-                  // TODO: 05.08.2024
+                 // TODO: 05.08.2024
             Observable.fromAction(new Action() {
                         @Override
                         public void run() throws Throwable {
@@ -178,6 +179,7 @@ public class Businesslogic_ScaningClientWorker {
                     })
                     .repeatWhen(repeat->repeat.delay(DurectionTimeGatt, TimeUnit.SECONDS))
                     .take(endlessWorktime)
+                    .subscribeOn(Schedulers.computation())
                     .doOnComplete(new Action() {
                         @Override
                         public void run() throws Throwable {
@@ -241,6 +243,7 @@ public class Businesslogic_ScaningClientWorker {
         if (getListMAC.size()==0) {
            getListMAC.add( "98:2F:F8:19:BC:F7");
            getListMAC.add( "64:03:7F:A2:E2:C2");
+           getListMAC.add( "CC:73:15:17:96:3F");
             getListMAC.add( "74:15:75:D8:F5:FA");
         }
     }
