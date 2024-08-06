@@ -28,6 +28,8 @@ import com.sous.scanner.businesslayer.bl_EvenBus.EventB_Clent;
 import com.sous.scanner.presentationlayer.FragmentScannerUser;
 
 import org.greenrobot.eventbus.EventBus;
+import org.reactivestreams.Subscriber;
+import org.reactivestreams.Subscription;
 
 import java.time.LocalDateTime;
 import java.util.Date;
@@ -40,9 +42,12 @@ import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicInteger;
 
+import io.reactivex.rxjava3.core.Flowable;
 import io.reactivex.rxjava3.core.Observable;
 import io.reactivex.rxjava3.functions.Action;
 import io.reactivex.rxjava3.functions.Consumer;
+import io.reactivex.rxjava3.functions.Function;
+import io.reactivex.rxjava3.parallel.ParallelFlowable;
 import io.reactivex.rxjava3.schedulers.Schedulers;
 
 public class Businesslogic_ScaningClientWorker {
@@ -117,7 +122,178 @@ public class Businesslogic_ScaningClientWorker {
             if (bluetoothAdapterPhoneClient!=null) {
                 // TODO: 30.07.2024
                 if (bluetoothAdapterPhoneClient.isEnabled()) {
-                    // TODO: 05.08.2024
+
+
+
+
+                    // TODO: 07.04.2024
+                    ParallelFlowable<String>     flowable= (ParallelFlowable)    Flowable.fromIterable( getListMAC )
+                            .parallel().runOn(Schedulers.from(Executors.newFixedThreadPool(getListMAC.size())));
+
+                    flowable.doOnNext(new Consumer<String>() {
+                        @Override
+                        public void accept(String s) throws Throwable {
+                            Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                                    " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                                    " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"   +"    Flowable.fromAction(new Action() { "
+                                    +   new Date().toLocaleString()
+                                    + " bluetoothAdapterPhoneClient.isEnabled() " +bluetoothAdapterPhoneClient.isEnabled());
+
+
+                            // TODO: 06.12.2023  запуск синхризуции по таблице конктерной
+                            // TODO: 02.08.2024 Обгнуляем Счетчик
+                            if (atomicInteger.get()>=getListMAC.size()) {
+                                // TODO: 02.08.2024
+                                atomicInteger.set(0);
+                                // TODO: 02.08.2024
+                                bluetoothGattCallbacks.clear();
+                            }
+
+                            // TODO: 25.07.2024
+                            final     String getAddress=     getListMAC.get(atomicInteger.get());
+                            // TODO: 02.08.2024
+                            // TODO: 26.07.2024
+                            final BluetoothDevice bluetoothDeviceScan = bluetoothAdapterPhoneClient.getRemoteDevice(getAddress.trim());
+
+                            // TODO: 12.02.2023  init CallBack Gatt Client for Scan
+                            bluetoothGattCallbacks.add(МетодРаботыСТекущийСерверомGATTДляScan( ));
+
+
+                            // TODO: 26.01.2023 staring  GATT
+                            МетодЗапускаGATTКлиентаScan(bluetoothDeviceScan, bluetoothGattCallbacks.get(atomicInteger.get()));
+
+                            // TODO: 02.08.2024 Увлеичиваем Значение Счетика
+                            atomicInteger.incrementAndGet();
+
+                            // TODO: 02.08.2024
+                            Log.d(this.getClass().getName(), "\n" + " class " +
+                                    Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                                    " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                                    " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" + "\n"
+                                    +  " atomicInteger.get() "+ atomicInteger.get());
+
+
+                            Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                                    " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                                    " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"   +"    Flowable.fromAction(new Action() { "
+                                    +   new Date().toLocaleString()
+                                    + " bluetoothAdapterPhoneClient.isEnabled() " +bluetoothAdapterPhoneClient.isEnabled());
+
+
+                        }
+                    }).sequential().doOnError(new Consumer<Throwable>() {
+                        @Override
+                        public void accept(Throwable throwable) throws Throwable {
+                            throwable.printStackTrace();
+                            Log.e(this.getClass().getName(), "Ошибка " +throwable + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() + " Линия  :"
+                                    + Thread.currentThread().getStackTrace()[2].getLineNumber());
+                            ContentValues valuesЗаписываемОшибки = new ContentValues();
+                            valuesЗаписываемОшибки.put("Error", throwable.toString().toLowerCase());
+                            valuesЗаписываемОшибки.put("Klass", this.getClass().getName());
+                            valuesЗаписываемОшибки.put("Metod", Thread.currentThread().getStackTrace()[2].getMethodName());
+                            valuesЗаписываемОшибки.put("LineError", Thread.currentThread().getStackTrace()[2].getLineNumber());
+                            final Object ТекущаяВерсияПрограммы = version;
+                            Integer ЛокальнаяВерсияПОСравнение = Integer.parseInt(ТекущаяВерсияПрограммы.toString());
+                            valuesЗаписываемОшибки.put("whose_error", ЛокальнаяВерсияПОСравнение);
+                            new SubClassErrors(context).МетодЗаписиОшибок(valuesЗаписываемОшибки);
+                        }
+                    }).doOnComplete(new Action() {
+                        @Override
+                        public void run() throws Throwable {
+
+                            Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                                    " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                                    " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n");
+                        }
+                    }).subscribe(e-> Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                            " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                            " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"   +"    Flowable.fromAction(new Action() { "
+                            +   new Date().toLocaleString()
+                            + " e " +e));
+
+
+                /*    flowable.doOnNext(new io.reactivex.rxjava3.functions.Consumer<String>() {
+                                @Override
+                                public void accept(String ТаблицаОбработываемаяParallel) throws Throwable {
+
+                                    // TODO: 06.12.2023  запуск синхризуции по таблице конктерной
+                                    // TODO: 02.08.2024 Обгнуляем Счетчик
+                                    if (atomicInteger.get()>=getListMAC.size()) {
+                                        // TODO: 02.08.2024
+                                        atomicInteger.set(0);
+                                        // TODO: 02.08.2024
+                                        bluetoothGattCallbacks.clear();
+                                    }
+
+                                    // TODO: 25.07.2024
+                                    final     String getAddress=     getListMAC.get(atomicInteger.get());
+                                    // TODO: 02.08.2024
+                                    // TODO: 26.07.2024
+                                    final BluetoothDevice bluetoothDeviceScan = bluetoothAdapterPhoneClient.getRemoteDevice(getAddress.trim());
+
+                                    // TODO: 12.02.2023  init CallBack Gatt Client for Scan
+                                    bluetoothGattCallbacks.add(МетодРаботыСТекущийСерверомGATTДляScan( ));
+
+
+                                    // TODO: 26.01.2023 staring  GATT
+                                    МетодЗапускаGATTКлиентаScan(bluetoothDeviceScan, bluetoothGattCallbacks.get(atomicInteger.get()));
+
+                                    // TODO: 02.08.2024 Увлеичиваем Значение Счетика
+                                    atomicInteger.incrementAndGet();
+
+                                    // TODO: 02.08.2024
+                                    Log.d(this.getClass().getName(), "\n" + " class " +
+                                            Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                                            " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                                            " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" + "\n"
+                                            +  " atomicInteger.get() "+ atomicInteger.get());
+
+
+                                    Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                                            " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                                            " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"   +"    Flowable.fromAction(new Action() { "
+                                            +   new Date().toLocaleString()
+                                            + " bluetoothAdapterPhoneClient.isEnabled() " +bluetoothAdapterPhoneClient.isEnabled());
+
+
+                                }
+                            })
+                            .doOnError(new Consumer<Throwable>() {
+                        @Override
+                        public void accept(Throwable throwable) throws Throwable {
+                            throwable.printStackTrace();
+                            Log.e(this.getClass().getName(), "Ошибка " +throwable + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() + " Линия  :"
+                                    + Thread.currentThread().getStackTrace()[2].getLineNumber());
+                            ContentValues valuesЗаписываемОшибки = new ContentValues();
+                            valuesЗаписываемОшибки.put("Error", throwable.toString().toLowerCase());
+                            valuesЗаписываемОшибки.put("Klass", this.getClass().getName());
+                            valuesЗаписываемОшибки.put("Metod", Thread.currentThread().getStackTrace()[2].getMethodName());
+                            valuesЗаписываемОшибки.put("LineError", Thread.currentThread().getStackTrace()[2].getLineNumber());
+                            final Object ТекущаяВерсияПрограммы = version;
+                            Integer ЛокальнаяВерсияПОСравнение = Integer.parseInt(ТекущаяВерсияПрограммы.toString());
+                            valuesЗаписываемОшибки.put("whose_error", ЛокальнаяВерсияПОСравнение);
+                            new SubClassErrors(context).МетодЗаписиОшибок(valuesЗаписываемОшибки);
+                        }
+                    }).doOnComplete(new Action() {
+                                @Override
+                                public void run() throws Throwable {
+
+                                    Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                                            " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                                            " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n");
+                                }
+                            }).sequential()
+                            .blockingSubscribe();*/
+
+
+
+
+
+
+
+
+
+/*                    // TODO: 05.08.2024
             Observable.fromAction(new Action() {
                         @Override
                         public void run() throws Throwable {
@@ -187,7 +363,7 @@ public class Businesslogic_ScaningClientWorker {
                             new SubClassErrors(context).МетодЗаписиОшибок(valuesЗаписываемОшибки);
                         }
                     })
-                    .subscribe();
+                    .subscribe();*/
 
                 }
             }else{

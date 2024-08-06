@@ -30,6 +30,8 @@ import com.sous.scanner.businesslayer.bl_forServices.Businesslogic_ScaningClient
 import java.time.LocalDateTime;
 import java.util.Date;
 
+import io.reactivex.rxjava3.core.Flowable;
+
 public class ServiceClientsScan extends Service {
 
     public Message handlerScan;
