@@ -25,11 +25,7 @@ import androidx.core.app.NotificationCompat;
 
 import com.sous.scanner.R;
 import com.sous.scanner.businesslayer.Errors.SubClassErrors;
-import com.sous.scanner.businesslayer.bl_EvenBus.EventB_Clent;
 import com.sous.scanner.businesslayer.bl_forServices.Businesslogic_ScaningClientWorker;
-import com.sous.scanner.presentationlayer.FragmentScannerUser;
-
-import org.greenrobot.eventbus.EventBus;
 
 import java.time.LocalDateTime;
 import java.util.Date;
@@ -125,17 +121,36 @@ public class ServiceClientsScan extends Service {
     public int onStartCommand(Intent intent, int flags, int startId) {
         try{
 // TODO: 24.07.2024 Scan
-
             // TODO: 05.08.2024  start Fragment SCANNEer
             blForServiceScan.    statyingCallBAckFragmentScaner();
 
+            switch (intent.getAction()) {
+                // TODO: 06.08.2024
+                case "robotlaunchingfrombackground":
+                    // TODO: 25.07.2024 Бесконечная работа
+                    blForServiceScan.robotlaunchingfromScanbackground(30,  Long.MAX_VALUE);
 
-            // TODO: 25.07.2024 Бесконечная работа
-            blForServiceScan.startingUserFromrUIButtonWorkerScanGATT(15);
+                    Log.d(getApplicationContext().getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                            " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                            " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" + " intent " +intent.getAction());
+                    break;
+
+
+
+                // TODO: 06.08.2024
+                case "userUIlaunchingfrombackground":
+                      // TODO: 06.08.2024
+                    blForServiceScan.userAnUIlaunchingfromScan(15 );
+
+                    Log.d(getApplicationContext().getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                            " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                            " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" + " intent " +intent.getAction());
+                    break;
+            }
 
             Log.d(getApplicationContext().getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                     " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                    " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n");
+                    " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" + " intent " +intent.getAction());
 
         } catch (Exception e) {
             e.printStackTrace();

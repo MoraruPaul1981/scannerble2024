@@ -809,7 +809,8 @@ public class FragmentScannerUser extends Fragment {
                         @Override
                         public void run() throws Throwable {
                             // TODO: 05.08.2024 JOB Service
-                            businesslogicJobServive.startingServiceJobIntentServiceClientGatt(materialButtonClick.getText().toString());
+                            // TODO: 16.07.2024  startting Fragment Scannig
+                            businesslogicJobServive.   startingServiceSimpleScan("userUIlaunchingfrombackground");
 
                             Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                                     " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +

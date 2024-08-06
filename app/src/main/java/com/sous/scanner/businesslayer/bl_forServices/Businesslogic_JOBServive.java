@@ -57,12 +57,13 @@ long version;
     }
 
     // TODO: 29.11.2022 служба сканирования
-    public void startingServiceSimpleScan() {
+    public void startingServiceSimpleScan(String stateScartServiceScan) {
         try {
 
             Intent intentClientServiceSimpleScan = new Intent(context, ServiceClientsScan.class);
             intentClientServiceSimpleScan.addFlags(Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
             intentClientServiceSimpleScan.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+            intentClientServiceSimpleScan.setAction(stateScartServiceScan);
             intentClientServiceSimpleScan.addFlags(Intent.FLAG_GRANT_PERSISTABLE_URI_PERMISSION);
             // TODO: 24.07.2024
             ContextCompat.startForegroundService(context,intentClientServiceSimpleScan);
