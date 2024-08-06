@@ -30,13 +30,12 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.card.MaterialCardView;
-import com.google.android.material.tabs.TabLayout;
 import com.google.android.material.textview.MaterialTextView;
 import com.jakewharton.rxbinding4.view.RxView;
 import com.sous.scanner.businesslayer.Errors.SubClassErrors;
 import com.sous.scanner.R;
 import com.sous.scanner.businesslayer.bl_forServices.Businesslogic_JOBServive;
-import com.sous.scanner.businesslayer.bl_fragnment_gatt_client.BinessLogicaForfragmentgattclient;
+import com.sous.scanner.businesslayer.bl_fragnment_gatt_client.DividerItemDecorator;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -70,6 +69,9 @@ public class FragmentScannerUser extends Fragment {
     private  Businesslogic_JOBServive businesslogicJobServive;
     private Animation   animation;
     private       RecyclerView     recyclerview_gatt_main;
+
+    private  String  toWork="На работу";
+    private     String    fromtheJob="С работы";
 
 
     @Override
@@ -253,24 +255,7 @@ public class FragmentScannerUser extends Fragment {
         }
     }
 
-    private void МетодВизуализацииКнопокИБар() {
-        try {
-            Log.i(this.getClass().getName(), "onStart() " + Thread.currentThread().getStackTrace()[2].getMethodName() + " время " + new Date().toLocaleString());
-        } catch (Exception e) {
-            e.printStackTrace();
-            Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() + " Линия  :"
-                    + Thread.currentThread().getStackTrace()[2].getLineNumber());
-            ContentValues valuesЗаписываемОшибки = new ContentValues();
-            valuesЗаписываемОшибки.put("Error", e.toString().toLowerCase());
-            valuesЗаписываемОшибки.put("Klass", this.getClass().getName());
-            valuesЗаписываемОшибки.put("Metod", Thread.currentThread().getStackTrace()[2].getMethodName());
-            valuesЗаписываемОшибки.put("LineError", Thread.currentThread().getStackTrace()[2].getLineNumber());
-            final Object ТекущаяВерсияПрограммы = version;
-            Integer ЛокальнаяВерсияПОСравнение = Integer.parseInt(ТекущаяВерсияПрограммы.toString());
-            valuesЗаписываемОшибки.put("whose_error", ЛокальнаяВерсияПОСравнение);
-            new SubClassErrors(getContext()).МетодЗаписиОшибок(valuesЗаписываемОшибки);
-        }
-    }
+
 
 
     void МетодСлушательObserverДляRecycleView() {  // TODO: 04.03.2022  класс в котором находяться слушатели
@@ -465,8 +450,8 @@ public class FragmentScannerUser extends Fragment {
             DividerItemDecoration dividerItemDecorationHor=
                     new DividerItemDecoration(recyclerview_gatt_main.getContext(), LinearLayoutManager.VERTICAL);
             recyclerview_gatt_main.addItemDecoration(dividerItemDecorationHor);
-            GridLayoutManager layoutManager = new GridLayoutManager(getContext(), 1,
-                    GridLayoutManager.VERTICAL,false);
+            GridLayoutManager layoutManager = new GridLayoutManager(getContext(), 2,
+                    GridLayoutManager.HORIZONTAL,false);
             layoutManager.setSpanSizeLookup(new GridLayoutManager.DefaultSpanSizeLookup());
             recyclerview_gatt_main.setLayoutManager(layoutManager);
             recyclerview_gatt_main.setNestedScrollingEnabled(false);
@@ -496,7 +481,8 @@ public class FragmentScannerUser extends Fragment {
 
     // TODO: 28.02.2022 начало  MyViewHolderДляЧата
     protected class MyViewHolder extends RecyclerView.ViewHolder {
-        private MaterialButton materialbutton_enter_and_exit_employee;
+        private MaterialButton materialbutton_Exit_employee;
+        private MaterialButton materialbutton_Same_employee;
 
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -523,7 +509,9 @@ public class FragmentScannerUser extends Fragment {
             try {
                 Log.d(this.getClass().getName(), " отработоатл new SubClassBuccessLogin_ГлавныйКлассБизнесЛогикиФрагмент1 itemView   " + itemView);
                 // TODO: 08.02.2023 кнопка на работы
-                materialbutton_enter_and_exit_employee = itemView.findViewById(R.id.id_materialbutton_enter_and_exit_employee);
+                materialbutton_Exit_employee = itemView.findViewById(R.id.id_materialbutton_enter_and_exit_employee);
+                // TODO: 06.08.2024
+                materialbutton_Same_employee = itemView.findViewById(R.id.id_materialbutton_enter_and_exit_employee);
                 // TODO: 17.07.2024
                 Log.d(getContext().getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                         " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
@@ -675,18 +663,21 @@ public class FragmentScannerUser extends Fragment {
             try {
                 // TODO: 17.07.2024  Сотрудник ПРИХОДИТ
                 if (position==0) {
-                    animationemployeeArrived(holder);
-                    eventButtonemployeeArrived(holder);
+// TODO: 06.08.2024
+                    holder.materialbutton_Same_employee.setText(toWork);
+                    animationCurrentButonClick(holder.materialbutton_Same_employee,200);
+                    // TODO: 06.08.2024  
+                    eventButtonemployeeArrived(holder.materialbutton_Same_employee);
 
                     Log.d(getContext().getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                             " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
                             " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n");
 
                 }else {
-
-                    animationemployeeArrived(holder);
-                    eventButtonemployeeArrived(holder);
-
+                    holder.materialbutton_Same_employee.setText(fromtheJob);
+                    animationCurrentButonClick(holder.materialbutton_Exit_employee,100);
+                    // TODO: 06.08.2024
+                    eventButtonemployeeArrived(holder.materialbutton_Exit_employee);
 
                     Log.d(getContext().getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                             " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
@@ -696,57 +687,36 @@ public class FragmentScannerUser extends Fragment {
 
                 Log.d(getContext().getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                         " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                        " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"+
+                        "  position " +position);
+
+
+            } catch (Exception e) {
+                e.printStackTrace();
+                Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() + " Линия  :"
+                        + Thread.currentThread().getStackTrace()[2].getLineNumber());
+                ContentValues valuesЗаписываемОшибки = new ContentValues();
+                valuesЗаписываемОшибки.put("Error", e.toString().toLowerCase());
+                valuesЗаписываемОшибки.put("Klass", this.getClass().getName());
+                valuesЗаписываемОшибки.put("Metod", Thread.currentThread().getStackTrace()[2].getMethodName());
+                valuesЗаписываемОшибки.put("LineError", Thread.currentThread().getStackTrace()[2].getLineNumber());
+                final Object ТекущаяВерсияПрограммы = version;
+                Integer ЛокальнаяВерсияПОСравнение = Integer.parseInt(ТекущаяВерсияПрограммы.toString());
+                valuesЗаписываемОшибки.put("whose_error", ЛокальнаяВерсияПОСравнение);
+                new SubClassErrors(getContext()).МетодЗаписиОшибок(valuesЗаписываемОшибки);
+            }
+        }
+
+
+
+        private void animationCurrentButonClick(@NonNull MaterialButton materialButtonClick,@NonNull int Duration) {
+            try {
+                Animation   animation = AnimationUtils.loadAnimation(getContext(), R.anim.slide_in_row_vibrator2);
+                animation.setDuration(Duration);
+                materialButtonClick.startAnimation(animation);
+                Log.d(getContext().getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                        " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
                         " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n");
-
-
-
-
-            } catch (Exception e) {
-                e.printStackTrace();
-                Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() + " Линия  :"
-                        + Thread.currentThread().getStackTrace()[2].getLineNumber());
-                ContentValues valuesЗаписываемОшибки = new ContentValues();
-                valuesЗаписываемОшибки.put("Error", e.toString().toLowerCase());
-                valuesЗаписываемОшибки.put("Klass", this.getClass().getName());
-                valuesЗаписываемОшибки.put("Metod", Thread.currentThread().getStackTrace()[2].getMethodName());
-                valuesЗаписываемОшибки.put("LineError", Thread.currentThread().getStackTrace()[2].getLineNumber());
-                final Object ТекущаяВерсияПрограммы = version;
-                Integer ЛокальнаяВерсияПОСравнение = Integer.parseInt(ТекущаяВерсияПрограммы.toString());
-                valuesЗаписываемОшибки.put("whose_error", ЛокальнаяВерсияПОСравнение);
-                new SubClassErrors(getContext()).МетодЗаписиОшибок(valuesЗаписываемОшибки);
-            }
-        }
-
-        private void anitatioinButtonEventemployeeExit(@NonNull MyViewHolder holder) {
-            try {
-             Animation   animation = AnimationUtils.loadAnimation(getContext(), R.anim.slide_in_row_vibrator2);
-                animation.setDuration(100l);
-                holder.materialbutton_enter_and_exit_employee.startAnimation(animation);
-                Log.i(this.getClass().getName(), "   создание согласования" + myViewHolder);
-                //TODO
-            } catch (Exception e) {
-                e.printStackTrace();
-                Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() + " Линия  :"
-                        + Thread.currentThread().getStackTrace()[2].getLineNumber());
-                ContentValues valuesЗаписываемОшибки = new ContentValues();
-                valuesЗаписываемОшибки.put("Error", e.toString().toLowerCase());
-                valuesЗаписываемОшибки.put("Klass", this.getClass().getName());
-                valuesЗаписываемОшибки.put("Metod", Thread.currentThread().getStackTrace()[2].getMethodName());
-                valuesЗаписываемОшибки.put("LineError", Thread.currentThread().getStackTrace()[2].getLineNumber());
-                final Object ТекущаяВерсияПрограммы = version;
-                Integer ЛокальнаяВерсияПОСравнение = Integer.parseInt(ТекущаяВерсияПрограммы.toString());
-                valuesЗаписываемОшибки.put("whose_error", ЛокальнаяВерсияПОСравнение);
-                new SubClassErrors(getContext()).МетодЗаписиОшибок(valuesЗаписываемОшибки);
-            }
-        }
-
-
-        private void animationemployeeArrived(@NonNull MyViewHolder holder) {
-            try {
-                Animation   animation2 = AnimationUtils.loadAnimation(getContext(), R.anim.slide_in_row_vibrator2);
-                animation2.setDuration(200l);
-                holder.materialbutton_enter_and_exit_employee.startAnimation(animation2);
-                Log.i(this.getClass().getName(), "   создание согласования" + myViewHolder);
                 //TODO
             } catch (Exception e) {
                 e.printStackTrace();
@@ -765,13 +735,13 @@ public class FragmentScannerUser extends Fragment {
         }
 
         ///todo первый метод #1
-        private void eventButtonemployeeArrived(@NonNull MyViewHolder holder) {
+        private void eventButtonemployeeArrived(@NonNull MaterialButton materialButtonClick) {
             try {
                 Log.i(this.getClass().getName(),  "  " +Thread.currentThread().getStackTrace()[2].getMethodName()+ " время "
-                        +new Date().toLocaleString() + " holder " +holder);
+                        +new Date().toLocaleString() + " materialButtonClick " +materialButtonClick);
                 // TODO: 19.02.2023 Второе Действие
                 // TODO: 22.02.2023 для второй кнопки
-                RxView.clicks(holder.materialbutton_enter_and_exit_employee)
+                RxView.clicks(materialButtonClick)
                         .throttleFirst(5, TimeUnit.SECONDS)
                         .observeOn(AndroidSchedulers.mainThread())
                         .subscribe(new io.reactivex.rxjava3.core.Observer<Unit>() {
@@ -783,7 +753,7 @@ public class FragmentScannerUser extends Fragment {
                             @Override
                             public void onNext(@io.reactivex.rxjava3.annotations.NonNull Unit unit) {
                                 // TODO: 05.08.2024
-                                workeButtonemployeeArrived(holder);
+                                workerClickTOService(materialButtonClick);
                                 Log.i(this.getClass().getName(),  "  RxView.clicks " +Thread.currentThread().getStackTrace()[2].getMethodName()
                                         + " время " +new Date().toLocaleString() );
 
@@ -830,7 +800,7 @@ public class FragmentScannerUser extends Fragment {
 
 
 
-        private void workeButtonemployeeArrived(@NonNull MyViewHolder holder) {
+        private void workerClickTOService(@NonNull MaterialButton materialButtonClick) {
             Observable.fromAction(new Action() {
                         @Override
                         public void run() throws Throwable {
@@ -858,70 +828,7 @@ public class FragmentScannerUser extends Fragment {
 
 
 
-        private void eventButtonEventEmployeeExit(@NonNull MyViewHolder holder) {
-            try {
-                Log.i(this.getClass().getName(),  "  " +Thread.currentThread().getStackTrace()[2].getMethodName()+ " время "
-                        +new Date().toLocaleString() + " holder " +holder);
-                // TODO: 19.02.2023 Второе Действие
-                RxView.clicks(holder.materialbutton_enter_and_exit_employee)
-                        .throttleFirst(5, TimeUnit.SECONDS)
-                        .observeOn(AndroidSchedulers.mainThread())
-                        .subscribe(new io.reactivex.rxjava3.core.Observer<Unit>() {
-                            @Override
-                            public void onSubscribe(@io.reactivex.rxjava3.annotations.NonNull Disposable d) {
-                                Log.i(this.getClass().getName(),  "  RxView.clicks " +Thread.currentThread().getStackTrace()[2].getMethodName()
-                                        + " время " +new Date().toLocaleString() );
-                            }
-                            @Override
-                            public void onNext(@io.reactivex.rxjava3.annotations.NonNull Unit unit) {
-
-                                Log.i(this.getClass().getName(),  "  RxView.clicks " +Thread.currentThread().getStackTrace()[2].getMethodName()
-                                        + " время " +new Date().toLocaleString() +
-                                        " disposable[0] " );
-
-                                workerButtonEventUserExit(holder);
-
-                                Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
-                                        " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                                        " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" +
-                                        " holder.materialbutton_enter_and_exit_employee" +holder.materialbutton_enter_and_exit_employee);
-
-                                // TODO: 22.02.2023
-                            }
-                            @Override
-                            public void onError(@io.reactivex.rxjava3.annotations.NonNull Throwable e) {
-
-                                Log.i(this.getClass().getName(),  "  RxView.clicks " +Thread.currentThread().getStackTrace()[2].getMethodName()
-                                        + " время " +new Date().toLocaleString() );
-                            }
-                            @Override
-                            public void onComplete() {
-
-                                Log.i(this.getClass().getName(),  "  RxView.clicks " +Thread.currentThread().getStackTrace()[2].getMethodName()
-                                        + " время " +new Date().toLocaleString() );
-                            }
-                        });
-
-
-            } catch (Exception e) {
-                e.printStackTrace();
-                Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() + " Линия  :"
-                        + Thread.currentThread().getStackTrace()[2].getLineNumber());
-                ContentValues valuesЗаписываемОшибки = new ContentValues();
-                valuesЗаписываемОшибки.put("Error", e.toString().toLowerCase());
-                valuesЗаписываемОшибки.put("Klass", this.getClass().getName());
-                valuesЗаписываемОшибки.put("Metod", Thread.currentThread().getStackTrace()[2].getMethodName());
-                valuesЗаписываемОшибки.put("LineError", Thread.currentThread().getStackTrace()[2].getLineNumber());
-                final Object ТекущаяВерсияПрограммы = version;
-                Integer ЛокальнаяВерсияПОСравнение = Integer.parseInt(ТекущаяВерсияПрограммы.toString());
-                valuesЗаписываемОшибки.put("whose_error", ЛокальнаяВерсияПОСравнение);
-                new SubClassErrors(getContext()).МетодЗаписиОшибок(valuesЗаписываемОшибки);
-            }
-        }
-
-
-
-        private void workerButtonEventUserExit(@NonNull MyViewHolder holder) {
+        private void workerClickExitEmloyee(@NonNull MyViewHolder holder) {
             Observable.fromAction(new Action() {
                         @Override
                         public void run() throws Throwable {

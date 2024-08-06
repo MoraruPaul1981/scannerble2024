@@ -33,7 +33,7 @@ import java.util.Date;
 
 
 public class MainActivityNewScanner extends AppCompatActivity  {
-   public Message handlerScannerGatt;
+   public Message handlerScannerGattClient;
     private NavigationBarView bottomNavigationView;
     @SuppressLint("RestrictedApi")
     private BottomNavigationItemView bottomNavigationItemViewВыход;
@@ -148,7 +148,7 @@ public class MainActivityNewScanner extends AppCompatActivity  {
 
 
     public void МетодHandles() {
-       handlerScannerGatt =new Handler(Looper.getMainLooper(), new Handler.Callback() {
+       handlerScannerGattClient =new Handler(Looper.getMainLooper(), new Handler.Callback() {
            @Override
            public boolean handleMessage(@NonNull Message msg) {
                return true;

@@ -37,7 +37,7 @@ public class FragmentBootScanner extends Fragment {
     private ImageView textViewZnak;
 
     private ProgressBar progressBarСканера;
-    private Message handlerScanner;
+    private Message handlerScannerGattClient;
     private  TabLayout tabLayoutScanner;
 
 
@@ -83,6 +83,8 @@ public class FragmentBootScanner extends Fragment {
             businesslogicJobServive.   startingServiceSimpleScan();
             // TODO: 05.08.2024 JOB Service
             businesslogicJobServive.startingServiceJobIntentServiceClientGatt("SimpleJob");
+
+            handlerScannerGattClient =((MainActivityNewScanner) getActivity()).handlerScannerGattClient;
 
 
             Log.d(getContext().getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
@@ -189,19 +191,21 @@ public class FragmentBootScanner extends Fragment {
     public void onMessageEvent(EventB_Clent event) {
         // Do something
         try {
-            FragmentScannerUser fragmentScannerUser=event.fragmentScannerUser;
-            FragmentTransaction   fragmentTransaction = fragmentManager.beginTransaction();
-            fragmentManager.getFragments().remove(0);
-            fragmentTransaction.addToBackStack(null);
-            fragmentTransaction.replace(R.id.id_gattclientFrameLayout, fragmentScannerUser);
-            fragmentTransaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_CLOSE).commit();
-            fragmentTransaction.setCustomAnimations(android.R.anim.slide_in_left, android.R.anim.slide_out_right);
-            fragmentTransaction.show(fragmentScannerUser);
+            handlerScannerGattClient.getTarget().postDelayed(()->{
+                FragmentScannerUser fragmentScannerUser=event.fragmentScannerUser;
+                FragmentTransaction   fragmentTransaction = fragmentManager.beginTransaction();
+                fragmentManager.getFragments().remove(0);
+                fragmentTransaction.addToBackStack(null);
+                fragmentTransaction.replace(R.id.id_gattclientFrameLayout, fragmentScannerUser);
+                fragmentTransaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_CLOSE).commit();
+                fragmentTransaction.setCustomAnimations(android.R.anim.slide_in_left, android.R.anim.slide_out_right);
+                fragmentTransaction.show(fragmentScannerUser);
 
-            Log.d(getContext().getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
-                    " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                    " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" );
+                Log.d(getContext().getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                        " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                        " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" );
 
+            },1500);
 
         } catch (Exception e) {
             e.printStackTrace();
