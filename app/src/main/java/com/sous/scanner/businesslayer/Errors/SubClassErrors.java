@@ -18,7 +18,7 @@ public class SubClassErrors {
     }
     public  void МетодЗаписиОшибок(@NonNull   ContentValues contentValuesДляЗаписиОшибки) {
         try {
-            Log.i( context.getClass().getName(), "contentValuesДляЗаписиОшибки  " + contentValuesДляЗаписиОшибки);
+            Log.e( context.getClass().getName(), "contentValuesДляЗаписиОшибки  " + contentValuesДляЗаписиОшибки);
             Uri uri = Uri.parse("content://com.sous.scanner.prodider/" +"errordsu1" + "");
        //     Uri uri = Uri.parse("content://dsu1.scanner.myapplication.contentproviderfordatabasescanner/" +"errordsu1" + "");
             ContentResolver resolver = context.getContentResolver();

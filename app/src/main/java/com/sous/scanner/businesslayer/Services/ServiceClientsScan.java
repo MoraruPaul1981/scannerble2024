@@ -206,11 +206,11 @@ public class ServiceClientsScan extends Service {
                 }
 
            while (!bluetoothAdapterPhoneClient.isEnabled());
-                Log.i(this.getClass().getName(),  "  " +Thread.currentThread().getStackTrace()[2].getMethodName()+ " время " +new Date().toLocaleString()+
+                Log.d(this.getClass().getName(),  "  " +Thread.currentThread().getStackTrace()[2].getMethodName()+ " время " +new Date().toLocaleString()+
                         " bluetoothAdapter  "+ bluetoothAdapterPhoneClient);
             }
 
-            Log.i(this.getClass().getName(),  "  " +Thread.currentThread().getStackTrace()[2].getMethodName()+ " время " +new Date().toLocaleString()+
+            Log.d(this.getClass().getName(),  "  " +Thread.currentThread().getStackTrace()[2].getMethodName()+ " время " +new Date().toLocaleString()+
                     " bluetoothAdapter " + bluetoothAdapterPhoneClient);
         } catch (Exception e) {
             e.printStackTrace();

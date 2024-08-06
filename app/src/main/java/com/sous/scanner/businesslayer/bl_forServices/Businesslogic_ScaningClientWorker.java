@@ -438,7 +438,7 @@ public class Businesslogic_ScaningClientWorker {
                         // TODO: 26.07.2024
                         switch (newState){
                             case BluetoothProfile.STATE_CONNECTED :
-                                Log.i(this.getClass().getName(), "Connected to GATT client. BluetoothProfile.STATE_CONNECTED ###1 onConnectionStateChange  " +
+                                Log.d(this.getClass().getName(), "Connected to GATT client. BluetoothProfile.STATE_CONNECTED ###1 onConnectionStateChange  " +
                                         ""+new Date().toLocaleString());
                                 message.getTarget().post(()->{
                                     ConcurrentHashMap<String,String> concurrentHashMap=      new ConcurrentHashMap<String,String>();
@@ -556,7 +556,7 @@ public class Businesslogic_ScaningClientWorker {
 
                                     }
 
-                                    Log.i(this.getClass().getName(), "characteristics" + new Date().toLocaleString()+  " characteristics "
+                                    Log.d(this.getClass().getName(), "characteristics" + new Date().toLocaleString()+  " characteristics "
                                             +characteristics+ " successОтправка " +successОтправка+
                                             " ДействиеДляСервераGATTОТКлиента "+ getWorkerStateClient);
                                 }
@@ -573,7 +573,7 @@ public class Businesslogic_ScaningClientWorker {
                                 ConcurrentHashMap<String,String> concurrentHashMap=      new ConcurrentHashMap<String,String>();
                                 concurrentHashMap  .put("7","ErrorWorkerGattClientWithServer");
                                 mediatorLiveDataScan.setValue(concurrentHashMap);
-                                Log.i(this.getClass().getName(), "GATT CLIENT Proccessing from GATT server.GATTCLIENTProccessing " + new Date().toLocaleString());
+                                Log.d(this.getClass().getName(), "GATT CLIENT Proccessing from GATT server.GATTCLIENTProccessing " + new Date().toLocaleString());
 
 
 
@@ -596,7 +596,7 @@ public class Businesslogic_ScaningClientWorker {
                             ConcurrentHashMap<String,String> concurrentHashMap=      new ConcurrentHashMap<String,String>();
                             concurrentHashMap  .put("BluetoothDevice.BOND_NONE","8");
                             mediatorLiveDataScan.setValue(concurrentHashMap);
-                            Log.i(this.getClass().getName(), "GATT CLIENT Proccessing from GATT server.GATTCLIENTProccessing " + new Date().toLocaleString());
+                            Log.d(this.getClass().getName(), "GATT CLIENT Proccessing from GATT server.GATTCLIENTProccessing " + new Date().toLocaleString());
 
                         }
 
@@ -631,7 +631,7 @@ public class Businesslogic_ScaningClientWorker {
                         String getIMEI = Settings.Secure.getString(context.getContentResolver(), Settings.Secure.ANDROID_ID);
                         linkedHashMapДанныеКлиентаДляGATT.add(  getIMEI+"\n");
                         linkedHashMapДанныеКлиентаДляGATT.add(  new Date().toLocaleString()+"\n");
-                        Log.i(this.getClass().getName(),  " " +Thread.currentThread().getStackTrace()[2].getMethodName()+
+                        Log.d(this.getClass().getName(),  " " +Thread.currentThread().getStackTrace()[2].getMethodName()+
                                 " время " +new Date().toLocaleString() +
                                 getIMEI + " getIMEI "+ " linkedHashMapДанныеКлиентаДляGATT " +linkedHashMapДанныеКлиентаДляGATT);
 
@@ -656,7 +656,7 @@ public class Businesslogic_ScaningClientWorker {
                 public void onCharacteristicRead(@NonNull BluetoothGatt gatt, @NonNull BluetoothGattCharacteristic characteristic, @NonNull byte[] value, int status) {
                     super.onCharacteristicRead(gatt, characteristic, value, status);
                     byte[] newValueПришлиДАнныеОтКлиента= characteristic.getValue();
-                    Log.i(this.getClass().getName(), "Connected to GATT server  newValueПришлиДАнныеОтКлиента."+new String(newValueПришлиДАнныеОтКлиента));
+                    Log.d(this.getClass().getName(), "Connected to GATT server  newValueПришлиДАнныеОтКлиента."+new String(newValueПришлиДАнныеОтКлиента));
                 }
 
                @Override
@@ -672,7 +672,7 @@ public class Businesslogic_ScaningClientWorker {
                             byte[] newValueОтветОтСервера = characteristic.getValue();
                             if (newValueОтветОтСервера!=null) {
                                 String ОтветОтСервераОбратно=new String(newValueОтветОтСервера);
-                                Log.i(this.getClass().getName(),  " " +Thread.currentThread().getStackTrace()[2].getMethodName()
+                                Log.d(this.getClass().getName(),  " " +Thread.currentThread().getStackTrace()[2].getMethodName()
                                         + " время " +new Date().toLocaleString()+ " ОтветОтСервераОбратно "+ОтветОтСервераОбратно );
                                 // TODO: 30.01.2023  ПОСЫЛАЕМ ОТВЕТ ОТ СЕРВЕРА СТАТУСА
                                 message.getTarget().post(()->{
@@ -685,7 +685,7 @@ public class Businesslogic_ScaningClientWorker {
                                 // TODO: 20.02.2023 закрыаем сесию ссервром
 
                             }
-                            Log.i(this.getClass().getName(),  " " +Thread.currentThread().getStackTrace()[2].getMethodName()
+                            Log.d(this.getClass().getName(),  " " +Thread.currentThread().getStackTrace()[2].getMethodName()
                                     + " время " +new Date().toLocaleString()+ " characteristic "+characteristic );
                         }
                     } catch (Exception e) {
@@ -737,14 +737,14 @@ public class Businesslogic_ScaningClientWorker {
                @Override
                 public void onServiceChanged(@NonNull BluetoothGatt gatt) {
                     super.onServiceChanged(gatt);
-                    Log.i(this.getClass().getName(),  "  " +Thread.currentThread().getStackTrace()[2].getMethodName()+
+                    Log.d(this.getClass().getName(),  "  " +Thread.currentThread().getStackTrace()[2].getMethodName()+
                             " время " +new Date().toLocaleString() + " gatt " +gatt);
                 }
             };
 
 // TODO: 02.08.2024 Добавляем Данные CallBack
             // TODO: 02.08.2024
-            Log.i(this.getClass().getName(),  " " +Thread.currentThread().getStackTrace()[2].getMethodName()
+            Log.d(this.getClass().getName(),  " " +Thread.currentThread().getStackTrace()[2].getMethodName()
                     + " время " +new Date().toLocaleString()  + " bluetoothGattCallbackScan  " +bluetoothGattCallbackScan);
 
             // TODO: 02.08.2024
@@ -900,12 +900,12 @@ public class Businesslogic_ScaningClientWorker {
         Message   message =new Handler(Looper.getMainLooper(), new Handler.Callback() {
             @Override
             public boolean handleMessage(@NonNull Message msg) {
-                Log.i(this.getClass().getName(),  "  " +Thread.currentThread().getStackTrace()[2].getMethodName()+ " время " +new Date().toLocaleString() );
+                Log.d(this.getClass().getName(),  "  " +Thread.currentThread().getStackTrace()[2].getMethodName()+ " время " +new Date().toLocaleString() );
 
                 return true;
             }
         }).obtainMessage();
-        Log.i(this.getClass().getName(),  "  " +Thread.currentThread().getStackTrace()[2].getMethodName()+ " время " +new Date().toLocaleString() );
+        Log.d(this.getClass().getName(),  "  " +Thread.currentThread().getStackTrace()[2].getMethodName()+ " время " +new Date().toLocaleString() );
         return message;
     }
 

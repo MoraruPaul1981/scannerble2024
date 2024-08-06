@@ -21,7 +21,7 @@ public class getApp  extends Application {
       /*  InitOndeSignal initOndeSignal=new InitOndeSignal(getApplicationContext(),version);
         initOndeSignal.starttinggetkeyOndeSignal("204d790a-7bd5-43ce-948c-81a25803a761");*/
 
-        Log.i(this.getClass().getName(), "  "
+        Log.d(this.getClass().getName(), "  "
                 + Thread.currentThread().getStackTrace()[2].getMethodName() +
                 " время " + new Date().toLocaleString());
 

@@ -30,9 +30,9 @@ import java.util.Date;
                 if (gatt!=null) {
                     gatt.disconnect();
                     gatt.close();
-                    Log.i(this.getClass().getName(),  "  " +Thread.currentThread().getStackTrace()[2].getMethodName()+ " время "
+                    Log.d(this.getClass().getName(),  "  " +Thread.currentThread().getStackTrace()[2].getMethodName()+ " время "
                             +new Date().toLocaleString() + " gatt " +gatt);}
-                Log.i(this.getClass().getName(), "GATT CLIENT Proccessing from GATT server.SERVER#SousAvtoEXIT " +
+                Log.d(this.getClass().getName(), "GATT CLIENT Proccessing from GATT server.SERVER#SousAvtoEXIT " +
                         new Date().toLocaleString() + gatt
                         + " gatt "+gatt);
                 //TODO

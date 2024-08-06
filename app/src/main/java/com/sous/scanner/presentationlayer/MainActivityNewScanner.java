@@ -67,7 +67,7 @@ public class MainActivityNewScanner extends AppCompatActivity  {
             fragmentManagerScanner = getSupportFragmentManager();
             PackageInfo pInfo = getApplicationContext().getPackageManager().getPackageInfo(getApplicationContext().getPackageName(), 0);
             version = pInfo.getLongVersionCode();
-            Log.i(this.getClass().getName(),  "onResume " +Thread.currentThread().getStackTrace()[2].getMethodName()+ " время " +new Date().toLocaleString() );
+            Log.d(this.getClass().getName(),  "onResume " +Thread.currentThread().getStackTrace()[2].getMethodName()+ " время " +new Date().toLocaleString() );
 
 
 // TODO: 17.07.2024 Коды запуски БИзнес ЛОгики Активти Сканера
@@ -154,7 +154,7 @@ public class MainActivityNewScanner extends AppCompatActivity  {
                return true;
            }
        }).obtainMessage();
-        Log.i(this.getClass().getName(),  "  " +Thread.currentThread().getStackTrace()[2].getMethodName()+ " время " +new Date().toLocaleString() );
+        Log.d(this.getClass().getName(),  "  " +Thread.currentThread().getStackTrace()[2].getMethodName()+ " время " +new Date().toLocaleString() );
     }
 
 

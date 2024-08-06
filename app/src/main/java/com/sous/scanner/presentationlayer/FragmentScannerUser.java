@@ -217,7 +217,7 @@ public class FragmentScannerUser extends Fragment {
             МетодПерегрузкаRecyceView();
 
             // TODO: 20.02.2023 ТЕКСТ КОД
-            Log.i(this.getClass().getName(),  "  " +Thread.currentThread().getStackTrace()[2].getMethodName()+ " время " +new Date().toLocaleString() );
+            Log.d(this.getClass().getName(),  "  " +Thread.currentThread().getStackTrace()[2].getMethodName()+ " время " +new Date().toLocaleString() );
         } catch (Exception e) {
             e.printStackTrace();
             Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() + " Линия  :"
@@ -543,13 +543,13 @@ public class FragmentScannerUser extends Fragment {
         public MyRecycleViewAdapter(@NotNull ArrayList ArrayListДанныеОтСканироваиниеДивайсов) {
             this.ArrayListДанныеОтСканироваиниеДивайсов = ArrayListДанныеОтСканироваиниеДивайсов;
             if (ArrayListДанныеОтСканироваиниеДивайсов.size() > 0) {
-                Log.i(this.getClass().getName(), " ArrayListДанныеОтСканироваиниеДивайсов  " + ArrayListДанныеОтСканироваиниеДивайсов.size());
+                Log.d(this.getClass().getName(), " ArrayListДанныеОтСканироваиниеДивайсов  " + ArrayListДанныеОтСканироваиниеДивайсов.size());
             }
         }
 
         @Override
         public void onBindViewHolder(@NonNull MyViewHolder holder, int position, @NonNull List<Object> payloads) {
-            Log.i(this.getClass().getName(), "   onBindViewHolder  position" + position + " ArrayListДанныеОтСканироваиниеДивайсов "
+            Log.d(this.getClass().getName(), "   onBindViewHolder  position" + position + " ArrayListДанныеОтСканироваиниеДивайсов "
                     + ArrayListДанныеОтСканироваиниеДивайсов);
             try {
                 ///todo ЩЕЛКАЕМ КАЖДУЮ СТРОЧКУ ОТДЕЛЬНО
@@ -612,9 +612,9 @@ public class FragmentScannerUser extends Fragment {
 
         @Override
         public int getItemViewType(int position) {
-            Log.i(this.getClass().getName(), "      holder.textView1  position " + position);
+            Log.d(this.getClass().getName(), "      holder.textView1  position " + position);
             try {
-                Log.i(this.getClass().getName(), "   getItemViewType  position" + position);
+                Log.d(this.getClass().getName(), "   getItemViewType  position" + position);
             } catch (Exception e) {
                 e.printStackTrace();
                 Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() + " Линия  :"
@@ -641,7 +641,7 @@ public class FragmentScannerUser extends Fragment {
                 // TODO: 05.08.2024
 
                 myViewHolder = new MyViewHolder(view);
-                Log.i(this.getClass().getName(), "   myViewHolder" + myViewHolder);
+                Log.d(this.getClass().getName(), "   myViewHolder" + myViewHolder);
             } catch (Exception e) {
                 e.printStackTrace();
                 Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() + " Линия  :"
@@ -740,7 +740,7 @@ public class FragmentScannerUser extends Fragment {
         ///todo первый метод #1
         private void eventButtonemployeeArrived(@NonNull MaterialButton materialButtonClick) {
             try {
-                Log.i(this.getClass().getName(),  "  " +Thread.currentThread().getStackTrace()[2].getMethodName()+ " время "
+                Log.d(this.getClass().getName(),  "  " +Thread.currentThread().getStackTrace()[2].getMethodName()+ " время "
                         +new Date().toLocaleString() + " materialButtonClick " +materialButtonClick);
                 // TODO: 19.02.2023 Второе Действие
                 // TODO: 22.02.2023 для второй кнопки
@@ -750,7 +750,7 @@ public class FragmentScannerUser extends Fragment {
                         .subscribe(new io.reactivex.rxjava3.core.Observer<Unit>() {
                             @Override
                             public void onSubscribe(@io.reactivex.rxjava3.annotations.NonNull Disposable d) {
-                                Log.i(this.getClass().getName(),  "  RxView.clicks " +Thread.currentThread().getStackTrace()[2].getMethodName()
+                                Log.d(this.getClass().getName(),  "  RxView.clicks " +Thread.currentThread().getStackTrace()[2].getMethodName()
                                         + " время " +new Date().toLocaleString() );
                             }
                             @Override
@@ -758,7 +758,7 @@ public class FragmentScannerUser extends Fragment {
                                 // TODO: 05.08.2024
                                 animationCurrentButonClick(materialButtonClick,200);
                                 workerClickTOService(materialButtonClick);
-                                Log.i(this.getClass().getName(),  "  RxView.clicks " +Thread.currentThread().getStackTrace()[2].getMethodName()
+                                Log.d(this.getClass().getName(),  "  RxView.clicks " +Thread.currentThread().getStackTrace()[2].getMethodName()
                                         + " время " +new Date().toLocaleString() );
 
                             }
@@ -781,7 +781,7 @@ public class FragmentScannerUser extends Fragment {
 
                             @Override
                             public void onComplete() {
-                                Log.i(this.getClass().getName(),  "  RxView.clicks " +Thread.currentThread().getStackTrace()[2].getMethodName()
+                                Log.d(this.getClass().getName(),  "  RxView.clicks " +Thread.currentThread().getStackTrace()[2].getMethodName()
                                         + " время " +new Date().toLocaleString() );
                             }
                         });
@@ -906,7 +906,7 @@ public class FragmentScannerUser extends Fragment {
         @Override
         public long getItemId(int position) {
             // TODO: 04.03.2022
-            Log.i(this.getClass().getName(), "     getItemId holder.position " + position);
+            Log.d(this.getClass().getName(), "     getItemId holder.position " + position);
             return super.getItemId(position);
 
         }

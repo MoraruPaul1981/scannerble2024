@@ -94,7 +94,7 @@ public class CREATE_DATABASEScanner extends SQLiteOpenHelper{ ///SQLiteOpenHelpe
                 onCreate(ССылкаНаСозданнуюБазу);
                 Log.d(this.getClass().getName(), " СЛУЖБА  содание базы newVersion > oldVersion   " + new Date());
             }
-            Log.i(this.getClass().getName(), "  Создана/Изменена База Данных !!! "+new Date());
+            Log.d(this.getClass().getName(), "  Создана/Изменена База Данных !!! "+new Date());
         } catch (Exception e) {
             e.printStackTrace();
             Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() + " Линия  :"
