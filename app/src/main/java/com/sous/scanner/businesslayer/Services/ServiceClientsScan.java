@@ -140,7 +140,7 @@ public class ServiceClientsScan extends Service {
                 // TODO: 06.08.2024
                 case "userUIlaunchingfrombackground":
                       // TODO: 06.08.2024
-                    blForServiceScan.userAnUIlaunchingfromScan(15 );
+                    blForServiceScan.robotlaunchingfromScanbackground(2,  1l);
 
                     Log.d(getApplicationContext().getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                             " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +

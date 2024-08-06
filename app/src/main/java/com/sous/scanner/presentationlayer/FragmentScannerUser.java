@@ -71,9 +71,8 @@ public class FragmentScannerUser extends Fragment {
     private Animation   animation;
     private       RecyclerView     recyclerview_gatt_main;
 
-    private  String  toWork="На работу";
-    private     String    fromtheJob="С работы";
-
+    private  String  toWork="Контроль доступа";
+    
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -418,8 +417,7 @@ public class FragmentScannerUser extends Fragment {
     void МетодЗаполенияRecycleViewДляЗадач() {
         try {
            ArrayList<String> ArrayListСканер = new ArrayList();
-            ArrayListСканер.add("ExitEmployee");
-            ArrayListСканер.add("InterEmploye");
+            ArrayListСканер.add("UserAccessControl");
 
             myRecycleViewAdapter = new MyRecycleViewAdapter(ArrayListСканер);
             recyclerview_gatt_main.setAdapter(myRecycleViewAdapter);
@@ -451,7 +449,7 @@ public class FragmentScannerUser extends Fragment {
             DividerItemDecoration dividerItemDecorationHor=
                     new DividerItemDecoration(recyclerview_gatt_main.getContext(), LinearLayoutManager.HORIZONTAL);
             recyclerview_gatt_main.addItemDecoration(dividerItemDecorationHor);
-            GridLayoutManager layoutManager = new GridLayoutManager(getContext(), 2,
+            GridLayoutManager layoutManager = new GridLayoutManager(getContext(), 1,
                     GridLayoutManager.HORIZONTAL,false);
             layoutManager.setSpanSizeLookup(new GridLayoutManager.DefaultSpanSizeLookup());
             recyclerview_gatt_main.setLayoutManager(layoutManager);
@@ -664,23 +662,12 @@ public class FragmentScannerUser extends Fragment {
             try {
                 // TODO: 17.07.2024  Сотрудник ПРИХОДИТ
                 if (position==0) {
-// TODO: 06.08.2024
-                    holder.materialbutton_Same_employee.setText(toWork);
-                    holder.materialbutton_Same_employee.setBackgroundColor(Color.parseColor("#BDC6C8"));
-                    animationCurrentButonClick(holder.materialbutton_Same_employee,200);
+                      // TODO: 06.08.2024
+                    addCurrentButonClick(holder.materialbutton_Same_employee);
+
+                    animationCurrentButonClick(holder.materialbutton_Same_employee,100);
                     // TODO: 06.08.2024  
                     eventButtonemployeeArrived(holder.materialbutton_Same_employee);
-
-                    Log.d(getContext().getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
-                            " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                            " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n");
-
-                }else {
-                    holder.materialbutton_Same_employee.setText(fromtheJob);
-                    holder.materialbutton_Same_employee.setBackgroundColor(Color.parseColor("#D0D3D4"));
-                    animationCurrentButonClick(holder.materialbutton_Exit_employee,100);
-                    // TODO: 06.08.2024
-                    eventButtonemployeeArrived(holder.materialbutton_Exit_employee);
 
                     Log.d(getContext().getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                             " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
@@ -710,6 +697,32 @@ public class FragmentScannerUser extends Fragment {
             }
         }
 
+        private void addCurrentButonClick(@NonNull MaterialButton materialButtonClick) {
+            try{
+            materialButtonClick.setText(toWork);
+            materialButtonClick.setBackgroundColor(Color.parseColor("#BDC6C8"));
+                // TODO: 06.08.2024
+            Log.d(getContext().getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                    " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                    " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"+
+                    "  materialButtonClick " +materialButtonClick);
+
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() + " Линия  :"
+                    + Thread.currentThread().getStackTrace()[2].getLineNumber());
+            ContentValues valuesЗаписываемОшибки = new ContentValues();
+            valuesЗаписываемОшибки.put("Error", e.toString().toLowerCase());
+            valuesЗаписываемОшибки.put("Klass", this.getClass().getName());
+            valuesЗаписываемОшибки.put("Metod", Thread.currentThread().getStackTrace()[2].getMethodName());
+            valuesЗаписываемОшибки.put("LineError", Thread.currentThread().getStackTrace()[2].getLineNumber());
+            final Object ТекущаяВерсияПрограммы = version;
+            Integer ЛокальнаяВерсияПОСравнение = Integer.parseInt(ТекущаяВерсияПрограммы.toString());
+            valuesЗаписываемОшибки.put("whose_error", ЛокальнаяВерсияПОСравнение);
+            new SubClassErrors(getContext()).МетодЗаписиОшибок(valuesЗаписываемОшибки);
+        }
+        }
 
 
         private void animationCurrentButonClick(@NonNull MaterialButton materialButtonClick,@NonNull int Duration) {

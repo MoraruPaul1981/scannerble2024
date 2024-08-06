@@ -68,7 +68,7 @@ public class BroadcastReceiverACL extends BroadcastReceiver {
                             "  getAddress " + getAddress+"\n" +
                             "  getName " + getName+"\n"+"\n"
                             + " rssi " +rssi+"\n"+
-                            " getBremy" +getBremy);
+                            " getBremy " +getBremy);
 
 
 
