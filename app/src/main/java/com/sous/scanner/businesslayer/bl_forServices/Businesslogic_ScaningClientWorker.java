@@ -7,6 +7,7 @@ import android.bluetooth.BluetoothDevice;
 import android.bluetooth.BluetoothGatt;
 import android.bluetooth.BluetoothGattCallback;
 import android.bluetooth.BluetoothGattCharacteristic;
+import android.bluetooth.BluetoothGattDescriptor;
 import android.bluetooth.BluetoothGattService;
 import android.bluetooth.BluetoothManager;
 import android.bluetooth.BluetoothProfile;
@@ -44,6 +45,7 @@ import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicInteger;
 
+import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
 import io.reactivex.rxjava3.core.Flowable;
 import io.reactivex.rxjava3.core.Observable;
 import io.reactivex.rxjava3.core.ObservableSource;
@@ -179,7 +181,7 @@ public class Businesslogic_ScaningClientWorker {
                     })
                     .repeatWhen(repeat->repeat.delay(DurectionTimeGatt, TimeUnit.SECONDS))
                     .take(endlessWorktime)
-                    .subscribeOn(Schedulers.computation())
+                    .subscribeOn(AndroidSchedulers.mainThread())
                     .doOnComplete(new Action() {
                         @Override
                         public void run() throws Throwable {
@@ -322,7 +324,7 @@ public class Businesslogic_ScaningClientWorker {
                                             + " bluetoothAdapterPhoneClient.isEnabled() " +bluetoothAdapterPhoneClient.isEnabled());
                                 }
                             })
-                            .subscribeOn(Schedulers.computation())
+                            .subscribeOn(AndroidSchedulers.mainThread())
                             .doOnComplete(new Action() {
                                 @Override
                                 public void run() throws Throwable {
@@ -416,7 +418,17 @@ public class Businesslogic_ScaningClientWorker {
         BluetoothGattCallback     bluetoothGattCallbackScan = null;
         try{
            bluetoothGattCallbackScan = new BluetoothGattCallback() {
-                @Override
+               @Override
+               public void onPhyUpdate(BluetoothGatt gatt, int txPhy, int rxPhy, int status) {
+                   super.onPhyUpdate(gatt, txPhy, rxPhy, status);
+               }
+
+               @Override
+               public void onPhyRead(BluetoothGatt gatt, int txPhy, int rxPhy, int status) {
+                   super.onPhyRead(gatt, txPhy, rxPhy, status);
+               }
+
+               @Override
                 public void onConnectionStateChange(BluetoothGatt gatt, int status,
                                                     int newState) {
                     try{
@@ -475,6 +487,8 @@ public class Businesslogic_ScaningClientWorker {
                               //  new Businesslogic_GattClinetClose(version,context). disaibleGattServer(gatt);
                                 Log.d(this.getClass().getName(), "Trying to \"SERVERВDontEndConnect\" "  + " newState " +newState);
                                 break;
+
+
                             default:{
                                 Log.d(this.getClass().getName(), "Trying to ДанныеОТGATTССевромGATT "  + " newState " +newState);
                             }
@@ -645,7 +659,12 @@ public class Businesslogic_ScaningClientWorker {
                     Log.i(this.getClass().getName(), "Connected to GATT server  newValueПришлиДАнныеОтКлиента."+new String(newValueПришлиДАнныеОтКлиента));
                 }
 
-                @Override
+               @Override
+               public void onCharacteristicWrite(BluetoothGatt gatt, BluetoothGattCharacteristic characteristic, int status) {
+                   super.onCharacteristicWrite(gatt, characteristic, status);
+               }
+
+               @Override
                 public void onCharacteristicChanged(BluetoothGatt gatt, BluetoothGattCharacteristic characteristic) {
                     super.onCharacteristicChanged(gatt, characteristic);
                     try{
@@ -685,7 +704,37 @@ public class Businesslogic_ScaningClientWorker {
                     }
                 }
 
-                @Override
+               @Override
+               public void onCharacteristicChanged(@NonNull BluetoothGatt gatt, @NonNull BluetoothGattCharacteristic characteristic, @NonNull byte[] value) {
+                   super.onCharacteristicChanged(gatt, characteristic, value);
+               }
+
+               @Override
+               public void onDescriptorRead(@NonNull BluetoothGatt gatt, @NonNull BluetoothGattDescriptor descriptor, int status, @NonNull byte[] value) {
+                   super.onDescriptorRead(gatt, descriptor, status, value);
+               }
+
+               @Override
+               public void onDescriptorWrite(BluetoothGatt gatt, BluetoothGattDescriptor descriptor, int status) {
+                   super.onDescriptorWrite(gatt, descriptor, status);
+               }
+
+               @Override
+               public void onReliableWriteCompleted(BluetoothGatt gatt, int status) {
+                   super.onReliableWriteCompleted(gatt, status);
+               }
+
+               @Override
+               public void onReadRemoteRssi(BluetoothGatt gatt, int rssi, int status) {
+                   super.onReadRemoteRssi(gatt, rssi, status);
+               }
+
+               @Override
+               public void onMtuChanged(BluetoothGatt gatt, int mtu, int status) {
+                   super.onMtuChanged(gatt, mtu, status);
+               }
+
+               @Override
                 public void onServiceChanged(@NonNull BluetoothGatt gatt) {
                     super.onServiceChanged(gatt);
                     Log.i(this.getClass().getName(),  "  " +Thread.currentThread().getStackTrace()[2].getMethodName()+
@@ -718,10 +767,9 @@ public class Businesslogic_ScaningClientWorker {
 
     @SuppressLint("MissingPermission")
     private   void error133CloseingGatt(BluetoothGatt gatt, int newState) {
-        if(newState ==113){
             gatt.disconnect();
             gatt.close();
-        }
+
     }
 
     // TODO: 24.07.2024
