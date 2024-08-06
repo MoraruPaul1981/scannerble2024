@@ -5,6 +5,7 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.pm.PackageInfo;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
@@ -448,7 +449,7 @@ public class FragmentScannerUser extends Fragment {
         try {
 
             DividerItemDecoration dividerItemDecorationHor=
-                    new DividerItemDecoration(recyclerview_gatt_main.getContext(), LinearLayoutManager.VERTICAL);
+                    new DividerItemDecoration(recyclerview_gatt_main.getContext(), LinearLayoutManager.HORIZONTAL);
             recyclerview_gatt_main.addItemDecoration(dividerItemDecorationHor);
             GridLayoutManager layoutManager = new GridLayoutManager(getContext(), 2,
                     GridLayoutManager.HORIZONTAL,false);
@@ -665,6 +666,7 @@ public class FragmentScannerUser extends Fragment {
                 if (position==0) {
 // TODO: 06.08.2024
                     holder.materialbutton_Same_employee.setText(toWork);
+                    holder.materialbutton_Same_employee.setBackgroundColor(Color.parseColor("#BDC6C8"));
                     animationCurrentButonClick(holder.materialbutton_Same_employee,200);
                     // TODO: 06.08.2024  
                     eventButtonemployeeArrived(holder.materialbutton_Same_employee);
@@ -675,6 +677,7 @@ public class FragmentScannerUser extends Fragment {
 
                 }else {
                     holder.materialbutton_Same_employee.setText(fromtheJob);
+                    holder.materialbutton_Same_employee.setBackgroundColor(Color.parseColor("#D0D3D4"));
                     animationCurrentButonClick(holder.materialbutton_Exit_employee,100);
                     // TODO: 06.08.2024
                     eventButtonemployeeArrived(holder.materialbutton_Exit_employee);

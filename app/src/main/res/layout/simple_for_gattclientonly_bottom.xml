@@ -1,13 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <com.google.android.material.card.MaterialCardView
-    android:id="@+id/id_materialcardview_simple_gatt_scan"
-    android:layout_width="match_parent"
-    android:layout_height="300dp"
-    android:translationZ="10dp"
-    android:layout_margin="5dp"
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/id_materialcardview_simple_gatt_scan"
+    android:layout_width="match_parent"
+    android:layout_height="280dp"
+    android:translationZ="1dp"
+    android:layout_margin="5dp"
+    android:textSize="10sp"
+    app:cardBackgroundColor="#FFFAFA"
+    app:cardCornerRadius="5dp"
+    app:cardElevation="1dp"
+    app:strokeColor="#F5FFFA"
+    app:cardMaxElevation="2dp"
+    app:strokeWidth="1dp"
+    android:animateLayoutChanges="true"
     tools:context=".presentationlayer.MainActivityNewScanner">
 
 
@@ -32,7 +40,7 @@
             app:cardMaxElevation="15dp"
             app:cornerRadius='150dp'
             app:backgroundTint="#BDC6C8"
-            android:translationZ="5dp"
+            android:translationZ="2dp"
             app:rippleColor="#C62828"
             app:strokeColor="#F5FFFA"
             app:strokeWidth="1dp"

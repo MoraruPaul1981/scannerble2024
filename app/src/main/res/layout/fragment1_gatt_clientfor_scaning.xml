@@ -65,27 +65,22 @@
             android:translationZ="50dp" />
 
 
-
-
-
-
-
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/id_recyclerview_gatt_main"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:minHeight="500dp"
-            android:layout_centerHorizontal="true"
+            android:layout_below="@+id/id_materialtextview_last_state"
             android:layout_alignParentBottom="true"
-            android:layout_below ="@+id/id_materialtextview_last_state"
-            android:background="#F0FFFF"
-            android:visibility="visible"
-            android:fillViewport="true"
-            android:padding="5dp"
-
+            android:layout_centerHorizontal="true"
+            android:background="#0FFFFFFF"
             android:divider="@color/material_dynamic_primary0"
             android:dividerHeight="10dp"
+            android:fillViewport="true"
             android:listSelector="@color/material_dynamic_primary50"
+
+            android:minHeight="500dp"
+            android:padding="5dp"
+            android:visibility="visible"
 
             app:layout_behavior="@string/appbar_scrolling_view_behavior"
             tools:ignore="MissingConstraints" />
