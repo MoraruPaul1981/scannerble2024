@@ -34,7 +34,7 @@ import io.reactivex.rxjava3.core.Flowable;
 
 public class ServiceClientsScan extends Service {
 
-    public Message handlerScan;
+
     protected LocationManager locationManager;
     protected BluetoothManager bluetoothManagerServer;
     protected BluetoothAdapter bluetoothAdapterPhoneClient;
@@ -83,11 +83,9 @@ public class ServiceClientsScan extends Service {
 
             setingEnableApapterScan();
 
-            МетодHandles();
 
 // TODO: 24.07.2024 Reference an class Buncess logica Servir Scan
-            blForServiceScan=       new Businesslogic_ScaningClientWorker( handlerScan,
-                    locationManager,
+            blForServiceScan=       new Businesslogic_ScaningClientWorker(locationManager,
                     bluetoothManagerServer,
                     bluetoothAdapterPhoneClient,
                     version,
@@ -231,16 +229,6 @@ public class ServiceClientsScan extends Service {
     }
 
 
-
-    public void МетодHandles() {
-        handlerScan =new Handler(Looper.getMainLooper(), new Handler.Callback() {
-            @Override
-            public boolean handleMessage(@NonNull Message msg) {
-                return true;
-            }
-        }).obtainMessage();
-        Log.i(this.getClass().getName(),  "  " +Thread.currentThread().getStackTrace()[2].getMethodName()+ " время " +new Date().toLocaleString() );
-    }
 
     @RequiresApi(Build.VERSION_CODES.O)
     private String getNotificationChannel(NotificationManager notificationManager){

@@ -13,6 +13,8 @@ import android.bluetooth.BluetoothProfile;
 import android.content.ContentValues;
 import android.content.Context;
 import android.location.LocationManager;
+import android.os.Handler;
+import android.os.Looper;
 import android.os.Message;
 import android.os.ParcelUuid;
 import android.provider.Settings;
@@ -55,7 +57,6 @@ public class Businesslogic_ScaningClientWorker {
     // TODO: 24.07.2024  varibles Service Scan
     private String getWorkerStateClient="Простое сканирование";
 
-    private Message handlerScan;
     private LocationManager locationManager;
     private BluetoothManager bluetoothManagerServer;
     private  BluetoothAdapter bluetoothAdapterPhoneClient;
@@ -69,17 +70,16 @@ public class Businesslogic_ScaningClientWorker {
 
   private    NotificationCompat.Builder notificationBuilder;
   private     NotificationManager notificationManager;
+  private    Message message;
 
 
-    public Businesslogic_ScaningClientWorker(@NonNull Message handlerScan,
-                                             @NonNull LocationManager locationManager,
+    public Businesslogic_ScaningClientWorker(@NonNull LocationManager locationManager,
                                              @NonNull BluetoothManager bluetoothManagerServer,
                                              @NonNull BluetoothAdapter bluetoothAdapterPhoneClient,
                                              @NonNull Long version,
                                              @NonNull Context context ,
                                              @NonNull   NotificationCompat.Builder notificationBuilder,
                                              @NonNull NotificationManager notificationManager) {
-        this.handlerScan = handlerScan;
         this.locationManager = locationManager;
         this.bluetoothManagerServer = bluetoothManagerServer;
         this.bluetoothAdapterPhoneClient = bluetoothAdapterPhoneClient;
@@ -87,6 +87,8 @@ public class Businesslogic_ScaningClientWorker {
         this.context = context;
         this.  notificationBuilder =   notificationBuilder;
         this.  notificationManager =   notificationManager;
+        // TODO: 06.08.2024
+          message=getMessage();
     }
 
 
@@ -117,183 +119,15 @@ public class Businesslogic_ScaningClientWorker {
             // TODO: 02.08.2024
             CopyOnWriteArrayList<BluetoothGattCallback>  bluetoothGattCallbacks = new CopyOnWriteArrayList();
 
+            CopyOnWriteArrayList<Message>  messageCopyOnWriteArrayList = new CopyOnWriteArrayList();
+
 
             // TODO: 25.07.2024
             if (bluetoothAdapterPhoneClient!=null) {
                 // TODO: 30.07.2024
                 if (bluetoothAdapterPhoneClient.isEnabled()) {
 
-
-
-
-                    // TODO: 07.04.2024
-                    ParallelFlowable<String>     flowable= (ParallelFlowable)    Flowable.fromIterable( getListMAC )
-                            .parallel().runOn(Schedulers.from(Executors.newFixedThreadPool(getListMAC.size())));
-
-                    flowable.doOnNext(new Consumer<String>() {
-                        @Override
-                        public void accept(String s) throws Throwable {
-                            Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
-                                    " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                                    " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"   +"    Flowable.fromAction(new Action() { "
-                                    +   new Date().toLocaleString()
-                                    + " bluetoothAdapterPhoneClient.isEnabled() " +bluetoothAdapterPhoneClient.isEnabled());
-
-
-                            // TODO: 06.12.2023  запуск синхризуции по таблице конктерной
-                            // TODO: 02.08.2024 Обгнуляем Счетчик
-                            if (atomicInteger.get()>=getListMAC.size()) {
-                                // TODO: 02.08.2024
-                                atomicInteger.set(0);
-                                // TODO: 02.08.2024
-                                bluetoothGattCallbacks.clear();
-                            }
-
-                            // TODO: 25.07.2024
-                            final     String getAddress=     getListMAC.get(atomicInteger.get());
-                            // TODO: 02.08.2024
-                            // TODO: 26.07.2024
-                            final BluetoothDevice bluetoothDeviceScan = bluetoothAdapterPhoneClient.getRemoteDevice(getAddress.trim());
-
-                            // TODO: 12.02.2023  init CallBack Gatt Client for Scan
-                            bluetoothGattCallbacks.add(МетодРаботыСТекущийСерверомGATTДляScan( ));
-
-
-                            // TODO: 26.01.2023 staring  GATT
-                            МетодЗапускаGATTКлиентаScan(bluetoothDeviceScan, bluetoothGattCallbacks.get(atomicInteger.get()));
-
-                            // TODO: 02.08.2024 Увлеичиваем Значение Счетика
-                            atomicInteger.incrementAndGet();
-
-                            // TODO: 02.08.2024
-                            Log.d(this.getClass().getName(), "\n" + " class " +
-                                    Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
-                                    " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                                    " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" + "\n"
-                                    +  " atomicInteger.get() "+ atomicInteger.get());
-
-
-                            Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
-                                    " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                                    " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"   +"    Flowable.fromAction(new Action() { "
-                                    +   new Date().toLocaleString()
-                                    + " bluetoothAdapterPhoneClient.isEnabled() " +bluetoothAdapterPhoneClient.isEnabled());
-
-
-                        }
-                    }).sequential().doOnError(new Consumer<Throwable>() {
-                        @Override
-                        public void accept(Throwable throwable) throws Throwable {
-                            throwable.printStackTrace();
-                            Log.e(this.getClass().getName(), "Ошибка " +throwable + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() + " Линия  :"
-                                    + Thread.currentThread().getStackTrace()[2].getLineNumber());
-                            ContentValues valuesЗаписываемОшибки = new ContentValues();
-                            valuesЗаписываемОшибки.put("Error", throwable.toString().toLowerCase());
-                            valuesЗаписываемОшибки.put("Klass", this.getClass().getName());
-                            valuesЗаписываемОшибки.put("Metod", Thread.currentThread().getStackTrace()[2].getMethodName());
-                            valuesЗаписываемОшибки.put("LineError", Thread.currentThread().getStackTrace()[2].getLineNumber());
-                            final Object ТекущаяВерсияПрограммы = version;
-                            Integer ЛокальнаяВерсияПОСравнение = Integer.parseInt(ТекущаяВерсияПрограммы.toString());
-                            valuesЗаписываемОшибки.put("whose_error", ЛокальнаяВерсияПОСравнение);
-                            new SubClassErrors(context).МетодЗаписиОшибок(valuesЗаписываемОшибки);
-                        }
-                    }).doOnComplete(new Action() {
-                        @Override
-                        public void run() throws Throwable {
-
-                            Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
-                                    " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                                    " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n");
-                        }
-                    }).subscribe(e-> Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
-                            " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                            " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"   +"    Flowable.fromAction(new Action() { "
-                            +   new Date().toLocaleString()
-                            + " e " +e));
-
-
-                /*    flowable.doOnNext(new io.reactivex.rxjava3.functions.Consumer<String>() {
-                                @Override
-                                public void accept(String ТаблицаОбработываемаяParallel) throws Throwable {
-
-                                    // TODO: 06.12.2023  запуск синхризуции по таблице конктерной
-                                    // TODO: 02.08.2024 Обгнуляем Счетчик
-                                    if (atomicInteger.get()>=getListMAC.size()) {
-                                        // TODO: 02.08.2024
-                                        atomicInteger.set(0);
-                                        // TODO: 02.08.2024
-                                        bluetoothGattCallbacks.clear();
-                                    }
-
-                                    // TODO: 25.07.2024
-                                    final     String getAddress=     getListMAC.get(atomicInteger.get());
-                                    // TODO: 02.08.2024
-                                    // TODO: 26.07.2024
-                                    final BluetoothDevice bluetoothDeviceScan = bluetoothAdapterPhoneClient.getRemoteDevice(getAddress.trim());
-
-                                    // TODO: 12.02.2023  init CallBack Gatt Client for Scan
-                                    bluetoothGattCallbacks.add(МетодРаботыСТекущийСерверомGATTДляScan( ));
-
-
-                                    // TODO: 26.01.2023 staring  GATT
-                                    МетодЗапускаGATTКлиентаScan(bluetoothDeviceScan, bluetoothGattCallbacks.get(atomicInteger.get()));
-
-                                    // TODO: 02.08.2024 Увлеичиваем Значение Счетика
-                                    atomicInteger.incrementAndGet();
-
-                                    // TODO: 02.08.2024
-                                    Log.d(this.getClass().getName(), "\n" + " class " +
-                                            Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
-                                            " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                                            " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" + "\n"
-                                            +  " atomicInteger.get() "+ atomicInteger.get());
-
-
-                                    Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
-                                            " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                                            " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"   +"    Flowable.fromAction(new Action() { "
-                                            +   new Date().toLocaleString()
-                                            + " bluetoothAdapterPhoneClient.isEnabled() " +bluetoothAdapterPhoneClient.isEnabled());
-
-
-                                }
-                            })
-                            .doOnError(new Consumer<Throwable>() {
-                        @Override
-                        public void accept(Throwable throwable) throws Throwable {
-                            throwable.printStackTrace();
-                            Log.e(this.getClass().getName(), "Ошибка " +throwable + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() + " Линия  :"
-                                    + Thread.currentThread().getStackTrace()[2].getLineNumber());
-                            ContentValues valuesЗаписываемОшибки = new ContentValues();
-                            valuesЗаписываемОшибки.put("Error", throwable.toString().toLowerCase());
-                            valuesЗаписываемОшибки.put("Klass", this.getClass().getName());
-                            valuesЗаписываемОшибки.put("Metod", Thread.currentThread().getStackTrace()[2].getMethodName());
-                            valuesЗаписываемОшибки.put("LineError", Thread.currentThread().getStackTrace()[2].getLineNumber());
-                            final Object ТекущаяВерсияПрограммы = version;
-                            Integer ЛокальнаяВерсияПОСравнение = Integer.parseInt(ТекущаяВерсияПрограммы.toString());
-                            valuesЗаписываемОшибки.put("whose_error", ЛокальнаяВерсияПОСравнение);
-                            new SubClassErrors(context).МетодЗаписиОшибок(valuesЗаписываемОшибки);
-                        }
-                    }).doOnComplete(new Action() {
-                                @Override
-                                public void run() throws Throwable {
-
-                                    Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
-                                            " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                                            " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n");
-                                }
-                            }).sequential()
-                            .blockingSubscribe();*/
-
-
-
-
-
-
-
-
-
-/*                    // TODO: 05.08.2024
+                  // TODO: 05.08.2024
             Observable.fromAction(new Action() {
                         @Override
                         public void run() throws Throwable {
@@ -304,6 +138,8 @@ public class Businesslogic_ScaningClientWorker {
                                         atomicInteger.set(0);
                                         // TODO: 02.08.2024
                                         bluetoothGattCallbacks.clear();
+                                        // TODO: 06.08.2024
+                                        messageCopyOnWriteArrayList.clear();
                                     }
 
                                     // TODO: 25.07.2024
@@ -315,9 +151,12 @@ public class Businesslogic_ScaningClientWorker {
                                     // TODO: 12.02.2023  init CallBack Gatt Client for Scan
                                     bluetoothGattCallbacks.add(МетодРаботыСТекущийСерверомGATTДляScan( ));
 
+                            // TODO: 06.08.2024
+                            messageCopyOnWriteArrayList.add(getMessage());
+
 
                                   // TODO: 26.01.2023 staring  GATT
-                                 МетодЗапускаGATTКлиентаScan(bluetoothDeviceScan, bluetoothGattCallbacks.get(atomicInteger.get()));
+                     МетодЗапускаGATTКлиентаScan(bluetoothDeviceScan, bluetoothGattCallbacks.get(atomicInteger.get()),messageCopyOnWriteArrayList.get(atomicInteger.get()));
 
                                     // TODO: 02.08.2024 Увлеичиваем Значение Счетика
                                     atomicInteger.incrementAndGet();
@@ -363,7 +202,7 @@ public class Businesslogic_ScaningClientWorker {
                             new SubClassErrors(context).МетодЗаписиОшибок(valuesЗаписываемОшибки);
                         }
                     })
-                    .subscribe();*/
+                    .subscribe();
 
                 }
             }else{
@@ -424,6 +263,7 @@ public class Businesslogic_ScaningClientWorker {
             // TODO: 02.08.2024
             CopyOnWriteArrayList<BluetoothGattCallback>  bluetoothGattCallbacks = new CopyOnWriteArrayList();
 
+            CopyOnWriteArrayList<Message>  messageCopyOnWriteArrayList = new CopyOnWriteArrayList();
 
             // TODO: 25.07.2024
             if (bluetoothAdapterPhoneClient!=null) {
@@ -440,6 +280,8 @@ public class Businesslogic_ScaningClientWorker {
                                         atomicInteger.set(0);
                                         // TODO: 02.08.2024
                                         bluetoothGattCallbacks.clear();
+                                        // TODO: 06.08.2024
+                                        messageCopyOnWriteArrayList.clear();
                                     }
 
                                     // TODO: 25.07.2024
@@ -452,8 +294,12 @@ public class Businesslogic_ScaningClientWorker {
                                     bluetoothGattCallbacks.add(МетодРаботыСТекущийСерверомGATTДляScan( ));
 
 
+                                    // TODO: 06.08.2024
+                                    messageCopyOnWriteArrayList.add(getMessage());
+
+
                                     // TODO: 26.01.2023 staring  GATT
-                                    МетодЗапускаGATTКлиентаScan(bluetoothDeviceScan, bluetoothGattCallbacks.get(atomicInteger.get()));
+                                    МетодЗапускаGATTКлиентаScan(bluetoothDeviceScan, bluetoothGattCallbacks.get(atomicInteger.get()),messageCopyOnWriteArrayList.get(atomicInteger.get()));
 
                                     // TODO: 02.08.2024 Увлеичиваем Значение Счетика
                                     atomicInteger.incrementAndGet();
@@ -579,7 +425,7 @@ public class Businesslogic_ScaningClientWorker {
                             case BluetoothProfile.STATE_CONNECTED :
                                 Log.i(this.getClass().getName(), "Connected to GATT client. BluetoothProfile.STATE_CONNECTED ###1 onConnectionStateChange  " +
                                         ""+new Date().toLocaleString());
-                                handlerScan.getTarget().post(()->{
+                                message.getTarget().post(()->{
                                     ConcurrentHashMap<String,String> concurrentHashMap=      new ConcurrentHashMap<String,String>();
                                     concurrentHashMap  .put("BluetoothProfile.STATE_CONNECTED","2");
                                     mediatorLiveDataScan.setValue(concurrentHashMap);
@@ -607,7 +453,7 @@ public class Businesslogic_ScaningClientWorker {
 
 
                             case BluetoothGatt.GATT_FAILURE:
-                                handlerScan.getTarget().post(()->{
+                                message.getTarget().post(()->{
                                     ConcurrentHashMap<String,String> concurrentHashMap=      new ConcurrentHashMap<String,String>();
                                     concurrentHashMap  .put("BluetoothGatt.GATT_FAILURE","4");
                                     mediatorLiveDataScan.setValue(concurrentHashMap);
@@ -618,7 +464,7 @@ public class Businesslogic_ScaningClientWorker {
 
 
                             case BluetoothGatt.GATT_CONNECTION_CONGESTED :
-                                handlerScan.getTarget().post(()->{
+                                message.getTarget().post(()->{
                                     ConcurrentHashMap<String,String> concurrentHashMap=      new ConcurrentHashMap<String,String>();
                                     concurrentHashMap  .put("BluetoothGatt.GATT_CONNECTION_CONGESTED","5");
                                     mediatorLiveDataScan.setValue(concurrentHashMap);
@@ -807,7 +653,7 @@ public class Businesslogic_ScaningClientWorker {
                                 Log.i(this.getClass().getName(),  " " +Thread.currentThread().getStackTrace()[2].getMethodName()
                                         + " время " +new Date().toLocaleString()+ " ОтветОтСервераОбратно "+ОтветОтСервераОбратно );
                                 // TODO: 30.01.2023  ПОСЫЛАЕМ ОТВЕТ ОТ СЕРВЕРА СТАТУСА
-                                handlerScan.getTarget().post(()->{
+                                message.getTarget().post(()->{
 
                                     ConcurrentHashMap<String,String> concurrentHashMap=      new ConcurrentHashMap<String,String>();
                                     concurrentHashMap  .put(ОтветОтСервераОбратно,ОтветОтСервераОбратно);
@@ -877,7 +723,8 @@ public class Businesslogic_ScaningClientWorker {
 
     // TODO: 24.07.2024
     @SuppressLint("MissingPermission")
-    private void МетодЗапускаGATTКлиентаScan(@NonNull  BluetoothDevice  bluetoothDevice,@NonNull  BluetoothGattCallback  bluetoothGattCallbacks) {
+    private void МетодЗапускаGATTКлиентаScan(@NonNull  BluetoothDevice  bluetoothDevice,@NonNull  BluetoothGattCallback  bluetoothGattCallbacks,
+                                             @NonNull Message message) {
         try{
 
             if (bluetoothAdapterPhoneClient!=null && bluetoothAdapterPhoneClient.isEnabled()) {
@@ -887,7 +734,7 @@ public class Businesslogic_ScaningClientWorker {
 
                 // TODO: 30.07.2024
             BluetoothGatt     gattScan =      bluetoothDevice.connectGatt(context, false,
-                    bluetoothGattCallbacks, BluetoothDevice.TRANSPORT_AUTO,BluetoothDevice.PHY_OPTION_NO_PREFERRED,handlerScan.getTarget());
+                    bluetoothGattCallbacks, BluetoothDevice.TRANSPORT_AUTO,BluetoothDevice.PHY_OPTION_NO_PREFERRED,message.getTarget());
                 gattScan.requestConnectionPriority(BluetoothGatt.CONNECTION_PRIORITY_HIGH);
                 //gatt.setPreferredPhy(BluetoothDevice.PHY_LE_2M_MASK,BluetoothDevice.PHY_LE_2M_MASK,BluetoothDevice.PHY_OPTION_S2);
                 int bondstate = bluetoothDevice.getBondState();
@@ -902,7 +749,7 @@ public class Businesslogic_ScaningClientWorker {
     
                     case BluetoothDevice.DEVICE_TYPE_UNKNOWN:
                         // TODO: 19.07.2024
-                        handlerScan.getTarget().post(()->{
+                        message.getTarget().post(()->{
                             ConcurrentHashMap<String,String> concurrentHashMap=      new ConcurrentHashMap<String,String>();
                             concurrentHashMap  .put("BluetoothDevice.DEVICE_TYPE_UNKNOWN","9");
                             mediatorLiveDataScan.setValue(concurrentHashMap);
@@ -916,7 +763,7 @@ public class Businesslogic_ScaningClientWorker {
     
                     case BluetoothDevice.BOND_NONE:
                         // TODO: 29.07.2024
-                        handlerScan.getTarget().post(()->{
+                        message.getTarget().post(()->{
                             ConcurrentHashMap<String,String> concurrentHashMap=      new ConcurrentHashMap<String,String>();
                             concurrentHashMap  .put("BluetoothDevice.BOND_NONE","10");
                             mediatorLiveDataScan.setValue(concurrentHashMap);
@@ -930,7 +777,7 @@ public class Businesslogic_ScaningClientWorker {
     
                     case BluetoothDevice.BOND_BONDING:
                         // TODO: 29.07.2024
-                        handlerScan.getTarget().post(()->{
+                        message.getTarget().post(()->{
                             ConcurrentHashMap<String,String> concurrentHashMap=      new ConcurrentHashMap<String,String>();
                             concurrentHashMap  .put("BluetoothDevice.BOND_BONDING","12");
                             mediatorLiveDataScan.setValue(concurrentHashMap);
@@ -944,7 +791,7 @@ public class Businesslogic_ScaningClientWorker {
                         break;
     
                     case BluetoothDevice.BOND_BONDED:
-                        handlerScan.getTarget().post(()->{
+                        message.getTarget().post(()->{
                             ConcurrentHashMap<String,String> concurrentHashMap=      new ConcurrentHashMap<String,String>();
                             concurrentHashMap  .put("BluetoothDevice.BOND_BONDING","13");
                             mediatorLiveDataScan.setValue(concurrentHashMap);
@@ -997,6 +844,19 @@ public class Businesslogic_ScaningClientWorker {
 
 
 
+
+    public Message getMessage() {
+        Message   message =new Handler(Looper.getMainLooper(), new Handler.Callback() {
+            @Override
+            public boolean handleMessage(@NonNull Message msg) {
+                Log.i(this.getClass().getName(),  "  " +Thread.currentThread().getStackTrace()[2].getMethodName()+ " время " +new Date().toLocaleString() );
+
+                return true;
+            }
+        }).obtainMessage();
+        Log.i(this.getClass().getName(),  "  " +Thread.currentThread().getStackTrace()[2].getMethodName()+ " время " +new Date().toLocaleString() );
+        return message;
+    }
 
     // TODO: 24.07.2024  end class
 
