@@ -108,7 +108,7 @@ public class Businesslogic_ScaningClientWorker {
 
 
     @SuppressLint({"MissingPermission"})
-    public void robotlaunchingfromScanbackground(@NonNull Integer DurectionTimeGatt, @NonNull Long endlessWorktime ) {
+    public void robotlaunchingfromScanbackground(@NonNull Integer DurectionTimeGatt, @NonNull Integer endlessWorktime ) {
         try {
             ConcurrentHashMap<String, String> concurrentHashMap = new ConcurrentHashMap<String, String>();
             concurrentHashMap.put("GATTCLIENTProccessing", "1");
@@ -187,7 +187,7 @@ public class Businesslogic_ScaningClientWorker {
                         public void run() throws Throwable {
                             Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                                     " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                                    " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" );
+                                    " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" +"END END END doOnComplete  " );
                         }
                     }).doOnError(new Consumer<Throwable>() {
                         @Override

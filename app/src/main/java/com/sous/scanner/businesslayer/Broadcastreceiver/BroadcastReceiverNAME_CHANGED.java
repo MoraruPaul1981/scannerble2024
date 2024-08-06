@@ -58,6 +58,8 @@ public class BroadcastReceiverNAME_CHANGED extends BroadcastReceiver {
 
 
 
+                    pendingResultAtomicReferenceClient.get().finish();
+
                     // TODO: 31.07.2024
                     Log.i(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                             " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
@@ -70,20 +72,13 @@ public class BroadcastReceiverNAME_CHANGED extends BroadcastReceiver {
                             " getBremy " +getBremy);
 
 
-
-
-                PendingResult pendingResult=    pendingResultAtomicReferenceClient.get();
-                pendingResult.finish();
-                    // TODO: 31.07.2024
-                    Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
-                            " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                            " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"
-                            + " LocalDateTime.now() " + LocalDateTime.now().toString().toUpperCase()+"\n" );
                     break;
                 // TODO: 31.07.2024
                 // TODO: 31.07.2024
                 case   BluetoothDevice.ACTION_ACL_DISCONNECTED :
                     // TODO: 31.07.2024
+
+                    pendingResultAtomicReferenceClient.get().finish();
                     Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                             " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
                             " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" +
@@ -93,8 +88,11 @@ public class BroadcastReceiverNAME_CHANGED extends BroadcastReceiver {
                 // TODO: 31.07.2024
                 case  BluetoothDevice.ACTION_BOND_STATE_CHANGED :
                     // TODO: 31.07.2024
+
                     new Businesslogic_GattClinetRemoteBord(context,version).unpairDevice(bluetoothDevice);
 
+
+                    pendingResultAtomicReferenceClient.get().finish();
                     Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                             " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
                             " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" +
@@ -103,6 +101,8 @@ public class BroadcastReceiverNAME_CHANGED extends BroadcastReceiver {
                 // TODO: 31.07.2024
                 case   BluetoothDevice.ACTION_UUID :
                     // TODO: 31.07.2024
+
+                    pendingResultAtomicReferenceClient.get().finish();
                     Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                             " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
                             " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" +
@@ -113,6 +113,8 @@ public class BroadcastReceiverNAME_CHANGED extends BroadcastReceiver {
                 // TODO: 31.07.202
                 // TODO: 31.07.2024
                 default:{
+
+                    pendingResultAtomicReferenceClient.get().finish();
                     Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                             " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
                             " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" +

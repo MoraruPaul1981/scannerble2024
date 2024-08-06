@@ -57,7 +57,8 @@ public class BroadcastReceiverACL extends BroadcastReceiver {
 
 // TODO: 05.08.2024 CAll BAck От сервера запись уСпешноый КОТРОЛЬ
 
-                    new Businesslogic_GattClinetSuccessfullycompletedClientControl(context,version).Successfullycompleted(context,getAction,getAddress,getName);
+                    new Businesslogic_GattClinetSuccessfullycompletedClientControl(context,version).successfullycompleted(context,getAction,getAddress,getName,
+                            pendingResultAtomicReferenceClient);
 
                     // TODO: 31.07.2024
                     Log.i(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
@@ -69,12 +70,6 @@ public class BroadcastReceiverACL extends BroadcastReceiver {
                             "  getName " + getName+"\n"+"\n"
                             + " rssi " +rssi+"\n"+
                             " getBremy " +getBremy);
-
-
-
-
-                PendingResult pendingResult=    pendingResultAtomicReferenceClient.get();
-                pendingResult.finish();
                     // TODO: 31.07.2024
                     Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                             " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
@@ -85,6 +80,7 @@ public class BroadcastReceiverACL extends BroadcastReceiver {
                 // TODO: 31.07.2024
                 case   BluetoothDevice.ACTION_ACL_DISCONNECTED :
                     // TODO: 31.07.2024
+                    pendingResultAtomicReferenceClient.get().finish();
                     Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                             " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
                             " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" +
@@ -95,6 +91,8 @@ public class BroadcastReceiverACL extends BroadcastReceiver {
                 case  BluetoothDevice.ACTION_BOND_STATE_CHANGED :
                     // TODO: 31.07.2024
                     new Businesslogic_GattClinetRemoteBord(context,version).unpairDevice(bluetoothDevice);
+                    // TODO: 06.08.2024
+                    pendingResultAtomicReferenceClient.get().finish();
 
                     Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                             " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
@@ -104,6 +102,7 @@ public class BroadcastReceiverACL extends BroadcastReceiver {
                 // TODO: 31.07.2024
 
                 default:{
+                    pendingResultAtomicReferenceClient.get().finish();
                     Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                             " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
                             " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" +

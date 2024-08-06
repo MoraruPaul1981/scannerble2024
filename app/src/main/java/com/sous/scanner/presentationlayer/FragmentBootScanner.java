@@ -80,7 +80,7 @@ public class FragmentBootScanner extends Fragment {
             businesslogicJobServive=new Businesslogic_JOBServive(getContext());
 
             // TODO: 16.07.2024  startting Fragment Scannig
-            businesslogicJobServive.   startingServiceSimpleScan("robotlaunchingfrombackground");
+            businesslogicJobServive.   startingServiceSimpleScan("");
 
 
             handlerScannerGattClient =((MainActivityNewScanner) getActivity()).handlerScannerGattClient;

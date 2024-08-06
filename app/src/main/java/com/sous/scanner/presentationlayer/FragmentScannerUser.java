@@ -700,6 +700,7 @@ public class FragmentScannerUser extends Fragment {
         private void addCurrentButonClick(@NonNull MaterialButton materialButtonClick) {
             try{
             materialButtonClick.setText(toWork);
+                materialButtonClick.setTextSize(11l);
             materialButtonClick.setBackgroundColor(Color.parseColor("#BDC6C8"));
                 // TODO: 06.08.2024
             Log.d(getContext().getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +

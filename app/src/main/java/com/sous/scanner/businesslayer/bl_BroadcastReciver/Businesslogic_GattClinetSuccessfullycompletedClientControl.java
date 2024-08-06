@@ -1,22 +1,21 @@
 package com.sous.scanner.businesslayer.bl_BroadcastReciver;
 
-import android.bluetooth.BluetoothDevice;
+import android.content.BroadcastReceiver;
 import android.content.ContentValues;
 import android.content.Context;
 import android.util.Log;
 
 import com.sous.scanner.businesslayer.Errors.SubClassErrors;
 
-import java.lang.reflect.Method;
-import java.time.LocalDateTime;
+import java.util.concurrent.atomic.AtomicReference;
 
 import javax.inject.Inject;
 
 import io.reactivex.rxjava3.annotations.NonNull;
 import io.reactivex.rxjava3.core.Completable;
 import io.reactivex.rxjava3.core.CompletableObserver;
-import io.reactivex.rxjava3.core.Single;
 import io.reactivex.rxjava3.disposables.Disposable;
+import io.reactivex.rxjava3.functions.Action;
 import io.reactivex.rxjava3.schedulers.Schedulers;
 
 public class Businesslogic_GattClinetSuccessfullycompletedClientControl {
@@ -30,8 +29,25 @@ public class Businesslogic_GattClinetSuccessfullycompletedClientControl {
     }
 
 
-    public void Successfullycompleted(Context context,String getAction,String getAddress,String getName) {
-        Completable.complete()
+    public synchronized void successfullycompleted(Context context, String getAction, String getAddress, String getName,
+                                      AtomicReference<BroadcastReceiver.PendingResult> pendingResultReceiver) {
+        Completable.fromAction(new Action() {
+                    @Override
+                    public void run() throws Throwable {
+                        Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                                " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                                " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"+ " pendingResultReceiver " +pendingResultReceiver );
+
+                        pendingResultReceiver.get().finish();
+
+                        // TODO: 06.08.2024
+
+                        Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                                " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                                " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"+ " pendingResultReceiver " +pendingResultReceiver );
+
+                    }
+                })
                 .subscribeOn(Schedulers.single())
                 .blockingSubscribe(new CompletableObserver() {
             @Override
@@ -47,6 +63,7 @@ public class Businesslogic_GattClinetSuccessfullycompletedClientControl {
                 Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                         " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
                         " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() );
+
 
             }
 
