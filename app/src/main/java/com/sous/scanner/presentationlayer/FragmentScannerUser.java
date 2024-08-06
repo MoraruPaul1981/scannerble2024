@@ -756,6 +756,7 @@ public class FragmentScannerUser extends Fragment {
                             @Override
                             public void onNext(@io.reactivex.rxjava3.annotations.NonNull Unit unit) {
                                 // TODO: 05.08.2024
+                                animationCurrentButonClick(materialButtonClick,200);
                                 workerClickTOService(materialButtonClick);
                                 Log.i(this.getClass().getName(),  "  RxView.clicks " +Thread.currentThread().getStackTrace()[2].getMethodName()
                                         + " время " +new Date().toLocaleString() );
@@ -808,7 +809,7 @@ public class FragmentScannerUser extends Fragment {
                         @Override
                         public void run() throws Throwable {
                             // TODO: 05.08.2024 JOB Service
-                            businesslogicJobServive.startingServiceJobIntentServiceClientGatt("employeeArrived");
+                            businesslogicJobServive.startingServiceJobIntentServiceClientGatt(materialButtonClick.getText().toString());
 
                             Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                                     " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
@@ -822,7 +823,7 @@ public class FragmentScannerUser extends Fragment {
                     })
                     .subscribeOn(AndroidSchedulers.mainThread())
                     .observeOn(AndroidSchedulers.mainThread())
-                    .repeat(2)
+                    .repeat(10)
                     .subscribe();
         }
 

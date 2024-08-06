@@ -41,7 +41,7 @@
             app:cornerRadius='150dp'
             app:backgroundTint="#BDC6C8"
             android:translationZ="2dp"
-            app:rippleColor="#C62828"
+            app:rippleColor="#5765B3"
             app:strokeColor="#F5FFFA"
             app:strokeWidth="1dp"
             android:hint="#статус задачи" />

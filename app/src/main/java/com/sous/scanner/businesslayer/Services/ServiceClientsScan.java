@@ -131,7 +131,7 @@ public class ServiceClientsScan extends Service {
 
 
             // TODO: 25.07.2024 Бесконечная работа
-            //blForServiceScan.startingUserFromrUIButtonWorkerScanGATT(15);
+            blForServiceScan.startingUserFromrUIButtonWorkerScanGATT(15);
 
             Log.d(getApplicationContext().getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                     " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
