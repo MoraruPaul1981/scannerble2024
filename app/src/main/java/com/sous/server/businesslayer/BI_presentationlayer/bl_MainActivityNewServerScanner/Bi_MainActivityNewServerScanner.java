@@ -75,6 +75,7 @@ public class Bi_MainActivityNewServerScanner {
         try {
 
             FragmentTransaction    fragmentTransactionBoot = fragmentManager.beginTransaction();
+            fragmentManager.getFragments().remove(0);
             fragmentTransactionBoot.addToBackStack(null);
             fragmentTransactionBoot.add(R.id.id_frameLayoutmain_boot, fragmentBoot);//.layout.activity_for_fragemtb_history_tasks
             fragmentTransactionBoot.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_CLOSE).commit();//FragmentTransaction.TRANSIT_FRAGMENT_CLOSE
