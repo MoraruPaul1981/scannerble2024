@@ -7,6 +7,7 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
 import android.annotation.SuppressLint;
+import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
 import android.content.ContentValues;
 import android.content.IntentFilter;
@@ -177,6 +178,7 @@ public class MainActivityNewScanner extends AppCompatActivity  {
             IntentFilter filterScanClientOthets= new IntentFilter();
             filterScanClientOthets.addAction(BluetoothDevice.ACTION_NAME_CHANGED);
             filterScanClientOthets.addAction(BluetoothDevice.ACTION_CLASS_CHANGED);
+            filterScanClientOthets.addAction(BluetoothAdapter.ACTION_STATE_CHANGED);
             registerReceiver(new BroadcastReceiverNAME_CHANGED(), filterScanClientOthets);
 
             Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +

@@ -41,7 +41,7 @@ public class FragmentBootScanner extends Fragment {
     private  TabLayout tabLayoutScanner;
 
 
-    Businesslogic_JOBServive businesslogicJobServive;
+   private Businesslogic_JOBServive businesslogicJobServive;
 
     @SuppressLint("RestrictedApi")
     @Override
@@ -76,14 +76,18 @@ public class FragmentBootScanner extends Fragment {
             PackageInfo     pInfo = getContext().getPackageManager().getPackageInfo(getContext().getPackageName(), 0);
             version = pInfo.getLongVersionCode();
             fragmentManager = getActivity().getSupportFragmentManager();
+
             // TODO: 05.08.2024
             businesslogicJobServive=new Businesslogic_JOBServive(getContext());
 
+            handlerScannerGattClient =((MainActivityNewScanner) getActivity()).handlerScannerGattClient;
+
+            // TODO: 31.07.2024
+            Businesslogic_JOBServive businesslogicJobServive=new Businesslogic_JOBServive(getContext());
+
             // TODO: 16.07.2024  startting Fragment Scannig
             businesslogicJobServive.   startingServiceSimpleScan("robotlaunchingfrombackground");
-
-
-            handlerScannerGattClient =((MainActivityNewScanner) getActivity()).handlerScannerGattClient;
+           // businesslogicJobServive.   startingServiceSimpleScan("launchingfromfragment");
 
 
             Log.d(getContext().getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +

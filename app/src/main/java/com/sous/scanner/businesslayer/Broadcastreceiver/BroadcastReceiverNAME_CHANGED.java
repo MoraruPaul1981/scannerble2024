@@ -1,6 +1,7 @@
 package com.sous.scanner.businesslayer.Broadcastreceiver;
 
 import android.annotation.SuppressLint;
+import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
 import android.content.BroadcastReceiver;
 import android.content.ContentValues;
@@ -10,7 +11,9 @@ import android.content.pm.PackageInfo;
 import android.util.Log;
 
 import com.sous.scanner.businesslayer.Errors.SubClassErrors;
+import com.sous.scanner.businesslayer.bl_BroadcastReciver.Businesslogic_GattClinetSuccessNAMECHANGED;
 import com.sous.scanner.businesslayer.bl_BroadcastReciver.Businesslogic_GattReflection;
+import com.sous.scanner.businesslayer.bl_forServices.Businesslogic_JOBServive;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -40,64 +43,27 @@ public class BroadcastReceiverNAME_CHANGED extends BroadcastReceiver {
                 // TODO: 31.07.2024
                 case   BluetoothDevice.ACTION_NAME_CHANGED :
                 case   BluetoothDevice.ACTION_CLASS_CHANGED :
+                case   BluetoothAdapter.ACTION_STATE_CHANGED :
 
+                    Businesslogic_GattClinetSuccessNAMECHANGED businesslogicGattClinetSuccessNAMECHANGED
+                            =new Businesslogic_GattClinetSuccessNAMECHANGED(context,version);
 
-
-                    final   String     bluetoothDeviceNAMe = intent.getParcelableExtra(BluetoothDevice.EXTRA_NAME);
-                    int rssi = intent.getShortExtra(BluetoothDevice.EXTRA_RSSI,Short.MIN_VALUE);
-
-                    // TODO: 31.07.2024
-              String getAction=    Optional.ofNullable( intent.getAction().toUpperCase()).map(m->m.toUpperCase()) .orElseGet(()->"");
-              String getAddress=     Optional.ofNullable(bluetoothDevice.getAddress().toUpperCase()) .orElseGet(()->"");
-              String getName= Optional.ofNullable(bluetoothDevice.getName()).map(m->m.toUpperCase()) .orElseGet(()->"");
-
-                    LocalDateTime futureDate = LocalDateTime.now();
-                    DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy.MM.dd HH.mm.ss.SSS");
-                    String getBremy=   dtf.format(futureDate);
-
-
+                    businesslogicGattClinetSuccessNAMECHANGED.successLocalBroadcastManagerNAMECHANGED(intent,bluetoothDevice,pendingResultAtomicReferenceClient);
 
                     // TODO: 31.07.2024
                     Log.i(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                             " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
                             " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"
-                            + " BroadcastReceiver LocalDateTime.now() " + LocalDateTime.now().toString().toUpperCase()+"\n" +
-                            "  getAction " + getAction+"\n"+
-                            "  getAddress " + getAddress+"\n" +
-                            "  getName " + getName+"\n"
-                            + " rssi " +rssi+"\n"+
-                            " getBremy " +getBremy);
+                            + " BroadcastReceiver LocalDateTime.now() " + LocalDateTime.now().toString().toUpperCase()+"\n"
+                    +"intent.getAction() "+intent.getAction());
 
 
-
-
-                PendingResult pendingResult=    pendingResultAtomicReferenceClient.get();
-                pendingResult.finish();
                     // TODO: 31.07.2024
                     Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                             " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
                             " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"
                             + " LocalDateTime.now() " + LocalDateTime.now().toString().toUpperCase()+"\n" );
                     break;
-                // TODO: 31.07.2024
-                // TODO: 31.07.2024
-                case  BluetoothDevice.ACTION_BOND_STATE_CHANGED :
-
-                    Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
-                            " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                            " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" +
-                            "intent.getAction() "+intent.getAction() + " intent.getAction() " +intent.getAction());
-                    break;
-                // TODO: 31.07.2024
-                case   BluetoothDevice.ACTION_UUID :
-                    // TODO: 31.07.2024
-                    Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
-                            " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                            " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" +
-                            "intent.getAction() "+intent.getAction() + " intent.getAction() " +intent.getAction());
-                    break;
-
-
                 // TODO: 31.07.202
                 // TODO: 31.07.2024
                 default:{
