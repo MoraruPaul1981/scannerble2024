@@ -1036,6 +1036,13 @@ public class FragmentScannerUser extends Fragment {
             businessloginforfragmentScanner .eventprocessingOtEventBus(event);
 
             businessloginforfragmentScanner.  updateUIFragmentScan(materialtextview_last_state,preferences,animation,materialButtonEventSameOfficeEvent, message);
+            // TODO: 07.08.2024
+
+          // TODO: 07.08.2024 оставналивем службу После Успешной
+            Businesslogic_JOBServive businesslogicJobServive1=new Businesslogic_JOBServive(getContext());
+            businesslogicJobServive1.stopServiceSimpleScan();
+
+
             // TODO: 31.07.2024
             Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                     " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
