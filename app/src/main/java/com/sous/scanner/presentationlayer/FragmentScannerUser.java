@@ -21,7 +21,6 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.Lifecycle;
 import androidx.lifecycle.LifecycleEventObserver;
 import androidx.lifecycle.LifecycleOwner;
@@ -36,11 +35,9 @@ import com.google.android.material.textview.MaterialTextView;
 import com.jakewharton.rxbinding4.view.RxView;
 import com.sous.scanner.businesslayer.Errors.SubClassErrors;
 import com.sous.scanner.R;
-import com.sous.scanner.businesslayer.bl_EvenBus.EventB_Clent;
 import com.sous.scanner.businesslayer.bl_EvenBus.EventLocalBroadcastManager;
 import com.sous.scanner.businesslayer.bl_forServices.Businesslogic_JOBServive;
 import com.sous.scanner.businesslayer.bl_fragnment_gatt_client.BusinessloginforfragmentScanner;
-import com.sous.scanner.businesslayer.bl_fragnment_gatt_client.DividerItemDecorator;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -52,8 +49,6 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
@@ -68,8 +63,8 @@ public class FragmentScannerUser extends Fragment {
     private MyRecycleViewAdapter myRecycleViewAdapter;
     private MyViewHolder myViewHolder;
     private FragmentManager fragmentManager;
-    private Message handler;
-    private  MaterialCardView materialcardview_gattclientonly_bottom;
+    private Message message;
+
     private  MaterialTextView materialtextview_last_state;
     private Long version = 0l;
     private SharedPreferences preferences;
@@ -80,7 +75,8 @@ public class FragmentScannerUser extends Fragment {
     private       RecyclerView     recyclerview_gatt_main;
 
     private  String  toWork="Контроль доступа";
-    
+    private  MaterialButton materialButtonEventSameOfficeEvent;
+
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -91,7 +87,7 @@ public class FragmentScannerUser extends Fragment {
             preferences = getContext().getSharedPreferences("sharedPreferencesХранилище", Context.MODE_MULTI_PROCESS);
             fragmentManager = getActivity().getSupportFragmentManager();
             // TODO: 05.08.2024
-            Animation   animation = AnimationUtils.loadAnimation(getContext(), R.anim.slide_in_row_vibrator2);
+                animation = AnimationUtils.loadAnimation(getContext(), R.anim.slide_in_row_vibrator2);
 
             // TODO: 05.08.2024
             МетодHandler();
@@ -157,7 +153,7 @@ public class FragmentScannerUser extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         try {
 
-            materialcardview_gattclientonly_bottom = (MaterialCardView) view.findViewById(R.id.id_materialcardview_gattclientonly_bottom);
+            MaterialCardView   materialcardview_gattclientonly_bottom = (MaterialCardView) view.findViewById(R.id.id_materialcardview_gattclientonly_bottom);
 
             recyclerview_gatt_main = (RecyclerView) materialcardview_gattclientonly_bottom.findViewById(R.id.id_recyclerview_gatt_main);
 
@@ -526,8 +522,7 @@ public class FragmentScannerUser extends Fragment {
 
     // TODO: 28.02.2022 начало  MyViewHolderДляЧата
     protected class MyViewHolder extends RecyclerView.ViewHolder {
-        private MaterialButton materialbutton_Exit_employee;
-        private MaterialButton materialbutton_Same_employee;
+        private MaterialButton materialButtonEventSameOffice;
 
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -554,7 +549,8 @@ public class FragmentScannerUser extends Fragment {
             try {
                 Log.d(this.getClass().getName(), " отработоатл new SubClassBuccessLogin_ГлавныйКлассБизнесЛогикиФрагмент1 itemView   " + itemView);
                 // TODO: 08.02.2023 кнопка на работы
-                materialbutton_Exit_employee = itemView.findViewById(R.id.id_materialbutton_enter_and_exit_employee);
+                materialButtonEventSameOffice = itemView.findViewById(R.id.id_materialbutton_enter_and_exit_employee);
+                materialButtonEventSameOfficeEvent=materialButtonEventSameOffice;
                 // TODO: 17.07.2024
                 Log.d(getContext().getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                         " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
@@ -707,11 +703,11 @@ public class FragmentScannerUser extends Fragment {
                 // TODO: 17.07.2024  Сотрудник ПРИХОДИТ
                 if (position==0) {
                       // TODO: 06.08.2024
-                    addCurrentButonClick(holder.materialbutton_Same_employee);
+                    addCurrentButonClick(holder.materialButtonEventSameOffice);
 
-                    animationCurrentButonClick(holder.materialbutton_Same_employee,100);
+                    animationCurrentButonClick(holder.materialButtonEventSameOffice,100);
                     // TODO: 06.08.2024  
-                    eventButtonemployeeArrived(holder.materialbutton_Same_employee);
+                    eventButtonemployeeArrived(holder.materialButtonEventSameOffice);
 
                     Log.d(getContext().getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                             " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
@@ -973,7 +969,7 @@ public class FragmentScannerUser extends Fragment {
     }
 
     void МетодHandler() {
-        handler = new Handler(Looper.getMainLooper(), new Handler.Callback() {
+        message = new Handler(Looper.getMainLooper(), new Handler.Callback() {
             @Override
             public boolean handleMessage(@NonNull Message msg) {
                 try {
@@ -1010,7 +1006,7 @@ public class FragmentScannerUser extends Fragment {
 
             businessloginforfragmentScanner .eventprocessingOtEventBus(event);
 
-            businessloginforfragmentScanner.  updateUIFragmentScan(materialtextview_last_state,preferences,animation);
+            businessloginforfragmentScanner.  updateUIFragmentScan(materialtextview_last_state,preferences,animation,materialButtonEventSameOfficeEvent, message);
             // TODO: 31.07.2024
             Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                     " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +

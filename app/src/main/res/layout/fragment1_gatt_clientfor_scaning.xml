@@ -60,7 +60,7 @@
             android:layout_centerHorizontal="true"
             android:textColor="#7F8080"
             android:textColorHint="#7F8080"
-            android:textSize="16sp"
+            android:textSize="14sp"
             android:textStyle="bold"
             android:translationZ="50dp" />
 
