@@ -7,12 +7,10 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageInfo;
-import android.os.ParcelUuid;
 import android.util.Log;
 
 import com.sous.server.businesslayer.Errors.SubClassErrors;
-import com.sous.server.businesslayer.bl_BloadcastReceiver.Bl_BloadcastGatt_getDeviceClentGatt;
-import com.sous.server.businesslayer.bl_BloadcastReceiver.Bl_BloadcastGatt_pairDevice;
+import com.sous.server.businesslayer.bl_BloadcastReceiver.Businesslogic_GattReflection;
 
 import java.util.concurrent.atomic.AtomicReference;
 
@@ -52,7 +50,7 @@ public class BroadcastReceiverGattServerOthers extends BroadcastReceiver {
                 // TODO: 31.07.2024
                 case  BluetoothDevice.ACTION_BOND_STATE_CHANGED :
                     // TODO: 31.07.2024
-                    new Bl_BloadcastGatt_pairDevice(context,version).unpairDevice(bluetoothDevice);
+                    new Businesslogic_GattReflection(context,version).unpairDevice(bluetoothDevice);
 
                     Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                             " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
