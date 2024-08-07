@@ -247,7 +247,7 @@ public class Businesslogic_ScaningClientWorker {
            getListMAC.add( "98:2F:F8:19:BC:F7");
            getListMAC.add( "64:03:7F:A2:E2:C2");
            getListMAC.add( "CC:73:15:17:96:3F");
-            getListMAC.add( "74:15:75:D8:F5:FA");
+            getListMAC.add( "74:15:75:D8:F5:FA");//
         }
     }
 
