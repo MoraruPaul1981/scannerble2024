@@ -116,7 +116,7 @@ public class BusinessloginforfragmentScanner {
                 materialcardview_gattclientonly_bottom.setText(getFirstNameButton);
                 materialtextview_last_state.setError(null);
                 materialcardview_gattclientonly_bottom.setTextColor(Color.BLACK);
-            },2000);
+            },1500);
 
             if (getAddress.length()>0 && getAction.length()>0) {
                 String completeResultContol="cервер: "+getAddress

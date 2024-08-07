@@ -160,7 +160,7 @@ public class FragmentScannerUser extends Fragment {
             recyclerview_gatt_main = (RecyclerView) materialcardview_gattclientonly_bottom.findViewById(R.id.id_recyclerview_gatt_main);
 
             materialtextview_last_state = (MaterialTextView) materialcardview_gattclientonly_bottom.findViewById(R.id.id_materialtextview_last_state);
-
+// TODO: 07.08.2024 Востанавливаем статус последниуспешый статус  
             materialtextViewGetLastState();
 
             Log.d(getContext().getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
