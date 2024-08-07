@@ -1,10 +1,21 @@
 package com.sous.scanner.businesslayer.bl_BroadcastReciver;
 
+import android.annotation.SuppressLint;
+import android.bluetooth.BluetoothDevice;
+import android.content.BroadcastReceiver;
 import android.content.ContentValues;
 import android.content.Context;
+import android.content.Intent;
 import android.util.Log;
 
 import com.sous.scanner.businesslayer.Errors.SubClassErrors;
+
+import org.jetbrains.annotations.NotNull;
+
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.Optional;
+import java.util.concurrent.atomic.AtomicReference;
 
 import javax.inject.Inject;
 
@@ -13,23 +24,45 @@ import io.reactivex.rxjava3.core.Completable;
 import io.reactivex.rxjava3.core.CompletableObserver;
 import io.reactivex.rxjava3.disposables.Disposable;
 import io.reactivex.rxjava3.functions.Action;
-import io.reactivex.rxjava3.schedulers.Schedulers;
 
 public class Businesslogic_GattClinetSuccessLocalBroadcastManager {
 
     private Context context;
     private Long version;
 
-    public @Inject Businesslogic_GattClinetSuccessLocalBroadcastManager(Context context, Long version) {
+    public  Businesslogic_GattClinetSuccessLocalBroadcastManager(Context context, Long version) {
         this.context = context;
         this.version = version;
     }
 
-
-    public void Successfullycompleted(Context context,String getAction,String getAddress,String getName) {
+    @SuppressLint("MissingPermission")
+    public void successLocalBroadcastManager(@NotNull Intent intent,
+                                             @NotNull BluetoothDevice bluetoothDevice,
+                                             @NotNull AtomicReference<BroadcastReceiver.PendingResult> pendingResultAtomicReferenceClient) {
         Completable.fromAction(new Action() {
                     @Override
                     public void run() throws Throwable {
+
+                        // TODO: 31.07.2024
+                        String getAction=    Optional.ofNullable( intent.getAction().toUpperCase()).map(m->m.toUpperCase()) .orElseGet(()->"");
+                        String getAddress=     Optional.ofNullable(bluetoothDevice.getAddress().toUpperCase()) .orElseGet(()->"");
+                        String getName= Optional.ofNullable(bluetoothDevice.getName()).map(m->m.toUpperCase()) .orElseGet(()->"");
+
+                        LocalDateTime futureDate = LocalDateTime.now();
+                        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy.MM.dd HH.mm.ss.SSS");
+                        String getBremy=   dtf.format(futureDate);
+                        // TODO: 07.08.2024
+
+
+                        Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                                " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                                " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" +
+                                "getAction "+getAction + "\n"
+                                + " getAddress " +getAddress+ "\n" +" getName " +getName+"\n"+ " getBremy " +getBremy+"\n" );
+
+                        pendingResultAtomicReferenceClient.get().finish();
+
+
                         Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                                 " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
                                 " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() );

@@ -10,6 +10,9 @@ import android.content.pm.PackageInfo;
 import android.util.Log;
 
 import com.sous.scanner.businesslayer.Errors.SubClassErrors;
+import com.sous.scanner.businesslayer.bl_BroadcastReciver.Businesslogic_GattClinetSuccessLocalBroadcastManager;
+
+import org.jetbrains.annotations.NotNull;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -40,48 +43,41 @@ public class BroadcastReceiverACL extends BroadcastReceiver {
                 // TODO: 31.07.2024
                 case   BluetoothDevice.ACTION_ACL_CONNECTED :
                     // TODO: 02.08.2024
-                    final   String     bluetoothDeviceNAMe = intent.getParcelableExtra(BluetoothDevice.EXTRA_NAME);
-                    int rssi = intent.getShortExtra(BluetoothDevice.EXTRA_RSSI,Short.MIN_VALUE);
-
-
-                    // TODO: 31.07.2024
-              String getAction=    Optional.ofNullable( intent.getAction().toUpperCase()).map(m->m.toUpperCase()) .orElseGet(()->"");
-              String getAddress=     Optional.ofNullable(bluetoothDevice.getAddress().toUpperCase()) .orElseGet(()->"");
-              String getName= Optional.ofNullable(bluetoothDevice.getName()).map(m->m.toUpperCase()) .orElseGet(()->"");
-
-                    LocalDateTime futureDate = LocalDateTime.now();
-                    DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy.MM.dd HH.mm.ss.SSS");
-                    String getBremy=   dtf.format(futureDate);
-
-
-
-
-
-                PendingResult pendingResult=    pendingResultAtomicReferenceClient.get();
-                pendingResult.finish();
                     // TODO: 31.07.2024
                     Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                             " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                            " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"
-                            + " LocalDateTime.now() " + LocalDateTime.now().toString().toUpperCase()+"\n" );
+                            " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" +
+                            "intent.getAction() "+intent.getAction() + "\n"
+                            + " LocalDateTime.now() " + LocalDateTime.now().toString().toUpperCase()+"\n");
                     break;
                 // TODO: 31.07.2024
                 // TODO: 31.07.2024
                 case   BluetoothDevice.ACTION_ACL_DISCONNECTED :
                     // TODO: 31.07.2024
+
+                    // TODO: 07.08.2024  Успешное Событие в нутри BroadCasr Recuver
+              new Businesslogic_GattClinetSuccessLocalBroadcastManager(context,version).      successLocalBroadcastManager(intent, bluetoothDevice,  pendingResultAtomicReferenceClient);
+
                     Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                             " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
                             " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" +
-                            "intent.getAction() "+intent.getAction() + " intent.getAction() " +intent.getAction());
+                            "intent.getAction() "+intent.getAction() + "\n"
+                            + " LocalDateTime.now() " + LocalDateTime.now().toString().toUpperCase()+"\n");
                     break;
                 // TODO: 31.07.2024
                 // TODO: 31.07.2024
                 case  BluetoothDevice.ACTION_ACL_DISCONNECT_REQUESTED :
                     // TODO: 31.07.2024
+
+                    // TODO: 07.08.2024  Успешное Событие в нутри BroadCasr Recuver
+                    // TODO: 07.08.2024  Успешное Событие в нутри BroadCasr Recuver
+                    new Businesslogic_GattClinetSuccessLocalBroadcastManager(context,version).      successLocalBroadcastManager(intent, bluetoothDevice,  pendingResultAtomicReferenceClient);
+
                     Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                             " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
                             " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" +
-                            "intent.getAction() "+intent.getAction() + " intent.getAction() " +intent.getAction());
+                            "intent.getAction() "+intent.getAction() + "\n"
+                            + " LocalDateTime.now() " + LocalDateTime.now().toString().toUpperCase()+"\n");
                     break;
                 // TODO: 31.07.2024
 
@@ -89,7 +85,8 @@ public class BroadcastReceiverACL extends BroadcastReceiver {
                     Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                             " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
                             " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" +
-                            "intent.getAction() "+intent.getAction() + " intent.getAction() " +intent.getAction());
+                            "intent.getAction() "+intent.getAction() + "\n"
+                            + " LocalDateTime.now() " + LocalDateTime.now().toString().toUpperCase()+"\n");
                     break;
                 }
             }
@@ -114,4 +111,7 @@ public class BroadcastReceiverACL extends BroadcastReceiver {
         new SubClassErrors(context).МетодЗаписиОшибок(valuesЗаписываемОшибки);
     }
     }
+
+
+
 }
