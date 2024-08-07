@@ -10,8 +10,6 @@ import android.content.pm.PackageInfo;
 import android.util.Log;
 
 import com.sous.scanner.businesslayer.Errors.SubClassErrors;
-import com.sous.scanner.businesslayer.bl_BroadcastReciver.Businesslogic_GattReflection;
-import com.sous.scanner.businesslayer.bl_BroadcastReciver.Businesslogic_GattClinetSuccessfullycompletedClientControl;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -55,20 +53,6 @@ public class BroadcastReceiverACL extends BroadcastReceiver {
                     DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy.MM.dd HH.mm.ss.SSS");
                     String getBremy=   dtf.format(futureDate);
 
-// TODO: 05.08.2024 CAll BAck От сервера запись уСпешноый КОТРОЛЬ
-
-                    new Businesslogic_GattClinetSuccessfullycompletedClientControl(context,version).Successfullycompleted(context,getAction,getAddress,getName);
-
-                    // TODO: 31.07.2024
-                    Log.i(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
-                            " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                            " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"
-                            + " BroadcastReceiver LocalDateTime.now() " + LocalDateTime.now().toString().toUpperCase()+"\n" +
-                            "  getAction " + getAction+"\n"+
-                            "  getAddress " + getAddress+"\n" +
-                            "  getName " + getName+"\n"+"\n"
-                            + " rssi " +rssi+"\n"+
-                            " getBremy " +getBremy);
 
 
 
