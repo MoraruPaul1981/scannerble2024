@@ -32,11 +32,15 @@ import com.sous.scanner.businesslayer.bl_EvenBus.EventB_Clent;
 import com.sous.scanner.presentationlayer.FragmentScannerUser;
 
 import org.greenrobot.eventbus.EventBus;
+import org.reactivestreams.Publisher;
 import org.reactivestreams.Subscriber;
 import org.reactivestreams.Subscription;
 
 import java.time.LocalDateTime;
+import java.util.Arrays;
 import java.util.Date;
+import java.util.Iterator;
+import java.util.List;
 import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentSkipListSet;
@@ -50,11 +54,15 @@ import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
 import io.reactivex.rxjava3.core.Flowable;
 import io.reactivex.rxjava3.core.Observable;
 import io.reactivex.rxjava3.core.ObservableSource;
+import io.reactivex.rxjava3.core.Observer;
+import io.reactivex.rxjava3.disposables.Disposable;
 import io.reactivex.rxjava3.functions.Action;
 import io.reactivex.rxjava3.functions.Consumer;
 import io.reactivex.rxjava3.functions.Function;
+import io.reactivex.rxjava3.functions.Predicate;
 import io.reactivex.rxjava3.parallel.ParallelFlowable;
 import io.reactivex.rxjava3.schedulers.Schedulers;
+import io.reactivex.rxjava3.subscribers.TestSubscriber;
 
 public class Businesslogic_ScaningClientWorker {
 
@@ -110,7 +118,7 @@ public class Businesslogic_ScaningClientWorker {
 
 
     @SuppressLint({"MissingPermission"})
-    public void robotlaunchingfromScanbackground(@NonNull Integer DurectionTimeGatt, @NonNull Long endlessWorktime ) {
+    public void robotlaunchingfromScanbackground(@NonNull Integer DurectionTimeGatt, @NonNull Integer endlessWorktime ) {
         try {
             ConcurrentHashMap<String, String> concurrentHashMap = new ConcurrentHashMap<String, String>();
             concurrentHashMap.put("GATTCLIENTProccessing", "1");
@@ -134,7 +142,7 @@ public class Businesslogic_ScaningClientWorker {
 
 
                  // TODO: 05.08.2024
-            Observable.fromAction(new Action() {
+         Observable.fromAction(new Action() {
                         @Override
                         public void run() throws Throwable {
 
@@ -148,7 +156,7 @@ public class Businesslogic_ScaningClientWorker {
                                         messageCopyOnWriteArrayList.clear();
                                     }
 
-                                    // TODO: 25.07.2024
+                                 /*   // TODO: 25.07.2024
                                  final     String getAddress=     getListMAC.get(atomicInteger.get());
                                     // TODO: 02.08.2024
                                     // TODO: 26.07.2024
@@ -165,7 +173,7 @@ public class Businesslogic_ScaningClientWorker {
                      МетодЗапускаGATTКлиентаScan(bluetoothDeviceScan, bluetoothGattCallbacks.get(atomicInteger.get()),messageCopyOnWriteArrayList.get(atomicInteger.get()));
 
                                     // TODO: 02.08.2024 Увлеичиваем Значение Счетика
-                                    atomicInteger.incrementAndGet();
+                                    atomicInteger.incrementAndGet();*/
 
                                     // TODO: 02.08.2024
                                     Log.d(this.getClass().getName(), "\n" + " class " +
@@ -182,34 +190,44 @@ public class Businesslogic_ScaningClientWorker {
                                     + " bluetoothAdapterPhoneClient.isEnabled() " +bluetoothAdapterPhoneClient.isEnabled());
                         }
                     })
-                    .repeatWhen(repeat->repeat.delay(DurectionTimeGatt, TimeUnit.SECONDS))
-                    .take(endlessWorktime)
-                    .subscribeOn(AndroidSchedulers.mainThread())
-                    .doOnComplete(new Action() {
-                        @Override
-                        public void run() throws Throwable {
-                            Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
-                                    " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                                    " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" );
-                        }
-                    }).doOnError(new Consumer<Throwable>() {
-                        @Override
-                        public void accept(Throwable throwable) throws Throwable {
-                            throwable.printStackTrace();
-                            Log.e(this.getClass().getName(), "Ошибка " +throwable + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() + " Линия  :"
-                                    + Thread.currentThread().getStackTrace()[2].getLineNumber());
-                            ContentValues valuesЗаписываемОшибки = new ContentValues();
-                            valuesЗаписываемОшибки.put("Error", throwable.toString().toLowerCase());
-                            valuesЗаписываемОшибки.put("Klass", this.getClass().getName());
-                            valuesЗаписываемОшибки.put("Metod", Thread.currentThread().getStackTrace()[2].getMethodName());
-                            valuesЗаписываемОшибки.put("LineError", Thread.currentThread().getStackTrace()[2].getLineNumber());
-                            final Object ТекущаяВерсияПрограммы = version;
-                            Integer ЛокальнаяВерсияПОСравнение = Integer.parseInt(ТекущаяВерсияПрограммы.toString());
-                            valuesЗаписываемОшибки.put("whose_error", ЛокальнаяВерсияПОСравнение);
-                            new SubClassErrors(context).МетодЗаписиОшибок(valuesЗаписываемОшибки);
-                        }
-                    })
-                    .subscribe();
+                 .repeatWhen(repeat->repeat.delay(DurectionTimeGatt, TimeUnit.SECONDS))
+                 .takeWhile(new Predicate<Object>() {
+                     @Override
+                     public boolean test(Object o) throws Throwable {
+                         if (atomicInteger.get()>=getListMAC.size()) {
+                             return false;
+                         } else {
+                             return false;
+                         }
+                     }
+                 })
+                 .subscribeOn(AndroidSchedulers.mainThread())
+                 .doOnComplete(new Action() {
+                     @Override
+                     public void run() throws Throwable {
+                         Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                                 " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                                 " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" );
+                     }
+                 }).doOnError(new Consumer<Throwable>() {
+                     @Override
+                     public void accept(Throwable throwable) throws Throwable {
+                         throwable.printStackTrace();
+                         Log.e(this.getClass().getName(), "Ошибка " +throwable + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() + " Линия  :"
+                                 + Thread.currentThread().getStackTrace()[2].getLineNumber());
+                         ContentValues valuesЗаписываемОшибки = new ContentValues();
+                         valuesЗаписываемОшибки.put("Error", throwable.toString().toLowerCase());
+                         valuesЗаписываемОшибки.put("Klass", this.getClass().getName());
+                         valuesЗаписываемОшибки.put("Metod", Thread.currentThread().getStackTrace()[2].getMethodName());
+                         valuesЗаписываемОшибки.put("LineError", Thread.currentThread().getStackTrace()[2].getLineNumber());
+                         final Object ТекущаяВерсияПрограммы = version;
+                         Integer ЛокальнаяВерсияПОСравнение = Integer.parseInt(ТекущаяВерсияПрограммы.toString());
+                         valuesЗаписываемОшибки.put("whose_error", ЛокальнаяВерсияПОСравнение);
+                         new SubClassErrors(context).МетодЗаписиОшибок(valuesЗаписываемОшибки);
+                     }
+                 })
+                 .blockingSubscribe();
+
 
                 }
             }else{

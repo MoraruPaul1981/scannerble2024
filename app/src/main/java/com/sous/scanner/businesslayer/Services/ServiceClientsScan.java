@@ -131,7 +131,7 @@ public class ServiceClientsScan extends Service {
                 case "robotlaunchingfrombackground":
                     // TODO: 25.07.2024 Бесконечная работа
                  //   blForServiceScan.robotlaunchingfromScanbackground(2,  1L);
-                    blForServiceScan.robotlaunchingfromScanbackground(2,  Long.MAX_VALUE);
+                    blForServiceScan.robotlaunchingfromScanbackground(2,  1);
 
                     Log.d(getApplicationContext().getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                             " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
@@ -140,15 +140,7 @@ public class ServiceClientsScan extends Service {
 
 
 
-                // TODO: 06.08.2024
-                case "userUIlaunchingfrombackground":
-                      // TODO: 06.08.2024
-                    blForServiceScan.robotlaunchingfromScanbackground(2,  1l);
 
-                    Log.d(getApplicationContext().getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
-                            " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                            " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" + " intent " +intent.getAction());
-                    break;
             }
 
             Log.d(getApplicationContext().getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
