@@ -119,7 +119,7 @@ public class Businesslogic_ScaningClientWorker {
 
 
     @SuppressLint({"MissingPermission"})
-    public void robotlaunchingfromScanbackground(@NonNull Integer DurectionTimeGatt, @NonNull Integer endlessWorktime ) {
+    public void robotlaunchingfromScanbackground(@NonNull Integer DurectionTimeGatt  ) {
         try {
             ConcurrentHashMap<String, String> concurrentHashMap = new ConcurrentHashMap<String, String>();
             concurrentHashMap.put("GATTCLIENTProccessing", "1");
@@ -143,129 +143,93 @@ public class Businesslogic_ScaningClientWorker {
 
 
 
-
-                Observable.just("dd")
-                        .subscribeOn(Schedulers.single())
-                        .zipWith(Observable.range(1,30),(n,i)->i) .repeatWhen(repeat->repeat.delay(2,TimeUnit.SECONDS))
-                        .flatMap(new Function<Integer, ObservableSource<?>>() {
-                            @Override
-                            public ObservableSource<?> apply(Integer integer) throws Throwable {
-                                return  Observable.just("dd")
-                                        .subscribeOn(Schedulers.single())
-                                        .zipWith(Observable.range(1,30),(n,i)->i) .repeatWhen(repeat->repeat.delay(10,TimeUnit.SECONDS)).delaySubscription(5,TimeUnit.SECONDS);
-                            }
-                        })
-                       /* .zipWith(Observable.interval(300, TimeUnit.MILLISECONDS), new BiFunction<Object, Long, Object>() {
-                            @Override
-                            public Object apply(Object o, Long aLong) throws Throwable {
-                                Log.d(this.getClass().getName(), " o " + o+ " aLong " +aLong);
-                                return aLong;
-                            }
-                        })*/.doOnNext(new Consumer<Object>() {
+                    Observable.fromIterable(      getListMAC)
+                        .zipWith( Observable.just("")
+                                .repeatWhen(repeat->repeat.delay(DurectionTimeGatt,TimeUnit.SECONDS)), (item, interval) -> item)
+                            .map(m->m.toUpperCase())
+                        .doOnNext(new Consumer<Object>() {
                             @Override
                             public void accept(Object o) throws Throwable {
                                 // TODO: 22.11.2022  первая часть
-                                Log.d(this.getClass().getName(), " doOnError  МетодУдалениеСамогоТабеля  throwable " );
-                            }
-                        }).subscribe();
-
-
-// TODO: 07.08.2024 end test code
-
-
-
-
-
-         /*           final Disposable[] disposableRobot = {null};
-                 // TODO: 05.08.2024
-         Observable.fromAction(new Action() {
-                        @Override
-                        public void run() throws Throwable {
-
-                                 // TODO: 02.08.2024 Обгнуляем Счетчик
-                                    if (atomicInteger.get()>=getListMAC.size()) {
-                                        // TODO: 02.08.2024
-                                        atomicInteger.set(0);
-                                        // TODO: 02.08.2024
-                                        bluetoothGattCallbacks.clear();
-                                        // TODO: 06.08.2024
-                                        messageCopyOnWriteArrayList.clear();
-                                        // TODO: 07.08.2024
-                                        disposableRobot[0].dispose();
-
-                                    }
-
-                                 *//*   // TODO: 25.07.2024
-                                 final     String getAddress=     getListMAC.get(atomicInteger.get());
+                                // TODO: 02.08.2024 Обгнуляем Счетчик
+                                if (atomicInteger.get()>=getListMAC.size()) {
                                     // TODO: 02.08.2024
-                                    // TODO: 26.07.2024
-                                      final BluetoothDevice bluetoothDeviceScan = bluetoothAdapterPhoneClient.getRemoteDevice(getAddress.trim());
+                                    atomicInteger.set(0);
+                                    // TODO: 02.08.2024
+                                    bluetoothGattCallbacks.clear();
+                                    // TODO: 06.08.2024
+                                    messageCopyOnWriteArrayList.clear();
+                                    // TODO: 07.08.2024
+                                }
 
-                                    // TODO: 12.02.2023  init CallBack Gatt Client for Scan
-                                    bluetoothGattCallbacks.add(МетодРаботыСТекущийСерверомGATTДляScan( ));
+                               //*   // TODO: 25.07.2024
+                                final     String getAddress=     getListMAC.get(atomicInteger.get());
+                                // TODO: 02.08.2024
+                                // TODO: 26.07.2024
+                                final BluetoothDevice bluetoothDeviceScan = bluetoothAdapterPhoneClient.getRemoteDevice(getAddress.trim());
 
-                            // TODO: 06.08.2024
-                            messageCopyOnWriteArrayList.add(getMessage());
+                                // TODO: 12.02.2023  init CallBack Gatt Client for Scan
+                                bluetoothGattCallbacks.add(МетодРаботыСТекущийСерверомGATTДляScan( ));
+
+                                // TODO: 06.08.2024
+                                messageCopyOnWriteArrayList.add(getMessage());
 
 
-                                  // TODO: 26.01.2023 staring  GATT
-                     МетодЗапускаGATTКлиентаScan(bluetoothDeviceScan, bluetoothGattCallbacks.get(atomicInteger.get()),messageCopyOnWriteArrayList.get(atomicInteger.get()));
+                                // TODO: 26.01.2023 staring  GATT
+                                МетодЗапускаGATTКлиентаScan(bluetoothDeviceScan, bluetoothGattCallbacks.get(atomicInteger.get()),messageCopyOnWriteArrayList.get(atomicInteger.get()));
 
-                                    // TODO: 02.08.2024 Увлеичиваем Значение Счетика
-                                    atomicInteger.incrementAndGet();*//*
-                            atomicInteger.incrementAndGet();
+                                // TODO: 02.08.2024 Увлеичиваем Значение Счетика
+                                atomicInteger.incrementAndGet();
+                                // TODO: 02.08.2024
+                                Log.d(this.getClass().getName(), "\n" + " class " +
+                                        Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                                        " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                                        " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" + "\n"
+                                        +  " atomicInteger.get() "+ atomicInteger.get());
+
+
+                                Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                                        " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                                        " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"   +"    Flowable.fromAction(new Action() { "
+                                        +   new Date().toLocaleString()
+                                        + " bluetoothAdapterPhoneClient.isEnabled() " +bluetoothAdapterPhoneClient.isEnabled());
+
+
+                                Log.d(this.getClass().getName(), "\n" + " class " +
+                                        Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                                        " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                                        " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" + "\n");
+                            }
+                        })
+                            .doOnError(new Consumer<Throwable>() {
+                                @Override
+                                public void accept(Throwable throwable) throws Throwable {
+                                    throwable.printStackTrace();
+                                    Log.e(this.getClass().getName(), "Ошибка " +throwable + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() + " Линия  :"
+                                            + Thread.currentThread().getStackTrace()[2].getLineNumber());
+                                    ContentValues valuesЗаписываемОшибки = new ContentValues();
+                                    valuesЗаписываемОшибки.put("Error", throwable.toString().toLowerCase());
+                                    valuesЗаписываемОшибки.put("Klass", this.getClass().getName());
+                                    valuesЗаписываемОшибки.put("Metod", Thread.currentThread().getStackTrace()[2].getMethodName());
+                                    valuesЗаписываемОшибки.put("LineError", Thread.currentThread().getStackTrace()[2].getLineNumber());
+                                    final Object ТекущаяВерсияПрограммы = version;
+                                    Integer ЛокальнаяВерсияПОСравнение = Integer.parseInt(ТекущаяВерсияПрограммы.toString());
+                                    valuesЗаписываемОшибки.put("whose_error", ЛокальнаяВерсияПОСравнение);
+                                    new SubClassErrors(context).МетодЗаписиОшибок(valuesЗаписываемОшибки);
+                                }
+                            })
+                            .doOnComplete(new Action() {
+                                @Override
+                                public void run() throws Throwable {
                                     // TODO: 02.08.2024
                                     Log.d(this.getClass().getName(), "\n" + " class " +
                                             Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                                             " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                                            " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" + "\n"
-                                            +  " atomicInteger.get() "+ atomicInteger.get());
-
-
-                            Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
-                                    " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                                    " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"   +"    Flowable.fromAction(new Action() { "
-                                    +   new Date().toLocaleString()
-                                    + " bluetoothAdapterPhoneClient.isEnabled() " +bluetoothAdapterPhoneClient.isEnabled());
-                        }
-                    })
-                 .repeatWhen(repeat->repeat.delay(DurectionTimeGatt, TimeUnit.SECONDS))
-                 .subscribeOn(AndroidSchedulers.mainThread())
-                 .doOnComplete(new Action() {
-                     @Override
-                     public void run() throws Throwable {
-                         Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
-                                 " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                                 " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" );
-                     }
-                 }).doOnError(new Consumer<Throwable>() {
-                     @Override
-                     public void accept(Throwable throwable) throws Throwable {
-                         throwable.printStackTrace();
-                         Log.e(this.getClass().getName(), "Ошибка " +throwable + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() + " Линия  :"
-                                 + Thread.currentThread().getStackTrace()[2].getLineNumber());
-                         ContentValues valuesЗаписываемОшибки = new ContentValues();
-                         valuesЗаписываемОшибки.put("Error", throwable.toString().toLowerCase());
-                         valuesЗаписываемОшибки.put("Klass", this.getClass().getName());
-                         valuesЗаписываемОшибки.put("Metod", Thread.currentThread().getStackTrace()[2].getMethodName());
-                         valuesЗаписываемОшибки.put("LineError", Thread.currentThread().getStackTrace()[2].getLineNumber());
-                         final Object ТекущаяВерсияПрограммы = version;
-                         Integer ЛокальнаяВерсияПОСравнение = Integer.parseInt(ТекущаяВерсияПрограммы.toString());
-                         valuesЗаписываемОшибки.put("whose_error", ЛокальнаяВерсияПОСравнение);
-                         new SubClassErrors(context).МетодЗаписиОшибок(valuesЗаписываемОшибки);
-                     }
-                 }).doOnSubscribe(new Consumer<Disposable>() {
-                     @Override
-                     public void accept(Disposable disposable) throws Throwable {
-                         // TODO: 07.08.2024
-                         disposableRobot[0] =disposable;
-                         Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
-                                 " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                                 " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" );
-                     }
-                 }).subscribe();*/
-
-
+                                            " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" + "\n");
+                                }
+                            })
+                            .subscribe();
+// TODO: 07.08.2024 end test code
                 }
             }else{
 
