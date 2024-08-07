@@ -9,7 +9,11 @@ import android.content.Intent;
 import android.util.Log;
 
 import com.sous.scanner.businesslayer.Errors.SubClassErrors;
+import com.sous.scanner.businesslayer.bl_EvenBus.EventB_Clent;
+import com.sous.scanner.businesslayer.bl_EvenBus.EventLocalBroadcastManager;
+import com.sous.scanner.presentationlayer.FragmentScannerUser;
 
+import org.greenrobot.eventbus.EventBus;
 import org.jetbrains.annotations.NotNull;
 
 import java.time.LocalDateTime;
@@ -53,6 +57,12 @@ public class Businesslogic_GattClinetSuccessLocalBroadcastManager {
                         DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy.MM.dd HH.mm.ss.SSS");
                         String getBremy=   dtf.format(futureDate);
                         // TODO: 07.08.2024
+
+                        // TODO: 07.08.2024  Call Backs клиенту почсле успешного отметки на сервее
+                        EventLocalBroadcastManager eventLocalBroadcastManager= new EventLocalBroadcastManager( getAction,getAddress,getName,getBremy);
+                        //TODO: ответ на экран работает ообрубование или нет
+                        EventBus.getDefault().post(eventLocalBroadcastManager);
+
 
 
                         Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
