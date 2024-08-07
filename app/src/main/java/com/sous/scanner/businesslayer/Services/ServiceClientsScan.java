@@ -128,7 +128,7 @@ public class ServiceClientsScan extends Service {
                 // TODO: 06.08.2024
                 case "robotlaunchingfrombackground":
                     // TODO: 25.07.2024 Бесконечная работа
-                    blForServiceScan.robotlaunchingfromScanbackground(15,  Long.MAX_VALUE);
+                    blForServiceScan.robotlaunchingfromScanbackground(2,  Long.MAX_VALUE);
 
                     Log.d(getApplicationContext().getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                             " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +

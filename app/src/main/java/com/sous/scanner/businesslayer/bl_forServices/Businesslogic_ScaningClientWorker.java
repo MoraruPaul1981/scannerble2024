@@ -75,6 +75,7 @@ public class Businesslogic_ScaningClientWorker {
   private    NotificationCompat.Builder notificationBuilder;
   private     NotificationManager notificationManager;
   private    Message message;
+  private    BluetoothGatt     gattScan;
 
 
     public Businesslogic_ScaningClientWorker(@NonNull LocationManager locationManager,
@@ -130,6 +131,7 @@ public class Businesslogic_ScaningClientWorker {
             if (bluetoothAdapterPhoneClient!=null) {
                 // TODO: 30.07.2024
                 if (bluetoothAdapterPhoneClient.isEnabled()) {
+
 
                  // TODO: 05.08.2024
             Observable.fromAction(new Action() {
@@ -284,6 +286,7 @@ public class Businesslogic_ScaningClientWorker {
         // TODO: 25.01.2023 ПЕРВЫЙ ВАРИАНТ СЕРВЕР gatt
         BluetoothGattCallback     bluetoothGattCallbackScan = null;
         try{
+            Businesslogic_GattReflection businesslogicGattReflection=new Businesslogic_GattReflection(context,version);
            bluetoothGattCallbackScan = new BluetoothGattCallback() {
                @Override
                public void onPhyUpdate(BluetoothGatt gatt, int txPhy, int rxPhy, int status) {
@@ -299,8 +302,6 @@ public class Businesslogic_ScaningClientWorker {
                 public void onConnectionStateChange(BluetoothGatt gatt, int status,
                                                     int newState) {
                     try{
-                        Businesslogic_GattReflection businesslogicGattReflection=new Businesslogic_GattReflection(context,version);
-
 
                         // TODO: 26.07.2024
                         switch (newState){
@@ -319,7 +320,6 @@ public class Businesslogic_ScaningClientWorker {
 
                                 // TODO: 07.08.2024  close clent GATT adn Refrecf
                                 businesslogicGattReflection.error133CloseingGatt(gatt);
-                                businesslogicGattReflection.refreshDeviceCache(gatt);
                                 break;
 
                             case BluetoothProfile.STATE_DISCONNECTED :
@@ -334,7 +334,6 @@ public class Businesslogic_ScaningClientWorker {
                                 // TODO: 16.07.2024 когда ошивка разрываем сообщение
                                 // TODO: 07.08.2024  close clent GATT adn Refrecf
                                 businesslogicGattReflection.error133CloseingGatt(gatt);
-                                businesslogicGattReflection.refreshDeviceCache(gatt);
                                 Log.d(this.getClass().getName(), "Trying to \"SERVERВDontEndConnect\" "  + " newState " +newState);
                                 break;
 
@@ -344,6 +343,7 @@ public class Businesslogic_ScaningClientWorker {
                                     ConcurrentHashMap<String,String> concurrentHashMap=      new ConcurrentHashMap<String,String>();
                                     concurrentHashMap  .put("BluetoothGatt.GATT_FAILURE","4");
                                     mediatorLiveDataScan.setValue(concurrentHashMap);
+                                    businesslogicGattReflection.error133CloseingGatt(gatt);
                                 });
                               //  new Businesslogic_GattClinetClose(version,context). disaibleGattServer(gatt);
                                 Log.d(this.getClass().getName(), "Trying to \"SERVERВDontEndConnect\" "  + " newState " +newState);
@@ -355,6 +355,7 @@ public class Businesslogic_ScaningClientWorker {
                                     ConcurrentHashMap<String,String> concurrentHashMap=      new ConcurrentHashMap<String,String>();
                                     concurrentHashMap  .put("BluetoothGatt.GATT_CONNECTION_CONGESTED","5");
                                     mediatorLiveDataScan.setValue(concurrentHashMap);
+                                    businesslogicGattReflection.error133CloseingGatt(gatt);
                                 });
                               //  new Businesslogic_GattClinetClose(version,context). disaibleGattServer(gatt);
                                 Log.d(this.getClass().getName(), "Trying to \"SERVERВDontEndConnect\" "  + " newState " +newState);
@@ -649,9 +650,14 @@ public class Businesslogic_ScaningClientWorker {
                 // TODO: 30.07.2024
                 bluetoothDevice.fetchUuidsWithSdp();
                 // TODO: 30.07.2024
+                Businesslogic_GattReflection businesslogicGattReflection=new Businesslogic_GattReflection(context,version);
+                if (gattScan!=null) {
+                    businesslogicGattReflection.refreshDeviceCache(gattScan);
+                }
+
 
                 // TODO: 30.07.2024
-            BluetoothGatt     gattScan =      bluetoothDevice.connectGatt(context, false,
+                 gattScan =      bluetoothDevice.connectGatt(context, false,
                     bluetoothGattCallbacks, BluetoothDevice.TRANSPORT_AUTO,BluetoothDevice.PHY_OPTION_NO_PREFERRED,message.getTarget());
                 gattScan.requestConnectionPriority(BluetoothGatt.CONNECTION_PRIORITY_HIGH);
                 //gatt.setPreferredPhy(BluetoothDevice.PHY_LE_2M_MASK,BluetoothDevice.PHY_LE_2M_MASK,BluetoothDevice.PHY_OPTION_S2);

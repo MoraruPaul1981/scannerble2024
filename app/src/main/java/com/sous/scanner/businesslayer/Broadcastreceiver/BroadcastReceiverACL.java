@@ -92,10 +92,8 @@ public class BroadcastReceiverACL extends BroadcastReceiver {
                     break;
                 // TODO: 31.07.2024
                 // TODO: 31.07.2024
-                case  BluetoothDevice.ACTION_BOND_STATE_CHANGED :
+                case  BluetoothDevice.ACTION_ACL_DISCONNECT_REQUESTED :
                     // TODO: 31.07.2024
-                    new Businesslogic_GattReflection(context,version).unpairDevice(bluetoothDevice);
-
                     Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                             " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
                             " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" +
