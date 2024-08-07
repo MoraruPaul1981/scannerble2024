@@ -137,6 +137,19 @@ public class ServiceClientsScan extends Service {
                             " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" + " intent " +intent.getAction());
                     break;
 
+                case "userUIlaunchingfrombackground":
+                    // TODO: 25.07.2024 Бесконечная работа
+                    blForServiceScan.robotlaunchingfromScanbackground(2 );
+
+                    Log.d(getApplicationContext().getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                            " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                            " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" + " intent " +intent.getAction());
+                    break;
+
+
+
+
+
                 default:{
                     Log.d(getApplicationContext().getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                             " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
