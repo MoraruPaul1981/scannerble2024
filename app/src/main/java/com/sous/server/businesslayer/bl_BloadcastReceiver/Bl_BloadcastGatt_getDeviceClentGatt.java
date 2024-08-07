@@ -77,6 +77,11 @@ public class Bl_BloadcastGatt_getDeviceClentGatt {
                         // TODO: 31.07.2024  посылаем данные на Франгмент
                         wtitingAndreadDataForScanGatt. afteruccessfuldataformationweSend(writeDatabaseScanGatt);
 
+                        // TODO: 07.08.2024
+                        // TODO: 30.07.2024
+                  pendingResultAtomicReference.get().finish();
+
+
 
                         Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                                 " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
@@ -86,9 +91,6 @@ public class Bl_BloadcastGatt_getDeviceClentGatt {
                 }).doOnComplete(new Action() {
                     @Override
                     public void run() throws Throwable {
-                        // TODO: 30.07.2024
-                 BroadcastReceiver.PendingResult pendingResult= pendingResultAtomicReference.get();
-                        pendingResult.finish();
                         Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                                 " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
                                 " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" +

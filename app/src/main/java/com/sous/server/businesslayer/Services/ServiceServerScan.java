@@ -54,6 +54,7 @@ import com.sous.server.businesslayer.Eventbus.MessageScannerServer;
 import com.sous.server.businesslayer.Eventbus.ParamentsScannerServer;
 import com.sous.server.businesslayer.Locations.GattLocationListener;
 import com.sous.server.businesslayer.Permissions.SetPermissions;
+import com.sous.server.businesslayer.bl_BloadcastReceiver.Businesslogic_GattReflection;
 import com.sous.server.datalayer.remote.bl_writeandreadScanCatt.WtitingAndreadDataForScanGatt;
 
 
@@ -582,6 +583,7 @@ public class ServiceServerScan extends Service {
                     "\n" + " POOL " + Thread.currentThread().getName() +
                     "\n" + " ALL POOLS  " + Thread.getAllStackTraces().entrySet().size());
             // TODO: 26.01.2023 Сервер КОД зарпуска сервера
+            // TODO: 31.07.2024
             getBluetoothGattServer = bluetoothManagerServer.openGattServer(getApplicationContext(), new BluetoothGattServerCallback() {
 
                 @Override
@@ -773,6 +775,8 @@ public class ServiceServerScan extends Service {
     void settingGattServerBluetoothGattService()  {
         try{
             ///TODO  служебный xiaomi "BC:61:93:E6:F2:EB", МОЙ XIAOMI FC:19:99:79:D6:D4  //////      "BC:61:93:E6:E2:63","FF:19:99:79:D6:D4"
+            // TODO: 07.08.2024
+            getBluetoothGattServer.clearServices();
             // TODO: 12.02.2023 Адреса серверов для Клиентна
             BluetoothGattService service = new BluetoothGattService(getPublicUUIDScan, BluetoothGattService.SERVICE_TYPE_PRIMARY);
             // TODO: 12.02.2023 первый сервер
