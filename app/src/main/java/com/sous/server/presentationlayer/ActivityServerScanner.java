@@ -208,6 +208,7 @@ public class ActivityServerScanner extends AppCompatActivity {
             IntentFilter filterScanServerName_Changed = new IntentFilter();
             filterScanServerName_Changed.addAction(BluetoothDevice.ACTION_NAME_CHANGED);
             filterScanServerName_Changed.addAction(BluetoothDevice.ACTION_CLASS_CHANGED);
+            filterScanServerName_Changed.addAction(BluetoothAdapter.ACTION_STATE_CHANGED);
             registerReceiver(new BroadcastReceiverGattServerName_Changed(), filterScanServerName_Changed);
 
 

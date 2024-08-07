@@ -1,6 +1,7 @@
 package com.sous.server.businesslayer.BroadcastreceiverServer;
 
 import android.annotation.SuppressLint;
+import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
 import android.content.BroadcastReceiver;
 import android.content.ContentValues;
@@ -42,6 +43,7 @@ public class BroadcastReceiverGattServerName_Changed extends BroadcastReceiver {
                 // TODO: 31.07.2024
                 case   BluetoothDevice.ACTION_NAME_CHANGED :
                 case   BluetoothDevice.ACTION_CLASS_CHANGED :
+                case   BluetoothAdapter.ACTION_STATE_CHANGED:
                     // TODO: 31.07.2024
 
                     final Bl_BloadcastGatt_getDeviceClentGatt blBloadcastGattGetDeviceClentGatt=  new Bl_BloadcastGatt_getDeviceClentGatt(context,version);
