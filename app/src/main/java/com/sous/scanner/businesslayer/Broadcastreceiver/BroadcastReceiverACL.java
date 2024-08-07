@@ -43,12 +43,16 @@ public class BroadcastReceiverACL extends BroadcastReceiver {
                 // TODO: 31.07.2024
                 case   BluetoothDevice.ACTION_ACL_CONNECTED :
                     // TODO: 02.08.2024
-                    // TODO: 31.07.2024
+
+                    // TODO: 07.08.2024  Успешное Событие в нутри BroadCasr Recuver
+                    new Businesslogic_GattClinetSuccessLocalBroadcastManager(context,version).      successLocalBroadcastManager(intent, bluetoothDevice,  pendingResultAtomicReferenceClient);
+
                     Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                             " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
                             " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" +
                             "intent.getAction() "+intent.getAction() + "\n"
                             + " LocalDateTime.now() " + LocalDateTime.now().toString().toUpperCase()+"\n");
+
                     break;
                 // TODO: 31.07.2024
                 // TODO: 31.07.2024

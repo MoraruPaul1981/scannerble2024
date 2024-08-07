@@ -24,6 +24,7 @@ import io.reactivex.rxjava3.core.Completable;
 import io.reactivex.rxjava3.core.CompletableObserver;
 import io.reactivex.rxjava3.disposables.Disposable;
 import io.reactivex.rxjava3.functions.Action;
+import io.reactivex.rxjava3.schedulers.Schedulers;
 
 public class Businesslogic_GattClinetSuccessLocalBroadcastManager {
 
@@ -58,7 +59,8 @@ public class Businesslogic_GattClinetSuccessLocalBroadcastManager {
                                 " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
                                 " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" +
                                 "getAction "+getAction + "\n"
-                                + " getAddress " +getAddress+ "\n" +" getName " +getName+"\n"+ " getBremy " +getBremy+"\n" );
+                                + " getAddress " +getAddress+ "\n" +" getName " +getName+"\n"+ " getBremy " +getBremy+"\n"
+                                +" Thread " +Thread.currentThread().getName().toUpperCase()+"\n");
 
                         pendingResultAtomicReferenceClient.get().finish();
 
@@ -67,7 +69,8 @@ public class Businesslogic_GattClinetSuccessLocalBroadcastManager {
                                 " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
                                 " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() );
                     }
-                }).complete()
+                })
+                .subscribeOn(Schedulers.computation())
                 .blockingSubscribe(new CompletableObserver() {
             @Override
             public void onSubscribe(@NonNull Disposable d) {
