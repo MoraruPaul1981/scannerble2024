@@ -57,6 +57,7 @@ import io.reactivex.rxjava3.core.ObservableSource;
 import io.reactivex.rxjava3.core.Observer;
 import io.reactivex.rxjava3.disposables.Disposable;
 import io.reactivex.rxjava3.functions.Action;
+import io.reactivex.rxjava3.functions.BiFunction;
 import io.reactivex.rxjava3.functions.Consumer;
 import io.reactivex.rxjava3.functions.Function;
 import io.reactivex.rxjava3.functions.Predicate;
@@ -140,7 +141,42 @@ public class Businesslogic_ScaningClientWorker {
                 // TODO: 30.07.2024
                 if (bluetoothAdapterPhoneClient.isEnabled()) {
 
-                    final Disposable[] disposableRobot = {null};
+
+
+
+                Observable.just("dd")
+                        .subscribeOn(Schedulers.single())
+                        .zipWith(Observable.range(1,30),(n,i)->i) .repeatWhen(repeat->repeat.delay(2,TimeUnit.SECONDS))
+                        .flatMap(new Function<Integer, ObservableSource<?>>() {
+                            @Override
+                            public ObservableSource<?> apply(Integer integer) throws Throwable {
+                                return  Observable.just("dd")
+                                        .subscribeOn(Schedulers.single())
+                                        .zipWith(Observable.range(1,30),(n,i)->i) .repeatWhen(repeat->repeat.delay(10,TimeUnit.SECONDS)).delaySubscription(5,TimeUnit.SECONDS);
+                            }
+                        })
+                       /* .zipWith(Observable.interval(300, TimeUnit.MILLISECONDS), new BiFunction<Object, Long, Object>() {
+                            @Override
+                            public Object apply(Object o, Long aLong) throws Throwable {
+                                Log.d(this.getClass().getName(), " o " + o+ " aLong " +aLong);
+                                return aLong;
+                            }
+                        })*/.doOnNext(new Consumer<Object>() {
+                            @Override
+                            public void accept(Object o) throws Throwable {
+                                // TODO: 22.11.2022  первая часть
+                                Log.d(this.getClass().getName(), " doOnError  МетодУдалениеСамогоТабеля  throwable " );
+                            }
+                        }).subscribe();
+
+
+// TODO: 07.08.2024 end test code
+
+
+
+
+
+         /*           final Disposable[] disposableRobot = {null};
                  // TODO: 05.08.2024
          Observable.fromAction(new Action() {
                         @Override
@@ -159,7 +195,7 @@ public class Businesslogic_ScaningClientWorker {
 
                                     }
 
-                                 /*   // TODO: 25.07.2024
+                                 *//*   // TODO: 25.07.2024
                                  final     String getAddress=     getListMAC.get(atomicInteger.get());
                                     // TODO: 02.08.2024
                                     // TODO: 26.07.2024
@@ -176,7 +212,7 @@ public class Businesslogic_ScaningClientWorker {
                      МетодЗапускаGATTКлиентаScan(bluetoothDeviceScan, bluetoothGattCallbacks.get(atomicInteger.get()),messageCopyOnWriteArrayList.get(atomicInteger.get()));
 
                                     // TODO: 02.08.2024 Увлеичиваем Значение Счетика
-                                    atomicInteger.incrementAndGet();*/
+                                    atomicInteger.incrementAndGet();*//*
                             atomicInteger.incrementAndGet();
                                     // TODO: 02.08.2024
                                     Log.d(this.getClass().getName(), "\n" + " class " +
@@ -227,7 +263,7 @@ public class Businesslogic_ScaningClientWorker {
                                  " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
                                  " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" );
                      }
-                 }).subscribe();
+                 }).subscribe();*/
 
 
                 }
