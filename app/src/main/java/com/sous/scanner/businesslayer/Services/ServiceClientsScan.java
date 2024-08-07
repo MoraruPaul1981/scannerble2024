@@ -66,7 +66,7 @@ public class ServiceClientsScan extends Service {
                     .setSmallIcon(R.drawable.icon_main_scanner_boot1)
                     .setContentText("Последний статус :"+LocalDateTime.now().toString())
                     .setContentTitle("Контроль Bluetooth")
-                     .setPriority(NotificationManager.IMPORTANCE_MIN)
+                     .setPriority(NotificationManager.IMPORTANCE_NONE)
                     .setCategory(NotificationCompat.CATEGORY_PROGRESS)
                     .build();
 

@@ -47,7 +47,7 @@ public class BroadcastReceiverACL extends BroadcastReceiver {
              /*       // TODO: 07.08.2024  Успешное Событие в нутри BroadCasr Recuver
                     new Businesslogic_GattClinetSuccessLocalBroadcastManager(context,version).      successLocalBroadcastManager(intent, bluetoothDevice,  pendingResultAtomicReferenceClient);*/
 
-                    Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                    Log.i(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                             " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
                             " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" +
                             "intent.getAction() "+intent.getAction() + "\n"
@@ -62,7 +62,7 @@ public class BroadcastReceiverACL extends BroadcastReceiver {
                     // TODO: 07.08.2024  Успешное Событие в нутри BroadCasr Recuver
               new Businesslogic_GattClinetSuccessLocalBroadcastManager(context,version).      successLocalBroadcastManager(intent, bluetoothDevice,  pendingResultAtomicReferenceClient);
 
-                    Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                    Log.i(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                             " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
                             " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" +
                             "intent.getAction() "+intent.getAction() + "\n"
@@ -77,7 +77,7 @@ public class BroadcastReceiverACL extends BroadcastReceiver {
                     // TODO: 07.08.2024  Успешное Событие в нутри BroadCasr Recuver
                     new Businesslogic_GattClinetSuccessLocalBroadcastManager(context,version).      successLocalBroadcastManager(intent, bluetoothDevice,  pendingResultAtomicReferenceClient);
 
-                    Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                    Log.i(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                             " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
                             " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" +
                             "intent.getAction() "+intent.getAction() + "\n"
@@ -86,7 +86,7 @@ public class BroadcastReceiverACL extends BroadcastReceiver {
                 // TODO: 31.07.2024
 
                 default:{
-                    Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                    Log.i(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                             " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
                             " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" +
                             "intent.getAction() "+intent.getAction() + "\n"
