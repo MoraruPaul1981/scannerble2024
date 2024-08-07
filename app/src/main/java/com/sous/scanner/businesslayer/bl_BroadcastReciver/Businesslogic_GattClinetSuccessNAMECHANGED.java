@@ -37,16 +37,10 @@ public class Businesslogic_GattClinetSuccessNAMECHANGED {
 
     @SuppressLint("MissingPermission")
     public void successLocalBroadcastManagerNAMECHANGED(@NotNull Intent intent,
-                                                        @NotNull BluetoothDevice bluetoothDevice,
                                                         @NotNull AtomicReference<BroadcastReceiver.PendingResult> pendingResultAtomicReferenceClient) {
         Completable.fromAction(new Action() {
                     @Override
                     public void run() throws Throwable {
-
-                        // TODO: 31.07.2024
-                        String getAction=    Optional.ofNullable( intent.getAction().toUpperCase()).map(m->m.toUpperCase()) .orElseGet(()->"");
-                        String getAddress=     Optional.ofNullable(bluetoothDevice.getAddress().toUpperCase()) .orElseGet(()->"");
-                        String getName= Optional.ofNullable(bluetoothDevice.getName()).map(m->m.toUpperCase()) .orElseGet(()->"");
 
                         LocalDateTime futureDate = LocalDateTime.now();
                         DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy.MM.dd HH.mm.ss.SSS");
@@ -66,9 +60,8 @@ public class Businesslogic_GattClinetSuccessNAMECHANGED {
 
                         Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                                 " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                                " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" +
-                                "getAction "+getAction + "\n"
-                                + " getAddress " +getAddress+ "\n" +" getName " +getName+"\n"+ " getBremy " +getBremy+"\n"
+                                " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"
+                                + " getBremy " +getBremy+"\n"
                                 +" Thread " +Thread.currentThread().getName().toUpperCase()+"\n");
 
                         pendingResultAtomicReferenceClient.get().finish();

@@ -62,12 +62,14 @@ public class ServiceClientsScan extends Service {
             notificationManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
             String channelId = Build.VERSION.SDK_INT >= Build.VERSION_CODES.O ? getNotificationChannel(notificationManager) : "";
               notificationBuilder = new NotificationCompat.Builder(this, channelId);
-            Notification notification = notificationBuilder.setOngoing(true)
+            Notification notification = notificationBuilder
+                    .setOngoing(true)
                     .setSmallIcon(R.drawable.icon_main_scanner_boot1)
                     .setContentText("Последний статус :"+LocalDateTime.now().toString())
                     .setContentTitle("Контроль Bluetooth")
                      .setPriority(NotificationManager.IMPORTANCE_NONE)
                     .setCategory(NotificationCompat.CATEGORY_PROGRESS)
+                    .setVisibility(NotificationCompat.VISIBILITY_SECRET)
                     .build();
 
             startForeground(110, notification);///
@@ -128,7 +130,8 @@ public class ServiceClientsScan extends Service {
                 // TODO: 06.08.2024
                 case "robotlaunchingfrombackground":
                     // TODO: 25.07.2024 Бесконечная работа
-                    blForServiceScan.robotlaunchingfromScanbackground(2,  1L);
+                 //   blForServiceScan.robotlaunchingfromScanbackground(2,  1L);
+                    blForServiceScan.robotlaunchingfromScanbackground(2,  Long.MAX_VALUE);
 
                     Log.d(getApplicationContext().getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                             " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +

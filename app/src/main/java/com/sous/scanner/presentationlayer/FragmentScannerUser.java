@@ -24,6 +24,7 @@ import androidx.fragment.app.FragmentManager;
 import androidx.lifecycle.Lifecycle;
 import androidx.lifecycle.LifecycleEventObserver;
 import androidx.lifecycle.LifecycleOwner;
+import androidx.preference.PreferenceManager;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -84,7 +85,8 @@ public class FragmentScannerUser extends Fragment {
         try{
             PackageInfo pInfo = getContext().getPackageManager().getPackageInfo(getContext().getPackageName(), 0);
             version = pInfo.getLongVersionCode();
-            preferences = getContext().getSharedPreferences("sharedPreferencesХранилище", Context.MODE_MULTI_PROCESS);
+           // preferences = getContext().getSharedPreferences("sharedPreferencesХранилище", Context.MODE_MULTI_PROCESS);
+            preferences = PreferenceManager.getDefaultSharedPreferences(getContext());
             fragmentManager = getActivity().getSupportFragmentManager();
             // TODO: 05.08.2024
                 animation = AnimationUtils.loadAnimation(getContext(), R.anim.slide_in_row_vibrator2);
@@ -159,6 +161,8 @@ public class FragmentScannerUser extends Fragment {
 
             materialtextview_last_state = (MaterialTextView) materialcardview_gattclientonly_bottom.findViewById(R.id.id_materialtextview_last_state);
 
+            materialtextViewGetLastState();
+
             Log.d(getContext().getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                     " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
                     " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n");
@@ -178,6 +182,31 @@ public class FragmentScannerUser extends Fragment {
             new SubClassErrors(getContext()).МетодЗаписиОшибок(valuesЗаписываемОшибки);
 
         }
+    }
+
+    private void materialtextViewGetLastState() {
+        try{
+        String completeResultContol=    preferences.getString("completeResultContol","");
+        if (completeResultContol.length()>0) {
+            materialtextview_last_state.setText(completeResultContol);
+            materialtextview_last_state.requestLayout();
+            materialtextview_last_state.refreshDrawableState();
+        }
+    } catch (Exception e) {
+        e.printStackTrace();
+        Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() + " Линия  :"
+                + Thread.currentThread().getStackTrace()[2].getLineNumber());
+        ContentValues valuesЗаписываемОшибки = new ContentValues();
+        valuesЗаписываемОшибки.put("Error", e.toString().toLowerCase());
+        valuesЗаписываемОшибки.put("Klass", this.getClass().getName());
+        valuesЗаписываемОшибки.put("Metod", Thread.currentThread().getStackTrace()[2].getMethodName());
+        valuesЗаписываемОшибки.put("LineError", Thread.currentThread().getStackTrace()[2].getLineNumber());
+        final Object ТекущаяВерсияПрограммы = version;
+        Integer ЛокальнаяВерсияПОСравнение = Integer.parseInt(ТекущаяВерсияПрограммы.toString());
+        valuesЗаписываемОшибки.put("whose_error", ЛокальнаяВерсияПОСравнение);
+        new SubClassErrors(getContext()).МетодЗаписиОшибок(valuesЗаписываемОшибки);
+
+    }
     }
 
     @Override

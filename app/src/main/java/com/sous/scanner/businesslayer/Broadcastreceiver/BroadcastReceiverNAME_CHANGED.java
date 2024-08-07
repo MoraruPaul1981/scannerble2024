@@ -48,7 +48,7 @@ public class BroadcastReceiverNAME_CHANGED extends BroadcastReceiver {
                     Businesslogic_GattClinetSuccessNAMECHANGED businesslogicGattClinetSuccessNAMECHANGED
                             =new Businesslogic_GattClinetSuccessNAMECHANGED(context,version);
 
-                    businesslogicGattClinetSuccessNAMECHANGED.successLocalBroadcastManagerNAMECHANGED(intent,bluetoothDevice,pendingResultAtomicReferenceClient);
+                    businesslogicGattClinetSuccessNAMECHANGED.successLocalBroadcastManagerNAMECHANGED(intent,pendingResultAtomicReferenceClient);
 
                     // TODO: 31.07.2024
                     Log.i(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
