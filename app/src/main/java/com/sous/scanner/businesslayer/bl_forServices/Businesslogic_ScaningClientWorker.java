@@ -140,7 +140,7 @@ public class Businesslogic_ScaningClientWorker {
                 // TODO: 30.07.2024
                 if (bluetoothAdapterPhoneClient.isEnabled()) {
 
-
+                    final Disposable[] disposableRobot = {null};
                  // TODO: 05.08.2024
          Observable.fromAction(new Action() {
                         @Override
@@ -154,6 +154,9 @@ public class Businesslogic_ScaningClientWorker {
                                         bluetoothGattCallbacks.clear();
                                         // TODO: 06.08.2024
                                         messageCopyOnWriteArrayList.clear();
+                                        // TODO: 07.08.2024
+                                        disposableRobot[0].dispose();
+
                                     }
 
                                  /*   // TODO: 25.07.2024
@@ -174,7 +177,7 @@ public class Businesslogic_ScaningClientWorker {
 
                                     // TODO: 02.08.2024 Увлеичиваем Значение Счетика
                                     atomicInteger.incrementAndGet();*/
-
+                            atomicInteger.incrementAndGet();
                                     // TODO: 02.08.2024
                                     Log.d(this.getClass().getName(), "\n" + " class " +
                                             Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
@@ -191,16 +194,6 @@ public class Businesslogic_ScaningClientWorker {
                         }
                     })
                  .repeatWhen(repeat->repeat.delay(DurectionTimeGatt, TimeUnit.SECONDS))
-                 .takeWhile(new Predicate<Object>() {
-                     @Override
-                     public boolean test(Object o) throws Throwable {
-                         if (atomicInteger.get()>=getListMAC.size()) {
-                             return false;
-                         } else {
-                             return false;
-                         }
-                     }
-                 })
                  .subscribeOn(AndroidSchedulers.mainThread())
                  .doOnComplete(new Action() {
                      @Override
@@ -225,8 +218,16 @@ public class Businesslogic_ScaningClientWorker {
                          valuesЗаписываемОшибки.put("whose_error", ЛокальнаяВерсияПОСравнение);
                          new SubClassErrors(context).МетодЗаписиОшибок(valuesЗаписываемОшибки);
                      }
-                 })
-                 .blockingSubscribe();
+                 }).doOnSubscribe(new Consumer<Disposable>() {
+                     @Override
+                     public void accept(Disposable disposable) throws Throwable {
+                         // TODO: 07.08.2024
+                         disposableRobot[0] =disposable;
+                         Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                                 " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                                 " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" );
+                     }
+                 }).subscribe();
 
 
                 }
