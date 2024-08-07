@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.card.MaterialCardView
+    android:id="@+id/id_materialcardview_gattclientonly_bottom"
+    android:layout_height="match_parent"
+    android:layout_width="match_parent"
+    android:translationZ="150dp"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".presentationlayer.MainActivityNewScanner">
+
+
+
+    <RelativeLayout
+        android:id="@+id/id_relativeLayout_fragment_boot"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#FFFFFF"
+        android:orientation="vertical">
+
+
+
+
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/id_textViewDefaultNameState"
+            android:layout_width="wrap_content"
+            android:layout_height="40dp"
+            android:drawablePadding="5dp"
+            android:gravity="center_vertical"
+            android:hint="Последний Статус:"
+            android:layout_alignParentTop="true"
+            android:padding="2dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="5dp"
+            android:layout_marginEnd="10dp"
+            android:layout_centerHorizontal="true"
+            android:textColor="#AAACAC"
+            android:textColorHint="#A3AAAA"
+            android:textSize="14sp"
+            android:textStyle="bold"
+            android:translationZ="50dp" />
+
+
+
+
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/id_materialtextview_last_state"
+            android:layout_width="wrap_content"
+            android:layout_height="40dp"
+            android:layout_below ="@+id/id_textViewDefaultNameState"
+            android:drawablePadding="5dp"
+            android:drawableLeft="@drawable/icon_dsu1_scanner_status_last"
+            android:gravity="center_vertical"
+            android:hint="ответ контроля"
+            android:padding="2dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="5dp"
+            android:layout_centerHorizontal="true"
+            android:textColor="#7F8080"
+            android:textColorHint="#7F8080"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            android:translationZ="50dp" />
+
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/id_recyclerview_gatt_main"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@+id/id_materialtextview_last_state"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:background="#0FFFFFFF"
+            android:divider="@color/material_dynamic_primary0"
+            android:dividerHeight="10dp"
+            android:fillViewport="true"
+            android:listSelector="@color/material_dynamic_primary50"
+
+            android:minHeight="500dp"
+            android:padding="5dp"
+            android:visibility="visible"
+
+            app:layout_behavior="@string/appbar_scrolling_view_behavior"
+            tools:ignore="MissingConstraints" />
+
+
+
+
+
+
+
+
+
+
+    </RelativeLayout>
+
+</com.google.android.material.card.MaterialCardView>

@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.card.MaterialCardView
+    android:id="@+id/id_cardViewblescanner"
+    android:layout_height="match_parent"
+    android:layout_width="match_parent"
+    android:translationZ="1dp"
+    android:padding="1dp"
+    android:layout_margin="1dp"
+    android:background="#FFFFFF"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".presentationlayer.MainActivityNewScanner">
+
+
+<RelativeLayout
+    android:id="@+id/id_relativecayoutscanner"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#FFFFFF"
+    android:orientation="vertical">
+
+
+
+
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/id_card_server_ble_inner"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:minWidth="200dp"
+        android:minHeight="40dp"
+        android:layout_centerInParent="true"
+        android:theme="@style/Theme.MaterialComponents.DayNight.DarkActionBar"
+        android:layout_margin="5dp"
+        android:layout_centerHorizontal="true"
+        android:padding="2dp"
+        android:textSize="10sp"
+        app:cardBackgroundColor="#FFFAFA"
+        app:cardCornerRadius="2dp"
+        app:cardElevation="10dp"
+        app:strokeColor="#F5FFFA"
+        app:cardMaxElevation="5dp"
+        app:strokeWidth="1dp"
+        android:translationZ="15dp"
+        android:animateLayoutChanges="true" >
+
+
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/text_scanner_work"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:clickable="false"
+            android:focusable="false"
+            android:foregroundGravity="clip_vertical"
+            android:gravity="center"
+            android:minWidth="200dp"
+            android:minHeight="40dp"
+            android:text="Контроль Bluetooth"
+            android:textAlignment="center"
+            android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+            android:textColor="#6A6C6C"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            android:translationZ="150dp"
+            android:typeface="monospace"
+            android:visibility="visible">
+        </com.google.android.material.textview.MaterialTextView>
+
+
+
+    </com.google.android.material.card.MaterialCardView>
+
+
+
+
+
+
+
+
+
+
+    <ProgressBar
+        android:id="@+id/progressBarFace"
+        style="@android:style/Widget.DeviceDefault.Light.ProgressBar.Horizontal"
+        android:layout_width="150dp"
+        android:layout_height="12dp"
+        android:layout_marginTop="280dp"
+        android:foregroundGravity="center_vertical|center_horizontal"
+        android:indeterminate="true"
+        android:indeterminateTint="#020202"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@id/id_card_server_ble_inner"
+        android:max="100"
+        android:scaleY="2"
+        android:scaleX="1"
+        android:progress="1"
+        android:progressTint="#FFFFFF"
+        android:textAlignment="center"
+        android:textDirection="firstStrong"
+        android:visibility="visible" />
+
+
+
+
+
+
+</RelativeLayout>
+</com.google.android.material.card.MaterialCardView>

@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "858730237201",
+    "project_id": "comsousscanner",
+    "storage_bucket": "comsousscanner.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:858730237201:android:c9013b6ff58d1a332950b0",
+        "android_client_info": {
+          "package_name": "com.sous.scanner"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAkx51ShZu6RVKyrthvnBCfa1-DjeV7hvU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
