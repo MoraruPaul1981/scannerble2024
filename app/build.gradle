@@ -4,9 +4,7 @@ plugins {
 }
 
 
-ext {
-    def onesignal_app_id = "2a1819db-60c8-4ca3-a752-1b6cd9cadfa1"
-}
+
 
 
 android {
@@ -41,7 +39,7 @@ android {
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         //TODO настройки уведомлений
 
-        manifestPlaceholders = [onesignal_app_id: "2a1819db-60c8-4ca3-a752-1b6cd9cadfa1",
+        manifestPlaceholders = [onesignal_app_id: "f385d025-3b73-4862-8148-985943299116",
                                 // Project number pulled from dashboard, local value is ignored.
                                 onesignal_google_project_number: "REMOTE"]
         vectorDrawables {
@@ -113,4 +111,7 @@ dependencies {
 
     //TODO OneSignal
     implementation 'com.onesignal:OneSignal:4.8.3'
+
+    implementation platform('com.google.firebase:firebase-bom:33.1.2')
+    implementation 'com.google.firebase:firebase-analytics'
 }

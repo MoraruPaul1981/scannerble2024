@@ -1,6 +1,6 @@
 buildscript {
 
-    def onesignal_app_id = "2a1819db-60c8-4ca3-a752-1b6cd9cadfa1"
+    def onesignal_app_id = "f385d025-3b73-4862-8148-985943299116"
 
     repositories {
         google()
@@ -25,9 +25,7 @@ buildscript {
 plugins {
     id 'com.android.application' version '7.4.2' apply false
     id 'com.android.library' version '7.4.2' apply false
-    id 'com.google.gms.google-services' version '4.3.14' apply false
-
-
+    id 'com.google.gms.google-services' version '4.4.2' apply false
 
 
 

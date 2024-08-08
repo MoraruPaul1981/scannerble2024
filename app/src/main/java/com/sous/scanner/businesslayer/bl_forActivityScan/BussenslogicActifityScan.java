@@ -12,7 +12,7 @@ public class BussenslogicActifityScan {
 
 Context context;
 long version;
-    final String ONEKEY="2a1819db-60c8-4ca3-a752-1b6cd9cadfa1";
+     final String ONEKEY="f385d025-3b73-4862-8148-985943299116";//   f385d025-3b73-4862-8148-985943299116
     public BussenslogicActifityScan(Context context, long version) {
         this.context = context;
         this.version = version;
