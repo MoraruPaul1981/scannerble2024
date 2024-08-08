@@ -37,15 +37,9 @@ import com.sous.scanner.businesslayer.bl_LocalBroadcastManagers.BussensloginLoca
 import com.sous.scanner.presentationlayer.FragmentScannerUser;
 
 import org.greenrobot.eventbus.EventBus;
-import org.reactivestreams.Publisher;
-import org.reactivestreams.Subscriber;
-import org.reactivestreams.Subscription;
 
 import java.time.LocalDateTime;
-import java.util.Arrays;
 import java.util.Date;
-import java.util.Iterator;
-import java.util.List;
 import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentSkipListSet;
@@ -55,20 +49,10 @@ import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicInteger;
 
-import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
-import io.reactivex.rxjava3.core.Flowable;
 import io.reactivex.rxjava3.core.Observable;
-import io.reactivex.rxjava3.core.ObservableSource;
-import io.reactivex.rxjava3.core.Observer;
 import io.reactivex.rxjava3.disposables.Disposable;
 import io.reactivex.rxjava3.functions.Action;
-import io.reactivex.rxjava3.functions.BiFunction;
 import io.reactivex.rxjava3.functions.Consumer;
-import io.reactivex.rxjava3.functions.Function;
-import io.reactivex.rxjava3.functions.Predicate;
-import io.reactivex.rxjava3.parallel.ParallelFlowable;
-import io.reactivex.rxjava3.schedulers.Schedulers;
-import io.reactivex.rxjava3.subscribers.TestSubscriber;
 
 public class Businesslogic_ScaningClientWorker {
 
@@ -316,7 +300,7 @@ public class Businesslogic_ScaningClientWorker {
                                     }
                                     if(atomicIntegerDisponse.get()>30){
                                         // TODO: 08.08.2024  передаем обраьтно в службу сообщени о прекращении работы
-                                        new BussensloginLocalBroadcastManager(context,version).getLocalBroadcastManager();
+                                        new BussensloginLocalBroadcastManager(context,version).getLocalBroadcastManagerDisposable();
                                         // TODO: 08.08.2024
                                         atomicIntegerDisponse.set(0);
                                         // TODO: 02.08.2024
@@ -439,9 +423,13 @@ public class Businesslogic_ScaningClientWorker {
     private  void addingQueueListmac(CopyOnWriteArrayList<String> getListMAC) {
         if (getListMAC.size()==0) {
            getListMAC.add( "98:2F:F8:19:BC:F7");
-    /*       getListMAC.add( "64:03:7F:A2:E2:C2");
+           getListMAC.add( "64:03:7F:A2:E2:C2");
            getListMAC.add( "CC:73:15:17:96:3F");
-            getListMAC.add( "74:15:75:D8:F5:FA");//*/
+            getListMAC.add( "74:15:75:D8:F5:FA");//
+            getListMAC.add( "FC:19:99:79:D6:D4");//
+            Log.d(context.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                    " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                    " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" + " getListMAC " +getListMAC.size());
         }
     }
 

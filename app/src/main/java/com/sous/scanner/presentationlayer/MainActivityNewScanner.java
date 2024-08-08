@@ -29,6 +29,7 @@ import com.sous.scanner.businesslayer.Broadcastreceiver.BroadcastReceiverNAME_CH
 import com.sous.scanner.businesslayer.Errors.SubClassErrors;
 import com.sous.scanner.R;
 import com.sous.scanner.businesslayer.Permissions.SetPermissions;
+import com.sous.scanner.businesslayer.bl_forActivityScan.BussenslogicActifityScan;
 
 import java.util.Date;
 
@@ -77,7 +78,7 @@ public class MainActivityNewScanner extends AppCompatActivity  {
             // TODO: 24.07.2024 устанвливаем разрешения
             new SetPermissions(version).additionalpermissionsBle(this,getApplicationContext());
 
-            initOneSignal();
+          new BussenslogicActifityScan(getApplicationContext(),version).initOneSignal();
 
             startinпBroadcastReceiverCleint();
 
@@ -104,16 +105,7 @@ public class MainActivityNewScanner extends AppCompatActivity  {
 
     }
 
-    private void initOneSignal() {
-        final String ONEKEY="d94341b5-cc58-4531-aa39-1186de5f9948";
-        OneSignal.initWithContext(this);
-        OneSignal.setAppId(ONEKEY);
-        OneSignal.promptForPushNotifications();
-        Log.d(getApplicationContext().getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
-                " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" );
 
-    }
 
     @Override
     protected void onStart() {

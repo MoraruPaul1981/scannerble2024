@@ -1,9 +1,11 @@
 package com.sous.scanner.presentationlayer;
 
 import android.annotation.SuppressLint;
+import android.content.BroadcastReceiver;
 import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.content.pm.PackageInfo;
 import android.graphics.Color;
@@ -11,8 +13,6 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
-import android.os.VibrationEffect;
-import android.os.Vibrator;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -59,12 +59,7 @@ import java.util.concurrent.TimeUnit;
 
 
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
-import io.reactivex.rxjava3.core.Observable;
 import io.reactivex.rxjava3.disposables.Disposable;
-import io.reactivex.rxjava3.functions.Action;
-import io.reactivex.rxjava3.functions.Consumer;
-import io.reactivex.rxjava3.functions.Predicate;
-import io.reactivex.rxjava3.schedulers.Schedulers;
 import kotlin.Unit;
 
 
@@ -73,7 +68,7 @@ public class FragmentScannerUser extends Fragment {
     private MyRecycleViewAdapter myRecycleViewAdapter;
     private MyViewHolder myViewHolder;
     private FragmentManager fragmentManager;
-    private Message message;
+    private Message messageClient;
 
     private  MaterialTextView materialtextview_last_state;
     private Long version = 0l;
@@ -86,6 +81,7 @@ public class FragmentScannerUser extends Fragment {
 
     private  String  toWork="Контроль доступа";
     private  String  toProccess="В процессе...";
+    private  String  toProccessError="Ошибка сервера";
     private  MaterialButton materialButtonEventSameOfficeEvent;
 
 
@@ -748,6 +744,9 @@ public class FragmentScannerUser extends Fragment {
                     // TODO: 06.08.2024  
                     eventButtonemployeeArrived(holder.materialButtonEventSameOffice);
 
+                    // TODO: 08.08.2024
+                    getLocalBroadcastManagerRebootUI (holder);
+
                     Log.d(getContext().getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                             " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
                             " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n");
@@ -943,6 +942,62 @@ public class FragmentScannerUser extends Fragment {
         }
 
 
+        public  void getLocalBroadcastManagerRebootUI (@NonNull MyViewHolder holder){
+            try{
+// Our handler for received Intents. This will be called whenever an Intent
+// with an action named "custom-event-name" is broadcasted.
+                BroadcastReceiver mMessageReceiver = new BroadcastReceiver() {
+                    @Override
+                    public void onReceive(Context context, Intent intent) {
+                        // Get extra data included in the Intent
+                        String message = intent.getStringExtra("message");
+                        Log.d("receiver", "Got message: " + message);
+                        if (message.equalsIgnoreCase("ReboootUINow")) {
+                            // TODO: 08.08.2024
+
+
+                            messageClient.getTarget().postDelayed(()->{
+                                addCurrentButonClick(holder.materialButtonEventSameOffice,toProccess);
+                            },1500);
+
+                            addCurrentButonClick(holder.materialButtonEventSameOffice,toProccessError);
+
+                            animationCurrentButonClick(holder.materialButtonEventSameOffice,100);
+
+
+                            Log.d(context.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                                    " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                                    " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"  );
+                        }
+
+                        Log.d(context.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                                " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                                " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" );
+                    }
+                };
+                Log.d(getContext().getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                        " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                        " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" );
+
+               LocalBroadcastManager.getInstance(getContext()).registerReceiver(mMessageReceiver,
+                        new IntentFilter("LocalBroadcastScaтReboootUI"));
+
+            } catch (Exception e) {
+                e.printStackTrace();
+                Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() + " Линия  :"
+                        + Thread.currentThread().getStackTrace()[2].getLineNumber());
+                ContentValues valuesЗаписываемОшибки=new ContentValues();
+                valuesЗаписываемОшибки.put("Error",e.toString().toLowerCase());
+                valuesЗаписываемОшибки.put("Klass",this.getClass().getName());
+                valuesЗаписываемОшибки.put("Metod",Thread.currentThread().getStackTrace()[2].getMethodName());
+                valuesЗаписываемОшибки.put("LineError",   Thread.currentThread().getStackTrace()[2].getLineNumber());
+                final Object ТекущаяВерсияПрограммы = version;
+                Integer   ЛокальнаяВерсияПОСравнение = Integer.parseInt(ТекущаяВерсияПрограммы.toString());
+                valuesЗаписываемОшибки.put("whose_error",ЛокальнаяВерсияПОСравнение);
+                new SubClassErrors(getContext()).МетодЗаписиОшибок(valuesЗаписываемОшибки);
+            }
+
+        }
 
 
 
@@ -1030,7 +1085,7 @@ public class FragmentScannerUser extends Fragment {
     }
 
     void МетодHandler() {
-        message = new Handler(Looper.getMainLooper(), new Handler.Callback() {
+        messageClient = new Handler(Looper.getMainLooper(), new Handler.Callback() {
             @Override
             public boolean handleMessage(@NonNull Message msg) {
                 try {
@@ -1067,7 +1122,7 @@ public class FragmentScannerUser extends Fragment {
 
             businessloginforfragmentScanner .eventprocessingOtEventBus(event);
 
-            businessloginforfragmentScanner.  updateUIFragmentScan(materialtextview_last_state,preferences,animation,materialButtonEventSameOfficeEvent, message);
+            businessloginforfragmentScanner.  updateUIFragmentScan(materialtextview_last_state,preferences,animation,materialButtonEventSameOfficeEvent, messageClient);
             // TODO: 07.08.2024
 
           // TODO: 07.08.2024 оставналивем службу После Успешной
@@ -1078,8 +1133,12 @@ public class FragmentScannerUser extends Fragment {
           new BusinessloginVibrator(getContext()).alarmVibrator();
 
 // TODO: 08.08.2024  передаем обраьтно в службу сообщени о прекращении работы  
-  new BussensloginLocalBroadcastManager(getContext(),version).getLocalBroadcastManager();
-
+            BussensloginLocalBroadcastManager bussensloginLocalBroadcastManager=
+                    new BussensloginLocalBroadcastManager(getContext(),version);
+            // TODO: 08.08.2024 остановка скана
+            bussensloginLocalBroadcastManager .getLocalBroadcastManagerDisposable();
+            // TODO: 08.08.2024 перегрузка Элемента экрана UI
+            bussensloginLocalBroadcastManager .getLocalBroadcastManagerUI();
 
 
 
