@@ -29,9 +29,14 @@ import com.sous.scanner.businesslayer.bl_forServices.Businesslogic_ScaningClient
 
 import java.time.LocalDateTime;
 import java.util.Date;
+import java.util.concurrent.TimeUnit;
 
 import io.reactivex.rxjava3.core.Flowable;
+import io.reactivex.rxjava3.core.Observable;
 import io.reactivex.rxjava3.disposables.Disposable;
+import io.reactivex.rxjava3.functions.Action;
+import io.reactivex.rxjava3.functions.Consumer;
+import io.reactivex.rxjava3.functions.Predicate;
 
 public class ServiceClientsScan extends Service {
 
@@ -47,7 +52,6 @@ public class ServiceClientsScan extends Service {
 
    private     NotificationManager notificationManager;
 
-    private Disposable disposable;
 
     @Override
     public void onCreate() {
@@ -93,7 +97,7 @@ public class ServiceClientsScan extends Service {
                     bluetoothAdapterPhoneClient,
                     version,
                     getApplicationContext(),
-                    notificationBuilder,     notificationManager,   disposable);
+                    notificationBuilder,     notificationManager);
 
 
 
@@ -127,6 +131,12 @@ public class ServiceClientsScan extends Service {
             // TODO: 05.08.2024  start Fragment SCANNEer
             blForServiceScan.    statyingCallBAckFragmentScaner();
 
+            blForServiceScan.    getLocalBroadcastManager ();
+
+
+
+
+
             switch (intent.getAction()) {
                 // TODO: 06.08.2024
                 case "robotlaunchingfrombackground":
@@ -140,24 +150,12 @@ public class ServiceClientsScan extends Service {
 
                 case "userUIlaunchingfrombackground":
                     // TODO: 25.07.2024 Бесконечная работа
-                    blForServiceScan.robotlaunchingfromScanbackground(5 );
-
-                    Log.d(getApplicationContext().getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
-                            " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                            " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" + " intent " +intent.getAction());
-                    break;
-
-
-                case     "launchingfrombackgroundempty":
-                    // TODO: 25.07.2024 Бесконечная работа
-                    // TODO: 25.07.2024 Бесконечная работа
                     blForServiceScan.userUIlaunchingfromScanbackground(2 );
 
                     Log.d(getApplicationContext().getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                             " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
                             " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" + " intent " +intent.getAction());
                     break;
-
 
                 default:{
                     Log.d(getApplicationContext().getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
@@ -196,12 +194,9 @@ public class ServiceClientsScan extends Service {
     public void onDestroy() {
         super.onDestroy();
         try{
-        if (disposable!=null) {
-            disposable.dispose();
-        }
         Log.d(getApplicationContext().getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                 " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" + "disposable " +disposable);
+                " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" );
     } catch (Exception e) {
         e.printStackTrace();
         Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() + " Линия  :"

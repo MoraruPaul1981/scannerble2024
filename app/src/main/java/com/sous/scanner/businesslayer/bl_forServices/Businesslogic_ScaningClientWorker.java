@@ -11,8 +11,11 @@ import android.bluetooth.BluetoothGattDescriptor;
 import android.bluetooth.BluetoothGattService;
 import android.bluetooth.BluetoothManager;
 import android.bluetooth.BluetoothProfile;
+import android.content.BroadcastReceiver;
 import android.content.ContentValues;
 import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
 import android.location.LocationManager;
 import android.os.Handler;
 import android.os.Looper;
@@ -25,6 +28,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.core.app.NotificationCompat;
 import androidx.lifecycle.MutableLiveData;
+import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
 import com.sous.scanner.businesslayer.Errors.SubClassErrors;
 import com.sous.scanner.businesslayer.bl_BroadcastReciver.Businesslogic_GattReflection;
@@ -94,8 +98,7 @@ public class Businesslogic_ScaningClientWorker {
                                              @NonNull Long version,
                                              @NonNull Context context ,
                                              @NonNull   NotificationCompat.Builder notificationBuilder,
-                                             @NonNull NotificationManager notificationManager,
-                                             @NonNull      Disposable disposable) {
+                                             @NonNull NotificationManager notificationManager) {
         this.locationManager = locationManager;
         this.bluetoothManagerServer = bluetoothManagerServer;
         this.bluetoothAdapterPhoneClient = bluetoothAdapterPhoneClient;
@@ -103,7 +106,6 @@ public class Businesslogic_ScaningClientWorker {
         this.context = context;
         this.  notificationBuilder =   notificationBuilder;
         this.  notificationManager =   notificationManager;
-        this.  disposable =   disposable;
         // TODO: 06.08.2024
           message=getMessage();
     }
@@ -942,6 +944,65 @@ public class Businesslogic_ScaningClientWorker {
         Log.d(this.getClass().getName(),  "  " +Thread.currentThread().getStackTrace()[2].getMethodName()+ " время " +new Date().toLocaleString() );
         return message;
     }
+
+
+    // TODO: 08.08.2024
+
+    public  void getLocalBroadcastManager (){
+        try{
+// Our handler for received Intents. This will be called whenever an Intent
+// with an action named "custom-event-name" is broadcasted.
+              BroadcastReceiver mMessageReceiver = new BroadcastReceiver() {
+                  @Override
+                  public void onReceive(Context context, Intent intent) {
+                      // Get extra data included in the Intent
+                      String message = intent.getStringExtra("message");
+                      Log.d("receiver", "Got message: " + message);
+
+                      Log.d(context.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                              " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                              " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" );
+                  }
+              };
+            Log.d(context.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                    " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                    " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" );
+
+            LocalBroadcastManager.getInstance(context).registerReceiver(mMessageReceiver,
+                    new IntentFilter("LocalBroadcastScan"));
+
+    } catch (Exception e) {
+        e.printStackTrace();
+        Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() + " Линия  :"
+                + Thread.currentThread().getStackTrace()[2].getLineNumber());
+        ContentValues valuesЗаписываемОшибки=new ContentValues();
+        valuesЗаписываемОшибки.put("Error",e.toString().toLowerCase());
+        valuesЗаписываемОшибки.put("Klass",this.getClass().getName());
+        valuesЗаписываемОшибки.put("Metod",Thread.currentThread().getStackTrace()[2].getMethodName());
+        valuesЗаписываемОшибки.put("LineError",   Thread.currentThread().getStackTrace()[2].getLineNumber());
+        final Object ТекущаяВерсияПрограммы = version;
+        Integer   ЛокальнаяВерсияПОСравнение = Integer.parseInt(ТекущаяВерсияПрограммы.toString());
+        valuesЗаписываемОшибки.put("whose_error",ЛокальнаяВерсияПОСравнение);
+        new SubClassErrors(context).МетодЗаписиОшибок(valuesЗаписываемОшибки);
+    }
+
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     // TODO: 24.07.2024  end class
 
