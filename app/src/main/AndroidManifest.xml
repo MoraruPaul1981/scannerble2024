@@ -87,6 +87,9 @@
         android:allowBackup="true"
         android:icon="@mipmap/icon_serverscanner"
         android:label="Сервер"
+        android:largeHeap="true"
+        android:appCategory="productivity"
+        android:hardwareAccelerated="false"
         android:roundIcon="@mipmap/icon_serverscanner_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.DSU">
@@ -172,7 +175,7 @@
             android:grantUriPermissions="true"
             android:hardwareAccelerated="false"
             android:label="Сервер"
-            android:launchMode="standard"
+            android:launchMode="singleTask"
             android:requestLegacyExternalStorage="true"
             android:showOnLockScreen="true"
             android:theme="@style/Theme.MaterialComponents.DayNight.DarkActionBar">

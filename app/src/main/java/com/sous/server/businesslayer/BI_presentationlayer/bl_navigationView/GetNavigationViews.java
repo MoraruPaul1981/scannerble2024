@@ -13,6 +13,7 @@ import androidx.fragment.app.FragmentManager;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.sous.server.R;
+import com.sous.server.businesslayer.BI_Services.BucceslogincStartServiceGattServer;
 import com.sous.server.businesslayer.BI_presentationlayer.bl_FragmentBootScannerServer.Bi_FragmentBootScannerServer;
 import com.sous.server.businesslayer.Errors.SubClassErrors;
 
@@ -123,14 +124,12 @@ public class GetNavigationViews {
     private void startingScanServer() {
         try {
 
-            /*    //TODO:создаем класс для бизнес логики */
-            Bi_FragmentBootScannerServer    biFragmentBootScannerServer = new Bi_FragmentBootScannerServer(context, fragmentManager, activity,version);
 
             message.getTarget().post(()->{
                 // TODO: 19.07.2024 Запуск Службы
                 Toast.makeText(context, "Перезапуск контроля Bluetooth", Toast.LENGTH_LONG).show();
 
-                biFragmentBootScannerServer.startingServiceScaning() ;
+                new BucceslogincStartServiceGattServer(context,version).startingServiceGattServer();
 
                 Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                         " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +

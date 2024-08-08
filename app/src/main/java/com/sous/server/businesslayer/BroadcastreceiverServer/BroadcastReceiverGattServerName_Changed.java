@@ -11,6 +11,7 @@ import android.content.pm.PackageInfo;
 import android.os.ParcelUuid;
 import android.util.Log;
 
+import com.sous.server.businesslayer.BI_Services.BucceslogincStartServiceGattServer;
 import com.sous.server.businesslayer.Errors.SubClassErrors;
 import com.sous.server.businesslayer.bl_BloadcastReceiver.Bl_BloadcastGatt_getDeviceClentGatt;
 
@@ -60,8 +61,7 @@ public class BroadcastReceiverGattServerName_Changed extends BroadcastReceiver {
                 // TODO: 07.08.2024
                 case   BluetoothAdapter.ACTION_STATE_CHANGED:
                     // TODO: 31.07.2024
-                    final Bl_BloadcastGatt_getDeviceClentGatt blBloadcastGattGetDeviceClentGattSTATECHANGED=  new Bl_BloadcastGatt_getDeviceClentGatt(context,version);
-                    blBloadcastGattGetDeviceClentGattSTATECHANGED.startingServiceScaning();
+                    new BucceslogincStartServiceGattServer(context,version).startingServiceGattServer();
                     // TODO: 31.07.2024
                     Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                             " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
