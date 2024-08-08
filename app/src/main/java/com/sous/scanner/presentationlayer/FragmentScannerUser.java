@@ -960,9 +960,13 @@ public class FragmentScannerUser extends Fragment {
                                 addCurrentButonClick(holder.materialButtonEventSameOffice,toProccess);
                             },1500);
 
-                            addCurrentButonClick(holder.materialButtonEventSameOffice,toProccessError);
 
-                            animationCurrentButonClick(holder.materialButtonEventSameOffice,100);
+                            messageClient.getTarget().post(()->{
+                                addCurrentButonClick(holder.materialButtonEventSameOffice,toProccessError);
+
+                                animationCurrentButonClick(holder.materialButtonEventSameOffice,100);
+
+                            });
 
 
                             Log.d(context.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
@@ -1137,8 +1141,7 @@ public class FragmentScannerUser extends Fragment {
                     new BussensloginLocalBroadcastManager(getContext(),version);
             // TODO: 08.08.2024 остановка скана
             bussensloginLocalBroadcastManager .getLocalBroadcastManagerDisposable();
-            // TODO: 08.08.2024 перегрузка Элемента экрана UI
-            bussensloginLocalBroadcastManager .getLocalBroadcastManagerUI();
+
 
 
 

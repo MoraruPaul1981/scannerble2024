@@ -298,9 +298,14 @@ public class Businesslogic_ScaningClientWorker {
                                                 " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" + "\n"
                                                 +  " atomicInteger.get() "+ atomicInteger.get());
                                     }
-                                    if(atomicIntegerDisponse.get()>30){
+                                    if(atomicIntegerDisponse.get()>20){
                                         // TODO: 08.08.2024  передаем обраьтно в службу сообщени о прекращении работы
-                                        new BussensloginLocalBroadcastManager(context,version).getLocalBroadcastManagerDisposable();
+                                        BussensloginLocalBroadcastManager bussensloginLocalBroadcastManager=
+                                                new BussensloginLocalBroadcastManager(context,version);
+                                        bussensloginLocalBroadcastManager  .getLocalBroadcastManagerDisposable();
+                                        // TODO: 08.08.2024
+                                        // TODO: 08.08.2024 перегрузка Элемента экрана UI
+                                        bussensloginLocalBroadcastManager .getLocalBroadcastManagerUI();
                                         // TODO: 08.08.2024
                                         atomicIntegerDisponse.set(0);
                                         // TODO: 02.08.2024
