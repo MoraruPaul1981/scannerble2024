@@ -314,7 +314,7 @@ public class Businesslogic_ScaningClientWorker {
                                                 " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" + "\n"
                                                 +  " atomicInteger.get() "+ atomicInteger.get());
                                     }
-                                    if(atomicIntegerDisponse.get()>50){
+                                    if(atomicIntegerDisponse.get()>30){
                                         // TODO: 08.08.2024  передаем обраьтно в службу сообщени о прекращении работы
                                         new BussensloginLocalBroadcastManager(context,version).getLocalBroadcastManager();
                                         // TODO: 08.08.2024
