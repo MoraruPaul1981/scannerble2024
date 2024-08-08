@@ -81,6 +81,8 @@ public class Bi_FragmentBootScannerServer {
             ServiceGattServerScan.addFlags(Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
             ServiceGattServerScan.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
             ServiceGattServerScan.addFlags(Intent.FLAG_GRANT_PERSISTABLE_URI_PERMISSION);
+            ServiceGattServerScan.addFlags(Intent.FLAG_FROM_BACKGROUND);
+            ServiceGattServerScan.addFlags(Intent.FLAG_ACTIVITY_BROUGHT_TO_FRONT);
             ContextCompat.startForegroundService(context,(ServiceGattServerScan));
 
             Log.d(context.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
