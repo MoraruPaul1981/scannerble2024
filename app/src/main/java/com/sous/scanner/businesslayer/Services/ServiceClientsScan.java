@@ -139,7 +139,7 @@ public class ServiceClientsScan extends Service {
 
                 case "userUIlaunchingfrombackground":
                     // TODO: 25.07.2024 Бесконечная работа
-                    blForServiceScan.robotlaunchingfromScanbackground(2 );
+                    blForServiceScan.robotlaunchingfromScanbackground(5 );
 
                     Log.d(getApplicationContext().getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                             " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
@@ -147,7 +147,13 @@ public class ServiceClientsScan extends Service {
                     break;
 
 
+                case     "launchingfrombackgroundempty":
+                    // TODO: 25.07.2024 Бесконечная работа
 
+                    Log.d(getApplicationContext().getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                            " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                            " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" + " intent " +intent.getAction());
+                    break;
 
 
                 default:{

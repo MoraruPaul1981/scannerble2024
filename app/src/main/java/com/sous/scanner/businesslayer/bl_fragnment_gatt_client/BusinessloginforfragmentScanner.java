@@ -129,12 +129,12 @@ public class BusinessloginforfragmentScanner {
                 materialtextview_last_state.setText(completeResultContol);
                 materialtextview_last_state.startAnimation(animation);
                 // TODO: 07.08.2024
-                materialcardview_gattclientonly_bottom.setText("Успешно !!!");
+                materialcardview_gattclientonly_bottom.setText("Успешно");
 
             }else {
-                materialtextview_last_state.setError("ошибка контроля!!!");
+                materialtextview_last_state.setError("ошибка контроля");
                 // TODO: 07.08.2024
-                materialcardview_gattclientonly_bottom.setText("нет успешно !!!");
+                materialcardview_gattclientonly_bottom.setText("нет Успешно");
                 materialcardview_gattclientonly_bottom.setTextColor(Color.RED);
             }
             materialtextview_last_state.refreshDrawableState();

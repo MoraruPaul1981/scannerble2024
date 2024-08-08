@@ -10,6 +10,8 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
+import android.os.VibrationEffect;
+import android.os.Vibrator;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -38,6 +40,7 @@ import com.sous.scanner.businesslayer.Errors.SubClassErrors;
 import com.sous.scanner.R;
 import com.sous.scanner.businesslayer.bl_EvenBus.EventLocalBroadcastManager;
 import com.sous.scanner.businesslayer.bl_forServices.Businesslogic_JOBServive;
+import com.sous.scanner.businesslayer.bl_fragnment_gatt_client.BusinessloginVibrator;
 import com.sous.scanner.businesslayer.bl_fragnment_gatt_client.BusinessloginforfragmentScanner;
 
 import org.greenrobot.eventbus.EventBus;
@@ -56,6 +59,9 @@ import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
 import io.reactivex.rxjava3.core.Observable;
 import io.reactivex.rxjava3.disposables.Disposable;
 import io.reactivex.rxjava3.functions.Action;
+import io.reactivex.rxjava3.functions.Consumer;
+import io.reactivex.rxjava3.functions.Predicate;
+import io.reactivex.rxjava3.schedulers.Schedulers;
 import kotlin.Unit;
 
 
@@ -76,6 +82,7 @@ public class FragmentScannerUser extends Fragment {
     private       RecyclerView     recyclerview_gatt_main;
 
     private  String  toWork="Контроль доступа";
+    private  String  toProccess="В процессе...";
     private  MaterialButton materialButtonEventSameOfficeEvent;
 
 
@@ -732,7 +739,7 @@ public class FragmentScannerUser extends Fragment {
                 // TODO: 17.07.2024  Сотрудник ПРИХОДИТ
                 if (position==0) {
                       // TODO: 06.08.2024
-                    addCurrentButonClick(holder.materialButtonEventSameOffice);
+                    addCurrentButonClick(holder.materialButtonEventSameOffice,toWork);
 
                     animationCurrentButonClick(holder.materialButtonEventSameOffice,100);
                     // TODO: 06.08.2024  
@@ -766,10 +773,10 @@ public class FragmentScannerUser extends Fragment {
             }
         }
 
-        private void addCurrentButonClick(@NonNull MaterialButton materialButtonClick) {
+        private void addCurrentButonClick(@NonNull MaterialButton materialButtonClick,@NonNull String toWork) {
             try{
-            materialButtonClick.setText(toWork);
-            materialButtonClick.setBackgroundColor(Color.parseColor("#BDC6C8"));
+                    materialButtonClick.setText(toWork);
+                    materialButtonClick.setBackgroundColor(Color.parseColor("#BDC6C8"));
                 // TODO: 06.08.2024
             Log.d(getContext().getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                     " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
@@ -838,10 +845,25 @@ public class FragmentScannerUser extends Fragment {
                             @Override
                             public void onNext(@io.reactivex.rxjava3.annotations.NonNull Unit unit) {
                                 // TODO: 05.08.2024
-                                animationCurrentButonClick(materialButtonClick,200);
+                                // TODO: 02.08.2024
+                                Log.d(this.getClass().getName(), "\n" + " class " +
+                                        Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                                        " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                                        " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" + "\n");
+
+                               addCurrentButonClick(materialButtonClick,toProccess);
+
+                                animationCurrentButonClick(materialButtonClick,100);
+
+
                                 workerClickTOService(materialButtonClick);
-                                Log.d(this.getClass().getName(),  "  RxView.clicks " +Thread.currentThread().getStackTrace()[2].getMethodName()
-                                        + " время " +new Date().toLocaleString() );
+
+
+                                // TODO: 02.08.2024
+                                Log.d(this.getClass().getName(), "\n" + " class " +
+                                        Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                                        " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                                        " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" + "\n");
 
                             }
 
@@ -886,6 +908,12 @@ public class FragmentScannerUser extends Fragment {
 
 
 
+
+
+
+
+
+
         private void workerClickTOService(@NonNull MaterialButton materialButtonClick) {
             Observable.fromAction(new Action() {
                         @Override
@@ -904,10 +932,27 @@ public class FragmentScannerUser extends Fragment {
                                     " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" );
                         }
                     })
-                    .subscribeOn(AndroidSchedulers.mainThread())
+                    .doOnError(new Consumer<Throwable>() {
+                        @Override
+                        public void accept(Throwable throwable) throws Throwable {
+                            throwable.printStackTrace();
+                            Log.e(this.getClass().getName(), "Ошибка " +throwable + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() + " Линия  :"
+                                    + Thread.currentThread().getStackTrace()[2].getLineNumber());
+                            ContentValues valuesЗаписываемОшибки = new ContentValues();
+                            valuesЗаписываемОшибки.put("Error", throwable.toString().toLowerCase());
+                            valuesЗаписываемОшибки.put("Klass", this.getClass().getName());
+                            valuesЗаписываемОшибки.put("Metod", Thread.currentThread().getStackTrace()[2].getMethodName());
+                            valuesЗаписываемОшибки.put("LineError", Thread.currentThread().getStackTrace()[2].getLineNumber());
+                            final Object ТекущаяВерсияПрограммы = version;
+                            Integer ЛокальнаяВерсияПОСравнение = Integer.parseInt(ТекущаяВерсияПрограммы.toString());
+                            valuesЗаписываемОшибки.put("whose_error", ЛокальнаяВерсияПОСравнение);
+                            new SubClassErrors(getContext()).МетодЗаписиОшибок(valuesЗаписываемОшибки);
+                        }
+                    })
                     .observeOn(AndroidSchedulers.mainThread())
-                    .repeat(1)
+                    .take(20,TimeUnit.SECONDS)
                     .subscribe();
+
         }
 
 
@@ -1041,6 +1086,9 @@ public class FragmentScannerUser extends Fragment {
           // TODO: 07.08.2024 оставналивем службу После Успешной
             Businesslogic_JOBServive businesslogicJobServive1=new Businesslogic_JOBServive(getContext());
             businesslogicJobServive1.stopServiceSimpleScan();
+
+// TODO: 07.08.2024 бирация при успешном пинг с сервром
+          new BusinessloginVibrator(getContext()).alarmVibrator();
 
 
             // TODO: 31.07.2024
