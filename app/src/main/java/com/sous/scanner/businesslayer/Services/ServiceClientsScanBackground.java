@@ -77,8 +77,7 @@ public class ServiceClientsScanBackground extends IntentService {
                     bluetoothManagerServer,
                     bluetoothAdapterPhoneClient,
                     version,
-                    getApplicationContext(),
-                    notificationBuilder,     notificationManager);
+                    getApplicationContext());
 
 
             blForServiceScan.    getLocalBroadcastManager ();

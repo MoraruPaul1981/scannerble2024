@@ -98,8 +98,7 @@ public class ServiceClientsScan extends Service {
                     bluetoothManagerServer,
                     bluetoothAdapterPhoneClient,
                     version,
-                    getApplicationContext(),
-                    notificationBuilder,     notificationManager);
+                    getApplicationContext());
 
 
             blForServiceScan.    getLocalBroadcastManager ();
