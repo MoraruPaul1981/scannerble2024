@@ -24,7 +24,12 @@ public class SubClassErrors {
             ContentResolver resolver = context.getContentResolver();
         Uri    insertData=   resolver.insert(uri, contentValuesДляЗаписиОшибки);
         Integer РезультатВставки= Optional.ofNullable(insertData.toString().replaceAll("content://","")).map(Integer::new).orElse(0);
-            Log.w(context.getClass().getName(), " РЕЗУЛЬТАТ insertData  ВСТАВКИ ЗНАЧЕНИЯ  " +  insertData.toString()+ " РезультатВставки " +РезультатВставки );
+
+            // TODO: 08.08.2024
+            Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                    " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                    " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" +"ERROR ERROR ERROR CLETNT SERVER  !!!!!!"+"\n"+ " РезультатВставки " +РезультатВставки);
+
         } catch (Exception e) {
             e.printStackTrace();
             Log.e( context.getClass().getName(), "SubClassErrors ДЛЯ SCANNER error " + e +
