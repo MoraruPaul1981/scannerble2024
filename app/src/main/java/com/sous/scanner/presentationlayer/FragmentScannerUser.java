@@ -987,7 +987,7 @@ public class FragmentScannerUser extends Fragment {
                             messageClient.getTarget().postDelayed(()->{
                                 addCurrentButonClick(holder.materialButtonEventSameOffice,toWork,"#BDC6C8");
                                 addCurrentButonChangetextClick(holder.materialButtonEventSameOffice,toWork,"#000000");
-                            },1500);
+                            },3000);
 
 
                             messageClient.getTarget().post(()->{

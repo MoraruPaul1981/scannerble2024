@@ -30,6 +30,7 @@ import androidx.core.app.NotificationCompat;
 import androidx.lifecycle.MutableLiveData;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
+import com.google.common.util.concurrent.AtomicDouble;
 import com.sous.scanner.businesslayer.Errors.SubClassErrors;
 import com.sous.scanner.businesslayer.bl_BroadcastReciver.Businesslogic_GattReflection;
 import com.sous.scanner.businesslayer.bl_EvenBus.EventB_Clent;
@@ -299,7 +300,7 @@ public class Businesslogic_ScaningClientWorker {
                                                 " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" + "\n"
                                                 +  " atomicInteger.get() "+ atomicInteger.get());
                                     }
-                                    if(atomicIntegerDisponse.get()>20){
+                                    if(atomicIntegerDisponse.get()>25){
                                         // TODO: 08.08.2024  передаем обраьтно в службу сообщени о прекращении работы
                                         BussensloginLocalBroadcastManager bussensloginLocalBroadcastManager=
                                                 new BussensloginLocalBroadcastManager(context,version);
@@ -312,6 +313,9 @@ public class Businesslogic_ScaningClientWorker {
                                         bussensloginLocalBroadcastManager .getLocalBroadcastManagerUI();
                                         // TODO: 08.08.2024
                                         atomicIntegerDisponse.set(0);
+                                        // TODO: 08.08.2024 Остаавливаем службу  
+                                        Businesslogic_JOBServive businesslogicJobServive1=new Businesslogic_JOBServive(context);
+                                        businesslogicJobServive1.stopServiceSimpleScan();
                                         // TODO: 02.08.2024
                                         Log.d(this.getClass().getName(), "\n" + " class " +
                                                 Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
