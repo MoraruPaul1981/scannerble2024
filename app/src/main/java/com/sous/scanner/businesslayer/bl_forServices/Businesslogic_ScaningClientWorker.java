@@ -958,6 +958,16 @@ public class Businesslogic_ScaningClientWorker {
                       // Get extra data included in the Intent
                       String message = intent.getStringExtra("message");
                       Log.d("receiver", "Got message: " + message);
+                     if (message.equalsIgnoreCase("DisposableNow")) {
+                         // TODO: 08.08.2024
+                         if (disposable!=null) {
+                             disposable.dispose();
+                         }
+
+                         Log.d(context.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                                 " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                                 " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"+ "disposable " +disposable );
+                      }
 
                       Log.d(context.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                               " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
@@ -969,7 +979,7 @@ public class Businesslogic_ScaningClientWorker {
                     " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" );
 
             LocalBroadcastManager.getInstance(context).registerReceiver(mMessageReceiver,
-                    new IntentFilter("LocalBroadcastScan"));
+                    new IntentFilter("LocalBroadcastScanDisposable"));
 
     } catch (Exception e) {
         e.printStackTrace();

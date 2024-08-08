@@ -3,6 +3,7 @@ package com.sous.scanner.presentationlayer;
 import android.annotation.SuppressLint;
 import android.content.ContentValues;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageInfo;
 import android.graphics.Color;
@@ -26,6 +27,7 @@ import androidx.fragment.app.FragmentManager;
 import androidx.lifecycle.Lifecycle;
 import androidx.lifecycle.LifecycleEventObserver;
 import androidx.lifecycle.LifecycleOwner;
+import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 import androidx.preference.PreferenceManager;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.GridLayoutManager;
@@ -39,6 +41,7 @@ import com.jakewharton.rxbinding4.view.RxView;
 import com.sous.scanner.businesslayer.Errors.SubClassErrors;
 import com.sous.scanner.R;
 import com.sous.scanner.businesslayer.bl_EvenBus.EventLocalBroadcastManager;
+import com.sous.scanner.businesslayer.bl_LocalBroadcastManagers.BussensloginLocalBroadcastManager;
 import com.sous.scanner.businesslayer.bl_forServices.Businesslogic_JOBServive;
 import com.sous.scanner.businesslayer.bl_fragnment_gatt_client.BusinessloginVibrator;
 import com.sous.scanner.businesslayer.bl_fragnment_gatt_client.BusinessloginforfragmentScanner;
@@ -1089,6 +1092,11 @@ public class FragmentScannerUser extends Fragment {
 
 // TODO: 07.08.2024 бирация при успешном пинг с сервром
           new BusinessloginVibrator(getContext()).alarmVibrator();
+
+// TODO: 08.08.2024  передаем обраьтно в службу сообщени о прекращении работы  
+  new BussensloginLocalBroadcastManager(getContext(),version).getLocalBroadcastManager();
+
+
 
 
             // TODO: 31.07.2024

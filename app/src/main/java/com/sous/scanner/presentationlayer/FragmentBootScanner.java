@@ -87,7 +87,7 @@ public class FragmentBootScanner extends Fragment {
 
             // TODO: 16.07.2024  startting Fragment Scannig
          //  businesslogicJobServive.   startingServiceSimpleScan("launchingfrombackgroundempty");
-           businesslogicJobServive.   startingServiceSimpleScan("launchingfrombackgroundempty");
+           businesslogicJobServive.   startingServiceSimpleScan("userUIlaunchingfrombackground");
 
 
 
