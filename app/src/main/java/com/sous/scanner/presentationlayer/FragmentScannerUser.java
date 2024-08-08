@@ -1157,9 +1157,6 @@ public class FragmentScannerUser extends Fragment {
             businessloginforfragmentScanner.  updateUIFragmentScan(materialtextview_last_state,preferences,animation,materialButtonEventSameOfficeEvent, messageClient);
             // TODO: 07.08.2024
 
-          // TODO: 07.08.2024 оставналивем службу После Успешной
-            Businesslogic_JOBServive businesslogicJobServive1=new Businesslogic_JOBServive(getContext());
-            businesslogicJobServive1.stopServiceSimpleScan();
 
 // TODO: 07.08.2024 бирация при успешном пинг с сервром
           new BusinessloginVibrator(getContext()).alarmVibrator();
@@ -1171,6 +1168,9 @@ public class FragmentScannerUser extends Fragment {
             bussensloginLocalBroadcastManager .getLocalBroadcastManagerDisposable();
 
 
+            // TODO: 07.08.2024 оставналивем службу После Успешной
+            Businesslogic_JOBServive businesslogicJobServive1=new Businesslogic_JOBServive(getContext());
+            businesslogicJobServive1.stopServiceSimpleScan();
 
 
             // TODO: 31.07.2024

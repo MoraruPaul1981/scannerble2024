@@ -53,6 +53,7 @@ public class ServiceClientsScan extends Service {
    private     NotificationManager notificationManager;
 
 
+    @SuppressLint("NotificationId0")
     @Override
     public void onCreate() {
         super.onCreate();
@@ -69,6 +70,7 @@ public class ServiceClientsScan extends Service {
               notificationBuilder = new NotificationCompat.Builder(this, channelId);
             Notification notification = notificationBuilder
                     .setOngoing(true)
+                    .setAutoCancel(true)
                     .setSmallIcon(R.drawable.icon_main_scanner_boot1)
                     .setContentText("Последний статус :"+LocalDateTime.now().toString())
                     .setContentTitle("Контроль Bluetooth")
@@ -76,8 +78,8 @@ public class ServiceClientsScan extends Service {
                     .setCategory(NotificationCompat.CATEGORY_PROGRESS)
                     .setVisibility(NotificationCompat.VISIBILITY_SECRET)
                     .build();
-
-            startForeground(110, notification);///
+           // startForeground(110, notification);///
+         //   startForeground(0, notification);///
 
 
             locationManager = (LocationManager) getApplicationContext().getSystemService(Context.LOCATION_SERVICE);
@@ -100,6 +102,7 @@ public class ServiceClientsScan extends Service {
                     notificationBuilder,     notificationManager);
 
 
+            blForServiceScan.    getLocalBroadcastManager ();
 
 
 
@@ -128,15 +131,6 @@ public class ServiceClientsScan extends Service {
     public int onStartCommand(Intent intent, int flags, int startId) {
         try{
 // TODO: 24.07.2024 Scan
-            // TODO: 05.08.2024  start Fragment SCANNEer
-            blForServiceScan.    statyingCallBAckFragmentScaner();
-
-            blForServiceScan.    getLocalBroadcastManager ();
-
-
-
-
-
             switch (intent.getAction()) {
                 // TODO: 06.08.2024
                 case "robotlaunchingfrombackground":
@@ -156,6 +150,21 @@ public class ServiceClientsScan extends Service {
                             " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
                             " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" + " intent " +intent.getAction());
                     break;
+
+                case    "fistlauntfrombackground":
+                    // TODO: 25.07.2024 Бесконечная работа
+
+                    // TODO: 05.08.2024  start Fragment SCANNEer
+                    blForServiceScan.    statyingCallBAckFragmentScaner();
+
+                    Log.d(getApplicationContext().getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                            " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                            " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" + " intent " +intent.getAction());
+                    break;
+
+
+
+
 
                 default:{
                     Log.d(getApplicationContext().getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +

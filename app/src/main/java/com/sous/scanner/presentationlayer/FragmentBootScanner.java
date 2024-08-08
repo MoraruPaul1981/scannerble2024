@@ -86,10 +86,8 @@ public class FragmentBootScanner extends Fragment {
             Businesslogic_JOBServive businesslogicJobServive=new Businesslogic_JOBServive(getContext());
 
             // TODO: 16.07.2024  startting Fragment Scannig
-         //  businesslogicJobServive.   startingServiceSimpleScan("launchingfrombackgroundempty");
-           businesslogicJobServive.   startingServiceSimpleScan("frombackground");
 
-
+            businesslogicJobServive.   startingServiceSimpleScan("fistlauntfrombackground");
 
             Log.d(getContext().getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                     " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +

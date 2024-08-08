@@ -9,6 +9,7 @@ import androidx.core.content.ContextCompat;
 
 import com.sous.scanner.businesslayer.Errors.SubClassErrors;
 import com.sous.scanner.businesslayer.Services.ServiceClientsScan;
+import com.sous.scanner.businesslayer.Services.ServiceClientsScanBackground;
 
 import javax.inject.Inject;
 
@@ -28,7 +29,8 @@ long version;
     public void startingServiceSimpleScan(String stateScartServiceScan) {
         try {
 
-            Intent intentClientServiceSimpleScanStart = new Intent(context, ServiceClientsScan.class);
+           // Intent intentClientServiceSimpleScanStart = new Intent(context, ServiceClientsScan.class);
+            Intent intentClientServiceSimpleScanStart = new Intent(context, ServiceClientsScanBackground.class);
             intentClientServiceSimpleScanStart.addFlags(Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
             intentClientServiceSimpleScanStart.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
             intentClientServiceSimpleScanStart.addFlags(Intent.FLAG_FROM_BACKGROUND);
@@ -36,7 +38,7 @@ long version;
             intentClientServiceSimpleScanStart.setAction(stateScartServiceScan);
             intentClientServiceSimpleScanStart.addFlags(Intent.FLAG_GRANT_PERSISTABLE_URI_PERMISSION);
             // TODO: 24.07.2024
-            ContextCompat.startForegroundService(context,intentClientServiceSimpleScanStart);
+            context.startService( intentClientServiceSimpleScanStart);
             // TODO: 26.07.2024
             Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                     " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
@@ -63,7 +65,8 @@ long version;
     // TODO: 29.11.2022 служба сканирования
     public void stopServiceSimpleScan( ) {
         try {
-            Intent intentClientServiceSimpleScanStop = new Intent(context, ServiceClientsScan.class);
+            //Intent intentClientServiceSimpleScanStop = new Intent(context, ServiceClientsScan.class);
+            Intent intentClientServiceSimpleScanStop = new Intent(context, ServiceClientsScanBackground.class);
             // TODO: 24.07.2024
             context.stopService( intentClientServiceSimpleScanStop);
             // TODO: 26.07.2024

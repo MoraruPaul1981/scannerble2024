@@ -66,8 +66,8 @@ public class Businesslogic_ScaningClientWorker {
     private  BluetoothAdapter bluetoothAdapterPhoneClient;
     private Long version;
     private     @NonNull Context context;
-    private MutableLiveData<ConcurrentHashMap<String,String>> mediatorLiveDataScan=new MutableLiveData<>();
-    private UUID getPublicUUIDScan = ParcelUuid.fromString("70000007-0000-1000-8000-00805f9b34fb").getUuid();
+
+   final private UUID getPublicUUIDScan = ParcelUuid.fromString("70000007-0000-1000-8000-00805f9b34fb").getUuid();
     private      ScheduledExecutorService scheduler = Executors.newSingleThreadScheduledExecutor();
 
 
@@ -115,7 +115,7 @@ public class Businesslogic_ScaningClientWorker {
         try {
             ConcurrentHashMap<String, String> concurrentHashMap = new ConcurrentHashMap<String, String>();
             concurrentHashMap.put("GATTCLIENTProccessing", "1");
-            mediatorLiveDataScan.setValue(concurrentHashMap);
+
             // TODO: 02.08.2024
             AtomicInteger atomicInteger=new AtomicInteger();
 
@@ -223,8 +223,11 @@ public class Businesslogic_ScaningClientWorker {
 // TODO: 07.08.2024 end test code
                 }
             }else{
+                            message.getTarget().post(()->{
+                                Toast.makeText(context, "Bluetooth нет !!! ", Toast.LENGTH_SHORT).show();
 
-                Toast.makeText(context, "Bluetooth нет !!! ", Toast.LENGTH_SHORT).show();
+                            });
+
 
                 Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                         " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
@@ -261,7 +264,7 @@ public class Businesslogic_ScaningClientWorker {
         try {
             ConcurrentHashMap<String, String> concurrentHashMap = new ConcurrentHashMap<String, String>();
             concurrentHashMap.put("GATTCLIENTProccessing", "1");
-            mediatorLiveDataScan.setValue(concurrentHashMap);
+
             // TODO: 02.08.2024
             AtomicInteger atomicInteger=new AtomicInteger();
             AtomicInteger atomicIntegerDisponse=new AtomicInteger();
@@ -403,7 +406,10 @@ public class Businesslogic_ScaningClientWorker {
                 }
             }else{
 
-                Toast.makeText(context, "Bluetooth нет !!! ", Toast.LENGTH_SHORT).show();
+                message.getTarget().post(()->{
+                    Toast.makeText(context, "Bluetooth нет !!! ", Toast.LENGTH_SHORT).show();
+
+                });
 
                 Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                         " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
@@ -504,12 +510,12 @@ public class Businesslogic_ScaningClientWorker {
                                 message.getTarget().post(()->{
                                     ConcurrentHashMap<String,String> concurrentHashMap=      new ConcurrentHashMap<String,String>();
                                     concurrentHashMap  .put("BluetoothProfile.STATE_CONNECTED","2");
-                                    mediatorLiveDataScan.setValue(concurrentHashMap);
+
                                 });
                                 Boolean ДанныеОТGATTССевромGATT=         gatt.discoverServices();
                                 Log.d(this.getClass().getName(), "Trying to ДанныеОТGATTССевромGATT " + ДанныеОТGATTССевромGATT + " newState " +newState);
                                 notificationBuilder.setContentText("Последний статус :"+LocalDateTime.now().toString());
-                                notificationManager.notify(110, notificationBuilder.build());
+                               // notificationManager.notify(110, notificationBuilder.build());
 
                                 // TODO: 07.08.2024  close clent GATT adn Refrecf
                                 businesslogicGattReflection.error133CloseingGatt(gatt);
@@ -523,7 +529,7 @@ public class Businesslogic_ScaningClientWorker {
                                         });*/
                               //  new Businesslogic_GattClinetClose(version,context). disaibleGattServer(gatt);
                                 notificationBuilder.setContentText("Последний статус :"+LocalDateTime.now().toString());
-                                notificationManager.notify(110, notificationBuilder.build());
+                                //notificationManager.notify(110, notificationBuilder.build());
                                 // TODO: 16.07.2024 когда ошивка разрываем сообщение
                                 // TODO: 07.08.2024  close clent GATT adn Refrecf
                                 businesslogicGattReflection.error133CloseingGatt(gatt);
@@ -535,7 +541,6 @@ public class Businesslogic_ScaningClientWorker {
                                 message.getTarget().post(()->{
                                     ConcurrentHashMap<String,String> concurrentHashMap=      new ConcurrentHashMap<String,String>();
                                     concurrentHashMap  .put("BluetoothGatt.GATT_FAILURE","4");
-                                    mediatorLiveDataScan.setValue(concurrentHashMap);
                                     businesslogicGattReflection.error133CloseingGatt(gatt);
                                 });
                               //  new Businesslogic_GattClinetClose(version,context). disaibleGattServer(gatt);
@@ -547,7 +552,7 @@ public class Businesslogic_ScaningClientWorker {
                                 message.getTarget().post(()->{
                                     ConcurrentHashMap<String,String> concurrentHashMap=      new ConcurrentHashMap<String,String>();
                                     concurrentHashMap  .put("BluetoothGatt.GATT_CONNECTION_CONGESTED","5");
-                                    mediatorLiveDataScan.setValue(concurrentHashMap);
+
                                     businesslogicGattReflection.error133CloseingGatt(gatt);
                                 });
                               //  new Businesslogic_GattClinetClose(version,context). disaibleGattServer(gatt);
@@ -613,12 +618,12 @@ public class Businesslogic_ScaningClientWorker {
 
 
 
-                                        mediatorLiveDataScan.setValue(concurrentHashMap);
+
                                         gatt.executeReliableWrite();
                                     }else {
                                         ConcurrentHashMap<String,String> concurrentHashMap=      new ConcurrentHashMap<String,String>();
                                         concurrentHashMap  .put("6","ErrorWorkerGattClientWithServer");
-                                        mediatorLiveDataScan.setValue(concurrentHashMap);
+
                                         gatt.abortReliableWrite();
 
                                     }
@@ -639,7 +644,7 @@ public class Businesslogic_ScaningClientWorker {
 
                                 ConcurrentHashMap<String,String> concurrentHashMap=      new ConcurrentHashMap<String,String>();
                                 concurrentHashMap  .put("7","ErrorWorkerGattClientWithServer");
-                                mediatorLiveDataScan.setValue(concurrentHashMap);
+
                                 Log.d(this.getClass().getName(), "GATT CLIENT Proccessing from GATT server.GATTCLIENTProccessing " + new Date().toLocaleString());
 
 
@@ -662,7 +667,7 @@ public class Businesslogic_ScaningClientWorker {
 
                             ConcurrentHashMap<String,String> concurrentHashMap=      new ConcurrentHashMap<String,String>();
                             concurrentHashMap  .put("BluetoothDevice.BOND_NONE","8");
-                            mediatorLiveDataScan.setValue(concurrentHashMap);
+
                             Log.d(this.getClass().getName(), "GATT CLIENT Proccessing from GATT server.GATTCLIENTProccessing " + new Date().toLocaleString());
 
                         }
@@ -746,7 +751,7 @@ public class Businesslogic_ScaningClientWorker {
 
                                     ConcurrentHashMap<String,String> concurrentHashMap=      new ConcurrentHashMap<String,String>();
                                     concurrentHashMap  .put(ОтветОтСервераОбратно,ОтветОтСервераОбратно);
-                                    mediatorLiveDataScan.setValue(concurrentHashMap);
+
 
                                 });
                                 // TODO: 20.02.2023 закрыаем сесию ссервром
@@ -869,7 +874,7 @@ public class Businesslogic_ScaningClientWorker {
                         message.getTarget().post(()->{
                             ConcurrentHashMap<String,String> concurrentHashMap=      new ConcurrentHashMap<String,String>();
                             concurrentHashMap  .put("BluetoothDevice.DEVICE_TYPE_UNKNOWN","9");
-                            mediatorLiveDataScan.setValue(concurrentHashMap);
+
                         });
     
                         Log.d(context.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
@@ -883,7 +888,7 @@ public class Businesslogic_ScaningClientWorker {
                         message.getTarget().post(()->{
                             ConcurrentHashMap<String,String> concurrentHashMap=      new ConcurrentHashMap<String,String>();
                             concurrentHashMap  .put("BluetoothDevice.BOND_NONE","10");
-                            mediatorLiveDataScan.setValue(concurrentHashMap);
+
                         });
                         Log.d(context.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                                 " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
@@ -897,7 +902,7 @@ public class Businesslogic_ScaningClientWorker {
                         message.getTarget().post(()->{
                             ConcurrentHashMap<String,String> concurrentHashMap=      new ConcurrentHashMap<String,String>();
                             concurrentHashMap  .put("BluetoothDevice.BOND_BONDING","12");
-                            mediatorLiveDataScan.setValue(concurrentHashMap);
+
     
                         });
     
@@ -911,7 +916,7 @@ public class Businesslogic_ScaningClientWorker {
                         message.getTarget().post(()->{
                             ConcurrentHashMap<String,String> concurrentHashMap=      new ConcurrentHashMap<String,String>();
                             concurrentHashMap  .put("BluetoothDevice.BOND_BONDING","13");
-                            mediatorLiveDataScan.setValue(concurrentHashMap);
+
     
                         });
                         Log.d(context.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
