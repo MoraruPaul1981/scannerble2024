@@ -1,8 +1,10 @@
 package com.sous.scanner.businesslayer.bl_forActivityScan;
 
 import android.content.Context;
+import android.os.Vibrator;
 import android.util.Log;
 
+import com.onesignal.BuildConfig;
 import com.onesignal.OneSignal;
 
 public class BussenslogicActifityScan {
@@ -17,7 +19,6 @@ long version;
     }
 
     public void initOneSignal() {
-
         OneSignal.initWithContext(context);
         OneSignal.setAppId(ONEKEY);
         OneSignal.promptForPushNotifications();

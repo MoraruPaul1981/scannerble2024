@@ -1,5 +1,6 @@
 buildscript {
 
+    def onesignal_app_id = "2a1819db-60c8-4ca3-a752-1b6cd9cadfa1"
 
     repositories {
         google()
@@ -15,6 +16,7 @@ buildscript {
 
 
 }// Top-level build file where you can add configuration options common to all sub-projects/modules.
+
 
 
 

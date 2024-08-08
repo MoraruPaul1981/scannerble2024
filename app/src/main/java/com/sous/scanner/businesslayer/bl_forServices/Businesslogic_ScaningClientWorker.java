@@ -34,6 +34,7 @@ import com.sous.scanner.businesslayer.Errors.SubClassErrors;
 import com.sous.scanner.businesslayer.bl_BroadcastReciver.Businesslogic_GattReflection;
 import com.sous.scanner.businesslayer.bl_EvenBus.EventB_Clent;
 import com.sous.scanner.businesslayer.bl_LocalBroadcastManagers.BussensloginLocalBroadcastManager;
+import com.sous.scanner.businesslayer.bl_fragnment_gatt_client.BusinessloginVibrator;
 import com.sous.scanner.presentationlayer.FragmentScannerUser;
 
 import org.greenrobot.eventbus.EventBus;
@@ -304,6 +305,9 @@ public class Businesslogic_ScaningClientWorker {
                                                 new BussensloginLocalBroadcastManager(context,version);
                                         bussensloginLocalBroadcastManager  .getLocalBroadcastManagerDisposable();
                                         // TODO: 08.08.2024
+
+// TODO: 07.08.2024 бирация при успешном пинг с сервром
+                                        new BusinessloginVibrator(context).alarmVibrator();
                                         // TODO: 08.08.2024 перегрузка Элемента экрана UI
                                         bussensloginLocalBroadcastManager .getLocalBroadcastManagerUI();
                                         // TODO: 08.08.2024
@@ -349,7 +353,7 @@ public class Businesslogic_ScaningClientWorker {
                                             Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                                             " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
                                             " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" + "\n"
-                                            +  " atomicInteger.get() "+ atomicInteger.get());
+                                            +  " atomicInteger.get() "+ atomicInteger.get()+" atomicIntegerDisponse.get() " +atomicIntegerDisponse.get());
 
                                 }
                             })
@@ -428,10 +432,10 @@ public class Businesslogic_ScaningClientWorker {
     private  void addingQueueListmac(CopyOnWriteArrayList<String> getListMAC) {
         if (getListMAC.size()==0) {
            getListMAC.add( "98:2F:F8:19:BC:F7");
-           getListMAC.add( "64:03:7F:A2:E2:C2");
+          /* getListMAC.add( "64:03:7F:A2:E2:C2");
            getListMAC.add( "CC:73:15:17:96:3F");
             getListMAC.add( "74:15:75:D8:F5:FA");//
-            getListMAC.add( "FC:19:99:79:D6:D4");//
+            getListMAC.add( "FC:19:99:79:D6:D4");//*/
             Log.d(context.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                     " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
                     " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" + " getListMAC " +getListMAC.size());

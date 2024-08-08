@@ -4,10 +4,13 @@ plugins {
 }
 
 
-
+ext {
+    def onesignal_app_id = "2a1819db-60c8-4ca3-a752-1b6cd9cadfa1"
+}
 
 
 android {
+
     namespace "com.sous.scanner"
     signingConfigs {
         debug {

@@ -738,7 +738,7 @@ public class FragmentScannerUser extends Fragment {
                 // TODO: 17.07.2024  Сотрудник ПРИХОДИТ
                 if (position==0) {
                       // TODO: 06.08.2024
-                    addCurrentButonClick(holder.materialButtonEventSameOffice,toWork);
+                    addCurrentButonClick(holder.materialButtonEventSameOffice,toWork,"#BDC6C8");
 
                     animationCurrentButonClick(holder.materialButtonEventSameOffice,100);
                     // TODO: 06.08.2024  
@@ -775,10 +775,10 @@ public class FragmentScannerUser extends Fragment {
             }
         }
 
-        private void addCurrentButonClick(@NonNull MaterialButton materialButtonClick,@NonNull String toWork) {
+        private void addCurrentButonClick(@NonNull MaterialButton materialButtonClick,@NonNull String toWork,String getColorcHange) {
             try{
                     materialButtonClick.setText(toWork);
-                    materialButtonClick.setBackgroundColor(Color.parseColor("#BDC6C8"));
+                    materialButtonClick.setBackgroundColor(Color.parseColor(getColorcHange));
                 // TODO: 06.08.2024
             Log.d(getContext().getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                     " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
@@ -801,6 +801,34 @@ public class FragmentScannerUser extends Fragment {
             new SubClassErrors(getContext()).МетодЗаписиОшибок(valuesЗаписываемОшибки);
         }
         }
+
+        private void addCurrentButonChangetextClick(@NonNull MaterialButton materialButtonClick,@NonNull String toWork,String getColorcHange) {
+            try{
+                materialButtonClick.setText(toWork);
+                materialButtonClick.setTextColor(Color.parseColor(getColorcHange));
+                // TODO: 06.08.2024
+                Log.d(getContext().getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                        " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                        " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"+
+                        "  materialButtonClick " +materialButtonClick);
+
+
+            } catch (Exception e) {
+                e.printStackTrace();
+                Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() + " Линия  :"
+                        + Thread.currentThread().getStackTrace()[2].getLineNumber());
+                ContentValues valuesЗаписываемОшибки = new ContentValues();
+                valuesЗаписываемОшибки.put("Error", e.toString().toLowerCase());
+                valuesЗаписываемОшибки.put("Klass", this.getClass().getName());
+                valuesЗаписываемОшибки.put("Metod", Thread.currentThread().getStackTrace()[2].getMethodName());
+                valuesЗаписываемОшибки.put("LineError", Thread.currentThread().getStackTrace()[2].getLineNumber());
+                final Object ТекущаяВерсияПрограммы = version;
+                Integer ЛокальнаяВерсияПОСравнение = Integer.parseInt(ТекущаяВерсияПрограммы.toString());
+                valuesЗаписываемОшибки.put("whose_error", ЛокальнаяВерсияПОСравнение);
+                new SubClassErrors(getContext()).МетодЗаписиОшибок(valuesЗаписываемОшибки);
+            }
+        }
+
 
 
         private void animationCurrentButonClick(@NonNull MaterialButton materialButtonClick,@NonNull int Duration) {
@@ -853,7 +881,7 @@ public class FragmentScannerUser extends Fragment {
                                         " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
                                         " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" + "\n");
 
-                               addCurrentButonClick(materialButtonClick,toProccess);
+                               addCurrentButonClick(materialButtonClick,toProccess,"#BDC6C8");
 
                                 animationCurrentButonClick(materialButtonClick,100);
 
@@ -957,13 +985,13 @@ public class FragmentScannerUser extends Fragment {
 
 
                             messageClient.getTarget().postDelayed(()->{
-                                addCurrentButonClick(holder.materialButtonEventSameOffice,toProccess);
+                                addCurrentButonClick(holder.materialButtonEventSameOffice,toWork,"#BDC6C8");
+                                addCurrentButonChangetextClick(holder.materialButtonEventSameOffice,toWork,"#000000");
                             },1500);
 
 
                             messageClient.getTarget().post(()->{
-                                addCurrentButonClick(holder.materialButtonEventSameOffice,toProccessError);
-
+                                addCurrentButonChangetextClick(holder.materialButtonEventSameOffice,toProccessError,"#A10B0B");
                                 animationCurrentButonClick(holder.materialButtonEventSameOffice,100);
 
                             });
