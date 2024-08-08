@@ -33,6 +33,7 @@ import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 import com.sous.scanner.businesslayer.Errors.SubClassErrors;
 import com.sous.scanner.businesslayer.bl_BroadcastReciver.Businesslogic_GattReflection;
 import com.sous.scanner.businesslayer.bl_EvenBus.EventB_Clent;
+import com.sous.scanner.businesslayer.bl_LocalBroadcastManagers.BussensloginLocalBroadcastManager;
 import com.sous.scanner.presentationlayer.FragmentScannerUser;
 
 import org.greenrobot.eventbus.EventBus;
@@ -277,6 +278,7 @@ public class Businesslogic_ScaningClientWorker {
             mediatorLiveDataScan.setValue(concurrentHashMap);
             // TODO: 02.08.2024
             AtomicInteger atomicInteger=new AtomicInteger();
+            AtomicInteger atomicIntegerDisponse=new AtomicInteger();
 
             CopyOnWriteArrayList<String> getListMAC=new CopyOnWriteArrayList();
             // TODO: 02.08.2024
@@ -305,7 +307,31 @@ public class Businesslogic_ScaningClientWorker {
                                         bluetoothGattCallbacks.clear();
                                         // TODO: 06.08.2024
                                         messageCopyOnWriteArrayList.clear();
+                                        // TODO: 02.08.2024
+                                        Log.d(this.getClass().getName(), "\n" + " class " +
+                                                Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                                                " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                                                " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" + "\n"
+                                                +  " atomicInteger.get() "+ atomicInteger.get());
                                     }
+                                    if(atomicIntegerDisponse.get()>50){
+                                        // TODO: 08.08.2024  передаем обраьтно в службу сообщени о прекращении работы
+                                        new BussensloginLocalBroadcastManager(context,version).getLocalBroadcastManager();
+                                        // TODO: 08.08.2024
+                                        atomicIntegerDisponse.set(0);
+                                        // TODO: 02.08.2024
+                                        Log.d(this.getClass().getName(), "\n" + " class " +
+                                                Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                                                " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                                                " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" + "\n"
+                                                +  " atomicInteger.get() "+ atomicInteger.get());
+                                    }
+
+
+
+
+
+
 
                                     // TODO: 25.07.2024
                                  final     String getAddress=     getListMAC.get(atomicInteger.get());
@@ -325,6 +351,9 @@ public class Businesslogic_ScaningClientWorker {
 
                                     // TODO: 02.08.2024 Увлеичиваем Значение Счетика
                                     atomicInteger.incrementAndGet();
+
+                                    // TODO: 08.08.2024  увеличиваем общще количесто операций
+                                    atomicIntegerDisponse.incrementAndGet();
 
                                     // TODO: 02.08.2024
                                     Log.d(this.getClass().getName(), "\n" + " class " +
