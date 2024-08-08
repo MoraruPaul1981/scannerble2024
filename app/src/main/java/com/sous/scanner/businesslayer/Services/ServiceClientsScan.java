@@ -31,6 +31,7 @@ import java.time.LocalDateTime;
 import java.util.Date;
 
 import io.reactivex.rxjava3.core.Flowable;
+import io.reactivex.rxjava3.disposables.Disposable;
 
 public class ServiceClientsScan extends Service {
 
@@ -46,7 +47,7 @@ public class ServiceClientsScan extends Service {
 
    private     NotificationManager notificationManager;
 
-
+    private Disposable disposable;
 
     @Override
     public void onCreate() {
@@ -87,12 +88,12 @@ public class ServiceClientsScan extends Service {
 
 
 // TODO: 24.07.2024 Reference an class Buncess logica Servir Scan
-            blForServiceScan=       new Businesslogic_ScaningClientWorker(locationManager,
+             blForServiceScan=       new Businesslogic_ScaningClientWorker(locationManager,
                     bluetoothManagerServer,
                     bluetoothAdapterPhoneClient,
                     version,
                     getApplicationContext(),
-                    notificationBuilder,     notificationManager);
+                    notificationBuilder,     notificationManager,   disposable);
 
 
 
@@ -149,6 +150,8 @@ public class ServiceClientsScan extends Service {
 
                 case     "launchingfrombackgroundempty":
                     // TODO: 25.07.2024 Бесконечная работа
+                    // TODO: 25.07.2024 Бесконечная работа
+                    blForServiceScan.userUIlaunchingfromScanbackground(2 );
 
                     Log.d(getApplicationContext().getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                             " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
@@ -192,9 +195,29 @@ public class ServiceClientsScan extends Service {
     @Override
     public void onDestroy() {
         super.onDestroy();
+        try{
+        if (disposable!=null) {
+            disposable.dispose();
+        }
         Log.d(getApplicationContext().getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                 " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n");
+                " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" + "disposable " +disposable);
+    } catch (Exception e) {
+        e.printStackTrace();
+        Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() + " Линия  :"
+                + Thread.currentThread().getStackTrace()[2].getLineNumber());
+        ContentValues valuesЗаписываемОшибки = new ContentValues();
+        valuesЗаписываемОшибки.put("Error", e.toString().toLowerCase());
+        valuesЗаписываемОшибки.put("Klass", this.getClass().getName());
+        valuesЗаписываемОшибки.put("Metod", Thread.currentThread().getStackTrace()[2].getMethodName());
+        valuesЗаписываемОшибки.put("LineError", Thread.currentThread().getStackTrace()[2].getLineNumber());
+        final Object ТекущаяВерсияПрограммы = version;
+        Integer ЛокальнаяВерсияПОСравнение = Integer.parseInt(ТекущаяВерсияПрограммы.toString());
+        valuesЗаписываемОшибки.put("whose_error", ЛокальнаяВерсияПОСравнение);
+        new SubClassErrors(getApplicationContext()).МетодЗаписиОшибок(valuesЗаписываемОшибки);
+    }
+
+
     }
 
     @Override
