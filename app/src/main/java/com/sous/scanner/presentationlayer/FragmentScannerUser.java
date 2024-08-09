@@ -195,6 +195,7 @@ public class FragmentScannerUser extends Fragment {
         String completeResultContol=    preferences.getString("completeResultContol","");
         if (completeResultContol.length()>0) {
             materialtextview_last_state.setText(completeResultContol);
+            materialtextview_last_state.setTextSize(13l);
             materialtextview_last_state.requestLayout();
             materialtextview_last_state.refreshDrawableState();
         }
