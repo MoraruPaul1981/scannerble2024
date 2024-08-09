@@ -284,7 +284,7 @@ public class Businesslogic_ScaningClientWorker {
 
 
 
-                    Observable.range(      1,50)
+                    Observable.range(      1,60)
                             .zipWith( Observable.just("")
                                     .repeatWhen(repeat->repeat.delay(DurectionTimeGatt,TimeUnit.SECONDS)), (item, interval) -> item)
                             .doOnNext(new Consumer<Object>() {
@@ -294,7 +294,7 @@ public class Businesslogic_ScaningClientWorker {
 
                                    Observable.fromIterable(      getListMAC)
                                             .zipWith( Observable.just("")
-                                                    .repeatWhen(repeat->repeat.delay(100,TimeUnit.SECONDS)), (item, interval) -> item)
+                                                    .repeatWhen(repeat->repeat.delay(250,TimeUnit.MILLISECONDS)), (item, interval) -> item)
                                             .doOnNext(new Consumer<String>() {
                                                 @Override
                                                 public void accept(String getAddress) throws Throwable {
@@ -391,14 +391,14 @@ public class Businesslogic_ScaningClientWorker {
                             })
                             .takeWhile(new Predicate<Integer>() {
                                 @Override
-                                public boolean test(Integer integer) throws Throwable {
+                                public boolean test(Integer numberoftheСurrentscanningattempt) throws Throwable {
                                     // TODO: 02.08.2024
                                     Log.d(this.getClass().getName(), "\n" + " class " +
                                             Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                                             " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
                                             " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" + "\n"+
-                                            " integer " +integer);
-                                    if (integer>=25) {
+                                            " numberoftheСurrentscanningattempt " +numberoftheСurrentscanningattempt);
+                                    if (numberoftheСurrentscanningattempt>=30) {
                                         // TODO: 09.08.2024
                                         // TODO: 08.08.2024  передаем обраьтно в службу сообщени о прекращении работы
                                         BussensloginLocalBroadcastManager bussensloginLocalBroadcastManager=
@@ -422,9 +422,16 @@ public class Businesslogic_ScaningClientWorker {
                                                 Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                                                 " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
                                                 " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" + "\n"
-                                                +  " atomicIntegerDisponse.get() "+ atomicIntegerDisponse.get());
+                                                +  " numberoftheСurrentscanningattempt "+ numberoftheСurrentscanningattempt);
                                         return false;
                                     } else {
+                                        // TODO: 09.08.2024
+                                        // TODO: 02.08.2024
+                                        Log.d(this.getClass().getName(), "\n" + " class " +
+                                                Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                                                " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                                                " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" + "\n"
+                                                +  " numberoftheСurrentscanningattempt "+ numberoftheСurrentscanningattempt);
                                         return true;
                                     }
                                 }
