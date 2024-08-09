@@ -15,6 +15,7 @@ import org.jetbrains.annotations.NotNull;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.Locale;
 import java.util.Optional;
 import java.util.concurrent.atomic.AtomicReference;
 
@@ -43,7 +44,8 @@ public class Businesslogic_GattClinetSuccessNAMECHANGED {
                     public void run() throws Throwable {
 
                         LocalDateTime futureDate = LocalDateTime.now();
-                        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy.MM.dd HH.mm.ss.SSS");
+                       // DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy.MM.dd HH.mm.ss.SSS", new Locale("ru","RU"));
+                        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("MMMM-dd-yyyy HH.mm", new Locale("ru","RU"));
                         String getBremy=   dtf.format(futureDate);
                         // TODO: 07.08.2024
 

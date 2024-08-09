@@ -18,6 +18,7 @@ import org.jetbrains.annotations.NotNull;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.Locale;
 import java.util.Optional;
 import java.util.concurrent.atomic.AtomicReference;
 
@@ -54,7 +55,8 @@ public class Businesslogic_GattClinetSuccessLocalBroadcastManager {
                         String getName= Optional.ofNullable(bluetoothDevice.getName()).map(m->m.toUpperCase()) .orElseGet(()->"");
 
                         LocalDateTime futureDate = LocalDateTime.now();
-                        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy.MM.dd HH.mm.ss.SSS");
+                       // DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy.MM.dd HH.mm.ss.SSS", new Locale("ru","RU"));
+                        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MMMM-dd HH.mm", new Locale("ru","RU"));
                         String getBremy=   dtf.format(futureDate);
                         // TODO: 07.08.2024
 
