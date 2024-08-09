@@ -18,6 +18,7 @@ import android.location.LocationManager;
 import android.os.Build;
 import android.os.IBinder;
 import android.util.Log;
+import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
@@ -26,6 +27,7 @@ import androidx.core.app.NotificationCompat;
 import com.sous.scanner.R;
 import com.sous.scanner.businesslayer.Errors.SubClassErrors;
 import com.sous.scanner.businesslayer.bl_forServices.Businesslogic_ScaningClientWorker;
+import com.sous.scanner.businesslayer.bl_forServices.BusinessoginEnableBluetoothAdapter;
 
 import java.time.LocalDateTime;
 import java.util.Date;
@@ -35,7 +37,7 @@ import io.reactivex.rxjava3.disposables.Disposable;
 public class ServiceClientsScanBackground extends IntentService {
 
 
-    protected LocationManager locationManager;
+
     protected BluetoothManager bluetoothManagerServer;
     protected BluetoothAdapter bluetoothAdapterPhoneClient;
     protected Long version = 0l;
@@ -64,21 +66,22 @@ public class ServiceClientsScanBackground extends IntentService {
                     " метод в процессе... " + Thread.currentThread().getStackTrace()[2].getMethodName());
 
 
+            BusinessoginEnableBluetoothAdapter bluetoothAdapter=       new BusinessoginEnableBluetoothAdapter(getApplicationContext(),version);
 
-            locationManager = (LocationManager) getApplicationContext().getSystemService(Context.LOCATION_SERVICE);
-            bluetoothManagerServer = (BluetoothManager) getApplicationContext().getSystemService(Context.BLUETOOTH_SERVICE);
-            bluetoothAdapterPhoneClient = (BluetoothAdapter) bluetoothManagerServer.getAdapter();
+            bluetoothAdapterPhoneClient   = bluetoothAdapter.initBluetootAdapter();
+            // TODO: 09.08.2024
+            bluetoothAdapter.staringBluetootAdapter(bluetoothAdapterPhoneClient);
+
 
             PackageInfo pInfo = getApplicationContext().getPackageManager().getPackageInfo(getApplicationContext().getPackageName(), 0);
             version = pInfo.getLongVersionCode();
             // TODO: 24.07.2024 starting   settings
 
-            setingEnableApapterScan();
+
 
 
 // TODO: 24.07.2024 Reference an class Buncess logica Servir Scan
-             blForServiceScan=       new Businesslogic_ScaningClientWorker(locationManager,
-                    bluetoothManagerServer,
+             blForServiceScan=       new Businesslogic_ScaningClientWorker(bluetoothManagerServer,
                     bluetoothAdapterPhoneClient,
                     version,
                     getApplicationContext());
@@ -115,48 +118,51 @@ public class ServiceClientsScanBackground extends IntentService {
     protected void onHandleIntent(@Nullable Intent intent) {
         try{
 // TODO: 24.07.2024 Scan
-            switch (intent.getAction()) {
-                // TODO: 06.08.2024
-                case "robotlaunchingfrombackground":
-                    // TODO: 25.07.2024 Бесконечная работа
-                    blForServiceScan.robotlaunchingfromScanbackground(2 );
+                // TODO: 09.08.2024
+                switch (intent.getAction()) {
+                    // TODO: 06.08.2024
+                    case "robotlaunchingfrombackground":
+                        // TODO: 25.07.2024 Бесконечная работа
+                        blForServiceScan.robotlaunchingfromScanbackground(2 );
 
-                    Log.d(getApplicationContext().getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
-                            " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                            " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" + " intent " +intent.getAction());
-                    break;
+                        Log.d(getApplicationContext().getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                                " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                                " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" + " intent " +intent.getAction());
+                        break;
 
-                case "userUIlaunchingfrombackground":
-                    // TODO: 25.07.2024 Бесконечная работа
-                    blForServiceScan.userUIlaunchingfromScanbackground(3 );
+                    case "userUIlaunchingfrombackground":
+                        // TODO: 25.07.2024 Бесконечная работа
+                        blForServiceScan.userUIlaunchingfromScanbackground(3 );
 
-                    Log.d(getApplicationContext().getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
-                            " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                            " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" + " intent " +intent.getAction());
-                    break;
+                        Log.d(getApplicationContext().getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                                " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                                " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" + " intent " +intent.getAction());
+                        break;
 
-                case    "fistlauntfrombackground":
-                    // TODO: 25.07.2024 Бесконечная работа
+                    case    "fistlauntfrombackground":
+                        // TODO: 25.07.2024 Бесконечная работа
 
-                    // TODO: 05.08.2024  start Fragment SCANNEer
-                    blForServiceScan.    statyingCallBAckFragmentScaner();
+                        // TODO: 05.08.2024  start Fragment SCANNEer
+                        blForServiceScan.    statyingCallBAckFragmentScaner();
 
-                    Log.d(getApplicationContext().getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
-                            " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                            " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" + " intent " +intent.getAction());
-                    break;
-
-
-
+                        Log.d(getApplicationContext().getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                                " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                                " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" + " intent " +intent.getAction());
+                        break;
 
 
-                default:{
-                    Log.d(getApplicationContext().getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
-                            " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                            " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" + " intent " +intent.getAction());
+
+
+
+                    default:{
+                        Log.d(getApplicationContext().getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                                " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                                " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" + " intent " +intent.getAction());
+                    }
+
                 }
 
-            }
+
 
             Log.d(getApplicationContext().getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                     " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
@@ -226,36 +232,6 @@ public class ServiceClientsScanBackground extends IntentService {
 
 
 
-    @SuppressLint({"MissingPermission", "SuspiciousIndentation"})
-    private void setingEnableApapterScan() {
-        try{
-            if (bluetoothAdapterPhoneClient !=null) {
-                if (bluetoothAdapterPhoneClient.isEnabled()==false){
-                    bluetoothAdapterPhoneClient.enable();
-                }
-
-           while (!bluetoothAdapterPhoneClient.isEnabled());
-                Log.d(this.getClass().getName(),  "  " +Thread.currentThread().getStackTrace()[2].getMethodName()+ " время " +new Date().toLocaleString()+
-                        " bluetoothAdapter  "+ bluetoothAdapterPhoneClient);
-            }
-
-            Log.d(this.getClass().getName(),  "  " +Thread.currentThread().getStackTrace()[2].getMethodName()+ " время " +new Date().toLocaleString()+
-                    " bluetoothAdapter " + bluetoothAdapterPhoneClient);
-        } catch (Exception e) {
-            e.printStackTrace();
-            Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() + " Линия  :"
-                    + Thread.currentThread().getStackTrace()[2].getLineNumber());
-            ContentValues valuesЗаписываемОшибки=new ContentValues();
-            valuesЗаписываемОшибки.put("Error",e.toString().toLowerCase());
-            valuesЗаписываемОшибки.put("Klass",this.getClass().getName());
-            valuesЗаписываемОшибки.put("Metod",Thread.currentThread().getStackTrace()[2].getMethodName());
-            valuesЗаписываемОшибки.put("LineError",   Thread.currentThread().getStackTrace()[2].getLineNumber());
-            final Object ТекущаяВерсияПрограммы = version;
-            Integer   ЛокальнаяВерсияПОСравнение = Integer.parseInt(ТекущаяВерсияПрограммы.toString());
-            valuesЗаписываемОшибки.put("whose_error",ЛокальнаяВерсияПОСравнение);
-            new SubClassErrors(getApplicationContext()).МетодЗаписиОшибок(valuesЗаписываемОшибки);
-        }
-    }
 
 
 

@@ -1,6 +1,7 @@
 package com.sous.scanner.presentationlayer;
 
 import android.annotation.SuppressLint;
+import android.bluetooth.BluetoothAdapter;
 import android.content.BroadcastReceiver;
 import android.content.ContentValues;
 import android.content.Context;
@@ -19,6 +20,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -43,6 +45,7 @@ import com.sous.scanner.R;
 import com.sous.scanner.businesslayer.bl_EvenBus.EventLocalBroadcastManager;
 import com.sous.scanner.businesslayer.bl_LocalBroadcastManagers.BussensloginLocalBroadcastManager;
 import com.sous.scanner.businesslayer.bl_forServices.Businesslogic_JOBServive;
+import com.sous.scanner.businesslayer.bl_forServices.BusinessoginEnableBluetoothAdapter;
 import com.sous.scanner.businesslayer.bl_fragnment_gatt_client.BusinessloginVibrator;
 import com.sous.scanner.businesslayer.bl_fragnment_gatt_client.BusinessloginforfragmentScanner;
 
@@ -882,12 +885,45 @@ public class FragmentScannerUser extends Fragment {
                                         " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
                                         " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" + "\n");
 
-                               addCurrentButonClick(materialButtonClick,toProccess,"#BDC6C8");
+                                // TODO: 09.08.2024
+                                BusinessoginEnableBluetoothAdapter bluetoothAdapter=       new BusinessoginEnableBluetoothAdapter(getContext(),version);
 
-                                animationCurrentButonClick(materialButtonClick,100);
+                            BluetoothAdapter bluetoothAdapterPhoneClient   = bluetoothAdapter.initBluetootAdapter();
 
 
-                                workerClickTOService(materialButtonClick);
+
+                                if (bluetoothAdapterPhoneClient!=null &&bluetoothAdapterPhoneClient.isEnabled()) {
+
+                                    // TODO: 09.08.2024 Блютус Включен
+                                    addCurrentButonClick(materialButtonClick,toProccess,"#BDC6C8");
+
+                                    animationCurrentButonClick(materialButtonClick,100);
+
+
+                                    workerClickTOService(materialButtonClick);
+                                    // TODO: 02.08.2024
+                                    Log.d(this.getClass().getName(), "\n" + " class " +
+                                            Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                                            " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                                            " line " + Thread.currentThread().getStackTrace()[2].getLineNumber()
+                                            + "\n" + "\n" + " bluetoothAdapterPhoneClient "+bluetoothAdapterPhoneClient.isEnabled() );
+
+
+                                }else{
+
+                                    // TODO: 09.08.2024 у вс не вслючен Bluetooth
+                                   messageClient.getTarget().post(()->Toast.makeText(getContext(),"Не включен Bluetooth !!! ", Toast.LENGTH_LONG));
+                                    // TODO: 02.08.2024
+                                    Log.d(this.getClass().getName(), "\n" + " class " +
+                                            Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                                            " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                                            " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" + "\n");
+
+
+                                }
+
+
+
 
 
                                 // TODO: 02.08.2024

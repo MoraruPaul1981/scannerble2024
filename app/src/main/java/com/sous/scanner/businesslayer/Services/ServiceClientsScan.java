@@ -27,6 +27,7 @@ import androidx.core.app.NotificationCompat;
 import com.sous.scanner.R;
 import com.sous.scanner.businesslayer.Errors.SubClassErrors;
 import com.sous.scanner.businesslayer.bl_forServices.Businesslogic_ScaningClientWorker;
+import com.sous.scanner.businesslayer.bl_forServices.BusinessoginEnableBluetoothAdapter;
 
 import java.time.LocalDateTime;
 import java.util.Date;
@@ -41,8 +42,6 @@ import io.reactivex.rxjava3.functions.Predicate;
 
 public class ServiceClientsScan extends Service {
 
-
-    protected LocationManager locationManager;
     protected BluetoothManager bluetoothManagerServer;
     protected BluetoothAdapter bluetoothAdapterPhoneClient;
     protected Long version = 0l;
@@ -83,9 +82,12 @@ public class ServiceClientsScan extends Service {
          //   startForeground(0, notification);///
 
 
-            locationManager = (LocationManager) getApplicationContext().getSystemService(Context.LOCATION_SERVICE);
-            bluetoothManagerServer = (BluetoothManager) getApplicationContext().getSystemService(Context.BLUETOOTH_SERVICE);
-            bluetoothAdapterPhoneClient = (BluetoothAdapter) bluetoothManagerServer.getAdapter();
+
+            BusinessoginEnableBluetoothAdapter bluetoothAdapter=       new BusinessoginEnableBluetoothAdapter(getApplicationContext(),version);
+
+            bluetoothAdapterPhoneClient   = bluetoothAdapter.initBluetootAdapter();
+            // TODO: 09.08.2024
+            bluetoothAdapter.staringBluetootAdapter(bluetoothAdapterPhoneClient);
 
             PackageInfo pInfo = getApplicationContext().getPackageManager().getPackageInfo(getApplicationContext().getPackageName(), 0);
             version = pInfo.getLongVersionCode();
@@ -95,8 +97,7 @@ public class ServiceClientsScan extends Service {
 
 
 // TODO: 24.07.2024 Reference an class Buncess logica Servir Scan
-             blForServiceScan=       new Businesslogic_ScaningClientWorker(locationManager,
-                    bluetoothManagerServer,
+             blForServiceScan=       new Businesslogic_ScaningClientWorker(bluetoothManagerServer,
                     bluetoothAdapterPhoneClient,
                     version,
                     getApplicationContext());

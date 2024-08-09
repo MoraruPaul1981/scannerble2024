@@ -64,7 +64,7 @@ public class Businesslogic_ScaningClientWorker {
     // TODO: 24.07.2024  varibles Service Scan
     private String getWorkerStateClient="Простое сканирование";
 
-    private LocationManager locationManager;
+
     private BluetoothManager bluetoothManagerServer;
     private  BluetoothAdapter bluetoothAdapterPhoneClient;
     private Long version;
@@ -82,12 +82,10 @@ public class Businesslogic_ScaningClientWorker {
     private  Disposable disposablegetListMAC;
 
     private Disposable      disposablerange ;
-    public Businesslogic_ScaningClientWorker(@NonNull LocationManager locationManager,
-                                             @NonNull BluetoothManager bluetoothManagerServer,
+    public Businesslogic_ScaningClientWorker(@NonNull BluetoothManager bluetoothManagerServer,
                                              @NonNull BluetoothAdapter bluetoothAdapterPhoneClient,
                                              @NonNull Long version,
                                              @NonNull Context context) {
-        this.locationManager = locationManager;
         this.bluetoothManagerServer = bluetoothManagerServer;
         this.bluetoothAdapterPhoneClient = bluetoothAdapterPhoneClient;
         this.version = version;
