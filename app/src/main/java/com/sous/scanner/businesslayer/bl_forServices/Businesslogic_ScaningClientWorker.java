@@ -1104,7 +1104,7 @@ try{
                 bluetoothDevice.fetchUuidsWithSdp();
 
                 // TODO: 30.07.2024
-                      gattScan     =      bluetoothDevice.connectGatt(context, false,
+                      gattScan     =      bluetoothDevice.connectGatt(context, true,
                     bluetoothGattCallbacks, BluetoothDevice.TRANSPORT_AUTO,BluetoothDevice.PHY_OPTION_NO_PREFERRED,message.getTarget());
                 gattScan.requestConnectionPriority(BluetoothGatt.CONNECTION_PRIORITY_HIGH);
                 //gatt.setPreferredPhy(BluetoothDevice.PHY_LE_2M_MASK,BluetoothDevice.PHY_LE_2M_MASK,BluetoothDevice.PHY_OPTION_S2);
