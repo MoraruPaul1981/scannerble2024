@@ -265,7 +265,6 @@ public class Businesslogic_ScaningClientWorker {
             concurrentHashMap.put("GATTCLIENTProccessing", "1");
 
             // TODO: 02.08.2024
-            AtomicInteger atomicInteger=new AtomicInteger();
             AtomicInteger atomicIntegerDisponse=new AtomicInteger();
 
             CopyOnWriteArrayList<String> getListMAC=new CopyOnWriteArrayList();
@@ -298,11 +297,11 @@ public class Businesslogic_ScaningClientWorker {
                                                     .repeatWhen(repeat->repeat.delay(100,TimeUnit.SECONDS)), (item, interval) -> item)
                                             .doOnNext(new Consumer<String>() {
                                                 @Override
-                                                public void accept(String s) throws Throwable {
+                                                public void accept(String getAddress) throws Throwable {
                                                     // TODO: 22.11.2022  первая часть
 
                                                     // TODO: 25.07.2024
-                                                    final     String getAddress=     getListMAC.get(atomicInteger.get());
+
                                                     // TODO: 02.08.2024
                                                     // TODO: 26.07.2024
                                                     final BluetoothDevice bluetoothDeviceScan = bluetoothAdapterPhoneClient.getRemoteDevice(getAddress.trim());
@@ -319,9 +318,6 @@ public class Businesslogic_ScaningClientWorker {
                                                             bluetoothGattCallbacks.get(atomicIntegerDisponse.get()),
                                                             connectionGattClient.get(atomicIntegerDisponse.get()))) ;
 
-                                                    // TODO: 02.08.2024 Увлеичиваем Значение Счетика
-                                                    atomicInteger.incrementAndGet();
-
                                                     // TODO: 08.08.2024  увеличиваем общще количесто операций
                                                     atomicIntegerDisponse.incrementAndGet();
 
@@ -330,7 +326,7 @@ public class Businesslogic_ScaningClientWorker {
                                                             Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                                                             " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
                                                             " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" + "\n"
-                                                            +  " atomicInteger.get() "+ atomicInteger.get()+" atomicIntegerDisponse.get() " +atomicIntegerDisponse.get());
+                                                            +  " getAddress "+ getAddress+" atomicIntegerDisponse.get() " +atomicIntegerDisponse.get());
 
 
 
@@ -367,8 +363,7 @@ public class Businesslogic_ScaningClientWorker {
                                                public void run() throws Throwable {
 
                                                    // TODO: 08.08.2024 выключаем элементы
-                                                   startingDisponseCallBackAndConnectionForGatt( bluetoothGattCallbacks,connectionGattClient,
-                                                           atomicInteger, atomicIntegerDisponse );
+                                                   startingDisponseCallBackAndConnectionForGatt( bluetoothGattCallbacks,connectionGattClient, atomicIntegerDisponse );
 
                                                    Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                                                            " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
@@ -376,7 +371,7 @@ public class Businesslogic_ScaningClientWorker {
                                                            +   new Date().toLocaleString());
                                                }
                                            })
-                                            .blockingSubscribe();
+                                            .subscribe();
 
 
                                     Log.d(this.getClass().getName(), "\n" + " class " +
@@ -417,8 +412,7 @@ public class Businesslogic_ScaningClientWorker {
                                         bussensloginLocalBroadcastManager .getLocalBroadcastManagerUI();
 
                                         // TODO: 08.08.2024 выключаем элементы
-                                        startingDisponseCallBackAndConnectionForGatt( bluetoothGattCallbacks,connectionGattClient,
-                                                atomicInteger, atomicIntegerDisponse );
+                                        startingDisponseCallBackAndConnectionForGatt( bluetoothGattCallbacks,connectionGattClient, atomicIntegerDisponse );
 
                                         // TODO: 08.08.2024 Остаавливаем службу
                                         Businesslogic_JOBServive businesslogicJobServive1=new Businesslogic_JOBServive(context);
@@ -428,7 +422,7 @@ public class Businesslogic_ScaningClientWorker {
                                                 Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                                                 " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
                                                 " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" + "\n"
-                                                +  " atomicInteger.get() "+ atomicInteger.get());
+                                                +  " atomicIntegerDisponse.get() "+ atomicIntegerDisponse.get());
                                         return false;
                                     } else {
                                         return true;
@@ -451,13 +445,12 @@ public class Businesslogic_ScaningClientWorker {
                                 public void run() throws Throwable {
 
                                     // TODO: 08.08.2024 выключаем элементы
-                                    startingDisponseCallBackAndConnectionForGatt( bluetoothGattCallbacks,connectionGattClient,
-                                            atomicInteger, atomicIntegerDisponse );
+                                    startingDisponseCallBackAndConnectionForGatt( bluetoothGattCallbacks,connectionGattClient, atomicIntegerDisponse );
 
                                     Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                                             " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
                                             " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"   +"    Flowable.fromAction(new Action() { "
-                                            +   new Date().toLocaleString());
+                                            +   new Date().toLocaleString() + atomicIntegerDisponse.get()+" atomicIntegerDisponse ");
                                 }
                             })
                             .subscribe();
@@ -659,10 +652,9 @@ public class Businesslogic_ScaningClientWorker {
 
     void startingDisponseCallBackAndConnectionForGatt(@NonNull CopyOnWriteArrayList<BluetoothGattCallback>  bluetoothGattCallbacks,
                                                       @NonNull  CopyOnWriteArrayList<Message>  connectionGattClient ,
-                                                      @NonNull AtomicInteger atomicInteger, @NonNull  AtomicInteger atomicIntegerDisponse ) {
+                                                      @NonNull  AtomicInteger atomicIntegerDisponse ) {
 try{
         // TODO: 08.08.2024
-        atomicInteger.set(0);
         atomicIntegerDisponse.set(0);
         // TODO: 02.08.2024
         bluetoothGattCallbacks.clear();
