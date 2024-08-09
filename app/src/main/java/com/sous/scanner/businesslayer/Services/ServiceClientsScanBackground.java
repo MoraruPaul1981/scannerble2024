@@ -187,6 +187,7 @@ public class ServiceClientsScanBackground extends IntentService {
     public void onDestroy() {
         super.onDestroy();
         try{
+            blForServiceScan=null;
         Log.d(getApplicationContext().getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                 " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
                 " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" );
