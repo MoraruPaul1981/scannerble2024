@@ -284,7 +284,7 @@ public class Businesslogic_ScaningClientWorker {
 
 
 
-                    Observable.range(      1,60)
+                    Observable.range(      1,70)
                             .zipWith( Observable.just("")
                                     .repeatWhen(repeat->repeat.delay(DurectionTimeGatt,TimeUnit.SECONDS)), (item, interval) -> item)
                             .doOnNext(new Consumer<Object>() {
@@ -363,7 +363,7 @@ public class Businesslogic_ScaningClientWorker {
                                                public void run() throws Throwable {
 
                                                    // TODO: 08.08.2024 выключаем элементы
-                                                   startingDisponseCallBackAndConnectionForGatt( bluetoothGattCallbacks,connectionGattClient, atomicIntegerDisponse );
+                                                   startingDisponseCallBackAndConnectionForGatt( bluetoothGattCallbacks,connectionGattClient, atomicIntegerDisponse  ,  getConnectionBluetoothGatt);
 
                                                    Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                                                            " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
@@ -398,7 +398,7 @@ public class Businesslogic_ScaningClientWorker {
                                             " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
                                             " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" + "\n"+
                                             " numberoftheСurrentscanningattempt " +numberoftheСurrentscanningattempt);
-                                    if (numberoftheСurrentscanningattempt>=30) {
+                                    if (numberoftheСurrentscanningattempt>=35) {
                                         // TODO: 09.08.2024
                                         // TODO: 08.08.2024  передаем обраьтно в службу сообщени о прекращении работы
                                         BussensloginLocalBroadcastManager bussensloginLocalBroadcastManager=
@@ -412,7 +412,7 @@ public class Businesslogic_ScaningClientWorker {
                                         bussensloginLocalBroadcastManager .getLocalBroadcastManagerUI();
 
                                         // TODO: 08.08.2024 выключаем элементы
-                                        startingDisponseCallBackAndConnectionForGatt( bluetoothGattCallbacks,connectionGattClient, atomicIntegerDisponse );
+                                        startingDisponseCallBackAndConnectionForGatt( bluetoothGattCallbacks,connectionGattClient, atomicIntegerDisponse,getConnectionBluetoothGatt );
 
                                         // TODO: 08.08.2024 Остаавливаем службу
                                         Businesslogic_JOBServive businesslogicJobServive1=new Businesslogic_JOBServive(context);
@@ -452,12 +452,12 @@ public class Businesslogic_ScaningClientWorker {
                                 public void run() throws Throwable {
 
                                     // TODO: 08.08.2024 выключаем элементы
-                                    startingDisponseCallBackAndConnectionForGatt( bluetoothGattCallbacks,connectionGattClient, atomicIntegerDisponse );
+                                    startingDisponseCallBackAndConnectionForGatt( bluetoothGattCallbacks,connectionGattClient, atomicIntegerDisponse  ,  getConnectionBluetoothGatt);
 
                                     Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                                             " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
                                             " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"   +"    Flowable.fromAction(new Action() { "
-                                            +   new Date().toLocaleString() + atomicIntegerDisponse.get()+" atomicIntegerDisponse ");
+                                            +   new Date().toLocaleString());
                                 }
                             })
                             .subscribe();
@@ -659,15 +659,20 @@ public class Businesslogic_ScaningClientWorker {
 
     void startingDisponseCallBackAndConnectionForGatt(@NonNull CopyOnWriteArrayList<BluetoothGattCallback>  bluetoothGattCallbacks,
                                                       @NonNull  CopyOnWriteArrayList<Message>  connectionGattClient ,
-                                                      @NonNull  AtomicInteger atomicIntegerDisponse ) {
+                                                      @NonNull  AtomicInteger atomicIntegerDisponse ,
+                                                      @NonNull     CopyOnWriteArrayList<BluetoothGatt>  getConnectionBluetoothGatt) {
 try{
+    if (atomicIntegerDisponse!=null) {
         // TODO: 08.08.2024
         atomicIntegerDisponse.set(0);
         // TODO: 02.08.2024
         bluetoothGattCallbacks.clear();
         // TODO: 06.08.2024
         connectionGattClient.clear();
-        // TODO: 07.04.2024
+        // TODO: 09.08.2024
+        getConnectionBluetoothGatt.clear();
+    }
+    // TODO: 07.04.2024
         Log.d(this.getClass().getName(), "\n" + " class " +
                 Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                 " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
