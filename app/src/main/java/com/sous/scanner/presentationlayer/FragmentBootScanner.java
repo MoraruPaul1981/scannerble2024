@@ -85,9 +85,7 @@ public class FragmentBootScanner extends Fragment {
             // TODO: 31.07.2024
             Businesslogic_JOBServive businesslogicJobServive=new Businesslogic_JOBServive(getContext());
 
-            // TODO: 16.07.2024  startting Fragment Scannig
 
-            businesslogicJobServive.   startingServiceSimpleScan("fistlauntfrombackground");
 
             Log.d(getContext().getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                     " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
@@ -146,6 +144,13 @@ public class FragmentBootScanner extends Fragment {
             EventBus.getDefault().register(this);
         }
 
+            // TODO: 16.07.2024  startting Fragment Scannig
+
+            handlerScannerGattClient.getTarget().postDelayed(()-> {
+
+                businesslogicJobServive.startingServiceSimpleScan("fistlauntfrombackground");
+            },1500);
+
         Log.d(getContext().getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                 " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
                 " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n");
@@ -193,7 +198,6 @@ public class FragmentBootScanner extends Fragment {
     public void onMessageEvent(EventB_Clent event) {
         // Do something
         try {
-            handlerScannerGattClient.getTarget().postDelayed(()->{
                 FragmentScannerUser fragmentScannerUser=event.fragmentScannerUser;
                 FragmentTransaction   fragmentTransaction = fragmentManager.beginTransaction();
                 fragmentTransaction.addToBackStack(null);
@@ -205,9 +209,6 @@ public class FragmentBootScanner extends Fragment {
                 Log.d(getContext().getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                         " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
                         " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" );
-
-            },1500);
-
         } catch (Exception e) {
             e.printStackTrace();
             Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() + " Линия  :"
