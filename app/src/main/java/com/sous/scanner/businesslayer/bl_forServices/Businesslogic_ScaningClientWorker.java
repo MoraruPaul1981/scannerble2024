@@ -670,6 +670,16 @@ try{
         // TODO: 06.08.2024
         connectionGattClient.clear();
         // TODO: 09.08.2024
+
+/*        getConnectionBluetoothGatt.forEach(new java.util.function.Consumer<BluetoothGatt>() {
+            @SuppressLint("MissingPermission")
+            @Override
+            public void accept(BluetoothGatt bluetoothGatt) {
+                bluetoothGatt.disconnect();
+                bluetoothGatt.close();
+            }
+        });*/
+
         getConnectionBluetoothGatt.clear();
     }
     // TODO: 07.04.2024
