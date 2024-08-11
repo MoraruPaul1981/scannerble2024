@@ -200,7 +200,7 @@ public class ContentProviderServer extends android.content.ContentProvider {
 
 
     @NonNull
-    private String МетодОпределяемТаблицу(Uri uri) {
+    private String МетодОпределяемТаблицу(@NonNull Uri uri) {
         String table = new String();
         try{
             Log.d(this.getClass().getName(), " uri"+ uri);

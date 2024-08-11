@@ -56,8 +56,7 @@ public class Bl_BloadcastGatt_getDeviceClentGatt {
                         // TODO: 29.07.2024
 
                         // TODO: 22.07.2024  Код Брадкаста ресивера
-                        // TODO: 29.07.2024
-                        bluetoothDevice.fetchUuidsWithSdp();
+
 
 
                         Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +

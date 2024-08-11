@@ -45,18 +45,15 @@ public class BroadcastReceiverGattServerName_Changed extends BroadcastReceiver {
                 case   BluetoothDevice.ACTION_NAME_CHANGED :
                 case   BluetoothDevice.ACTION_CLASS_CHANGED :
                     // TODO: 31.07.2024
-
                     final Bl_BloadcastGatt_getDeviceClentGatt blBloadcastGattGetDeviceClentGatt=  new Bl_BloadcastGatt_getDeviceClentGatt(context,version);
                     blBloadcastGattGetDeviceClentGatt.startingGetDeviceBLECkient(  intent ,   pendingResultAtomicReferenceServer,bluetoothDevice);
-                    // TODO: 30.07.2024
-                    ParcelUuid[] uuidlist=         bluetoothDevice.getUuids();
+
 
                     // TODO: 31.07.2024
                     Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                             " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
                             " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" +
-                            "intent.getAction() "+intent.getAction() + " intent.getAction() " +intent.getAction()+
-                            "  uuidlist " +  uuidlist);
+                            "intent.getAction() "+intent.getAction() + " intent.getAction() " +intent.getAction());
                     break;
                 // TODO: 07.08.2024
 

@@ -42,6 +42,10 @@ public class BroadcastReceiverGattServerAlcConn extends BroadcastReceiver {
             switch (intent.getAction()){
                 // TODO: 31.07.2024
                 case   BluetoothDevice.ACTION_ACL_CONNECTED :
+                    // TODO: 11.08.2024
+                    // TODO: 31.07.2024
+                    bluetoothDevice.fetchUuidsWithSdp();
+
                     // TODO: 07.08.2024
                     final Bl_BloadcastGatt_getDeviceClentGatt blBloadcastGattGetDeviceClentGatt=  new Bl_BloadcastGatt_getDeviceClentGatt(context,version);
 
