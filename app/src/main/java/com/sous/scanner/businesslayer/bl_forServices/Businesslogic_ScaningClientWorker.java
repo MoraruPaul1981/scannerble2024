@@ -52,6 +52,7 @@ import io.reactivex.rxjava3.disposables.Disposable;
 import io.reactivex.rxjava3.functions.Action;
 import io.reactivex.rxjava3.functions.Consumer;
 import io.reactivex.rxjava3.functions.Predicate;
+import io.reactivex.rxjava3.schedulers.Schedulers;
 
 public class Businesslogic_ScaningClientWorker {
 
@@ -280,7 +281,7 @@ public class Businesslogic_ScaningClientWorker {
 
 
 
-                    Observable.range(      1,70)
+                    Observable.range(      1,30)
                             .zipWith( Observable.just("")
                                     .repeatWhen(repeat->repeat.delay(DurectionTimeGatt,TimeUnit.SECONDS)), (item, interval) -> item)
                             .doOnNext(new Consumer<Object>() {
@@ -291,6 +292,7 @@ public class Businesslogic_ScaningClientWorker {
                                    Observable.fromIterable(      getListMAC)
                                             .zipWith( Observable.just("")
                                                     .repeatWhen(repeat->repeat.delay(2,TimeUnit.SECONDS)), (item, interval) -> item)
+
                                             .doOnNext(new Consumer<String>() {
                                                 @Override
                                                 public void accept(String getAddress) throws Throwable {
@@ -394,7 +396,7 @@ public class Businesslogic_ScaningClientWorker {
                                             " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
                                             " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" + "\n"+
                                             " numberoftheСurrentscanningattempt " +numberoftheСurrentscanningattempt);
-                                    if (numberoftheСurrentscanningattempt>=35
+                                    if (numberoftheСurrentscanningattempt>=15
                                             || disposablerange.isDisposed() ||
                                             disposablegetListMAC.isDisposed()) {
                                         // TODO: 09.08.2024
