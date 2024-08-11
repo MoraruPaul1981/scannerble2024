@@ -96,7 +96,7 @@ public class GattLocationListener implements LocationListener {
             try {
                 addresses = gcd.getFromLocation(getlocation.getLatitude(), getlocation.getLongitude(), 1);
             } catch (IOException e) {
-                throw new RuntimeException(e);
+                ///throw new RuntimeException(e);
             }
 
             Log.i(TAG, "MyLocationListener GPS addresses "+addresses);

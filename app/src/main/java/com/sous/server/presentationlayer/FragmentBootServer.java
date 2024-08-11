@@ -17,7 +17,6 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.loader.content.AsyncTaskLoader;
@@ -40,7 +39,7 @@ import java.util.concurrent.ConcurrentHashMap;
 public class FragmentBootServer extends Fragment {
     private Long version;
     private FragmentManager fragmentManager;
-    private Message messageGattServer  ;
+    private Message message;
     private AsyncTaskLoader asyncTaskLoaderGatt;
     private Bi_FragmentBootScannerServer biFragmentBootScannerServer;
 
@@ -56,7 +55,7 @@ public class FragmentBootServer extends Fragment {
         /////todo Пришли переменные
         fragmentManager = (FragmentManager) ((ActivityServerScanner) getActivity()).fragmentManager;
         version = (Long) ((ActivityServerScanner) getActivity()).version;
-        messageGattServer = (Message) ((ActivityServerScanner) getActivity()).messageGattServer;
+        message = (Message) ((ActivityServerScanner) getActivity()).messageGattServer;
         asyncTaskLoaderGatt = (AsyncTaskLoader) ((ActivityServerScanner) getActivity()).asyncTaskLoaderGatt;
 
         Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
@@ -183,17 +182,16 @@ public class FragmentBootServer extends Fragment {
     private void startingServicesOnlyScan() {
         try{
 
-
-        messageGattServer.getTarget().post(()->{
             // TODO: 19.07.2024 Запуск Службы
 
-         new BucceslogincStartServiceGattServer(getContext(),version).startingServiceGattServer();
+
+         new BucceslogincStartServiceGattServer(getContext(),version).startingServiceGattServer(message);
 
             Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                     " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
                     " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" );
 
-        });
+
 
         Log.d(getContext().getClass().getName(), "\n"
                 + " время: " + new Date() + "\n+" +
@@ -333,7 +331,6 @@ public class FragmentBootServer extends Fragment {
 ////TODO: В зависимтсто какой результат прищели из службы то сообщаем пользоватю об этом , лии сразу переходим на новой  фрагмент RecyreView
             forwardOtServiceGattEventBus(getFladEnableApadaterBTEOtService);
 
-            messageGattServer.getTarget().postDelayed(()->{
                 // TODO: 17.07.2024  переходим после успещглй коннекта Обмена между Клиентмо и Сервером BLE  данными
                 //TODO: Запускаем Фрагмент Server Fragment
                 biFragmentBootScannerServer.МетодЗапускаФрагментаServer(  new FragmentScanRecyclerView())   ; /// Scan
@@ -346,8 +343,6 @@ public class FragmentBootServer extends Fragment {
                         " Класс в процессе... " + this.getClass().getName() + "\n" +
                         " метод в процессе... " + Thread.currentThread().getStackTrace()[2].getMethodName()+
                         " CurrentTask " + CurrentTask);
-            },1500);
-
             Log.d(getContext().getClass().getName(), "\n"
                     + " время: " + new Date() + "\n+" +
                     " Класс в процессе... " + this.getClass().getName() + "\n" +
@@ -356,19 +351,6 @@ public class FragmentBootServer extends Fragment {
 
         } else {
 
-            if (CurrentTask.contentEquals("bluetootAdapterDisabledScan")) {
-                /*   Snackbar.make(id_fragment_boot_scannerserver , "Сервер или Bluetooth не работает !!! ",Snackbar.ANIMATION_MODE_SLIDE)
-                    .setAction("Action",null).show();*/
-                Toast toast = Toast.makeText(getContext(),"Сервер или Bluetooth не работает !!! ", Toast.LENGTH_LONG);
-                toast.setGravity(Gravity.CENTER, toast.getXOffset() / 2, toast.getYOffset() / 2);
-                toast.show();
-
-                Log.d(getContext().getClass().getName(), "\n"
-                        + " время: " + new Date() + "\n+" +
-                        " Класс в процессе... " + this.getClass().getName() + "\n" +
-                        " метод в процессе... " + Thread.currentThread().getStackTrace()[2].getMethodName()+
-                        " CurrentTask " + CurrentTask);
-            }
 
         }
         Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +

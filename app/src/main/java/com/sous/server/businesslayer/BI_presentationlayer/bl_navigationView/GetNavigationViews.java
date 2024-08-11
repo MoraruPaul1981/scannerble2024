@@ -124,19 +124,14 @@ public class GetNavigationViews {
     private void startingScanServer() {
         try {
 
-
-            message.getTarget().post(()->{
                 // TODO: 19.07.2024 Запуск Службы
                 Toast.makeText(context, "Перезапуск контроля Bluetooth", Toast.LENGTH_LONG).show();
 
-                new BucceslogincStartServiceGattServer(context,version).startingServiceGattServer();
+                new BucceslogincStartServiceGattServer(context,version).startingServiceGattServer(message);
 
                 Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                         " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
                         " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" );
-
-            });
-
 
             Log.d(context.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                     " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +

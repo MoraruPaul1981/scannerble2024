@@ -59,15 +59,6 @@ public class BroadcastReceiverGattServerName_Changed extends BroadcastReceiver {
                             "  uuidlist " +  uuidlist);
                     break;
                 // TODO: 07.08.2024
-                case   BluetoothAdapter.ACTION_STATE_CHANGED:
-                    // TODO: 31.07.2024
-                    new BucceslogincStartServiceGattServer(context,version).startingServiceGattServer();
-                    // TODO: 31.07.2024
-                    Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
-                            " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                            " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" +
-                            "intent.getAction() "+intent.getAction() + " intent.getAction() " +intent.getAction());
-                    break;
 
 
             }

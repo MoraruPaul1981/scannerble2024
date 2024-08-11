@@ -1,5 +1,8 @@
 package com.sous.server.businesslayer.Services;
 
+import static android.app.job.JobInfo.PRIORITY_MAX;
+import static android.app.job.JobInfo.PRIORITY_MIN;
+
 import android.annotation.SuppressLint;
 import android.app.IntentService;
 import android.app.Notification;
@@ -38,6 +41,8 @@ import android.os.ParcelUuid;
 import android.os.VibrationEffect;
 import android.os.Vibrator;
 import android.util.Log;
+import android.view.Gravity;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -114,11 +119,11 @@ public class ServiceServerScan extends Service {
             String channelId = Build.VERSION.SDK_INT >= Build.VERSION_CODES.O ? getNotificationChannel(notificationManager) : "";
             notificationBuilderServer = new NotificationCompat.Builder(this, channelId);
             Notification notification = notificationBuilderServer.setOngoing(true)
-                    .setSmallIcon(R.mipmap.ic_launcher)
+                    .setSmallIcon(R.drawable.icon_bluetooth_start)
                     .setContentText("запуск:"+LocalDateTime.now().toString() )
-                    .setContentTitle(" Контроль Bluetooth")
-                    // .setPriority(PRIORITY_MIN)
-                    .setCategory(NotificationCompat.CATEGORY_SERVICE)
+                    .setContentTitle("Сервре Bluetooth")
+                   .setPriority(PRIORITY_MAX)
+                    .setCategory(NotificationCompat.CATEGORY_PROGRESS)
                     .build();
 
             startForeground(111, notification);//
@@ -275,15 +280,34 @@ public class ServiceServerScan extends Service {
     private void langingGPSforGATTServer(@NonNull SharedPreferences sharedPreferencesGatt) {
         try{
 
-            if (locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)){
+            if (locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)
+            && locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER)){
                 locationManager.requestLocationUpdates( LocationManager.GPS_PROVIDER,
                         2000,
                         10, new GattLocationListener(getApplicationContext(), sharedPreferencesGatt,  contentProviderServer));
+
                 Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                         " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                        " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" );
-            }
+                        " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" +
+                        "locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER  " +
+                        locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER +"\n"+
+                                " locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER "+
+                                locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER)));
+            }else {
 
+                Toast toast = Toast.makeText(getApplicationContext(), "Нет сети и локации !!! ", Toast.LENGTH_LONG);
+                toast.setGravity(Gravity.CENTER, toast.getXOffset() / 2, toast.getYOffset() / 2);
+                toast.show();
+
+                Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                        " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                        " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"  + "\n" +
+                        "locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER  " +
+                        locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER +"\n"+
+                                " locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER "+
+                                locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER)));
+
+            }
         } catch (Exception e) {
             e.printStackTrace();
             Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() + " Линия  :"
@@ -776,7 +800,9 @@ public class ServiceServerScan extends Service {
         try{
             ///TODO  служебный xiaomi "BC:61:93:E6:F2:EB", МОЙ XIAOMI FC:19:99:79:D6:D4  //////      "BC:61:93:E6:E2:63","FF:19:99:79:D6:D4"
             // TODO: 07.08.2024
-            getBluetoothGattServer.clearServices();
+            if (getBluetoothGattServer!=null) {
+                getBluetoothGattServer.clearServices();
+            }
             // TODO: 12.02.2023 Адреса серверов для Клиентна
             BluetoothGattService service = new BluetoothGattService(getPublicUUIDScan, BluetoothGattService.SERVICE_TYPE_PRIMARY);
             // TODO: 12.02.2023 первый сервер
