@@ -10,6 +10,7 @@ import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.content.pm.PackageInfo;
 import android.graphics.Color;
+import android.graphics.Shader;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
@@ -38,7 +39,9 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.card.MaterialCardView;
+import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.textview.MaterialTextView;
+import com.google.common.util.concurrent.AtomicDouble;
 import com.jakewharton.rxbinding4.view.RxView;
 import com.sous.scanner.businesslayer.Errors.SubClassErrors;
 import com.sous.scanner.R;
@@ -63,6 +66,8 @@ import java.util.concurrent.TimeUnit;
 
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
 import io.reactivex.rxjava3.disposables.Disposable;
+import io.reactivex.rxjava3.functions.Action;
+import io.reactivex.rxjava3.functions.Consumer;
 import kotlin.Unit;
 
 
@@ -863,6 +868,7 @@ public class FragmentScannerUser extends Fragment {
         ///todo первый метод #1
         private void eventButtonemployeeArrived(@NonNull MaterialButton materialButtonClick) {
             try {
+                final Disposable[] disposableClick = new Disposable[1];
                 Log.d(this.getClass().getName(),  "  " +Thread.currentThread().getStackTrace()[2].getMethodName()+ " время "
                         +new Date().toLocaleString() + " materialButtonClick " +materialButtonClick);
                 // TODO: 19.02.2023 Второе Действие
@@ -870,6 +876,26 @@ public class FragmentScannerUser extends Fragment {
                 RxView.clicks(materialButtonClick)
                         .throttleFirst(5, TimeUnit.SECONDS)
                         .observeOn(AndroidSchedulers.mainThread())
+                        .doOnSubscribe(new Consumer<Disposable>() {
+                            @Override
+                            public void accept(Disposable disposable) throws Throwable {
+                                // TODO: 09.08.2024
+                                disposableClick[0] =disposable;
+                                Log.d(this.getClass().getName(),  "  RxView.clicks " +Thread.currentThread().getStackTrace()[2].getMethodName()
+                                        + " время " +new Date().toLocaleString()  + " disposableClick[0] " +disposableClick[0] );
+                            }
+                        }).doOnDispose(new Action() {
+
+                            @Override
+                            public void run() throws Throwable {
+                                // TODO: 09.08.2024
+                                // TODO: 09.08.2024 у вс не вслючен Bluetooth
+                             Toast.makeText(getActivity(),"Не включен Bluetooth !!! ", Toast.LENGTH_LONG).show();
+
+                                Log.d(this.getClass().getName(),  "  RxView.clicks " +Thread.currentThread().getStackTrace()[2].getMethodName()
+                                        + " время " +new Date().toLocaleString()  + " disposableClick[0] " +disposableClick[0] ); 
+                            }
+                        })
                         .subscribe(new io.reactivex.rxjava3.core.Observer<Unit>() {
                             @Override
                             public void onSubscribe(@io.reactivex.rxjava3.annotations.NonNull Disposable d) {
@@ -888,12 +914,30 @@ public class FragmentScannerUser extends Fragment {
                                 // TODO: 09.08.2024
                                 BusinessoginEnableBluetoothAdapter bluetoothAdapter=       new BusinessoginEnableBluetoothAdapter(getContext(),version);
 
-                            BluetoothAdapter bluetoothAdapterPhoneClient   = bluetoothAdapter.initBluetootAdapter();
+                                BluetoothAdapter bluetoothAdapterPhoneClient   = bluetoothAdapter.initBluetootAdapter();
 
 
+                                // TODO: 02.08.2024
+                                Log.d(this.getClass().getName(), "\n" + " class " +
+                                        Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                                        " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                                        " line " + Thread.currentThread().getStackTrace()[2].getLineNumber()
+                                        + "\n" + "\n" + " bluetoothAdapterPhoneClient "+bluetoothAdapterPhoneClient.isEnabled() );
+                                
+                                if ((bluetoothAdapterPhoneClient == null || bluetoothAdapterPhoneClient.isEnabled()) == false) {
+                                    // TODO: 09.08.2024  
 
-                                if (bluetoothAdapterPhoneClient!=null &&bluetoothAdapterPhoneClient.isEnabled()) {
-
+                                      onComplete();
+                                    // TODO: 02.08.2024
+                                    Log.d(this.getClass().getName(), "\n" + " class " +
+                                            Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                                            " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                                            " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" + "\n" +
+                                             " bluetoothAdapterPhoneClient.isEnabled() " +bluetoothAdapterPhoneClient.isEnabled()+
+                                            "  disposableClick[0] " + disposableClick[0]);
+                                    
+                                }else{
+                                    
                                     // TODO: 09.08.2024 Блютус Включен
                                     addCurrentButonClick(materialButtonClick,toProccess,"#BDC6C8");
 
@@ -907,25 +951,10 @@ public class FragmentScannerUser extends Fragment {
                                             " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
                                             " line " + Thread.currentThread().getStackTrace()[2].getLineNumber()
                                             + "\n" + "\n" + " bluetoothAdapterPhoneClient "+bluetoothAdapterPhoneClient.isEnabled() );
-
-
-                                }else{
-
-                                    // TODO: 09.08.2024 у вс не вслючен Bluetooth
-                                   messageClient.getTarget().post(()->Toast.makeText(getContext(),"Не включен Bluetooth !!! ", Toast.LENGTH_LONG));
-                                    // TODO: 02.08.2024
-                                    Log.d(this.getClass().getName(), "\n" + " class " +
-                                            Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
-                                            " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                                            " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" + "\n");
-
-
                                 }
 
-
-
-
-
+                                  
+                                
                                 // TODO: 02.08.2024
                                 Log.d(this.getClass().getName(), "\n" + " class " +
                                         Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
@@ -952,6 +981,17 @@ public class FragmentScannerUser extends Fragment {
 
                             @Override
                             public void onComplete() {
+                                // TODO: 09.08.2024 у вс не вслючен Bluetooth
+                                Toast.makeText(getActivity(),"Не включен Bluetooth !!! ", Toast.LENGTH_LONG).show();
+
+                                Snackbar snackbar = Snackbar
+                                        .make(materialButtonClick, "Не включен Bluetooth !!! ", Snackbar.LENGTH_LONG);
+                                snackbar.show();
+
+
+                                Log.d(this.getClass().getName(),  "  RxView.clicks " +Thread.currentThread().getStackTrace()[2].getMethodName()
+                                        + " время " +new Date().toLocaleString()  + " disposableClick[0] " +disposableClick[0] );
+
                                 Log.d(this.getClass().getName(),  "  RxView.clicks " +Thread.currentThread().getStackTrace()[2].getMethodName()
                                         + " время " +new Date().toLocaleString() );
                             }
@@ -1198,16 +1238,7 @@ public class FragmentScannerUser extends Fragment {
 // TODO: 07.08.2024 бирация при успешном пинг с сервром
           new BusinessloginVibrator(getContext()).alarmVibrator();
 
-// TODO: 08.08.2024  передаем обраьтно в службу сообщени о прекращении работы  
-            BussensloginLocalBroadcastManager bussensloginLocalBroadcastManager=
-                    new BussensloginLocalBroadcastManager(getContext(),version);
-            // TODO: 08.08.2024 остановка скана
-            bussensloginLocalBroadcastManager .getLocalBroadcastManagerDisposable();
 
-
-            // TODO: 07.08.2024 оставналивем службу После Успешной
-            Businesslogic_JOBServive businesslogicJobServive1=new Businesslogic_JOBServive(getContext());
-            businesslogicJobServive1.stopServiceSimpleScan();
 
 
             // TODO: 31.07.2024

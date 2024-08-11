@@ -9,7 +9,6 @@ import android.bluetooth.BluetoothGattCallback;
 import android.bluetooth.BluetoothGattCharacteristic;
 import android.bluetooth.BluetoothGattDescriptor;
 import android.bluetooth.BluetoothGattService;
-import android.bluetooth.BluetoothHeadset;
 import android.bluetooth.BluetoothManager;
 import android.bluetooth.BluetoothProfile;
 import android.content.BroadcastReceiver;
@@ -17,7 +16,6 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
-import android.location.LocationManager;
 import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
@@ -27,12 +25,10 @@ import android.util.Log;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.core.app.NotificationCompat;
-import androidx.lifecycle.MutableLiveData;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
-import com.google.common.util.concurrent.AtomicDouble;
 import com.sous.scanner.businesslayer.Errors.SubClassErrors;
+import com.sous.scanner.businesslayer.Services.ServiceClientsScanBackground;
 import com.sous.scanner.businesslayer.bl_BroadcastReciver.Businesslogic_GattReflection;
 import com.sous.scanner.businesslayer.bl_EvenBus.EventB_Clent;
 import com.sous.scanner.businesslayer.bl_LocalBroadcastManagers.BussensloginLocalBroadcastManager;
@@ -41,9 +37,7 @@ import com.sous.scanner.presentationlayer.FragmentScannerUser;
 
 import org.greenrobot.eventbus.EventBus;
 
-import java.time.LocalDateTime;
 import java.util.Date;
-import java.util.List;
 import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentSkipListSet;
@@ -82,14 +76,18 @@ public class Businesslogic_ScaningClientWorker {
     private  Disposable disposablegetListMAC;
 
     private Disposable      disposablerange ;
+    private  ServiceClientsScanBackground serviceClientsScanBackground;
     public Businesslogic_ScaningClientWorker(@NonNull BluetoothManager bluetoothManagerServer,
                                              @NonNull BluetoothAdapter bluetoothAdapterPhoneClient,
                                              @NonNull Long version,
-                                             @NonNull Context context) {
+                                             @NonNull Context context,
+                                             @NonNull ServiceClientsScanBackground serviceClientsScanBackground) {
         this.bluetoothManagerServer = bluetoothManagerServer;
         this.bluetoothAdapterPhoneClient = bluetoothAdapterPhoneClient;
         this.version = version;
         this.context = context;
+        this.serviceClientsScanBackground = serviceClientsScanBackground;
+
         // TODO: 06.08.2024
           message=getMessage();
     }
@@ -108,7 +106,7 @@ public class Businesslogic_ScaningClientWorker {
 
 
     @SuppressLint({"MissingPermission"})
-    public void robotlaunchingfromScanbackground(@NonNull Integer DurectionTimeGatt  ) {
+    public void launchingSimplebackground(@NonNull Integer DurectionTimeGatt  ) {
         try {
             ConcurrentHashMap<String, String> concurrentHashMap = new ConcurrentHashMap<String, String>();
             concurrentHashMap.put("GATTCLIENTProccessing", "1");
@@ -257,7 +255,7 @@ public class Businesslogic_ScaningClientWorker {
     // TODO: 08.08.2024
 
     @SuppressLint({"MissingPermission"})
-    public void userUIlaunchingfromScanbackground(@NonNull Integer DurectionTimeGatt  ) {
+    public void launchingСomplexbackground(@NonNull Integer DurectionTimeGatt  ) {
         try {
             ConcurrentHashMap<String, String> concurrentHashMap = new ConcurrentHashMap<String, String>();
             concurrentHashMap.put("GATTCLIENTProccessing", "1");
@@ -292,7 +290,7 @@ public class Businesslogic_ScaningClientWorker {
 
                                    Observable.fromIterable(      getListMAC)
                                             .zipWith( Observable.just("")
-                                                    .repeatWhen(repeat->repeat.delay(250,TimeUnit.MILLISECONDS)), (item, interval) -> item)
+                                                    .repeatWhen(repeat->repeat.delay(2,TimeUnit.SECONDS)), (item, interval) -> item)
                                             .doOnNext(new Consumer<String>() {
                                                 @Override
                                                 public void accept(String getAddress) throws Throwable {
@@ -396,8 +394,13 @@ public class Businesslogic_ScaningClientWorker {
                                             " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
                                             " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" + "\n"+
                                             " numberoftheСurrentscanningattempt " +numberoftheСurrentscanningattempt);
-                                    if (numberoftheСurrentscanningattempt>=35 || disposablerange.isDisposed() || disposablegetListMAC.isDisposed()) {
+                                    if (numberoftheСurrentscanningattempt>=35
+                                            || disposablerange.isDisposed() ||
+                                            disposablegetListMAC.isDisposed()) {
                                         // TODO: 09.08.2024
+
+
+
                                         // TODO: 08.08.2024  передаем обраьтно в службу сообщени о прекращении работы
                                         BussensloginLocalBroadcastManager bussensloginLocalBroadcastManager=
                                                 new BussensloginLocalBroadcastManager(context,version);
@@ -410,11 +413,11 @@ public class Businesslogic_ScaningClientWorker {
                                         bussensloginLocalBroadcastManager .getLocalBroadcastManagerUI();
 
                                         // TODO: 08.08.2024 выключаем элементы
-                                        startingDisponseCallBackAndConnectionForGatt( bluetoothGattCallbacks,connectionGattClient, atomicIntegerDisponse,getConnectionBluetoothGatt );
+                                        startingDisponseCallBackAndConnectionForGatt( bluetoothGattCallbacks,connectionGattClient,
+                                                atomicIntegerDisponse,getConnectionBluetoothGatt );
 
                                         // TODO: 08.08.2024 Остаавливаем службу
-                                        Businesslogic_JOBServive businesslogicJobServive1=new Businesslogic_JOBServive(context);
-                                        businesslogicJobServive1.stopServiceSimpleScan();
+
                                         // TODO: 02.08.2024
                                         Log.d(this.getClass().getName(), "\n" + " class " +
                                                 Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
@@ -1254,11 +1257,19 @@ try{
                      if (message.equalsIgnoreCase("DisposableNow")) {
                          // TODO: 08.08.2024
                          if (disposablegetListMAC!=null) {
-                             disposablegetListMAC.dispose();
+                             if(!disposablegetListMAC.isDisposed()){
+                                 disposablegetListMAC.dispose();
+
+                                 if ( disposablerange!=null) {
+                                     if (!disposablerange.isDisposed()) {
+                                         disposablerange.dispose();
+                                         // TODO: 11.08.2024
+                                         serviceClientsScanBackground.stopSelf();
+                                     }
+                                 }
+                             }
                          }
-                         if ( disposablerange!=null) {
-                             disposablerange.dispose();
-                         }
+
 
                          Log.d(context.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                                  " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +

@@ -8,9 +8,11 @@ import android.content.Context;
 import android.content.Intent;
 import android.util.Log;
 
+import com.google.common.util.concurrent.AtomicDouble;
 import com.sous.scanner.businesslayer.Errors.SubClassErrors;
 import com.sous.scanner.businesslayer.bl_EvenBus.EventB_Clent;
 import com.sous.scanner.businesslayer.bl_EvenBus.EventLocalBroadcastManager;
+import com.sous.scanner.businesslayer.bl_LocalBroadcastManagers.BussensloginLocalBroadcastManager;
 import com.sous.scanner.presentationlayer.FragmentScannerUser;
 
 import org.greenrobot.eventbus.EventBus;
@@ -64,6 +66,17 @@ public class Businesslogic_GattClinetSuccessLocalBroadcastManager {
                         EventLocalBroadcastManager eventLocalBroadcastManager= new EventLocalBroadcastManager( getAction,getAddress,getName,getBremy);
                         //TODO: ответ на экран работает ообрубование или нет
                         EventBus.getDefault().post(eventLocalBroadcastManager);
+
+
+                        // TODO: 11.08.2024
+
+
+// TODO: 08.08.2024  передаем обраьтно в службу сообщени о прекращении работы
+                        BussensloginLocalBroadcastManager bussensloginLocalBroadcastManager=
+                                new BussensloginLocalBroadcastManager(context,version);
+                        // TODO: 08.08.2024 остановка скана
+                        bussensloginLocalBroadcastManager .getLocalBroadcastManagerDisposable();
+
 
 
 

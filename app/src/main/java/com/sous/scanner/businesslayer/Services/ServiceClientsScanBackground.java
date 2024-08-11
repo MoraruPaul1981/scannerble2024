@@ -7,18 +7,14 @@ import android.app.IntentService;
 import android.app.Notification;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
-import android.app.Service;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothManager;
 import android.content.ContentValues;
-import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageInfo;
-import android.location.LocationManager;
 import android.os.Build;
 import android.os.IBinder;
 import android.util.Log;
-import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
@@ -29,10 +25,7 @@ import com.sous.scanner.businesslayer.Errors.SubClassErrors;
 import com.sous.scanner.businesslayer.bl_forServices.Businesslogic_ScaningClientWorker;
 import com.sous.scanner.businesslayer.bl_forServices.BusinessoginEnableBluetoothAdapter;
 
-import java.time.LocalDateTime;
 import java.util.Date;
-
-import io.reactivex.rxjava3.disposables.Disposable;
 
 public class ServiceClientsScanBackground extends IntentService {
 
@@ -84,7 +77,7 @@ public class ServiceClientsScanBackground extends IntentService {
              blForServiceScan=       new Businesslogic_ScaningClientWorker(bluetoothManagerServer,
                     bluetoothAdapterPhoneClient,
                     version,
-                    getApplicationContext());
+                    getApplicationContext(),this);
 
 
             blForServiceScan.    getLocalBroadcastManager ();
@@ -123,7 +116,7 @@ public class ServiceClientsScanBackground extends IntentService {
                     // TODO: 06.08.2024
                     case "robotlaunchingfrombackground":
                         // TODO: 25.07.2024 Бесконечная работа
-                        blForServiceScan.robotlaunchingfromScanbackground(2 );
+                        blForServiceScan.launchingSimplebackground(2 );
 
                         Log.d(getApplicationContext().getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                                 " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
@@ -132,7 +125,7 @@ public class ServiceClientsScanBackground extends IntentService {
 
                     case "userUIlaunchingfrombackground":
                         // TODO: 25.07.2024 Бесконечная работа
-                        blForServiceScan.userUIlaunchingfromScanbackground(3 );
+                        blForServiceScan.launchingСomplexbackground(10 );
 
                         Log.d(getApplicationContext().getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                                 " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
