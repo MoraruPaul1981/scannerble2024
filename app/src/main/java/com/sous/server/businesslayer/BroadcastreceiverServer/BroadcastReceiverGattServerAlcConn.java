@@ -43,8 +43,6 @@ public class BroadcastReceiverGattServerAlcConn extends BroadcastReceiver {
                 // TODO: 31.07.2024
                 case   BluetoothDevice.ACTION_ACL_CONNECTED :
                     // TODO: 11.08.2024
-                    // TODO: 31.07.2024
-                    bluetoothDevice.fetchUuidsWithSdp();
 
                     // TODO: 07.08.2024
                     final Bl_BloadcastGatt_getDeviceClentGatt blBloadcastGattGetDeviceClentGatt=  new Bl_BloadcastGatt_getDeviceClentGatt(context,version);
@@ -52,14 +50,11 @@ public class BroadcastReceiverGattServerAlcConn extends BroadcastReceiver {
                     blBloadcastGattGetDeviceClentGatt.startingGetDeviceBLECkient(  intent ,   pendingResultAtomicReferenceServer,bluetoothDevice);
                     // TODO: 30.07.2024
 
-                    ParcelUuid[] uuidlist=         bluetoothDevice.getUuids();
-
                     // TODO: 31.07.2024
                     Log.i(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                             " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
                             " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" +
-                            "intent.getAction() "+intent.getAction() + " intent.getAction() " +intent.getAction()+
-                            "  uuidlist " +  uuidlist);
+                            "intent.getAction() "+intent.getAction() + " intent.getAction() " +intent.getAction());
                     break;
 
             }
