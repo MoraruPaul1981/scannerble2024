@@ -39,6 +39,7 @@ import com.sous.scanner.presentationlayer.FragmentScannerUser;
 import org.greenrobot.eventbus.EventBus;
 
 import java.util.Date;
+import java.util.Random;
 import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentSkipListSet;
@@ -52,6 +53,7 @@ import io.reactivex.rxjava3.core.Observable;
 import io.reactivex.rxjava3.disposables.Disposable;
 import io.reactivex.rxjava3.functions.Action;
 import io.reactivex.rxjava3.functions.Consumer;
+import io.reactivex.rxjava3.functions.Function;
 import io.reactivex.rxjava3.functions.Predicate;
 import io.reactivex.rxjava3.schedulers.Schedulers;
 
@@ -274,77 +276,68 @@ public class Businesslogic_ScaningClientWorker {
                     Observable.range(      1,10)
                             .zipWith( Observable.just("")
                                     .repeatWhen(repeat->repeat.delay(DurectionTimeGatt,TimeUnit.SECONDS)), (item, interval) -> item)
-                            .doOnNext(new Consumer<Object>() {
-                                @Override
-                                public void accept(Object o) throws Throwable {
-                                    // TODO: 22.11.2022  первая часть
+                            .doOnNext(next->{
+                                // TODO: 22.11.2022  первая часть
+                                int DurectionTimeGattInner=       getRandomNumberUsingMilisecond(250,800);
+                                Observable.fromIterable(      getListMAC)
+                                        .zipWith( Observable.just("")
+                                                .repeatWhen(repeat->repeat.delay(DurectionTimeGattInner,TimeUnit.MILLISECONDS)), (item, interval) -> item)
+                                        .flatMap(val -> Observable.just(val)
+                                                .subscribeOn(Schedulers.computation()))
+                                        .doOnNext(new Consumer<String>() {
+                                            @Override
+                                            public void accept(String getAddress) throws Throwable {
+                                                // TODO: 22.11.2022  первая часть
 
-                                   Observable.fromIterable(      getListMAC)
-                                            .zipWith( Observable.just("")
-                                                    .repeatWhen(repeat->repeat.delay(500,TimeUnit.MILLISECONDS)), (item, interval) -> item)
-                                           .flatMap(val -> Observable.just(val)
-                                                   .subscribeOn(Schedulers.computation()))
-                                            .doOnNext(new Consumer<String>() {
-                                                @Override
-                                                public void accept(String getAddress) throws Throwable {
-                                                    // TODO: 22.11.2022  первая часть
+                                                // TODO: 25.07.2024
 
-                                                    // TODO: 25.07.2024
+                                                // TODO: 02.08.2024
+                                                // TODO: 26.07.2024
+                                                final BluetoothDevice bluetoothDeviceScan = bluetoothAdapterPhoneClient.getRemoteDevice(getAddress.trim());
 
-                                                    // TODO: 02.08.2024
-                                                    // TODO: 26.07.2024
-                                                    final BluetoothDevice bluetoothDeviceScan = bluetoothAdapterPhoneClient.getRemoteDevice(getAddress.trim());
+                                                // TODO: 12.02.2023  init CallBack Gatt Client for Scan
+                                                bluetoothGattCallbacks.add(МетодРаботыСТекущийСерверомGATTДляScan( ));
 
-                                                    // TODO: 12.02.2023  init CallBack Gatt Client for Scan
-                                                    bluetoothGattCallbacks.add(МетодРаботыСТекущийСерверомGATTДляScan( ));
-
-                                                    // TODO: 06.08.2024
-                                                    connectionGattClient.add(getMessage());
+                                                // TODO: 06.08.2024
+                                                connectionGattClient.add(getMessage());
 
 
-                                                    // TODO: 26.01.2023 staring  GATT
-                                                    getConnectionBluetoothGatt.add( МетодЗапускаGATTКлиентаScan(bluetoothDeviceScan,
-                                                            bluetoothGattCallbacks.get(atomicIntegerDisponse.get()),
-                                                            connectionGattClient.get(atomicIntegerDisponse.get()))) ;
+                                                // TODO: 26.01.2023 staring  GATT
+                                                getConnectionBluetoothGatt.add( МетодЗапускаGATTКлиентаScan(bluetoothDeviceScan,
+                                                        bluetoothGattCallbacks.get(atomicIntegerDisponse.get()),
+                                                        connectionGattClient.get(atomicIntegerDisponse.get()))) ;
 
 
-                                                    // TODO: 08.08.2024  увеличиваем общще количесто операций
-                                                    atomicIntegerDisponse.incrementAndGet();
+                                                // TODO: 08.08.2024  увеличиваем общще количесто операций
+                                                atomicIntegerDisponse.incrementAndGet();
 
-                                                    // TODO: 02.08.2024
-                                                    Log.d(this.getClass().getName(), "\n" + " class " +
-                                                            Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
-                                                            " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                                                            " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" + "\n"
-                                                            +  " getAddress "+ getAddress+" atomicIntegerDisponse.get() " +atomicIntegerDisponse.get());
+                                                // TODO: 02.08.2024
+                                                Log.d(this.getClass().getName(), "\n" + " class " +
+                                                        Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                                                        " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                                                        " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" + "\n"
+                                                        +  " getAddress "+ getAddress+" atomicIntegerDisponse.get() " +atomicIntegerDisponse.get());
 
 
 
 
-                                                    Log.d(this.getClass().getName(), "\n" + " class " +
-                                                            Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
-                                                            " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                                                            " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" + "\n");
-                                                }
-                                            })
-                                           .doOnSubscribe(new Consumer<Disposable>() {
-                                               @Override
-                                               public void accept(Disposable disposable) throws Throwable {
-                                                   disposablegetListMAC=disposable;
-                                                   // TODO: 02.08.2024
-                                                   Log.d(this.getClass().getName(), "\n" + " class " +
-                                                           Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
-                                                           " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                                                           " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" + "\n");
-                                               }
-                                           }).subscribe();
-
-
-                                    Log.d(this.getClass().getName(), "\n" + " class " +
-                                            Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
-                                            " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                                            " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" + "\n");
-                                }
+                                                Log.d(this.getClass().getName(), "\n" + " class " +
+                                                        Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                                                        " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                                                        " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" + "\n");
+                                            }
+                                        })
+                                        .doOnSubscribe(new Consumer<Disposable>() {
+                                            @Override
+                                            public void accept(Disposable disposable) throws Throwable {
+                                                disposablegetListMAC=disposable;
+                                                // TODO: 02.08.2024
+                                                Log.d(this.getClass().getName(), "\n" + " class " +
+                                                        Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                                                        " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                                                        " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" + "\n");
+                                            }
+                                        }).subscribe();
                             }).doOnComplete(new Action() {
                                 @Override
                                 public void run() throws Throwable {
@@ -1059,10 +1052,20 @@ public class Businesslogic_ScaningClientWorker {
 
 
 
+    public int getRandomNumberUsingSECOND(int min, int max) {
+        Random random = new Random();
+        return random.ints(min, max)
+                .findFirst()
+                .getAsInt();
+    }
 
 
-
-
+    public int getRandomNumberUsingMilisecond(int min, int max) {
+        Random random = new Random();
+        return random.ints(min, max)
+                .findFirst()
+                .getAsInt();
+    }
 
 
 
