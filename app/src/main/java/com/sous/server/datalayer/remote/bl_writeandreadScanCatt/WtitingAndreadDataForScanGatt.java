@@ -322,12 +322,12 @@ try{
             contentValuesВставкаДанных.put("city",    sharedPreferencesGatt.getString("getLocality","нет данных"));
             contentValuesВставкаДанных.put("gps1", sharedPreferencesGatt.getString("getLongitude","нет данных"));
             contentValuesВставкаДанных.put("gps2", sharedPreferencesGatt.getString("getLatitude","нет данных"));
-            contentValuesВставкаДанных.put("adress",  sharedPreferencesGatt.getString("getCountryName","")+" "+
+            contentValuesВставкаДанных.put("adress",  sharedPreferencesGatt.getString("getCountryName","нет данных")+" "+
                     sharedPreferencesGatt.getString("getLocality","нет данных")+" "+
                     sharedPreferencesGatt.getString("getSubAdminArea","нет данных")+" "+
                     sharedPreferencesGatt.getString("getLatitude","нет данных")+" "+
                     sharedPreferencesGatt.getString("getLongitude","нет данных")+" "+
-                    sharedPreferencesGatt.getString("getLocale","")+"нет данных"+
+                    sharedPreferencesGatt.getString("getLocale","нет данных")+" "+
                     sharedPreferencesGatt.getString("getThoroughfare","нет данных")+" "+
                     sharedPreferencesGatt.getString("getSubThoroughfare","нет данных")+" " );
 
