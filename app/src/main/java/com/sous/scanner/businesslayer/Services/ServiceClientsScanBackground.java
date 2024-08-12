@@ -125,7 +125,7 @@ public class ServiceClientsScanBackground extends IntentService {
 
                     case "userUIlaunchingfrombackground":
                         // TODO: 25.07.2024 Бесконечная работа
-                        blForServiceScan.launchingСomplexbackground(5 );
+                        blForServiceScan.launchingСomplexbackground(20 );
 
                         Log.d(getApplicationContext().getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                                 " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +

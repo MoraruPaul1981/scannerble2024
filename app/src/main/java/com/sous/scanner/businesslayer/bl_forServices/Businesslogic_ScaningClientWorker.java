@@ -293,7 +293,7 @@ public class Businesslogic_ScaningClientWorker {
 
                                    Observable.fromIterable(      getListMAC)
                                             .zipWith( Observable.just("")
-                                                    .repeatWhen(repeat->repeat.delay(250,TimeUnit.MILLISECONDS)), (item, interval) -> item)
+                                                    .repeatWhen(repeat->repeat.delay(2,TimeUnit.SECONDS)), (item, interval) -> item)
                                            .flatMap(val -> Observable.just(val)
                                                    .subscribeOn(Schedulers.computation()))
                                             .doOnNext(new Consumer<String>() {
@@ -981,6 +981,7 @@ try{
             if (bluetoothAdapterPhoneClient!=null && bluetoothAdapterPhoneClient.isEnabled()) {
                 // TODO: 30.07.2024
                 bluetoothDevice.fetchUuidsWithSdp();
+               new    Businesslogic_GattReflection(context,version).pairDevice(bluetoothDevice);
 
                 // TODO: 30.07.2024
                       gattScan     =      bluetoothDevice.connectGatt(context, true,

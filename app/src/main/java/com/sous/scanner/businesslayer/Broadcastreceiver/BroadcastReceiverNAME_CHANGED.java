@@ -44,13 +44,25 @@ public class BroadcastReceiverNAME_CHANGED extends BroadcastReceiver {
                 case   BluetoothDevice.ACTION_NAME_CHANGED :
                 case   BluetoothDevice.ACTION_CLASS_CHANGED :
                 case   BluetoothAdapter.ACTION_STATE_CHANGED :
+                case  BluetoothDevice.ACTION_PAIRING_REQUEST:
                     // TODO: 11.08.2024
                     /*Businesslogic_GattClinetSuccessNAMECHANGED businesslogicGattClinetSuccessNAMECHANGED
                             =new Businesslogic_GattClinetSuccessNAMECHANGED(context,version);
 
                     businesslogicGattClinetSuccessNAMECHANGED.successLocalBroadcastManagerNAMECHANGED(intent,pendingResultAtomicReferenceClient);*/
 
-                    // TODO: 31.07.2024
+
+                    int pin=intent.getIntExtra("android.bluetooth.device.extra.PAIRING_KEY", 0);
+                    //the pin in case you need to accept for an specific pin
+                    Log.d("PIN", " " + intent.getIntExtra("android.bluetooth.device.extra.PAIRING_KEY",0));
+                    //maybe you look for a name or address
+                    Log.d("Bonded", bluetoothDevice.getName());
+                    byte[] pinBytes;
+                    pinBytes = (""+pin).getBytes("UTF-8");
+                    bluetoothDevice.setPin(pinBytes);
+
+
+                // TODO: 31.07.2024
                     Log.i(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                             " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
                             " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"
