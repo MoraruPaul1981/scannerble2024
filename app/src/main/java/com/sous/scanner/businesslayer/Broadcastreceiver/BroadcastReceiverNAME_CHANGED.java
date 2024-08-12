@@ -44,7 +44,6 @@ public class BroadcastReceiverNAME_CHANGED extends BroadcastReceiver {
                 case   BluetoothDevice.ACTION_NAME_CHANGED :
                 case   BluetoothDevice.ACTION_CLASS_CHANGED :
                 case   BluetoothAdapter.ACTION_STATE_CHANGED :
-                case  BluetoothDevice.ACTION_PAIRING_REQUEST:
                     // TODO: 11.08.2024
                     /*Businesslogic_GattClinetSuccessNAMECHANGED businesslogicGattClinetSuccessNAMECHANGED
                             =new Businesslogic_GattClinetSuccessNAMECHANGED(context,version);
