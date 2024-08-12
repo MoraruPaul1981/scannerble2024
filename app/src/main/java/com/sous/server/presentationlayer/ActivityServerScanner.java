@@ -7,10 +7,15 @@ import android.content.ContentValues;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.pm.ActivityInfo;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
 import android.database.sqlite.SQLiteDatabase;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.os.PowerManager;
+import android.provider.Settings;
 import android.util.Log;
 import android.view.WindowManager;
 
@@ -27,6 +32,7 @@ import com.sous.server.businesslayer.BroadcastreceiverServer.BroadcastReceiverGa
 import com.sous.server.businesslayer.BroadcastreceiverServer.BroadcastReceiverGattServerOthers;
 import com.sous.server.businesslayer.Errors.SubClassErrors;
 import com.sous.server.businesslayer.Permissions.SetPermissions;
+import com.sous.server.businesslayer.bl_OneSingal.BussenslogicOneSignal;
 
 import java.util.Date;
 
@@ -40,7 +46,6 @@ public class ActivityServerScanner extends AppCompatActivity {
     protected  SQLiteDatabase Create_Database_СамаБАзаSQLite;
 
     protected  Bi_MainActivityNewServerScanner biMainActivityNewServerScanner;
-
 
 
 
@@ -66,22 +71,24 @@ public class ActivityServerScanner extends AppCompatActivity {
 
 
 
+            PackageInfo   pInfo = getApplicationContext().getPackageManager().getPackageInfo(getApplicationContext().getPackageName(), 0);
+            version = pInfo.getLongVersionCode();
+
 
             // TODO: 24.07.2024 устанвливаем разрешения
 
        new SetPermissions(version).additionalpermissionsBle(this,getApplicationContext());
 
-
-
             startinggeregisterReceiver();
-
+            startPowerManager();
             getDISCOVERABLE_DURATIONs();
 
-           final String ONEKEY="204d790a-7bd5-43ce-948c-81a25803a761";
-            OneSignal.initWithContext(this);
-            OneSignal.setAppId(ONEKEY);
 
-            OneSignal.promptForPushNotifications();
+            BussenslogicOneSignal bussenslogicOneSignal   =    new BussenslogicOneSignal(getApplicationContext(),version);
+
+            bussenslogicOneSignal  .initOneSignal();
+
+
               biMainActivityNewServerScanner=new Bi_MainActivityNewServerScanner(getApplicationContext(), fragmentManager,this);
 
             version=    biMainActivityNewServerScanner.  getversionCurrentPC();
@@ -245,6 +252,42 @@ public class ActivityServerScanner extends AppCompatActivity {
 
 
 
+    public void  startPowerManager(){
+        try{
+// TODO: 02.08.2024
+            Intent intent = new Intent();
+            String packageName = getPackageName();
+            PowerManager pm = (PowerManager) getSystemService(POWER_SERVICE);
+            if (!pm.isIgnoringBatteryOptimizations(packageName)) {
+                intent.setAction(Settings.ACTION_REQUEST_IGNORE_BATTERY_OPTIMIZATIONS);
+                intent.setAction(Settings.ACTION_IGNORE_BATTERY_OPTIMIZATION_SETTINGS);
+                intent.setData(Uri.parse("package:" + packageName));
+                startActivity(intent);
+            }
+
+            Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                    " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                    " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" );
+
+
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() + " Линия  :"
+                    + Thread.currentThread().getStackTrace()[2].getLineNumber());
+            ContentValues valuesЗаписываемОшибки = new ContentValues();
+            valuesЗаписываемОшибки.put("Error", e.toString().toLowerCase());
+            valuesЗаписываемОшибки.put("Klass", this.getClass().getName());
+            valuesЗаписываемОшибки.put("Metod", Thread.currentThread().getStackTrace()[2].getMethodName());
+            valuesЗаписываемОшибки.put("LineError", Thread.currentThread().getStackTrace()[2].getLineNumber());
+            final Object ТекущаяВерсияПрограммы = version;
+            Integer ЛокальнаяВерсияПОСравнение = Integer.parseInt(ТекущаяВерсияПрограммы.toString());
+            valuesЗаписываемОшибки.put("whose_error", ЛокальнаяВерсияПОСравнение);
+            new SubClassErrors(getApplicationContext()).МетодЗаписиОшибок(valuesЗаписываемОшибки);
+            // new SubClassErrors(getApplicationContext()).МетодЗаписиОшибокИзServerGatt(valuesЗаписываемОшибки,contentProviderServer);
+        }
+
+    }
 
 
 

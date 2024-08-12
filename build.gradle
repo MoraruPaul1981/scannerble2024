@@ -1,7 +1,7 @@
 // Top-level build file where you can add configuration options common to all sub-projects/modules.
 buildscript {
 
-
+    def onesignal_app_id = "f385d025-3b73-4862-8148-985943299116"
 
     dependencies {
         classpath 'com.google.gms:google-services:4.3.14'
@@ -9,8 +9,10 @@ buildscript {
 
     repositories {
         google()
-        jcenter()
+        mavenCentral()
         gradlePluginPortal()
+        jcenter()
+
 
     }
 

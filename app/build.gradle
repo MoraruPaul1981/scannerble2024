@@ -5,7 +5,7 @@ plugins {
 
 android {
 
-
+    namespace "com.sous.server"
     signingConfigs {
         debug {
             storeFile file('C:\\Users\\moraru_pi\\AndroidStudioProjectsBLE_Server\\server\\certificatescannerserver\\certscannerserver.jks')
@@ -23,8 +23,7 @@ android {
     }
 
 
-    namespace 'com.sous.server'
-    compileSdk 33
+     compileSdk 33
 
 
 
@@ -32,10 +31,19 @@ android {
         applicationId "com.sous.server"
         minSdk 29
         targetSdk 33
-        versionCode 1
-        versionName "1.0"
+        versionCode 29
+        versionName 'Server GATT 2024'
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+
+
+        manifestPlaceholders = [onesignal_app_id: "f385d025-3b73-4862-8148-985943299116",
+                                // Project number pulled from dashboard, local value is ignored.
+                                onesignal_google_project_number: "REMOTE"]
+        vectorDrawables {
+            useSupportLibrary true
+        }
+
     }
 
     buildTypes {
@@ -73,8 +81,7 @@ dependencies {
     implementation 'com.google.firebase:firebase-messaging-directboot:23.0.0'
     implementation   'com.google.firebase:firebase-messaging:22.0.0'
 
-    //TODO OneSignal
-    implementation 'com.onesignal:OneSignal:4.8.3'
+
 
     ///TODO RXJAVA BLE
     implementation 'io.reactivex.rxjava3:rxandroid:3.0.2'
@@ -101,9 +108,12 @@ dependencies {
 
     //TODO new Firebase
 
+
+    //TODO OneSignal
+    implementation 'com.onesignal:OneSignal:4.8.3'
+
     implementation platform('com.google.firebase:firebase-bom:33.1.2')
     implementation 'com.google.firebase:firebase-analytics'
-
 
 
 }

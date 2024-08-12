@@ -1,13 +1,13 @@
 {
   "project_info": {
-    "project_number": "995952893238",
-    "project_id": "gatt-7ce6c",
-    "storage_bucket": "gatt-7ce6c.appspot.com"
+    "project_number": "596598266122",
+    "project_id": "comsousscanner-d153b",
+    "storage_bucket": "comsousscanner-d153b.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:995952893238:android:0811ef1e1d61b7de65a797",
+        "mobilesdk_app_id": "1:596598266122:android:341f79cd4e0a6b995082f3",
         "android_client_info": {
           "package_name": "com.sous.server"
         }
@@ -15,7 +15,7 @@
       "oauth_client": [],
       "api_key": [
         {
-          "current_key": "AIzaSyDQcSTUGX6LsWHIqqhIc7OBpN50XkDvqN4"
+          "current_key": "AIzaSyDvk3TfLRwJA3tPvkH4jjFQs7-hT6VcC0U"
         }
       ],
       "services": {

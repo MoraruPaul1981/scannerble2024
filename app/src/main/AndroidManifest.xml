@@ -94,6 +94,7 @@
         android:appCategory="productivity"
         android:hardwareAccelerated="false"
         android:roundIcon="@mipmap/icon_serverscanner_round"
+        android:name="com.sous.server.GetApplication"
         android:supportsRtl="true"
         android:theme="@style/Theme.DSU">
 
