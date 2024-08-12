@@ -1,4 +1,4 @@
-package com.sous.scanner.businesslayer.getApplication;
+package com.sous.scanner;
 
 import android.app.Application;
 import android.content.ComponentCallbacks;
@@ -6,14 +6,17 @@ import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.util.Log;
 
-import com.onesignal.OneSignal;
-import com.sous.scanner.businesslayer.bl_forActivityScan.BussenslogicActifityScan;
+
+import com.sous.scanner.businesslayer.bl_forActivityScan.BussenslogicOneSignal;
 
 import java.util.Date;
 
 public class GetApplication  extends Application {
-    public GetApplication() {
+    public GetApplication() throws PackageManager.NameNotFoundException {
         super();
+// TODO: 12.08.2024
+
+
         Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                 " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
                 " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"   +"    Flowable.fromAction(new Action() { "
@@ -30,9 +33,12 @@ public class GetApplication  extends Application {
         } catch (PackageManager.NameNotFoundException e) {
             throw new RuntimeException(e);
         }
-        long   version = pInfo.getLongVersionCode();
+        long  version = pInfo.getLongVersionCode();
 
-        new BussenslogicActifityScan(getApplicationContext(),version).initOneSignal();
+        BussenslogicOneSignal bussenslogicOneSignal=
+                new BussenslogicOneSignal(getApplicationContext(),version);
+        bussenslogicOneSignal .initOneSignal();
+
         Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                 " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
                 " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"   +"    Flowable.fromAction(new Action() { "

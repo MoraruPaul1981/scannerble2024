@@ -23,13 +23,12 @@ import android.view.WindowManager;
 import com.google.android.material.bottomnavigation.BottomNavigationItemView;
 import com.google.android.material.navigation.NavigationBarView;
 import com.google.android.material.tabs.TabLayout;
-import com.onesignal.OneSignal;
 import com.sous.scanner.businesslayer.Broadcastreceiver.BroadcastReceiverACL;
 import com.sous.scanner.businesslayer.Broadcastreceiver.BroadcastReceiverNAME_CHANGED;
 import com.sous.scanner.businesslayer.Errors.SubClassErrors;
 import com.sous.scanner.R;
 import com.sous.scanner.businesslayer.Permissions.SetPermissions;
-import com.sous.scanner.businesslayer.bl_forActivityScan.BussenslogicActifityScan;
+import com.sous.scanner.businesslayer.bl_forActivityScan.BussenslogicOneSignal;
 
 import java.util.Date;
 
@@ -78,9 +77,14 @@ public class MainActivityNewScanner extends AppCompatActivity  {
             // TODO: 24.07.2024 устанвливаем разрешения
             new SetPermissions(version).additionalpermissionsBle(this,getApplicationContext());
 
-          new BussenslogicActifityScan(getApplicationContext(),version).initOneSignal();
+
 
             startinпBroadcastReceiverCleint();
+
+            BussenslogicOneSignal bussenslogicOneSignal=
+                    new BussenslogicOneSignal(getApplicationContext(),version);
+            bussenslogicOneSignal .initOneSignal();
+
 
             Log.d(getApplicationContext().getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                     " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
