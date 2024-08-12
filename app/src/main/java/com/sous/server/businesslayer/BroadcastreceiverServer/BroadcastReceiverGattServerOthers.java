@@ -56,7 +56,8 @@ public class BroadcastReceiverGattServerOthers extends BroadcastReceiver {
                             "intent.getAction() "+intent.getAction() + " intent.getAction() " +intent.getAction());
                     break;
 
-                // TODO: 31.07.2024
+                // TODO: 31
+
                 // TODO: 31.07.2024
                 default:{
                     Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
