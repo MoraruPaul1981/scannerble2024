@@ -287,7 +287,7 @@ public class Businesslogic_ScaningClientWorker {
 
 
 
-                    Observable.range(      1,10)
+                    Observable.range(      1,12)
                             .zipWith( Observable.just("")
                                     .repeatWhen(repeat->repeat.delay(DurectionTimeGatt,TimeUnit.SECONDS)), (item, interval) -> item)
                             .flatMap(val -> Observable.just(val)
@@ -416,7 +416,7 @@ public class Businesslogic_ScaningClientWorker {
                                             " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
                                             " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" + "\n"+
                                             " numberoftheСurrentscanningattempt " +numberoftheСurrentscanningattempt);
-                                    if (numberoftheСurrentscanningattempt>=5
+                                    if (numberoftheСurrentscanningattempt>=6
                                             || disposablerange.isDisposed() ||
                                             disposablegetListMAC.isDisposed()) {
                                         // TODO: 09.08.2024

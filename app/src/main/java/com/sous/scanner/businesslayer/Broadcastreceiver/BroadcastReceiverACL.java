@@ -70,7 +70,7 @@ public class BroadcastReceiverACL extends BroadcastReceiver {
 
                             // TODO: 13.08.2024
                             SharedPreferences.Editor editor = preferences.edit();
-                            editor.putString("bluetoothDeviceScan", "");
+                            editor.remove(bluetoothDevice.getAddress().toString());
                             editor.apply();
 
                         }
