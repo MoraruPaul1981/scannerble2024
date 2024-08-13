@@ -66,7 +66,7 @@ public class BroadcastReceiverACL extends BroadcastReceiver {
                             new Businesslogic_GattClinetSuccessLocalBroadcastManager(context,version).
                                       successLocalBroadcastManager(intent, bluetoothDevice,  pendingResultAtomicReferenceClient);
 
-                            new Businesslogic_GattReflection(context,version).unpairDevice(bluetoothDevice);
+                          new Businesslogic_GattReflection(context,version).unpairDevice(bluetoothDevice);
 
                       new BussenloginSaredPreferense(preferences,context,version).  workerSharedPreferences(bluetoothDevice);
 
