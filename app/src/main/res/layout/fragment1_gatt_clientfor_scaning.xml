@@ -19,29 +19,33 @@
         android:orientation="vertical">
 
 
-        <com.google.android.material.textview.MaterialTextView
+
+
+        <com.google.android.material.tabs.TabLayout
             android:id="@+id/id_textViewDefaultNameState"
-            android:layout_width="wrap_content"
-            android:layout_height="40dp"
             android:layout_alignParentTop="true"
             android:layout_centerHorizontal="true"
-            android:layout_marginTop="10dp"
-            android:layout_marginEnd="10dp"
-            android:autoLink="phone"
-            android:bufferType="spannable"
-            android:drawablePadding="5dp"
-            android:gravity="center_vertical"
-            android:hint="#значение Статус:"
-            android:padding="2dp"
-            android:text="Последний Статус:"
-            android:textColor="#AAACAC"
-            android:textColorHint="#A3AAAA"
-            android:textSize="15sp"
-            android:textStyle="bold"
-            android:translationZ="50dp" />
+            android:layout_width="200dp"
+            android:layout_height="40dp"
+           android:layout_marginTop="20dp"
+            android:elevation="3dp"
+            app:tabMinWidth="150dp"
+            android:translationZ="10dp"
+            android:background="#FFFFFF"
+            app:tabIndicatorColor="#A6A3A2"
+            app:tabIndicatorHeight="2dp"
+            app:tabTextColor="#A6A3A2"
+            app:tabSelectedTextColor="#A6A3A2"
+            app:tabMode="fixed"
+            android:padding="2dp">
+            <com.google.android.material.tabs.TabItem
+                android:id="@+id/tabItem_server_ble"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="10dp"
+                android:text="Последний статус" />
 
-
-
+        </com.google.android.material.tabs.TabLayout>
 
 
         <com.google.android.material.textview.MaterialTextView
@@ -55,7 +59,7 @@
             android:gravity="center_vertical"
             android:hint="ответ контроля"
             android:padding="2dp"
-            android:layout_marginTop="5dp"
+            android:layout_marginTop="10dp"
             android:layout_marginBottom="5dp"
             android:layout_centerHorizontal="true"
             android:textColor="#7F8080"
