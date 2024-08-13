@@ -42,6 +42,7 @@ import com.sous.server.businesslayer.Errors.SubClassErrors;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.concurrent.ConcurrentHashMap;
 
 public class Bl_FragmentRecyreViewServerSimpleScan {
@@ -305,8 +306,8 @@ public class Bl_FragmentRecyreViewServerSimpleScan {
             DividerItemDecoration dividerItemDecorationHor=
                     new DividerItemDecoration(context, LinearLayoutManager.VERTICAL);
             recyclerViewServer.addItemDecoration(dividerItemDecorationHor);
-            GridLayoutManager layoutManager = new GridLayoutManager(context, 1,
-                    GridLayoutManager.HORIZONTAL,false);
+            GridLayoutManager layoutManager = new GridLayoutManager(context, 2,
+                    GridLayoutManager.VERTICAL,false);
             layoutManager.setSpanSizeLookup(new GridLayoutManager.DefaultSpanSizeLookup());
             recyclerViewServer.setLayoutManager(layoutManager);
 
@@ -1043,7 +1044,9 @@ public class Bl_FragmentRecyreViewServerSimpleScan {
     @SuppressLint("Range")
     private void gettextinputtext_namedevice(@NonNull MyViewHolder holder, @NonNull Cursor getconcurrentHashMapCursor) {
         try{
-            holder. textinputtext_namedevice.setText(getconcurrentHashMapCursor.getString(getconcurrentHashMapCursor.getColumnIndex("namedevice")));//todo "namedevice"
+            String namedevice=
+                    Optional.ofNullable(getconcurrentHashMapCursor.getString(getconcurrentHashMapCursor.getColumnIndex("namedevice"))).orElse("нет данных");
+            holder. textinputtext_namedevice.setText(namedevice);//todo "namedevice"
             holder. textinputtext_namedevice.setClickable(false);
             holder.  textinputtext_namedevice.setFocusable(false);
             holder.  textinputtext_namedevice.refreshDrawableState();

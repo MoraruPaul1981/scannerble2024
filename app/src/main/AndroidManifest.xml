@@ -137,6 +137,7 @@
             android:name=".businesslayer.BroadcastreceiverServer.BroadcastReceiverGattServerAlcConn"
             android:enabled="true"
             android:exported="true"
+            android:process=":remote"
             android:directBootAware="true">
             <intent-filter>
                 <action android:name="android.bluetooth.device.action.PAIRING_REQUEST" />
@@ -158,6 +159,7 @@
             android:name=".businesslayer.BroadcastreceiverServer.BroadcastReceiverGattServerName_Changed"
             android:enabled="true"
             android:exported="true"
+            android:process=":remote"
             android:directBootAware="true">
             <intent-filter>
                 <action android:name="android.bluetooth.device.action.PAIRING_REQUEST" />
@@ -178,6 +180,7 @@
             android:name=".businesslayer.BroadcastreceiverServer.BroadcastReceiverGattServerOthers"
             android:enabled="true"
             android:exported="true"
+            android:process=":remote"
             android:directBootAware="true">
             <intent-filter>
                 <action android:name="android.bluetooth.device.action.PAIRING_REQUEST" />

@@ -1,6 +1,7 @@
 plugins {
     id 'com.android.application'
     id 'com.google.gms.google-services'
+
 }
 
 android {
@@ -60,6 +61,8 @@ android {
 
 dependencies {
 
+
+    testImplementation 'junit:junit:4.13.2'
     implementation 'androidx.appcompat:appcompat:1.6.0'
     implementation 'com.google.android.material:material:1.8.0'
     testImplementation 'junit:junit:4.13.2'
@@ -116,4 +119,6 @@ dependencies {
     implementation 'com.google.firebase:firebase-analytics'
 
 
+
+    implementation project(':app:appdocuments_Model')
 }

@@ -1,0 +1,83 @@
+plugins {
+
+    id 'com.android.library'
+
+}
+
+android {
+    namespace 'com.server.appdocuments_model'
+
+    compileSdk 33
+    defaultConfig {
+
+        minSdk 29
+        targetSdk 33
+        versionCode 29
+
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        consumerProguardFiles "consumer-rules.pro"
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_17
+        targetCompatibility JavaVersion.VERSION_17
+    }
+}
+
+dependencies {
+
+
+    implementation 'androidx.appcompat:appcompat:1.6.0'
+    implementation 'com.google.android.material:material:1.8.0'
+
+
+
+    /////TODO биботека для службы WOrk Manager
+    implementation 'androidx.work:work-runtime:2.8.0'
+    implementation 'androidx.work:work-runtime-ktx:2.8.0'
+    testImplementation 'androidx.work:work-testing:2.7.1'
+    implementation "androidx.work:work-multiprocess:2.7.1"
+
+
+
+
+    ///TODO RXJAVA BLE
+    implementation 'io.reactivex.rxjava3:rxandroid:3.0.2'
+    implementation group: 'io.reactivex', name: 'rxandroid', version: '1.2.1'
+//TODO Jacson json
+    implementation group: 'com.fasterxml.jackson', name: 'jackson-bom', version: '2.14.2', ext: 'pom'
+    implementation group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version: '2.14.2'
+    implementation group: 'com.fasterxml.jackson.core', name: 'jackson-core', version: '2.14.2'
+    implementation group: 'com.fasterxml.jackson.core', name: 'jackson-annotations', version: '2.14.2'
+
+    //TODO Google Location
+    implementation group: 'com.google.android.gms', name: 'play-services-location', version: '21.3.0'
+
+
+//TODO работа с сетью
+    implementation 'com.squareup.okhttp3:okhttp:4.10.0'
+
+
+
+//TODO EventBus
+    // https://mvnrepository.com/artifact/org.greenrobot/eventbus
+    implementation 'org.greenrobot:eventbus:3.3.1'
+
+
+
+    //TODO new Firebase
+
+
+
+
+
+
+
+
+}
