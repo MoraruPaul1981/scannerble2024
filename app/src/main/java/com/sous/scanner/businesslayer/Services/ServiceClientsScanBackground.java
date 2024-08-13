@@ -116,7 +116,7 @@ public class ServiceClientsScanBackground extends IntentService {
                     // TODO: 06.08.2024
                     case "robotlaunchingfrombackground":
                         // TODO: 25.07.2024 Бесконечная работа
-                        blForServiceScan.launchingSimplebackground(5 );
+                        blForServiceScan.launchingSimplebackground(2 );
 
                         Log.d(getApplicationContext().getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                                 " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
@@ -125,8 +125,7 @@ public class ServiceClientsScanBackground extends IntentService {
 
                     case "userUIlaunchingfrombackground":
                         // TODO: 25.07.2024 Бесконечная работа
-                     int DurectionTimeGatt=   blForServiceScan.   getRandomNumberUsingSECOND(5,12);
-                        blForServiceScan.launchingСomplexbackground(DurectionTimeGatt);
+                        blForServiceScan.launchingСomplexbackground(20 );
 
                         Log.d(getApplicationContext().getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                                 " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +

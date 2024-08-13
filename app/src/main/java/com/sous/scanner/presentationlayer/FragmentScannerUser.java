@@ -874,7 +874,7 @@ public class FragmentScannerUser extends Fragment {
                 // TODO: 19.02.2023 Второе Действие
                 // TODO: 22.02.2023 для второй кнопки
                 RxView.clicks(materialButtonClick)
-                        .throttleFirst(15, TimeUnit.SECONDS)
+                        .throttleFirst(5, TimeUnit.SECONDS)
                         .observeOn(AndroidSchedulers.mainThread())
                         .doOnSubscribe(new Consumer<Disposable>() {
                             @Override
