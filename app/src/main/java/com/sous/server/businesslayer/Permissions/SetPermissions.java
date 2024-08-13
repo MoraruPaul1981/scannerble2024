@@ -34,6 +34,8 @@ private  Long version;
                     Manifest.permission.BLUETOOTH_PRIVILEGED,
                     Manifest.permission.BLUETOOTH_ADVERTISE,
                     Manifest.permission.BLUETOOTH_ADMIN,
+
+
                     Manifest.permission.READ_PHONE_STATE,
                     Manifest.permission.READ_SMS,
                     Manifest.permission.READ_PHONE_NUMBERS,
