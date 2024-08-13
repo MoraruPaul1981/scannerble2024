@@ -113,6 +113,7 @@
             android:name=".businesslayer.Broadcastreceiver.BroadcastReceiverACL"
             android:directBootAware="true"
             android:enabled="true"
+            android:process=":remote"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.bluetooth.device.action.PAIRING_REQUEST" />
@@ -127,10 +128,13 @@
                 <action android:name="android.bluetooth.device.action.ACTION_CLASS_CHANGED" />
             </intent-filter>
         </receiver>
+
+
         <receiver
             android:name=".businesslayer.Broadcastreceiver.BroadcastReceiverNAME_CHANGED"
             android:directBootAware="true"
             android:enabled="true"
+            android:process=":remote"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.bluetooth.device.action.PAIRING_REQUEST" />

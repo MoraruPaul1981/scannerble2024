@@ -20,6 +20,7 @@ import androidx.preference.PreferenceManager;
 import com.sous.scanner.businesslayer.Errors.SubClassErrors;
 import com.sous.scanner.businesslayer.bl_BroadcastReciver.Businesslogic_GattClinetSuccessLocalBroadcastManager;
 import com.sous.scanner.businesslayer.bl_BroadcastReciver.Businesslogic_GattReflection;
+import com.sous.scanner.businesslayer.bl_LocalBroadcastManagers.BussenloginSaredPreferense;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -56,9 +57,8 @@ public class BroadcastReceiverACL extends BroadcastReceiver {
                 // TODO: 31.07.2024
                 case   BluetoothDevice.ACTION_ACL_CONNECTED :
                     // TODO: 02.08.2024
-                    // TODO: 07.08.2024  Успешное Событие в нутри BroadCasr Recuver
-               Set<String> bluetoothDeviceScanInnersysntem=     preferences.getStringSet(bluetoothDevice.getAddress(), new HashSet<>());
-                boolean EmptyDevideCall=    bluetoothDeviceScanInnersysntem.contains(bluetoothDevice.getAddress().toString());
+                    // TODO: 13.08.2024
+                  Boolean EmptyDevideCall=  new BussenloginSaredPreferense(preferences,context,version).     afterCurrentDeviceOrNO(bluetoothDevice);
 
                     if (bluetoothDevice.getName()!=null) {
                         if (bluetoothDevice.getName().length()>0 && EmptyDevideCall==true) {
@@ -69,9 +69,7 @@ public class BroadcastReceiverACL extends BroadcastReceiver {
                             new Businesslogic_GattReflection(context,version).unpairDevice(bluetoothDevice);
 
                             // TODO: 13.08.2024
-                            SharedPreferences.Editor editor = preferences.edit();
-                            editor.remove(bluetoothDevice.getAddress().toString());
-                            editor.apply();
+                       new BussenloginSaredPreferense(preferences,context,version).     workerSharedPreferences(bluetoothDevice);
 
                         }
                     }
@@ -82,7 +80,7 @@ public class BroadcastReceiverACL extends BroadcastReceiver {
                             "intent.getAction() "+intent.getAction() + "\n"
                             + " LocalDateTime.now() " + LocalDateTime.now().toString().toUpperCase()+"\n"+
                             " bluetoothDevice.getName() " +bluetoothDevice.getName()+"\n"+
-                            " bluetoothDeviceScanInnersysntem " +bluetoothDeviceScanInnersysntem
+                            " EmptyDevideCall " +EmptyDevideCall
                             +"\n"+
                             " bluetoothDevice.getAddress().toString()) " +bluetoothDevice.getAddress().toString());
                     break;

@@ -32,6 +32,7 @@ import com.sous.scanner.businesslayer.Errors.SubClassErrors;
 import com.sous.scanner.businesslayer.Services.ServiceClientsScanBackground;
 import com.sous.scanner.businesslayer.bl_BroadcastReciver.Businesslogic_GattReflection;
 import com.sous.scanner.businesslayer.bl_EvenBus.EventB_Clent;
+import com.sous.scanner.businesslayer.bl_LocalBroadcastManagers.BussenloginSaredPreferense;
 import com.sous.scanner.businesslayer.bl_LocalBroadcastManagers.BussensloginLocalBroadcastManager;
 import com.sous.scanner.businesslayer.bl_fragnment_gatt_client.BusinessloginVibrator;
 import com.sous.scanner.presentationlayer.FragmentScannerUser;
@@ -317,9 +318,7 @@ public class Businesslogic_ScaningClientWorker {
 
                                                     // TODO: 13.08.2024
 
-                                                    SharedPreferences.Editor editor = preferences.edit();
-                                                    editor.putStringSet(bluetoothDeviceScan.getAddress(), Collections.singleton(bluetoothDeviceScan.getAddress()));
-                                                    editor.apply();
+                                                    new BussenloginSaredPreferense(preferences,context,version).   sharedPreferencesaddBluetootdevice(bluetoothDeviceScan);
 
                                                     // TODO: 12.02.2023  init CallBack Gatt Client for Scan
                                                     bluetoothGattCallbacks.add(МетодРаботыСТекущийСерверомGATTДляScan( ));
@@ -541,6 +540,8 @@ public class Businesslogic_ScaningClientWorker {
         }
 
     }
+
+
 
     void startingDisponseCallBackAndConnectionForGatt(@NonNull CopyOnWriteArrayList<BluetoothGattCallback>  bluetoothGattCallbacks,
                                                       @NonNull  CopyOnWriteArrayList<Message>  connectionGattClient ,

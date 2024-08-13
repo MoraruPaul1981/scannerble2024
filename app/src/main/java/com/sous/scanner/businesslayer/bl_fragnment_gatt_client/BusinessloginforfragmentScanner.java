@@ -119,7 +119,9 @@ public class BusinessloginforfragmentScanner {
             },1500);
 
             if (getAddress.length()>0 && getAction.length()>0) {
-                String completeResultContol="Сервер: "+getAddress
+                String completeResultContol=
+                        "Девайс: "+getName
+                        +"\n"+ "Сервер: "+getAddress
                         +"\n"+"Время: " +getBremy;
 
                 // TODO: 07.08.2024 save Last Secces Status
