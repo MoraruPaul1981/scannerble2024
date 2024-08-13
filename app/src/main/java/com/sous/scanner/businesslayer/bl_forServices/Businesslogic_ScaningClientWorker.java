@@ -38,6 +38,7 @@ import com.sous.scanner.presentationlayer.FragmentScannerUser;
 import org.greenrobot.eventbus.EventBus;
 
 import java.util.Date;
+import java.util.Random;
 import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentSkipListSet;
@@ -281,7 +282,7 @@ public class Businesslogic_ScaningClientWorker {
 
 
 
-                    Observable.range(      1,20)
+                    Observable.range(      1,10)
                             .zipWith( Observable.just("")
                                     .repeatWhen(repeat->repeat.delay(DurectionTimeGatt,TimeUnit.SECONDS)), (item, interval) -> item)
                             .flatMap(val -> Observable.just(val)
@@ -291,9 +292,11 @@ public class Businesslogic_ScaningClientWorker {
                                 public void accept(Object o) throws Throwable {
                                     // TODO: 22.11.2022  первая часть
 
-                                   Observable.fromIterable(      getListMAC)
+                                    // TODO: 22.11.2022  первая часть
+                                    int DurectionTimeGattInner=       getRandomNumberUsingMilisecond(200,500);
+                                    Observable.fromIterable(      getListMAC)
                                             .zipWith( Observable.just("")
-                                                    .repeatWhen(repeat->repeat.delay(2,TimeUnit.SECONDS)), (item, interval) -> item)
+                                                    .repeatWhen(repeat->repeat.delay(DurectionTimeGattInner,TimeUnit.MILLISECONDS)), (item, interval) -> item)
                                            .flatMap(val -> Observable.just(val)
                                                    .subscribeOn(Schedulers.computation()))
                                             .doOnNext(new Consumer<String>() {
@@ -1182,6 +1185,24 @@ try{
 
 
 
+
+
+
+
+    public int getRandomNumberUsingSECOND(int min, int max) {
+        Random random = new Random();
+        return random.ints(min, max)
+                .findFirst()
+                .getAsInt();
+    }
+
+
+    public int getRandomNumberUsingMilisecond(int min, int max) {
+        Random random = new Random();
+        return random.ints(min, max)
+                .findFirst()
+                .getAsInt();
+    }
 
 
 

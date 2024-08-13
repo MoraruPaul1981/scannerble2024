@@ -8,7 +8,9 @@ import android.app.Notification;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.bluetooth.BluetoothAdapter;
+import android.bluetooth.BluetoothDevice;
 import android.bluetooth.BluetoothManager;
+import android.bluetooth.BluetoothProfile;
 import android.content.ContentValues;
 import android.content.Intent;
 import android.content.pm.PackageInfo;
@@ -26,6 +28,7 @@ import com.sous.scanner.businesslayer.bl_forServices.Businesslogic_ScaningClient
 import com.sous.scanner.businesslayer.bl_forServices.BusinessoginEnableBluetoothAdapter;
 
 import java.util.Date;
+import java.util.function.Consumer;
 
 public class ServiceClientsScanBackground extends IntentService {
 
@@ -107,6 +110,7 @@ public class ServiceClientsScanBackground extends IntentService {
 
 
 
+    @SuppressLint("MissingPermission")
     @Override
     protected void onHandleIntent(@Nullable Intent intent) {
         try{
@@ -123,9 +127,11 @@ public class ServiceClientsScanBackground extends IntentService {
                                 " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" + " intent " +intent.getAction());
                         break;
 
+
                     case "userUIlaunchingfrombackground":
                         // TODO: 25.07.2024 Бесконечная работа
-                        blForServiceScan.launchingСomplexbackground(20 );
+                        int DurectionTimeGatt=   blForServiceScan.   getRandomNumberUsingSECOND(5,12);
+                        blForServiceScan.launchingСomplexbackground(DurectionTimeGatt);
 
                         Log.d(getApplicationContext().getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                                 " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +

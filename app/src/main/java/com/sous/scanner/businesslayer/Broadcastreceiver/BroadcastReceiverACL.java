@@ -51,16 +51,22 @@ public class BroadcastReceiverACL extends BroadcastReceiver {
                 case   BluetoothDevice.ACTION_ACL_CONNECTED :
                     // TODO: 02.08.2024
                     // TODO: 07.08.2024  Успешное Событие в нутри BroadCasr Recuver
-                  new Businesslogic_GattClinetSuccessLocalBroadcastManager(context,version).
-                            successLocalBroadcastManager(intent, bluetoothDevice,  pendingResultAtomicReferenceClient);
+                    if (bluetoothDevice.getName()!=null) {
+                        if (bluetoothDevice.getName().length()>0) {
+                            // TODO: 13.08.2024
+                            new Businesslogic_GattClinetSuccessLocalBroadcastManager(context,version).
+                                      successLocalBroadcastManager(intent, bluetoothDevice,  pendingResultAtomicReferenceClient);
 
-                    new Businesslogic_GattReflection(context,version).unpairDevice(bluetoothDevice);
+                            new Businesslogic_GattReflection(context,version).unpairDevice(bluetoothDevice);
+                        }
+                    }
 
                     Log.i(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                             " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
                             " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" +
                             "intent.getAction() "+intent.getAction() + "\n"
-                            + " LocalDateTime.now() " + LocalDateTime.now().toString().toUpperCase()+"\n");
+                            + " LocalDateTime.now() " + LocalDateTime.now().toString().toUpperCase()+"\n"+
+                            " bluetoothDevice.getName() " +bluetoothDevice.getName());
                     break;
                 // TODO: 31.07.2024
                 // TODO: 31.07.2024
