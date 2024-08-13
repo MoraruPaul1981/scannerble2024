@@ -84,9 +84,7 @@ public class ActivityServerScanner extends AppCompatActivity {
             getDISCOVERABLE_DURATIONs();
 
 
-            BussenslogicOneSignal bussenslogicOneSignal   =    new BussenslogicOneSignal(getApplicationContext(),version);
 
-            bussenslogicOneSignal  .initOneSignal();
 
 
               biMainActivityNewServerScanner=new Bi_MainActivityNewServerScanner(getApplicationContext(), fragmentManager,this);

@@ -18,7 +18,6 @@ import androidx.loader.content.AsyncTaskLoader;
 
 
 import com.sous.server.businesslayer.Errors.SubClassErrors;
-import com.sous.server.datalayer.data.CREATE_DATABASEServerScanner;
 
 import java.util.List;
 import java.util.Optional;
@@ -43,7 +42,7 @@ public class ContentProviderServer extends android.content.ContentProvider {
             ИменаТаблицыОтАндройда.add("errordsu1");
             ИменаТаблицыОтАндройда.add("scannerserversuccess");
             ИменаТаблицыОтАндройда.add("scannerlistdevices");
-            Log.d(this.getClass().getName(),  " ContentProviderServer" +uriMatcherДЛяПровайдераКонтентБазаДанных );
+            Log.d(this.getClass().getName(),  " ContentProviderServerWorkmanger" +uriMatcherДЛяПровайдераКонтентБазаДанных );
             Log.d(this.getClass().getName(), " ИменаТаблицыОтАндройда "+ИменаТаблицыОтАндройда );
             uriMatcherДЛяПровайдераКонтентБазаДанных=new UriMatcher(ИменаТаблицыОтАндройда.size());
             ИменаТаблицыОтАндройда.forEach(new Consumer<String>() {
