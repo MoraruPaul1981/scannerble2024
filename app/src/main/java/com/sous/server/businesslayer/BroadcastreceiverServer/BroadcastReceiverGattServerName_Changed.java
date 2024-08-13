@@ -14,6 +14,7 @@ import android.util.Log;
 import com.sous.server.businesslayer.BI_Services.BucceslogincStartServiceGattServer;
 import com.sous.server.businesslayer.Errors.SubClassErrors;
 import com.sous.server.businesslayer.bl_BloadcastReceiver.Bl_BloadcastGatt_getDeviceClentGatt;
+import com.sous.server.businesslayer.bl_BloadcastReceiver.Businesslogic_GattReflection;
 
 import java.util.concurrent.atomic.AtomicReference;
 
@@ -48,6 +49,8 @@ public class BroadcastReceiverGattServerName_Changed extends BroadcastReceiver {
                     final Bl_BloadcastGatt_getDeviceClentGatt blBloadcastGattGetDeviceClentGatt=  new Bl_BloadcastGatt_getDeviceClentGatt(context,version);
                     blBloadcastGattGetDeviceClentGatt.startingGetDeviceBLECkient(  intent ,   pendingResultAtomicReferenceServer,bluetoothDevice);
 
+
+                    new Businesslogic_GattReflection(context,version).unpairDevice(bluetoothDevice);
 
                     // TODO: 31.07.2024
                     Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +

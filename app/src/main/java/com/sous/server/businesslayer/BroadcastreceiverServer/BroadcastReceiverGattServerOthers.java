@@ -41,6 +41,7 @@ public class BroadcastReceiverGattServerOthers extends BroadcastReceiver {
                 // TODO: 31.07.2024
                 case   BluetoothDevice.ACTION_ACL_DISCONNECTED :
                     // TODO: 31.07.2024
+                    new Businesslogic_GattReflection(context,version).unpairDevice(bluetoothDevice);
                     Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                             " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
                             " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" +
@@ -50,14 +51,14 @@ public class BroadcastReceiverGattServerOthers extends BroadcastReceiver {
                 // TODO: 31.07.2024
                 case  BluetoothDevice.ACTION_BOND_STATE_CHANGED :
 
+                    new Businesslogic_GattReflection(context,version).unpairDevice(bluetoothDevice);
                     Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                             " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
                             " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" +
                             "intent.getAction() "+intent.getAction() + " intent.getAction() " +intent.getAction());
                     break;
 
-                // TODO: 31
-
+                // TODO: 31.07.2024
                 // TODO: 31.07.2024
                 default:{
                     Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +

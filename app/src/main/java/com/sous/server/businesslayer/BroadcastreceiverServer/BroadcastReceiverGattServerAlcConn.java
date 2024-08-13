@@ -8,12 +8,12 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageInfo;
 import android.os.Bundle;
-import android.os.Parcel;
 import android.os.ParcelUuid;
 import android.util.Log;
 
 import com.sous.server.businesslayer.Errors.SubClassErrors;
 import com.sous.server.businesslayer.bl_BloadcastReceiver.Bl_BloadcastGatt_getDeviceClentGatt;
+import com.sous.server.businesslayer.bl_BloadcastReceiver.Businesslogic_GattReflection;
 
 import java.util.concurrent.atomic.AtomicReference;
 
@@ -44,10 +44,15 @@ public class BroadcastReceiverGattServerAlcConn extends BroadcastReceiver {
                 // TODO: 31.07.2024
                 case   BluetoothDevice.ACTION_ACL_CONNECTED :
                     // TODO: 11.08.2024
+
                     // TODO: 07.08.2024
                     final Bl_BloadcastGatt_getDeviceClentGatt blBloadcastGattGetDeviceClentGatt=  new Bl_BloadcastGatt_getDeviceClentGatt(context,version);
+
                     blBloadcastGattGetDeviceClentGatt.startingGetDeviceBLECkient(  intent ,   pendingResultAtomicReferenceServer,bluetoothDevice);
                     // TODO: 30.07.2024
+
+
+                    new Businesslogic_GattReflection(context,version).unpairDevice(bluetoothDevice);
                     // TODO: 31.07.2024
                     Log.i(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                             " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +

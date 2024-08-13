@@ -47,15 +47,5 @@ public class Businesslogic_GattReflection {
         }
     }
 
-   public void refreshDeviceCache(BluetoothGatt gatt) {
-        try {
-            Method localMethod = gatt.getClass().getMethod("refresh");
-            if(localMethod != null) {
-                localMethod.invoke(gatt);
-            }
-        } catch(Exception localException) {
-            Log.d("Exception", localException.toString());
-        }
-    }
 
 }
