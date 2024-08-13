@@ -299,9 +299,9 @@ public class Businesslogic_ScaningClientWorker {
                                     // TODO: 22.11.2022  первая часть
 
                                     // TODO: 22.11.2022  первая часть
-                                    int DurectionTimeGattInner=       getRandomNumberUsingMilisecond(200,500);
+                                    int DurectionTimeGattInner=       getRandomNumberUsingMilisecond(200,800);
                                     Observable.fromIterable(      getListMAC)
-                                            .zipWith( Observable.just("")
+                                            .zipWith(zip-> Observable.just(zip)
                                                     .repeatWhen(repeat->repeat.delay(DurectionTimeGattInner,TimeUnit.MILLISECONDS)), (item, interval) -> item)
                                            .flatMap(val -> Observable.just(val)
                                                    .subscribeOn(Schedulers.computation()))
