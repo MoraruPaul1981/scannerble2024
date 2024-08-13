@@ -16,6 +16,7 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.SharedPreferences;
 import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
@@ -37,6 +38,7 @@ import com.sous.scanner.presentationlayer.FragmentScannerUser;
 
 import org.greenrobot.eventbus.EventBus;
 
+import java.util.Collections;
 import java.util.Date;
 import java.util.Random;
 import java.util.UUID;
@@ -79,16 +81,19 @@ public class Businesslogic_ScaningClientWorker {
 
     private Disposable      disposablerange ;
     private  ServiceClientsScanBackground serviceClientsScanBackground;
+    private SharedPreferences preferences;
     public Businesslogic_ScaningClientWorker(@NonNull BluetoothManager bluetoothManagerServer,
                                              @NonNull BluetoothAdapter bluetoothAdapterPhoneClient,
                                              @NonNull Long version,
                                              @NonNull Context context,
-                                             @NonNull ServiceClientsScanBackground serviceClientsScanBackground) {
+                                             @NonNull ServiceClientsScanBackground serviceClientsScanBackground,
+                                             @NonNull SharedPreferences preferences) {
         this.bluetoothManagerServer = bluetoothManagerServer;
         this.bluetoothAdapterPhoneClient = bluetoothAdapterPhoneClient;
         this.version = version;
         this.context = context;
         this.serviceClientsScanBackground = serviceClientsScanBackground;
+        this.preferences = preferences;
 
         // TODO: 06.08.2024
           message=getMessage();
@@ -310,6 +315,12 @@ public class Businesslogic_ScaningClientWorker {
                                                     // TODO: 26.07.2024
                                                     final BluetoothDevice bluetoothDeviceScan = bluetoothAdapterPhoneClient.getRemoteDevice(getAddress.trim());
 
+                                                    // TODO: 13.08.2024
+
+                                                    SharedPreferences.Editor editor = preferences.edit();
+                                                    editor.putStringSet(bluetoothDeviceScan.getAddress(), Collections.singleton(bluetoothDeviceScan.getAddress()));
+                                                    editor.apply();
+
                                                     // TODO: 12.02.2023  init CallBack Gatt Client for Scan
                                                     bluetoothGattCallbacks.add(МетодРаботыСТекущийСерверомGATTДляScan( ));
 
@@ -325,6 +336,8 @@ public class Businesslogic_ScaningClientWorker {
 
                                                     // TODO: 08.08.2024  увеличиваем общще количесто операций
                                                     atomicIntegerDisponse.incrementAndGet();
+
+
 
                                                     // TODO: 02.08.2024
                                                     Log.d(this.getClass().getName(), "\n" + " class " +

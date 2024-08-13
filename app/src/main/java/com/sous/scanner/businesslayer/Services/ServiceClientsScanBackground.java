@@ -13,6 +13,7 @@ import android.bluetooth.BluetoothManager;
 import android.bluetooth.BluetoothProfile;
 import android.content.ContentValues;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageInfo;
 import android.os.Build;
 import android.os.IBinder;
@@ -21,6 +22,7 @@ import android.util.Log;
 import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 import androidx.core.app.NotificationCompat;
+import androidx.preference.PreferenceManager;
 
 import com.sous.scanner.R;
 import com.sous.scanner.businesslayer.Errors.SubClassErrors;
@@ -44,7 +46,7 @@ public class ServiceClientsScanBackground extends IntentService {
 
    private     NotificationManager notificationManager;
 
-
+private      SharedPreferences preferences;
     public ServiceClientsScanBackground( ) {
         super(ServiceClientsScanBackground.class.toString());
     }
@@ -61,6 +63,7 @@ public class ServiceClientsScanBackground extends IntentService {
                     " Класс в процессе... " + this.getClass().getName() + "\n" +
                     " метод в процессе... " + Thread.currentThread().getStackTrace()[2].getMethodName());
 
+            preferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
 
             BusinessoginEnableBluetoothAdapter bluetoothAdapter=       new BusinessoginEnableBluetoothAdapter(getApplicationContext(),version);
 
@@ -80,7 +83,7 @@ public class ServiceClientsScanBackground extends IntentService {
              blForServiceScan=       new Businesslogic_ScaningClientWorker(bluetoothManagerServer,
                     bluetoothAdapterPhoneClient,
                     version,
-                    getApplicationContext(),this);
+                    getApplicationContext(),this,  preferences);
 
 
             blForServiceScan.    getLocalBroadcastManager ();

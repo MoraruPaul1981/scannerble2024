@@ -9,11 +9,13 @@ import android.content.BroadcastReceiver;
 import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageInfo;
 import android.os.Handler;
 import android.util.Log;
 
 import androidx.annotation.NonNull;
+import androidx.preference.PreferenceManager;
 
 import com.sous.scanner.businesslayer.Errors.SubClassErrors;
 import com.sous.scanner.businesslayer.bl_BroadcastReciver.Businesslogic_GattClinetSuccessLocalBroadcastManager;
@@ -23,7 +25,9 @@ import org.jetbrains.annotations.NotNull;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.HashSet;
 import java.util.Optional;
+import java.util.Set;
 import java.util.concurrent.atomic.AtomicReference;
 
 public class BroadcastReceiverACL extends BroadcastReceiver {
@@ -31,7 +35,7 @@ public class BroadcastReceiverACL extends BroadcastReceiver {
     private Long version;
     private AtomicReference<PendingResult> pendingResultAtomicReferenceClient=new AtomicReference<>();
 
-
+    private   SharedPreferences preferences;
 
     @SuppressLint({"MissingPermission", "NewApi"})
     @Override
@@ -39,6 +43,8 @@ public class BroadcastReceiverACL extends BroadcastReceiver {
         // TODO: This method is called when the BroadcastReceiver is receiving
         try{
             pendingResultAtomicReferenceClient.set(goAsync());
+            // TODO: 13.08.2024
+            preferences = PreferenceManager.getDefaultSharedPreferences(context);
 
             // TODO: 31.07.2024 Получаем сам девайс
             final   BluetoothDevice     bluetoothDevice = intent.getParcelableExtra(BluetoothDevice.EXTRA_DEVICE);
@@ -51,13 +57,22 @@ public class BroadcastReceiverACL extends BroadcastReceiver {
                 case   BluetoothDevice.ACTION_ACL_CONNECTED :
                     // TODO: 02.08.2024
                     // TODO: 07.08.2024  Успешное Событие в нутри BroadCasr Recuver
+               Set<String> bluetoothDeviceScanInnersysntem=     preferences.getStringSet(bluetoothDevice.getAddress(), new HashSet<>());
+                boolean EmptyDevideCall=    bluetoothDeviceScanInnersysntem.contains(bluetoothDevice.getAddress().toString());
+
                     if (bluetoothDevice.getName()!=null) {
-                        if (bluetoothDevice.getName().length()>0) {
+                        if (bluetoothDevice.getName().length()>0 && EmptyDevideCall==true) {
                             // TODO: 13.08.2024
                             new Businesslogic_GattClinetSuccessLocalBroadcastManager(context,version).
                                       successLocalBroadcastManager(intent, bluetoothDevice,  pendingResultAtomicReferenceClient);
 
                             new Businesslogic_GattReflection(context,version).unpairDevice(bluetoothDevice);
+
+                            // TODO: 13.08.2024
+                            SharedPreferences.Editor editor = preferences.edit();
+                            editor.putString("bluetoothDeviceScan", "");
+                            editor.apply();
+
                         }
                     }
 
@@ -66,7 +81,10 @@ public class BroadcastReceiverACL extends BroadcastReceiver {
                             " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" +
                             "intent.getAction() "+intent.getAction() + "\n"
                             + " LocalDateTime.now() " + LocalDateTime.now().toString().toUpperCase()+"\n"+
-                            " bluetoothDevice.getName() " +bluetoothDevice.getName());
+                            " bluetoothDevice.getName() " +bluetoothDevice.getName()+"\n"+
+                            " bluetoothDeviceScanInnersysntem " +bluetoothDeviceScanInnersysntem
+                            +"\n"+
+                            " bluetoothDevice.getAddress().toString()) " +bluetoothDevice.getAddress().toString());
                     break;
                 // TODO: 31.07.2024
                 // TODO: 31.07.2024
