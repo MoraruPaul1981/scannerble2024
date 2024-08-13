@@ -128,8 +128,6 @@
                 <action android:name="android.bluetooth.device.action.ACTION_CLASS_CHANGED" />
             </intent-filter>
         </receiver>
-
-
         <receiver
             android:name=".businesslayer.Broadcastreceiver.BroadcastReceiverNAME_CHANGED"
             android:directBootAware="true"

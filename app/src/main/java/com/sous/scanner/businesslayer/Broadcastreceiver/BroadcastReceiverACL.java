@@ -57,22 +57,20 @@ public class BroadcastReceiverACL extends BroadcastReceiver {
                 // TODO: 31.07.2024
                 case   BluetoothDevice.ACTION_ACL_CONNECTED :
                     // TODO: 02.08.2024
-                    // TODO: 13.08.2024
-                  Boolean EmptyDevideCall=  new BussenloginSaredPreferense(preferences,context,version).     afterCurrentDeviceOrNO(bluetoothDevice);
+                    // TODO: 07.08.2024  Успешное Событие в нутри BroadCasr Recuver
+               Set<String> bluetoothDeviceScanInnersysntem=     preferences.getStringSet(bluetoothDevice.getAddress(), new HashSet<>());
+                boolean EmptyDevideCall=    bluetoothDeviceScanInnersysntem.contains(bluetoothDevice.getAddress().toString());
 
-                    if (bluetoothDevice.getName()!=null) {
-                        if (bluetoothDevice.getName().length()>0 && EmptyDevideCall==true) {
+                    if (EmptyDevideCall==true) {
                             // TODO: 13.08.2024
                             new Businesslogic_GattClinetSuccessLocalBroadcastManager(context,version).
                                       successLocalBroadcastManager(intent, bluetoothDevice,  pendingResultAtomicReferenceClient);
 
                             new Businesslogic_GattReflection(context,version).unpairDevice(bluetoothDevice);
 
-                            // TODO: 13.08.2024
-                       new BussenloginSaredPreferense(preferences,context,version).     workerSharedPreferences(bluetoothDevice);
+                      new BussenloginSaredPreferense(preferences,context,version).  workerSharedPreferences(bluetoothDevice);
 
                         }
-                    }
 
                     Log.i(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                             " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
@@ -80,7 +78,7 @@ public class BroadcastReceiverACL extends BroadcastReceiver {
                             "intent.getAction() "+intent.getAction() + "\n"
                             + " LocalDateTime.now() " + LocalDateTime.now().toString().toUpperCase()+"\n"+
                             " bluetoothDevice.getName() " +bluetoothDevice.getName()+"\n"+
-                            " EmptyDevideCall " +EmptyDevideCall
+                            " bluetoothDeviceScanInnersysntem " +bluetoothDeviceScanInnersysntem
                             +"\n"+
                             " bluetoothDevice.getAddress().toString()) " +bluetoothDevice.getAddress().toString());
                     break;

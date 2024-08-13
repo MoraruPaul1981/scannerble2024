@@ -58,7 +58,7 @@ public class Businesslogic_GattClinetSuccessLocalBroadcastManager {
 
                         LocalDateTime futureDate = LocalDateTime.now();
                        // DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy.MM.dd HH.mm.ss.SSS", new Locale("ru","RU"));
-                        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MMMM-dd HH.mm", new Locale("ru","RU"));
+                        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd-yyyy-MMMM, HH.mm", new Locale("ru","RU"));
                         String getBremy=   dtf.format(futureDate);
                         // TODO: 07.08.2024
 

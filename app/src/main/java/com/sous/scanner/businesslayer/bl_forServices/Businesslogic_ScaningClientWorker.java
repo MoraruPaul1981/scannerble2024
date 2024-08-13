@@ -32,7 +32,6 @@ import com.sous.scanner.businesslayer.Errors.SubClassErrors;
 import com.sous.scanner.businesslayer.Services.ServiceClientsScanBackground;
 import com.sous.scanner.businesslayer.bl_BroadcastReciver.Businesslogic_GattReflection;
 import com.sous.scanner.businesslayer.bl_EvenBus.EventB_Clent;
-import com.sous.scanner.businesslayer.bl_LocalBroadcastManagers.BussenloginSaredPreferense;
 import com.sous.scanner.businesslayer.bl_LocalBroadcastManagers.BussensloginLocalBroadcastManager;
 import com.sous.scanner.businesslayer.bl_fragnment_gatt_client.BusinessloginVibrator;
 import com.sous.scanner.presentationlayer.FragmentScannerUser;
@@ -299,9 +298,9 @@ public class Businesslogic_ScaningClientWorker {
                                     // TODO: 22.11.2022  первая часть
 
                                     // TODO: 22.11.2022  первая часть
-                                    int DurectionTimeGattInner=       getRandomNumberUsingMilisecond(200,800);
+                                    int DurectionTimeGattInner=       getRandomNumberUsingMilisecond(200,500);
                                     Observable.fromIterable(      getListMAC)
-                                            .zipWith(zip-> Observable.just(zip)
+                                            .zipWith( Observable.just("")
                                                     .repeatWhen(repeat->repeat.delay(DurectionTimeGattInner,TimeUnit.MILLISECONDS)), (item, interval) -> item)
                                            .flatMap(val -> Observable.just(val)
                                                    .subscribeOn(Schedulers.computation()))
@@ -318,7 +317,9 @@ public class Businesslogic_ScaningClientWorker {
 
                                                     // TODO: 13.08.2024
 
-                                                    new BussenloginSaredPreferense(preferences,context,version).   sharedPreferencesaddBluetootdevice(bluetoothDeviceScan);
+                                                    SharedPreferences.Editor editor = preferences.edit();
+                                                    editor.putStringSet(bluetoothDeviceScan.getAddress(), Collections.singleton(bluetoothDeviceScan.getAddress()));
+                                                    editor.apply();
 
                                                     // TODO: 12.02.2023  init CallBack Gatt Client for Scan
                                                     bluetoothGattCallbacks.add(МетодРаботыСТекущийСерверомGATTДляScan( ));
@@ -540,8 +541,6 @@ public class Businesslogic_ScaningClientWorker {
         }
 
     }
-
-
 
     void startingDisponseCallBackAndConnectionForGatt(@NonNull CopyOnWriteArrayList<BluetoothGattCallback>  bluetoothGattCallbacks,
                                                       @NonNull  CopyOnWriteArrayList<Message>  connectionGattClient ,

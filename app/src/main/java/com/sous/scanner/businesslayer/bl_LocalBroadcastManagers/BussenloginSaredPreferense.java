@@ -35,10 +35,6 @@ public class BussenloginSaredPreferense {
             SharedPreferences.Editor editor = preferences.edit();
 
             editor.remove(bluetoothDevice.getAddress().toString());
-
-            if (Optional.ofNullable(bluetoothDevice.getName()).isPresent()) {
-                editor.putString("getName", bluetoothDevice.getName().toString());
-            }
             editor.apply();
             // TODO: 13.08.2024
             Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +

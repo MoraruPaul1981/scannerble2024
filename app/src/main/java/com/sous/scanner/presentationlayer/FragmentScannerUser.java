@@ -203,15 +203,9 @@ public class FragmentScannerUser extends Fragment {
         String completeResultContol=    preferences.getString("completeResultContol","");
         if (completeResultContol.length()>0) {
             materialtextview_last_state.setText(completeResultContol);
-            materialtextview_last_state.setTextSize(13l);
             materialtextview_last_state.requestLayout();
             materialtextview_last_state.refreshDrawableState();
         }
-
-            Log.d(getContext().getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
-                    " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                    " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"+
-                    " completeResultContol " +completeResultContol);
     } catch (Exception e) {
         e.printStackTrace();
         Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() + " Линия  :"
@@ -760,9 +754,6 @@ public class FragmentScannerUser extends Fragment {
 
                     // TODO: 08.08.2024
                     getLocalBroadcastManagerRebootUI (holder);
-
-                    // TODO: 07.08.2024 Востанавливаем статус последниуспешый статус
-                    materialtextViewGetLastState();
 
                     Log.d(getContext().getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                             " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
