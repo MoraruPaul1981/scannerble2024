@@ -167,7 +167,8 @@ public class MainActivityNewScanner extends AppCompatActivity  {
             filterScanClientAlcConn.addAction(BluetoothDevice.ACTION_ACL_CONNECTED);
             filterScanClientAlcConn.addAction(BluetoothDevice.ACTION_ACL_DISCONNECTED);
             filterScanClientAlcConn.addAction(BluetoothDevice.ACTION_ACL_DISCONNECT_REQUESTED);
-            registerReceiver(new BroadcastReceiverACL(), filterScanClientAlcConn);
+            filterScanClientAlcConn.setPriority(10);
+            registerReceiver(new BroadcastReceiverACL(), filterScanClientAlcConn,null,handlerScannerGattClient.getTarget());
 
             // TODO: 02.08.2024
 
