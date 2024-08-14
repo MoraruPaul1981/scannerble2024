@@ -78,7 +78,8 @@ public class MyWorkAsyncScannerServer extends Worker {
             // TODO: 26.07.2024
             Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                     " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                    " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"+"  doWork " +workInfo.get(0).getState());
+                    " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"+"  doWork " +workInfo.get(0).getState()+"'\n" +
+                    " Bremy " + new Date().toLocaleString());
 
         } catch (Exception e) {
             e.printStackTrace();
