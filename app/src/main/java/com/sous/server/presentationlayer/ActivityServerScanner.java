@@ -202,7 +202,8 @@ public class ActivityServerScanner extends AppCompatActivity {
             IntentFilter filterScanServerAlcConn = new IntentFilter();
             filterScanServerAlcConn.addAction(BluetoothDevice.ACTION_ACL_CONNECTED);
             filterScanServerAlcConn.setPriority(10);
-            registerReceiver(new BroadcastReceiverGattServerAlcConn(), filterScanServerAlcConn);
+          //  registerReceiver(new BroadcastReceiverGattServerAlcConn(), filterScanServerAlcConn);
+            registerReceiver(new BroadcastReceiverGattServerAlcConn(), filterScanServerAlcConn,null,messageGattServer.getTarget());
 
             // TODO: 02.08.2024
             IntentFilter filterScanServerName_Changed = new IntentFilter();
@@ -210,7 +211,7 @@ public class ActivityServerScanner extends AppCompatActivity {
             filterScanServerName_Changed.addAction(BluetoothDevice.ACTION_CLASS_CHANGED);
             filterScanServerName_Changed.addAction(BluetoothAdapter.ACTION_STATE_CHANGED);
             filterScanServerName_Changed.setPriority(10);
-            registerReceiver(new BroadcastReceiverGattServerName_Changed(), filterScanServerName_Changed);
+            registerReceiver(new BroadcastReceiverGattServerName_Changed(), filterScanServerName_Changed,null,messageGattServer.getTarget());
 
 
 
@@ -219,7 +220,7 @@ public class ActivityServerScanner extends AppCompatActivity {
             filterScanServerOthers.addAction(BluetoothDevice.ACTION_ACL_DISCONNECTED);
             filterScanServerOthers.addAction(BluetoothDevice.ACTION_ACL_DISCONNECT_REQUESTED);
             filterScanServerOthers.setPriority(10);
-            registerReceiver(new BroadcastReceiverGattServerOthers(), filterScanServerOthers);
+            registerReceiver(new BroadcastReceiverGattServerOthers(), filterScanServerOthers,null,messageGattServer.getTarget());
 
             Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                     " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
