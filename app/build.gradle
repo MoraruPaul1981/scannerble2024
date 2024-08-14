@@ -24,14 +24,14 @@ android {
     }
 
 
-     compileSdk 33
+     compileSdk 34
 
 
 
     defaultConfig {
         applicationId "com.sous.server"
         minSdk 29
-        targetSdk 33
+        targetSdk 34
         versionCode 29
         versionName 'Server GATT 2024'
 
@@ -119,6 +119,6 @@ dependencies {
     implementation 'com.google.firebase:firebase-analytics'
 
 
-    implementation project(':workmanager')
+
 
 }

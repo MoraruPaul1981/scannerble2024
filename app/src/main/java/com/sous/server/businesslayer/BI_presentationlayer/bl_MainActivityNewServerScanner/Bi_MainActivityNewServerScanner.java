@@ -16,6 +16,7 @@ import androidx.fragment.app.FragmentTransaction;
 
 import com.sous.server.R;
 import com.sous.server.businesslayer.Errors.SubClassErrors;
+import com.sous.server.datalayer.data.CREATE_DATABASEServerScanner;
 
 import java.util.Date;
 
@@ -111,7 +112,8 @@ public class Bi_MainActivityNewServerScanner {
         // CREATE_DATABASEServerScanner createDatabaseServerScanner= new CREATE_DATABASEServerScanner(context);
             Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                     " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                    " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" );
+                    " line " + Thread.currentThread().getStackTrace()[2].getLineNumber()
+                    + "\n"  + " Create_Database_СамаБАзаSQLite " +Create_Database_СамаБАзаSQLite);
 
         } catch (Exception e) {
             e.printStackTrace();
