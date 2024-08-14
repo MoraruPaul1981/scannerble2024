@@ -48,11 +48,11 @@ public class GetApplication  extends Application {
 
             // TODO: 14.08.2024
 
-            RemoteMessaging remoteMessaging=new RemoteMessaging(Create_Database_СамаБАзаSQLite);
+            RemoteMessaging remoteMessaging=new RemoteMessaging(Create_Database_СамаБАзаSQLite,getApplicationContext(),version);
             // TODO: 14.08.2024
             Integer startingRemoteMessaging=  remoteMessaging.startingRemoteMessaging();
-
-
+            // TODO: 14.08.2024 start workmanager
+              remoteMessaging.initWorkmanager();
 
 
             // TODO: 26.07.2024

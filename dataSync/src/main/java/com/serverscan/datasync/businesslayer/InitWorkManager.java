@@ -4,6 +4,7 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.util.Log;
 
+import androidx.lifecycle.LiveData;
 import androidx.work.BackoffPolicy;
 import androidx.work.Constraints;
 import androidx.work.Data;
@@ -12,7 +13,9 @@ import androidx.work.NetworkType;
 import androidx.work.PeriodicWorkRequest;
 import androidx.work.WorkInfo;
 import androidx.work.WorkManager;
+import androidx.work.multiprocess.RemoteWorkManager;
 
+import com.serverscan.datasync.Errors.SubClassErrors;
 import com.serverscan.datasync.WorkManager.MyWorkAsyncScannerServer;
 
 import java.util.Date;
@@ -32,10 +35,10 @@ public class InitWorkManager {
     }
 
 
-    private void initWorkManager()
+    public void initWorkManager()
             throws ExecutionException, InterruptedException {
         try {
-            String ИмяСлужбыСинхронизации = "WorkManager Synchronizasiy_DataScanners";
+            String ИмяСлужбыСинхронизации = "workmanagerdataSync";
             Data myDataДляОбщейСинхрониазации = new Data.Builder()
                     .putInt("КтоЗапустилWorkManagerДляСинхронизации", 1)
                     .build();
@@ -45,7 +48,8 @@ public class InitWorkManager {
                     .setRequiresStorageNotLow(false)
                     .build();
             PeriodicWorkRequest periodicWorkRequestСинхронизация = new PeriodicWorkRequest.Builder(MyWorkAsyncScannerServer.class,
-                    PeriodicWorkRequest.MIN_PERIODIC_INTERVAL_MILLIS, TimeUnit.MILLISECONDS)//MIN_PERIODIC_FLEX_MILLIS////  PeriodicWorkRequest.MIN_PERIODIC_INTERVAL_MILLIS, TimeUnit.MILLISECONDS PeriodicWorkRequest.MIN_PERIODIC_INTERVAL_MILLIS
+                    PeriodicWorkRequest.MIN_PERIODIC_INTERVAL_MILLIS, TimeUnit.MILLISECONDS)//MIN_PERIODIC_FLEX_MILLIS////
+                    // PeriodicWorkRequest.MIN_PERIODIC_INTERVAL_MILLIS, TimeUnit.MILLISECONDS PeriodicWorkRequest.MIN_PERIODIC_INTERVAL_MILLIS
                     .addTag(ИмяСлужбыСинхронизации)
                     .setInputData(myDataДляОбщейСинхрониазации)
                     .setConstraints(constraintsСинхронизация)
@@ -57,15 +61,37 @@ public class InitWorkManager {
                     .build();
 
 
-            List<WorkInfo> workInfo = WorkManager.getInstance(context).getWorkInfosByTag(ИмяСлужбыСинхронизации).get();
-            if (  workInfo.size()>=0){
-                Log.w(context.getClass().getName(), " ПОСЛЕ ОТРАБОТКИ МЕТОДА ..." +
-                        ".Внутри BroadcastReceiverWorkManagerScannersServer  callbackRunnable.name() "
-                        + "  workInfo " +workInfo+  "   workInfo.hasObservers() " +  workInfo + "  workInfo.getState() " +workInfo.get(0).getState());
-                WorkManager.getInstance(context.getApplicationContext()).enqueueUniquePeriodicWork(ИмяСлужбыСинхронизации,
-                        ExistingPeriodicWorkPolicy.REPLACE, periodicWorkRequestСинхронизация);
-            }
-            Log.i(this.getClass().getName(),  "  " +Thread.currentThread().getStackTrace()[2].getMethodName()+ " время " +new Date().toLocaleString() );
+          //  List<WorkInfo> workInfo = WorkManager.getInstance(context).getWorkInfosByTag(ИмяСлужбыСинхронизации).get();
+
+           LiveData<List<WorkInfo>> workInfosByTagLiveData = WorkManager.getInstance(context).getWorkInfosByTagLiveData(ИмяСлужбыСинхронизации);
+
+      List<WorkInfo> workInfo=      workInfosByTagLiveData.getValue();
+
+      switch ( workInfo.get(0).getState())   {
+
+          case RUNNING,BLOCKED,ENQUEUED,CANCELLED,SUCCEEDED,FAILED -> {
+              // TODO: 26.07.2024
+              Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                      " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                      " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n");
+          }
+
+          default -> {
+              RemoteWorkManager.getInstance(context.getApplicationContext()).enqueueUniquePeriodicWork(ИмяСлужбыСинхронизации,
+                      ExistingPeriodicWorkPolicy.UPDATE, periodicWorkRequestСинхронизация);
+              // TODO: 26.07.2024
+              Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                      " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                      " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n");
+          }
+      }
+
+
+
+            // TODO: 26.07.2024
+            Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                    " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                    " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n");
         } catch (Exception e) {
             e.printStackTrace();
             Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() + " Линия  :"
