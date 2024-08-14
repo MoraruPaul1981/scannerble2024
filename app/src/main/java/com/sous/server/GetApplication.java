@@ -9,6 +9,8 @@ import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 
 
+import androidx.startup.AppInitializer;
+
 import com.serverscan.datasync.businesslayer.RemoteMessaging;
 import com.sous.server.businesslayer.Errors.SubClassErrors;
 import com.sous.server.businesslayer.bl_OneSingal.BussenslogicOneSignal;
@@ -49,6 +51,9 @@ public class GetApplication  extends Application {
             RemoteMessaging remoteMessaging=new RemoteMessaging(Create_Database_СамаБАзаSQLite);
             // TODO: 14.08.2024
             Integer startingRemoteMessaging=  remoteMessaging.startingRemoteMessaging();
+
+
+
 
             // TODO: 26.07.2024
             Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +

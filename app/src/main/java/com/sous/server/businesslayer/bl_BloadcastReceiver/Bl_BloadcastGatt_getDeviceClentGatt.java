@@ -32,7 +32,7 @@ public class Bl_BloadcastGatt_getDeviceClentGatt {
     private  Long version;
 
     private ContentProviderServer contentProviderServer;
-    private SharedPreferences sharedPreferencesGatt;
+
 
     public Bl_BloadcastGatt_getDeviceClentGatt(Context context, Long version) {
         this.context = context;
@@ -43,21 +43,19 @@ public class Bl_BloadcastGatt_getDeviceClentGatt {
     public synchronized void  startingGetDeviceBLECkient(  @NonNull Intent intent,
                                              @NonNull AtomicReference<BroadcastReceiver.PendingResult>
                                                      pendingResultAtomicReference,
-                                             @NonNull BluetoothDevice     bluetoothDevice) {
+                                             @NonNull final BluetoothDevice     bluetoothDevice) {
         Completable.fromAction(new Action() {
                     @SuppressLint("MissingPermission")
                     @Override
                     public void run() throws Throwable {
 
 
-                        sharedPreferencesGatt =context. getSharedPreferences("gatt", Context.MODE_PRIVATE);
+                        SharedPreferences          sharedPreferencesGatt =context. getSharedPreferences("gatt", Context.MODE_PRIVATE);
                         // TODO: 29.07.2024
                         getContentProvider();
                         // TODO: 29.07.2024
 
                         // TODO: 22.07.2024  Код Брадкаста ресивера
-
-
 
                         Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                                 " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +

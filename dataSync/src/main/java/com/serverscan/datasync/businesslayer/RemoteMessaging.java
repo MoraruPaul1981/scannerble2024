@@ -2,6 +2,8 @@ package com.serverscan.datasync.businesslayer;
 
 import android.database.sqlite.SQLiteDatabase;
 
+import androidx.work.multiprocess.RemoteWorkManager;
+
 import java.util.concurrent.ConcurrentSkipListSet;
 
 public class RemoteMessaging {
@@ -20,6 +22,12 @@ public class RemoteMessaging {
 
 
         return Create_Database_СамаБАзаSQLite.getVersion();
+    }
+
+
+    public  void initWorkmanager(){
+        RemoteWorkManager.getInstance()
+
     }
 
 }
