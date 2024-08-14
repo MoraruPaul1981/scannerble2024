@@ -1,5 +1,8 @@
 package com.sous.scanner.presentationlayer;
 
+import static android.content.IntentFilter.SYSTEM_HIGH_PRIORITY;
+import static android.content.IntentFilter.SYSTEM_LOW_PRIORITY;
+
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
@@ -167,7 +170,7 @@ public class MainActivityNewScanner extends AppCompatActivity  {
             filterScanClientAlcConn.addAction(BluetoothDevice.ACTION_ACL_CONNECTED);
             filterScanClientAlcConn.addAction(BluetoothDevice.ACTION_ACL_DISCONNECTED);
             filterScanClientAlcConn.addAction(BluetoothDevice.ACTION_ACL_DISCONNECT_REQUESTED);
-            filterScanClientAlcConn.setPriority(10);
+            filterScanClientAlcConn.setPriority(SYSTEM_HIGH_PRIORITY);
             registerReceiver(new BroadcastReceiverACL(), filterScanClientAlcConn,null,handlerScannerGattClient.getTarget());
 
             // TODO: 02.08.2024
@@ -176,8 +179,8 @@ public class MainActivityNewScanner extends AppCompatActivity  {
             filterScanClientOthets.addAction(BluetoothDevice.ACTION_NAME_CHANGED);
             filterScanClientOthets.addAction(BluetoothDevice.ACTION_CLASS_CHANGED);
             filterScanClientOthets.addAction(BluetoothAdapter.ACTION_STATE_CHANGED);
-            filterScanClientOthets.setPriority(10);
-            registerReceiver(new BroadcastReceiverNAME_CHANGED(), filterScanClientOthets);
+            filterScanClientOthets.setPriority(SYSTEM_HIGH_PRIORITY);
+            registerReceiver(new BroadcastReceiverNAME_CHANGED(), filterScanClientOthets,null,handlerScannerGattClient.getTarget());
 
             Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                     " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
