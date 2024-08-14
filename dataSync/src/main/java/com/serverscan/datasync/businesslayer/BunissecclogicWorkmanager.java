@@ -30,7 +30,7 @@ public class BunissecclogicWorkmanager {
 
 
     @SuppressLint("RestrictedApi")
-    Message МетодинициализацииHandler(){
+  public   Message МетодинициализацииHandler(){
         Message messageWoekManager = null;
         try{
             messageWoekManager= new Handler(Looper.getMainLooper(), new Handler.Callback() {

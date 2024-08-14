@@ -38,9 +38,10 @@ public class InitWorkManager {
     public void initWorkManager()
             throws ExecutionException, InterruptedException {
         try {
-            String ИмяСлужбыСинхронизации = "workmanagerdataSync";
+            String ИмяСлужбыСинхронизации = "workmanagerdataasync";
             Data myDataДляОбщейСинхрониазации = new Data.Builder()
                     .putInt("КтоЗапустилWorkManagerДляСинхронизации", 1)
+                    .putString("getname", ИмяСлужбыСинхронизации)
                     .build();
             Constraints constraintsСинхронизация = new Constraints.Builder()
                     .setRequiredNetworkType(NetworkType.CONNECTED)
@@ -61,31 +62,38 @@ public class InitWorkManager {
                     .build();
 
 
-          //  List<WorkInfo> workInfo = WorkManager.getInstance(context).getWorkInfosByTag(ИмяСлужбыСинхронизации).get();
+           List<WorkInfo> workInfo = WorkManager.getInstance(context).getWorkInfosByTag(ИмяСлужбыСинхронизации).get();
 
-           LiveData<List<WorkInfo>> workInfosByTagLiveData = WorkManager.getInstance(context).getWorkInfosByTagLiveData(ИмяСлужбыСинхронизации);
-
-      List<WorkInfo> workInfo=      workInfosByTagLiveData.getValue();
-
-      switch ( workInfo.get(0).getState())   {
-
-          case RUNNING,BLOCKED,ENQUEUED,CANCELLED,SUCCEEDED,FAILED -> {
-              // TODO: 26.07.2024
-              Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
-                      " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                      " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n");
-          }
-
-          default -> {
-              RemoteWorkManager.getInstance(context.getApplicationContext()).enqueueUniquePeriodicWork(ИмяСлужбыСинхронизации,
-                      ExistingPeriodicWorkPolicy.UPDATE, periodicWorkRequestСинхронизация);
-              // TODO: 26.07.2024
-              Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
-                      " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                      " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n");
-          }
-      }
-
+            if (workInfo.size()>0) {
+                // TODO: 14.08.2024
+                switch ( workInfo.get(0).getState())   {
+          
+                    case RUNNING,BLOCKED,ENQUEUED ,CANCELLED,SUCCEEDED,FAILED -> {
+                        // TODO: 26.07.2024
+                        Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                                " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                                " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n");
+                    }
+          
+                    default -> {
+                        // TODO: 14.08.2024  
+                        RemoteWorkManager.getInstance(context.getApplicationContext()).enqueueUniquePeriodicWork(ИмяСлужбыСинхронизации,
+                                ExistingPeriodicWorkPolicy.UPDATE, periodicWorkRequestСинхронизация);
+                        // TODO: 26.07.2024
+                        Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                                " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                                " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n");
+                    }
+                }
+            }else {
+// TODO: 14.08.2024  
+                RemoteWorkManager.getInstance(context.getApplicationContext()).enqueueUniquePeriodicWork(ИмяСлужбыСинхронизации,
+                        ExistingPeriodicWorkPolicy.UPDATE, periodicWorkRequestСинхронизация);
+                // TODO: 26.07.2024
+                Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                        " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                        " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n");  
+            }
 
 
             // TODO: 26.07.2024

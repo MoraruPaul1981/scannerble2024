@@ -10,6 +10,10 @@ import android.os.Message;
 import android.util.Log;
 
 import androidx.annotation.NonNull;
+import androidx.lifecycle.LiveData;
+import androidx.work.Data;
+import androidx.work.WorkInfo;
+import androidx.work.WorkManager;
 import androidx.work.Worker;
 import androidx.work.WorkerParameters;
 
@@ -17,12 +21,14 @@ import com.serverscan.datasync.Errors.SubClassErrors;
 import com.serverscan.datasync.businesslayer.BunissecclogicWorkmanager;
 
 import java.util.Date;
+import java.util.List;
 
 public class MyWorkAsyncScannerServer extends Worker {
     private Context context;
 
     private Long version=0l;
     private Message messageWoekManager;
+    private  String ИмяСлужбыСинхронизации;
     private BunissecclogicWorkmanager bunissecclogicWorkmanager;
     // TODO: 28.09.2022
     public MyWorkAsyncScannerServer(@NonNull Context context, @NonNull WorkerParameters workerParams) {
@@ -33,8 +39,13 @@ public class MyWorkAsyncScannerServer extends Worker {
             PackageInfo pInfo = context.getPackageManager().getPackageInfo(context.getPackageName(), 0);
             version = pInfo.getLongVersionCode();
 
+       Data data=     workerParams.getInputData();
+            ИмяСлужбыСинхронизации=     data.getString("getname");
+
             // TODO: 14.08.2024
              bunissecclogicWorkmanager=new BunissecclogicWorkmanager(getApplicationContext(),version);
+            // TODO: 14.08.2024  
+            messageWoekManager=   bunissecclogicWorkmanager.МетодинициализацииHandler();
             // TODO: 26.07.2024
             Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                     " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
@@ -61,10 +72,14 @@ public class MyWorkAsyncScannerServer extends Worker {
     @Override
     public Result doWork() {
         try {
+
+            List<WorkInfo> workInfo = WorkManager.getInstance(context).getWorkInfosByTag(ИмяСлужбыСинхронизации).get();
+            
             // TODO: 26.07.2024
             Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                     " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                    " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n");
+                    " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"+"  doWork " +workInfo.get(0).getState());
+
         } catch (Exception e) {
             e.printStackTrace();
             Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() + " Линия  :"
