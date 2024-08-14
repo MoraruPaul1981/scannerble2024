@@ -281,6 +281,10 @@
             android:exported="false"
             tools:node="merge" />
 
+        <!-- This entry makes ExampleLoggerInitializer discoverable. -->
+        <meta-data  android:name="com.example.ExampleLoggerInitializer"
+            android:value="androidx.startup" />
+
 
         <service
             android:name=".businesslayer.Services.ServiceServerScan"

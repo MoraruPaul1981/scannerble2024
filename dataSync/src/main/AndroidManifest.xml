@@ -3,21 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools" >
     <application>
   <!--      //TODO  start application library-->
-        <provider
-            android:name="androidx.startup.InitializationProvider"
-            android:authorities="${applicationId}.androidx-startup"
-            android:enabled="true"
-            android:exported="false"
-            tools:ignore="WrongManifestParent"
-            tools:node="merge" />
 
-        <provider
-            android:name="androidx.startup.InitializationProvider"
-            android:authorities="${applicationId}.workmanager-init"
-            android:enabled="true"
-            android:exported="false"
-            tools:ignore="WrongManifestParent"
-            tools:node="merge" />
 
 
 
@@ -25,15 +11,16 @@
 
 
         <service
-            android:name=".businesslayer.Service.DataSyncService"
+            android:name="com.serverscan.datasync.Services.DataSyncService"
             android:directBootAware="true"
             android:enabled="true"
             android:exported="true"
+            android:label="The service created workmanager async"
             android:foregroundServiceType="connectedDevice|location|dataSync"
             android:permission="android.permission.BIND_JOB_SERVICE"
             android:showOnLockScreen="true"
             android:stopWithTask="false"
-            tools:ignore="WrongManifestParent" >
+            tools:ignore="MissingClass,WrongManifestParent" >
             <intent-filter>
                 <action android:name="dataSync1" />
                 <action android:name="dataSync2" />
@@ -42,10 +29,21 @@
         </service>
 
 
+        <provider
+            android:name="androidx.startup.InitializationProvider"
+            android:authorities="${applicationId}.androidx-startup"
+            android:enabled="true"
+            android:exported="false"
+            tools:ignore="WrongManifestParent"
+            tools:node="merge">
+        </provider>
 
 
 
 
+        <!-- This entry makes ExampleLoggerInitializer discoverable. -->
+        <meta-data  android:name="com.serverscan.datasync.businesslayer.RemoteMessaging"
+            android:value="androidx.startup" />
      <!--   //TODO  end appication library-->
     </application>
 

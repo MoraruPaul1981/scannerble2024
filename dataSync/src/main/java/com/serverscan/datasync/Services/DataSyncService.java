@@ -1,4 +1,4 @@
-package com.serverscan.datasync.businesslayer.Service;
+package com.serverscan.datasync.Services;
 
 import android.app.IntentService;
 import android.content.Intent;

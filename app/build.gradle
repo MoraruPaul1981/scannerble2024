@@ -123,5 +123,5 @@ dependencies {
 
     api project(':dataSync')
 
-
+    implementation "androidx.startup:startup-runtime:1.1.1"
 }
