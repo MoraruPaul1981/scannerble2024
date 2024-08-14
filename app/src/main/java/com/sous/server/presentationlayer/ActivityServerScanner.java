@@ -1,5 +1,7 @@
 package com.sous.server.presentationlayer;
 
+import static android.content.IntentFilter.SYSTEM_HIGH_PRIORITY;
+
 import android.annotation.SuppressLint;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
@@ -201,7 +203,7 @@ public class ActivityServerScanner extends AppCompatActivity {
 // TODO: 02.08.2024
             IntentFilter filterScanServerAlcConn = new IntentFilter();
             filterScanServerAlcConn.addAction(BluetoothDevice.ACTION_ACL_CONNECTED);
-            filterScanServerAlcConn.setPriority(10);
+            filterScanServerAlcConn.setPriority(SYSTEM_HIGH_PRIORITY);
           //  registerReceiver(new BroadcastReceiverGattServerAlcConn(), filterScanServerAlcConn);
             registerReceiver(new BroadcastReceiverGattServerAlcConn(), filterScanServerAlcConn,null,messageGattServer.getTarget());
 
@@ -210,7 +212,7 @@ public class ActivityServerScanner extends AppCompatActivity {
             filterScanServerName_Changed.addAction(BluetoothDevice.ACTION_NAME_CHANGED);
             filterScanServerName_Changed.addAction(BluetoothDevice.ACTION_CLASS_CHANGED);
             filterScanServerName_Changed.addAction(BluetoothAdapter.ACTION_STATE_CHANGED);
-            filterScanServerName_Changed.setPriority(10);
+            filterScanServerName_Changed.setPriority(SYSTEM_HIGH_PRIORITY);
             registerReceiver(new BroadcastReceiverGattServerName_Changed(), filterScanServerName_Changed,null,messageGattServer.getTarget());
 
 
@@ -219,7 +221,7 @@ public class ActivityServerScanner extends AppCompatActivity {
             IntentFilter filterScanServerOthers = new IntentFilter();
             filterScanServerOthers.addAction(BluetoothDevice.ACTION_ACL_DISCONNECTED);
             filterScanServerOthers.addAction(BluetoothDevice.ACTION_ACL_DISCONNECT_REQUESTED);
-            filterScanServerOthers.setPriority(10);
+            filterScanServerOthers.setPriority(SYSTEM_HIGH_PRIORITY);
             registerReceiver(new BroadcastReceiverGattServerOthers(), filterScanServerOthers,null,messageGattServer.getTarget());
 
             Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
