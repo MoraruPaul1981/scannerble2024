@@ -21,6 +21,7 @@ import com.serverscan.datasync.WorkManager.MyWorkAsyncScannerServer;
 import java.util.Date;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
+import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
 
 public class InitWorkManager {
@@ -84,6 +85,22 @@ public class InitWorkManager {
                                 " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n");
                     }
                 }
+
+                // TODO: 14.08.2024
+                WorkManager.getInstance(context).getWorkInfosByTag(ИмяСлужбыСинхронизации).addListener(()->{
+                    // TODO: 26.07.2024
+                    Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                            " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                            " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"+"  doWork "
+                            +workInfo.get(0).getState()+"'\n" +
+                            " Bremy " + new Date().toLocaleString());
+
+                }, Executors.newSingleThreadExecutor());
+
+
+                // TODO: 14.08.2024
+
+
             }else {
 // TODO: 14.08.2024  
                 RemoteWorkManager.getInstance(context.getApplicationContext()).enqueueUniquePeriodicWork(ИмяСлужбыСинхронизации,

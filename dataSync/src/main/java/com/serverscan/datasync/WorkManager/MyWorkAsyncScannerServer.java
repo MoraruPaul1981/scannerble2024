@@ -22,6 +22,7 @@ import com.serverscan.datasync.businesslayer.BunissecclogicWorkmanager;
 
 import java.util.Date;
 import java.util.List;
+import java.util.concurrent.Executors;
 
 public class MyWorkAsyncScannerServer extends Worker {
     private Context context;
@@ -72,9 +73,8 @@ public class MyWorkAsyncScannerServer extends Worker {
     @Override
     public Result doWork() {
         try {
-
+            // TODO: 14.08.2024
             List<WorkInfo> workInfo = WorkManager.getInstance(context).getWorkInfosByTag(ИмяСлужбыСинхронизации).get();
-            
             // TODO: 26.07.2024
             Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                     " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
