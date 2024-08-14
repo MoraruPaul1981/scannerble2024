@@ -5,17 +5,20 @@ import android.content.ComponentCallbacks;
 import android.content.ContentValues;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
+import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 
 
 import com.sous.server.businesslayer.Errors.SubClassErrors;
 import com.sous.server.businesslayer.bl_OneSingal.BussenslogicOneSignal;
+import com.sous.server.datalayer.data.GetCurrentDatabase;
 
 
 import java.util.Date;
 
 public class GetApplication  extends Application {
     private   long   version;
+    protected SQLiteDatabase Create_Database_СамаБАзаSQLite;
     public GetApplication() throws PackageManager.NameNotFoundException {
         super();
 // TODO: 12.08.2024
@@ -37,11 +40,13 @@ public class GetApplication  extends Application {
         BussenslogicOneSignal bussenslogicOneSignal   =    new BussenslogicOneSignal(getApplicationContext(),version);
         bussenslogicOneSignal  .initOneSignal();
 
-
+            /*  //TODO:Иниицилизуем БАз ДАнных */
+            Create_Database_СамаБАзаSQLite=    new GetCurrentDatabase(getApplicationContext() ,version).initingCurrentDatabase();
             // TODO: 26.07.2024
             Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                     " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                    " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" );
+                    " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"+
+                    " Create_Database_СамаБАзаSQLite " +Create_Database_СамаБАзаSQLite);
         } catch (Exception e) {
             e.printStackTrace();
             Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() + " Линия  :"

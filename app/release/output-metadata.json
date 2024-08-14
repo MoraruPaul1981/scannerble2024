@@ -11,8 +11,8 @@
       "type": "SINGLE",
       "filters": [],
       "attributes": [],
-      "versionCode": 1,
-      "versionName": "1.0",
+      "versionCode": 29,
+      "versionName": "Server GATT 2024",
       "outputFile": "app-release.apk"
     }
   ],

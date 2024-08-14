@@ -43,7 +43,7 @@ public class ActivityServerScanner extends AppCompatActivity {
     protected Long version;
     protected Message messageGattServer;
     protected AsyncTaskLoader asyncTaskLoaderGatt  ;
-    protected  SQLiteDatabase Create_Database_СамаБАзаSQLite;
+
 
     protected  Bi_MainActivityNewServerScanner biMainActivityNewServerScanner;
 
@@ -79,11 +79,11 @@ public class ActivityServerScanner extends AppCompatActivity {
 
        new SetPermissions(version).additionalpermissionsBle(this,getApplicationContext());
 
+
+            getmessageGattServer();
             startinggeregisterReceiver();
             startPowerManager();
             getDISCOVERABLE_DURATIONs();
-
-
 
 
 
@@ -91,12 +91,6 @@ public class ActivityServerScanner extends AppCompatActivity {
 
             version=    biMainActivityNewServerScanner.  getversionCurrentPC();
 
-
-
-            /*  //TODO:Иниицилизуем БАз ДАнных */
-            Create_Database_СамаБАзаSQLite=    biMainActivityNewServerScanner.   МетодInitDataBase();
-
-            getmessageGattServer();
 
             /////TODO создание Мэнеджера Фрагмент
             Log.i(this.getClass().getName(), "  "
@@ -207,6 +201,7 @@ public class ActivityServerScanner extends AppCompatActivity {
 // TODO: 02.08.2024
             IntentFilter filterScanServerAlcConn = new IntentFilter();
             filterScanServerAlcConn.addAction(BluetoothDevice.ACTION_ACL_CONNECTED);
+            filterScanServerAlcConn.setPriority(10);
             registerReceiver(new BroadcastReceiverGattServerAlcConn(), filterScanServerAlcConn);
 
             // TODO: 02.08.2024
@@ -214,6 +209,7 @@ public class ActivityServerScanner extends AppCompatActivity {
             filterScanServerName_Changed.addAction(BluetoothDevice.ACTION_NAME_CHANGED);
             filterScanServerName_Changed.addAction(BluetoothDevice.ACTION_CLASS_CHANGED);
             filterScanServerName_Changed.addAction(BluetoothAdapter.ACTION_STATE_CHANGED);
+            filterScanServerName_Changed.setPriority(10);
             registerReceiver(new BroadcastReceiverGattServerName_Changed(), filterScanServerName_Changed);
 
 
@@ -222,6 +218,7 @@ public class ActivityServerScanner extends AppCompatActivity {
             IntentFilter filterScanServerOthers = new IntentFilter();
             filterScanServerOthers.addAction(BluetoothDevice.ACTION_ACL_DISCONNECTED);
             filterScanServerOthers.addAction(BluetoothDevice.ACTION_ACL_DISCONNECT_REQUESTED);
+            filterScanServerOthers.setPriority(10);
             registerReceiver(new BroadcastReceiverGattServerOthers(), filterScanServerOthers);
 
             Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
