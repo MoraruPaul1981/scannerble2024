@@ -119,6 +119,9 @@ dependencies {
     implementation 'com.google.firebase:firebase-analytics'
 
 
+//TODO new MOdules
+
+    api project(':dataSync')
 
 
 }

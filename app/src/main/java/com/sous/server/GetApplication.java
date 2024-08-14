@@ -9,6 +9,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 
 
+import com.serverscan.datasync.businesslayer.RemoteMessaging;
 import com.sous.server.businesslayer.Errors.SubClassErrors;
 import com.sous.server.businesslayer.bl_OneSingal.BussenslogicOneSignal;
 import com.sous.server.datalayer.data.GetCurrentDatabase;
@@ -42,6 +43,11 @@ public class GetApplication  extends Application {
 
             /*  //TODO:Иниицилизуем БАз ДАнных */
             Create_Database_СамаБАзаSQLite=    new GetCurrentDatabase(getApplicationContext() ,version).initingCurrentDatabase();
+
+            // TODO: 14.08.2024
+
+            RemoteMessaging remoteMessaging=new RemoteMessaging();
+
             // TODO: 26.07.2024
             Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                     " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
