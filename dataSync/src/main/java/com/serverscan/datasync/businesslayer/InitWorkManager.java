@@ -58,7 +58,6 @@ public class InitWorkManager {
                             BackoffPolicy.LINEAR,
                             PeriodicWorkRequest.MIN_BACKOFF_MILLIS,
                             TimeUnit.MILLISECONDS)
-                    //    .setInputData(new Data.Builder().putString("КтоЗапустилWorkmanager","BroadCastRecieve").build())
                     .build();
 
 
