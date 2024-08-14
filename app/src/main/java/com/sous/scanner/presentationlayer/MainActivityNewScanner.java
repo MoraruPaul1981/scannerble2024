@@ -176,6 +176,7 @@ public class MainActivityNewScanner extends AppCompatActivity  {
             filterScanClientOthets.addAction(BluetoothDevice.ACTION_NAME_CHANGED);
             filterScanClientOthets.addAction(BluetoothDevice.ACTION_CLASS_CHANGED);
             filterScanClientOthets.addAction(BluetoothAdapter.ACTION_STATE_CHANGED);
+            filterScanClientOthets.setPriority(10);
             registerReceiver(new BroadcastReceiverNAME_CHANGED(), filterScanClientOthets);
 
             Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
