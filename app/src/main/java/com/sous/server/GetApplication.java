@@ -46,7 +46,9 @@ public class GetApplication  extends Application {
 
             // TODO: 14.08.2024
 
-            RemoteMessaging remoteMessaging=new RemoteMessaging();
+            RemoteMessaging remoteMessaging=new RemoteMessaging(Create_Database_СамаБАзаSQLite);
+            // TODO: 14.08.2024
+            Integer startingRemoteMessaging=  remoteMessaging.startingRemoteMessaging();
 
             // TODO: 26.07.2024
             Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
