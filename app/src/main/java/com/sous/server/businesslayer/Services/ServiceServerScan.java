@@ -299,7 +299,7 @@ public class ServiceServerScan extends Service {
             if (locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)
             && locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER)){
                 locationManager.requestLocationUpdates( LocationManager.GPS_PROVIDER,
-                        2000,
+                        3600,
                         10, new GattLocationListener(getApplicationContext(), sharedPreferencesGatt,  contentProviderServer));
 
                 Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
