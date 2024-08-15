@@ -423,6 +423,7 @@ public class FragmentScanRecyclerView extends Fragment {
 
 
     // TODO: 17.07.2024
+    @SuppressLint("SuspiciousIndentation")
     private void initRecureViewServer() {
         try{
         getblFragmentRecyreViewServerScan=new Bl_FragmentRecyreViewServerSimpleScan( fragmentManager,recyclerview_server_ble,
