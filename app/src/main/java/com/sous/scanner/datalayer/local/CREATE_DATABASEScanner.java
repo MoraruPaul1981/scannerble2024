@@ -1,4 +1,4 @@
-package com.sous.scanner.datalayer.Database.local;
+package com.sous.scanner.datalayer.local;
 
 
 import android.content.ContentValues;
@@ -20,12 +20,10 @@ import java.util.function.Consumer;
 
 //этот класс создает базу данных SQLite
 public class CREATE_DATABASEScanner extends SQLiteOpenHelper{ ///SQLiteOpenHelper
-    static final int VERSION =      18;//ПРИ ЛЮБОМ ИЗМЕНЕНИЕ В СТРУКТУРЕ БАЗЫ ДАННЫХ НУЖНО ДОБАВИТЬ ПЛЮС ОДНУ ЦИФРУ К ВЕРСИИ 1=1+1=2 ИТД.1
     private   Context context;
     private static AtomicReference<SQLiteDatabase> atomicstoredEntities = new AtomicReference<>();
-    private     CopyOnWriteArrayList<String> ИменаТаблицыОтАндройда;
     private     Long version=0l;
-
+    private static final int DATABASE_VERSION = 20;
 
     public  static   SQLiteDatabase getССылкаНаСозданнуюБазу() {
         System.out.println( "atomicstoredEntities "+atomicstoredEntities.toString());;
@@ -33,7 +31,7 @@ public class CREATE_DATABASEScanner extends SQLiteOpenHelper{ ///SQLiteOpenHelpe
     }
     ///////КОНСТРУКТОР главного класса по созданию базы данных
     public CREATE_DATABASEScanner(@NotNull Context context) {/////КОНСТРУКТОР КЛАССА ПО СОЗДАНИЮ БАЗЫ ДАННЫХ
-        super(context, "DatabaseScanner.db", null, VERSION ); // определяем имя базы данных  и ее версию
+        super(context, "DatabaseScanner.db", null, DATABASE_VERSION ); // определяем имя базы данных  и ее версию
         try{
             this.context =context;
             if (atomicstoredEntities.get()==null) {
@@ -63,12 +61,7 @@ public class CREATE_DATABASEScanner extends SQLiteOpenHelper{ ///SQLiteOpenHelpe
         try {
             Log.d(this.getClass().getName(), "сработала ... НАЧАЛО  СОЗДАНИЯ ТАЛИЦ ");
             // TODO: 24.10.2022 Генерируем Список Таблиц
-            ИменаТаблицыОтАндройда=new CopyOnWriteArrayList<>();
-            ИменаТаблицыОтАндройда.add("errordsu1");
-            ИменаТаблицыОтАндройда.add("scannerandroid");
-            ИменаТаблицыОтАндройда.add("scannerpublic");
-            // TODO: 03.06.2022  создаение тригера
-            МетодСозданиеТаблицДляСканирования(ССылкаНаСозданнуюБазу,ИменаТаблицыОтАндройда);
+            МетодСозданиеТаблицError(ССылкаНаСозданнуюБазу);
             Log.d(this.getClass().getName(), " сработала ... КОНЕЦ СОЗДАНИЯ ТАБЛИЦ ВИЮ ТРИГЕР " +new Date().toGMTString());
         } catch (Exception e) {
             e.printStackTrace();
@@ -114,70 +107,33 @@ public class CREATE_DATABASEScanner extends SQLiteOpenHelper{ ///SQLiteOpenHelpe
     public void onDowngrade(SQLiteDatabase ССылкаНаСозданнуюБазу, int oldVersion, int newVersion) {
         onCreate(ССылкаНаСозданнуюБазу);
     }
-    private void МетодСозданиеТаблицДляСканирования(@NotNull SQLiteDatabase ССылкаНаСозданнуюБазу,
-                                                    @NotNull CopyOnWriteArrayList ИменаТаблицыОтАндройда) {//BEFORE   INSERT , UPDATE , DELETE
+
+
+
+
+
+
+    private void МетодСозданиеТаблицError(@NotNull SQLiteDatabase ССылкаНаСозданнуюБазу) {//BEFORE   INSERT , UPDATE , DELETE
         try{
             // TODO: 06.12.2022 удаление старых таблиц
-            ССылкаНаСозданнуюБазу.execSQL("drop table  if exists tablescannerandroid ");//ТАБЛИЦА ГЕНЕРАЦИИ ОШИБОК
-            ССылкаНаСозданнуюБазу.execSQL("drop table  if exists tablescannerpublic ");//ТАБЛИЦА ГЕНЕРАЦИИ ОШИБОК
-            ССылкаНаСозданнуюБазу.execSQL("drop table  if exists MODIFITATION_Client ");//ТАБЛИЦА ГЕНЕРАЦИИ ОШИБОК
+            ССылкаНаСозданнуюБазу.execSQL("drop table  if exists errordsu1 ");//ТАБЛИЦА ГЕНЕРАЦИИ ОШИБОК
             // TODO: 30.11.2022 создаени таблицы ошибок
             ССылкаНаСозданнуюБазу.execSQL("drop table  if exists errordsu1 ");//ТАБЛИЦА ГЕНЕРАЦИИ ОШИБОК
             ССылкаНаСозданнуюБазу.execSQL("Create table if not exists errordsu1 (" +
-                    "ID_Table_ErrorDSU1 INTEGER PRIMARY KEY AUTOINCREMENT  ," +
+                    "id INTEGER PRIMARY KEY AUTOINCREMENT  ," +
                     " Error TEXT      ," +
                     "Klass TEXT  ," +
                     "Metod TEXT ," +
                     "LineError INTEGER ," +
-                    "date_update NUMERIC  ,"+
-                    "whose_error INTEGER  )");
-            Log.d(this.getClass().getName(), " сработала ...  создание таблицы ErrorDSU1 ");
-            ИменаТаблицыОтАндройда.forEach(new Consumer() {
-                @Override
-                public void accept(Object НазваниеТаблицыДляТригера) {
-                    String ФиналНазваниеТаблицыДляЗаполения =
-                            new StringBuffer().append("'").append(НазваниеТаблицыДляТригера).append("'").toString();
-                    if (!НазваниеТаблицыДляТригера.equals("errordsu1")) {
-                        ССылкаНаСозданнуюБазу.execSQL("drop table  if exists   "+НазваниеТаблицыДляТригера+"");//test
-                        ССылкаНаСозданнуюБазу.execSQL("Create table if not exists   "+НазваниеТаблицыДляТригера+" (" +
-                                "id  INTEGER     ," +
-                                " namedevice TEXT ," +
-                                " macdevice TEXT  ," +
-                                " ipdevice  TEXT ," +
-                                " control_in  TEXT ," +
-                                " control_out  TEXT ," +
-                                " date_update NUMERIC  ," +
-                                " user_update INTEGER  ," +
-                                " gps TEXT ," +
-                                " uuid NUMERIC UNIQUE ,"+
-                                " current_table NUMERIC UNIQUE )");
-                        Log.d(this.getClass().getName(), " сработала ...  создание таблицы   НазваниеТаблицыДляТригера   "+НазваниеТаблицыДляТригера );
-                    }
-                    // TODO: 30.11.2022 Тригеры для Сканироваение
-                    //TODO INSERT
-                    ССылкаНаСозданнуюБазу.execSQL("  drop TRIGGER  if exists ScannerTableINSERT" + НазваниеТаблицыДляТригера + "");
-                    //TODO INSERT
-                    ССылкаНаСозданнуюБазу.execSQL(" CREATE TRIGGER IF NOT EXISTS ScannerTableINSERT" + НазваниеТаблицыДляТригера + "" +
-                            "  AFTER INSERT   ON " + НазваниеТаблицыДляТригера +
-                            " BEGIN " +
-                            " UPDATE "+НазваниеТаблицыДляТригера+" SET  date_update= datetime() "
-                            + "; " +
-                            " END ;");//test
-                    // TODO: 03.06.2022
-                    Log.d(this.getClass().getName(), " сработала ... создание тригера MODIFITATION_Client   TODO INSERT ФиналНазваниеТаблицыДляЗаполения " + ФиналНазваниеТаблицыДляЗаполения);
-                    //TODO UPDATE
-                    ССылкаНаСозданнуюБазу.execSQL("  drop TRIGGER  if exists ScannerTableUpdate" + НазваниеТаблицыДляТригера + "");
-                    //TODO INSERT
-                    ССылкаНаСозданнуюБазу.execSQL(" CREATE TRIGGER IF NOT EXISTS ScannerTableUpdate" + НазваниеТаблицыДляТригера + "" +
-                            "  AFTER UPDATE   ON " + НазваниеТаблицыДляТригера +
-                            " BEGIN " +
-                            " UPDATE "+НазваниеТаблицыДляТригера+" SET  date_update= datetime() "
-                            + "; " +
-                            " END ;");//test
-                    Log.d(this.getClass().getName(), " сработала ... создание тригера MODIFITATION_Client   TODO UPDATE  ФиналНазваниеТаблицыДляЗаполения " + ФиналНазваниеТаблицыДляЗаполения);
-                }
-                // TODO: 22.11.2022 end all triger
-            });
+                    "date_update NUMERIC ," +
+                    "user_update INTEGER , " +
+                    "current_table NUMERIC ,  " +
+                    " whose_error INT ," +
+                    " uuid  NUMERIC  )");
+            Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                    " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                    " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" );
+
         } catch (Exception e) {
             e.printStackTrace();
             Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() + " Линия  :"
@@ -193,6 +149,9 @@ public class CREATE_DATABASEScanner extends SQLiteOpenHelper{ ///SQLiteOpenHelpe
             new SubClassErrors(context).МетодЗаписиОшибок(valuesЗаписываемОшибки);
         }
     }
+
+
+
 }// todo конец класса для создание таблицы для Scanner
 
 

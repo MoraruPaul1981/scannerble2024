@@ -4,14 +4,18 @@ import android.app.Application;
 import android.content.ComponentCallbacks;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
+import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 
 
 import com.sous.scanner.businesslayer.bl_forActivityScan.BussenslogicOneSignal;
+import com.sous.scanner.datalayer.local.CREATE_DATABASEScanner;
 
 import java.util.Date;
 
 public class GetApplication  extends Application {
+
+    protected SQLiteDatabase Create_Database_СамаБАзаSQLite;
     public GetApplication() throws PackageManager.NameNotFoundException {
         super();
 // TODO: 12.08.2024
@@ -38,6 +42,11 @@ public class GetApplication  extends Application {
         BussenslogicOneSignal bussenslogicOneSignal=
                 new BussenslogicOneSignal(getApplicationContext(),version);
         bussenslogicOneSignal .initOneSignal();
+
+
+
+        /*  //TODO:Иниицилизуем БАз ДАнных */
+        Create_Database_СамаБАзаSQLite=new CREATE_DATABASEScanner(getApplicationContext()).getССылкаНаСозданнуюБазу();
 
         Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                 " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +

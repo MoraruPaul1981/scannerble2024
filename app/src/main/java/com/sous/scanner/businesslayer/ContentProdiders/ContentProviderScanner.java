@@ -13,8 +13,9 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.loader.content.AsyncTaskLoader;
 
-import com.sous.scanner.datalayer.Database.local.CREATE_DATABASEScanner;
+
 import com.sous.scanner.businesslayer.Errors.SubClassErrors;
+import com.sous.scanner.datalayer.local.CREATE_DATABASEScanner;
 
 import java.util.Optional;
 import java.util.concurrent.CopyOnWriteArrayList;
