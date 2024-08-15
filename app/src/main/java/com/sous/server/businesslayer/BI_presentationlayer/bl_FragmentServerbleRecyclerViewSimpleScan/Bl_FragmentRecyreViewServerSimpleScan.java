@@ -6,11 +6,14 @@ import android.bluetooth.BluetoothAdapter;
 import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.content.pm.ProviderInfo;
 import android.database.Cursor;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.os.Handler;
 import android.os.Message;
+import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -37,10 +40,13 @@ import com.google.android.material.tabs.TabLayout;
 import com.google.android.material.textfield.TextInputEditText;
 import com.sous.server.R;
 import com.sous.server.businesslayer.BI_presentationlayer.bl_FragmentServerRecyreView.BlgeneralServer;
+import com.sous.server.businesslayer.ContentProvoders.ContentProviderServer;
 import com.sous.server.businesslayer.Errors.SubClassErrors;
+import com.sous.server.datalayer.remote.bl_writeandreadScanCatt.WtitingAndreadDataForScanGatt;
 
 import org.jetbrains.annotations.NotNull;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 import java.util.concurrent.ConcurrentHashMap;
@@ -68,6 +74,11 @@ public class Bl_FragmentRecyreViewServerSimpleScan {
     private Message messageGattServer;
     private    BottomNavigationView bottomnavigationview_server_scan;
 
+    private ContentProviderServer contentProviderServer;
+
+    protected SharedPreferences sharedPreferencesGatt;
+
+
     public Bl_FragmentRecyreViewServerSimpleScan(FragmentManager fragmentManager,
                                                  RecyclerView recyclerViewServer,
                                                  Long version,
@@ -81,6 +92,8 @@ public class Bl_FragmentRecyreViewServerSimpleScan {
                                                  Activity activity,
                                                  Message messageGattServer,
                                                  BottomNavigationView bottomnavigationview_server_scan) {
+        // TODO: 15.08.2024
+        try{
         // TODO: 17.07.2024
         this.fragmentManager = fragmentManager;
         this.version = version;
@@ -97,6 +110,28 @@ public class Bl_FragmentRecyreViewServerSimpleScan {
         this.bottomnavigationview_server_scan = bottomnavigationview_server_scan;
         // TODO: 18.07.2024
         blgeneralServer=new BlgeneralServerSimpleScan(context,version);
+
+        getContentProvider();
+
+        sharedPreferencesGatt     = PreferenceManager.getDefaultSharedPreferences(context);
+
+        Log.d(context.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n");
+    } catch (Exception e) {
+        e.printStackTrace();
+        Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() + " Линия  :"
+                + Thread.currentThread().getStackTrace()[2].getLineNumber());
+        ContentValues valuesЗаписываемОшибки = new ContentValues();
+        valuesЗаписываемОшибки.put("Error", e.toString().toLowerCase());
+        valuesЗаписываемОшибки.put("Klass", this.getClass().getName());
+        valuesЗаписываемОшибки.put("Metod", Thread.currentThread().getStackTrace()[2].getMethodName());
+        valuesЗаписываемОшибки.put("LineError", Thread.currentThread().getStackTrace()[2].getLineNumber());
+        final Object ТекущаяВерсияПрограммы = version;
+        Integer ЛокальнаяВерсияПОСравнение = Integer.parseInt(ТекущаяВерсияПрограммы.toString());
+        valuesЗаписываемОшибки.put("whose_error", ЛокальнаяВерсияПОСравнение);
+        new SubClassErrors(context).МетодЗаписиОшибок(valuesЗаписываемОшибки);
+    }
     }
 
 
@@ -1271,6 +1306,40 @@ public class Bl_FragmentRecyreViewServerSimpleScan {
     }
 
 
+    public void sendingSucceessDataFromFragmenUI() {
+        try{
+            // TODO: 25.07.2024  запускаем запись в базу
+            WtitingAndreadDataForScanGatt wtitingAndreadDataForScanGatt = new WtitingAndreadDataForScanGatt(context,
+                    version,
+                    contentProviderServer,
+                    sharedPreferencesGatt);
+
+            // TODO: 31.07.2024  посылаем данные на Франгмент
+            ConcurrentHashMap<String, Cursor> writeDatabaseScanGattDontDevice=  wtitingAndreadDataForScanGatt.writeDatabaseScanGattDontDevice( );
+
+            // TODO: 19.07.2024 Посылаем Пользователю сообщение что данные изменились
+            wtitingAndreadDataForScanGatt.  sendStatusSucessEventBusDONTDevice(writeDatabaseScanGattDontDevice );
+
+            Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                    " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                    " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" +
+                    " onConnectionStateChange " + new Date().toLocaleString());
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() + " Линия  :"
+                    + Thread.currentThread().getStackTrace()[2].getLineNumber());
+            ContentValues valuesЗаписываемОшибки = new ContentValues();
+            valuesЗаписываемОшибки.put("Error", e.toString().toLowerCase());
+            valuesЗаписываемОшибки.put("Klass", this.getClass().getName());
+            valuesЗаписываемОшибки.put("Metod", Thread.currentThread().getStackTrace()[2].getMethodName());
+            valuesЗаписываемОшибки.put("LineError", Thread.currentThread().getStackTrace()[2].getLineNumber());
+            final Object ТекущаяВерсияПрограммы = version;
+            Integer ЛокальнаяВерсияПОСравнение = Integer.parseInt(ТекущаяВерсияПрограммы.toString());
+            valuesЗаписываемОшибки.put("whose_error", ЛокальнаяВерсияПОСравнение);
+            new SubClassErrors(context).МетодЗаписиОшибокИзServerGatt(valuesЗаписываемОшибки,contentProviderServer);
+        }
+    }
 
 
 
@@ -1415,6 +1484,32 @@ public void settingbottomnavigationview_server_scan(){
 
 
 
+
+    private void getContentProvider() throws InterruptedException {
+        try{
+            contentProviderServer=new ContentProviderServer();
+            contentProviderServer.attachInfo(context,new ProviderInfo());
+            contentProviderServer.onCreate();
+
+            Log.d(context.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                    " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                    " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n");
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() + " Линия  :"
+                    + Thread.currentThread().getStackTrace()[2].getLineNumber());
+            ContentValues valuesЗаписываемОшибки = new ContentValues();
+            valuesЗаписываемОшибки.put("Error", e.toString().toLowerCase());
+            valuesЗаписываемОшибки.put("Klass", this.getClass().getName());
+            valuesЗаписываемОшибки.put("Metod", Thread.currentThread().getStackTrace()[2].getMethodName());
+            valuesЗаписываемОшибки.put("LineError", Thread.currentThread().getStackTrace()[2].getLineNumber());
+            final Object ТекущаяВерсияПрограммы = version;
+            Integer ЛокальнаяВерсияПОСравнение = Integer.parseInt(ТекущаяВерсияПрограммы.toString());
+            valuesЗаписываемОшибки.put("whose_error", ЛокальнаяВерсияПОСравнение);
+            new SubClassErrors(context).МетодЗаписиОшибокИзServerGatt(valuesЗаписываемОшибки,contentProviderServer);
+        }
+    }
 
 
 

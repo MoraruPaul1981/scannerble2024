@@ -8,6 +8,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.ProviderInfo;
+import android.preference.PreferenceManager;
 import android.util.Log;
 
 import androidx.annotation.NonNull;
@@ -50,7 +51,7 @@ public class Bl_BloadcastGatt_getDeviceClentGatt {
                     public void run() throws Throwable {
 
 
-                        SharedPreferences          sharedPreferencesGatt =context. getSharedPreferences("gatt", Context.MODE_PRIVATE);
+                        SharedPreferences          sharedPreferencesGatt     = PreferenceManager.getDefaultSharedPreferences(context);
                         // TODO: 29.07.2024
                         getContentProvider();
                         // TODO: 29.07.2024

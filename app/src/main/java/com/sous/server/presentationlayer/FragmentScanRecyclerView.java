@@ -2,10 +2,13 @@ package com.sous.server.presentationlayer;
 
 import android.annotation.SuppressLint;
 import android.content.ContentValues;
+import android.content.SharedPreferences;
 import android.content.pm.PackageInfo;
+import android.content.pm.ProviderInfo;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.os.Message;
+import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -29,9 +32,11 @@ import com.google.android.material.tabs.TabLayout;
 import com.sous.server.R;
 import com.sous.server.businesslayer.BI_presentationlayer.bl_FragmentServerbleRecyclerViewSimpleScan.Bl_FragmentRecyreViewServerSimpleScan;
 import com.sous.server.businesslayer.BI_presentationlayer.bl_navigationView.GetNavigationViews;
+import com.sous.server.businesslayer.ContentProvoders.ContentProviderServer;
 import com.sous.server.businesslayer.Errors.SubClassErrors;
 import com.sous.server.businesslayer.Eventbus.MessageScannerServer;
 import com.sous.server.businesslayer.Eventbus.ParamentsScannerServer;
+import com.sous.server.datalayer.remote.bl_writeandreadScanCatt.WtitingAndreadDataForScanGatt;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -58,7 +63,6 @@ public class FragmentScanRecyclerView extends Fragment {
 
     private Message messageGattServer;
     private BottomNavigationView bottomnavigationview_server_scan ;
-
 
 
     @Override
@@ -351,6 +355,7 @@ public class FragmentScanRecyclerView extends Fragment {
 //todo Есди Данные Пришли ТО мы Их получаем от службыть
                     onResume();
                 } else {
+
                     Log.d(getContext().getClass().getName(), "\n"
                             + " время: " + new Date() + "\n+" +
                             " Класс в процессе... " + this.getClass().getName() + "\n" +
@@ -419,13 +424,33 @@ public class FragmentScanRecyclerView extends Fragment {
 
     // TODO: 17.07.2024
     private void initRecureViewServer() {
+        try{
         getblFragmentRecyreViewServerScan=new Bl_FragmentRecyreViewServerSimpleScan( fragmentManager,recyclerview_server_ble,
                 version,maincardView_server_ble_fragment,relativeLayout_server_ble,tabLayout_server_ble,card_server_ble_inner,
                 progressbar_server_ble,animation,getContext(),getActivity(),messageGattServer,bottomnavigationview_server_scan);
+
+            Log.d(getContext().getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                    " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                    " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n");
+    } catch (Exception e) {
+        e.printStackTrace();
+        Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() + " Линия  :"
+                + Thread.currentThread().getStackTrace()[2].getLineNumber());
+        ContentValues valuesЗаписываемОшибки = new ContentValues();
+        valuesЗаписываемОшибки.put("Error", e.toString().toLowerCase());
+        valuesЗаписываемОшибки.put("Klass", this.getClass().getName());
+        valuesЗаписываемОшибки.put("Metod", Thread.currentThread().getStackTrace()[2].getMethodName());
+        valuesЗаписываемОшибки.put("LineError", Thread.currentThread().getStackTrace()[2].getLineNumber());
+        final Object ТекущаяВерсияПрограммы = version;
+        Integer ЛокальнаяВерсияПОСравнение = Integer.parseInt(ТекущаяВерсияПрограммы.toString());
+        valuesЗаписываемОшибки.put("whose_error", ЛокальнаяВерсияПОСравнение);
+        new SubClassErrors(getContext()).МетодЗаписиОшибок(valuesЗаписываемОшибки);
+    }
     }
 
     private void installationRecyreViewServer() {
         //todo  NavigationViewGatt с тремя кнопками Выход .Скан .Контроль
+        try{
         GetNavigationViews getNavigationViews=new GetNavigationViews(getContext(),
                 messageGattServer,bottomnavigationview_server_scan,
                 version,getActivity(),fragmentManager);
@@ -436,7 +461,34 @@ public class FragmentScanRecyclerView extends Fragment {
         getblFragmentRecyreViewServerScan.     getObserverRecyreView();
         getblFragmentRecyreViewServerScan. settingAnimatios(recyclerview_server_ble);
         getblFragmentRecyreViewServerScan.     addSetingsRecyclerView(recyclerview_server_ble);
+
+        getblFragmentRecyreViewServerScan. sendingSucceessDataFromFragmenUI( );
+
+            Log.d(getContext().getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                    " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                    " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n");
+    } catch (Exception e) {
+        e.printStackTrace();
+        Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() + " Линия  :"
+                + Thread.currentThread().getStackTrace()[2].getLineNumber());
+        ContentValues valuesЗаписываемОшибки = new ContentValues();
+        valuesЗаписываемОшибки.put("Error", e.toString().toLowerCase());
+        valuesЗаписываемОшибки.put("Klass", this.getClass().getName());
+        valuesЗаписываемОшибки.put("Metod", Thread.currentThread().getStackTrace()[2].getMethodName());
+        valuesЗаписываемОшибки.put("LineError", Thread.currentThread().getStackTrace()[2].getLineNumber());
+        final Object ТекущаяВерсияПрограммы = version;
+        Integer ЛокальнаяВерсияПОСравнение = Integer.parseInt(ТекущаяВерсияПрограммы.toString());
+        valuesЗаписываемОшибки.put("whose_error", ЛокальнаяВерсияПОСравнение);
+        new SubClassErrors(getContext()).МетодЗаписиОшибок(valuesЗаписываемОшибки);
     }
+    }
+
+
+
+
+
+
+
 
 // TODO: 01.08.2024 end
 

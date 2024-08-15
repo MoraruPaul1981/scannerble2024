@@ -35,6 +35,7 @@ import android.os.IBinder;
 import android.os.ParcelUuid;
 import android.os.VibrationEffect;
 import android.os.Vibrator;
+import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.Gravity;
 import android.widget.Toast;
@@ -122,7 +123,7 @@ public class ServiceServerScan extends Service {
 
             PackageInfo pInfo = getApplicationContext().getPackageManager().getPackageInfo(getApplicationContext().getPackageName(), 0);
             version = pInfo.getLongVersionCode();
-            sharedPreferencesGatt = getSharedPreferences("gatt", Context.MODE_PRIVATE);
+            sharedPreferencesGatt =              PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
 
 
             //TODO методы параменторв Службы Gaat
@@ -185,12 +186,10 @@ public class ServiceServerScan extends Service {
              settingGattServerBluetoothGattService();
 
 
-            sendadatacompletioneventtotheformwithaBacklog();
 
 
-            Log.d(getApplicationContext().getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
-                    " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                    " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n");
+
+
 
 
             Log.d(getApplicationContext().getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
@@ -227,38 +226,7 @@ public class ServiceServerScan extends Service {
         //  return super.onStartCommand(intent, flags, startId);
     }
 
-    private void sendadatacompletioneventtotheformwithaBacklog() {
 
-        try{
-        handler.postDelayed(()->{
-
-            sendingSucceessDataFromFragmenUI( );
-
-        },1300);
-
-        Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
-                " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" +
-                "  getStatusEnableBlueadapter " + getStatusEnableBlueadapter);
-
-
-// TODO: 30.06.2022 сама не постредствено запуск метода
-    } catch (Exception e) {
-        e.printStackTrace();
-        Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() + " Линия  :"
-                + Thread.currentThread().getStackTrace()[2].getLineNumber());
-        ContentValues valuesЗаписываемОшибки = new ContentValues();
-        valuesЗаписываемОшибки.put("Error", e.toString().toLowerCase());
-        valuesЗаписываемОшибки.put("Klass", this.getClass().getName());
-        valuesЗаписываемОшибки.put("Metod", Thread.currentThread().getStackTrace()[2].getMethodName());
-        valuesЗаписываемОшибки.put("LineError", Thread.currentThread().getStackTrace()[2].getLineNumber());
-        final Object ТекущаяВерсияПрограммы = version;
-        Integer ЛокальнаяВерсияПОСравнение = Integer.parseInt(ТекущаяВерсияПрограммы.toString());
-        valuesЗаписываемОшибки.put("whose_error", ЛокальнаяВерсияПОСравнение);
-        new SubClassErrors(getApplicationContext()).МетодЗаписиОшибокИзServerGatt(valuesЗаписываемОшибки,contentProviderServer);
-    }
-
-    }
 
     @Override
     public void onDestroy() {
@@ -639,10 +607,6 @@ public class ServiceServerScan extends Service {
                                 " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" +
                                 " onConnectionStateChange " + new Date().toLocaleString());
 
-// TODO: 31.07.2024 первый запуск когда еще не т пинга и поулчаем Даные Из БАзы
-                        sendingSucceessDataFromFragmenUI( );
-
-
                         // TODO: 31.07.2024 закрываепм сервер соединения  
                         getBluetoothGattServer.cancelConnection(device);
                         // TODO: 29.07.2024
@@ -779,24 +743,7 @@ public class ServiceServerScan extends Service {
         }
     }
 
-    private void sendingSucceessDataFromFragmenUI( ) {
-        // TODO: 25.07.2024  запускаем запись в базу
-        WtitingAndreadDataForScanGatt wtitingAndreadDataForScanGatt = new WtitingAndreadDataForScanGatt(getApplicationContext(),
-                version,
-                contentProviderServer,
-                sharedPreferencesGatt);
 
-        // TODO: 31.07.2024  посылаем данные на Франгмент
-         ConcurrentHashMap<String, Cursor> writeDatabaseScanGattDontDevice=  wtitingAndreadDataForScanGatt.writeDatabaseScanGattDontDevice( );
-
-        // TODO: 19.07.2024 Посылаем Пользователю сообщение что данные изменились
-        wtitingAndreadDataForScanGatt.  sendStatusSucessEventBusDONTDevice(writeDatabaseScanGattDontDevice );
-
-        Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
-                " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" +
-                " onConnectionStateChange " + new Date().toLocaleString());
-    }
 
 
 
