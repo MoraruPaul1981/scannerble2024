@@ -189,20 +189,16 @@ public class ServiceServerScan extends Service {
 
             //TODO :  главный метод службы запускаем Gatt Server
 
-     mainstartingServerScan();
+
+            mainstartingServerScan();
 
             //TODO:  для запущеного сервера Gatt ,дополвнительые параметры натсройки Charact and UUID
              settingGattServerBluetoothGattService();
 
 
-
-
-            new Handler(getMainLooper()).postDelayed(()->{
-
                 sendingSucceessDataFromFragmenUI( );
 
 
-            },3000);
 
             
             Log.d(getApplicationContext().getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +

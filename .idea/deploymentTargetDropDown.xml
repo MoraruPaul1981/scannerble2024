@@ -6,20 +6,7 @@
         <State />
       </entry>
       <entry key="server-gatt">
-        <State>
-          <runningDeviceTargetSelectedWithDropDown>
-            <Target>
-              <type value="RUNNING_DEVICE_TARGET" />
-              <deviceKey>
-                <Key>
-                  <type value="SERIAL_NUMBER" />
-                  <value value="A3NBB23331200012" />
-                </Key>
-              </deviceKey>
-            </Target>
-          </runningDeviceTargetSelectedWithDropDown>
-          <timeTargetWasSelectedWithDropDown value="2024-08-15T06:27:18.117324400Z" />
-        </State>
+        <State />
       </entry>
       <entry key="workmanager">
         <State />

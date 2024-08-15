@@ -83,8 +83,8 @@ public class ActivityServerScanner extends AppCompatActivity {
 
 
             getmessageGattServer();
+
             startinggeregisterReceiver();
-            startPowerManager();
 
 
               biMainActivityNewServerScanner=new Bi_MainActivityNewServerScanner(getApplicationContext(), fragmentManager,this);
@@ -248,42 +248,7 @@ public class ActivityServerScanner extends AppCompatActivity {
 
 
 
-    public void  startPowerManager(){
-        try{
-// TODO: 02.08.2024
-            Intent intent = new Intent();
-            String packageName = getPackageName();
-            PowerManager pm = (PowerManager) getSystemService(POWER_SERVICE);
-            if (!pm.isIgnoringBatteryOptimizations(packageName)) {
-                intent.setAction(Settings.ACTION_REQUEST_IGNORE_BATTERY_OPTIMIZATIONS);
-                intent.setAction(Settings.ACTION_IGNORE_BATTERY_OPTIMIZATION_SETTINGS);
-                intent.setData(Uri.parse("package:" + packageName));
-                startActivity(intent);
-            }
 
-            Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
-                    " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                    " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" );
-
-
-
-        } catch (Exception e) {
-            e.printStackTrace();
-            Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() + " Линия  :"
-                    + Thread.currentThread().getStackTrace()[2].getLineNumber());
-            ContentValues valuesЗаписываемОшибки = new ContentValues();
-            valuesЗаписываемОшибки.put("Error", e.toString().toLowerCase());
-            valuesЗаписываемОшибки.put("Klass", this.getClass().getName());
-            valuesЗаписываемОшибки.put("Metod", Thread.currentThread().getStackTrace()[2].getMethodName());
-            valuesЗаписываемОшибки.put("LineError", Thread.currentThread().getStackTrace()[2].getLineNumber());
-            final Object ТекущаяВерсияПрограммы = version;
-            Integer ЛокальнаяВерсияПОСравнение = Integer.parseInt(ТекущаяВерсияПрограммы.toString());
-            valuesЗаписываемОшибки.put("whose_error", ЛокальнаяВерсияПОСравнение);
-            new SubClassErrors(getApplicationContext()).МетодЗаписиОшибок(valuesЗаписываемОшибки);
-            // new SubClassErrors(getApplicationContext()).МетодЗаписиОшибокИзServerGatt(valuesЗаписываемОшибки,contentProviderServer);
-        }
-
-    }
 
 
 
