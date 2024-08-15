@@ -336,13 +336,10 @@ public class FragmentScanRecyclerView extends Fragment {
                          "getMapReceivedFromBootFragmentGatta " +getMapReceivedFromBootFragmentGatta+ "concurrentHashMapCursor " +concurrentHashMapCursor );
 
 
+
                 if (concurrentHashMapCursor.size()>0) {
                     // TODO: 15.08.2024
-                    getblFragmentRecyreViewServerScan.   setManagerfromRecyclerView();
-
                     getblFragmentRecyreViewServerScan.     rebootRecyreViewApdater(  getMapReceivedFromBootFragmentGatta,     concurrentHashMapCursor );
-
-
 
 
                     Log.d(getContext().getClass().getName(), "\n"
