@@ -45,6 +45,7 @@ import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentSkipListSet;
 import java.util.concurrent.CopyOnWriteArrayList;
+import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
@@ -287,9 +288,49 @@ public class Businesslogic_ScaningClientWorker {
 
 
 
-                    Observable.range(      1,12)
+                    getListMAC.forEach(new java.util.function.Consumer<String>() {
+                        @Override
+                        public void accept(String getAddress) {
+
+                            // TODO: 02.08.2024
+
+                                // TODO: 26.07.2024
+                                final BluetoothDevice bluetoothDeviceScan = bluetoothAdapterPhoneClient.getRemoteDevice(getAddress.trim());
+
+                                // TODO: 13.08.2024
+
+                                SharedPreferences.Editor editor = preferences.edit();
+                                editor.putStringSet(bluetoothDeviceScan.getAddress(), Collections.singleton(bluetoothDeviceScan.getAddress()));
+                                editor.apply();
+
+                                // TODO: 12.02.2023  init CallBack Gatt Client for Scan
+                                bluetoothGattCallbacks.add(МетодРаботыСТекущийСерверомGATTДляScan( ));
+
+                                // TODO: 06.08.2024
+                                connectionGattClient.add(getMessage());
+
+
+                                // TODO: 26.01.2023 staring  GATT
+                                getConnectionBluetoothGatt.add( МетодЗапускаGATTКлиентаScan(bluetoothDeviceScan,
+                                        bluetoothGattCallbacks.get(atomicIntegerDisponse.get()),
+                                        connectionGattClient.get(atomicIntegerDisponse.get()))) ;
+
+
+
+                            // TODO: 08.08.2024  увеличиваем общще количесто операций
+                            atomicIntegerDisponse.incrementAndGet();
+
+                        }
+                    });
+                    // TODO: 07.04.2024
+                    Log.d(this.getClass().getName(), "\n" + " class " +
+                            Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                            " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                            " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" + "\n");
+
+                /*    Observable.range(      1,12)
                             .zipWith( Observable.just("")
-                                    .repeatWhen(repeat->repeat.delay(20,TimeUnit.SECONDS)), (item, interval) -> item)
+                                    .repeatWhen(repeat->repeat.delay(5,TimeUnit.SECONDS)), (item, interval) -> item)
                             .flatMap(val -> Observable.just(val)
                                     .subscribeOn(Schedulers.computation()))
                             .doOnNext(new Consumer<Object>() {
@@ -298,10 +339,10 @@ public class Businesslogic_ScaningClientWorker {
                                     // TODO: 22.11.2022  первая часть
 
                                     // TODO: 22.11.2022  первая часть
-                                    int DurectionTimeGattInner=     12;//  getRandomNumberUsingMilisecond(5000,1500);
+                                    int DurectionTimeGattInner=   250  ;//  getRandomNumberUsingMilisecond(5000,1500);
                                     Observable.fromIterable(      getListMAC)
                                             .zipWith( Observable.just("")
-                                                    .repeatWhen(repeat->repeat.delay(DurectionTimeGattInner,TimeUnit.SECONDS)), (item, interval) -> item)
+                                                    .repeatWhen(repeat->repeat.delay(DurectionTimeGattInner,TimeUnit.MILLISECONDS)), (item, interval) -> item)
                                            .flatMap(val -> Observable.just(val)
                                                    .subscribeOn(Schedulers.computation()))
                                             .doOnNext(new Consumer<String>() {
@@ -312,26 +353,29 @@ public class Businesslogic_ScaningClientWorker {
                                                     // TODO: 25.07.2024
 
                                                     // TODO: 02.08.2024
-                                                    // TODO: 26.07.2024
-                                                    final BluetoothDevice bluetoothDeviceScan = bluetoothAdapterPhoneClient.getRemoteDevice(getAddress.trim());
+                                                    if ( !disposablerange.isDisposed() ||
+                                                            !disposablegetListMAC.isDisposed()) {
+                                                        // TODO: 26.07.2024
+                                                        final BluetoothDevice bluetoothDeviceScan = bluetoothAdapterPhoneClient.getRemoteDevice(getAddress.trim());
 
-                                                    // TODO: 13.08.2024
+                                                        // TODO: 13.08.2024
 
-                                                    SharedPreferences.Editor editor = preferences.edit();
-                                                    editor.putStringSet(bluetoothDeviceScan.getAddress(), Collections.singleton(bluetoothDeviceScan.getAddress()));
-                                                    editor.apply();
+                                                        SharedPreferences.Editor editor = preferences.edit();
+                                                        editor.putStringSet(bluetoothDeviceScan.getAddress(), Collections.singleton(bluetoothDeviceScan.getAddress()));
+                                                        editor.apply();
 
-                                                    // TODO: 12.02.2023  init CallBack Gatt Client for Scan
-                                                    bluetoothGattCallbacks.add(МетодРаботыСТекущийСерверомGATTДляScan( ));
+                                                        // TODO: 12.02.2023  init CallBack Gatt Client for Scan
+                                                        bluetoothGattCallbacks.add(МетодРаботыСТекущийСерверомGATTДляScan( ));
 
-                                                    // TODO: 06.08.2024
-                                                    connectionGattClient.add(getMessage());
+                                                        // TODO: 06.08.2024
+                                                        connectionGattClient.add(getMessage());
 
 
-                                                    // TODO: 26.01.2023 staring  GATT
-                                                    getConnectionBluetoothGatt.add( МетодЗапускаGATTКлиентаScan(bluetoothDeviceScan,
-                                                            bluetoothGattCallbacks.get(atomicIntegerDisponse.get()),
-                                                            connectionGattClient.get(atomicIntegerDisponse.get()))) ;
+                                                        // TODO: 26.01.2023 staring  GATT
+                                                        getConnectionBluetoothGatt.add( МетодЗапускаGATTКлиентаScan(bluetoothDeviceScan,
+                                                                bluetoothGattCallbacks.get(atomicIntegerDisponse.get()),
+                                                                connectionGattClient.get(atomicIntegerDisponse.get()))) ;
+                                                    }
 
 
                                                     // TODO: 08.08.2024  увеличиваем общще количесто операций
@@ -344,7 +388,8 @@ public class Businesslogic_ScaningClientWorker {
                                                             Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                                                             " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
                                                             " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" + "\n"
-                                                            +  " getAddress "+ getAddress+" atomicIntegerDisponse.get() " +atomicIntegerDisponse.get());
+                                                            +  " getAddress "+ getAddress+" atomicIntegerDisponse.get() " +atomicIntegerDisponse.get() +
+                                                             "disposablegetListMAC.isDisposed() " +disposablegetListMAC.isDisposed());
 
 
 
@@ -390,7 +435,8 @@ public class Businesslogic_ScaningClientWorker {
                                                }
                                            })
                                             .subscribe();
-
+*/
+/*
 
                                     Log.d(this.getClass().getName(), "\n" + " class " +
                                             Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
@@ -416,9 +462,7 @@ public class Businesslogic_ScaningClientWorker {
                                             " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
                                             " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" + "\n"+
                                             " numberoftheСurrentscanningattempt " +numberoftheСurrentscanningattempt);
-                                    if (numberoftheСurrentscanningattempt>=6
-                                            || disposablerange.isDisposed() ||
-                                            disposablegetListMAC.isDisposed()) {
+                                    if (numberoftheСurrentscanningattempt>=6) {
                                         // TODO: 09.08.2024
 
 
@@ -484,6 +528,7 @@ public class Businesslogic_ScaningClientWorker {
                             })
                             .subscribe();
 
+*/
 
 
 
@@ -591,9 +636,10 @@ try{
 
     private  void addingQueueListmac(CopyOnWriteArrayList<String> getListMAC) {
         if (getListMAC.size()==0) {
-           getListMAC.add( "98:2F:F8:19:BC:F7");
+
        /*    getListMAC.add( "64:03:7F:A2:E2:C2");*/
-           getListMAC.add( "CC:73:15:17:96:3F");
+           //.add( "CC:73:15:17:96:3F");
+            getListMAC.add( "98:2F:F8:19:BC:F7");
            /* getListMAC.add( "74:15:75:D8:F5:FA");
             getListMAC.add( "FC:19:99:79:D6:D4");*/
             Log.d(context.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
