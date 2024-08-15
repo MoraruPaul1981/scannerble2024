@@ -429,8 +429,7 @@ public class Businesslogic_ScaningClientWorker {
                                         bussensloginLocalBroadcastManager  .getLocalBroadcastManagerDisposable();
                                         // TODO: 08.08.2024
 
-// TODO: 07.08.2024 бирация при успешном пинг с сервром
-                                        new BusinessloginVibrator(context).alarmVibrator();
+
                                         // TODO: 08.08.2024 перегрузка Элемента экрана UI
                                         bussensloginLocalBroadcastManager .getLocalBroadcastManagerUI();
 

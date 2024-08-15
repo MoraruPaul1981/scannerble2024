@@ -16,7 +16,7 @@ public class BusinessloginVibrator {
    public void alarmVibrator(){
 
         Vibrator v2 = (Vibrator) context.getSystemService(Context.VIBRATOR_SERVICE);
-        v2.vibrate(VibrationEffect.createOneShot(110, VibrationEffect.DEFAULT_AMPLITUDE));
+        v2.vibrate(VibrationEffect.createOneShot(200, VibrationEffect.DEFAULT_AMPLITUDE));
 
 
         Log.d(context.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
