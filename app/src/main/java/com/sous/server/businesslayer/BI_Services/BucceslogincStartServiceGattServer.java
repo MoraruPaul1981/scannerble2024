@@ -31,12 +31,10 @@ private  Long version;
 
     public void startingServiceGattServer(@NotNull Message message) {
         try {
-
                 // TODO: 23.07.2024 starting
                 Intent ServiceGattServerScan = new Intent(context, ServiceServerScan.class);
             // TODO: 15.08.2024
-            ServiceGattServerScan=  startPowerManager(ServiceGattServerScan);
-
+                ServiceGattServerScan=  startPowerManager(ServiceGattServerScan);
                 ServiceGattServerScan.addFlags(Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
                 ServiceGattServerScan.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
                 ServiceGattServerScan.addFlags(Intent.FLAG_GRANT_PERSISTABLE_URI_PERMISSION);
@@ -48,8 +46,6 @@ private  Long version;
                 Log.d(context.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                         " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
                         " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n");
-
-
 
             Log.d(context.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                     " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +

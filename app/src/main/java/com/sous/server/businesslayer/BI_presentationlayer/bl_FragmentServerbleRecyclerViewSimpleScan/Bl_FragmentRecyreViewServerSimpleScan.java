@@ -68,8 +68,6 @@ public class Bl_FragmentRecyreViewServerSimpleScan {
     private Message messageGattServer;
     private    BottomNavigationView bottomnavigationview_server_scan;
 
-
-    public  Cursor  getconcurrentHashMapCursor;
     public Bl_FragmentRecyreViewServerSimpleScan(FragmentManager fragmentManager,
                                                  RecyclerView recyclerViewServer,
                                                  Long version,
@@ -404,7 +402,7 @@ public class Bl_FragmentRecyreViewServerSimpleScan {
                         " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"+
                         "  itemView " +itemView
                         + " myRecycleViewAdapterServer.getMapReceivedFromBootFragmentGatta "
-                        +  getconcurrentHashMapCursor );
+                        +  itemView );
 
             } catch (Exception e) {
                 e.printStackTrace();
@@ -487,7 +485,7 @@ public class Bl_FragmentRecyreViewServerSimpleScan {
 
 
     class MyRecycleViewAdapterServer extends RecyclerView.Adapter<MyViewHolder> {
-
+        public  Cursor  getconcurrentHashMapCursor;
 
         public MyRecycleViewAdapterServer(@Nullable  Cursor  mapconcurrentHashMapCursor) {
             // TODO: 15.08.2024
@@ -1188,11 +1186,11 @@ public class Bl_FragmentRecyreViewServerSimpleScan {
             // TODO: 15.08.2024
 
             if (curcorServerGatt.getCount()>0) {
-                if (  getconcurrentHashMapCursor==null) {
-                   getconcurrentHashMapCursor=curcorServerGatt;
+                if ( myRecycleViewAdapterServer. getconcurrentHashMapCursor==null) {
+                    myRecycleViewAdapterServer. getconcurrentHashMapCursor=curcorServerGatt;
                 } else {
-                    getconcurrentHashMapCursor.close();
-                    getconcurrentHashMapCursor=curcorServerGatt;
+                    myRecycleViewAdapterServer. getconcurrentHashMapCursor.close();
+                    myRecycleViewAdapterServer. getconcurrentHashMapCursor=curcorServerGatt;
                 }
 
                 myRecycleViewAdapterServer.notifyDataSetChanged();
@@ -1361,9 +1359,9 @@ public void settingbottomnavigationview_server_scan(){
      BadgeDrawable badge =bottomnavigationview_server_scan.getOrCreateBadge(R.id.scan);
 
      // TODO: 31.07.2024
-     if ( getconcurrentHashMapCursor!=null) {
+     if ( myRecycleViewAdapterServer. getconcurrentHashMapCursor!=null) {
          badge.setBackgroundColor(Color.BLACK);
-         badge.setNumber( getconcurrentHashMapCursor.getCount());
+         badge.setNumber( myRecycleViewAdapterServer. getconcurrentHashMapCursor.getCount());
      } else {
          badge.setBackgroundColor(Color.RED);
          badge.setNumber(0);

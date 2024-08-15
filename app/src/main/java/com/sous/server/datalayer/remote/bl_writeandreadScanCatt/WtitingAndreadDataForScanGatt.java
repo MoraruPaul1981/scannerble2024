@@ -619,8 +619,7 @@ try{
                                                            @androidx.annotation.NonNull ContentValues    contentValuesВставкаДанныхScan) {
         try{
 
-            Vibrator v2 = (Vibrator) context.getSystemService(Context.VIBRATOR_SERVICE);
-            v2.vibrate(VibrationEffect.createOneShot(50, VibrationEffect.DEFAULT_AMPLITUDE));
+
 
 
             //TODO:Event Send To Fragment Boot After Success DataBase and Divece

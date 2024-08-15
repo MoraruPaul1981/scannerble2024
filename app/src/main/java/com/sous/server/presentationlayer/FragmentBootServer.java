@@ -332,22 +332,25 @@ public class FragmentBootServer extends Fragment {
             forwardOtServiceGattEventBus(getFladEnableApadaterBTEOtService);
 
                 // TODO: 17.07.2024  переходим после успещглй коннекта Обмена между Клиентмо и Сервером BLE  данными
-                //TODO: Запускаем Фрагмент Server Fragment
-                biFragmentBootScannerServer.МетодЗапускаФрагментаServer(  new FragmentScanRecyclerView())   ; /// Scan
+                      message.getTarget().postDelayed(()->{
 
-                Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
-                        " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                        " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" );
+                          biFragmentBootScannerServer.МетодЗапускаФрагментаServer(  new FragmentScanRecyclerView())   ; /// Scan
+
+                          Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                                  " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                                  " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" );
+
+
+                      },1000);
+                //TODO: Запускаем Фрагмент Server Fragment
+
+
                 Log.d(getContext().getClass().getName(), "\n"
                         + " время: " + new Date() + "\n+" +
                         " Класс в процессе... " + this.getClass().getName() + "\n" +
                         " метод в процессе... " + Thread.currentThread().getStackTrace()[2].getMethodName()+
                         " CurrentTask " + CurrentTask);
-            Log.d(getContext().getClass().getName(), "\n"
-                    + " время: " + new Date() + "\n+" +
-                    " Класс в процессе... " + this.getClass().getName() + "\n" +
-                    " метод в процессе... " + Thread.currentThread().getStackTrace()[2].getMethodName()+
-                    " CurrentTask " + CurrentTask);
+
 
         } else {
 

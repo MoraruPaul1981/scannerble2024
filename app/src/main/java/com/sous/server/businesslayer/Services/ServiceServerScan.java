@@ -1,7 +1,6 @@
 package com.sous.server.businesslayer.Services;
 
 import static android.app.job.JobInfo.PRIORITY_MAX;
-import static android.app.job.JobInfo.PRIORITY_MIN;
 
 import android.annotation.SuppressLint;
 import android.app.IntentService;
@@ -19,8 +18,6 @@ import android.bluetooth.BluetoothGattServerCallback;
 import android.bluetooth.BluetoothGattService;
 import android.bluetooth.BluetoothManager;
 import android.bluetooth.BluetoothProfile;
-import android.bluetooth.BluetoothServerSocket;
-import android.bluetooth.BluetoothSocket;
 import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
@@ -29,14 +26,12 @@ import android.content.pm.PackageInfo;
 import android.content.pm.ProviderInfo;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import android.location.Address;
 import android.location.LocationManager;
 import android.os.Binder;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.IBinder;
-import android.os.Parcel;
 import android.os.ParcelUuid;
 import android.os.VibrationEffect;
 import android.os.Vibrator;
@@ -49,8 +44,6 @@ import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 import androidx.core.app.NotificationCompat;
 
-import com.google.android.gms.location.FusedLocationProviderClient;
-
 
 import com.sous.server.R;
 import com.sous.server.businesslayer.ContentProvoders.ContentProviderServer;
@@ -58,24 +51,18 @@ import com.sous.server.businesslayer.Errors.SubClassErrors;
 import com.sous.server.businesslayer.Eventbus.MessageScannerServer;
 import com.sous.server.businesslayer.Eventbus.ParamentsScannerServer;
 import com.sous.server.businesslayer.Locations.GattLocationListener;
-import com.sous.server.businesslayer.Permissions.SetPermissions;
-import com.sous.server.businesslayer.bl_BloadcastReceiver.Businesslogic_GattReflection;
 import com.sous.server.datalayer.remote.bl_writeandreadScanCatt.WtitingAndreadDataForScanGatt;
 
 
 import org.greenrobot.eventbus.EventBus;
 
-import java.io.IOException;
-import java.net.Socket;
 import java.nio.charset.StandardCharsets;
 import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
-import java.util.Random;
 import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicReference;
-import java.util.function.Consumer;
 
 
 /**
@@ -103,6 +90,8 @@ public class ServiceServerScan extends Service {
     protected     Cursor successfuldevices;
     protected  NotificationCompat.Builder notificationBuilderServer;
     protected    Boolean getStatusEnableBlueadapter;
+
+    protected      final  Handler handler=new Handler();
 
     @Override
     public void onCreate() {
@@ -196,11 +185,9 @@ public class ServiceServerScan extends Service {
              settingGattServerBluetoothGattService();
 
 
-                sendingSucceessDataFromFragmenUI( );
+            sendadatacompletioneventtotheformwithaBacklog();
 
 
-
-            
             Log.d(getApplicationContext().getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                     " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
                     " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n");
@@ -238,6 +225,39 @@ public class ServiceServerScan extends Service {
 
         return START_STICKY;
         //  return super.onStartCommand(intent, flags, startId);
+    }
+
+    private void sendadatacompletioneventtotheformwithaBacklog() {
+
+        try{
+        handler.postDelayed(()->{
+
+            sendingSucceessDataFromFragmenUI( );
+
+        },1300);
+
+        Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" +
+                "  getStatusEnableBlueadapter " + getStatusEnableBlueadapter);
+
+
+// TODO: 30.06.2022 сама не постредствено запуск метода
+    } catch (Exception e) {
+        e.printStackTrace();
+        Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() + " Линия  :"
+                + Thread.currentThread().getStackTrace()[2].getLineNumber());
+        ContentValues valuesЗаписываемОшибки = new ContentValues();
+        valuesЗаписываемОшибки.put("Error", e.toString().toLowerCase());
+        valuesЗаписываемОшибки.put("Klass", this.getClass().getName());
+        valuesЗаписываемОшибки.put("Metod", Thread.currentThread().getStackTrace()[2].getMethodName());
+        valuesЗаписываемОшибки.put("LineError", Thread.currentThread().getStackTrace()[2].getLineNumber());
+        final Object ТекущаяВерсияПрограммы = version;
+        Integer ЛокальнаяВерсияПОСравнение = Integer.parseInt(ТекущаяВерсияПрограммы.toString());
+        valuesЗаписываемОшибки.put("whose_error", ЛокальнаяВерсияПОСравнение);
+        new SubClassErrors(getApplicationContext()).МетодЗаписиОшибокИзServerGatt(valuesЗаписываемОшибки,contentProviderServer);
+    }
+
     }
 
     @Override
@@ -652,9 +672,6 @@ public class ServiceServerScan extends Service {
                     // TODO: 22.07.2024
                     super.onServiceAdded(status, service);
 
-
-                    Vibrator v2 = (Vibrator) getApplicationContext().getSystemService(Context.VIBRATOR_SERVICE);
-                    v2.vibrate(VibrationEffect.createOneShot(100, VibrationEffect.DEFAULT_AMPLITUDE));
 
                     ///TODO: SuccessAddDevice
                     Bundle bundleAddDeviceSuccess = new Bundle();
