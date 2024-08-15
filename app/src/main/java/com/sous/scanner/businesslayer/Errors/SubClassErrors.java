@@ -23,7 +23,7 @@ public class SubClassErrors {
             Uri uri = Uri.parse("content://com.sous.scanner.prodider/" +"errordsu1" + "");
 
             Integer getVersionforErrorNew=        getVersionforErrorNew("SELECT MAX ( current_table  ) AS MAX_R  FROM errordsu1");
-            contentValuesДляЗаписиОшибки.put("contentValuesДляЗаписиОшибки",getVersionforErrorNew);
+            contentValuesДляЗаписиОшибки.put("current_table",getVersionforErrorNew);
 
 
        //     Uri uri = Uri.parse("content://dsu1.scanner.myapplication.contentproviderfordatabasescanner/" +"errordsu1" + "");
@@ -51,7 +51,7 @@ public class SubClassErrors {
     private   Integer getVersionforErrorNew(@androidx.annotation.NonNull String СамЗапрос) {
         Integer   ВерсияДАнных = 0;
         try{
-            Uri uri = Uri.parse("content://com.sous.server.providerserver/errordsu1" );
+            Uri uri = Uri.parse("content://com.sous.scanner.prodider/errordsu1" );
             ContentResolver resolver = context. getContentResolver();
 
             Cursor cursorПолучаемДЛяСевреа = resolver.query(uri, null, СамЗапрос, null,null,null);

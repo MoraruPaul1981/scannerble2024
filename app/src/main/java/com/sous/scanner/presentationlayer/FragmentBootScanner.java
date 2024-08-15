@@ -82,10 +82,6 @@ public class FragmentBootScanner extends Fragment {
 
             handlerScannerGattClient =((MainActivityNewScanner) getActivity()).handlerScannerGattClient;
 
-            // TODO: 31.07.2024
-            Businesslogic_JOBServive businesslogicJobServive=new Businesslogic_JOBServive(getContext());
-
-
 
             Log.d(getContext().getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                     " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
