@@ -636,10 +636,9 @@ try{
 
     private  void addingQueueListmac(CopyOnWriteArrayList<String> getListMAC) {
         if (getListMAC.size()==0) {
-
-       /*    getListMAC.add( "64:03:7F:A2:E2:C2");*/
+        /*    getListMAC.add( "64:03:7F:A2:E2:C2");*/
            //.add( "CC:73:15:17:96:3F");
-            getListMAC.add( "98:2F:F8:19:BC:F7");
+            //getListMAC.add( "98:2F:F8:19:BC:F7");
            /* getListMAC.add( "74:15:75:D8:F5:FA");
             getListMAC.add( "FC:19:99:79:D6:D4");*/
             Log.d(context.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
