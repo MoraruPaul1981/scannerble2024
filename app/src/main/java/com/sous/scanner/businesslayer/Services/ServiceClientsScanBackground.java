@@ -123,7 +123,7 @@ private      SharedPreferences preferences;
                     // TODO: 06.08.2024
                     case "robotlaunchingfrombackground":
                         // TODO: 25.07.2024 Бесконечная работа
-                        blForServiceScan.launchingSimplebackground(2 );
+                       /// blForServiceScan.launchingSimplebackground(2 );
 
                         Log.d(getApplicationContext().getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                                 " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +

@@ -289,7 +289,7 @@ public class Businesslogic_ScaningClientWorker {
 
                     Observable.range(      1,12)
                             .zipWith( Observable.just("")
-                                    .repeatWhen(repeat->repeat.delay(DurectionTimeGatt,TimeUnit.SECONDS)), (item, interval) -> item)
+                                    .repeatWhen(repeat->repeat.delay(20,TimeUnit.SECONDS)), (item, interval) -> item)
                             .flatMap(val -> Observable.just(val)
                                     .subscribeOn(Schedulers.computation()))
                             .doOnNext(new Consumer<Object>() {
@@ -298,10 +298,10 @@ public class Businesslogic_ScaningClientWorker {
                                     // TODO: 22.11.2022  первая часть
 
                                     // TODO: 22.11.2022  первая часть
-                                    int DurectionTimeGattInner=       getRandomNumberUsingMilisecond(200,500);
+                                    int DurectionTimeGattInner=     12;//  getRandomNumberUsingMilisecond(5000,1500);
                                     Observable.fromIterable(      getListMAC)
                                             .zipWith( Observable.just("")
-                                                    .repeatWhen(repeat->repeat.delay(DurectionTimeGattInner,TimeUnit.MILLISECONDS)), (item, interval) -> item)
+                                                    .repeatWhen(repeat->repeat.delay(DurectionTimeGattInner,TimeUnit.SECONDS)), (item, interval) -> item)
                                            .flatMap(val -> Observable.just(val)
                                                    .subscribeOn(Schedulers.computation()))
                                             .doOnNext(new Consumer<String>() {
@@ -592,10 +592,10 @@ try{
     private  void addingQueueListmac(CopyOnWriteArrayList<String> getListMAC) {
         if (getListMAC.size()==0) {
            getListMAC.add( "98:2F:F8:19:BC:F7");
-           getListMAC.add( "64:03:7F:A2:E2:C2");
+       /*    getListMAC.add( "64:03:7F:A2:E2:C2");*/
            getListMAC.add( "CC:73:15:17:96:3F");
-            getListMAC.add( "74:15:75:D8:F5:FA");//
-            getListMAC.add( "FC:19:99:79:D6:D4");//
+           /* getListMAC.add( "74:15:75:D8:F5:FA");
+            getListMAC.add( "FC:19:99:79:D6:D4");*/
             Log.d(context.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                     " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
                     " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" + " getListMAC " +getListMAC.size());
