@@ -266,6 +266,7 @@
             android:enabled="true"
             android:exported="true"
             android:grantUriPermissions="true"
+            android:permission="com.sous.server.providerserver.pemission"
             android:readPermission="true"
             android:writePermission="true" />
         <provider

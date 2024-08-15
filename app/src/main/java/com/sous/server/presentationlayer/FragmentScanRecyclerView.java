@@ -336,11 +336,31 @@ public class FragmentScanRecyclerView extends Fragment {
                          "getMapReceivedFromBootFragmentGatta " +getMapReceivedFromBootFragmentGatta+ "concurrentHashMapCursor " +concurrentHashMapCursor );
 
 
-                getblFragmentRecyreViewServerScan.     rebootRecyreViewApdater(  getMapReceivedFromBootFragmentGatta,     concurrentHashMapCursor );
+                if (concurrentHashMapCursor.size()>0) {
+                    // TODO: 15.08.2024
+                    getblFragmentRecyreViewServerScan.   setManagerfromRecyclerView();
+
+                    getblFragmentRecyreViewServerScan.     rebootRecyreViewApdater(  getMapReceivedFromBootFragmentGatta,     concurrentHashMapCursor );
 
 
+
+
+                    Log.d(getContext().getClass().getName(), "\n"
+                            + " время: " + new Date() + "\n+" +
+                            " Класс в процессе... " + this.getClass().getName() + "\n" +
+                            " метод в процессе... " + Thread.currentThread().getStackTrace()[2].getMethodName()+
+                            " getFladEnableApadaterBTEOtService " +getFladEnableApadaterBTEOtService+
+                            " CurrentTask  "  +CurrentTask);
 //todo Есди Данные Пришли ТО мы Их получаем от службыть
-             onResume();
+                    onResume();
+                } else {
+                    Log.d(getContext().getClass().getName(), "\n"
+                            + " время: " + new Date() + "\n+" +
+                            " Класс в процессе... " + this.getClass().getName() + "\n" +
+                            " метод в процессе... " + Thread.currentThread().getStackTrace()[2].getMethodName()+
+                            " getFladEnableApadaterBTEOtService " +getFladEnableApadaterBTEOtService+
+                            " CurrentTask  "  +CurrentTask);
+                }
 
 
                 Log.d(getContext().getClass().getName(), "\n"
@@ -414,7 +434,7 @@ public class FragmentScanRecyclerView extends Fragment {
                 version,getActivity(),fragmentManager);
         getNavigationViews.startingbottomNavigationVeiw();
 
-        getblFragmentRecyreViewServerScan.     setManagerfromRecyclerView();
+        getblFragmentRecyreViewServerScan.    setManagerfromRecyclerViewDontData();
         getblFragmentRecyreViewServerScan.     addAdapterServerforRecyreview(null);
         getblFragmentRecyreViewServerScan.     getObserverRecyreView();
         getblFragmentRecyreViewServerScan. settingAnimatios(recyclerview_server_ble);
