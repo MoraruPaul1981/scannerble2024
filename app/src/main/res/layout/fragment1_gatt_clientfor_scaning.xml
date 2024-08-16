@@ -88,28 +88,26 @@
                 android:background="#FFFFFF">
 
 
-            <androidx.appcompat.widget.SearchView
+            <com.google.android.material.textview.MaterialTextView
                 android:id="@+id/searchview_commitdocument"
                 android:layout_width="match_parent"
-                android:layout_height="30dp"
+                android:layout_height="35dp"
                 android:layout_alignParentLeft="true"
                 android:layout_alignParentTop="true"
                 android:layout_alignParentRight="true"
                 android:layout_centerHorizontal="true"
-                android:layout_marginStart="40dp"
-                android:layout_marginEnd="40dp"
+                android:layout_marginStart="20dp"
+                android:layout_marginEnd="20dp"
                 android:layout_marginBottom="2dp"
                 android:layout_marginTop="2dp"
+                android:gravity="center"
                 android:padding="2dp"
+                android:drawableLeft="@drawable/icon_ble_mac_list"
                 android:background="@drawable/style_for_newstypespinners_ietm6"
-                android:checkMark="?android:attr/listChoiceIndicatorSingle"
-                android:gravity="center_vertical|center_horizontal"
-                android:paddingStart="?android:attr/listPreferredItemPaddingStart"
-                android:paddingEnd="?android:attr/listPreferredItemPaddingEnd"
-                android:queryHint="Поиск..."
                 android:textAppearance="?android:attr/textAppearanceListItemSmall"
-                android:textSize="15dp"
+                android:textSize="14dp"
                 android:textStyle="bold"
+                android:text="мас-адреса"
                 android:visibility="visible" />
             </RelativeLayout>
 

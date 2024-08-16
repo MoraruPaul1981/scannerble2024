@@ -10,7 +10,6 @@ import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.content.pm.PackageInfo;
 import android.graphics.Color;
-import android.graphics.Shader;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
@@ -41,16 +40,14 @@ import com.google.android.material.button.MaterialButton;
 import com.google.android.material.card.MaterialCardView;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.textview.MaterialTextView;
-import com.google.common.util.concurrent.AtomicDouble;
 import com.jakewharton.rxbinding4.view.RxView;
 import com.sous.scanner.businesslayer.Errors.SubClassErrors;
 import com.sous.scanner.R;
 import com.sous.scanner.businesslayer.bl_EvenBus.EventLocalBroadcastManager;
-import com.sous.scanner.businesslayer.bl_LocalBroadcastManagers.BussensloginLocalBroadcastManager;
 import com.sous.scanner.businesslayer.bl_forServices.Businesslogic_JOBServive;
 import com.sous.scanner.businesslayer.bl_forServices.BusinessoginEnableBluetoothAdapter;
-import com.sous.scanner.businesslayer.bl_fragnment_gatt_client.BusinessloginVibrator;
-import com.sous.scanner.businesslayer.bl_fragnment_gatt_client.BusinessloginforfragmentScanner;
+import com.sous.scanner.businesslayer.bl_fragmentscanneruser.BusinessloginVibrator;
+import com.sous.scanner.businesslayer.bl_fragmentscanneruser.BusinessloginforfragmentScanner;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -202,9 +199,17 @@ public class FragmentScannerUser extends Fragment {
         try{
         String completeResultContol=    preferences.getString("completeResultContol","");
         if (completeResultContol.length()>0) {
-            materialtextview_last_state.setText(completeResultContol);
-            materialtextview_last_state.requestLayout();
-            materialtextview_last_state.refreshDrawableState();
+
+            materialtextview_last_state.animate().rotationX(+20l);
+            messageClient.getTarget() .postDelayed(()-> {
+                materialtextview_last_state.animate().rotationX(0);
+
+                materialtextview_last_state.setText(completeResultContol);
+                materialtextview_last_state.requestLayout();
+                materialtextview_last_state.refreshDrawableState();
+            },200);
+
+
         }
     } catch (Exception e) {
         e.printStackTrace();
@@ -228,7 +233,7 @@ public class FragmentScannerUser extends Fragment {
         View view = null;
         try {
             view = inflater.inflate(R.layout.fragment1_gatt_clientfor_scaning, container, false);
-            // TODO: 05.08.2024  
+            // TODO: 05.08.2024
             Log.d(getContext().getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                     " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
                     " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"+" view " +view);
@@ -910,6 +915,9 @@ public class FragmentScannerUser extends Fragment {
                                         " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
                                         " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" + "\n");
 
+
+                                    // TODO: 16.05.2023 запуск SEARCHVIEW CFO
+
                                 // TODO: 09.08.2024
                                 BusinessoginEnableBluetoothAdapter bluetoothAdapter=       new BusinessoginEnableBluetoothAdapter(getContext(),version);
 
@@ -952,7 +960,7 @@ public class FragmentScannerUser extends Fragment {
                                             + "\n" + "\n" + " bluetoothAdapterPhoneClient "+bluetoothAdapterPhoneClient.isEnabled() );
                                 }
 
-                                  
+
                                 
                                 // TODO: 02.08.2024
                                 Log.d(this.getClass().getName(), "\n" + " class " +

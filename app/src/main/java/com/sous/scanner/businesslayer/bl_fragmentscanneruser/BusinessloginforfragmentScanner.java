@@ -1,4 +1,4 @@
-package com.sous.scanner.businesslayer.bl_fragnment_gatt_client;
+package com.sous.scanner.businesslayer.bl_fragmentscanneruser;
 
 import android.content.ContentValues;
 import android.content.Context;
@@ -16,10 +16,6 @@ import com.sous.scanner.businesslayer.Errors.SubClassErrors;
 import com.sous.scanner.businesslayer.bl_EvenBus.EventLocalBroadcastManager;
 
 import java.time.LocalDateTime;
-import java.util.List;
-import java.util.logging.Handler;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 public class BusinessloginforfragmentScanner {
 

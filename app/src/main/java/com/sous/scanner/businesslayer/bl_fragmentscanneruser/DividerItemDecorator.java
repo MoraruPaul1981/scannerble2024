@@ -1,9 +1,6 @@
-package com.sous.scanner.businesslayer.bl_fragnment_gatt_client;
+package com.sous.scanner.businesslayer.bl_fragmentscanneruser;
 
-import android.content.Context;
-import android.graphics.Canvas;
 import android.graphics.Rect;
-import android.graphics.drawable.Drawable;
 import android.view.View;
 
 import androidx.annotation.NonNull;
