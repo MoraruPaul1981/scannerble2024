@@ -1,37 +1,50 @@
 <?xml version="1.0" encoding="utf-8"?>
 <com.google.android.material.card.MaterialCardView
-    android:id="@+id/id_materialcardview_gattclientonly_bottom"
-    android:layout_height="match_parent"
-    android:layout_width="match_parent"
-    android:translationZ="150dp"
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/id_materialcardview_gattclientonly_bottom"
+    android:layout_height="match_parent"
+    android:layout_width="match_parent"
+    android:translationZ="15dp"
+    app:cardBackgroundColor="#FFFFFF"
+    app:strokeColor="#F2F6F6"
+    app:cardCornerRadius="1dp"
+    app:cardElevation="2dp"
+    app:cardMaxElevation="10dp"
+    app:strokeWidth="1dp"
+    android:animateLayoutChanges="true"
+    android:theme="@style/Theme.MaterialComponents.Light.NoActionBar"
     tools:context=".presentationlayer.MainActivityNewScanner">
 
-
-
-    <RelativeLayout
-        android:id="@+id/id_relativeLayout_fragment_boot"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
+    <TableLayout
+        android:id="@+id/tableLayoutparentrow_pays"
+        android:shrinkColumns="*"
+        android:stretchColumns="*"
+        android:gravity="center"
         android:background="#FFFFFF"
-        android:orientation="vertical">
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
+    <TableRow
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="1dp"
+        android:padding="1dp"
+        android:layout_column="0"
+        android:background="#FFFFFF"
+        android:gravity="center_vertical|center_horizontal">
 
 
 
         <com.google.android.material.tabs.TabLayout
             android:id="@+id/id_textViewDefaultNameState"
-            android:layout_alignParentTop="true"
-            android:layout_centerHorizontal="true"
+            android:layout_column="0"
             android:layout_width="200dp"
             android:layout_height="40dp"
-           android:layout_marginTop="20dp"
             android:elevation="3dp"
             app:tabMinWidth="150dp"
             android:translationZ="10dp"
-            android:background="#FFFFFF"
             app:tabIndicatorColor="#A6A3A2"
             app:tabIndicatorHeight="2dp"
             app:tabTextColor="#A6A3A2"
@@ -42,66 +55,63 @@
                 android:id="@+id/tabItem_server_ble"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:padding="10dp"
+                android:padding="2dp"
                 android:text="Последний статус" />
 
         </com.google.android.material.tabs.TabLayout>
 
 
 
+    </TableRow>
 
 
 
-
-
-
-
-
-
-
-
-        <com.google.android.material.textview.MaterialTextView
-            android:id="@+id/id_materialtextview_last_state"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:minHeight="40dp"
-            android:layout_below ="@+id/id_textViewDefaultNameState"
-            android:drawablePadding="5dp"
-            android:drawableLeft="@drawable/icon_dsu1_scanner_status_last"
-            android:gravity="center_vertical"
-            android:hint="ответ контроля"
-            android:padding="2dp"
-            android:layout_marginTop="10dp"
-            android:layout_marginBottom="5dp"
-            android:layout_centerHorizontal="true"
-            android:textColor="#7F8080"
-            android:textColorHint="#7F8080"
-            android:textSize="18sp"
-            android:textStyle="bold"
-            android:translationZ="50dp" />
-
-
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/id_recyclerview_gatt_main"
+        <!--//TODO   НАЧАЛО ПЕРВАЯ СТРОЧКА ROW #1-->
+        <TableRow
+            android:id="@+id/tableRow_commitdocumentsearch"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_below="@+id/id_materialtextview_last_state"
-            android:layout_alignParentBottom="true"
-            android:layout_centerHorizontal="true"
-            android:background="#0FFFFFFF"
-            android:divider="@color/material_dynamic_primary0"
-            android:dividerHeight="10dp"
-            android:fillViewport="true"
-            android:listSelector="@color/material_dynamic_primary50"
-
-            android:minHeight="500dp"
-            android:padding="5dp"
-            android:visibility="visible"
-
-            app:layout_behavior="@string/appbar_scrolling_view_behavior"
-            tools:ignore="MissingConstraints" />
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:layout_gravity="center_horizontal"
+            android:layout_margin="2dp"
+            android:padding="2dp"
+            android:background="#FFFFFF">
 
 
+            <RelativeLayout
+                android:layout_column="0"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal|center_vertical"
+                android:orientation="vertical"
+                android:background="#FFFFFF">
+
+
+            <androidx.appcompat.widget.SearchView
+                android:id="@+id/searchview_commitdocument"
+                android:layout_width="match_parent"
+                android:layout_height="30dp"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentRight="true"
+                android:layout_centerHorizontal="true"
+                android:layout_marginStart="40dp"
+                android:layout_marginEnd="40dp"
+                android:layout_marginBottom="2dp"
+                android:layout_marginTop="2dp"
+                android:padding="2dp"
+                android:checkMark="?android:attr/listChoiceIndicatorSingle"
+                android:gravity="center_vertical|center_horizontal"
+                android:paddingStart="?android:attr/listPreferredItemPaddingStart"
+                android:paddingEnd="?android:attr/listPreferredItemPaddingEnd"
+                android:queryHint="Поиск..."
+                android:textAppearance="?android:attr/textAppearanceListItemSmall"
+                android:textSize="15dp"
+                android:textStyle="bold"
+                android:visibility="visible" />
+            </RelativeLayout>
+
+        </TableRow>
 
 
 
@@ -110,6 +120,85 @@
 
 
 
-    </RelativeLayout>
+
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:background="#FFFFFF"
+            android:layout_gravity="center_horizontal">
+
+            <RelativeLayout
+                android:layout_column="0"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal|center_vertical"
+                android:orientation="vertical">
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/id_materialtextview_last_state"
+                android:layout_width="250dp"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:minHeight="30dp"
+                android:drawablePadding="5dp"
+                android:drawableLeft="@drawable/icon_dsu1_scanner_status_last"
+                android:gravity="center"
+                android:hint="ответ контроля"
+                android:padding="2dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="5dp"
+                android:textColor="#7F8080"
+                android:textColorHint="#7F8080"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                android:translationZ="50dp" />
+
+
+            </RelativeLayout>
+        </TableRow>
+
+
+
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="1dp"
+            android:padding="1dp"
+            android:gravity="center_vertical|center_horizontal">
+
+            <RelativeLayout
+                android:layout_column="0"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="center_horizontal|center_vertical"
+                android:orientation="vertical"
+                android:background="#FFFFFF">
+
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/id_recyclerview_gatt_main"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_alignParentTop="true"
+                android:layout_centerInParent="true"
+                android:layout_marginBottom="1dp"
+                android:background="#0FFFFFFF"
+                android:divider="@color/material_dynamic_primary0"
+                android:dividerHeight="10dp"
+                android:fillViewport="true"
+                android:listSelector="#FFD5D9DA"
+                android:minHeight="500dp"
+                android:padding="5dp"
+                android:visibility="visible"
+                app:layout_behavior="@string/appbar_scrolling_view_behavior"
+                tools:ignore="MissingConstraints" />
+
+
+            </RelativeLayout>
+        </TableRow>
+    </TableLayout>
 
 </com.google.android.material.card.MaterialCardView>
