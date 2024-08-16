@@ -4,10 +4,10 @@
     <selectionStates>
       <SelectionState runConfigName="client-gatt">
         <option name="selectionMode" value="DROPDOWN" />
-        <DropdownSelection timestamp="2024-08-15T12:34:38.720850500Z">
+        <DropdownSelection timestamp="2024-08-16T08:51:58.377547600Z">
           <Target type="DEFAULT_BOOT">
             <handle>
-              <DeviceId pluginId="PhysicalDevice" identifier="serial=9HW8MVLJV4EEMJTO" />
+              <DeviceId pluginId="PhysicalDevice" identifier="serial=A3NBB23331200012" />
             </handle>
           </Target>
         </DropdownSelection>
