@@ -100,6 +100,7 @@
                 android:layout_marginBottom="2dp"
                 android:layout_marginTop="2dp"
                 android:padding="2dp"
+                android:background="@drawable/style_for_newstypespinners_ietm6"
                 android:checkMark="?android:attr/listChoiceIndicatorSingle"
                 android:gravity="center_vertical|center_horizontal"
                 android:paddingStart="?android:attr/listPreferredItemPaddingStart"
