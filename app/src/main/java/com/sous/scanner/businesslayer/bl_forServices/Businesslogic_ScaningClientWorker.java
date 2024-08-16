@@ -77,9 +77,6 @@ public class Businesslogic_ScaningClientWorker {
 
   private     NotificationManager notificationManager;
   private    Message message;
-
-    private  Disposable disposablegetListMAC;
-
     private Disposable      disposablerange ;
     private  ServiceClientsScanBackground serviceClientsScanBackground;
     private SharedPreferences preferences;
@@ -288,49 +285,10 @@ public class Businesslogic_ScaningClientWorker {
 
 
 
-                    getListMAC.forEach(new java.util.function.Consumer<String>() {
-                        @Override
-                        public void accept(String getAddress) {
 
-                            // TODO: 02.08.2024
-
-                                // TODO: 26.07.2024
-                                final BluetoothDevice bluetoothDeviceScan = bluetoothAdapterPhoneClient.getRemoteDevice(getAddress.trim());
-
-                                // TODO: 13.08.2024
-
-                                SharedPreferences.Editor editor = preferences.edit();
-                                editor.putStringSet(bluetoothDeviceScan.getAddress(), Collections.singleton(bluetoothDeviceScan.getAddress()));
-                                editor.apply();
-
-                                // TODO: 12.02.2023  init CallBack Gatt Client for Scan
-                                bluetoothGattCallbacks.add(МетодРаботыСТекущийСерверомGATTДляScan( ));
-
-                                // TODO: 06.08.2024
-                                connectionGattClient.add(getMessage());
-
-
-                                // TODO: 26.01.2023 staring  GATT
-                                getConnectionBluetoothGatt.add( МетодЗапускаGATTКлиентаScan(bluetoothDeviceScan,
-                                        bluetoothGattCallbacks.get(atomicIntegerDisponse.get()),
-                                        connectionGattClient.get(atomicIntegerDisponse.get()))) ;
-
-
-
-                            // TODO: 08.08.2024  увеличиваем общще количесто операций
-                            atomicIntegerDisponse.incrementAndGet();
-
-                        }
-                    });
-                    // TODO: 07.04.2024
-                    Log.d(this.getClass().getName(), "\n" + " class " +
-                            Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
-                            " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                            " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" + "\n");
-
-                /*    Observable.range(      1,12)
+                 Observable.range(      1,3)
                             .zipWith( Observable.just("")
-                                    .repeatWhen(repeat->repeat.delay(5,TimeUnit.SECONDS)), (item, interval) -> item)
+                                    .repeatWhen(repeat->repeat.delay(10,TimeUnit.SECONDS)), (item, interval) -> item)
                             .flatMap(val -> Observable.just(val)
                                     .subscribeOn(Schedulers.computation()))
                             .doOnNext(new Consumer<Object>() {
@@ -338,105 +296,41 @@ public class Businesslogic_ScaningClientWorker {
                                 public void accept(Object o) throws Throwable {
                                     // TODO: 22.11.2022  первая часть
 
-                                    // TODO: 22.11.2022  первая часть
-                                    int DurectionTimeGattInner=   250  ;//  getRandomNumberUsingMilisecond(5000,1500);
-                                    Observable.fromIterable(      getListMAC)
-                                            .zipWith( Observable.just("")
-                                                    .repeatWhen(repeat->repeat.delay(DurectionTimeGattInner,TimeUnit.MILLISECONDS)), (item, interval) -> item)
-                                           .flatMap(val -> Observable.just(val)
-                                                   .subscribeOn(Schedulers.computation()))
-                                            .doOnNext(new Consumer<String>() {
-                                                @Override
-                                                public void accept(String getAddress) throws Throwable {
-                                                    // TODO: 22.11.2022  первая часть
+                                    // TODO: 25.07.2024
+                                    // TODO: 26.07.2024
+                                    final BluetoothDevice bluetoothDeviceScan = bluetoothAdapterPhoneClient.getRemoteDevice(getListMAC.get(0).trim());
 
-                                                    // TODO: 25.07.2024
+                                    // TODO: 13.08.2024
 
-                                                    // TODO: 02.08.2024
-                                                    if ( !disposablerange.isDisposed() ||
-                                                            !disposablegetListMAC.isDisposed()) {
-                                                        // TODO: 26.07.2024
-                                                        final BluetoothDevice bluetoothDeviceScan = bluetoothAdapterPhoneClient.getRemoteDevice(getAddress.trim());
+                                    SharedPreferences.Editor editor = preferences.edit();
+                                    editor.putStringSet(bluetoothDeviceScan.getAddress(), Collections.singleton(bluetoothDeviceScan.getAddress()));
+                                    editor.apply();
 
-                                                        // TODO: 13.08.2024
+                                    // TODO: 12.02.2023  init CallBack Gatt Client for Scan
+                                    bluetoothGattCallbacks.add(МетодРаботыСТекущийСерверомGATTДляScan( ));
 
-                                                        SharedPreferences.Editor editor = preferences.edit();
-                                                        editor.putStringSet(bluetoothDeviceScan.getAddress(), Collections.singleton(bluetoothDeviceScan.getAddress()));
-                                                        editor.apply();
-
-                                                        // TODO: 12.02.2023  init CallBack Gatt Client for Scan
-                                                        bluetoothGattCallbacks.add(МетодРаботыСТекущийСерверомGATTДляScan( ));
-
-                                                        // TODO: 06.08.2024
-                                                        connectionGattClient.add(getMessage());
+                                    // TODO: 06.08.2024
+                                    connectionGattClient.add(getMessage());
 
 
-                                                        // TODO: 26.01.2023 staring  GATT
-                                                        getConnectionBluetoothGatt.add( МетодЗапускаGATTКлиентаScan(bluetoothDeviceScan,
-                                                                bluetoothGattCallbacks.get(atomicIntegerDisponse.get()),
-                                                                connectionGattClient.get(atomicIntegerDisponse.get()))) ;
-                                                    }
-
-
-                                                    // TODO: 08.08.2024  увеличиваем общще количесто операций
-                                                    atomicIntegerDisponse.incrementAndGet();
+                                    // TODO: 26.01.2023 staring  GATT
+                                    getConnectionBluetoothGatt.add( МетодЗапускаGATTКлиентаScan(bluetoothDeviceScan,
+                                            bluetoothGattCallbacks.get(atomicIntegerDisponse.get()),
+                                            connectionGattClient.get(atomicIntegerDisponse.get()))) ;
 
 
 
-                                                    // TODO: 02.08.2024
-                                                    Log.d(this.getClass().getName(), "\n" + " class " +
-                                                            Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
-                                                            " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                                                            " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" + "\n"
-                                                            +  " getAddress "+ getAddress+" atomicIntegerDisponse.get() " +atomicIntegerDisponse.get() +
-                                                             "disposablegetListMAC.isDisposed() " +disposablegetListMAC.isDisposed());
+                                    // TODO: 08.08.2024  увеличиваем общще количесто операций
+                                    atomicIntegerDisponse.incrementAndGet();
 
 
 
-
-                                                    Log.d(this.getClass().getName(), "\n" + " class " +
-                                                            Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
-                                                            " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                                                            " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" + "\n");
-                                                }
-                                            })
-                                            .doOnComplete(new Action() {
-                                                @Override
-                                                public void run() throws Throwable {
-                                                    // TODO: 02.08.2024
-                                                    Log.d(this.getClass().getName(), "\n" + " class " +
-                                                            Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
-                                                            " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                                                            " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" + "\n");
-                                                }
-                                            })
-                                           .doOnSubscribe(new Consumer<Disposable>() {
-                                               @Override
-                                               public void accept(Disposable disposable) throws Throwable {
-                                                   disposablegetListMAC=disposable;
-                                                   // TODO: 02.08.2024
-                                                   Log.d(this.getClass().getName(), "\n" + " class " +
-                                                           Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
-                                                           " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                                                           " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" + "\n");
-                                               }
-                                           })
-                                           .doOnDispose(new Action() {
-                                               @Override
-                                               public void run() throws Throwable {
-
-                                                   // TODO: 08.08.2024 выключаем элементы
-                                                   startingDisponseCallBackAndConnectionForGatt( bluetoothGattCallbacks,connectionGattClient, atomicIntegerDisponse  ,  getConnectionBluetoothGatt);
-
-                                                   Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
-                                                           " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                                                           " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"   +"    Flowable.fromAction(new Action() { "
-                                                           +   new Date().toLocaleString());
-                                               }
-                                           })
-                                            .subscribe();
-*/
-/*
+                                    // TODO: 02.08.2024
+                                    Log.d(this.getClass().getName(), "\n" + " class " +
+                                            Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                                            " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                                            " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" + "\n"
+                                            +  " getListMAC.get(0).trim() "+ getListMAC.get(0).trim()+" atomicIntegerDisponse.get() " +atomicIntegerDisponse.get() );
 
                                     Log.d(this.getClass().getName(), "\n" + " class " +
                                             Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
@@ -462,7 +356,8 @@ public class Businesslogic_ScaningClientWorker {
                                             " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
                                             " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" + "\n"+
                                             " numberoftheСurrentscanningattempt " +numberoftheСurrentscanningattempt);
-                                    if (numberoftheСurrentscanningattempt>=6) {
+                                    if (numberoftheСurrentscanningattempt>=2 ||
+                                            disposablerange.isDisposed()) {
                                         // TODO: 09.08.2024
 
 
@@ -526,27 +421,24 @@ public class Businesslogic_ScaningClientWorker {
                                             +   new Date().toLocaleString());
                                 }
                             })
+                         .doOnError(new Consumer<Throwable>() {
+                             @Override
+                             public void accept(Throwable throwable) throws Throwable {
+                                 throwable.printStackTrace();
+                                 Log.e(this.getClass().getName(), "Ошибка " + throwable + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() + " Линия  :"
+                                         + Thread.currentThread().getStackTrace()[2].getLineNumber());
+                                 ContentValues valuesЗаписываемОшибки = new ContentValues();
+                                 valuesЗаписываемОшибки.put("Error",throwable.toString().toLowerCase());
+                                 valuesЗаписываемОшибки.put("Klass", this.getClass().getName());
+                                 valuesЗаписываемОшибки.put("Metod", Thread.currentThread().getStackTrace()[2].getMethodName());
+                                 valuesЗаписываемОшибки.put("LineError", Thread.currentThread().getStackTrace()[2].getLineNumber());
+                                 final Object ТекущаяВерсияПрограммы = version;
+                                 Integer ЛокальнаяВерсияПОСравнение = Integer.parseInt(ТекущаяВерсияПрограммы.toString());
+                                 valuesЗаписываемОшибки.put("whose_error", ЛокальнаяВерсияПОСравнение);
+                                 new SubClassErrors(context).МетодЗаписиОшибок(valuesЗаписываемОшибки);
+                             }
+                         })
                             .subscribe();
-
-*/
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 // TODO: 07.08.2024 end test code
                 }
             }else{
@@ -641,6 +533,9 @@ try{
             //getListMAC.add( "98:2F:F8:19:BC:F7");
            /* getListMAC.add( "74:15:75:D8:F5:FA");
             getListMAC.add( "FC:19:99:79:D6:D4");*/
+           // getListMAC.add( "98:2F:F8:19:BC:F7");
+            getListMAC.add( "70:5F:A3:C4:D2:6C");//TODO Служба безрпасности
+
             Log.d(context.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                     " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
                     " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" + " getListMAC " +getListMAC.size());
@@ -1190,9 +1085,6 @@ try{
                       Log.d("receiver", "Got message: " + message);
                      if (message.equalsIgnoreCase("DisposableNow")) {
                          // TODO: 08.08.2024
-                         if (disposablegetListMAC!=null) {
-                             if(!disposablegetListMAC.isDisposed()){
-                                 disposablegetListMAC.dispose();
 
                                  if ( disposablerange!=null) {
                                      if (!disposablerange.isDisposed()) {
@@ -1202,7 +1094,6 @@ try{
                                      }
                                  }
                              }
-                         }
 
 
                          Log.d(context.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
@@ -1210,10 +1101,7 @@ try{
                                  " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"+ " disposablerange " + disposablerange );
                       }
 
-                      Log.d(context.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
-                              " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                              " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" );
-                  }
+
               };
             Log.d(context.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                     " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
