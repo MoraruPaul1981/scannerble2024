@@ -14,6 +14,12 @@
     <uses-permission android:name="android.permission.BLUETOOTH_PRIVILEGED"
         tools:ignore="ProtectedPermissions" />
 
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.intent.action.SENDTO" />
+    <uses-permission android:name="android.intent.action.PROVIDERS_CHANGED" />
+    <uses-permission android:name="android.intent.action.ACCESS_GPS"/> >
+
 
     <uses-permission android:name="com.google.android.c2dm.permission.SEND" />
     <uses-permission android:name="oppo.permission.OPPO_COMPONENT_SAFE" />
@@ -73,11 +79,6 @@
     <uses-permission android:name="android.intent.action.ACTION_EXTERNAL_APPLICATIONS_AVAILABLE" />
     <uses-permission android:name="android.intent.action.BOOT_COMPLETED" />
     <uses-permission android:name="android.intent.action.SEND" />
-    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
-    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
-    <uses-permission android:name="android.intent.action.SENDTO" />
-    <uses-permission android:name="android.intent.action.PROVIDERS_CHANGED" />
-    <uses-permission android:name="android.intent.action.ACCESS_GPS" />
 
     <uses-feature android:name="android.hardware.location.gps" />
 
