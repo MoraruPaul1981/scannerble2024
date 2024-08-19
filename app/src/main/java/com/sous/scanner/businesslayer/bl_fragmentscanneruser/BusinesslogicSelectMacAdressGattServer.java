@@ -6,6 +6,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.graphics.Color;
 import android.graphics.Typeface;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.Message;
 import android.util.Log;
@@ -78,7 +79,10 @@ public class BusinesslogicSelectMacAdressGattServer {
                     searchViewMacAdress =    (SearchView) view.findViewById(R.id.searchview_newordertransport);
                     searchViewMacAdress.setQueryHint("Поиск..");
                     ListViewForSearchViewGattMacList.setTextFilterEnabled(true);
-                    searchViewMacAdress.setDrawingCacheBackgroundColor(Color.GRAY);
+
+                    Drawable drawable = context.getResources().getDrawable(R.drawable.style_for_newstypespinners_ietm6);
+
+                    searchViewMacAdress.setDividerDrawable(drawable);
                     searchViewMacAdress.setDrawingCacheEnabled(true);
                     searchViewMacAdress.setSubmitButtonEnabled(true);
 
@@ -514,6 +518,7 @@ public class BusinesslogicSelectMacAdressGattServer {
                 public void onClick(View v) {
                     alertDialogMacAdress.dismiss();
                     alertDialogMacAdress.cancel();
+                    searchview_maclistdeviceserver.startAnimation(animationvibr1);
 
                     Log.d(materialButtonFilterЗакрытьДиалог.getContext().getClass().getName(), "\n"
                             + " время: " + new Date()+"\n+" +
