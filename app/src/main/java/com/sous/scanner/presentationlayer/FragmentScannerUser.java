@@ -86,9 +86,9 @@ public class FragmentScannerUser extends Fragment {
     private Animation   animation;
     private       RecyclerView     recyclerview_gatt_main;
 
-    private  String  toWork="Контроль доступа";
+    private  String  toWork="Контроль";
     private  String  toProccess="В процессе...";
-    private  String  toProccessError="Ошибка сервера";
+    private  String  toProccessError="Ошибка сервера !!!";
     private  MaterialButton materialButtonEventSameOfficeEvent;
 
 
