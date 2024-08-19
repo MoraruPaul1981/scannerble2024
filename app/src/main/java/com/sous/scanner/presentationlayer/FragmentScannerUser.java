@@ -40,14 +40,13 @@ import com.google.android.material.button.MaterialButton;
 import com.google.android.material.card.MaterialCardView;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.textview.MaterialTextView;
-import com.google.common.util.concurrent.AtomicDouble;
 import com.jakewharton.rxbinding4.view.RxView;
 import com.sous.scanner.businesslayer.Errors.SubClassErrors;
 import com.sous.scanner.R;
 import com.sous.scanner.businesslayer.bl_EvenBus.EventLocalBroadcastManager;
 import com.sous.scanner.businesslayer.bl_forServices.Businesslogic_JOBServive;
 import com.sous.scanner.businesslayer.bl_forServices.BusinessoginEnableBluetoothAdapter;
-import com.sous.scanner.businesslayer.bl_fragmentscanneruser.BusinesslogicSearchViewForMaterMac;
+import com.sous.scanner.businesslayer.bl_fragmentscanneruser.BusinesslogicSelectMacAdressGattServer;
 import com.sous.scanner.businesslayer.bl_fragmentscanneruser.BusinessloginVibrator;
 import com.sous.scanner.businesslayer.bl_fragmentscanneruser.BusinessloginforfragmentScanner;
 
@@ -245,7 +244,7 @@ public class FragmentScannerUser extends Fragment {
             // TODO: 19.08.2024
             searchview_maclistdeviceserver.setOnClickListener(currentMac->{
                 // TODO: 19.08.2024
-                BusinesslogicSearchViewForMaterMac businesslogicSearchViewForMaterMac=new BusinesslogicSearchViewForMaterMac(getContext(),version,messageClient);
+                BusinesslogicSelectMacAdressGattServer businesslogicSelectMacAdressGattServer =new BusinesslogicSelectMacAdressGattServer(getContext(),version,messageClient,getLayoutInflater());
 
 
 

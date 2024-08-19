@@ -1,6 +1,7 @@
 package com.sous.scanner.businesslayer.bl_fragmentscanneruser;
 
 import android.annotation.SuppressLint;
+import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.graphics.Color;
@@ -9,8 +10,11 @@ import android.os.Bundle;
 import android.os.Message;
 import android.util.Log;
 import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.WindowManager;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.AdapterView;
 import android.widget.FilterQueryProvider;
 import android.widget.ListView;
@@ -26,10 +30,11 @@ import com.google.android.material.button.MaterialButton;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.android.material.textview.MaterialTextView;
 import com.sous.scanner.R;
+import com.sous.scanner.businesslayer.Errors.SubClassErrors;
 
 import java.util.Date;
 
-public class BusinesslogicSearchViewForMaterMac {
+public class BusinesslogicSelectMacAdressGattServer {
 
     // TODO: 16.08.2024
     private    ListView ListViewForSearchView;
@@ -37,22 +42,30 @@ public class BusinesslogicSearchViewForMaterMac {
     private Context context;
     private  long version;
     private Message messageClient;
+    private Animation animation,animationvibr1;
+    private AlertDialog   alertDialogMacAdress;
+    private LayoutInflater layoutInflater;
 
-    public BusinesslogicSearchViewForMaterMac( Context context, long version, Message messageClient) {
+    public BusinesslogicSelectMacAdressGattServer( @NonNull  Context context, @NonNull  long version, @NonNull   Message messageClient,@NonNull   LayoutInflater layoutInflater) {
         this.context = context;
         this.version = version;
         this.messageClient = messageClient;
+        this.layoutInflater = layoutInflater;
+
+        // TODO: 19.08.2024
+        animation = AnimationUtils.loadAnimation(context, R.anim.slide_in_row_newscanner1);
+        animationvibr1 = AnimationUtils.loadAnimation(context,R.anim.slide_singletable2);//
     }
 
 
     @SuppressLint("Range")
-    void landingsearchformacAddressesofmasters(@NonNull Cursor cursor,
-                                         @NonNull String Столбик,
-                                         @NonNull String ТаблицаТекущая,
-                                         @NonNull String Спровочник,
-                                         @NonNull MaterialTextView materialTextViewListMacAdressMater){
+    void selectiongMacAdressGattServer(@NonNull Cursor cursor,
+                                       @NonNull String Столбик,
+                                       @NonNull String ТаблицаТекущая,
+                                       @NonNull String Спровочник,
+                                       @NonNull MaterialTextView materialTextViewListMacAdressMater){
 
-     AlertDialog   alertDialogMacAdress = new MaterialAlertDialogBuilder(context){
+        alertDialogMacAdress = new MaterialAlertDialogBuilder(context){
             private     MaterialButton ButtonFilterЗакрытьДиалог =null;
             @NonNull
             @Override
@@ -129,11 +142,18 @@ public class BusinesslogicSearchViewForMaterMac {
                                             // TODO: 13.12.2022 филь
                                         } catch (Exception e) {
                                             e.printStackTrace();
-                                            Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
-                                                    " Линия  :" + Thread.currentThread().getStackTrace()[2].getLineNumber());
-                                            new   Class_Generation_Errors( getContext()).МетодЗаписиВЖурналНовойОшибки(e.toString(),
-                                                    this.getClass().getName(),
-                                                    Thread.currentThread().getStackTrace()[2].getMethodName(), Thread.currentThread().getStackTrace()[2].getLineNumber());
+                                            Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() + " Линия  :"
+                                                    + Thread.currentThread().getStackTrace()[2].getLineNumber());
+                                            ContentValues valuesЗаписываемОшибки = new ContentValues();
+                                            valuesЗаписываемОшибки.put("Error", e.toString().toLowerCase());
+                                            valuesЗаписываемОшибки.put("Klass", this.getClass().getName());
+                                            valuesЗаписываемОшибки.put("Metod", Thread.currentThread().getStackTrace()[2].getMethodName());
+                                            valuesЗаписываемОшибки.put("LineError", Thread.currentThread().getStackTrace()[2].getLineNumber());
+                                            final Object ТекущаяВерсияПрограммы = version;
+                                            Integer ЛокальнаяВерсияПОСравнение = Integer.parseInt(ТекущаяВерсияПрограммы.toString());
+                                            valuesЗаписываемОшибки.put("whose_error", ЛокальнаяВерсияПОСравнение);
+                                            new SubClassErrors(getContext()).МетодЗаписиОшибок(valuesЗаписываемОшибки);
+
                                         }
                                         return true;
                                     } else {
@@ -168,14 +188,18 @@ public class BusinesslogicSearchViewForMaterMac {
                             " метод в процессе... " + Thread.currentThread().getStackTrace()[2].getMethodName());
                 } catch (Exception e) {
                     e.printStackTrace();
-                    Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" +
-                            Thread.currentThread().getStackTrace()[2].getMethodName() +
-                            " Линия  :" + Thread.currentThread().getStackTrace()[2].getLineNumber());
-                    new   Class_Generation_Errors(this.getContext())
-                            .МетодЗаписиВЖурналНовойОшибки(e.toString(),
-                                    this.getClass().getName(),
-                                    Thread.currentThread().getStackTrace()[2].getMethodName(),
-                                    Thread.currentThread().getStackTrace()[2].getLineNumber());
+                    Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() + " Линия  :"
+                            + Thread.currentThread().getStackTrace()[2].getLineNumber());
+                    ContentValues valuesЗаписываемОшибки = new ContentValues();
+                    valuesЗаписываемОшибки.put("Error", e.toString().toLowerCase());
+                    valuesЗаписываемОшибки.put("Klass", this.getClass().getName());
+                    valuesЗаписываемОшибки.put("Metod", Thread.currentThread().getStackTrace()[2].getMethodName());
+                    valuesЗаписываемОшибки.put("LineError", Thread.currentThread().getStackTrace()[2].getLineNumber());
+                    final Object ТекущаяВерсияПрограммы = version;
+                    Integer ЛокальнаяВерсияПОСравнение = Integer.parseInt(ТекущаяВерсияПрограммы.toString());
+                    valuesЗаписываемОшибки.put("whose_error", ЛокальнаяВерсияПОСравнение);
+                    new SubClassErrors(getContext()).МетодЗаписиОшибок(valuesЗаписываемОшибки);
+
                 }
 
                 return super.setView(view);
@@ -201,8 +225,8 @@ public class BusinesslogicSearchViewForMaterMac {
                                     // TODO: 15.05.2023 ЗАПОЛЕНИЕ ДАННЫМИ КЛИК
                                     materialTextViewParent.startAnimation(animation);
                                     // TODO: 15.05.2023  ЗАКРЫВАЕТ
-                                    alertDialogNewOrderTranport.cancel();
-                                    alertDialogNewOrderTranport.dismiss();
+                                    alertDialogMacAdress.cancel();
+                                    alertDialogMacAdress.dismiss();
                                     Log.d(getContext().getClass().getName(), "\n"
                                             + " время: " + new Date() + "\n+" +
                                             " Класс в процессе... " + this.getClass().getName() + "\n" +
@@ -216,42 +240,52 @@ public class BusinesslogicSearchViewForMaterMac {
                                 }
                             } catch (Exception e) {
                                 e.printStackTrace();
-                                Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" +
-                                        Thread.currentThread().getStackTrace()[2].getMethodName() +
-                                        " Линия  :" + Thread.currentThread().getStackTrace()[2].getLineNumber());
-                                new   Class_Generation_Errors( getContext())
-                                        .МетодЗаписиВЖурналНовойОшибки(e.toString(),
-                                                this.getClass().getName(),
-                                                Thread.currentThread().getStackTrace()[2].getMethodName(),
-                                                Thread.currentThread().getStackTrace()[2].getLineNumber());
+                                Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() + " Линия  :"
+                                        + Thread.currentThread().getStackTrace()[2].getLineNumber());
+                                ContentValues valuesЗаписываемОшибки = new ContentValues();
+                                valuesЗаписываемОшибки.put("Error", e.toString().toLowerCase());
+                                valuesЗаписываемОшибки.put("Klass", this.getClass().getName());
+                                valuesЗаписываемОшибки.put("Metod", Thread.currentThread().getStackTrace()[2].getMethodName());
+                                valuesЗаписываемОшибки.put("LineError", Thread.currentThread().getStackTrace()[2].getLineNumber());
+                                final Object ТекущаяВерсияПрограммы = version;
+                                Integer ЛокальнаяВерсияПОСравнение = Integer.parseInt(ТекущаяВерсияПрограммы.toString());
+                                valuesЗаписываемОшибки.put("whose_error", ЛокальнаяВерсияПОСравнение);
+                                new SubClassErrors(getContext()).МетодЗаписиОшибок(valuesЗаписываемОшибки);
+
                             }
+
                         }
                     });
                 } catch (Exception e) {
                     e.printStackTrace();
-                    Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" +
-                            Thread.currentThread().getStackTrace()[2].getMethodName() +
-                            " Линия  :" + Thread.currentThread().getStackTrace()[2].getLineNumber());
-                    new   Class_Generation_Errors( getContext())
-                            .МетодЗаписиВЖурналНовойОшибки(e.toString(),
-                                    this.getClass().getName(),
-                                    Thread.currentThread().getStackTrace()[2].getMethodName(),
-                                    Thread.currentThread().getStackTrace()[2].getLineNumber());
+                    Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() + " Линия  :"
+                            + Thread.currentThread().getStackTrace()[2].getLineNumber());
+                    ContentValues valuesЗаписываемОшибки = new ContentValues();
+                    valuesЗаписываемОшибки.put("Error", e.toString().toLowerCase());
+                    valuesЗаписываемОшибки.put("Klass", this.getClass().getName());
+                    valuesЗаписываемОшибки.put("Metod", Thread.currentThread().getStackTrace()[2].getMethodName());
+                    valuesЗаписываемОшибки.put("LineError", Thread.currentThread().getStackTrace()[2].getLineNumber());
+                    final Object ТекущаяВерсияПрограммы = version;
+                    Integer ЛокальнаяВерсияПОСравнение = Integer.parseInt(ТекущаяВерсияПрограммы.toString());
+                    valuesЗаписываемОшибки.put("whose_error", ЛокальнаяВерсияПОСравнение);
+                    new SubClassErrors(getContext()).МетодЗаписиОшибок(valuesЗаписываемОшибки);
+
                 }
+
             }
 
 
         }
-                .setTitle(Спровочник)
+                .setTitle("Mac-адреса")
                 .setCancelable(false)
                 .setIcon( R.drawable.icon_newscannertwo)
-                .setView(getLayoutInflater().inflate( R.layout.simple_for_new_spinner_searchview_newordertransport2, null )).show();
+                .setView(layoutInflater.inflate( R.layout.simple_for_mac_adress_gatt_searchview, null )).show();
         WindowManager.LayoutParams layoutParams = new WindowManager.LayoutParams();
-        layoutParams.copyFrom(    alertDialogNewOrderTranport.getWindow().getAttributes());
+        layoutParams.copyFrom(    alertDialogMacAdress.getWindow().getAttributes());
         layoutParams.width = WindowManager.LayoutParams.MATCH_PARENT;
         layoutParams.height =WindowManager.LayoutParams.MATCH_PARENT;
         layoutParams.gravity = Gravity.CENTER;
-        alertDialogNewOrderTranport.getWindow().setAttributes(layoutParams);
+        alertDialogMacAdress.getWindow().setAttributes(layoutParams);
         // TODO: 13.12.2022 ВТОРОЙ СЛУШАТЕЛЬ НА КНОПКУ
         Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                 " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
@@ -266,7 +300,7 @@ public class BusinesslogicSearchViewForMaterMac {
 
     private void МетодПоискаФильтр(@NonNull String ТаблицаДляФильтра,@NonNull     SimpleCursorAdapter          simpleCursorForSearchView ) {
         try{
-            searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            searchViewMacAdress.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
                 @Override
                 public boolean onQueryTextSubmit(String query) {
                     try{
@@ -346,12 +380,20 @@ public class BusinesslogicSearchViewForMaterMac {
             });
         } catch (Exception e) {
             e.printStackTrace();
-            Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
-                    " Линия  :" + Thread.currentThread().getStackTrace()[2].getLineNumber());
-            new   Class_Generation_Errors( getContext()).МетодЗаписиВЖурналНовойОшибки(e.toString(),
-                    this.getClass().getName(),
-                    Thread.currentThread().getStackTrace()[2].getMethodName(), Thread.currentThread().getStackTrace()[2].getLineNumber());
+            Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() + " Линия  :"
+                    + Thread.currentThread().getStackTrace()[2].getLineNumber());
+            ContentValues valuesЗаписываемОшибки = new ContentValues();
+            valuesЗаписываемОшибки.put("Error", e.toString().toLowerCase());
+            valuesЗаписываемОшибки.put("Klass", this.getClass().getName());
+            valuesЗаписываемОшибки.put("Metod", Thread.currentThread().getStackTrace()[2].getMethodName());
+            valuesЗаписываемОшибки.put("LineError", Thread.currentThread().getStackTrace()[2].getLineNumber());
+            final Object ТекущаяВерсияПрограммы = version;
+            Integer ЛокальнаяВерсияПОСравнение = Integer.parseInt(ТекущаяВерсияПрограммы.toString());
+            valuesЗаписываемОшибки.put("whose_error", ЛокальнаяВерсияПОСравнение);
+            new SubClassErrors(context).МетодЗаписиОшибок(valuesЗаписываемОшибки);
+
         }
+
     }
 
 
@@ -383,11 +425,18 @@ public class BusinesslogicSearchViewForMaterMac {
                     " метод в процессе... " + Thread.currentThread().getStackTrace()[2].getMethodName() + " cursorFilter "+ cursorFilter);
         } catch (Exception e) {
             e.printStackTrace();
-            Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
-                    " Линия  :" + Thread.currentThread().getStackTrace()[2].getLineNumber());
-            new   Class_Generation_Errors( getContext()).МетодЗаписиВЖурналНовойОшибки(e.toString(),
-                    this.getClass().getName(),
-                    Thread.currentThread().getStackTrace()[2].getMethodName(), Thread.currentThread().getStackTrace()[2].getLineNumber());
+            Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() + " Линия  :"
+                    + Thread.currentThread().getStackTrace()[2].getLineNumber());
+            ContentValues valuesЗаписываемОшибки = new ContentValues();
+            valuesЗаписываемОшибки.put("Error", e.toString().toLowerCase());
+            valuesЗаписываемОшибки.put("Klass", this.getClass().getName());
+            valuesЗаписываемОшибки.put("Metod", Thread.currentThread().getStackTrace()[2].getMethodName());
+            valuesЗаписываемОшибки.put("LineError", Thread.currentThread().getStackTrace()[2].getLineNumber());
+            final Object ТекущаяВерсияПрограммы = version;
+            Integer ЛокальнаяВерсияПОСравнение = Integer.parseInt(ТекущаяВерсияПрограммы.toString());
+            valuesЗаписываемОшибки.put("whose_error", ЛокальнаяВерсияПОСравнение);
+            new SubClassErrors(context).МетодЗаписиОшибок(valuesЗаписываемОшибки);
+
         }
     }
 
@@ -396,8 +445,8 @@ public class BusinesslogicSearchViewForMaterMac {
             materialButtonFilterЗакрытьДиалог.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    alertDialogNewOrderTranport.dismiss();
-                    alertDialogNewOrderTranport.cancel();
+                    alertDialogMacAdress.dismiss();
+                    alertDialogMacAdress.cancel();
 
                     Log.d(materialButtonFilterЗакрытьДиалог.getContext().getClass().getName(), "\n"
                             + " время: " + new Date()+"\n+" +
@@ -407,14 +456,21 @@ public class BusinesslogicSearchViewForMaterMac {
             });
         } catch (Exception e) {
             e.printStackTrace();
-            Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
-                    " Линия  :" + Thread.currentThread().getStackTrace()[2].getLineNumber());
-            new   Class_Generation_Errors(materialButtonFilterЗакрытьДиалог.getContext()).МетодЗаписиВЖурналНовойОшибки(e.toString(),
-                    this.getClass().getName(),
-                    Thread.currentThread().getStackTrace()[2].getMethodName(), Thread.currentThread().getStackTrace()[2].getLineNumber());
+            Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() + " Линия  :"
+                    + Thread.currentThread().getStackTrace()[2].getLineNumber());
+            ContentValues valuesЗаписываемОшибки = new ContentValues();
+            valuesЗаписываемОшибки.put("Error", e.toString().toLowerCase());
+            valuesЗаписываемОшибки.put("Klass", this.getClass().getName());
+            valuesЗаписываемОшибки.put("Metod", Thread.currentThread().getStackTrace()[2].getMethodName());
+            valuesЗаписываемОшибки.put("LineError", Thread.currentThread().getStackTrace()[2].getLineNumber());
+            final Object ТекущаяВерсияПрограммы = version;
+            Integer ЛокальнаяВерсияПОСравнение = Integer.parseInt(ТекущаяВерсияПрограммы.toString());
+            valuesЗаписываемОшибки.put("whose_error", ЛокальнаяВерсияПОСравнение);
+            new SubClassErrors(context).МетодЗаписиОшибок(valuesЗаписываемОшибки);
+
         }
     }
     // TODO: 15.05.2023 КОНЕЦ НОВОГО ПОСИКА
 }
 
-}
+
