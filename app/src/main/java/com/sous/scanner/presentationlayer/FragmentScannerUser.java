@@ -246,7 +246,7 @@ public class FragmentScannerUser extends Fragment {
                 // TODO: 19.08.2024
                 BusinesslogicSelectMacAdressGattServer businesslogicSelectMacAdressGattServer =new BusinesslogicSelectMacAdressGattServer(getContext(),version,messageClient,getLayoutInflater());
 
-
+                businesslogicSelectMacAdressGattServer.selectiongMacAdressGattServer(searchview_maclistdeviceserver);
 
 
                 Log.d(getContext().getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +

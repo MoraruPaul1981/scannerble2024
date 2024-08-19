@@ -45,8 +45,10 @@ public class BusinesslogicSelectMacAdressGattServer {
     private Animation animation,animationvibr1;
     private AlertDialog   alertDialogMacAdress;
     private LayoutInflater layoutInflater;
-    private  MaterialTextView materialTextViewParent;
+    private  MaterialTextView searchview_maclistdeviceserver;
     private  Cursor cursor;
+    private  String MacTable="listMacMastersSous";
+    private  String MacColumn="macadress";
 
     public BusinesslogicSelectMacAdressGattServer( @NonNull  Context context,
                                                    @NonNull  long version,
@@ -63,11 +65,7 @@ public class BusinesslogicSelectMacAdressGattServer {
 
 
     @SuppressLint("Range")
-    void selectiongMacAdressGattServer(@NonNull Cursor cursor,
-                                       @NonNull String Столбик,
-                                       @NonNull String ТаблицаТекущая,
-                                       @NonNull String Спровочник,
-                                       @NonNull MaterialTextView materialTextViewListMacAdressMater){
+  public   void selectiongMacAdressGattServer(@NonNull MaterialTextView searchview_maclistdeviceserver){
 
         alertDialogMacAdress = new MaterialAlertDialogBuilder(context){
             private     MaterialButton ButtonFilterЗакрытьДиалог =null;
@@ -77,8 +75,8 @@ public class BusinesslogicSelectMacAdressGattServer {
                 try{
                     ButtonFilterЗакрытьДиалог =    (MaterialButton) view.findViewById(R.id.bottom_newscanner1);
                     ListViewForSearchViewGattMacList =    (ListView) view.findViewById(R.id.ListViewForNewOrderTransport);
-                    searchViewMacAdress =    (androidx.appcompat.widget.SearchView) view.findViewById(R.id.searchview_newordertransport);
-                    searchViewMacAdress.setQueryHint("Поиск "+Спровочник);
+                    searchViewMacAdress =    (SearchView) view.findViewById(R.id.searchview_newordertransport);
+                    searchViewMacAdress.setQueryHint("Поиск..");
                     ListViewForSearchViewGattMacList.setTextFilterEnabled(true);
                     searchViewMacAdress.setDrawingCacheBackgroundColor(Color.GRAY);
                     searchViewMacAdress.setDrawingCacheEnabled(true);
@@ -93,16 +91,20 @@ public class BusinesslogicSelectMacAdressGattServer {
                     TextView textViewСтрокаПосика = searchViewMacAdress.findViewById(com.google.android.material.R.id.search_src_text);
 
 
-
-
+                    // TODO: 19.08.2024
                     textViewСтрокаПосика.setTextColor(Color.rgb(0,102,102));
                     textViewСтрокаПосика.setTypeface(Typeface.defaultFromStyle(Typeface.BOLD));
                     searchViewMacAdress.refreshDrawableState();
 
+                    Log.d(getContext().getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                            " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                            " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"+" textViewСтрокаПосика " +textViewСтрокаПосика);
+                    
+
                     ///TODO ГЛАВНЫЙ АДАПТЕР чата
                     SimpleCursorAdapter simpleCursorForSearchView =
                             new SimpleCursorAdapter(getContext(),
-                                    R.layout.simple_newspinner_dwonload_newfiltersearch, cursor, new String[]{ Столбик,"_id"},
+                                    R.layout.simple_newspinner_dwonload_newfiltersearch, cursor, new String[]{ MacColumn,"_id"},
                                     new int[]{android.R.id.text1,android.R.id.text1}, CursorAdapter.FLAG_REGISTER_CONTENT_OBSERVER);
                     SimpleCursorAdapter.ViewBinder БиндингДляПоиск = new SimpleCursorAdapter.ViewBinder(){
 
@@ -118,7 +120,7 @@ public class BusinesslogicSelectMacAdressGattServer {
                                             Integer   getId = cursor.getInt(cursor.getColumnIndex("_id"));
                                             if (getId>0) {
                                                 Long UUIDGetFilter = cursor.getLong(cursor.getColumnIndex("uuid"));
-                                                String  getName = cursor.getString(cursor.getColumnIndex(Столбик)).trim();
+                                                String  getName = cursor.getString(cursor.getColumnIndex(MacColumn)).trim();
                                                 Bundle bundle=new Bundle();
                                                 bundle.putInt("getId",getId);
                                                 bundle.putString("getName",getName);
@@ -177,7 +179,7 @@ public class BusinesslogicSelectMacAdressGattServer {
                     ListViewForSearchViewGattMacList.requestLayout();
 
                     // TODO: 13.12.2022  Поиск и его слушель
-                    МетодПоискаФильтр(  ТаблицаТекущая,             simpleCursorForSearchView );
+                    МетодПоискаФильтр(  MacTable,             simpleCursorForSearchView );
 
                     // TODO: 15.05.2023 Слушатель Действия Кнопки Сохранить
                     // TODO: 16.05.2023  КЛИК СЛУШАТЕЛЬ ПО ЕЛЕМЕНТУ
@@ -224,10 +226,11 @@ public class BusinesslogicSelectMacAdressGattServer {
                                     Integer getId=      bundlePepoles.getInt("getId",0);
                                     String getName=   bundlePepoles.getString("getName","").trim();
                                     Long getUUID =   bundlePepoles.getLong("getUUID",0l);
-                                    materialTextViewParent.setTag(bundlePepoles);
-                                    materialTextViewParent.setText(getName);
+                                    // TODO: 19.08.2024  
+                                    searchview_maclistdeviceserver.setTag(bundlePepoles);
+                                    searchview_maclistdeviceserver.setText(getName);
                                     // TODO: 15.05.2023 ЗАПОЛЕНИЕ ДАННЫМИ КЛИК
-                                    materialTextViewParent.startAnimation(animation);
+                                    searchview_maclistdeviceserver.startAnimation(animation);
                                     // TODO: 15.05.2023  ЗАКРЫВАЕТ
                                     alertDialogMacAdress.cancel();
                                     alertDialogMacAdress.dismiss();
