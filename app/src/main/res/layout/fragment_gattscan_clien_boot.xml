@@ -23,58 +23,19 @@
 
 
 
-    <com.google.android.material.card.MaterialCardView
-        android:id="@+id/id_card_server_ble_inner"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:minWidth="200dp"
-        android:minHeight="40dp"
-        android:layout_centerInParent="true"
-        android:theme="@style/Theme.MaterialComponents.DayNight.DarkActionBar"
-        android:layout_margin="5dp"
-        android:layout_centerHorizontal="true"
-        android:padding="2dp"
-        android:textSize="10sp"
-        app:cardBackgroundColor="#FFFAFA"
-        app:cardCornerRadius="2dp"
-        app:cardElevation="10dp"
-        app:strokeColor="#F5FFFA"
-        app:cardMaxElevation="5dp"
-        app:strokeWidth="1dp"
-        android:translationZ="15dp"
-        android:animateLayoutChanges="true" >
 
 
 
-        <com.google.android.material.textview.MaterialTextView
-            android:id="@+id/text_scanner_work"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+        <ImageView
+            android:id="@+id/id_imageviewbootscanner"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
             android:layout_centerInParent="true"
-            android:clickable="false"
-            android:focusable="false"
-            android:foregroundGravity="clip_vertical"
-            android:gravity="center"
-            android:minWidth="200dp"
-            android:minHeight="40dp"
-            android:text="Контроль Bluetooth"
-            android:textAlignment="center"
-            android:textAppearance="@style/TextAppearance.AppCompat.Body1"
-            android:textColor="#6A6C6C"
-            android:textSize="16sp"
+            android:adjustViewBounds="false"
+            android:textSize="26sp"
             android:textStyle="bold"
-            android:translationZ="150dp"
             android:typeface="monospace"
-            android:visibility="visible">
-        </com.google.android.material.textview.MaterialTextView>
-
-
-
-    </com.google.android.material.card.MaterialCardView>
-
-
-
-
+            app:srcCompat="@drawable/icon_main_forserverscanners1" />
 
 
 
@@ -83,28 +44,21 @@
 
     <ProgressBar
         android:id="@+id/progressBarFace"
-        style="@android:style/Widget.DeviceDefault.Light.ProgressBar.Horizontal"
-        android:layout_width="150dp"
-        android:layout_height="12dp"
-        android:layout_marginTop="280dp"
+        style="@android:style/Widget.DeviceDefault.Light.ProgressBar.Inverse"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="70dp"
         android:foregroundGravity="center_vertical|center_horizontal"
         android:indeterminate="true"
         android:indeterminateTint="#020202"
-        android:layout_centerHorizontal="true"
-        android:layout_below="@id/id_card_server_ble_inner"
         android:max="100"
-        android:scaleY="2"
-        android:scaleX="1"
         android:progress="1"
         android:progressTint="#FFFFFF"
         android:textAlignment="center"
         android:textDirection="firstStrong"
         android:visibility="visible" />
-
-
-
-
-
 
 </RelativeLayout>
 </com.google.android.material.card.MaterialCardView>

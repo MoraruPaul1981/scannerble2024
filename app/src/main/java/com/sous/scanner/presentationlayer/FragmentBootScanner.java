@@ -145,7 +145,8 @@ public class FragmentBootScanner extends Fragment {
             handlerScannerGattClient.getTarget().postDelayed(()-> {
 
                 businesslogicJobServive.startingServiceSimpleScan("fistlauntfrombackground");
-            },1500);
+
+            },2000);
 
         Log.d(getContext().getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                 " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
