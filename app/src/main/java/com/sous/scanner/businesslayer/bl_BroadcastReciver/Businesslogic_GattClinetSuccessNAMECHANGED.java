@@ -55,9 +55,6 @@ public class Businesslogic_GattClinetSuccessNAMECHANGED {
                         // TODO: 31.07.2024
                         Businesslogic_JOBServive businesslogicJobServive=new Businesslogic_JOBServive(context);
 
-                        // TODO: 16.07.2024  startting Fragment Scannig
-                        businesslogicJobServive.   startingServiceSimpleScan("robotlaunchingfrombackground");
-
 
 
                         Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +

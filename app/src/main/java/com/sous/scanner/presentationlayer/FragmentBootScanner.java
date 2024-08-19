@@ -141,16 +141,13 @@ public class FragmentBootScanner extends Fragment {
         }
 
             // TODO: 16.07.2024  startting Fragment Scannig
+                businesslogicJobServive.startingServiceSimpleScan("fistlauntfrombackground",handlerScannerGattClient);
 
-            handlerScannerGattClient.getTarget().postDelayed(()-> {
-
-                businesslogicJobServive.startingServiceSimpleScan("fistlauntfrombackground");
-
-            },2000);
 
         Log.d(getContext().getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                 " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
                 " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n");
+
     } catch (Exception e) {
         e.printStackTrace();
         Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() + " Линия  :"

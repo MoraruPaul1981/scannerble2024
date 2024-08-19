@@ -3,7 +3,11 @@ package com.sous.scanner.businesslayer.bl_forServices;
 import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
+import android.os.Message;
 import android.util.Log;
+
+import androidx.annotation.Nullable;
+import androidx.loader.content.AsyncTaskLoader;
 
 import com.sous.scanner.businesslayer.Errors.SubClassErrors;
 import com.sous.scanner.businesslayer.Services.ServiceClientsScanBackground;
@@ -23,19 +27,40 @@ long version;
 
 
     // TODO: 29.11.2022 служба сканирования
-    public void startingServiceSimpleScan(String stateScartServiceScan) {
+    public void startingServiceSimpleScan(String stateScartServiceScan, Message handlerScannerGattClient) {
         try {
+            // TODO: 19.08.2024
+            handlerScannerGattClient.getTarget().postDelayed(()->{
+                AsyncTaskLoader asyncTaskLoader=new AsyncTaskLoader(context) {
+                    @Nullable
+                    @Override
+                    public Object loadInBackground() {
 
-           // Intent intentClientServiceSimpleScanStart = new Intent(context, ServiceClientsScan.class);
-            Intent intentClientServiceSimpleScanStart = new Intent(context, ServiceClientsScanBackground.class);
-            intentClientServiceSimpleScanStart.addFlags(Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
-            intentClientServiceSimpleScanStart.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
-            intentClientServiceSimpleScanStart.addFlags(Intent.FLAG_FROM_BACKGROUND);
-            intentClientServiceSimpleScanStart.addFlags(Intent.FLAG_ACTIVITY_BROUGHT_TO_FRONT);
-            intentClientServiceSimpleScanStart.setAction(stateScartServiceScan);
-            intentClientServiceSimpleScanStart.addFlags(Intent.FLAG_GRANT_PERSISTABLE_URI_PERMISSION);
-            // TODO: 24.07.2024
-            context.startService( intentClientServiceSimpleScanStart);
+                        // Intent intentClientServiceSimpleScanStart = new Intent(context, ServiceClientsScan.class);
+                        Intent intentClientServiceSimpleScanStart = new Intent(context, ServiceClientsScanBackground.class);
+                        intentClientServiceSimpleScanStart.addFlags(Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
+                        intentClientServiceSimpleScanStart.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+                        intentClientServiceSimpleScanStart.addFlags(Intent.FLAG_FROM_BACKGROUND);
+                        intentClientServiceSimpleScanStart.addFlags(Intent.FLAG_ACTIVITY_BROUGHT_TO_FRONT);
+                        intentClientServiceSimpleScanStart.setAction(stateScartServiceScan);
+                        intentClientServiceSimpleScanStart.addFlags(Intent.FLAG_GRANT_PERSISTABLE_URI_PERMISSION);
+                        // TODO: 24.07.2024
+                        context.startService( intentClientServiceSimpleScanStart);
+
+                        return null;
+                    }
+                };
+                asyncTaskLoader.forceLoad();
+                asyncTaskLoader.loadInBackground();
+
+                // TODO: 26.07.2024
+                Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                        " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                        " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" );
+
+            },3000);
+
+
             // TODO: 26.07.2024
             Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                     " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +

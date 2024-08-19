@@ -1081,7 +1081,7 @@ public class FragmentScannerUser extends Fragment {
             // TODO: 16.07.2024  startting Fragment Scannig
 
             try {
-                businesslogicJobServive.startingServiceSimpleScan("userUIlaunchingfrombackground");
+                businesslogicJobServive.startingServiceSimpleScan("userUIlaunchingfrombackground",messageClient);
 
                 Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                         " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
