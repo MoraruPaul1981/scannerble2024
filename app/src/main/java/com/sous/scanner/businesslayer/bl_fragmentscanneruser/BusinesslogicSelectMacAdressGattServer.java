@@ -373,7 +373,7 @@ public class BusinesslogicSelectMacAdressGattServer {
                     final Cursor[] cursorFilter = {null};
                     try{
                         messageClient.getTarget().post(()->{
-                            ///   cursorFilter[0] =    simpleCursorForSearchViewGattMacList.getCursor();
+                            // TODO: 19.08.2024  
                             cursorFilter[0] =         getCursor("");
 
                             // TODO: 15.05.2023 ПЕРЕПОЛУЧАЕМ НОВЫЕ ДАННЫЕ КУРСОР   // TODO: 15.05.2023 ПЕРЕПОЛУЧАЕМ НОВЫЕ ДАННЫЕ КУРСОР   // TODO: 15.05.2023 ПЕРЕПОЛУЧАЕМ НОВЫЕ ДАННЫЕ КУРСОР
