@@ -118,8 +118,8 @@ public class BusinesslogicSelectMacAdressGattServer {
                     ///TODO ГЛАВНЫЙ АДАПТЕР чата
                     SimpleCursorAdapter simpleCursorForSearchView =
                             new SimpleCursorAdapter(getContext(),
-                                    R.layout.simple_newspinner_dwonload_newfiltersearch, cursor, new String[]{  "_id"},
-                                    new int[]{android.R.id.text1}, CursorAdapter.FLAG_REGISTER_CONTENT_OBSERVER);
+                                    R.layout.simple_newspinner_dwonload_newfiltersearch, cursor, new String[]{  "_id","name"},
+                                    new int[]{android.R.id.text1,android.R.id.text2}, CursorAdapter.FLAG_REGISTER_CONTENT_OBSERVER);
                     SimpleCursorAdapter.ViewBinder БиндингДляПоиск = new SimpleCursorAdapter.ViewBinder(){
 
                         @Override

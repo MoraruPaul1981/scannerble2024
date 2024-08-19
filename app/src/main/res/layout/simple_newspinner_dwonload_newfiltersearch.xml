@@ -64,7 +64,7 @@
                 android:textAppearance="?android:attr/textAppearanceListItemSmall"
                 android:textSize="14dp"
                 android:textStyle="bold"
-                android:text="мас-адреса"
+                android:text="Mac"
                 android:visibility="visible" />
         </RelativeLayout>
     </TableRow>
@@ -101,11 +101,11 @@
                     android:padding="2dp"
                     android:ellipsize="end"
                     android:drawableLeft="@drawable/icon_ble_mac_list"
-                    android:background="@drawable/style_for_newstypespinners_ietm6"
+                    android:background="@drawable/style_for_newstypespinners_ietm8"
                     android:textAppearance="?android:attr/textAppearanceListItemSmall"
                     android:textSize="14dp"
                     android:textStyle="bold"
-                    android:text="мас-адреса"
+                    android:text="macSub"
                     android:visibility="visible" />
             </RelativeLayout>
         </TableRow>
