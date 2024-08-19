@@ -28,10 +28,12 @@ import androidx.cursoradapter.widget.CursorAdapter;
 import androidx.cursoradapter.widget.SimpleCursorAdapter;
 
 import com.google.android.material.button.MaterialButton;
+import com.google.android.material.card.MaterialCardView;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.android.material.textview.MaterialTextView;
 import com.sous.scanner.R;
 import com.sous.scanner.businesslayer.Errors.SubClassErrors;
+import com.sous.scanner.datalayer.bl_DataBase.BusinesslogicDatabase;
 
 import java.util.Date;
 
@@ -49,7 +51,8 @@ public class BusinesslogicSelectMacAdressGattServer {
     private  MaterialTextView searchview_maclistdeviceserver;
     private  Cursor cursor;
     private  String MacTable="listMacMastersSous";
-    private  String MacColumn="macadress";
+
+    private    BusinesslogicDatabase  businesslogicDatabase;
 
     public BusinesslogicSelectMacAdressGattServer( @NonNull  Context context,
                                                    @NonNull  long version,
@@ -68,6 +71,8 @@ public class BusinesslogicSelectMacAdressGattServer {
     @SuppressLint("Range")
   public   void selectiongMacAdressGattServer(@NonNull MaterialTextView searchview_maclistdeviceserver){
 
+        // TODO: 19.08.2024
+        try {
         alertDialogMacAdress = new MaterialAlertDialogBuilder(context){
             private     MaterialButton ButtonFilterЗакрытьДиалог =null;
             @NonNull
@@ -75,7 +80,7 @@ public class BusinesslogicSelectMacAdressGattServer {
             public MaterialAlertDialogBuilder setView(View view) {
                 try{
                     ButtonFilterЗакрытьДиалог =    (MaterialButton) view.findViewById(R.id.bottom_newscanner1);
-                    ListViewForSearchViewGattMacList =    (ListView) view.findViewById(R.id.ListViewForNewOrderTransport);
+                    ListViewForSearchViewGattMacList =    (ListView) view.findViewById(R.id.id_listview_macgatt);
                     searchViewMacAdress =    (SearchView) view.findViewById(R.id.searchview_newordertransport);
                     searchViewMacAdress.setQueryHint("Поиск..");
                     ListViewForSearchViewGattMacList.setTextFilterEnabled(true);
@@ -99,17 +104,22 @@ public class BusinesslogicSelectMacAdressGattServer {
                     textViewСтрокаПосика.setTextColor(Color.rgb(0,102,102));
                     textViewСтрокаПосика.setTypeface(Typeface.defaultFromStyle(Typeface.BOLD));
                     searchViewMacAdress.refreshDrawableState();
+                    // TODO: 19.08.2024
+
+                    // TODO: 19.08.2024  поулчение жданны
+                       businesslogicDatabase=new BusinesslogicDatabase(context,version);
+                     cursor=   businesslogicDatabase.getingCursor("SELECT * FROM listMacMastersSous ");
 
                     Log.d(getContext().getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                             " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                            " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"+" textViewСтрокаПосика " +textViewСтрокаПосика);
+                            " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"+" textViewСтрокаПосика " +textViewСтрокаПосика +" cursor " +cursor );
                     
 
                     ///TODO ГЛАВНЫЙ АДАПТЕР чата
                     SimpleCursorAdapter simpleCursorForSearchView =
                             new SimpleCursorAdapter(getContext(),
-                                    R.layout.simple_newspinner_dwonload_newfiltersearch, cursor, new String[]{ MacColumn,"id"},
-                                    new int[]{android.R.id.text1,android.R.id.text1}, CursorAdapter.FLAG_REGISTER_CONTENT_OBSERVER);
+                                    R.layout.simple_newspinner_dwonload_newfiltersearch, cursor, new String[]{  "_id"},
+                                    new int[]{android.R.id.text1}, CursorAdapter.FLAG_REGISTER_CONTENT_OBSERVER);
                     SimpleCursorAdapter.ViewBinder БиндингДляПоиск = new SimpleCursorAdapter.ViewBinder(){
 
                         @Override
@@ -119,18 +129,20 @@ public class BusinesslogicSelectMacAdressGattServer {
                                     Log.d(this.getClass().getName()," position");
                                     if (cursor.getCount()>0) {
                                         try{
-                                            MaterialTextView materialTextViewЭлементСписка=(MaterialTextView) view;
+                                            MaterialCardView cardViewMAcs=(MaterialCardView) view.findViewById(android.R.id.text1);
+                                            MaterialTextView materialTextVieMac=(MaterialTextView) cardViewMAcs.findViewById( R.id.id_mac);
+                                            MaterialTextView materialTextVieMacsub=(MaterialTextView) cardViewMAcs.findViewById(R.id.id_macsub);
                                             // TODO: 13.12.2022  производим состыковку
                                             Integer   getId = cursor.getInt(cursor.getColumnIndex("_id"));
                                             if (getId>0) {
                                                 Long UUIDGetFilter = cursor.getLong(cursor.getColumnIndex("uuid"));
-                                                String  getName = cursor.getString(cursor.getColumnIndex(MacColumn)).trim();
+                                                String  getName = cursor.getString(cursor.getColumnIndex("name")).trim();
                                                 Bundle bundle=new Bundle();
                                                 bundle.putInt("getId",getId);
                                                 bundle.putString("getName",getName);
                                                 bundle.putLong("getUUID",UUIDGetFilter);
                                                 // TODO: 16.05.2023 Элемент Заполяем данными  TAG
-                                                materialTextViewЭлементСписка.setTag(bundle);
+                                                materialTextVieMac.setTag(bundle);
                                                 // TODO: 20.01.2022
                                                 Log.d(this.getClass().getName()," getName "+getName + " getId " +getId  + " UUIDGetFilter " +UUIDGetFilter+ " bundle "+bundle);
                                                 boolean ДлинаСтрокивСпиноре = getName.length() >40;
@@ -141,14 +153,14 @@ public class BusinesslogicSelectMacAdressGattServer {
                                                     Log.d(getContext().getClass().getName(), " getName " + "--" + getName);/////
                                                 }
                                                 // TODO: 16.05.2023 Элемент Заполяем данными
-                                                materialTextViewЭлементСписка.setText(getName);
-                                                materialTextViewЭлементСписка.startAnimation(animation);
+                                                materialTextVieMac.setText(getName);
+                                                materialTextVieMac.startAnimation(animation);
+                                                materialTextVieMac.requestLayout();
                                             }
                                             Log.d(getContext().getClass().getName(), "\n"
                                                     + " время: " + new Date() + "\n+" +
                                                     " Класс в процессе... " + this.getClass().getName() + "\n" +
-                                                    " метод в процессе... " + Thread.currentThread().getStackTrace()[2].getMethodName() +
-                                                    "  ((MaterialTextView)view) " +  materialTextViewЭлементСписка);
+                                                    " метод в процессе... " + Thread.currentThread().getStackTrace()[2].getMethodName() );
                                             // TODO: 13.12.2022 филь
                                         } catch (Exception e) {
                                             e.printStackTrace();
@@ -287,7 +299,7 @@ public class BusinesslogicSelectMacAdressGattServer {
 
 
         }
-                .setTitle("Выберете мac-адреса")
+                .setTitle("Выберете Mac-адрес")
                 .setCancelable(false)
                 .setIcon( R.drawable.icon_newscannertwo)
                 .setView(layoutInflater.inflate( R.layout.simple_for_mac_adress_gatt_searchview, null )).show();
@@ -301,8 +313,24 @@ public class BusinesslogicSelectMacAdressGattServer {
         Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                 " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
                 " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n");
+    } catch (Exception e) {
+        e.printStackTrace();
+        Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() + " Линия  :"
+                + Thread.currentThread().getStackTrace()[2].getLineNumber());
+        ContentValues valuesЗаписываемОшибки = new ContentValues();
+        valuesЗаписываемОшибки.put("Error", e.toString().toLowerCase());
+        valuesЗаписываемОшибки.put("Klass", this.getClass().getName());
+        valuesЗаписываемОшибки.put("Metod", Thread.currentThread().getStackTrace()[2].getMethodName());
+        valuesЗаписываемОшибки.put("LineError", Thread.currentThread().getStackTrace()[2].getLineNumber());
+        final Object ТекущаяВерсияПрограммы = version;
+        Integer ЛокальнаяВерсияПОСравнение = Integer.parseInt(ТекущаяВерсияПрограммы.toString());
+        valuesЗаписываемОшибки.put("whose_error", ЛокальнаяВерсияПОСравнение);
+        new SubClassErrors(context).МетодЗаписиОшибок(valuesЗаписываемОшибки);
 
     }
+
+
+}
 
 
 
@@ -380,8 +408,10 @@ public class BusinesslogicSelectMacAdressGattServer {
                     final Cursor[] cursorFilter = {null};
                     try{
                         messageClient.getTarget().post(()->{
-                            // TODO: 19.08.2024  
-                            cursorFilter[0] =         getCursor("");
+                            // TODO: 19.08.2024
+                            // TODO: 19.08.2024  поулчение жданны
+                            businesslogicDatabase=new BusinesslogicDatabase(context,version);
+                            cursorFilter[0]=   businesslogicDatabase.getingCursor("SELECT * FROM listMacMastersSous ");
 
                             // TODO: 15.05.2023 ПЕРЕПОЛУЧАЕМ НОВЫЕ ДАННЫЕ КУРСОР   // TODO: 15.05.2023 ПЕРЕПОЛУЧАЕМ НОВЫЕ ДАННЫЕ КУРСОР   // TODO: 15.05.2023 ПЕРЕПОЛУЧАЕМ НОВЫЕ ДАННЫЕ КУРСОР
                             методПерезаполенияПоискаИзФилтра(cursorFilter[0],          simpleCursorForSearchViewGattMacList );
@@ -438,33 +468,7 @@ public class BusinesslogicSelectMacAdressGattServer {
         }
 
     }
-    protected   Cursor getCursor(@NonNull  String  quertyMac ){
-        Cursor cursor=null;
-        try{
 
-            Log.d(this.getClass().getName(), "\n" + " class " +
-                    Thread.currentThread().getStackTrace()[2].getClassName()
-                    + "\n" +
-                    " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                    " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"
-                    + " quertyMac " + quertyMac + " cursor  "+cursor );
-        } catch (Exception e) {
-            e.printStackTrace();
-            Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() + " Линия  :"
-                    + Thread.currentThread().getStackTrace()[2].getLineNumber());
-            ContentValues valuesЗаписываемОшибки = new ContentValues();
-            valuesЗаписываемОшибки.put("Error", e.toString().toLowerCase());
-            valuesЗаписываемОшибки.put("Klass", this.getClass().getName());
-            valuesЗаписываемОшибки.put("Metod", Thread.currentThread().getStackTrace()[2].getMethodName());
-            valuesЗаписываемОшибки.put("LineError", Thread.currentThread().getStackTrace()[2].getLineNumber());
-            final Object ТекущаяВерсияПрограммы = version;
-            Integer ЛокальнаяВерсияПОСравнение = Integer.parseInt(ТекущаяВерсияПрограммы.toString());
-            valuesЗаписываемОшибки.put("whose_error", ЛокальнаяВерсияПОСравнение);
-            new SubClassErrors(context).МетодЗаписиОшибок(valuesЗаписываемОшибки);
-
-        }
-        return cursor;
-    }
 
     // TODO: 15.05.2023 ПЕРЕПОЛУЧАЕМ НОВЫЕ ДАННЫЕ КУРСОР   // TODO: 15.05.2023 ПЕРЕПОЛУЧАЕМ НОВЫЕ ДАННЫЕ КУРСОР   // TODO: 15.05.2023 ПЕРЕПОЛУЧАЕМ НОВЫЕ ДАННЫЕ КУРСОР
     private void методПерезаполенияПоискаИзФилтра(Cursor cursorFilter ,@NonNull     SimpleCursorAdapter          simpleCursorForSearchView ) {

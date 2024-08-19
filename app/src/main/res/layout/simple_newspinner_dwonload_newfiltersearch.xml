@@ -1,31 +1,128 @@
-<com.google.android.material.textview.MaterialTextView
+<com.google.android.material.card.MaterialCardView
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@android:id/text1"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_margin="5dp"
-    android:padding="2dp"
-    android:checkMark="?android:attr/listChoiceIndicatorSingle"
-    android:gravity="center_vertical|center_horizontal"
-    android:minWidth="50dp"
-    android:minHeight="40dp"
-    android:textStyle="normal"
-    android:textColor="@color/black"
-    android:textSize="13dp"
-    android:background="@drawable/style_for_newstypespinners_ietm7"
-    android:translationZ="5dp"
-    app:cardCornerRadius="3dp"
-    app:cardElevation="1dp"
-    app:cardMaxElevation="5dp"
-    app:cornerRadius="10dp"
-    android:icon="@drawable/brograssbarnews4"
-    app:strokeWidth="0dp"
+    android:translationZ="15dp"
+    app:cardBackgroundColor="#FFFFFF"
+    app:strokeColor="#F2F6F6"
+    app:cardCornerRadius="1dp"
+    app:cardElevation="2dp"
+    app:cardMaxElevation="10dp"
+    app:strokeWidth="1dp"
+    android:animateLayoutChanges="true"
     android:theme="@style/Theme.MaterialComponents.Light.NoActionBar"
-    tools:context=".presentationlayer.MainActivityNewScanner"
-    >
-</com.google.android.material.textview.MaterialTextView>
+    tools:context=".presentationlayer.MainActivityNewScanner">
+
+
+
+    <TableLayout
+        android:id="@+id/tableLayoutparentrow_pays"
+        android:shrinkColumns="*"
+        android:stretchColumns="*"
+        android:gravity="center"
+        android:background="#FFFFFF"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+    <TableRow
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="1dp"
+        android:padding="1dp"
+        android:layout_column="0"
+        android:background="#FFFFFF"
+        android:gravity="center_vertical|center_horizontal">
+        <RelativeLayout
+            android:layout_column="0"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal|center_vertical"
+            android:orientation="vertical"
+            android:background="#FFFFFF">
+
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/id_mac"
+                android:layout_width="match_parent"
+                android:layout_height="35dp"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentRight="true"
+                android:layout_centerHorizontal="true"
+                android:layout_marginStart="20dp"
+                android:layout_marginEnd="20dp"
+                android:layout_marginBottom="2dp"
+                android:layout_marginTop="2dp"
+                android:gravity="center"
+                android:padding="2dp"
+                android:ellipsize="end"
+                android:drawableLeft="@drawable/icon_ble_mac_list"
+                android:background="@drawable/style_for_newstypespinners_ietm6"
+                android:textAppearance="?android:attr/textAppearanceListItemSmall"
+                android:textSize="14dp"
+                android:textStyle="bold"
+                android:text="мас-адреса"
+                android:visibility="visible" />
+        </RelativeLayout>
+    </TableRow>
+
+
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="1dp"
+            android:padding="1dp"
+            android:layout_column="0"
+            android:background="#FFFFFF"
+            android:gravity="center_vertical|center_horizontal">
+            <RelativeLayout
+                android:layout_column="0"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal|center_vertical"
+                android:orientation="vertical"
+                android:background="#FFFFFF">
+
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:id="@+id/id_macsub"
+                    android:layout_width="match_parent"
+                    android:layout_height="35dp"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginEnd="20dp"
+                    android:layout_marginBottom="2dp"
+                    android:layout_marginTop="2dp"
+                    android:gravity="center"
+                    android:padding="2dp"
+                    android:ellipsize="end"
+                    android:drawableLeft="@drawable/icon_ble_mac_list"
+                    android:background="@drawable/style_for_newstypespinners_ietm6"
+                    android:textAppearance="?android:attr/textAppearanceListItemSmall"
+                    android:textSize="14dp"
+                    android:textStyle="bold"
+                    android:text="мас-адреса"
+                    android:visibility="visible" />
+            </RelativeLayout>
+        </TableRow>
+
+
+
+
+
+    </TableLayout>
+</com.google.android.material.card.MaterialCardView>
+
+
+
+
+
+
+
 
 
 

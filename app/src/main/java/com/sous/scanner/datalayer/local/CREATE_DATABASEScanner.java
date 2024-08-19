@@ -21,7 +21,7 @@ public class CREATE_DATABASEScanner extends SQLiteOpenHelper{ ///SQLiteOpenHelpe
     private   Context context;
     private static AtomicReference<SQLiteDatabase> atomicstoredEntities = new AtomicReference<>();
     private     Long version=0l;
-    private static final int DATABASE_VERSION = 23;
+    private static final int DATABASE_VERSION = 24;
 
     public  static   SQLiteDatabase getССылкаНаСозданнуюБазу() {
         System.out.println( "atomicstoredEntities "+atomicstoredEntities.toString());;
@@ -126,7 +126,7 @@ public class CREATE_DATABASEScanner extends SQLiteOpenHelper{ ///SQLiteOpenHelpe
         ССылкаНаСозданнуюБазу.execSQL("drop TRIGGER  if exists   ScannerTableUpdatescannerpublic ");
 
         ССылкаНаСозданнуюБазу.execSQL("drop table  if exists scannerandroid ");
-        ССылкаНаСозданнуюБазу.execSQL("drop table  if exists scannerandroid ");
+        ССылкаНаСозданнуюБазу.execSQL("drop table  if exists listMacMastersSous ");
 
         // TODO: 03.06.2022
         Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
@@ -164,7 +164,6 @@ public class CREATE_DATABASEScanner extends SQLiteOpenHelper{ ///SQLiteOpenHelpe
             // TODO: 06.12.2022 удаление старых таблиц
             ССылкаНаСозданнуюБазу.execSQL("drop table  if exists errordsu1 ");//ТАБЛИЦА ГЕНЕРАЦИИ ОШИБОК
             // TODO: 30.11.2022 создаени таблицы ошибок
-            ССылкаНаСозданнуюБазу.execSQL("drop table  if exists errordsu1 ");//ТАБЛИЦА ГЕНЕРАЦИИ ОШИБОК
             ССылкаНаСозданнуюБазу.execSQL("Create table if not exists errordsu1 (" +
                     "id INTEGER PRIMARY KEY AUTOINCREMENT  ," +
                     " Error TEXT      ," +
@@ -199,9 +198,9 @@ public class CREATE_DATABASEScanner extends SQLiteOpenHelper{ ///SQLiteOpenHelpe
 
     private void listMacMastersSous(@NotNull SQLiteDatabase ССылкаНаСозданнуюБазу) {//BEFORE   INSERT , UPDATE , DELETE
         try{
-            ССылкаНаСозданнуюБазу.execSQL("drop table  if exists    istMacMastersSous ");//test
+            ССылкаНаСозданнуюБазу.execSQL("drop table  if exists    listMacMastersSous ");//test
             ССылкаНаСозданнуюБазу.execSQL("Create table if not exists    listMacMastersSous  (" +
-                    "id INTEGER PRIMARY KEY AUTOINCREMENT  ," +
+                    "_id INTEGER PRIMARY KEY AUTOINCREMENT  ," +
                     "name TEXT      ," +
                     "macadress TEXT  ," +
                     "plot INT," +

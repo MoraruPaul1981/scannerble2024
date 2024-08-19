@@ -37,6 +37,7 @@ public class ContentProviderScanner extends android.content.ContentProvider {
         try{
             ИменаТаблицыОтАндройда=new CopyOnWriteArrayList<>();
             ИменаТаблицыОтАндройда.add("errordsu1");
+            ИменаТаблицыОтАндройда.add("listMacMastersSous");
             Log.d(this.getClass().getName(),  " ContentProviderScanner" +uriMatcherДЛяПровайдераКонтентБазаДанных );
             Log.d(this.getClass().getName(), " ИменаТаблицыОтАндройда "+ИменаТаблицыОтАндройда );
             uriMatcherДЛяПровайдераКонтентБазаДанных=new UriMatcher(ИменаТаблицыОтАндройда.size());
@@ -106,10 +107,7 @@ public class ContentProviderScanner extends android.content.ContentProvider {
                     table = "errordsu1";
                     break;
                 case 1:
-                    table = "tablescannerandroid";
-                    break;
-                case 2:
-                    table = "tablescannerpublic";
+                    table = "listMacMastersSous";
                     break;
                 default:
                     table=    Optional.ofNullable(uri).map(Emmeter->Emmeter.toString().replace("content://com.sous.scanner.prodider/","")).get();
