@@ -40,12 +40,14 @@ import com.google.android.material.button.MaterialButton;
 import com.google.android.material.card.MaterialCardView;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.textview.MaterialTextView;
+import com.google.common.util.concurrent.AtomicDouble;
 import com.jakewharton.rxbinding4.view.RxView;
 import com.sous.scanner.businesslayer.Errors.SubClassErrors;
 import com.sous.scanner.R;
 import com.sous.scanner.businesslayer.bl_EvenBus.EventLocalBroadcastManager;
 import com.sous.scanner.businesslayer.bl_forServices.Businesslogic_JOBServive;
 import com.sous.scanner.businesslayer.bl_forServices.BusinessoginEnableBluetoothAdapter;
+import com.sous.scanner.businesslayer.bl_fragmentscanneruser.BusinesslogicSearchViewForMaterMac;
 import com.sous.scanner.businesslayer.bl_fragmentscanneruser.BusinessloginVibrator;
 import com.sous.scanner.businesslayer.bl_fragmentscanneruser.BusinessloginforfragmentScanner;
 
@@ -76,6 +78,7 @@ public class FragmentScannerUser extends Fragment {
     private Message messageClient;
 
     private  MaterialTextView materialtextview_last_state;
+    private  MaterialTextView  searchview_maclistdeviceserver;
     private Long version = 0l;
     private SharedPreferences preferences;
 
@@ -171,8 +174,12 @@ public class FragmentScannerUser extends Fragment {
             recyclerview_gatt_main = (RecyclerView) materialcardview_gattclientonly_bottom.findViewById(R.id.id_recyclerview_gatt_main);
 
             materialtextview_last_state = (MaterialTextView) materialcardview_gattclientonly_bottom.findViewById(R.id.id_materialtextview_last_state);
-// TODO: 07.08.2024 Востанавливаем статус последниуспешый статус  
+
+            searchview_maclistdeviceserver = (MaterialTextView) materialcardview_gattclientonly_bottom.findViewById(R.id.id_searchview_maclistdeviceserver);
+// TODO: 07.08.2024 Востанавливаем статус последниуспешый статус
             materialtextViewGetLastState();
+            // TODO: 19.08.2024 выбор текущаег о МАК адреса через лик
+            selectMacaddressviaclick();
 
             Log.d(getContext().getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                     " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
@@ -210,6 +217,10 @@ public class FragmentScannerUser extends Fragment {
             },200);
 
 
+
+            Log.d(getContext().getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                    " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                    " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n");
         }
     } catch (Exception e) {
         e.printStackTrace();
@@ -227,6 +238,45 @@ public class FragmentScannerUser extends Fragment {
 
     }
     }
+
+
+    private void selectMacaddressviaclick() {
+        try{
+            // TODO: 19.08.2024
+            searchview_maclistdeviceserver.setOnClickListener(currentMac->{
+                // TODO: 19.08.2024
+                BusinesslogicSearchViewForMaterMac businesslogicSearchViewForMaterMac=new BusinesslogicSearchViewForMaterMac(getContext(),version,messageClient);
+
+
+
+
+                Log.d(getContext().getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                        " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                        " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"+" currentMac " +currentMac);
+            });
+            Log.d(getContext().getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                    " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                    " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n");
+        } catch (Exception e) {
+            e.printStackTrace();
+            Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() + " Линия  :"
+                    + Thread.currentThread().getStackTrace()[2].getLineNumber());
+            ContentValues valuesЗаписываемОшибки = new ContentValues();
+            valuesЗаписываемОшибки.put("Error", e.toString().toLowerCase());
+            valuesЗаписываемОшибки.put("Klass", this.getClass().getName());
+            valuesЗаписываемОшибки.put("Metod", Thread.currentThread().getStackTrace()[2].getMethodName());
+            valuesЗаписываемОшибки.put("LineError", Thread.currentThread().getStackTrace()[2].getLineNumber());
+            final Object ТекущаяВерсияПрограммы = version;
+            Integer ЛокальнаяВерсияПОСравнение = Integer.parseInt(ТекущаяВерсияПрограммы.toString());
+            valuesЗаписываемОшибки.put("whose_error", ЛокальнаяВерсияПОСравнение);
+            new SubClassErrors(getContext()).МетодЗаписиОшибок(valuesЗаписываемОшибки);
+
+        }
+    }
+
+
+
+
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {

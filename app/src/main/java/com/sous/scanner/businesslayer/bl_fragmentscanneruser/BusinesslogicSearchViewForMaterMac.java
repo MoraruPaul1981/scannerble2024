@@ -6,6 +6,7 @@ import android.database.Cursor;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.os.Bundle;
+import android.os.Message;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
@@ -24,26 +25,23 @@ import androidx.cursoradapter.widget.SimpleCursorAdapter;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.android.material.textview.MaterialTextView;
+import com.sous.scanner.R;
 
 import java.util.Date;
 
 public class BusinesslogicSearchViewForMaterMac {
 
     // TODO: 16.08.2024
-    private AlertDialog alertDialog;
     private    ListView ListViewForSearchView;
-    private   androidx.appcompat.widget.SearchView searchView;
-    private  Cursor cursor;
-    private  MaterialTextView materialTextViewListMacAdressMater;
-
+    private   androidx.appcompat.widget.SearchView searchViewMacAdress;
     private Context context;
     private  long version;
+    private Message messageClient;
 
-    public BusinesslogicSearchViewForMaterMac(Cursor cursor, MaterialTextView materialTextViewListMacAdressMater, Context context, long version) {
-        this.cursor = cursor;
-        this.materialTextViewListMacAdressMater = materialTextViewListMacAdressMater;
+    public BusinesslogicSearchViewForMaterMac( Context context, long version, Message messageClient) {
         this.context = context;
         this.version = version;
+        this.messageClient = messageClient;
     }
 
 
@@ -54,7 +52,7 @@ public class BusinesslogicSearchViewForMaterMac {
                                          @NonNull String Спровочник,
                                          @NonNull MaterialTextView materialTextViewListMacAdressMater){
 
-        alertDialog = new MaterialAlertDialogBuilder(context){
+     AlertDialog   alertDialogMacAdress = new MaterialAlertDialogBuilder(context){
             private     MaterialButton ButtonFilterЗакрытьДиалог =null;
             @NonNull
             @Override
@@ -62,24 +60,27 @@ public class BusinesslogicSearchViewForMaterMac {
                 try{
                     ButtonFilterЗакрытьДиалог =    (MaterialButton) view.findViewById(R.id.bottom_newscanner1);
                     ListViewForSearchView =    (ListView) view.findViewById(R.id.ListViewForNewOrderTransport);
-                    searchView =    (androidx.appcompat.widget.SearchView) view.findViewById(R.id.searchview_newordertransport);
-                    searchView.setQueryHint("Поиск "+Спровочник);
+                    searchViewMacAdress =    (androidx.appcompat.widget.SearchView) view.findViewById(R.id.searchview_newordertransport);
+                    searchViewMacAdress.setQueryHint("Поиск "+Спровочник);
                     ListViewForSearchView.setTextFilterEnabled(true);
-                    searchView.setDrawingCacheBackgroundColor(Color.GRAY);
-                    searchView.setDrawingCacheEnabled(true);
-                    searchView.setSubmitButtonEnabled(true);
+                    searchViewMacAdress.setDrawingCacheBackgroundColor(Color.GRAY);
+                    searchViewMacAdress.setDrawingCacheEnabled(true);
+                    searchViewMacAdress.setSubmitButtonEnabled(true);
 
 
+                    Log.d(getContext().getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                            " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                            " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n");
 
 
-                    TextView textViewСтрокаПосика = searchView.findViewById(com.google.android.material.R.id.search_src_text);
+                    TextView textViewСтрокаПосика = searchViewMacAdress.findViewById(com.google.android.material.R.id.search_src_text);
 
 
 
 
                     textViewСтрокаПосика.setTextColor(Color.rgb(0,102,102));
                     textViewСтрокаПосика.setTypeface(Typeface.defaultFromStyle(Typeface.BOLD));
-                    searchView.refreshDrawableState();
+                    searchViewMacAdress.refreshDrawableState();
 
                     ///TODO ГЛАВНЫЙ АДАПТЕР чата
                     SimpleCursorAdapter simpleCursorForSearchView =

@@ -89,7 +89,7 @@
 
 
             <com.google.android.material.textview.MaterialTextView
-                android:id="@+id/searchview_commitdocument"
+                android:id="@+id/id_searchview_maclistdeviceserver"
                 android:layout_width="match_parent"
                 android:layout_height="35dp"
                 android:layout_alignParentLeft="true"
