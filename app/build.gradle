@@ -141,6 +141,9 @@ dependencies {
     testAnnotationProcessor 'com.google.dagger:hilt-compiler:2.44'
 
 
+//TODO HINT Dagger2
 
+    implementation 'com.google.dagger:hilt-android:2.44'
+    annotationProcessor 'com.google.dagger:hilt-compiler:2.44'
 
 }
