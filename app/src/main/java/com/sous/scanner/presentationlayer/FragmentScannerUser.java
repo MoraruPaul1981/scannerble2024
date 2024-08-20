@@ -1053,7 +1053,7 @@ public class FragmentScannerUser extends Fragment {
                                     animationCurrentButonClick(materialButtonClick,100);
 
 
-                                    workerClickTOService(materialButtonClick);
+                                    workerClickTOService(searchview_maclistdeviceserver);
                                     // TODO: 02.08.2024
                                     Log.d(this.getClass().getName(), "\n" + " class " +
                                             Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
@@ -1130,15 +1130,18 @@ public class FragmentScannerUser extends Fragment {
 
 
 
-        private void workerClickTOService(@NonNull MaterialButton materialButtonClick) {
+        private void workerClickTOService(@NonNull MaterialTextView  searchview_maclistdeviceserver) {
             // TODO: 16.07.2024  startting Fragment Scannig
 
             try {
-                businesslogicJobServive.startingServiceSimpleScan("userUIlaunchingfrombackground",messageClient);
+                Bundle searchview_bungle=    (Bundle)    searchview_maclistdeviceserver.getTag();
+
+                businesslogicJobServive.startingServiceSimpleScan("userUIlaunchingfrombackground",messageClient,searchview_bungle);
 
                 Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                         " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                        " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n");
+                        " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" +
+                         " searchview_bungle  " +searchview_bungle);
             } catch (Exception e) {
                 e.printStackTrace();
                 Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() + " Линия  :"

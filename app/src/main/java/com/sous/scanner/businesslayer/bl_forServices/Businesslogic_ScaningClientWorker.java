@@ -17,6 +17,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
+import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
@@ -117,7 +118,7 @@ public class Businesslogic_ScaningClientWorker {
 
             CopyOnWriteArrayList<String> getListMAC=new CopyOnWriteArrayList();
                     // TODO: 02.08.2024
-            addingQueueListmac(getListMAC);
+         String   addbundleFormSearchMacGatt=     addbundleFormSearchMacGatt(null);
             // TODO: 02.08.2024
             CopyOnWriteArrayList<BluetoothGattCallback>  bluetoothGattCallbacks = new CopyOnWriteArrayList();
 
@@ -256,22 +257,21 @@ public class Businesslogic_ScaningClientWorker {
     // TODO: 08.08.2024
 
     @SuppressLint({"MissingPermission"})
-    public void launchingСomplexbackground(@NonNull Integer DurectionTimeGatt  ) {
+    public void launchingСomplexbackground(@NonNull Bundle bundleFormSearchMacGatt) {
         try {
             // TODO: 02.08.2024
-            AtomicInteger atomicIntegerDisponse=new AtomicInteger(0);
-            CopyOnWriteArrayList<String> getListMAC=new CopyOnWriteArrayList();
-            CopyOnWriteArrayList<BluetoothGatt>  getConnectionBluetoothGatt = new CopyOnWriteArrayList();
+            ConcurrentSkipListSet<BluetoothGatt>  getConnectionBluetoothGatt = new ConcurrentSkipListSet();
             // TODO: 02.08.2024
-            addingQueueListmac(getListMAC);
+            String  getMacGatt =addbundleFormSearchMacGatt(bundleFormSearchMacGatt);
             // TODO: 25.07.2024
             if (bluetoothAdapterPhoneClient!=null) {
                 // TODO: 30.07.2024
                 if (bluetoothAdapterPhoneClient.isEnabled()) {
-
-
+                    // TODO: 20.08.2024
+                    int DurectionTimeGatt=      getRandomNumberUsingMilisecond(150,800);
                  Observable.range(      1,3)
                             .zipWith( Observable.just("")
+                                    .delay(DurectionTimeGatt,TimeUnit.MILLISECONDS)
                                     .repeatWhen(repeat->repeat.delay(10,TimeUnit.SECONDS)), (item, interval) -> item)
                             .flatMap(val -> Observable.just(val)
                                     .subscribeOn(Schedulers.computation()))
@@ -281,24 +281,22 @@ public class Businesslogic_ScaningClientWorker {
                                     // TODO: 22.11.2022  первая часть
 
                                     // TODO: 25.07.2024
-                                    // TODO: 26.07.2024
-                                    final BluetoothDevice bluetoothDeviceScan = bluetoothAdapterPhoneClient.getRemoteDevice(getListMAC.get(0).trim());
+                                    if (!getMacGatt.isEmpty()) {
+                                        // TODO: 26.07.2024
+                                        final BluetoothDevice bluetoothDeviceScan = bluetoothAdapterPhoneClient.getRemoteDevice(getMacGatt);
 
-                                    // TODO: 13.08.2024
-                                    SharedPreferences.Editor editor = preferences.edit();
-                                    editor.putStringSet(bluetoothDeviceScan.getAddress(), Collections.singleton(bluetoothDeviceScan.getAddress()));
-                                    editor.apply();
+                                        // TODO: 13.08.2024
+                                        SharedPreferences.Editor editor = preferences.edit();
+                                        editor.putStringSet(bluetoothDeviceScan.getAddress(), Collections.singleton(bluetoothDeviceScan.getAddress()));
+                                        editor.apply();
 
 
-                                    // TODO: 12.02.2023  init CallBack Gatt Client for Scan
-                                    BluetoothGattCallback bluetoothGattCallback= МетодРаботыСТекущийСерверомGATTДляScan( );
+                                        // TODO: 12.02.2023  init CallBack Gatt Client for Scan
+                                        BluetoothGattCallback bluetoothGattCallback= МетодРаботыСТекущийСерверомGATTДляScan( );
 
-                                    // TODO: 26.01.2023 staring  GATT
-                                    getConnectionBluetoothGatt.add( МетодЗапускаGATTКлиентаScan(bluetoothDeviceScan, bluetoothGattCallback, getMessage())) ;
-
-                                    // TODO: 08.08.2024  увеличиваем общще количесто операций
-                                    atomicIntegerDisponse.incrementAndGet();
-
+                                        // TODO: 26.01.2023 staring  GATT
+                                        getConnectionBluetoothGatt.add( МетодЗапускаGATTКлиентаScan(bluetoothDeviceScan, bluetoothGattCallback, getMessage())) ;
+                                    }
 
 
                                     // TODO: 02.08.2024
@@ -306,12 +304,9 @@ public class Businesslogic_ScaningClientWorker {
                                             Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                                             " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
                                             " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" + "\n"
-                                            +  " getListMAC.get(0).trim() "+ getListMAC.get(0).trim()+" atomicIntegerDisponse.get() " +atomicIntegerDisponse.get() );
+                                            +  " getMacGatt "+ getMacGatt+" getConnectionBluetoothGatt.size()" +getConnectionBluetoothGatt.size());
 
-                                    Log.d(this.getClass().getName(), "\n" + " class " +
-                                            Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
-                                            " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                                            " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" + "\n");
+
                                 }
                             }).doOnComplete(new Action() {
                                 @Override
@@ -452,7 +447,7 @@ public class Businesslogic_ScaningClientWorker {
 
     }
 
-    void startingDisponseCallBackAndConnectionForGatt(@NonNull     CopyOnWriteArrayList<BluetoothGatt>  getConnectionBluetoothGatt) {
+    void startingDisponseCallBackAndConnectionForGatt(@NonNull     ConcurrentSkipListSet<BluetoothGatt>  getConnectionBluetoothGatt) {
 try{
        getConnectionBluetoothGatt.forEach(new java.util.function.Consumer<BluetoothGatt>() {
             @SuppressLint("MissingPermission")
@@ -487,20 +482,46 @@ try{
     }
 
 
-    private  void addingQueueListmac(CopyOnWriteArrayList<String> getListMAC) {
-        if (getListMAC.size()==0) {
+    private  String addbundleFormSearchMacGatt(Bundle bundleFormSearchMacGatt) {
+        // TODO: 20.08.2024
+        String  getMacGatt=null;
+        try{
+        if (bundleFormSearchMacGatt.size()>0) {
    /*     *//*    getListMAC.add( "64:03:7F:A2:E2:C2");*//*
            //.add( "CC:73:15:17:96:3F");
             //getListMAC.add( "98:2F:F8:19:BC:F7");
            *//* getListMAC.add( "74:15:75:D8:F5:FA");
             getListMAC.add( "FC:19:99:79:D6:D4");*/
-           getListMAC.add( "98:2F:F8:19:BC:F7");
           ///  getListMAC.add( "70:5F:A3:C4:D2:6C");//TODO Служба безрпасности
+
+            getMacGatt=  bundleFormSearchMacGatt.getString("geMAc","");
+          String  getName=  bundleFormSearchMacGatt.getString("getName","");
 
             Log.d(context.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                     " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                    " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" + " getListMAC " +getListMAC.size());
+                    " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" + " bundleFormSearchMacGatt " +bundleFormSearchMacGatt+
+                    " getMacGatt " +getMacGatt + " getName "+getName);
         }
+            Log.d(context.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                    " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                    " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" + " bundleFormSearchMacGatt " +bundleFormSearchMacGatt+
+                    " getMacGatt " +getMacGatt );
+    } catch (Exception e) {
+        e.printStackTrace();
+        Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() + " Линия  :"
+                + Thread.currentThread().getStackTrace()[2].getLineNumber());
+        ContentValues valuesЗаписываемОшибки = new ContentValues();
+        valuesЗаписываемОшибки.put("Error", e.toString().toLowerCase());
+        valuesЗаписываемОшибки.put("Klass", this.getClass().getName());
+        valuesЗаписываемОшибки.put("Metod", Thread.currentThread().getStackTrace()[2].getMethodName());
+        valuesЗаписываемОшибки.put("LineError", Thread.currentThread().getStackTrace()[2].getLineNumber());
+        final Object ТекущаяВерсияПрограммы = version;
+        Integer ЛокальнаяВерсияПОСравнение = Integer.parseInt(ТекущаяВерсияПрограммы.toString());
+        valuesЗаписываемОшибки.put("whose_error", ЛокальнаяВерсияПОСравнение);
+        new SubClassErrors(context).МетодЗаписиОшибок(valuesЗаписываемОшибки);
+    }
+return  getMacGatt;
+
     }
 
 

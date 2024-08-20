@@ -145,7 +145,7 @@ public class ContentProviderScanner extends android.content.ContentProvider {
             // TODO: 14.10.2022 метод определения текущней таблицы
             String table = МетодОпределяемТаблицу(uri);
 
-            Long   РезультатВставкиДанныхСканирование  = Create_Database_СамаБАзаSQLite.insertOrThrow(table, null, values);
+            Long   РезультатВставкиДанныхСканирование  = Create_Database_СамаБАзаSQLite.insert(table, null, values);
             // TODO: 30.10.2021
             Log.w(getContext().getClass().getName(), " РезультатВставкиДанных  " + РезультатВставкиДанныхСканирование);/////
 

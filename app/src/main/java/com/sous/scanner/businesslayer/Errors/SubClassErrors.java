@@ -32,6 +32,10 @@ public class SubClassErrors {
                     Integer getVersionforErrorNew=        getVersionforErrorNew("SELECT MAX ( current_table  ) AS MAX_R  FROM errordsu1");
                     contentValuesДляЗаписиОшибки.put("current_table",getVersionforErrorNew);
 
+                    Integer getVersionUUID=        getVersionforErrorNew("SELECT MAX ( uuid  ) AS MAX_R  FROM errordsu1");
+                    contentValuesДляЗаписиОшибки.put("uuid",getVersionUUID);
+
+
 
                     //     Uri uri = Uri.parse("content://dsu1.scanner.myapplication.contentproviderfordatabasescanner/" +"errordsu1" + "");
                     ContentResolver resolver = context.getContentResolver();

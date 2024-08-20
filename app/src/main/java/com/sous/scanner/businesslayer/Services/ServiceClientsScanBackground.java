@@ -133,8 +133,8 @@ private      SharedPreferences preferences;
 
                     case "userUIlaunchingfrombackground":
                         // TODO: 25.07.2024 Бесконечная работа
-                        int DurectionTimeGatt=   blForServiceScan.   getRandomNumberUsingSECOND(5,12);
-                        blForServiceScan.launchingСomplexbackground(DurectionTimeGatt);
+
+                        blForServiceScan.launchingСomplexbackground(intent.getExtras() );
 
                         Log.d(getApplicationContext().getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                                 " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
@@ -151,8 +151,6 @@ private      SharedPreferences preferences;
                                 " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
                                 " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" + " intent " +intent.getAction());
                         break;
-
-
 
 
 
