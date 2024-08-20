@@ -120,7 +120,7 @@ public class BusinesslogicSelectMacAdressGattServer {
                     SimpleCursorAdapter simpleCursorForSearchView = getSimpleCursorAdapterMacAdressMasters();
 
                     // TODO: 13.12.2022  Поиск и его слушель
-                    МетодПоискаФильтр(  MacTable,             simpleCursorForSearchView );
+                    МетодПоискаФильтр(             simpleCursorForSearchView );
 
                     // TODO: 15.05.2023 Слушатель Действия Кнопки Сохранить
                     // TODO: 16.05.2023  КЛИК СЛУШАТЕЛЬ ПО ЕЛЕМЕНТУ
@@ -392,7 +392,7 @@ public class BusinesslogicSelectMacAdressGattServer {
 
 
 
-    private void МетодПоискаФильтр(@NonNull String ТаблицаДляФильтра,@NonNull     SimpleCursorAdapter          simpleCursorForSearchViewGattMacList ) {
+    private void МетодПоискаФильтр( @NonNull     SimpleCursorAdapter          simpleCursorForSearchViewGattMacList ) {
         try{
             searchViewMacAdress.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
                 @Override
@@ -460,27 +460,21 @@ public class BusinesslogicSelectMacAdressGattServer {
             simpleCursorForSearchViewGattMacList.setFilterQueryProvider(new FilterQueryProvider() {
                 @Override
                 public Cursor runQuery(CharSequence constraint) {
-                    final Cursor[] cursorFilter = {null};
+                    // TODO: 20.08.2024
+                    Cursor   cursorFilter=null;
                     try{
-                        messageClient.getTarget().post(()->{
-                            // TODO: 19.08.2024
                             // TODO: 19.08.2024  поулчение жданны
                             businesslogicDatabase=new BusinesslogicDatabase(context,version);
-                            cursorFilter[0]=   businesslogicDatabase.getingCursor("SELECT * FROM listMacMastersSous ");
-
+                        cursorFilter=   businesslogicDatabase.getingCursor("  SELECT * FROM listMacMastersSous  WHERE name  LIKE  '%"+constraint+"%'");
                             // TODO: 15.05.2023 ПЕРЕПОЛУЧАЕМ НОВЫЕ ДАННЫЕ КУРСОР   // TODO: 15.05.2023 ПЕРЕПОЛУЧАЕМ НОВЫЕ ДАННЫЕ КУРСОР   // TODO: 15.05.2023 ПЕРЕПОЛУЧАЕМ НОВЫЕ ДАННЫЕ КУРСОР
-                            методПерезаполенияПоискаИзФилтра(cursorFilter[0],          simpleCursorForSearchViewGattMacList );
+                            методПерезаполенияПоискаИзФилтра(cursorFilter,          simpleCursorForSearchViewGattMacList );
                             // TODO: 16.05.2023
                             Log.d(context .getClass().getName(), "\n"
                                     + " время: " + new Date()+"\n+" +
                                     " Класс в процессе... " +   context.getClass().getName()+"\n"+
-                                    " метод в процессе... " + Thread.currentThread().getStackTrace()[2].getMethodName() + " cursorFilter "+ cursorFilter[0]);
+                                    " метод в процессе... " + Thread.currentThread().getStackTrace()[2].getMethodName()
+                                    + " cursorFilter "+ cursorFilter+" constraint " +constraint);
 
-                        });
-                        Log.d(context .getClass().getName(), "\n"
-                                + " время: " + new Date()+"\n+" +
-                                " Класс в процессе... " +   context.getClass().getName()+"\n"+
-                                " метод в процессе... " + Thread.currentThread().getStackTrace()[2].getMethodName() + " cursorFilter "+ cursorFilter[0]);
                         // TODO: 13.12.2022 ВТОРОЙ СЛУШАТЕЛЬ НА КНОПКУ
                     } catch (Exception e) {
                         e.printStackTrace();
@@ -497,7 +491,7 @@ public class BusinesslogicSelectMacAdressGattServer {
                         new SubClassErrors(context).МетодЗаписиОшибок(valuesЗаписываемОшибки);
 
                     }
-                    return cursorFilter[0];
+                    return cursorFilter;
                 }
             });
             Log.d(this.getClass().getName(), "\n" + " class " +
@@ -534,10 +528,6 @@ public class BusinesslogicSelectMacAdressGattServer {
             // TODO: 16.05.2023 Если данные Естьв Фильтре
             if(cursorFilter !=null && cursorFilter.getCount()>0) {
                 ListViewForSearchViewGattMacList.setSelection(0);
-                View filter=       ListViewForSearchViewGattMacList.getChildAt(0);
-                if(filter!=null){
-                    ((MaterialTextView)filter).startAnimation(animationvibr1);
-                }
             }else{
                 searchViewMacAdress.setBackgroundColor(Color.RED);
                 messageClient.getTarget().postDelayed(() -> {
@@ -548,6 +538,7 @@ public class BusinesslogicSelectMacAdressGattServer {
             // TODO: 16.05.2023
             ListViewForSearchViewGattMacList.refreshDrawableState();
             ListViewForSearchViewGattMacList.forceLayout();
+            ListViewForSearchViewGattMacList.requestLayout();
             // TODO: 19.08.2024
             Log.d(context .getClass().getName(), "\n"
                     + " время: " + new Date()+"\n+" +
