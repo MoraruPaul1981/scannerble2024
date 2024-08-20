@@ -76,6 +76,10 @@
             android:gravity="center"
             android:minHeight="20dp"
             android:maxHeight="30dp"
+            android:translationZ="15dp"
+            app:cardCornerRadius="1dp"
+            app:cardElevation="2dp"
+            app:cardMaxElevation="10dp"
             android:text="Закрыть"
             android:textColor="#0E0E0E"
             android:textSize="10sp"
@@ -83,7 +87,7 @@
             android:theme="@style/Theme.MaterialComponents.Light.NoActionBar"
             android:typeface="normal"
             android:visibility="visible"
-            app:backgroundTint="#00E5FF"
+            app:backgroundTint="#B0C4DE"
             app:cornerRadius="20dp"
             tools:visibility="visible" />
 

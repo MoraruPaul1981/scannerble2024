@@ -91,7 +91,7 @@
             <com.google.android.material.textview.MaterialTextView
                 android:id="@+id/id_searchview_maclistdeviceserver"
                 android:layout_width="match_parent"
-                android:layout_height="35dp"
+                android:layout_height="45dp"
                 android:layout_alignParentLeft="true"
                 android:layout_alignParentTop="true"
                 android:layout_alignParentRight="true"
@@ -106,7 +106,7 @@
                 android:drawableLeft="@drawable/icon_ble_mac_list"
                 android:background="@drawable/style_for_newstypespinners_ietm6"
                 android:textAppearance="?android:attr/textAppearanceListItemSmall"
-                android:textSize="14dp"
+                android:textSize="16dp"
                 android:textStyle="bold"
                 android:text="мас-адреса"
                 android:visibility="visible" />
