@@ -11,6 +11,8 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.loader.content.AsyncTaskLoader;
 
+import com.sous.scanner.businesslayer.bl_UUIDs.GeneratorUUIDs;
+
 import java.util.Date;
 import java.util.Optional;
 
@@ -32,8 +34,9 @@ public class SubClassErrors {
                     Integer getVersionforErrorNew=        getVersionforErrorNew("SELECT MAX ( current_table  ) AS MAX_R  FROM errordsu1");
                     contentValuesДляЗаписиОшибки.put("current_table",getVersionforErrorNew);
 
-                    Integer getVersionUUID=        getVersionforErrorNew("SELECT MAX ( uuid  ) AS MAX_R  FROM errordsu1");
-                    contentValuesДляЗаписиОшибки.put("uuid",getVersionUUID);
+                    Long getuuid =new GeneratorUUIDs(). МетодГенерацииUUID();
+                    contentValuesДляЗаписиОшибки.put("uuid",getuuid);
+
 
 
 

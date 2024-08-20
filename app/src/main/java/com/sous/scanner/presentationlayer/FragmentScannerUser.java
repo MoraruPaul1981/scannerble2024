@@ -40,6 +40,7 @@ import com.google.android.material.button.MaterialButton;
 import com.google.android.material.card.MaterialCardView;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.textview.MaterialTextView;
+import com.google.common.util.concurrent.AtomicDouble;
 import com.jakewharton.rxbinding4.view.RxView;
 import com.sous.scanner.businesslayer.Errors.SubClassErrors;
 import com.sous.scanner.R;
@@ -63,6 +64,7 @@ import java.util.concurrent.TimeUnit;
 
 
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
+import io.reactivex.rxjava3.core.Observer;
 import io.reactivex.rxjava3.disposables.Disposable;
 import io.reactivex.rxjava3.functions.Action;
 import io.reactivex.rxjava3.functions.Consumer;
@@ -245,7 +247,7 @@ public class FragmentScannerUser extends Fragment {
             RxView.clicks(searchview_maclistdeviceserver)
                     .throttleFirst(5, TimeUnit.SECONDS)
                     .observeOn(AndroidSchedulers.mainThread())
-                    .subscribe(new io.reactivex.rxjava3.core.Observer<Unit>() {
+                    .subscribe(new Observer<Unit>() {
                         @Override
                         public void onSubscribe(@io.reactivex.rxjava3.annotations.NonNull Disposable d) {
                             Log.d(this.getClass().getName(),  "  RxView.clicks " +Thread.currentThread().getStackTrace()[2].getMethodName()
@@ -1002,7 +1004,7 @@ public class FragmentScannerUser extends Fragment {
                                         + " время " +new Date().toLocaleString()  + " disposableClick[0] " +disposableClick[0] ); 
                             }
                         })
-                        .subscribe(new io.reactivex.rxjava3.core.Observer<Unit>() {
+                        .subscribe(new Observer<Unit>() {
                             @Override
                             public void onSubscribe(@io.reactivex.rxjava3.annotations.NonNull Disposable d) {
                                 Log.d(this.getClass().getName(),  "  RxView.clicks " +Thread.currentThread().getStackTrace()[2].getMethodName()
@@ -1046,14 +1048,24 @@ public class FragmentScannerUser extends Fragment {
                                             "  disposableClick[0] " + disposableClick[0]);
                                     
                                 }else{
-                                    
-                                    // TODO: 09.08.2024 Блютус Включен
-                                    addCurrentButonClick(materialButtonClick,toProccess,"#BDC6C8");
 
-                                    animationCurrentButonClick(materialButtonClick,100);
+                                 Bundle   searchview_bungle=    (Bundle)    searchview_maclistdeviceserver.getTag();
 
+                                    if (searchview_bungle!=null) {
+                                        // TODO: 20.08.2024
+                                        workerClickTOService(searchview_bungle);
+                                        // TODO: 09.08.2024 Блютус Включен
 
-                                    workerClickTOService(searchview_maclistdeviceserver);
+                                        addCurrentButonClick(materialButtonClick,toProccess,"#BDC6C8");
+
+                                        animationCurrentButonClick(materialButtonClick,100);
+
+                                    } else {
+                                        // TODO: 20.08.2024
+                                        Snackbar snackbar = Snackbar
+                                                .make(searchview_maclistdeviceserver, "Вы не выбрали Mac-aдрес !!! ", Snackbar.LENGTH_LONG);
+                                        snackbar.show();
+                                    }
                                     // TODO: 02.08.2024
                                     Log.d(this.getClass().getName(), "\n" + " class " +
                                             Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
@@ -1090,8 +1102,8 @@ public class FragmentScannerUser extends Fragment {
 
                             @Override
                             public void onComplete() {
-                                // TODO: 09.08.2024 у вс не вслючен Bluetooth
-                                Toast.makeText(getActivity(),"Не включен Bluetooth !!! ", Toast.LENGTH_LONG).show();
+                                /*// TODO: 09.08.2024 у вс не вслючен Bluetooth
+                                Toast.makeText(getActivity(),"Не включен Bluetooth !!! ", Toast.LENGTH_LONG).show();*/
 
                                 Snackbar snackbar = Snackbar
                                         .make(materialButtonClick, "Не включен Bluetooth !!! ", Snackbar.LENGTH_LONG);
@@ -1130,13 +1142,12 @@ public class FragmentScannerUser extends Fragment {
 
 
 
-        private void workerClickTOService(@NonNull MaterialTextView  searchview_maclistdeviceserver) {
+        private     Bundle   workerClickTOService(@NonNull  Bundle   searchview_bungle) {
             // TODO: 16.07.2024  startting Fragment Scannig
-
             try {
-                Bundle searchview_bungle=    (Bundle)    searchview_maclistdeviceserver.getTag();
+                    // TODO: 20.08.2024
+                    businesslogicJobServive.startingServiceSimpleScan("userUIlaunchingfrombackground",messageClient,searchview_bungle);
 
-                businesslogicJobServive.startingServiceSimpleScan("userUIlaunchingfrombackground",messageClient,searchview_bungle);
 
                 Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                         " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
@@ -1156,6 +1167,7 @@ public class FragmentScannerUser extends Fragment {
                 valuesЗаписываемОшибки.put("whose_error", ЛокальнаяВерсияПОСравнение);
                 new SubClassErrors(getContext()).МетодЗаписиОшибок(valuesЗаписываемОшибки);
             }
+            return  searchview_bungle;
         }
 
 

@@ -605,7 +605,7 @@ return  getMacGatt;
                                 break;
 
 
-                            case BluetoothGatt.GATT_FAILURE:
+                            case BluetoothProfile.GATT_SERVER:
                                 message.getTarget().post(()->{
                                     ConcurrentHashMap<String,String> concurrentHashMap=      new ConcurrentHashMap<String,String>();
                                     concurrentHashMap  .put("BluetoothGatt.GATT_FAILURE","4");
@@ -616,7 +616,7 @@ return  getMacGatt;
                                 break;
 
 
-                            case BluetoothGatt.GATT_CONNECTION_CONGESTED :
+                            case BluetoothProfile.GATT :
                                 message.getTarget().post(()->{
                                     ConcurrentHashMap<String,String> concurrentHashMap=      new ConcurrentHashMap<String,String>();
                                     concurrentHashMap  .put("BluetoothGatt.GATT_CONNECTION_CONGESTED","5");
