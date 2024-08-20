@@ -12,6 +12,7 @@ import androidx.annotation.Nullable;
 import androidx.loader.content.AsyncTaskLoader;
 
 import com.sous.server.businesslayer.ContentProvoders.ContentProviderServer;
+import com.sous.server.businesslayer.bl_UUID.GeneratorUUIDs;
 
 import java.util.Date;
 import java.util.Optional;
@@ -34,8 +35,9 @@ public class SubClassErrors {
                     contentValuesДляЗаписиОшибки.put("current_table",getVersionforErrorNew);
 
 
-                    Integer getVersionUUID=        getVersionforErrorNew("SELECT MAX ( uuid  ) AS MAX_R  FROM errordsu1");
-                    contentValuesДляЗаписиОшибки.put("uuid",getVersionUUID);
+                    Long getuuid =new GeneratorUUIDs(). МетодГенерацииUUID();
+                    contentValuesДляЗаписиОшибки.put("uuid",getuuid);
+
 
 
 
@@ -78,6 +80,10 @@ public class SubClassErrors {
 
             Integer getVersionforErrorNew=        getVersionforErrorNew("SELECT MAX ( current_table  ) AS MAX_R  FROM errordsu1");
             contentValuesДляЗаписиОшибки.put("current_table",getVersionforErrorNew);
+
+            Long getuuid =new GeneratorUUIDs(). МетодГенерацииUUID();
+            contentValuesДляЗаписиОшибки.put("uuid",getuuid);
+
 
             Log.i( context.getClass().getName(), "contentValuesДляЗаписиОшибки  " + contentValuesДляЗаписиОшибки);
             Uri uri = Uri.parse("content://com.sous.server.providerserver/errordsu1" );

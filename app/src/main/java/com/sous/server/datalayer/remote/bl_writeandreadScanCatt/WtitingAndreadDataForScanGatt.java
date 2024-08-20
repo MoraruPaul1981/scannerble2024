@@ -17,6 +17,7 @@ import com.sous.server.businesslayer.ContentProvoders.ContentProviderServer;
 import com.sous.server.businesslayer.Errors.SubClassErrors;
 import com.sous.server.businesslayer.Eventbus.MessageScannerServer;
 import com.sous.server.businesslayer.Eventbus.ParamentsScannerServer;
+import com.sous.server.businesslayer.bl_UUID.GeneratorUUIDs;
 
 import org.greenrobot.eventbus.EventBus;
 
@@ -345,7 +346,7 @@ try{
             contentValuesВставкаДанных.put("version", version);
 
 
-            Long getuuid = МетодГенерацииUUID();
+            Long getuuid =new GeneratorUUIDs(). МетодГенерацииUUID();
             contentValuesВставкаДанных.put("uuid", getuuid.toString());
 
 
@@ -499,42 +500,6 @@ try{
 
 // TODO: 25.07.2024
     /////TODO: код Вытаскиваем из общего метоада
-
-    @androidx.annotation.NonNull
-    private Long МетодГенерацииUUID() {
-        Long getUUID = 0l;
-        try{
-
-            UUID uuid = UUID.randomUUID();
-
-            //uuid   .toString().replaceAll("-", "").replaceAll("[a-zA-Z]", "").substring(0, 20);
-            ///uuid = uuid.replaceAll("[a-zA-Z]", "");
-            //uuid= CharMatcher.any().replaceFrom("[A-Za-z0-9]", "");
-            Long fff2=  uuid.getLeastSignificantBits();
-            Long fff3=  uuid.getMostSignificantBits();
-            BigInteger bigInteger=BigInteger.valueOf(fff3).abs();
-            getUUID= bigInteger.longValue();
-            Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
-                    " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                    " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" +
-                    " uuid " +uuid );
-
-        } catch (Exception e) {
-            e.printStackTrace();
-            Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() + " Линия  :"
-                    + Thread.currentThread().getStackTrace()[2].getLineNumber());
-            ContentValues valuesЗаписываемОшибки = new ContentValues();
-            valuesЗаписываемОшибки.put("Error", e.toString().toLowerCase());
-            valuesЗаписываемОшибки.put("Klass", this.getClass().getName());
-            valuesЗаписываемОшибки.put("Metod", Thread.currentThread().getStackTrace()[2].getMethodName());
-            valuesЗаписываемОшибки.put("LineError", Thread.currentThread().getStackTrace()[2].getLineNumber());
-            final Object ТекущаяВерсияПрограммы = version;
-            Integer ЛокальнаяВерсияПОСравнение = Integer.parseInt(ТекущаяВерсияПрограммы.toString());
-            valuesЗаписываемОшибки.put("whose_error", ЛокальнаяВерсияПОСравнение);
-            new SubClassErrors(context).МетодЗаписиОшибокИзServerGatt(valuesЗаписываемОшибки,contentProviderServer);
-        }
-        return getUUID;
-    }
 
 // TODO: 25.07.2024
 
