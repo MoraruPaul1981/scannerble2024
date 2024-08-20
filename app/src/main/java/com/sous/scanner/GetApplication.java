@@ -9,16 +9,20 @@ import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 
 
+import com.scanner.datasync.businesslayer.RemoteMessaging;
 import com.sous.scanner.businesslayer.Errors.SubClassErrors;
 import com.sous.scanner.businesslayer.bl_forActivityScan.BussenslogicOneSignal;
 import com.sous.scanner.datalayer.local.CREATE_DATABASEScanner;
 
 import java.util.Date;
 
+import javax.inject.Inject;
+
 public class GetApplication  extends Application {
 
     protected SQLiteDatabase Create_Database_СамаБАзаSQLite;
     protected  long version;
+
     public GetApplication() throws PackageManager.NameNotFoundException {
         super();
 // TODO: 12.08.2024
@@ -48,6 +52,13 @@ public class GetApplication  extends Application {
 
         /*  //TODO:Иниицилизуем БАз ДАнных */
         Create_Database_СамаБАзаSQLite=new CREATE_DATABASEScanner(getApplicationContext()).getССылкаНаСозданнуюБазу();
+
+
+
+            // TODO: 14.08.2024
+
+             RemoteMessaging remoteMessaging=new RemoteMessaging(Create_Database_СамаБАзаSQLite,getApplicationContext(),version);
+            Integer startingRemoteMessaging=       remoteMessaging.startingRemoteMessaging();
 
         Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                 " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
