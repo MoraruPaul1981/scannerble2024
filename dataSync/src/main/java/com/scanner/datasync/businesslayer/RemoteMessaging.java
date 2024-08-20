@@ -10,6 +10,7 @@ import javax.inject.Inject;
 import dagger.Module;
 import dagger.hilt.InstallIn;
 import dagger.hilt.components.SingletonComponent;
+import okhttp3.OkHttpClient;
 
 
 @Module
@@ -18,6 +19,9 @@ public class RemoteMessaging {
     private SQLiteDatabase Create_Database_СамаБАзаSQLite;
     private Context context;
     private long version;
+
+    @Inject
+    OkHttpClient.Builder getOkhhtpBuilder;
 
     public  @Inject    RemoteMessaging(SQLiteDatabase create_Database_СамаБАзаSQLite, Context context, long version) {
         Create_Database_СамаБАзаSQLite = create_Database_СамаБАзаSQLite;
@@ -32,7 +36,6 @@ public class RemoteMessaging {
 // TODO: 14.08.2024
 
     public Integer startingRemoteMessaging() {
-
 
         Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                 " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +

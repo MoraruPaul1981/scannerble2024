@@ -64,7 +64,8 @@ public class GetApplication  extends Application {
                 " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
                 " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"   +"    Flowable.fromAction(new Action() { "
                 +   new Date().toLocaleString());
-
+String s = null;
+s.length();
 
     } catch (Exception e) {
         e.printStackTrace();

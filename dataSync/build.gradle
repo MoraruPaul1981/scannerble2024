@@ -48,4 +48,9 @@ dependencies {
 
     implementation 'com.google.dagger:hilt-android:2.44'
     annotationProcessor 'com.google.dagger:hilt-compiler:2.44'
+
+    //TODO работа с сетью
+    implementation 'com.squareup.okhttp3:okhttp:4.10.0'
+
+
 }

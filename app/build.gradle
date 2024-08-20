@@ -87,9 +87,6 @@ dependencies {
     //TODO binding
     implementation 'com.jakewharton.rxbinding4:rxbinding:4.0.0'
 
-//TODO работа с сетью
-    implementation 'com.squareup.okhttp3:okhttp:4.10.0'
-
 
 
 //TODO EventBus
