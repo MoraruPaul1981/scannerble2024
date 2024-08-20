@@ -201,6 +201,7 @@ public class ActivityServerScanner extends AppCompatActivity {
 // TODO: 02.08.2024
             IntentFilter filterScanServerAlcConn = new IntentFilter();
             filterScanServerAlcConn.addAction(BluetoothDevice.ACTION_ACL_CONNECTED);
+            filterScanServerAlcConn.addAction(BluetoothDevice.ACTION_FOUND);
             filterScanServerAlcConn.setPriority(SYSTEM_HIGH_PRIORITY);
           //  registerReceiver(new BroadcastReceiverGattServerAlcConn(), filterScanServerAlcConn);
             registerReceiver(new BroadcastReceiverGattServerAlcConn(), filterScanServerAlcConn,null,messageGattServer.getTarget());

@@ -1,7 +1,11 @@
 package com.sous.server.businesslayer.BroadcastreceiverServer;
 
 import android.annotation.SuppressLint;
+import android.bluetooth.BluetoothA2dp;
 import android.bluetooth.BluetoothDevice;
+import android.bluetooth.BluetoothGatt;
+import android.bluetooth.BluetoothHidDevice;
+import android.bluetooth.le.BluetoothLeScanner;
 import android.content.BroadcastReceiver;
 import android.content.ContentValues;
 import android.content.Context;
@@ -40,8 +44,8 @@ public class BroadcastReceiverGattServerAlcConn extends BroadcastReceiver {
             switch (intent.getAction()){
                 // TODO: 31.07.2024
                 case   BluetoothDevice.ACTION_ACL_CONNECTED :
+                case   BluetoothDevice.ACTION_FOUND:
                     // TODO: 11.08.2024
-
                     // TODO: 07.08.2024
                     final Bl_BloadcastGatt_getDeviceClentGatt blBloadcastGattGetDeviceClentGatt=  new Bl_BloadcastGatt_getDeviceClentGatt(context,version);
 
