@@ -291,9 +291,11 @@ public class BusinesslogicSelectMacAdressGattServer {
                                     if (getId>0) {
                                         Long UUIDGetFilter = cursor.getLong(cursor.getColumnIndex("uuid"));
                                         String  getName = cursor.getString(cursor.getColumnIndex("name")).trim();
+                                        String  geMAc = cursor.getString(cursor.getColumnIndex("macadress")).trim();
                                         Bundle bundle=new Bundle();
                                         bundle.putInt("getId",getId);
                                         bundle.putString("getName",getName);
+                                        bundle.putString("geMAc",geMAc);
                                         bundle.putLong("getUUID",UUIDGetFilter);
                                         // TODO: 16.05.2023 Элемент Заполяем данными  TAG
                                         materialTextVieMac.setTag(bundle);
@@ -308,8 +310,16 @@ public class BusinesslogicSelectMacAdressGattServer {
                                         }
                                         // TODO: 16.05.2023 Элемент Заполяем данными
                                         materialTextVieMac.setText(getName);
-                                        materialTextVieMac.startAnimation(animation);
+                                        materialTextVieMacsub.setText(geMAc);
+                                        materialTextVieMac.startAnimation(animationvibr1);
                                         materialTextVieMac.requestLayout();
+
+
+                                        Log.d(context.getClass().getName(), "\n"
+                                                + " время: " + new Date() + "\n+" +
+                                                " Класс в процессе... " + this.getClass().getName() + "\n" +
+                                                " метод в процессе... " + Thread.currentThread().getStackTrace()[2].getMethodName() +
+                                                "getName " +getName +  " geMAc " +geMAc );
                                     }
                                     Log.d(context.getClass().getName(), "\n"
                                             + " время: " + new Date() + "\n+" +
