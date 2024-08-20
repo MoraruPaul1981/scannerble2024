@@ -57,11 +57,13 @@ public class BusinesslogicSelectMacAdressGattServer {
     public BusinesslogicSelectMacAdressGattServer( @NonNull  Context context,
                                                    @NonNull  long version,
                                                    @NonNull   Message messageClient,
-                                                   @NonNull   LayoutInflater layoutInflater) {
+                                                   @NonNull   LayoutInflater layoutInflater,
+                                                   @NonNull MaterialTextView searchview_maclistdeviceserver) {
         this.context = context;
         this.version = version;
         this.messageClient = messageClient;
         this.layoutInflater = layoutInflater;
+        this.searchview_maclistdeviceserver = searchview_maclistdeviceserver;
         // TODO: 19.08.2024
         animation = AnimationUtils.loadAnimation(context, R.anim.slide_in_row_newscanner1);
         animationvibr1 = AnimationUtils.loadAnimation(context,R.anim.slide_singletable2);//
@@ -69,7 +71,7 @@ public class BusinesslogicSelectMacAdressGattServer {
 
 
     @SuppressLint("Range")
-  public   void selectiongMacAdressGattServer(@NonNull MaterialTextView searchview_maclistdeviceserver){
+  public   void selectiongMacAdressGattServer( ){
 
         // TODO: 19.08.2024
         try {
@@ -124,7 +126,7 @@ public class BusinesslogicSelectMacAdressGattServer {
 
                     // TODO: 15.05.2023 Слушатель Действия Кнопки Сохранить
                     // TODO: 16.05.2023  КЛИК СЛУШАТЕЛЬ ПО ЕЛЕМЕНТУ
-                    методКликПоЗаказуOrder(  );
+                    clickGattMacList(  );
 
                     методКликДейсвиеКнопкиСохранить(ButtonFilterЗакрытьДиалог);
 
@@ -193,38 +195,42 @@ public class BusinesslogicSelectMacAdressGattServer {
 }
 
     // TODO: 16.05.2023  КЛИК ПО ЕЛЕМЕНТУ
-    private void методКликПоЗаказуOrder( ) {
-        try{
+    private void clickGattMacList( ) {
             ListViewForSearchViewGattMacList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                 @Override
                 public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                     try{
-                        MaterialTextView materialTextViewGetElement=(MaterialTextView)       parent.getAdapter().getView(position, view,parent );
-                        if(materialTextViewGetElement!=null){
-                            Bundle bundlePepoles= (Bundle) materialTextViewGetElement.getTag();
-                            materialTextViewGetElement.startAnimation(animationvibr1);
+                        MaterialCardView cardViewMAcs=(MaterialCardView)       parent.getAdapter().getView(position, view,parent );
+                        // TODO: 20.08.2024
+                        if(cardViewMAcs!=null){
+                            // TODO: 20.08.2024
+                            MaterialTextView materialTextVieMac=(MaterialTextView) cardViewMAcs.findViewById( R.id.id_mac);
+                            materialTextVieMac.startAnimation(animation);
+                            Bundle bundlePepoles= (Bundle) materialTextVieMac.getTag();
+                            materialTextVieMac.startAnimation(animationvibr1);
                             // TODO: 16.05.2023 Из Выбраного Элемента Получаеним ДАнные
                             Integer getId=      bundlePepoles.getInt("getId",0);
                             String getName=   bundlePepoles.getString("getName","").trim();
+                            String geMAc=   bundlePepoles.getString("geMAc","").trim();
                             Long getUUID =   bundlePepoles.getLong("getUUID",0l);
                             // TODO: 19.08.2024
                             searchview_maclistdeviceserver.setTag(bundlePepoles);
                             searchview_maclistdeviceserver.setText(getName);
                             // TODO: 15.05.2023 ЗАПОЛЕНИЕ ДАННЫМИ КЛИК
-                            searchview_maclistdeviceserver.startAnimation(animation);
+                            searchview_maclistdeviceserver.startAnimation(animationvibr1);
+                            searchview_maclistdeviceserver.refreshDrawableState();
+                            searchview_maclistdeviceserver.requestLayout();
                             // TODO: 15.05.2023  ЗАКРЫВАЕТ
                             alertDialogMacAdress.cancel();
                             alertDialogMacAdress.dismiss();
-                            Log.d(context.getClass().getName(), "\n"
-                                    + " время: " + new Date() + "\n+" +
-                                    " Класс в процессе... " + this.getClass().getName() + "\n" +
-                                    " метод в процессе... " + Thread.currentThread().getStackTrace()[2].getMethodName() +
+
 
                                     Log.d(context.getClass().getName(), "\n"
                                             + " время: " + new Date()+"\n+" +
                                             " Класс в процессе... " +
                                            context.getClass().getName()+"\n"+
-                                            " метод в процессе... " + Thread.currentThread().getStackTrace()[2].getMethodName()));
+                                            " метод в процессе... " + Thread.currentThread().getStackTrace()[2].getMethodName()+
+                                            " geMAc " +geMAc+ " getName " +getName);
                         }
                     } catch (Exception e) {
                         e.printStackTrace();
@@ -244,22 +250,6 @@ public class BusinesslogicSelectMacAdressGattServer {
 
                 }
             });
-        } catch (Exception e) {
-            e.printStackTrace();
-            Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() + " Линия  :"
-                    + Thread.currentThread().getStackTrace()[2].getLineNumber());
-            ContentValues valuesЗаписываемОшибки = new ContentValues();
-            valuesЗаписываемОшибки.put("Error", e.toString().toLowerCase());
-            valuesЗаписываемОшибки.put("Klass", this.getClass().getName());
-            valuesЗаписываемОшибки.put("Metod", Thread.currentThread().getStackTrace()[2].getMethodName());
-            valuesЗаписываемОшибки.put("LineError", Thread.currentThread().getStackTrace()[2].getLineNumber());
-            final Object ТекущаяВерсияПрограммы = version;
-            Integer ЛокальнаяВерсияПОСравнение = Integer.parseInt(ТекущаяВерсияПрограммы.toString());
-            valuesЗаписываемОшибки.put("whose_error", ЛокальнаяВерсияПОСравнение);
-            new SubClassErrors(context).МетодЗаписиОшибок(valuesЗаписываемОшибки);
-
-        }
-
     }
 
 
