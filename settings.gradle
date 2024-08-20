@@ -15,4 +15,5 @@ dependencyResolutionManagement {
 
 rootProject.name = "scanner"
 include ':app'
-include ':app:dataSync'
+
+include ':dataSync'

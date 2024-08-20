@@ -26,12 +26,12 @@ android {
         
     }
 
-    compileSdk 33
+    compileSdk 34
 
     defaultConfig {
         applicationId "com.sous.scanner"
         minSdk 29
-        targetSdk 33
+        targetSdk 34
         versionCode 18
         versionName 'Scanner BLE 2024'
 
@@ -135,8 +135,9 @@ dependencies {
     //TODO  запуск всего 
     implementation "androidx.startup:startup-runtime:1.1.1"
 
-  //TODO подлючение модулей
-    api project(':app:dataSync')
+//TODO new MOdules
+
+    api project(':dataSync')
 
 
 }
