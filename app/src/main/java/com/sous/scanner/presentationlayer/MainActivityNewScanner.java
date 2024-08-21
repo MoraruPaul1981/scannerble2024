@@ -26,6 +26,7 @@ import android.view.WindowManager;
 import com.google.android.material.bottomnavigation.BottomNavigationItemView;
 import com.google.android.material.navigation.NavigationBarView;
 import com.google.android.material.tabs.TabLayout;
+import com.scanner.datasync.businesslayer.bl_RemoteMessaging.RemoteMessaging;
 import com.sous.scanner.businesslayer.Broadcastreceiver.BroadcastReceiverACL;
 import com.sous.scanner.businesslayer.Broadcastreceiver.BroadcastReceiverNAME_CHANGED;
 import com.sous.scanner.businesslayer.Errors.SubClassErrors;
@@ -35,7 +36,11 @@ import com.sous.scanner.businesslayer.bl_forActivityScan.BussenslogicOneSignal;
 
 import java.util.Date;
 
+import javax.inject.Inject;
 
+import dagger.hilt.android.AndroidEntryPoint;
+
+@AndroidEntryPoint
 public class MainActivityNewScanner extends AppCompatActivity  {
    public Message handlerScannerGattClient;
     private NavigationBarView bottomNavigationView;

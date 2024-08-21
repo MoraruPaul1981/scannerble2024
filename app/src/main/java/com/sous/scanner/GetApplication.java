@@ -15,15 +15,17 @@ import com.sous.scanner.businesslayer.bl_forActivityScan.BussenslogicOneSignal;
 import com.sous.scanner.datalayer.local.CREATE_DATABASEScanner;
 
 import java.util.Date;
-
 import javax.inject.Inject;
+import dagger.hilt.android.HiltAndroidApp;
 
+
+@HiltAndroidApp
 public class GetApplication  extends Application {
 
     protected SQLiteDatabase Create_Database_СамаБАзаSQLite;
     protected  long version;
-     @Inject
-     protected  RemoteMessaging remoteMessaging;
+    @Inject
+    RemoteMessaging remoteMessaging;
 
     public GetApplication() throws PackageManager.NameNotFoundException {
         super();

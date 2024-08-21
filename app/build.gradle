@@ -1,6 +1,8 @@
 plugins {
     id 'com.android.application'
     id 'com.google.gms.google-services'
+    id 'com.google.dagger.hilt.android'
+
 }
 
 
@@ -107,7 +109,7 @@ dependencies {
     implementation platform('com.google.firebase:firebase-bom:33.1.2')
     implementation 'com.google.firebase:firebase-analytics'
 
-    //TODO HINT Dagger2
+//TODO HINT Dagger2
 
     implementation 'com.google.dagger:hilt-android:2.44'
     annotationProcessor 'com.google.dagger:hilt-compiler:2.44'
