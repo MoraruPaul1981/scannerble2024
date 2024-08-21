@@ -30,7 +30,6 @@ public class SubClassErrors {
                 @Override
                 public Object loadInBackground() {
 
-                    Log.i( context.getClass().getName(), "contentValuesДляЗаписиОшибки  " + contentValuesДляЗаписиОшибки);
                     Integer getVersionforErrorNew=        getVersionforErrorNew("SELECT MAX ( current_table  ) AS MAX_R  FROM errordsu1");
                     contentValuesДляЗаписиОшибки.put("current_table",getVersionforErrorNew);
 
@@ -114,6 +113,8 @@ public class SubClassErrors {
                 ВерсияДАнных=      cursorПолучаемДЛяСевреа.getInt(0);
                 Log.i(this.getClass().getName(), "ВерсияДАнных"+ ВерсияДАнных) ;
                 ВерсияДАнных++;
+            }else {
+                ВерсияДАнных=1;
             }
             Log.w(context.getClass().getName(), " РЕЗУЛЬТАТ insertData  cursorПолучаемДЛяСевреа  " +  cursorПолучаемДЛяСевреа.toString() );
             cursorПолучаемДЛяСевреа.close();
