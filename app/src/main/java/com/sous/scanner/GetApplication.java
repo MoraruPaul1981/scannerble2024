@@ -22,10 +22,11 @@ import dagger.hilt.android.HiltAndroidApp;
 @HiltAndroidApp
 public class GetApplication  extends Application {
 
-    protected SQLiteDatabase Create_Database_СамаБАзаSQLite;
-    protected  long version;
+
     @Inject
     RemoteMessaging remoteMessaging;
+    protected SQLiteDatabase Create_Database_СамаБАзаSQLite;
+    protected  long version;
 
     public GetApplication() throws PackageManager.NameNotFoundException {
         super();
@@ -57,12 +58,8 @@ public class GetApplication  extends Application {
         /*  //TODO:Иниицилизуем БАз ДАнных */
         Create_Database_СамаБАзаSQLite=new CREATE_DATABASEScanner(getApplicationContext()).getССылкаНаСозданнуюБазу();
 
-
-
             // TODO: 14.08.2024
-
-/*             RemoteMessaging remoteMessaging=new RemoteMessaging(Create_Database_СамаБАзаSQLite,getApplicationContext(),version);
-            Integer startingRemoteMessaging=       remoteMessaging.startingRemoteMessaging();*/
+            Integer startingRemoteMessaging=       remoteMessaging.startingRemoteMessaging(  Create_Database_СамаБАзаSQLite,  version);
 
         Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                 " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +

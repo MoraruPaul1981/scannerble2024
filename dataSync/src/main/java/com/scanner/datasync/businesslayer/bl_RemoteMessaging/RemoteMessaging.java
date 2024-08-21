@@ -5,6 +5,8 @@ import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 
+import androidx.annotation.NonNull;
+
 import javax.inject.Inject;
 
 import dagger.Module;
@@ -29,23 +31,9 @@ public class RemoteMessaging   implements  RemoteMessaпуInterface{
     }
 
 
-
-
-/*    public  @Inject    RemoteMessaging(SQLiteDatabase create_Database_СамаБАзаSQLite, Context context, long version) {
-        Create_Database_СамаБАзаSQLite = create_Database_СамаБАзаSQLite;
-        this.context = context;
-        this.version = version;
-        Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
-                " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n");
-    }*/
-
-
-
-
 // TODO: 14.08.2024
       @Override
-    public Integer startingRemoteMessaging() {
+    public Integer startingRemoteMessaging(@NonNull  SQLiteDatabase Create_Database_СамаБАзаSQLite,  @NonNull  Long version) {
 
         Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                 " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +

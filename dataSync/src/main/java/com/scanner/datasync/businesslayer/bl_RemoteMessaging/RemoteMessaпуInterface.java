@@ -1,7 +1,11 @@
 package com.scanner.datasync.businesslayer.bl_RemoteMessaging;
 
+import android.database.sqlite.SQLiteDatabase;
+
+import androidx.annotation.NonNull;
+
 public interface RemoteMessaпуInterface {
-    Integer startingRemoteMessaging();
+    Integer startingRemoteMessaging(@NonNull SQLiteDatabase Create_Database_СамаБАзаSQLite, @NonNull  Long version);
 
 }
 

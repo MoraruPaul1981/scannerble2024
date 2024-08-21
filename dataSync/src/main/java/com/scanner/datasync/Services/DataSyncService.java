@@ -65,7 +65,6 @@ public class DataSyncService extends IntentService {
 
     @Override
     protected void onHandleIntent(Intent intent) {
-        remoteMessaging.startingRemoteMessaging();
     }
 
 }
