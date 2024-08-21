@@ -269,6 +269,8 @@ public class FragmentScannerUser extends Fragment {
                                             version,messageClient,getLayoutInflater()
                             ,searchview_maclistdeviceserver);
 
+                            searchview_maclistdeviceserver.startAnimation(animation);
+
                             businesslogicSelectMacAdressGattServer.selectiongMacAdressGattServer( );
 
 

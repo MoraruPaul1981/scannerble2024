@@ -32,6 +32,7 @@ import com.google.android.material.button.MaterialButton;
 import com.google.android.material.card.MaterialCardView;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.android.material.textview.MaterialTextView;
+import com.google.common.util.concurrent.AtomicDouble;
 import com.sous.scanner.R;
 import com.sous.scanner.businesslayer.Errors.SubClassErrors;
 import com.sous.scanner.datalayer.bl_DataBase.BusinesslogicDatabase;
@@ -152,28 +153,28 @@ public class BusinesslogicSelectMacAdressGattServer {
 
             private void currentpopulationofListViewMacdata() {
                 try{
-                if (cursor.getCount()>0) {
-                    // TODO: 21.08.2024
-                    SimpleCursorAdapter    simpleCursorForSearchView = fillingwhenDataisavailable();
+                    Log.d(this.getContext().getClass().getName(), "\n"
+                            + " время: " + new Date()+"\n+" +
+                            " Класс в процессе... " +
+                            this.getContext().getClass().getName()+"\n"+
+                            " метод в процессе... " + Thread.currentThread().getStackTrace()[2].getMethodName()  + " cursor.getCount() " +cursor.getCount());
 
+
+                if (cursor.getCount()==0) {
+                    fillingwhenthereisNodata();
+                }else {
+                    // TODO: 21.08.2024 когда данные есть
+                    SimpleCursorAdapter     simpleCursorForSearchView = fillingwhenDataisavailable();
                     // TODO: 13.12.2022  Поиск и его слушель
                     МетодПоискаФильтр(             simpleCursorForSearchView );
 
-                    // TODO: 15.05.2023 Слушатель Действия Кнопки Сохранить
                     // TODO: 16.05.2023  КЛИК СЛУШАТЕЛЬ ПО ЕЛЕМЕНТУ
                     clickGattMacList(  );
-
-                    методКликДейсвиеКнопкиСохранить(ButtonFilterЗакрытьДиалог);
-
-
-                } else {
-
-                    fillingwhenthereisNodata();
-
                 }
-
-
-                finaloperationforListView();
+                    // TODO: 21.08.2024
+                    finaloperationforListView();
+                    // TODO: 21.08.2024 Кнопка ЗАкрыть
+                    методКликДейсвиеКнопкиСохранить(ButtonFilterЗакрытьДиалог);
 
                 Log.d(this.getContext().getClass().getName(), "\n"
                         + " время: " + new Date()+"\n+" +
