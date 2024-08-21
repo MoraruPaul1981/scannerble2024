@@ -20,7 +20,7 @@
             android:clickable="false"
             android:focusable="false"
             android:animateLayoutChanges="true"
-            tools:context=".presentationlayer.FragmentGattRecyclerView">
+            tools:context=".presentationlayer.ActivityServerScanner">
 
 
     <RelativeLayout

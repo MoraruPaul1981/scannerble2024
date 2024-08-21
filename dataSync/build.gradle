@@ -48,4 +48,20 @@ dependencies {
 
     implementation 'com.google.dagger:hilt-android:2.44'
     annotationProcessor 'com.google.dagger:hilt-compiler:2.44'
+
+    // For instrumentation tests
+    androidTestImplementation  'com.google.dagger:hilt-android-testing:2.44'
+    androidTestAnnotationProcessor 'com.google.dagger:hilt-compiler:2.44'
+
+    // For local unit tests
+    testImplementation 'com.google.dagger:hilt-android-testing:2.44'
+    testAnnotationProcessor 'com.google.dagger:hilt-compiler:2.44'
+
+
+
+    //TODO jackson
+    implementation 'com.fasterxml.jackson.core:jackson-databind:2.14.2'
+    implementation 'com.fasterxml.jackson.core:jackson-core:2.14.2'
+    implementation 'com.fasterxml.jackson.core:jackson-annotations:2.14.2'
+    implementation 'com.fasterxml.jackson.dataformat:jackson-dataformat-cbor:2.14.2'
 }
