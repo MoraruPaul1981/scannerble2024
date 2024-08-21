@@ -11,7 +11,9 @@ import android.os.PowerManager;
 import android.provider.Settings;
 import android.util.Log;
 
+import androidx.annotation.Nullable;
 import androidx.core.content.ContextCompat;
+import androidx.loader.content.AsyncTaskLoader;
 
 import com.sous.server.businesslayer.Errors.SubClassErrors;
 import com.sous.server.businesslayer.Services.ServiceServerScan;
@@ -31,21 +33,46 @@ private  Long version;
 
     public void startingServiceGattServer(@NotNull Message message) {
         try {
-                // TODO: 23.07.2024 starting
-                Intent ServiceGattServerScan = new Intent(context, ServiceServerScan.class);
-            // TODO: 15.08.2024
-                ServiceGattServerScan=  startPowerManager(ServiceGattServerScan);
-                ServiceGattServerScan.addFlags(Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
-                ServiceGattServerScan.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
-                ServiceGattServerScan.addFlags(Intent.FLAG_GRANT_PERSISTABLE_URI_PERMISSION);
-                ServiceGattServerScan.addFlags(Intent.FLAG_FROM_BACKGROUND);
-                ServiceGattServerScan.addFlags(Intent.FLAG_ACTIVITY_BROUGHT_TO_FRONT);
-                // TODO: 08.08.2024
-                ContextCompat.startForegroundService(context,ServiceGattServerScan);
+            AsyncTaskLoader asyncTaskLoader=new AsyncTaskLoader(context) {
+                @Nullable
+                @Override
+                public Object loadInBackground() {
 
-                Log.d(context.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
-                        " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                        " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n");
+
+                    message.getTarget().postDelayed(()->{
+
+
+                        // TODO: 23.07.2024 starting
+                        Intent ServiceGattServerScan = new Intent(context, ServiceServerScan.class);
+                        // TODO: 15.08.2024
+                        ServiceGattServerScan=  startPowerManager(ServiceGattServerScan);
+                        ServiceGattServerScan.addFlags(Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
+                        ServiceGattServerScan.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+                        ServiceGattServerScan.addFlags(Intent.FLAG_GRANT_PERSISTABLE_URI_PERMISSION);
+                        ServiceGattServerScan.addFlags(Intent.FLAG_FROM_BACKGROUND);
+                        ServiceGattServerScan.addFlags(Intent.FLAG_ACTIVITY_BROUGHT_TO_FRONT);
+                        // TODO: 08.08.2024
+                        ContextCompat.startForegroundService(context,ServiceGattServerScan);
+
+                        Log.d(context.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                                " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                                " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n");
+
+
+                    },2000);
+
+                    Log.d(context.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                            " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                            " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n");
+
+
+                    return null;
+                }
+            };
+            asyncTaskLoader.forceLoad();
+            asyncTaskLoader.loadInBackground();
+
+
 
             Log.d(context.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                     " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
@@ -66,6 +93,12 @@ private  Long version;
         }
 
     }
+
+
+
+
+
+
     public Intent  startPowerManager(@NotNull  Intent intent){
         try{
 // TODO: 02.08.2024

@@ -34,6 +34,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.badge.BadgeDrawable;
+import com.google.android.material.bottomnavigation.BottomNavigationItemView;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.card.MaterialCardView;
 import com.google.android.material.tabs.TabLayout;
@@ -1427,6 +1428,9 @@ public void settingbottomnavigationview_server_scan(){
  try{
      BadgeDrawable badge =bottomnavigationview_server_scan.getOrCreateBadge(R.id.scan);
 
+     BottomNavigationItemView bottomNavigationAsync = bottomnavigationview_server_scan.findViewById(R.id.scan);
+
+
      // TODO: 31.07.2024
      if ( myRecycleViewAdapterServer. getconcurrentHashMapCursor!=null) {
          badge.setBackgroundColor(Color.BLACK);
@@ -1440,21 +1444,18 @@ public void settingbottomnavigationview_server_scan(){
      badge.setBadgeGravity(BadgeDrawable.TOP_END);
 
 // TODO: 31.07.2024 Lister
-     bottomnavigationview_server_scan.setOnNavigationItemReselectedListener(
-            new BottomNavigationView.OnNavigationItemReselectedListener() {
-        @Override
-        public void onNavigationItemReselected(@NonNull MenuItem menuItem) {
-            switch (menuItem.getItemId()) {
-                case R.id.scan:
-                    // TODO: 31.07.2024
-                    Log.d(context.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
-                            " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                            " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"+" menuItem.getItemId() "+menuItem.getItemId()  );
-                    break;
 
-            }
-        }
-    });
+     bottomNavigationAsync.setOnClickListener(new View.OnClickListener() {
+         @Override
+         public void onClick(View view) {
+             // TODO: 31.07.2024
+             Log.d(context.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                     " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                     " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"+" view.getItemId() "+view   );
+         }
+     });
+
+
      // TODO: 31.07.2024
      bottomnavigationview_server_scan.refreshDrawableState();
      bottomnavigationview_server_scan.requestLayout();

@@ -38,7 +38,9 @@ import com.sous.server.businesslayer.bl_OneSingal.BussenslogicOneSignal;
 
 import java.util.Date;
 
+import dagger.hilt.android.AndroidEntryPoint;
 
+@AndroidEntryPoint
 public class ActivityServerScanner extends AppCompatActivity {
     protected FragmentManager fragmentManager;
 

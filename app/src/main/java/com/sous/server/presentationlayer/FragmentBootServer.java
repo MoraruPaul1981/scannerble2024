@@ -332,7 +332,6 @@ public class FragmentBootServer extends Fragment {
             forwardOtServiceGattEventBus(getFladEnableApadaterBTEOtService);
 
                 // TODO: 17.07.2024  переходим после успещглй коннекта Обмена между Клиентмо и Сервером BLE  данными
-                      message.getTarget().postDelayed(()->{
 
                           biFragmentBootScannerServer.МетодЗапускаФрагментаServer(  new FragmentScanRecyclerView())   ; /// Scan
 
@@ -340,8 +339,6 @@ public class FragmentBootServer extends Fragment {
                                   " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
                                   " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" );
 
-
-                      },1000);
                 //TODO: Запускаем Фрагмент Server Fragment
 
 

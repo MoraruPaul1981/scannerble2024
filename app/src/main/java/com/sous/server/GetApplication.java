@@ -19,6 +19,10 @@ import com.sous.server.datalayer.data.GetCurrentDatabase;
 
 import java.util.Date;
 
+import dagger.hilt.android.HiltAndroidApp;
+
+
+@HiltAndroidApp
 public class GetApplication  extends Application {
     private   long   version;
     protected SQLiteDatabase Create_Database_СамаБАзаSQLite;

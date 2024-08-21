@@ -1,16 +1,19 @@
 package com.sous.server.businesslayer.BI_presentationlayer.bl_navigationView;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.ContentValues;
 import android.content.Context;
 import android.os.Message;
 import android.util.Log;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.FragmentManager;
 
+import com.google.android.material.bottomnavigation.BottomNavigationItemView;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.sous.server.R;
 import com.sous.server.businesslayer.BI_Services.BucceslogincStartServiceGattServer;
@@ -40,37 +43,35 @@ public class GetNavigationViews {
         this.fragmentManager = fragmentManager;
     }
 
-
+    @SuppressLint("RestrictedApi")
     public void startingbottomNavigationVeiw( ) {
 
         try{
+            BottomNavigationItemView bottomNavigationexit = bottomNavigationViewAll.findViewById(R.id.exit);
 
-            bottomNavigationViewAll.setOnNavigationItemSelectedListener(
-                    new BottomNavigationView.OnNavigationItemSelectedListener() {
-                        @Override
-                        public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-                            switch (item.getItemId()) {
-                                case R.id.exit:
-                                    // open fragment 1
-                                    // TODO: 26.07.2024
-                                    exitFragmentaServer();
+            bottomNavigationexit.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    // TODO: 26.07.2024
+                    exitFragmentaServer();
 
-                                    Log.d(context.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
-                                            " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                                            " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"+" bottomNavigationViewAll " +bottomNavigationViewAll );
-                                    break;
-                                case R.id.scan:
-                                    // open fragment 2
-                                    // TODO: 26.07.2024
-                                    startingScanServer();
-                                    Log.d(context.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
-                                            " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                                            " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"+" bottomNavigationViewAll " +bottomNavigationViewAll );
+                    Log.d(context.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                            " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                            " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"+" bottomNavigationViewAll " +bottomNavigationViewAll );
+                }
+            });
+            BottomNavigationItemView bottomNavigationscan = bottomNavigationViewAll.findViewById(R.id.scan);
+            bottomNavigationscan.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    // TODO: 26.07.2024
+                    startingScanServer();
+                    Log.d(context.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                            " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                            " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"+" bottomNavigationViewAll " +bottomNavigationViewAll );
+                }
+            });
 
-                            }
-                            return false;
-                        }
-                    });
 
             Log.d(context.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                     " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
