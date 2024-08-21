@@ -1,4 +1,4 @@
-package com.scanner.datasync.businesslayer;
+package com.scanner.datasync.businesslayer.bl_RemoteMessaging;
 
 
 import dagger.hilt.EntryPoint;

@@ -9,14 +9,12 @@ import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 
 
-import com.scanner.datasync.businesslayer.RemoteMessaging;
+import com.scanner.datasync.businesslayer.bl_RemoteMessaging.RemoteMessaging;
 import com.sous.scanner.businesslayer.Errors.SubClassErrors;
 import com.sous.scanner.businesslayer.bl_forActivityScan.BussenslogicOneSignal;
 import com.sous.scanner.datalayer.local.CREATE_DATABASEScanner;
 
 import java.util.Date;
-
-import javax.inject.Inject;
 
 public class GetApplication  extends Application {
 

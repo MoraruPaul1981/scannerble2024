@@ -4,20 +4,17 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.util.Log;
 
+import androidx.annotation.NonNull;
+
 import com.scanner.datasync.Errors.SubClassErrors;
 
 import java.math.BigInteger;
 import java.util.UUID;
 
-public class GeneratorUUIDs {
+public class GeneratorUUIDs   implements  GeneratorUUIDInterface{
     private Context context;
-
     private long version;
-
-
-
-
-    @androidx.annotation.NonNull
+   @NonNull
     public Long МетодГенерацииUUID( ) {
         Long getUUID = 0l;
         try {

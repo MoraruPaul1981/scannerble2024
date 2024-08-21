@@ -1,4 +1,4 @@
-package com.scanner.datasync.businesslayer;
+package com.scanner.datasync.businesslayer.bl_RemoteMessaging;
 
 
 import android.content.Context;
@@ -15,13 +15,14 @@ import okhttp3.OkHttpClient;
 
 @Module
 @InstallIn(SingletonComponent.class)
-public class RemoteMessaging {
+public class RemoteMessaging   implements  RemoteMessaпуInterface{
     private SQLiteDatabase Create_Database_СамаБАзаSQLite;
     private Context context;
     private long version;
 
     @Inject
     OkHttpClient.Builder getOkhhtpBuilder;
+
 
     public  @Inject    RemoteMessaging(SQLiteDatabase create_Database_СамаБАзаSQLite, Context context, long version) {
         Create_Database_СамаБАзаSQLite = create_Database_СамаБАзаSQLite;
@@ -33,8 +34,10 @@ public class RemoteMessaging {
     }
 
 
-// TODO: 14.08.2024
 
+
+// TODO: 14.08.2024
+      @Override
     public Integer startingRemoteMessaging() {
 
         Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +

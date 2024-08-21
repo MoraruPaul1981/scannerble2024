@@ -1,4 +1,4 @@
-package com.scanner.datasync.businesslayer.bl_SynsProccessor;
+package com.scanner.datasync.businesslayer.bl_Okhhtp;
 
 import android.content.ContentValues;
 import android.content.Context;
@@ -24,16 +24,17 @@ import okhttp3.OkHttpClient;
 
 
 
-@Module
-@InstallIn(SingletonComponent.class)
-public class GetOkhhtpBuilder {
 
-
+public class GetOkhhtpBuilder   implements  OkhhtpInterface {
     Long version;
 
-    @Singleton
-    @Provides
-    public @Inject OkHttpClient.Builder getOkhhtpBuilder(@ApplicationContext Context hiltcontext) {
+    public  @Inject GetOkhhtpBuilder(Long version) {
+        this.version = version;
+    }
+
+
+    @Override
+    public  OkHttpClient.Builder getOkhhtpBuilder(@ApplicationContext Context hiltcontext) {
         OkHttpClient.Builder builder=null;
         try{
             PackageInfo pInfo = hiltcontext.getPackageManager().getPackageInfo(hiltcontext.getPackageName(), 0);

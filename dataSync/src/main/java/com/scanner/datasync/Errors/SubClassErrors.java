@@ -16,11 +16,14 @@ import com.scanner.datasync.businesslayer.bl_UUIds.GeneratorUUIDs;
 import java.util.Date;
 import java.util.Optional;
 
-public class SubClassErrors {
+public class SubClassErrors  implements  ErrosInterface{
     Context context;///
     public SubClassErrors(@NonNull Context context) {
         this.context =context;
     }
+
+
+    @Override
     public  void МетодЗаписиОшибок(@NonNull ContentValues contentValuesДляЗаписиОшибки) {
         try {
             AsyncTaskLoader asyncTaskLoaderErrorWriter=new AsyncTaskLoader(context) {
@@ -77,8 +80,8 @@ public class SubClassErrors {
 
 
 
-
-    private   Integer getVersionforErrorNew(@androidx.annotation.NonNull String СамЗапрос) {
+    @Override
+    public Integer getVersionforErrorNew(@androidx.annotation.NonNull String СамЗапрос) {
         Integer   ВерсияДАнных = 0;
         try{
             Uri uri = Uri.parse("content://com.sous.scanner.prodider/errordsu1" );
