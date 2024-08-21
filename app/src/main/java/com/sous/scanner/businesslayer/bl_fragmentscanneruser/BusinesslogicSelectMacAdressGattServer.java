@@ -13,12 +13,15 @@ import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.AdapterView;
 import android.widget.FilterQueryProvider;
+import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -36,6 +39,7 @@ import com.sous.scanner.businesslayer.Errors.SubClassErrors;
 import com.sous.scanner.datalayer.bl_DataBase.BusinesslogicDatabase;
 
 import java.util.Date;
+import java.util.zip.Inflater;
 
 public class BusinesslogicSelectMacAdressGattServer {
 
@@ -117,9 +121,48 @@ public class BusinesslogicSelectMacAdressGattServer {
                             " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"+" textViewСтрокаПосика " +textViewСтрокаПосика +" cursor " +cursor );
 
 
-                    // TODO: 20.08.2024  создание адапрета
+                    // TODO: 20.08.2024  создание адапрета, Если Есть ДАнные
 
                     SimpleCursorAdapter simpleCursorForSearchView = getSimpleCursorAdapterMacAdressMasters();
+
+
+/*
+                    RelativeLayout empty = (RelativeLayout) layoutInflater.inflate(
+                            R.layout.fragment_server_dont_data_oncreateviewholder,
+                            (ViewGroup) ListViewForSearchViewGattMacList.getParent());*/
+
+
+                    View footerView = layoutInflater.inflate(R.layout.fragment_server_dont_data_oncreateviewholder,
+                            ListViewForSearchViewGattMacList, false);
+
+
+                    MaterialCardView mSearchMoreBtn = (MaterialCardView) footerView
+                            .findViewById(R.id.id_card_server_dont_data_oncreateviewholder);
+
+
+                   // LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+                    RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
+                    params.setMargins(10,10,10,10);
+                    mSearchMoreBtn.setChecked(true);
+                    mSearchMoreBtn.setLayoutParams(params);
+                   /* empty.removeAllViews();
+                    empty.addView(mSearchMoreBtn);*/
+                    mSearchMoreBtn.setLayoutParams(params);
+                  //  ListViewForSearchViewGattMacList.setEmptyView(empty);
+                    ListViewForSearchViewGattMacList.addFooterView(footerView);
+
+
+
+
+
+
+
+
+                      ListViewForSearchViewGattMacList.setSelection(0);
+                    ListViewForSearchViewGattMacList.startAnimation(animation);
+                    ListViewForSearchViewGattMacList.refreshDrawableState();
+                    ListViewForSearchViewGattMacList.requestLayout();
+
 
                     // TODO: 13.12.2022  Поиск и его слушель
                     МетодПоискаФильтр(             simpleCursorForSearchView );
@@ -205,27 +248,31 @@ public class BusinesslogicSelectMacAdressGattServer {
                         if(cardViewMAcs!=null){
                             // TODO: 20.08.2024
                             MaterialTextView materialTextVieMac=(MaterialTextView) cardViewMAcs.findViewById( R.id.id_mac);
-                            materialTextVieMac.startAnimation(animation);
-                            Bundle bundlePepoles= (Bundle) materialTextVieMac.getTag();
-                            materialTextVieMac.startAnimation(animationvibr1);
-                            // TODO: 16.05.2023 Из Выбраного Элемента Получаеним ДАнные
-                            Integer getId=      bundlePepoles.getInt("getId",0);
-                            String getName=   bundlePepoles.getString("getName","").trim();
-                            String geMAc=   bundlePepoles.getString("geMAc","").trim();
-                            Long getUUID =   bundlePepoles.getLong("getUUID",0l);
-                            // TODO: 19.08.2024
-                            searchview_maclistdeviceserver.setTag(bundlePepoles);
-                            searchview_maclistdeviceserver.setText(getName);
-                            // TODO: 15.05.2023 ЗАПОЛЕНИЕ ДАННЫМИ КЛИК
-                            searchview_maclistdeviceserver.startAnimation(animationvibr1);
-                            searchview_maclistdeviceserver.refreshDrawableState();
-                            searchview_maclistdeviceserver.requestLayout();
-                            // TODO: 15.05.2023  ЗАКРЫВАЕТ
-                            alertDialogMacAdress.cancel();
-                            alertDialogMacAdress.dismiss();
+                            String getName= null;
+                            String geMAc= null;
+                            if (materialTextVieMac!=null) {
+                                materialTextVieMac.startAnimation(animation);
+                                Bundle bundlePepoles= (Bundle) materialTextVieMac.getTag();
+                                materialTextVieMac.startAnimation(animationvibr1);
+                                // TODO: 16.05.2023 Из Выбраного Элемента Получаеним ДАнные
+                                Integer getId=      bundlePepoles.getInt("getId",0);
+                                getName = bundlePepoles.getString("getName","").trim();
+                                geMAc = bundlePepoles.getString("geMAc","").trim();
+                                Long getUUID =   bundlePepoles.getLong("getUUID",0l);
+                                // TODO: 19.08.2024
+                                searchview_maclistdeviceserver.setTag(bundlePepoles);
+                                searchview_maclistdeviceserver.setText(getName);
+                                // TODO: 15.05.2023 ЗАПОЛЕНИЕ ДАННЫМИ КЛИК
+                                searchview_maclistdeviceserver.startAnimation(animationvibr1);
+                                searchview_maclistdeviceserver.refreshDrawableState();
+                                searchview_maclistdeviceserver.requestLayout();
+                                // TODO: 15.05.2023  ЗАКРЫВАЕТ
+                                alertDialogMacAdress.cancel();
+                                alertDialogMacAdress.dismiss();
+                            }
 
 
-                                    Log.d(context.getClass().getName(), "\n"
+                            Log.d(context.getClass().getName(), "\n"
                                             + " время: " + new Date()+"\n+" +
                                             " Класс в процессе... " +
                                            context.getClass().getName()+"\n"+
@@ -340,13 +387,11 @@ public class BusinesslogicSelectMacAdressGattServer {
                     return false;
                 }
             };
-            simpleCursorForSearchView.setViewBinder(БиндингДляПоиск);
+             simpleCursorForSearchView.setViewBinder(БиндингДляПоиск);
+            simpleCursorForSearchView.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
             simpleCursorForSearchView.notifyDataSetChanged();
             ListViewForSearchViewGattMacList.setAdapter(simpleCursorForSearchView);
-            ListViewForSearchViewGattMacList.setSelection(0);
-            ListViewForSearchViewGattMacList.startAnimation(animation);
-            ListViewForSearchViewGattMacList.refreshDrawableState();
-            ListViewForSearchViewGattMacList.requestLayout();
+
         } catch (Exception e) {
             e.printStackTrace();
             Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() + " Линия  :"
