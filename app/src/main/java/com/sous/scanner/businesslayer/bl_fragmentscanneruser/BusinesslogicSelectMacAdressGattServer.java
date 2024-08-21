@@ -13,13 +13,11 @@ import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.AdapterView;
 import android.widget.FilterQueryProvider;
-import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -39,13 +37,12 @@ import com.sous.scanner.businesslayer.Errors.SubClassErrors;
 import com.sous.scanner.datalayer.bl_DataBase.BusinesslogicDatabase;
 
 import java.util.Date;
-import java.util.zip.Inflater;
 
 public class BusinesslogicSelectMacAdressGattServer {
 
     // TODO: 16.08.2024
     private    ListView ListViewForSearchViewGattMacList;
-    private   androidx.appcompat.widget.SearchView searchViewMacAdress;
+    private   SearchView searchViewMacAdress;
     private Context context;
     private  long version;
     private Message messageClient;
@@ -123,61 +120,16 @@ public class BusinesslogicSelectMacAdressGattServer {
 
                     // TODO: 20.08.2024  создание адапрета, Если Есть ДАнные
 
-                    SimpleCursorAdapter simpleCursorForSearchView = getSimpleCursorAdapterMacAdressMasters();
 
+                    currentpopulationofListViewMacdata();
 
-/*
-                    RelativeLayout empty = (RelativeLayout) layoutInflater.inflate(
-                            R.layout.fragment_server_dont_data_oncreateviewholder,
-                            (ViewGroup) ListViewForSearchViewGattMacList.getParent());*/
-
-
-                    View footerView = layoutInflater.inflate(R.layout.fragment_server_dont_data_oncreateviewholder,
-                            ListViewForSearchViewGattMacList, false);
-
-
-                    MaterialCardView mSearchMoreBtn = (MaterialCardView) footerView
-                            .findViewById(R.id.id_card_server_dont_data_oncreateviewholder);
-
-
-                   // LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-                    RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
-                    params.setMargins(10,10,10,10);
-                    mSearchMoreBtn.setChecked(true);
-                    mSearchMoreBtn.setLayoutParams(params);
-                   /* empty.removeAllViews();
-                    empty.addView(mSearchMoreBtn);*/
-                    mSearchMoreBtn.setLayoutParams(params);
-                  //  ListViewForSearchViewGattMacList.setEmptyView(empty);
-                    ListViewForSearchViewGattMacList.addFooterView(footerView);
-
-
-
-
-
-
-
-
-                      ListViewForSearchViewGattMacList.setSelection(0);
-                    ListViewForSearchViewGattMacList.startAnimation(animation);
-                    ListViewForSearchViewGattMacList.refreshDrawableState();
-                    ListViewForSearchViewGattMacList.requestLayout();
-
-
-                    // TODO: 13.12.2022  Поиск и его слушель
-                    МетодПоискаФильтр(             simpleCursorForSearchView );
-
-                    // TODO: 15.05.2023 Слушатель Действия Кнопки Сохранить
-                    // TODO: 16.05.2023  КЛИК СЛУШАТЕЛЬ ПО ЕЛЕМЕНТУ
-                    clickGattMacList(  );
-
-                    методКликДейсвиеКнопкиСохранить(ButtonFilterЗакрытьДиалог);
 
                     Log.d(this.getContext().getClass().getName(), "\n"
                             + " время: " + new Date()+"\n+" +
                             " Класс в процессе... " +
                             this.getContext().getClass().getName()+"\n"+
                             " метод в процессе... " + Thread.currentThread().getStackTrace()[2].getMethodName());
+
                 } catch (Exception e) {
                     e.printStackTrace();
                     Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() + " Линия  :"
@@ -198,9 +150,90 @@ public class BusinesslogicSelectMacAdressGattServer {
                 // TODO: 20.12.2022  тут конец выбеленого
             }
 
+            private void currentpopulationofListViewMacdata() {
+                try{
+                if (cursor.getCount()>0) {
+                    // TODO: 21.08.2024
+                    SimpleCursorAdapter    simpleCursorForSearchView = fillingwhenDataisavailable();
+
+                    // TODO: 13.12.2022  Поиск и его слушель
+                    МетодПоискаФильтр(             simpleCursorForSearchView );
+
+                    // TODO: 15.05.2023 Слушатель Действия Кнопки Сохранить
+                    // TODO: 16.05.2023  КЛИК СЛУШАТЕЛЬ ПО ЕЛЕМЕНТУ
+                    clickGattMacList(  );
+
+                    методКликДейсвиеКнопкиСохранить(ButtonFilterЗакрытьДиалог);
+
+
+                } else {
+
+                    fillingwhenthereisNodata();
+
+                }
+
+
+                finaloperationforListView();
+
+                Log.d(this.getContext().getClass().getName(), "\n"
+                        + " время: " + new Date()+"\n+" +
+                        " Класс в процессе... " +
+                        this.getContext().getClass().getName()+"\n"+
+                        " метод в процессе... " + Thread.currentThread().getStackTrace()[2].getMethodName());
+
+            } catch (Exception e) {
+                e.printStackTrace();
+                Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() + " Линия  :"
+                        + Thread.currentThread().getStackTrace()[2].getLineNumber());
+                ContentValues valuesЗаписываемОшибки = new ContentValues();
+                valuesЗаписываемОшибки.put("Error", e.toString().toLowerCase());
+                valuesЗаписываемОшибки.put("Klass", this.getClass().getName());
+                valuesЗаписываемОшибки.put("Metod", Thread.currentThread().getStackTrace()[2].getMethodName());
+                valuesЗаписываемОшибки.put("LineError", Thread.currentThread().getStackTrace()[2].getLineNumber());
+                final Object ТекущаяВерсияПрограммы = version;
+                Integer ЛокальнаяВерсияПОСравнение = Integer.parseInt(ТекущаяВерсияПрограммы.toString());
+                valuesЗаписываемОшибки.put("whose_error", ЛокальнаяВерсияПОСравнение);
+                new SubClassErrors(getContext()).МетодЗаписиОшибок(valuesЗаписываемОшибки);
+
+            }
 
 
 
+            }
+
+
+
+
+
+
+
+
+
+            private void finaloperationforListView() {
+                ListViewForSearchViewGattMacList.setForegroundGravity(Gravity.CENTER);
+                ListViewForSearchViewGattMacList.setSelection(0);
+                ListViewForSearchViewGattMacList.startAnimation(animation);
+                ListViewForSearchViewGattMacList.refreshDrawableState();
+                ListViewForSearchViewGattMacList.requestLayout();
+            }
+
+            private void fillingwhenthereisNodata() {
+                View footerView = layoutInflater.inflate(R.layout.fragment_server_dont_data_oncreateviewholder,
+                        ListViewForSearchViewGattMacList, false);
+
+                MaterialCardView mSearchMoreBtn = (MaterialCardView) footerView
+                        .findViewById(R.id.id_card_server_dont_data_oncreateviewholder);
+                // LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+                RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
+                params.setMargins(0,100,0,0);
+                mSearchMoreBtn.setChecked(true);
+                mSearchMoreBtn.setLayoutParams(params);
+                mSearchMoreBtn.setLayoutParams(params);
+                mSearchMoreBtn.setForegroundGravity(Gravity.CENTER);
+                footerView.requestLayout();
+                footerView.refreshDrawableState();
+                ListViewForSearchViewGattMacList.addFooterView(footerView);
+            }
 
 
         }
@@ -303,7 +336,7 @@ public class BusinesslogicSelectMacAdressGattServer {
 
     @SuppressLint("Range")
     @NonNull
-    private SimpleCursorAdapter getSimpleCursorAdapterMacAdressMasters() {
+    private SimpleCursorAdapter fillingwhenDataisavailable() {
         ///TODO ГЛАВНЫЙ АДАПТЕР чата
         SimpleCursorAdapter simpleCursorForSearchView=null;
         try{

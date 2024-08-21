@@ -5,9 +5,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/id_card_server_dont_data_oncreateviewholder"
     android:layout_width="match_parent"
-    android:layout_height="550dp"
+    android:layout_height="match_parent"
     android:theme="@style/Theme.MaterialComponents.DayNight.DarkActionBar"
-    android:textSize="10sp"
+    android:textSize="13sp"
     android:layout_margin="10dp"
     android:padding="2dp"
     app:cardBackgroundColor="#FFFFFF"
@@ -64,7 +64,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_margin="20dp"
-                android:textSize="14sp"
+                android:textSize="16sp"
+                android:textStyle="bold"
                 android:text="Mac-адресов нет  !!! " />
         </com.google.android.material.textfield.TextInputLayout>
 
