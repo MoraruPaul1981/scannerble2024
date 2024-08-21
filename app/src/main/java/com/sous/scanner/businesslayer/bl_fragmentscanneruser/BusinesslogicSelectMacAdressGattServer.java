@@ -162,7 +162,9 @@ public class BusinesslogicSelectMacAdressGattServer {
 
                 if (cursor.getCount()==0) {
                     fillingwhenthereisNodata();
-                }else {
+                }
+
+
                     // TODO: 21.08.2024 когда данные есть
                     SimpleCursorAdapter     simpleCursorForSearchView = fillingwhenDataisavailable();
                     // TODO: 13.12.2022  Поиск и его слушель
@@ -170,7 +172,7 @@ public class BusinesslogicSelectMacAdressGattServer {
 
                     // TODO: 16.05.2023  КЛИК СЛУШАТЕЛЬ ПО ЕЛЕМЕНТУ
                     clickGattMacList(  );
-                }
+
                     // TODO: 21.08.2024
                     finaloperationforListView();
                     // TODO: 21.08.2024 Кнопка ЗАкрыть
@@ -216,6 +218,10 @@ public class BusinesslogicSelectMacAdressGattServer {
                 ListViewForSearchViewGattMacList.startAnimation(animation);
                 ListViewForSearchViewGattMacList.refreshDrawableState();
                 ListViewForSearchViewGattMacList.requestLayout();
+                Log.d(context.getClass().getName(), "\n"
+                        + " время: " + new Date() + "\n+" +
+                        " Класс в процессе... " + this.getClass().getName() + "\n" +
+                        " метод в процессе... " + Thread.currentThread().getStackTrace()[2].getMethodName() );
             }
 
             private void fillingwhenthereisNodata() {
@@ -229,11 +235,18 @@ public class BusinesslogicSelectMacAdressGattServer {
                 params.setMargins(0,100,0,0);
                 mSearchMoreBtn.setChecked(true);
                 mSearchMoreBtn.setLayoutParams(params);
-                mSearchMoreBtn.setLayoutParams(params);
                 mSearchMoreBtn.setForegroundGravity(Gravity.CENTER);
                 footerView.requestLayout();
                 footerView.refreshDrawableState();
+                // TODO: 21.08.2024
+                if ( ListViewForSearchViewGattMacList.getChildCount()>0) {
+                    ListViewForSearchViewGattMacList.removeAllViews();
+                }
                 ListViewForSearchViewGattMacList.addFooterView(footerView);
+                Log.d(context.getClass().getName(), "\n"
+                        + " время: " + new Date() + "\n+" +
+                        " Класс в процессе... " + this.getClass().getName() + "\n" +
+                        " метод в процессе... " + Thread.currentThread().getStackTrace()[2].getMethodName() );
             }
 
 
@@ -425,7 +438,6 @@ public class BusinesslogicSelectMacAdressGattServer {
             simpleCursorForSearchView.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
             simpleCursorForSearchView.notifyDataSetChanged();
             ListViewForSearchViewGattMacList.setAdapter(simpleCursorForSearchView);
-
         } catch (Exception e) {
             e.printStackTrace();
             Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() + " Линия  :"
