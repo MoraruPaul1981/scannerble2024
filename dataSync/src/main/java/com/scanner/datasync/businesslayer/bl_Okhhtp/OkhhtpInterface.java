@@ -7,5 +7,5 @@ import okhttp3.OkHttpClient;
 
 public interface OkhhtpInterface {
 
-    OkHttpClient.Builder getOkhhtpBuilder(@ApplicationContext Context hiltcontext);
+    OkHttpClient.Builder getOkhhtpBuilder(@ApplicationContext Context hiltcontext );
 }

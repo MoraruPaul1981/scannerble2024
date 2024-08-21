@@ -7,6 +7,13 @@ import android.os.IBinder;
 
 import androidx.annotation.Nullable;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.scanner.datasync.businesslayer.bl_RemoteMessaging.RemoteMessaging;
+
+import javax.inject.Inject;
+
+import okhttp3.OkHttpClient;
+
 /**
  * An {@link IntentService} subclass for handling asynchronous task requests in
  * a service on a separate handler thread.
@@ -18,6 +25,16 @@ import androidx.annotation.Nullable;
 public class DataSyncService extends IntentService {
 
     // TODO: Rename actions, choose action names that describe tasks that this
+
+    @Inject
+    RemoteMessaging remoteMessaging;
+
+    @Inject
+    ObjectMapper getHiltJaksonObjectMapper;
+
+    @Inject
+    OkHttpClient.Builder getOkhhtpBuilder;
+
 
     public DataSyncService() {
         super("DataSyncService");
@@ -48,7 +65,7 @@ public class DataSyncService extends IntentService {
 
     @Override
     protected void onHandleIntent(Intent intent) {
-
+        remoteMessaging.startingRemoteMessaging();
     }
 
 }

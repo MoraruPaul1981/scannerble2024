@@ -24,17 +24,18 @@ import okhttp3.OkHttpClient;
 
 
 
-
+@Module
+@InstallIn(SingletonComponent.class)
 public class GetOkhhtpBuilder   implements  OkhhtpInterface {
     Long version;
 
-    public  @Inject GetOkhhtpBuilder(Long version) {
-        this.version = version;
-    }
 
 
+
+    @Singleton
+    @Provides
     @Override
-    public  OkHttpClient.Builder getOkhhtpBuilder(@ApplicationContext Context hiltcontext) {
+    public  OkHttpClient.Builder getOkhhtpBuilder(@ApplicationContext Context hiltcontext ) {
         OkHttpClient.Builder builder=null;
         try{
             PackageInfo pInfo = hiltcontext.getPackageManager().getPackageInfo(hiltcontext.getPackageName(), 0);
@@ -43,7 +44,7 @@ public class GetOkhhtpBuilder   implements  OkhhtpInterface {
 
             builder=     new OkHttpClient().newBuilder();
             builder.connectionPool(new ConnectionPool(100,5, TimeUnit.SECONDS));
-            Log.i(this.getClass().getName(),  " Атоманически установкаОбновление ПО "+
+            Log.i(this.getClass().getName(),  " OkHttpClient"+
                     Thread.currentThread().getStackTrace()[2].getMethodName()+
                     " время " +new Date().toLocaleString() );
         } catch (Exception e) {

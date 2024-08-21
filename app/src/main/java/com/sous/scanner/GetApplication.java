@@ -16,10 +16,14 @@ import com.sous.scanner.datalayer.local.CREATE_DATABASEScanner;
 
 import java.util.Date;
 
+import javax.inject.Inject;
+
 public class GetApplication  extends Application {
 
     protected SQLiteDatabase Create_Database_СамаБАзаSQLite;
     protected  long version;
+     @Inject
+     protected  RemoteMessaging remoteMessaging;
 
     public GetApplication() throws PackageManager.NameNotFoundException {
         super();
@@ -55,8 +59,8 @@ public class GetApplication  extends Application {
 
             // TODO: 14.08.2024
 
-             RemoteMessaging remoteMessaging=new RemoteMessaging(Create_Database_СамаБАзаSQLite,getApplicationContext(),version);
-            Integer startingRemoteMessaging=       remoteMessaging.startingRemoteMessaging();
+/*             RemoteMessaging remoteMessaging=new RemoteMessaging(Create_Database_СамаБАзаSQLite,getApplicationContext(),version);
+            Integer startingRemoteMessaging=       remoteMessaging.startingRemoteMessaging();*/
 
         Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                 " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
