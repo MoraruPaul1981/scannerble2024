@@ -17,6 +17,11 @@ import com.sous.server.businesslayer.bl_UUID.GeneratorUUIDs;
 import java.util.Date;
 import java.util.Optional;
 
+import io.reactivex.rxjava3.core.Completable;
+import io.reactivex.rxjava3.core.CompletableObserver;
+import io.reactivex.rxjava3.disposables.Disposable;
+import io.reactivex.rxjava3.schedulers.Schedulers;
+
 public class SubClassErrors {
     Context context;
     public SubClassErrors(@NonNull Context context) {
@@ -24,39 +29,65 @@ public class SubClassErrors {
     }
     public  void МетодЗаписиОшибок(@NonNull   ContentValues contentValuesДляЗаписиОшибки) {
         try {
-
-            AsyncTaskLoader asyncTaskLoaderErrorWriter=new AsyncTaskLoader(context) {
-                @Nullable
-                @Override
-                public Object loadInBackground() {
-
-                    Integer getVersionforErrorNew=        getVersionforErrorNew("SELECT MAX ( current_table  ) AS MAX_R  FROM errordsu1");
-                    contentValuesДляЗаписиОшибки.put("current_table",getVersionforErrorNew);
+// TODO: 22.08.2024 Server gatt wtire Errror 
+            Completable.fromRunnable(()->{
 
 
-                    Long getuuid =new GeneratorUUIDs(). МетодГенерацииUUID();
-                    contentValuesДляЗаписиОшибки.put("uuid",getuuid);
+                        Log.e( context.getClass().getName(), "contentValuesДляЗаписиОшибки  " + contentValuesДляЗаписиОшибки);
+                        Uri uri = Uri.parse("content://com.sous.scanner.prodider/" +"errordsu1" + "");
+
+                        Integer getVersionforErrorNew=        getVersionforErrorNew("SELECT MAX ( current_table  ) AS MAX_R  FROM errordsu1");
+                        contentValuesДляЗаписиОшибки.put("current_table",getVersionforErrorNew);
+
+                        Long getuuid =new GeneratorUUIDs(). МетодГенерацииUUID();
+                        contentValuesДляЗаписиОшибки.put("uuid",getuuid);
 
 
 
 
-                    Uri uri = Uri.parse("content://com.sous.server.providerserver/errordsu1" );
-                    ContentResolver resolver = context. getContentResolver();
-                    Uri    insertData=   resolver.insert(uri, contentValuesДляЗаписиОшибки);
-                    Integer РезультатВставки= Optional.ofNullable(insertData.toString().replaceAll("content://","")).map(Integer::new).orElse(0);
-                    // TODO: 20.08.2024
-                    // TODO: 08.08.2024
-                    Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
-                            " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                            " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" +"ERROR ERROR ERROR GATT SERVER  !!!!!!"
-                            +"\n"+ " РезультатВставки " +РезультатВставки);
-                    return РезультатВставки;
-                }
-            };
-            // TODO: 20.08.2024
+                        //     Uri uri = Uri.parse("content://dsu1.scanner.myapplication.contentproviderfordatabasescanner/" +"errordsu1" + "");
+                        ContentResolver resolver = context.getContentResolver();
+                        Uri    insertData=   resolver.insert(uri, contentValuesДляЗаписиОшибки);
+                        Integer РезультатВставки= Optional.ofNullable(insertData.toString().replaceAll("content://","")).map(Integer::new).orElse(0);
 
-            asyncTaskLoaderErrorWriter.forceLoad();
-            asyncTaskLoaderErrorWriter.loadInBackground();
+
+                        // TODO: 08.08.2024
+                        Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                                " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                                " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" +"ERROR ERROR ERROR CLETNT SERVER  !!!!!!"+"\n"+ " РезультатВставки " +РезультатВставки+
+                                " contentValuesДляЗаписиОшибки " +contentValuesДляЗаписиОшибки);
+
+
+                    })
+                    .subscribeOn(Schedulers.single())
+                    .subscribe(new CompletableObserver() {
+                        @Override
+                        public void onSubscribe(@io.reactivex.rxjava3.annotations.NonNull Disposable d) {
+                            // TODO: 08.08.2024
+                            Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                                    " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                                    " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" +"ERROR ERROR ERROR CLETNT SERVER  !!!!!!"+
+                                    " contentValuesДляЗаписиОшибки " +contentValuesДляЗаписиОшибки);
+                        }
+
+                        @Override
+                        public void onComplete() {
+                            // TODO: 08.08.2024
+                            Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                                    " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                                    " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" +"ERROR ERROR ERROR CLETNT SERVER  !!!!!!"+
+                                    " contentValuesДляЗаписиОшибки " +contentValuesДляЗаписиОшибки);
+                        }
+
+                        @Override
+                        public void onError(@io.reactivex.rxjava3.annotations.NonNull Throwable e) {
+                            // TODO: 08.08.2024
+                            Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                                    " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                                    " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" +"ERROR ERROR ERROR CLETNT SERVER  !!!!!!"+
+                                    " contentValuesДляЗаписиОшибки " +contentValuesДляЗаписиОшибки);
+                        }
+                    });
 
             // TODO: 08.08.2024
             Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
