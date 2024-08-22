@@ -50,7 +50,7 @@ public class SubClassErrors {
 
 
                     // TODO: 08.08.2024
-                    Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                    Log.e(this.getClass().getName(),"\n" + " ERROR  class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                             " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
                             " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" +"ERROR ERROR ERROR CLETNT SERVER  !!!!!!"+"\n"+ " РезультатВставки " +РезультатВставки+
                             " contentValuesДляЗаписиОшибки " +contentValuesДляЗаписиОшибки);
@@ -64,7 +64,7 @@ public class SubClassErrors {
             asyncTaskLoaderErrorWriter.loadInBackground();
 
             // TODO: 08.08.2024
-            Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+            Log.e(this.getClass().getName(),"\n" + " ERROR class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                     " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
                     " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" +"ERROR ERROR ERROR CLETNT SERVER  !!!!!!"+"\n"+
                     " contentValuesДляЗаписиОшибки " +contentValuesДляЗаписиОшибки);

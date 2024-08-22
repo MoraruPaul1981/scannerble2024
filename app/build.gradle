@@ -131,4 +131,9 @@ dependencies {
     api project(':dataSync')
 
 
+
+    ///TODO RXJAVA BLE
+    implementation 'io.reactivex.rxjava3:rxandroid:3.0.2'
+    implementation group: 'io.reactivex', name: 'rxandroid', version: '1.2.1'
+
 }

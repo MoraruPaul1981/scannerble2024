@@ -9,6 +9,9 @@ import androidx.annotation.NonNull;
 import com.scanner.datasync.Errors.SubClassErrors;
 
 import java.math.BigInteger;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.Date;
 import java.util.UUID;
 
 public class GeneratorUUIDs   implements  GeneratorUUIDInterface{
@@ -19,15 +22,14 @@ public class GeneratorUUIDs   implements  GeneratorUUIDInterface{
         Long getUUID = 0l;
         try {
 
-            UUID uuid = UUID.randomUUID();
-
-            //uuid   .toString().replaceAll("-", "").replaceAll("[a-zA-Z]", "").substring(0, 20);
-            ///uuid = uuid.replaceAll("[a-zA-Z]", "");
-            //uuid= CharMatcher.any().replaceFrom("[A-Za-z0-9]", "");
-            Long fff2 = uuid.getLeastSignificantBits();
-            Long fff3 = uuid.getMostSignificantBits();
-            BigInteger bigInteger = BigInteger.valueOf(fff3).abs();
-            getUUID = bigInteger.longValue();
+            LocalDateTime futureDate = LocalDateTime.now();
+            DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy.MM.dd HH.mm.ss.SSS");
+            String uuid=   dtf.format(futureDate) ;
+            String finaluuid=   uuid.replaceAll("[^0-9]","");
+          // uuid = uuid.replaceAll("^[a-zA-Z]", "");
+           //uuid= CharMatcher.any().replaceFrom("[A-Za-z0-9]", "");
+            BigInteger result = new BigInteger(finaluuid);
+            getUUID = result.longValue();
             Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                     " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
                     " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" +
