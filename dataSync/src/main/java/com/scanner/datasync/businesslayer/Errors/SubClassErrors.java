@@ -1,4 +1,4 @@
-package com.scanner.datasync.Errors;
+package com.scanner.datasync.businesslayer.Errors;
 
 import android.content.ContentResolver;
 import android.content.ContentValues;
@@ -8,23 +8,15 @@ import android.net.Uri;
 import android.util.Log;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.loader.content.AsyncTaskLoader;
 
 import com.scanner.datasync.businesslayer.bl_UUIds.GeneratorUUIDs;
 
 import java.util.Date;
 import java.util.Optional;
-import java.util.concurrent.CompletableFuture;
-import java.util.concurrent.CountedCompleter;
 
-import dagger.internal.SingleCheck;
 import io.reactivex.rxjava3.core.Completable;
 import io.reactivex.rxjava3.core.CompletableObserver;
-import io.reactivex.rxjava3.core.Single;
-import io.reactivex.rxjava3.core.SingleObserver;
 import io.reactivex.rxjava3.disposables.Disposable;
-import io.reactivex.rxjava3.observers.DisposableCompletableObserver;
 import io.reactivex.rxjava3.schedulers.Schedulers;
 
 public class SubClassErrors  implements  ErrosInterface{

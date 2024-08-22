@@ -5,26 +5,20 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
-import android.os.Parcel;
-import android.os.Parcelable;
 import android.util.Log;
 
 import androidx.annotation.NonNull;
 import androidx.core.content.ContextCompat;
 
-import com.scanner.datasync.Errors.SubClassErrors;
-import com.scanner.datasync.Services.DataSyncService;
-
-import java.io.Serializable;
+import com.scanner.datasync.businesslayer.Errors.SubClassErrors;
+import com.scanner.datasync.businesslayer.Services.DataSyncService;
 
 import javax.inject.Inject;
 
 import dagger.Module;
 import dagger.hilt.InstallIn;
-import dagger.hilt.android.HiltAndroidApp;
 import dagger.hilt.android.qualifiers.ApplicationContext;
 import dagger.hilt.components.SingletonComponent;
-import okhttp3.OkHttpClient;
 
 
 @Module

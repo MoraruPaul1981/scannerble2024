@@ -1,4 +1,4 @@
-package com.scanner.datasync.SynsProccessor;
+package com.scanner.datasync.businesslayer.SynsProccessor;
 
 import android.content.Context;
 

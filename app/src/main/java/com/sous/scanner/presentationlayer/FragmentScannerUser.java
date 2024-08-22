@@ -1235,30 +1235,6 @@ public class FragmentScannerUser extends Fragment {
         }
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
         @Override
         public long getItemId(int position) {
             // TODO: 04.03.2022

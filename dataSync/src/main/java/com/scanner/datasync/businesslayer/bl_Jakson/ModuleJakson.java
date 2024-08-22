@@ -10,7 +10,7 @@ import com.fasterxml.jackson.core.JsonFactory;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.PropertyNamingStrategy;
 import com.fasterxml.jackson.databind.SerializationFeature;
-import com.scanner.datasync.Errors.SubClassErrors;
+import com.scanner.datasync.businesslayer.Errors.SubClassErrors;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;

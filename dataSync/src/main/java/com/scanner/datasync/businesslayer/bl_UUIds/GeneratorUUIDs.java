@@ -6,13 +6,11 @@ import android.util.Log;
 
 import androidx.annotation.NonNull;
 
-import com.scanner.datasync.Errors.SubClassErrors;
+import com.scanner.datasync.businesslayer.Errors.SubClassErrors;
 
 import java.math.BigInteger;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.Date;
-import java.util.UUID;
 
 public class GeneratorUUIDs   implements  GeneratorUUIDInterface{
     private Context context;

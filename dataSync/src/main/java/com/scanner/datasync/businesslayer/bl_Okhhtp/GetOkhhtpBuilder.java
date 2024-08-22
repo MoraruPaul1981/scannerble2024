@@ -6,12 +6,11 @@ import android.content.pm.PackageInfo;
 import android.util.Log;
 
 
-import com.scanner.datasync.Errors.SubClassErrors;
+import com.scanner.datasync.businesslayer.Errors.SubClassErrors;
 
 import java.util.Date;
 import java.util.concurrent.TimeUnit;
 
-import javax.inject.Inject;
 import javax.inject.Singleton;
 
 import dagger.Module;

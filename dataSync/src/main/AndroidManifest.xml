@@ -6,7 +6,7 @@
 
 
         <service
-            android:name="com.scanner.datasync.Services.DataSyncService"
+            android:name="com.scanner.datasync.businesslayer.Services.DataSyncService"
             android:directBootAware="true"
             android:enabled="true"
             android:exported="true"

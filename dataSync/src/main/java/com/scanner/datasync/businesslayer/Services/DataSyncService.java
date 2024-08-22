@@ -1,20 +1,15 @@
-package com.scanner.datasync.Services;
+package com.scanner.datasync.businesslayer.Services;
 
-import static android.app.job.JobInfo.PRIORITY_MAX;
 import static android.app.job.JobInfo.PRIORITY_MIN;
 
-import android.annotation.SuppressLint;
 import android.app.IntentService;
 import android.app.Notification;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
-import android.content.ContentResolver;
 import android.content.ContentValues;
 import android.content.Intent;
 import android.content.Context;
 import android.content.pm.PackageInfo;
-import android.database.sqlite.SQLiteDatabase;
-import android.net.Uri;
 import android.os.Build;
 import android.os.IBinder;
 import android.util.Log;
@@ -24,18 +19,12 @@ import androidx.annotation.RequiresApi;
 import androidx.core.app.NotificationCompat;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.scanner.datasync.Errors.SubClassErrors;
-import com.scanner.datasync.R;
-import com.scanner.datasync.businesslayer.bl_RemoteMessaging.RemoteMessaging;
-
-import java.time.LocalDateTime;
-import java.util.Optional;
-import java.util.Random;
+import com.scanner.datasync.businesslayer.Errors.SubClassErrors;
+import com.scanner.datasync.businesslayer.bl_DataSyncService.BinesslogicDataSync;
 
 import javax.inject.Inject;
 
 import dagger.hilt.android.AndroidEntryPoint;
-import dagger.hilt.android.HiltAndroidApp;
 import okhttp3.OkHttpClient;
 
 /**
@@ -59,6 +48,12 @@ public class DataSyncService extends IntentService {
     OkHttpClient.Builder getOkhhtpBuilder;
 
     private  long version;
+
+
+    @Inject
+    BinesslogicDataSync binesslogicDataSync;
+
+
 
     public DataSyncService() {
         super("DataSyncService");
@@ -174,6 +169,10 @@ public class DataSyncService extends IntentService {
     @Override
     protected void onHandleIntent(Intent intent) {
         try{
+
+
+
+            binesslogicDataSync.   getLocalBroadcastManagerUI();
             // TODO: 22.08.2024
          /* ContentValues contentValues=new ContentValues();
             Log.e( getApplicationContext().getClass().getName(), "contentValuesДляЗаписиОшибки  " + contentValues);

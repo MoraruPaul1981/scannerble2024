@@ -1,4 +1,4 @@
-package com.scanner.datasync.Errors;
+package com.scanner.datasync.businesslayer.Errors;
 
 import android.content.ContentValues;
 
