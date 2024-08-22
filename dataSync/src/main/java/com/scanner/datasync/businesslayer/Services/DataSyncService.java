@@ -105,11 +105,12 @@ public class DataSyncService extends IntentService {
     public void onDestroy() {
         super.onDestroy();
         try {
-
             // Do something
-
             stopForeground(true);
 
+            // TODO: 22.08.2024  повсе всего Работы Службы Синхронихации запускаем Фрагмент Сканера   , Самая последная Операция
+            binesslogicDataSync.callBackBroadcastManagerDataSyncService(version);
+            // TODO: 22.08.2024
 
         Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                 " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
@@ -170,20 +171,9 @@ public class DataSyncService extends IntentService {
     protected void onHandleIntent(Intent intent) {
         try{
 
+            // TODO: 22.08.2024  повсе всего Работы Службы Синхронихации запускаем Фрагмент Сканера   , Самая последная Операция
+            binesslogicDataSync.callContentResolverDataSyncService(version);
 
-
-            binesslogicDataSync.   getLocalBroadcastManagerUI();
-            // TODO: 22.08.2024
-         /* ContentValues contentValues=new ContentValues();
-            Log.e( getApplicationContext().getClass().getName(), "contentValuesДляЗаписиОшибки  " + contentValues);
-            Uri uri = Uri.parse("content://com.sous.scanner.prodider/" +"errordsu1" + "");
-
-            Integer getVersionforErrorNew=       11;
-            contentValues.put("current_table",getVersionforErrorNew);
-            //     Uri uri = Uri.parse("content://dsu1.scanner.myapplication.contentproviderfordatabasescanner/" +"errordsu1" + "");
-            ContentResolver resolver = getApplicationContext().getContentResolver();
-            Uri insertData=   resolver.insert(uri, contentValues);
-            Integer РезультатВставки= Optional.ofNullable(insertData.toString().replaceAll("content://","")).map(Integer::new).orElse(0);*/
 
             // TODO: 21.08.2024  
         Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +

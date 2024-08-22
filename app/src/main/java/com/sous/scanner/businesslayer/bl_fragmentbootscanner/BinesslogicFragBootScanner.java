@@ -139,14 +139,10 @@ public class BinesslogicFragBootScanner {
                     String message = intent.getStringExtra("message");
                     Log.d("receiver", "Got message: " + message);
                     if (message.equalsIgnoreCase("DataSyncServiceEnding")) {
-                        // TODO: 08.08.2024
-
-
+                        
                         // TODO: 22.08.2024  Сразу переходим на запуск Службы Сканирование Bluetooth Client
-
                         businesslogicJobServive.startingServiceSimpleScan("fistlauntfrombackground");
-
-
+                        
                         Log.d(context.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                                 " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
                                 " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"  );
@@ -161,6 +157,7 @@ public class BinesslogicFragBootScanner {
                     " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
                     " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" );
 
+            // TODO: 22.08.2024  регистрируем локальный брод каста ресивер
             LocalBroadcastManager.getInstance(context).registerReceiver(mMessageReceiver,
                     new IntentFilter("DataSyncService"));
 
