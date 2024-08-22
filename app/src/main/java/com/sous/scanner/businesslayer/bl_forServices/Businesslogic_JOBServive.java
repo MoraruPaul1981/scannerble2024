@@ -10,6 +10,7 @@ import android.util.Log;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.content.ContextCompat;
 import androidx.loader.content.AsyncTaskLoader;
 
 import com.google.android.material.textview.MaterialTextView;
@@ -50,7 +51,7 @@ long version;
                         intentClientServiceSimpleScanStart.setAction(stateScartServiceScan);
                         intentClientServiceSimpleScanStart.addFlags(Intent.FLAG_GRANT_PERSISTABLE_URI_PERMISSION);
                         // TODO: 24.07.2024
-                        context.startService( intentClientServiceSimpleScanStart);
+                        ContextCompat.startForegroundService(context,intentClientServiceSimpleScanStart);
                         // TODO: 19.08.2024
                         // TODO: 26.07.2024
                         Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +

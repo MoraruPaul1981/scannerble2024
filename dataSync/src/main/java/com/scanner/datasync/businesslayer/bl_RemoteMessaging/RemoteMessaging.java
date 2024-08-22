@@ -10,6 +10,7 @@ import android.os.Parcelable;
 import android.util.Log;
 
 import androidx.annotation.NonNull;
+import androidx.core.content.ContextCompat;
 
 import com.scanner.datasync.Errors.SubClassErrors;
 import com.scanner.datasync.Services.DataSyncService;
@@ -87,13 +88,15 @@ public class RemoteMessaging   implements  RemoteMessaпуInterface{
             intentDataSyncService.addFlags(Intent.FLAG_ACTIVITY_BROUGHT_TO_FRONT);
             intentDataSyncService.setAction("stateDataSync");
             intentDataSyncService.addFlags(Intent.FLAG_GRANT_PERSISTABLE_URI_PERMISSION);
-            // TODO: 24.07.2024
-            context.startService( intentDataSyncService);
+            // TODO: 08.08.2024
+            ContextCompat.startForegroundService(context,intentDataSyncService);
 
             Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                     " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
                     " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n");
 
+            String s=null;
+            s.length();
 
         } catch (Exception e) {
             e.printStackTrace();

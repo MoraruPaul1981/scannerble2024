@@ -2,6 +2,9 @@ package com.sous.scanner.businesslayer.Services;
 
 
 
+import static android.app.job.JobInfo.PRIORITY_MAX;
+import static android.app.job.JobInfo.PRIORITY_MIN;
+
 import android.annotation.SuppressLint;
 import android.app.IntentService;
 import android.app.Notification;
@@ -29,6 +32,7 @@ import com.sous.scanner.businesslayer.Errors.SubClassErrors;
 import com.sous.scanner.businesslayer.bl_forServices.Businesslogic_ScaningClientWorker;
 import com.sous.scanner.businesslayer.bl_forServices.BusinessoginEnableBluetoothAdapter;
 
+import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.function.Consumer;
 
@@ -89,6 +93,8 @@ private      SharedPreferences preferences;
             blForServiceScan.    getLocalBroadcastManager ();
 
 
+            Notification();
+
 
             Log.d(getApplicationContext().getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                     " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
@@ -111,6 +117,17 @@ private      SharedPreferences preferences;
 
     }
 
+    private void Notification() {
+        //For creating the Foreground Service
+        NotificationManager notificationManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
+        String channelId = Build.VERSION.SDK_INT >= Build.VERSION_CODES.O ? getNotificationChannel(notificationManager) : "";
+        NotificationCompat.Builder   notificationBuilderServer = new NotificationCompat.Builder(this, channelId);
+        Notification notification = notificationBuilderServer.setOngoing(true)
+                .setPriority(PRIORITY_MIN)
+                .setCategory(NotificationCompat.CATEGORY_PROGRESS)
+                .build();
+        startForeground(24, notification);//
+    }
 
 
     @SuppressLint("MissingPermission")
@@ -194,6 +211,9 @@ private      SharedPreferences preferences;
         super.onDestroy();
         try{
             blForServiceScan=null;
+            // Do something
+
+            stopForeground(true);
         Log.d(getApplicationContext().getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                 " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
                 " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" );

@@ -1,19 +1,33 @@
 package com.scanner.datasync.Services;
 
+import static android.app.job.JobInfo.PRIORITY_MAX;
+import static android.app.job.JobInfo.PRIORITY_MIN;
+
+import android.annotation.SuppressLint;
 import android.app.IntentService;
+import android.app.Notification;
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
 import android.content.ContentValues;
 import android.content.Intent;
 import android.content.Context;
 import android.content.pm.PackageInfo;
 import android.database.sqlite.SQLiteDatabase;
+import android.os.Build;
 import android.os.IBinder;
 import android.util.Log;
 
 import androidx.annotation.Nullable;
+import androidx.annotation.RequiresApi;
+import androidx.core.app.NotificationCompat;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.scanner.datasync.Errors.SubClassErrors;
+import com.scanner.datasync.R;
 import com.scanner.datasync.businesslayer.bl_RemoteMessaging.RemoteMessaging;
+
+import java.time.LocalDateTime;
+import java.util.Random;
 
 import javax.inject.Inject;
 
@@ -57,6 +71,9 @@ public class DataSyncService extends IntentService {
     // TODO: Customize helper method
 
 
+
+
+
     public DataSyncService(String name) {
         super(name);
         
@@ -66,9 +83,43 @@ public class DataSyncService extends IntentService {
     }
 
     @Override
+    public void onCreate() {
+        super.onCreate();
+
+        //For creating the Foreground Service
+        Notification();
+
+
+        // TODO: 21.08.2024
+        Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n");
+
+
+    }
+
+    private void Notification() {
+        NotificationManager notificationManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
+        String channelId = Build.VERSION.SDK_INT >= Build.VERSION_CODES.O ? getNotificationChannel(notificationManager) : "";
+        NotificationCompat.Builder   notificationBuilderServer = new NotificationCompat.Builder(this, channelId);
+        Notification notification = notificationBuilderServer.setOngoing(true)
+                .setPriority(PRIORITY_MIN)
+                .setCategory(NotificationCompat.CATEGORY_PROGRESS)
+                .build();
+
+        startForeground(23, notification);//
+    }
+
+    @Override
     public void onDestroy() {
         super.onDestroy();
         try {
+
+            // Do something
+
+            stopForeground(true);
+
+
         Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                 " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
                 " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n");
@@ -146,5 +197,19 @@ public class DataSyncService extends IntentService {
         new SubClassErrors(context).МетодЗаписиОшибок(valuesЗаписываемОшибки);
     }
     }
+
+
+    @RequiresApi(Build.VERSION_CODES.O)
+    private String getNotificationChannel(NotificationManager notificationManager){
+        String channelId = "channelid";
+        String channelName = getResources().getString(com.google.android.material.R.string.fab_transformation_scrim_behavior);
+        NotificationChannel channel = new NotificationChannel(channelId, channelName, NotificationManager.IMPORTANCE_HIGH);
+        channel.setImportance(NotificationManager.IMPORTANCE_NONE);
+        channel.setLockscreenVisibility(Notification.VISIBILITY_PRIVATE);
+        notificationManager.createNotificationChannel(channel);
+        return channelId;
+    }
+
+
 
 }

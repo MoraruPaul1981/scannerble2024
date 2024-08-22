@@ -96,7 +96,7 @@ public class ContentProviderScanner extends ContentProvider {
             valuesЗаписываемОшибки.put("whose_error",ЛокальнаяВерсияПОСравнение);
             new SubClassErrors(getContext()).МетодЗаписиОшибок(valuesЗаписываемОшибки);
         }
-       return true;
+        return true;
     }
 
 
