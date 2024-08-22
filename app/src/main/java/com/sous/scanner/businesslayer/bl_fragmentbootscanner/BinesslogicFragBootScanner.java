@@ -2,10 +2,16 @@ package com.sous.scanner.businesslayer.bl_fragmentbootscanner;
 
 import android.content.ContentValues;
 import android.content.Context;
+import android.location.LocationManager;
 import android.util.Log;
 
+import com.google.common.util.concurrent.AtomicDouble;
 import com.scanner.datasync.businesslayer.bl_RemoteMessaging.RemoteMessaging;
 import com.sous.scanner.businesslayer.Errors.SubClassErrors;
+import com.sous.scanner.businesslayer.bl_forServices.Businesslogic_JOBServive;
+
+import java.util.Optional;
+import java.util.function.ToDoubleBiFunction;
 
 import javax.inject.Inject;
 
@@ -28,6 +34,10 @@ public class BinesslogicFragBootScanner {
 
     @Inject
     RemoteMessaging remoteMessaging;
+    @Inject
+    Businesslogic_JOBServive businesslogicJobServive;
+
+    private  LocationManager locationManager;
     public @Inject BinesslogicFragBootScanner(@ApplicationContext Context hiltcontext ) {
         // TODO: 22.08.2024
         // TODO: 21.08.2024
@@ -46,9 +56,28 @@ public class BinesslogicFragBootScanner {
         Completable.complete().blockingSubscribe(new CompletableObserver() {
             @Override
             public void onSubscribe(@NonNull Disposable d) {
+
+                // TODO: 22.08.2024 Парименимае Решение Запускаем Сихронизацию  
+                locationManager = (LocationManager) context.getSystemService(Context.LOCATION_SERVICE);
+;
+                
+                if (Optional.ofNullable(locationManager) .isPresent() 
+                        || locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER)) {
+
+                    // TODO: 22.08.2024  Запускаем слуджу Синжрониазции
+                    remoteMessaging.startingServicedataSync(context,version);
+                    
+                }else {
+                    // TODO: 22.08.2024  Сразу переходим на запуск Службы Сканирование Bluetooth Client  
+
+                    businesslogicJobServive.startingServiceSimpleScan("fistlauntfrombackground");
+                }
+                
                 Log.d(context.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                         " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                        " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" );
+                        " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"   +
+                        "  locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER) " + locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER)+
+                        " Optional.ofNullable(locationManager) .isPresent()  " +Optional.ofNullable(locationManager) .isPresent() );
             }
 
             @Override

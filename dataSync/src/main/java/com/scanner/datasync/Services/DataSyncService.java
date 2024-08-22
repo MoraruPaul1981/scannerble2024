@@ -53,16 +53,10 @@ public class DataSyncService extends IntentService {
     // TODO: Rename actions, choose action names that describe tasks that this
 
     @Inject
-    RemoteMessaging remoteMessaging;
-
-    @Inject
     ObjectMapper getHiltJaksonObjectMapper;
 
     @Inject
     OkHttpClient.Builder getOkhhtpBuilder;
-
-
-
 
     private  long version;
 

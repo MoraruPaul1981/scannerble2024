@@ -19,13 +19,23 @@ import com.sous.scanner.businesslayer.Services.ServiceClientsScanBackground;
 
 import javax.inject.Inject;
 
+import dagger.Module;
+import dagger.hilt.InstallIn;
+import dagger.hilt.android.qualifiers.ApplicationContext;
+import dagger.hilt.components.SingletonComponent;
+
+@Module
+@InstallIn(SingletonComponent.class)
 public class Businesslogic_JOBServive {
 
 Context context;
 long version;
 
-    public  @Inject Businesslogic_JOBServive(Context context) {
-        this.context = context;
+    public  @Inject Businesslogic_JOBServive(@ApplicationContext Context hiltcontext) {
+        this.context = hiltcontext;
+        Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n");
     }
 
 
@@ -33,16 +43,9 @@ long version;
 
     // TODO: 29.11.2022 служба сканирования
     @SuppressLint("RestrictedApi")
-    public void startingServiceSimpleScan(@NonNull String stateScartServiceScan, Message handlerScannerGattClient) {
+    public void startingServiceSimpleScan(@NonNull String stateScartServiceScan ) {
         try {
             // TODO: 19.08.2024
-            handlerScannerGattClient.getTarget().postDelayed(()->{
-                AsyncTaskLoader asyncTaskLoader=new AsyncTaskLoader(context) {
-                    @Nullable
-                    @Override
-                    public Object loadInBackground() {
-
-                        // Intent intentClientServiceSimpleScanStart = new Intent(context, ServiceClientsScan.class);
                         Intent intentClientServiceSimpleScanStart = new Intent(context, ServiceClientsScanBackground.class);
                         intentClientServiceSimpleScanStart.addFlags(Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
                         intentClientServiceSimpleScanStart.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
@@ -57,21 +60,6 @@ long version;
                         Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                                 " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
                                 " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" );
-
-                        return null;
-                    }
-                };
-                asyncTaskLoader.forceLoad();
-                asyncTaskLoader.setUpdateThrottle(2000);
-                asyncTaskLoader.loadInBackground();
-
-                // TODO: 26.07.2024
-                Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
-                        " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                        " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" );
-
-            },3000);
-
 
             // TODO: 26.07.2024
             Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
@@ -100,11 +88,10 @@ long version;
 
     // TODO: 29.11.2022 служба сканирования
     @SuppressLint("RestrictedApi")
-    public void startingServiceSimpleScan(@NonNull String stateScartServiceScan, Message handlerScannerGattClient,
+    public void startingServiceSimpleScan(@NonNull String stateScartServiceScan,
                                           @NonNull Bundle searchview_bungle) {
         try {
             // TODO: 19.08.2024
-                        // Intent intentClientServiceSimpleScanStart = new Intent(context, ServiceClientsScan.class);
                         Intent intentClientServiceSimpleScanStart = new Intent(context, ServiceClientsScanBackground.class);
                         intentClientServiceSimpleScanStart.addFlags(Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
                         intentClientServiceSimpleScanStart.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
