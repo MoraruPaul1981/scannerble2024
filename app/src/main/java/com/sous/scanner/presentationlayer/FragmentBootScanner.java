@@ -191,11 +191,11 @@ public class FragmentBootScanner extends Fragment {
 
     private void welaunchtwoservicessyncandscan() {
         try{
-        // TODO: 22.08.2024  запускаем служюбу синхрониазции которая работает до службв Сканера Bluetooth
-        binesslogicFragBootScanner.startingServicedataSync(     version );
-        Log.d(getContext().getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
-                " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n");
+                // TODO: 22.08.2024  запускаем служюбу синхрониазции которая работает до службв Сканера Bluetooth
+                binesslogicFragBootScanner.startingServicedataSync(     version );
+                Log.d(getContext().getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                        " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                        " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n");
 
     } catch (Exception e) {
         e.printStackTrace();

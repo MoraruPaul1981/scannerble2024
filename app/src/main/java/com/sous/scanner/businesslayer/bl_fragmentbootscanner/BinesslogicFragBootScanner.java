@@ -3,6 +3,8 @@ package com.sous.scanner.businesslayer.bl_fragmentbootscanner;
 import android.content.ContentValues;
 import android.content.Context;
 import android.location.LocationManager;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.util.Log;
 
 import com.google.common.util.concurrent.AtomicDouble;
@@ -11,6 +13,7 @@ import com.sous.scanner.businesslayer.Errors.SubClassErrors;
 import com.sous.scanner.businesslayer.bl_forServices.Businesslogic_JOBServive;
 
 import java.util.Optional;
+import java.util.concurrent.TimeUnit;
 import java.util.function.ToDoubleBiFunction;
 
 import javax.inject.Inject;
@@ -22,7 +25,9 @@ import dagger.hilt.components.SingletonComponent;
 import io.reactivex.rxjava3.annotations.NonNull;
 import io.reactivex.rxjava3.core.Completable;
 import io.reactivex.rxjava3.core.CompletableObserver;
+import io.reactivex.rxjava3.core.Scheduler;
 import io.reactivex.rxjava3.disposables.Disposable;
+import io.reactivex.rxjava3.schedulers.Schedulers;
 
 
 @Module
@@ -37,7 +42,7 @@ public class BinesslogicFragBootScanner {
     @Inject
     Businesslogic_JOBServive businesslogicJobServive;
 
-    private  LocationManager locationManager;
+  private ConnectivityManager connectivityManager ;
     public @Inject BinesslogicFragBootScanner(@ApplicationContext Context hiltcontext ) {
         // TODO: 22.08.2024
         // TODO: 21.08.2024
@@ -53,31 +58,39 @@ public class BinesslogicFragBootScanner {
     public void startingServicedataSync (long versionhilt) {
         this.version = versionhilt;
         // TODO: 22.08.2024
-        Completable.complete().blockingSubscribe(new CompletableObserver() {
+        Completable.fromAction(()->{
+                    connectivityManager = (ConnectivityManager)context.getSystemService(Context.CONNECTIVITY_SERVICE);
+                    NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
+                    // TODO: 22.08.2024 Парименимае Решение Запускаем Сихронизацию
+
+                    if ( Optional.ofNullable(activeNetworkInfo).isPresent()  ) {
+                        // TODO: 22.08.2024  Запускаем слуджу Синжрониазции
+                        if (activeNetworkInfo.isConnected()) {
+                            // TODO: 22.08.2024
+                            remoteMessaging.startingServicedataSync(context,version);
+                        }
+
+                    }else {
+                        // TODO: 22.08.2024  Сразу переходим на запуск Службы Сканирование Bluetooth Client
+
+                        businesslogicJobServive.startingServiceSimpleScan("fistlauntfrombackground");
+                    }
+
+                    Log.d(context.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                            " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                            " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"   +
+                            "  locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER) " +
+                            " activeNetworkInfo  " +activeNetworkInfo );
+
+
+        }).subscribeOn(Schedulers.single())
+                .delaySubscription(2, TimeUnit.SECONDS)
+                .subscribe(new CompletableObserver() {
             @Override
             public void onSubscribe(@NonNull Disposable d) {
-
-                // TODO: 22.08.2024 Парименимае Решение Запускаем Сихронизацию  
-                locationManager = (LocationManager) context.getSystemService(Context.LOCATION_SERVICE);
-;
-                
-                if (Optional.ofNullable(locationManager) .isPresent() 
-                        || locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER)) {
-
-                    // TODO: 22.08.2024  Запускаем слуджу Синжрониазции
-                    remoteMessaging.startingServicedataSync(context,version);
-                    
-                }else {
-                    // TODO: 22.08.2024  Сразу переходим на запуск Службы Сканирование Bluetooth Client  
-
-                    businesslogicJobServive.startingServiceSimpleScan("fistlauntfrombackground");
-                }
-                
                 Log.d(context.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                         " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                        " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"   +
-                        "  locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER) " + locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER)+
-                        " Optional.ofNullable(locationManager) .isPresent()  " +Optional.ofNullable(locationManager) .isPresent() );
+                        " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" );
             }
 
             @Override
