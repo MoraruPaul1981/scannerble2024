@@ -1,4 +1,4 @@
-package com.sous.server.datalayer.data;
+package com.sous.server.datalayer.local;
 
 import android.content.ContentValues;
 import android.content.Context;
@@ -11,10 +11,7 @@ import com.sous.server.businesslayer.Errors.SubClassErrors;
 
 import org.jetbrains.annotations.NotNull;
 import java.util.Date;
-import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.concurrent.atomic.AtomicReference;
-import java.util.function.Consumer;
-import java.util.function.UnaryOperator;
 
 
 //этот класс создает базу данных SQLite

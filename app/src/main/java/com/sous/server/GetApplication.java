@@ -9,12 +9,10 @@ import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 
 
-import androidx.startup.AppInitializer;
-
 import com.serverscan.datasync.businesslayer.RemoteMessaging;
 import com.sous.server.businesslayer.Errors.SubClassErrors;
 import com.sous.server.businesslayer.bl_OneSingal.BussenslogicOneSignal;
-import com.sous.server.datalayer.data.GetCurrentDatabase;
+import com.sous.server.datalayer.local.GetCurrentDatabase;
 
 
 import java.util.Date;

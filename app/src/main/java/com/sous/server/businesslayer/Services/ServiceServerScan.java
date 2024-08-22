@@ -330,7 +330,6 @@ public class ServiceServerScan extends Service {
             contentProviderServer=new ContentProviderServer();
             contentProviderServer.attachInfo(getApplicationContext(),new ProviderInfo());
             contentProviderServer.onCreate();
-
             Log.d(getApplicationContext().getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                     " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
                     " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n");

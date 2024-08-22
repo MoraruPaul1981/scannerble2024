@@ -6,7 +6,6 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
-import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 
 import androidx.annotation.NonNull;
@@ -16,7 +15,6 @@ import androidx.fragment.app.FragmentTransaction;
 
 import com.sous.server.R;
 import com.sous.server.businesslayer.Errors.SubClassErrors;
-import com.sous.server.datalayer.data.CREATE_DATABASEServerScanner;
 
 import java.util.Date;
 

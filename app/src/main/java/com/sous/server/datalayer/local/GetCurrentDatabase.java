@@ -1,4 +1,4 @@
-package com.sous.server.datalayer.data;
+package com.sous.server.datalayer.local;
 
 import android.content.ContentValues;
 import android.content.Context;
