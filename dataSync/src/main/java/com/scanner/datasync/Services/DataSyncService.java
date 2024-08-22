@@ -5,6 +5,7 @@ import android.content.ContentValues;
 import android.content.Intent;
 import android.content.Context;
 import android.content.pm.PackageInfo;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.IBinder;
 import android.util.Log;
 
@@ -42,6 +43,9 @@ public class DataSyncService extends IntentService {
 
     @Inject
     OkHttpClient.Builder getOkhhtpBuilder;
+
+
+
 
     private Context context;
     private  long version;

@@ -5,17 +5,24 @@ import android.content.ComponentCallbacks;
 import android.content.ContentValues;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
+import android.content.pm.ProviderInfo;
 import android.database.sqlite.SQLiteDatabase;
+import android.os.Bundle;
+import android.os.Parcelable;
 import android.util.Log;
 
 
 import com.scanner.datasync.businesslayer.bl_RemoteMessaging.RemoteMessaging;
+import com.sous.scanner.businesslayer.ContentProdiders.ContentProviderScanner;
 import com.sous.scanner.businesslayer.Errors.SubClassErrors;
 import com.sous.scanner.businesslayer.bl_forActivityScan.BussenslogicOneSignal;
 import com.sous.scanner.datalayer.local.CREATE_DATABASEScanner;
 
+import java.io.Serializable;
 import java.util.Date;
 import javax.inject.Inject;
+
+import dagger.Provides;
 import dagger.hilt.android.HiltAndroidApp;
 
 
@@ -25,6 +32,10 @@ public class GetApplication  extends Application {
 
     @Inject
     RemoteMessaging remoteMessaging;
+      @Inject
+      CREATE_DATABASEScanner createDatabaseScanner;
+
+
     protected SQLiteDatabase Create_Database_СамаБАзаSQLite;
     protected  long version;
 
@@ -56,10 +67,13 @@ public class GetApplication  extends Application {
 
 
         /*  //TODO:Иниицилизуем БАз ДАнных */
-        Create_Database_СамаБАзаSQLite=new CREATE_DATABASEScanner(getApplicationContext()).getССылкаНаСозданнуюБазу();
+        Create_Database_СамаБАзаSQLite=createDatabaseScanner.getССылкаНаСозданнуюБазу();
 
-            // TODO: 14.08.2024
-            Integer startingRemoteMessaging=       remoteMessaging.startingRemoteMessaging(  Create_Database_СамаБАзаSQLite,  version);
+
+
+
+            // TODO: 14.08.2024 тестовый
+            Integer startingRemoteMessaging=       remoteMessaging.startingRemoteMessaging(  Create_Database_СамаБАзаSQLite,  version );
 
         Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                 " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +

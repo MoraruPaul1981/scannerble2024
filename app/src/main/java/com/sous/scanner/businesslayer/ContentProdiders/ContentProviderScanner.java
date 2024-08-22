@@ -1,8 +1,11 @@
 package com.sous.scanner.businesslayer.ContentProdiders;
 
+import android.content.ContentProvider;
 import android.content.ContentValues;
+import android.content.Context;
 import android.content.UriMatcher;
 import android.content.pm.PackageInfo;
+import android.content.pm.ProviderInfo;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
@@ -19,13 +22,19 @@ import androidx.loader.content.AsyncTaskLoader;
 import com.sous.scanner.businesslayer.Errors.SubClassErrors;
 import com.sous.scanner.datalayer.local.CREATE_DATABASEScanner;
 
+import java.util.Date;
 import java.util.Optional;
 import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.function.Consumer;
 
+import javax.inject.Inject;
+
+import dagger.hilt.EntryPoint;
+import dagger.hilt.android.AndroidEntryPoint;
+import dagger.hilt.android.HiltAndroidApp;
 
 
-public class ContentProviderScanner extends android.content.ContentProvider {
+public class ContentProviderScanner extends ContentProvider {
     private   UriMatcher uriMatcherДЛяПровайдераКонтентБазаДанных;
     private SQLiteDatabase Create_Database_СамаБАзаSQLite;
     private AsyncTaskLoader<?> asyncTaskLoader;
@@ -33,47 +42,46 @@ public class ContentProviderScanner extends android.content.ContentProvider {
     private Integer ТекущаяСтрокаПриДОбавлениииURL=0;
     private     Long  version=0l;
     private  CopyOnWriteArrayList<String> ИменаТаблицыОтАндройда;
-    public ContentProviderScanner() throws InterruptedException {
-        try{
-            ИменаТаблицыОтАндройда=new CopyOnWriteArrayList<>();
-            ИменаТаблицыОтАндройда.add("errordsu1");
-            ИменаТаблицыОтАндройда.add("listMacMastersSous");
-            Log.d(this.getClass().getName(),  " ContentProviderScanner" +uriMatcherДЛяПровайдераКонтентБазаДанных );
-            Log.d(this.getClass().getName(), " ИменаТаблицыОтАндройда "+ИменаТаблицыОтАндройда );
-            uriMatcherДЛяПровайдераКонтентБазаДанных=new UriMatcher(ИменаТаблицыОтАндройда.size());
-            ИменаТаблицыОтАндройда.forEach(new Consumer<String>() {
-                @Override
-                public void accept(String ЭлементТаблица) {
-                    uriMatcherДЛяПровайдераКонтентБазаДанных.addURI("com.sous.scanner.prodider",ЭлементТаблица.toString(),ТекущаяСтрокаПриДОбавлениииURL);
-                    Log.d(this.getClass().getName(), " ЭлементТаблица "+ЭлементТаблица + " ТекущаяСтрокаПриДОбавлениииURL " +ТекущаяСтрокаПриДОбавлениииURL);
-                    ТекущаяСтрокаПриДОбавлениииURL++;
-                }
-            });
-        } catch (Exception e) {
-            e.printStackTrace();
-            Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() + " Линия  :"
-                    + Thread.currentThread().getStackTrace()[2].getLineNumber());
-            ContentValues valuesЗаписываемОшибки=new ContentValues();
-            valuesЗаписываемОшибки.put("Error",e.toString().toLowerCase());
-            valuesЗаписываемОшибки.put("Klass",this.getClass().getName());
-            valuesЗаписываемОшибки.put("Metod",Thread.currentThread().getStackTrace()[2].getMethodName());
-            valuesЗаписываемОшибки.put("LineError",   Thread.currentThread().getStackTrace()[2].getLineNumber());
-            final Object ТекущаяВерсияПрограммы = version;
-            Integer   ЛокальнаяВерсияПОСравнение = Integer.parseInt(ТекущаяВерсияПрограммы.toString());
-            valuesЗаписываемОшибки.put("whose_error",ЛокальнаяВерсияПОСравнение);
-            new SubClassErrors(getContext()).МетодЗаписиОшибок(valuesЗаписываемОшибки);
-        }
+
+    public @Inject ContentProviderScanner()   {
+
+        Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"   +"    Flowable.fromAction(new Action() { "
+                +   new Date().toLocaleString());
     }
     @Override
     public boolean onCreate() {
         try{
-            if (Create_Database_СамаБАзаSQLite==null) {
-                Log.w(this.getClass().getName(), "Create_Database_СамаБАзаSQLite " + Create_Database_СамаБАзаSQLite);
-                Create_Database_СамаБАзаSQLite=new CREATE_DATABASEScanner(getContext()).getССылкаНаСозданнуюБазу();
-                Log.w(this.getClass().getName(), "Create_Database_СамаБАзаSQLite " + Create_Database_СамаБАзаSQLite + " getContext()) " +getContext());
-            }
+
             PackageInfo pInfo = getContext().getPackageManager().getPackageInfo(getContext().getPackageName(), 0);
             version = pInfo.getLongVersionCode();
+
+            Create_Database_СамаБАзаSQLite=new CREATE_DATABASEScanner(getContext()).getССылкаНаСозданнуюБазу();
+
+
+            if (Create_Database_СамаБАзаSQLite!=null) {
+                // TODO: 22.08.2024
+                ИменаТаблицыОтАндройда=new CopyOnWriteArrayList<>();
+                ИменаТаблицыОтАндройда.add("errordsu1");
+                ИменаТаблицыОтАндройда.add("listMacMastersSous");
+                Log.d(this.getClass().getName(),  " ContentProviderScanner" +uriMatcherДЛяПровайдераКонтентБазаДанных );
+                Log.d(this.getClass().getName(), " ИменаТаблицыОтАндройда "+ИменаТаблицыОтАндройда );
+                uriMatcherДЛяПровайдераКонтентБазаДанных=new UriMatcher(ИменаТаблицыОтАндройда.size());
+                ИменаТаблицыОтАндройда.forEach(new Consumer<String>() {
+                    @Override
+                    public void accept(String ЭлементТаблица) {
+                        uriMatcherДЛяПровайдераКонтентБазаДанных.addURI("com.sous.scanner.prodider",ЭлементТаблица.toString(),ТекущаяСтрокаПриДОбавлениииURL);
+                        Log.d(this.getClass().getName(), " ЭлементТаблица "+ЭлементТаблица + " ТекущаяСтрокаПриДОбавлениииURL " +ТекущаяСтрокаПриДОбавлениииURL);
+                        ТекущаяСтрокаПриДОбавлениииURL++;
+                    }
+                });
+            }
+
+            Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                    " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                    " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"   +"    Flowable.fromAction(new Action() { "
+                    +   new Date().toLocaleString() + " Create_Database_СамаБАзаSQLite " +Create_Database_СамаБАзаSQLite);
         } catch (Exception e) {
             e.printStackTrace();
             Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() + " Линия  :"
@@ -88,13 +96,24 @@ public class ContentProviderScanner extends android.content.ContentProvider {
             valuesЗаписываемОшибки.put("whose_error",ЛокальнаяВерсияПОСравнение);
             new SubClassErrors(getContext()).МетодЗаписиОшибок(valuesЗаписываемОшибки);
         }
-        if (Create_Database_СамаБАзаSQLite!=null) {
-            return true;
-        } else {
-            return false;
-        }
-
+       return true;
     }
+
+
+
+
+    @Override
+    public void attachInfo(Context context, ProviderInfo info) {
+        super.attachInfo(context, info);
+        Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"   +"    Flowable.fromAction(new Action() { "
+                +   new Date().toLocaleString());
+    }
+
+
+
+
 
 
     @NonNull
@@ -225,6 +244,8 @@ public class ContentProviderScanner extends android.content.ContentProvider {
         }
         return РезультатСменыСтатусаВыбраногоМатериала;
     }
+
+
     public Cursor query(@NonNull Uri uri, @Nullable String[] strings, @Nullable String s, @Nullable String[] strings1, @Nullable String s1) {
         Cursor cursor = null;
         try{

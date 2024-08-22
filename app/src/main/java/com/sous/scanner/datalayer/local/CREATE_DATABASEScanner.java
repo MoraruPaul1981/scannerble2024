@@ -4,6 +4,7 @@ package com.sous.scanner.datalayer.local;
 import android.content.ContentValues;
 import android.content.Context;
 import android.content.pm.PackageInfo;
+import android.database.DatabaseErrorHandler;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
@@ -15,29 +16,64 @@ import org.jetbrains.annotations.NotNull;
 import java.util.Date;
 import java.util.concurrent.atomic.AtomicReference;
 
+import javax.inject.Inject;
+import javax.inject.Singleton;
 
-//этот класс создает базу данных SQLite
+import dagger.Module;
+import dagger.Provides;
+import dagger.hilt.InstallIn;
+import dagger.hilt.android.qualifiers.ApplicationContext;
+import dagger.hilt.components.SingletonComponent;
+
+
+@Module
+@InstallIn(SingletonComponent.class)
 public class CREATE_DATABASEScanner extends SQLiteOpenHelper{ ///SQLiteOpenHelper
     private   Context context;
-    private static AtomicReference<SQLiteDatabase> atomicstoredEntities = new AtomicReference<>();
+    private  static AtomicReference<SQLiteDatabase> atomicstoredEntities = new AtomicReference<>();
     private     Long version=0l;
     private static final int DATABASE_VERSION = 24;
 
-    public  static   SQLiteDatabase getССылкаНаСозданнуюБазу() {
+
+
+ 
+    public      SQLiteDatabase getССылкаНаСозданнуюБазу() {
         System.out.println( "atomicstoredEntities "+atomicstoredEntities.toString());;
         return atomicstoredEntities.get();
     }
     ///////КОНСТРУКТОР главного класса по созданию базы данных
-    public CREATE_DATABASEScanner(@NotNull Context context) {/////КОНСТРУКТОР КЛАССА ПО СОЗДАНИЮ БАЗЫ ДАННЫХ
-        super(context, "DatabaseScanner.db", null, DATABASE_VERSION ); // определяем имя базы данных  и ее версию
-        try{
-            this.context =context;
-            if (atomicstoredEntities.get()==null) {
-                atomicstoredEntities.set(this.getWritableDatabase());
+
+
+
+
+
+    public @Inject  CREATE_DATABASEScanner(@ApplicationContext Context hiltcontext) {/////КОНСТРУКТОР КЛАССА ПО СОЗДАНИЮ БАЗЫ ДАННЫХ
+        super(hiltcontext, "DatabaseScanner.db", null, DATABASE_VERSION, new DatabaseErrorHandler() {
+            @Override
+            public void onCorruption(SQLiteDatabase sqLiteDatabase) {
+                Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                        " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                        " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"   +"    Flowable.fromAction(new Action() { "
+                        +   new Date().toLocaleString()+ " sqLiteDatabase "+sqLiteDatabase);
             }
-            Log.d(this.getClass().getName()," БАЗА  ДАННЫХ   ДСУ-1 ОТКРЫВАЕМ  ССылкаНаСозданнуюБазу==null   " +atomicstoredEntities);
+        }); // определяем имя базы данных  и ее версию
+        try{
+            // TODO: 22.08.2024
+            context=hiltcontext;
+
             PackageInfo pInfo = context.getPackageManager().getPackageInfo(context.getPackageName(), 0);
             version = pInfo.getLongVersionCode();
+
+            if (atomicstoredEntities.get()==null) {
+                // TODO: 22.08.2024
+                atomicstoredEntities.set(this.getWritableDatabase());
+
+            }
+            Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                    " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                    " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"   +"    Flowable.fromAction(new Action() { "
+                    +   new Date().toLocaleString()  + " atomicstoredEntities " +atomicstoredEntities.get());
+
         } catch (Exception e) {
             e.printStackTrace();
             Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() + " Линия  :"
@@ -53,6 +89,10 @@ public class CREATE_DATABASEScanner extends SQLiteOpenHelper{ ///SQLiteOpenHelpe
             new SubClassErrors(context).МетодЗаписиОшибок(valuesЗаписываемОшибки);
         }
     }
+
+
+
+
 
     @Override
     public void onCreate(SQLiteDatabase ССылкаНаСозданнуюБазу) {
