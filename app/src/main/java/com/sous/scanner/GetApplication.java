@@ -69,11 +69,11 @@ public class GetApplication  extends Application {
         /*  //TODO:Иниицилизуем БАз ДАнных */
         Create_Database_СамаБАзаSQLite=createDatabaseScanner.getССылкаНаСозданнуюБазу();
 
-
-
-
             // TODO: 14.08.2024 тестовый
             Integer startingRemoteMessaging=       remoteMessaging.startingRemoteMessaging(  Create_Database_СамаБАзаSQLite,  version );
+
+
+
 
         Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                 " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +

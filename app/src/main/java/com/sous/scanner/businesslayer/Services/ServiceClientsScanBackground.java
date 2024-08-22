@@ -37,24 +37,16 @@ import java.util.Date;
 import java.util.function.Consumer;
 
 public class ServiceClientsScanBackground extends IntentService {
-
-
-
     protected BluetoothManager bluetoothManagerServer;
     protected BluetoothAdapter bluetoothAdapterPhoneClient;
     protected Long version = 0l;
-
-
    private Businesslogic_ScaningClientWorker blForServiceScan;
    private      NotificationCompat.Builder notificationBuilder;
-
    private     NotificationManager notificationManager;
-
 private      SharedPreferences preferences;
     public ServiceClientsScanBackground( ) {
         super(ServiceClientsScanBackground.class.toString());
     }
-
 
     @SuppressLint("NotificationId0")
     @Override
@@ -68,33 +60,22 @@ private      SharedPreferences preferences;
                     " метод в процессе... " + Thread.currentThread().getStackTrace()[2].getMethodName());
 
             preferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
-
             BusinessoginEnableBluetoothAdapter bluetoothAdapter=       new BusinessoginEnableBluetoothAdapter(getApplicationContext(),version);
-
             bluetoothAdapterPhoneClient   = bluetoothAdapter.initBluetootAdapter();
             // TODO: 09.08.2024
             bluetoothAdapter.staringBluetootAdapter(bluetoothAdapterPhoneClient);
-
-
             PackageInfo pInfo = getApplicationContext().getPackageManager().getPackageInfo(getApplicationContext().getPackageName(), 0);
             version = pInfo.getLongVersionCode();
             // TODO: 24.07.2024 starting   settings
-
-
-
-
 // TODO: 24.07.2024 Reference an class Buncess logica Servir Scan
              blForServiceScan=       new Businesslogic_ScaningClientWorker(bluetoothManagerServer,
                     bluetoothAdapterPhoneClient,
                     version,
                     getApplicationContext(),this,  preferences);
 
-
             blForServiceScan.    getLocalBroadcastManager ();
 
-
             Notification();
-
 
             Log.d(getApplicationContext().getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                     " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +

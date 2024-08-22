@@ -8,11 +8,13 @@ import android.app.IntentService;
 import android.app.Notification;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
+import android.content.ContentResolver;
 import android.content.ContentValues;
 import android.content.Intent;
 import android.content.Context;
 import android.content.pm.PackageInfo;
 import android.database.sqlite.SQLiteDatabase;
+import android.net.Uri;
 import android.os.Build;
 import android.os.IBinder;
 import android.util.Log;
@@ -27,6 +29,7 @@ import com.scanner.datasync.R;
 import com.scanner.datasync.businesslayer.bl_RemoteMessaging.RemoteMessaging;
 
 import java.time.LocalDateTime;
+import java.util.Optional;
 import java.util.Random;
 
 import javax.inject.Inject;
@@ -61,7 +64,6 @@ public class DataSyncService extends IntentService {
 
 
 
-    private Context context;
     private  long version;
 
     public DataSyncService() {
@@ -135,7 +137,7 @@ public class DataSyncService extends IntentService {
         final Object ТекущаяВерсияПрограммы = version;
         Integer ЛокальнаяВерсияПОСравнение = Integer.parseInt(ТекущаяВерсияПрограммы.toString());
         valuesЗаписываемОшибки.put("whose_error", ЛокальнаяВерсияПОСравнение);
-        new SubClassErrors(context).МетодЗаписиОшибок(valuesЗаписываемОшибки);
+        new SubClassErrors(getApplicationContext()).МетодЗаписиОшибок(valuesЗаписываемОшибки);
     }
 
     }
@@ -171,13 +173,25 @@ public class DataSyncService extends IntentService {
         final Object ТекущаяВерсияПрограммы = version;
         Integer ЛокальнаяВерсияПОСравнение = Integer.parseInt(ТекущаяВерсияПрограммы.toString());
         valuesЗаписываемОшибки.put("whose_error", ЛокальнаяВерсияПОСравнение);
-        new SubClassErrors(context).МетодЗаписиОшибок(valuesЗаписываемОшибки);
+        new SubClassErrors(getApplicationContext()).МетодЗаписиОшибок(valuesЗаписываемОшибки);
     }
     }
 
     @Override
     protected void onHandleIntent(Intent intent) {
         try{
+            // TODO: 22.08.2024
+         /* ContentValues contentValues=new ContentValues();
+            Log.e( getApplicationContext().getClass().getName(), "contentValuesДляЗаписиОшибки  " + contentValues);
+            Uri uri = Uri.parse("content://com.sous.scanner.prodider/" +"errordsu1" + "");
+
+            Integer getVersionforErrorNew=       11;
+            contentValues.put("current_table",getVersionforErrorNew);
+            //     Uri uri = Uri.parse("content://dsu1.scanner.myapplication.contentproviderfordatabasescanner/" +"errordsu1" + "");
+            ContentResolver resolver = getApplicationContext().getContentResolver();
+            Uri insertData=   resolver.insert(uri, contentValues);
+            Integer РезультатВставки= Optional.ofNullable(insertData.toString().replaceAll("content://","")).map(Integer::new).orElse(0);*/
+
             // TODO: 21.08.2024  
         Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                 " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
@@ -194,7 +208,7 @@ public class DataSyncService extends IntentService {
         final Object ТекущаяВерсияПрограммы = version;
         Integer ЛокальнаяВерсияПОСравнение = Integer.parseInt(ТекущаяВерсияПрограммы.toString());
         valuesЗаписываемОшибки.put("whose_error", ЛокальнаяВерсияПОСравнение);
-        new SubClassErrors(context).МетодЗаписиОшибок(valuesЗаписываемОшибки);
+        new SubClassErrors(getApplicationContext()).МетодЗаписиОшибок(valuesЗаписываемОшибки);
     }
     }
 

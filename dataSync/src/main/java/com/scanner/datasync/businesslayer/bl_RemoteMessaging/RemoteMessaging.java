@@ -48,9 +48,6 @@ public class RemoteMessaging   implements  RemoteMessaпуInterface{
       @Override
     public Integer startingRemoteMessaging(@NonNull  SQLiteDatabase Create_Database_СамаБАзаSQLite,  @NonNull  Long version ) {
         try{
-            // TODO: 21.08.2024 запускаем службу сканера обмен данных
-             startingServicedataSync(context,version);
-
 
         Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                 " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
