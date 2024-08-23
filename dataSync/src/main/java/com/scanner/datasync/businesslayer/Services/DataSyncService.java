@@ -6,6 +6,7 @@ import android.app.IntentService;
 import android.app.Notification;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
+import android.content.ContentResolver;
 import android.content.ContentValues;
 import android.content.Intent;
 import android.content.Context;
@@ -40,31 +41,20 @@ import okhttp3.OkHttpClient;
 public class DataSyncService extends IntentService {
 
     // TODO: Rename actions, choose action names that describe tasks that this
-
     @Inject
     ObjectMapper getHiltJaksonObjectMapper;
-
     @Inject
     OkHttpClient.Builder getOkhhtpBuilder;
-
     private  long version;
-
-
     @Inject
     BinesslogicDataSync binesslogicDataSync;
-
-
+    private  ContentResolver resolver ;
 
     public DataSyncService() {
         super("DataSyncService");
     }
 
     // TODO: Customize helper method
-
-
-
-
-
     public DataSyncService(String name) {
         super(name);
         
@@ -76,11 +66,10 @@ public class DataSyncService extends IntentService {
     @Override
     public void onCreate() {
         super.onCreate();
-
         //For creating the Foreground Service
         Notification();
 
-
+        resolver = getApplicationContext().getContentResolver();
         // TODO: 21.08.2024
         Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                 " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
@@ -90,6 +79,8 @@ public class DataSyncService extends IntentService {
     }
 
     private void Notification() {
+        // TODO: 23.08.2024
+        try{
         NotificationManager notificationManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
         String channelId = Build.VERSION.SDK_INT >= Build.VERSION_CODES.O ? getNotificationChannel(notificationManager) : "";
         NotificationCompat.Builder   notificationBuilderServer = new NotificationCompat.Builder(this, channelId);
@@ -99,7 +90,27 @@ public class DataSyncService extends IntentService {
                 .build();
 
         startForeground(23, notification);//
+
+            Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                    " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                    " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n");
+
+    } catch (Exception e) {
+        e.printStackTrace();
+        Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() + " Линия  :"
+                + Thread.currentThread().getStackTrace()[2].getLineNumber());
+        ContentValues valuesЗаписываемОшибки = new ContentValues();
+        valuesЗаписываемОшибки.put("Error", e.toString().toLowerCase());
+        valuesЗаписываемОшибки.put("Klass", this.getClass().getName());
+        valuesЗаписываемОшибки.put("Metod", Thread.currentThread().getStackTrace()[2].getMethodName());
+        valuesЗаписываемОшибки.put("LineError", Thread.currentThread().getStackTrace()[2].getLineNumber());
+        final Object ТекущаяВерсияПрограммы = version;
+        Integer ЛокальнаяВерсияПОСравнение = Integer.parseInt(ТекущаяВерсияПрограммы.toString());
+        valuesЗаписываемОшибки.put("whose_error", ЛокальнаяВерсияПОСравнение);
+        new SubClassErrors(getApplicationContext()).МетодЗаписиОшибок(valuesЗаписываемОшибки);
     }
+
+}
 
     @Override
     public void onDestroy() {
@@ -171,8 +182,13 @@ public class DataSyncService extends IntentService {
     protected void onHandleIntent(Intent intent) {
         try{
 
+
             // TODO: 22.08.2024  повсе всего Работы Службы Синхронихации запускаем Фрагмент Сканера   , Самая последная Операция
-            binesslogicDataSync.callContentResolverDataSyncService(version);
+            binesslogicDataSync.callOkhhtpDataSyncService(version,   getOkhhtpBuilder);
+
+            binesslogicDataSync.callJaksonDataSyncService(version,   getHiltJaksonObjectMapper);
+            // TODO: 23.08.2024
+            binesslogicDataSync.callContentResolverDataSyncService(version,resolver);
 
 
             // TODO: 21.08.2024  
