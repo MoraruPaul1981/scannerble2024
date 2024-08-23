@@ -22,6 +22,10 @@ import androidx.core.app.NotificationCompat;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.scanner.datasync.businesslayer.Errors.SubClassErrors;
 import com.scanner.datasync.businesslayer.bl_DataSyncService.BinesslogicDataSync;
+import com.scanner.datasync.businesslayer.bl_JbossAdress.QualifierJbossServer2;
+import com.scanner.datasync.businesslayer.bl_JbossAdress.QualifierJbossServer3;
+
+import java.util.LinkedHashMap;
 
 import javax.inject.Inject;
 
@@ -49,6 +53,16 @@ public class DataSyncService extends IntentService {
     @Inject
     BinesslogicDataSync binesslogicDataSync;
     private  ContentResolver resolver ;
+
+
+    @Inject
+    @QualifierJbossServer3
+    public LinkedHashMap<Integer,String> getJbossAdressDebug;
+
+    @Inject
+    @QualifierJbossServer2
+    public LinkedHashMap<Integer,String> getHiltJbossReliz;
+
 
     public DataSyncService() {
         super("DataSyncService");
@@ -178,13 +192,13 @@ public class DataSyncService extends IntentService {
     }
     }
 
+
+
     @Override
     protected void onHandleIntent(Intent intent) {
         try{
-
-
             // TODO: 22.08.2024  повсе всего Работы Службы Синхронихации запускаем Фрагмент Сканера   , Самая последная Операция
-            binesslogicDataSync.callOkhhtpDataSyncService(version,   getOkhhtpBuilder);
+            binesslogicDataSync.callOkhhtpDataSyncService(version,   getOkhhtpBuilder,getJbossAdressDebug);
 
             binesslogicDataSync.callJaksonDataSyncService(version,   getHiltJaksonObjectMapper);
             // TODO: 23.08.2024

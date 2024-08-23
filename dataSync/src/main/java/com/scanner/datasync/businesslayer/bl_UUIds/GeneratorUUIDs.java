@@ -11,6 +11,7 @@ import com.scanner.datasync.businesslayer.Errors.SubClassErrors;
 import java.math.BigInteger;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.Locale;
 
 public class GeneratorUUIDs   implements  GeneratorUUIDInterface{
     private Context context;
@@ -21,7 +22,7 @@ public class GeneratorUUIDs   implements  GeneratorUUIDInterface{
         try {
 
             LocalDateTime futureDate = LocalDateTime.now();
-            DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy.MM.dd HH.mm.ss.SSS");
+            DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy.MM.dd HH.mm.ss.SSS", new Locale("ru","RU"));
             String uuid=   dtf.format(futureDate) ;
             String finaluuid=   uuid.replaceAll("[^0-9]","");
           // uuid = uuid.replaceAll("^[a-zA-Z]", "");

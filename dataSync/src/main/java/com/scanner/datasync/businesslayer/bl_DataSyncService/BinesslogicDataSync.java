@@ -4,16 +4,30 @@ import android.content.ContentResolver;
 import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
+import android.database.sqlite.SQLiteCursor;
 import android.net.Uri;
+import android.provider.Settings;
 import android.util.Log;
 
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.google.firebase.crashlytics.buildtools.reloc.com.google.common.io.ByteSource;
 import com.scanner.datasync.businesslayer.Errors.SubClassErrors;
 
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.Date;
+import java.util.LinkedHashMap;
+import java.util.Locale;
 import java.util.Optional;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.TimeUnit;
+import java.util.zip.GZIPInputStream;
 
 import javax.inject.Inject;
 
@@ -25,7 +39,13 @@ import io.reactivex.rxjava3.annotations.NonNull;
 import io.reactivex.rxjava3.core.Completable;
 import io.reactivex.rxjava3.core.CompletableObserver;
 import io.reactivex.rxjava3.disposables.Disposable;
+import okhttp3.Call;
+import okhttp3.Callback;
+import okhttp3.Dispatcher;
+import okhttp3.Interceptor;
 import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.Response;
 
 
 @Module
@@ -86,8 +106,8 @@ public class BinesslogicDataSync {
             Uri uri = Uri.parse("content://com.sous.scanner.prodider/" +"errordsu1" + "");
             Integer getVersionforErrorNew=       11;
             contentValues.put("current_table",getVersionforErrorNew);
-            Uri insertData=   resolver.insert(uri, contentValues);
-            Integer РезультатВставки= Optional.ofNullable(insertData.toString().replaceAll("content://","")).map(Integer::new).orElse(0);
+       /*     Uri insertData=   resolver.insert(uri, contentValues);
+            Integer РезультатВставки= Optional.ofNullable(insertData.toString().replaceAll("content://","")).map(Integer::new).orElse(0);*/
             // TODO: 31.07.2024
             Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                     " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
@@ -112,12 +132,127 @@ public class BinesslogicDataSync {
     }
 
 
-    public   void callOkhhtpDataSyncService(@NonNull long version,@NonNull  OkHttpClient.Builder getOkhhtpBuilder){
+    public   void callOkhhtpDataSyncService(@NonNull long version,@NonNull  OkHttpClient.Builder getOkhhtpBuilder,
+                                            @NonNull LinkedHashMap<Integer, String> getJbossAdress ) throws ExecutionException, InterruptedException {
             // TODO: 22.08.2024  Коненпт провайдер для зааписив базу данных
             Completable.complete().blockingSubscribe(new CompletableObserver() {
                 @Override
                 public void onSubscribe(@NonNull Disposable d) {
                     // TODO: 31.07.2024
+                    // TODO: 23.08.2024
+                    String ANDROID_ID = Settings.Secure.getString(context.getContentResolver(), Settings.Secure.ANDROID_ID);
+                    String macAddress = android.provider.Settings.Secure.getString(context.getContentResolver(), "bluetooth_address");
+                    Long ВерсияДанных = null;
+
+
+                    DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy.MM.dd HH.mm.ss.SSS", new Locale("ru","RU"));
+                    LocalDateTime futureDate = LocalDateTime.parse(new Date().toLocaleString(),dtf);
+                    String uuid=   dtf.format(futureDate) ;
+
+                    // TODO: 02.04.2024  Адресс и Порт Сервера Jboss
+                    String   getNameServer = getJbossAdress.values().stream().map(m->String.valueOf(m)).findFirst().get();
+                    Integer    getPortServer = getJbossAdress.keySet().stream().mapToInt(m->m).findFirst().getAsInt();
+
+                    String СтрокаСвязиСсервером ="http://"+getNameServer+":"+getPortServer+"/"+"/sous.jboss.tabel";
+                    СтрокаСвязиСсервером = СтрокаСвязиСсервером.replace(" ", "%20");
+                    String Params = "?" + "NameTable= " + "listMacMastersSous".trim() +
+                            "&" + "JobForServer=" +  "Хотим Получить  JSON".trim() + ""
+                            + "&" + "VersionData=" + ВерсияДанных.toString() + "";
+                    СтрокаСвязиСсервером=   СтрокаСвязиСсервером + Params;
+                    СтрокаСвязиСсервером = СтрокаСвязиСсервером.replace(" ", "%20");
+                    URL Adress = null;
+                    try {
+                        Adress = new URL(СтрокаСвязиСсервером);
+                    } catch (MalformedURLException e) {
+                        throw new RuntimeException(e);
+                    }
+
+                    SQLiteCursor Курсор_ПолучаемИмяСотрудникаИзТаблицыФИО= null;
+
+                    if(Курсор_ПолучаемИмяСотрудникаИзТаблицыФИО.getCount()>0){
+                        Курсор_ПолучаемИмяСотрудникаИзТаблицыФИО.moveToFirst();
+                    }
+
+
+                    Log.d(context.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                            " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                            " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n");
+                    OkHttpClient okHttpClientClientScanner = getOkhhtpBuilder.addInterceptor(new Interceptor() {
+                                @Override
+                                public Response intercept(Chain chain) throws IOException {
+                                    // TODO: 21.08.2024
+                                    Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                                            " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                                            " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n");
+
+                                    Request originalRequest = chain.request();
+                                    Request.Builder builder = originalRequest.newBuilder()
+                                            .header("Content-Type", "application/gzip" + " ;charset=UTF-8")
+                                            .header("Accept-Encoding", "gzip,deflate,sdch")
+                                            .header("Connection", "Keep-Alive")
+                                            .header("Accept-Language", "ru-RU")
+                                            .header("identifier", macAddress)
+                                            .header("p_identifier", ANDROID_ID)
+                                            .header("id_device_androis", ANDROID_ID);
+                                    Request newRequest = builder.build();
+                                    return chain.proceed(newRequest);
+                                }
+                            }).connectTimeout(3, TimeUnit.SECONDS)
+                            .writeTimeout(1, TimeUnit.MINUTES)
+                            .readTimeout(1, TimeUnit.MINUTES)
+                            .build();
+                    ///  MediaType JSON = MediaType.parse("application/json; charset=utf-16");
+                    Request requestGET = new Request.Builder().get().url(Adress).build();
+                    Dispatcher dispatcherДанныеОтСервера = okHttpClientClientScanner.dispatcher();
+                    // TODO: 23.08.2024
+                    Log.d(context.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                            " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                            " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n");
+                    
+                    okHttpClientClientScanner.newCall(requestGET).enqueue(new Callback() {
+                        @Override
+                        public void onFailure(@androidx.annotation.NonNull Call call, @androidx.annotation.NonNull IOException e) {
+               
+                            // TODO: 31.05.2022
+                            dispatcherДанныеОтСервера.executorService().shutdown();
+                            //TODO закрываем п отоки
+                        }
+                        @Override
+                        public void onResponse(@androidx.annotation.NonNull Call call, @androidx.annotation.NonNull Response response) throws IOException {
+
+                                if (response.isSuccessful()) {
+                                    String  ПришедшегоПотока =    response.header("stream_size");
+                                    ПришедшегоПотока =     Optional.ofNullable(ПришедшегоПотока).map(String::valueOf).orElse("0");
+                                    Long РазмерПришедшегоПотока = Long.parseLong(ПришедшегоПотока  );
+                                    // TODO: 29.09.2023
+                                    Integer КакаяКодировка = Integer.parseInt(   Optional.ofNullable(response.header("getcharsets")).map(String::new).orElse("0"));
+                                    Boolean ФлагgZIPOutputStream =Boolean.parseBoolean (  Optional.ofNullable(response.header("GZIPOutputStream")).map(String::new).orElse("false"));
+                                    if (РазмерПришедшегоПотока>0l) {
+                                        // TODO: 07.10.2023  gzip
+                                        byte[] asByteBuffer=    response.body().source().readByteArray();
+                                        InputStream inputStreamJaksonByte = new GZIPInputStream(ByteSource.wrap(asByteBuffer).openBufferedStream(),2048);//4096
+                                        Log.d(this.getClass().getName(), "inputStreamJaksonByte[0] " + inputStreamJaksonByte.available() +
+                                                " РазмерПришедшегоПотока " + РазмерПришедшегоПотока);
+
+                                    }
+                                    // TODO: 31.05.2022
+                                    dispatcherДанныеОтСервера.executorService().shutdown();
+                                }
+
+                        }
+                    });
+                    //TODO
+                    try {
+                        dispatcherДанныеОтСервера.executorService().awaitTermination(1, TimeUnit.DAYS);
+                    } catch (InterruptedException e) {
+                        throw new RuntimeException(e);
+                    }
+                    dispatcherДанныеОтСервера.cancelAll();
+
+
+
+
+
                     Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                             " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
                             " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" + "\n"
