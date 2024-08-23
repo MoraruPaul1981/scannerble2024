@@ -1,12 +1,16 @@
 package com.scanner.datasync.businesslayer.bl_DataSyncService;
 
+import android.bluetooth.BluetoothAdapter;
 import android.content.ContentResolver;
 import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
 import android.database.sqlite.SQLiteCursor;
 import android.net.Uri;
+import android.net.wifi.WifiInfo;
+import android.net.wifi.WifiManager;
 import android.provider.Settings;
+import android.telephony.TelephonyManager;
 import android.util.Log;
 
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
@@ -17,6 +21,8 @@ import com.scanner.datasync.businesslayer.Errors.SubClassErrors;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.lang.reflect.Field;
+import java.lang.reflect.InvocationTargetException;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.time.LocalDateTime;
@@ -53,7 +59,6 @@ import okhttp3.Response;
 public class BinesslogicDataSync {
 
     private Context context;
-    private  long version;
 
     public @Inject BinesslogicDataSync(@ApplicationContext Context hiltcontext ) {
         // TODO: 22.08.2024
@@ -141,10 +146,7 @@ public class BinesslogicDataSync {
                     // TODO: 31.07.2024
                     // TODO: 23.08.2024
                     String ANDROID_ID = Settings.Secure.getString(context.getContentResolver(), Settings.Secure.ANDROID_ID);
-                    String macAddress = android.provider.Settings.Secure.getString(context.getContentResolver(), "bluetooth_address");
                     Long ВерсияДанных = null;
-
-
                     DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy.MM.dd HH.mm.ss.SSS", new Locale("ru","RU"));
                     LocalDateTime futureDate = LocalDateTime.parse(new Date().toLocaleString(),dtf);
                     String uuid=   dtf.format(futureDate) ;
@@ -153,7 +155,7 @@ public class BinesslogicDataSync {
                     String   getNameServer = getJbossAdress.values().stream().map(m->String.valueOf(m)).findFirst().get();
                     Integer    getPortServer = getJbossAdress.keySet().stream().mapToInt(m->m).findFirst().getAsInt();
 
-                    String СтрокаСвязиСсервером ="http://"+getNameServer+":"+getPortServer+"/"+"/sous.jboss.tabel";
+                    String СтрокаСвязиСсервером ="http://"+getNameServer+":"+getPortServer+"/"+"/sous.jboss.scanner";
                     СтрокаСвязиСсервером = СтрокаСвязиСсервером.replace(" ", "%20");
                     String Params = "?" + "NameTable= " + "listMacMastersSous".trim() +
                             "&" + "JobForServer=" +  "Хотим Получить  JSON".trim() + ""
@@ -191,7 +193,7 @@ public class BinesslogicDataSync {
                                             .header("Accept-Encoding", "gzip,deflate,sdch")
                                             .header("Connection", "Keep-Alive")
                                             .header("Accept-Language", "ru-RU")
-                                            .header("identifier", macAddress)
+                                            .header("identifier", ANDROID_ID)
                                             .header("p_identifier", ANDROID_ID)
                                             .header("id_device_androis", ANDROID_ID);
                                     Request newRequest = builder.build();
@@ -212,9 +214,13 @@ public class BinesslogicDataSync {
                     okHttpClientClientScanner.newCall(requestGET).enqueue(new Callback() {
                         @Override
                         public void onFailure(@androidx.annotation.NonNull Call call, @androidx.annotation.NonNull IOException e) {
-               
                             // TODO: 31.05.2022
                             dispatcherДанныеОтСервера.executorService().shutdown();
+                            // TODO: 23.08.2024
+                            Log.d(context.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                                    " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                                    " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n");
+
                             //TODO закрываем п отоки
                         }
                         @Override
@@ -237,6 +243,11 @@ public class BinesslogicDataSync {
                                     }
                                     // TODO: 31.05.2022
                                     dispatcherДанныеОтСервера.executorService().shutdown();
+                                    // TODO: 23.08.2024
+                                    Log.d(context.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                                            " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                                            " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n");
+
                                 }
 
                         }
