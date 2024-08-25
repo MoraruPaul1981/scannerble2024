@@ -99,15 +99,15 @@ public class GetTest {
             ParcelUuid parcelUuid = new ParcelUuid(getPublicUUIDScan);
 
             // Setting LE advertise data
+            // Setting LE advertise data
             AdvertiseData advertiseData = new AdvertiseData.Builder()
                     .setIncludeDeviceName(true)
                     .setIncludeTxPowerLevel(true)
-                    .build();
-            // Setting LE advertise data
-            AdvertiseData scanResponse = new AdvertiseData.Builder()
+                    .addServiceUuid(parcelUuid)
                     .build();
 
-            bluetoothAdapter.getBluetoothLeAdvertiser().startAdvertising(advertiseSettings, advertiseData,scanResponse,
+
+            bluetoothAdapter.getBluetoothLeAdvertiser().startAdvertising(advertiseSettings,advertiseData,
                     new AdvertiseCallback() {
                 @Override
                 public void onStartSuccess(AdvertiseSettings settingsInEffect) {
