@@ -37,6 +37,10 @@ public class BroadcastReceiverGattServerAlcConn extends BroadcastReceiver {
             // TODO: 31.07.2024 Получаем сам девайс
          final   BluetoothDevice     bluetoothDevice = intent.getParcelableExtra(BluetoothDevice.EXTRA_DEVICE);
 
+         final   int       rssi = intent.getShortExtra(BluetoothDevice.EXTRA_RSSI,Short.MIN_VALUE);
+         final   String     name = intent.getStringExtra(BluetoothDevice.EXTRA_NAME);
+         final   String     transport = intent.getStringExtra(BluetoothDevice.EXTRA_TRANSPORT);
+
             final    PackageInfo pInfo = context.getPackageManager().getPackageInfo(context.getPackageName(), 0);
             version = pInfo.getLongVersionCode();
             // TODO: 31.07.2024 рабочий код

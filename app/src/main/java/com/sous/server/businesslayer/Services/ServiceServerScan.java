@@ -2,6 +2,7 @@ package com.sous.server.businesslayer.Services;
 
 import static android.app.job.JobInfo.PRIORITY_MAX;
 
+import android.Manifest;
 import android.annotation.SuppressLint;
 import android.app.IntentService;
 import android.app.Notification;
@@ -23,6 +24,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
 import android.content.pm.ProviderInfo;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
@@ -43,6 +45,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
+import androidx.core.app.ActivityCompat;
 import androidx.core.app.NotificationCompat;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
@@ -53,6 +56,7 @@ import com.sous.server.businesslayer.Errors.SubClassErrors;
 import com.sous.server.businesslayer.Eventbus.MessageScannerServer;
 import com.sous.server.businesslayer.Eventbus.ParamentsScannerServer;
 import com.sous.server.businesslayer.Locations.GattLocationListener;
+import com.sous.server.businesslayer.bl_Tests.GetTest;
 import com.sous.server.datalayer.remote.bl_writeandreadScanCatt.WtitingAndreadDataForScanGatt;
 
 
@@ -66,6 +70,10 @@ import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicReference;
 
+import javax.inject.Inject;
+
+import dagger.hilt.android.AndroidEntryPoint;
+
 
 /**
  * An {@link IntentService} subclass for handling asynchronous task requests in
@@ -75,6 +83,7 @@ import java.util.concurrent.atomic.AtomicReference;
  * TODO: Customize class - update intent actions, extra parameters and static
  * helper methods.
  */
+@AndroidEntryPoint
 public class ServiceServerScan extends Service {
     // TODO: 30.07.2024
     protected SQLiteDatabase sqLiteDatabase;
@@ -94,6 +103,10 @@ public class ServiceServerScan extends Service {
     protected    Boolean getStatusEnableBlueadapter;
 
     protected      final  Handler handler=new Handler();
+
+
+    @Inject
+    GetTest getTest;
 
     @Override
     public void onCreate() {
@@ -120,6 +133,21 @@ public class ServiceServerScan extends Service {
             startForeground(111, notification);//
 
 
+            // TODO: 25.08.2024
+            if (ActivityCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.BLUETOOTH_SCAN) != PackageManager.PERMISSION_GRANTED) {
+                // TODO: Consider calling
+                //    ActivityCompat#requestPermissions
+                // here to request the missing permissions, and then overriding
+                //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+                //                                          int[] grantResults)
+                // to handle the case where the user grants the permission. See the documentation
+                // for ActivityCompat#requestPermissions for more details.
+                return;
+            }
+
+
+
+
 
 
             PackageInfo pInfo = getApplicationContext().getPackageManager().getPackageInfo(getApplicationContext().getPackageName(), 0);
@@ -138,6 +166,11 @@ public class ServiceServerScan extends Service {
 
 
             langingGPSforGATTServer(  sharedPreferencesGatt);
+
+
+            // TODO: 25.08.2024 TEST
+            getTest.startingTest(bluetoothAdapter);
+
 
 
 
