@@ -2,6 +2,7 @@ package com.scanner.datasync.businesslayer.Services;
 
 import static android.app.job.JobInfo.PRIORITY_MIN;
 
+import android.Manifest;
 import android.app.IntentService;
 import android.app.Notification;
 import android.app.NotificationChannel;
@@ -11,12 +12,14 @@ import android.content.ContentValues;
 import android.content.Intent;
 import android.content.Context;
 import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.IBinder;
 import android.util.Log;
 
 import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
+import androidx.core.app.ActivityCompat;
 import androidx.core.app.NotificationCompat;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -84,6 +87,7 @@ public class DataSyncService extends IntentService {
         Notification();
 
         resolver = getApplicationContext().getContentResolver();
+
         // TODO: 21.08.2024
         Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                 " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
@@ -104,6 +108,21 @@ public class DataSyncService extends IntentService {
                 .build();
 
         startForeground(23, notification);//
+
+            // TODO: 25.08.2024
+            if (ActivityCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.BLUETOOTH_SCAN) != PackageManager.PERMISSION_GRANTED) {
+                // TODO: Consider calling
+                //    ActivityCompat#requestPermissions
+                // here to request the missing permissions, and then overriding
+                //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+                //                                          int[] grantResults)
+                // to handle the case where the user grants the permission. See the documentation
+                // for ActivityCompat#requestPermissions for more details.
+                return;
+            }
+
+
+
 
             Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                     " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
@@ -197,12 +216,12 @@ public class DataSyncService extends IntentService {
     @Override
     protected void onHandleIntent(Intent intent) {
         try{
-            // TODO: 22.08.2024  повсе всего Работы Службы Синхронихации запускаем Фрагмент Сканера   , Самая последная Операция
+          /*  // TODO: 22.08.2024  повсе всего Работы Службы Синхронихации запускаем Фрагмент Сканера   , Самая последная Операция
             binesslogicDataSync.callOkhhtpDataSyncService(version,   getOkhhtpBuilder,getJbossAdressDebug);
 
             binesslogicDataSync.callJaksonDataSyncService(version,   getHiltJaksonObjectMapper);
             // TODO: 23.08.2024
-            binesslogicDataSync.callContentResolverDataSyncService(version,resolver);
+            binesslogicDataSync.callContentResolverDataSyncService(version,resolver);*/
 
 
             // TODO: 21.08.2024  

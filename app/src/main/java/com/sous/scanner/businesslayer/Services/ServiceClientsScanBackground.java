@@ -5,6 +5,7 @@ package com.sous.scanner.businesslayer.Services;
 import static android.app.job.JobInfo.PRIORITY_MAX;
 import static android.app.job.JobInfo.PRIORITY_MIN;
 
+import android.Manifest;
 import android.annotation.SuppressLint;
 import android.app.IntentService;
 import android.app.Notification;
@@ -18,17 +19,20 @@ import android.content.ContentValues;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.IBinder;
 import android.util.Log;
 
 import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
+import androidx.core.app.ActivityCompat;
 import androidx.core.app.NotificationCompat;
 import androidx.preference.PreferenceManager;
 
 import com.sous.scanner.R;
 import com.sous.scanner.businesslayer.Errors.SubClassErrors;
+import com.sous.scanner.businesslayer.bl_Tests.GetTest;
 import com.sous.scanner.businesslayer.bl_forServices.Businesslogic_ScaningClientWorker;
 import com.sous.scanner.businesslayer.bl_forServices.BusinessoginEnableBluetoothAdapter;
 
@@ -36,6 +40,12 @@ import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.function.Consumer;
 
+import javax.inject.Inject;
+
+import dagger.hilt.android.AndroidEntryPoint;
+
+
+@AndroidEntryPoint
 public class ServiceClientsScanBackground extends IntentService {
     protected BluetoothManager bluetoothManagerServer;
     protected BluetoothAdapter bluetoothAdapterPhoneClient;
@@ -44,6 +54,9 @@ public class ServiceClientsScanBackground extends IntentService {
    private      NotificationCompat.Builder notificationBuilder;
    private     NotificationManager notificationManager;
 private      SharedPreferences preferences;
+
+    @Inject
+    GetTest getTest;
     public ServiceClientsScanBackground( ) {
         super(ServiceClientsScanBackground.class.toString());
     }
@@ -76,6 +89,19 @@ private      SharedPreferences preferences;
             blForServiceScan.    getLocalBroadcastManager ();
 
             Notification();
+
+
+            // TODO: 25.08.2024
+            if (ActivityCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.BLUETOOTH_SCAN) != PackageManager.PERMISSION_GRANTED) {
+                // TODO: Consider calling
+                //    ActivityCompat#requestPermissions
+                // here to request the missing permissions, and then overriding
+                //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+                //                                          int[] grantResults)
+                // to handle the case where the user grants the permission. See the documentation
+                // for ActivityCompat#requestPermissions for more details.
+                return;
+            }
 
             Log.d(getApplicationContext().getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                     " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
@@ -144,6 +170,10 @@ private      SharedPreferences preferences;
 
                         // TODO: 05.08.2024  start Fragment SCANNEer
                         blForServiceScan.    statyingCallBAckFragmentScaner();
+
+
+                        // TODO: 25.08.2024 TEST
+                        getTest.startingTest(bluetoothAdapterPhoneClient);
 
                         Log.d(getApplicationContext().getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                                 " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
