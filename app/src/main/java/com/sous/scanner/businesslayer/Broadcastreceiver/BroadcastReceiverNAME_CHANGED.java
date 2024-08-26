@@ -18,6 +18,7 @@ import com.sous.scanner.businesslayer.bl_forServices.Businesslogic_JOBServive;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Optional;
+import java.util.Random;
 import java.util.concurrent.atomic.AtomicReference;
 
 public class BroadcastReceiverNAME_CHANGED extends BroadcastReceiver {
@@ -38,6 +39,7 @@ public class BroadcastReceiverNAME_CHANGED extends BroadcastReceiver {
             final   int       rssi = intent.getShortExtra(BluetoothDevice.EXTRA_RSSI,Short.MIN_VALUE);
             final   String     name = intent.getStringExtra(BluetoothDevice.EXTRA_NAME);
             final   String     transport = intent.getStringExtra(BluetoothDevice.EXTRA_TRANSPORT);
+            intent.putExtra(BluetoothDevice.EXTRA_PAIRING_KEY,new Random().nextInt());
             // TODO: 25.08.2024  
             final    PackageInfo pInfo = context.getPackageManager().getPackageInfo(context.getPackageName(), 0);
             version = pInfo.getLongVersionCode();
