@@ -526,6 +526,9 @@ public class Bl_FragmentRecyreViewServerSimpleScan {
         public MyRecycleViewAdapterServer(@Nullable  Cursor  mapconcurrentHashMapCursor) {
             // TODO: 15.08.2024
             if (mapconcurrentHashMapCursor!=null) {
+                if ( getconcurrentHashMapCursor!=null) {
+                    getconcurrentHashMapCursor.close();;
+                }
                 getconcurrentHashMapCursor = mapconcurrentHashMapCursor;
             }
             //TODO
@@ -546,7 +549,7 @@ public class Bl_FragmentRecyreViewServerSimpleScan {
                         + " holder " +holder);
 
                 if(getconcurrentHashMapCursor!=null    ) {
-                    if (getconcurrentHashMapCursor.getCount()>0) {
+                    if (getconcurrentHashMapCursor.getCount()>0 && recyclerViewServer.isAttachedToWindow()) {
 
                         //todo ЗАполеняем Данными пришедешими с севрера
 
@@ -637,6 +640,8 @@ public class Bl_FragmentRecyreViewServerSimpleScan {
 
         @Override
         public void onAttachedToRecyclerView(@NonNull RecyclerView recyclerView) {
+
+
 
             recyclerView.removeAllViews();
 
@@ -1230,8 +1235,11 @@ public class Bl_FragmentRecyreViewServerSimpleScan {
                 }
 
                 myRecycleViewAdapterServer.notifyDataSetChanged();
+
             RecyclerView.Adapter recyclerViewadapter=         recyclerViewServer.getAdapter();
+
             recyclerViewServer.swapAdapter(recyclerViewadapter,true);
+
                 recyclerViewadapter.notifyDataSetChanged();
 
             }

@@ -6,18 +6,12 @@ import android.annotation.SuppressLint;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
 import android.content.ContentValues;
-import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.pm.ActivityInfo;
 import android.content.pm.PackageInfo;
-import android.content.pm.PackageManager;
-import android.database.sqlite.SQLiteDatabase;
-import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
-import android.os.PowerManager;
-import android.provider.Settings;
 import android.util.Log;
 import android.view.WindowManager;
 
@@ -26,15 +20,13 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentManager;
 import androidx.loader.content.AsyncTaskLoader;
 
-import com.onesignal.OneSignal;
 import com.sous.server.R;
 import com.sous.server.businesslayer.BI_presentationlayer.bl_MainActivityNewServerScanner.Bi_MainActivityNewServerScanner;
-import com.sous.server.businesslayer.BroadcastreceiverServer.BroadcastReceiverGattServerAlcConn;
-import com.sous.server.businesslayer.BroadcastreceiverServer.BroadcastReceiverGattServerName_Changed;
-import com.sous.server.businesslayer.BroadcastreceiverServer.BroadcastReceiverGattServerOthers;
+import com.sous.server.businesslayer.bl_UUID.BroadcastreceiverServer.BroadcastReceiverGattServerAlcConn;
+import com.sous.server.businesslayer.bl_UUID.BroadcastreceiverServer.BroadcastReceiverGattServerName_Changed;
+import com.sous.server.businesslayer.bl_UUID.BroadcastreceiverServer.BroadcastReceiverGattServerOthers;
 import com.sous.server.businesslayer.Errors.SubClassErrors;
 import com.sous.server.businesslayer.Permissions.SetPermissions;
-import com.sous.server.businesslayer.bl_OneSingal.BussenslogicOneSignal;
 
 import java.util.Date;
 

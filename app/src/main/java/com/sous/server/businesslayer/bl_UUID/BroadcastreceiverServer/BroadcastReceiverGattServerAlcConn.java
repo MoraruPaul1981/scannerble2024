@@ -1,4 +1,4 @@
-package com.sous.server.businesslayer.BroadcastreceiverServer;
+package com.sous.server.businesslayer.bl_UUID.BroadcastreceiverServer;
 
 import android.annotation.SuppressLint;
 import android.bluetooth.BluetoothA2dp;
