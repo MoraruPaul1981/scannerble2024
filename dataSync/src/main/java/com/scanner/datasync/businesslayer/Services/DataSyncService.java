@@ -14,6 +14,7 @@ import android.content.Context;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
+import android.database.sqlite.SQLiteCursor;
 import android.os.Build;
 import android.os.IBinder;
 import android.util.Log;
@@ -26,9 +27,11 @@ import androidx.core.app.NotificationCompat;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.firebase.crashlytics.buildtools.reloc.com.google.common.util.concurrent.AtomicDouble;
 import com.scanner.datasync.businesslayer.Errors.SubClassErrors;
+
 import com.scanner.datasync.businesslayer.bl_DataSyncService.BinesslogicDataSync;
 import com.scanner.datasync.businesslayer.bl_JbossAdress.QualifierJbossServer2;
 import com.scanner.datasync.businesslayer.bl_JbossAdress.QualifierJbossServer3;
+import com.scanner.datasync.datalayer.local.BinesslogicGetCursors;
 
 import java.util.LinkedHashMap;
 import java.util.function.ToDoubleBiFunction;
@@ -69,6 +72,8 @@ public class DataSyncService extends IntentService {
     @QualifierJbossServer2
     public LinkedHashMap<Integer,String> getHiltJbossReliz;
 
+    @Inject
+    BinesslogicGetCursors binesslogicGetCursors;
 
     public DataSyncService() {
         super("DataSyncService");
@@ -220,13 +225,13 @@ public class DataSyncService extends IntentService {
     protected void onHandleIntent(Intent intent) {
         try{
           // TODO: 22.08.2024  повсе всего Работы Службы Синхронихации запускаем Фрагмент Сканера   , Самая последная Операция
+
+
             // TODO: 26.08.2024  получаем данные ЛОкальыне с версией данных
-            Cursor cursorlocal =     binesslogicDataSync. getLocalDataSyncService(version,resolver);
+            Cursor cursorlocal =     binesslogicGetCursors. getLocalDataSyncService(version,resolver);
 
             // TODO: 26.08.2024  получаем данные от Сервера
-            binesslogicDataSync.callOkhhtpDataSyncService(version,   getOkhhtpBuilder,getJbossAdressDebug);
-
-
+            binesslogicDataSync.callOkhhtpDataSyncService(version,   getOkhhtpBuilder,getJbossAdressDebug,cursorlocal);
 
         /*    // TODO: 26.08.2024  полученые данные поднотпаливаем для Записи
             binesslogicDataSync.callJaksonDataSyncService(version,   getHiltJaksonObjectMapper);
