@@ -44,7 +44,9 @@ import dagger.hilt.components.SingletonComponent;
 import io.reactivex.rxjava3.annotations.NonNull;
 import io.reactivex.rxjava3.core.Completable;
 import io.reactivex.rxjava3.core.CompletableObserver;
+import io.reactivex.rxjava3.core.Scheduler;
 import io.reactivex.rxjava3.disposables.Disposable;
+import io.reactivex.rxjava3.schedulers.Schedulers;
 import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.Dispatcher;
@@ -140,16 +142,31 @@ public class BinesslogicDataSync {
     public   void callOkhhtpDataSyncService(@NonNull long version,@NonNull  OkHttpClient.Builder getOkhhtpBuilder,
                                             @NonNull LinkedHashMap<Integer, String> getJbossAdress ) throws ExecutionException, InterruptedException {
             // TODO: 22.08.2024  Коненпт провайдер для зааписив базу данных
-            Completable.complete().blockingSubscribe(new CompletableObserver() {
+            Completable.complete().mergeWith(e->{
+
+                Log.d(context.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                        " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                        " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n");
+
+
+            }).concatWith(m->{
+
+                        Log.d(context.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                                " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                                " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n");
+                    })
+                    .subscribeOn(Schedulers.single())
+
+                    .blockingSubscribe(new CompletableObserver() {
                 @Override
                 public void onSubscribe(@NonNull Disposable d) {
                     // TODO: 31.07.2024
                     // TODO: 23.08.2024
                     String ANDROID_ID = Settings.Secure.getString(context.getContentResolver(), Settings.Secure.ANDROID_ID);
-                    Long ВерсияДанных = null;
-                    DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy.MM.dd HH.mm.ss.SSS", new Locale("ru","RU"));
-                    LocalDateTime futureDate = LocalDateTime.parse(new Date().toLocaleString(),dtf);
-                    String uuid=   dtf.format(futureDate) ;
+                    Long ВерсияДанных = 1l;
+                    DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.SSS", new Locale("ru","RU"));
+                    LocalDateTime futureDate = LocalDateTime.parse("2024-06-01 20:31:37.867",dtf);
+                    String ВремяДанных=   dtf.format(futureDate) ;
 
                     // TODO: 02.04.2024  Адресс и Порт Сервера Jboss
                     String   getNameServer = getJbossAdress.values().stream().map(m->String.valueOf(m)).findFirst().get();
@@ -158,7 +175,7 @@ public class BinesslogicDataSync {
                     String СтрокаСвязиСсервером ="http://"+getNameServer+":"+getPortServer+"/"+"/sous.jboss.scanner";
                     СтрокаСвязиСсервером = СтрокаСвязиСсервером.replace(" ", "%20");
                     String Params = "?" + "NameTable= " + "listMacMastersSous".trim() +
-                            "&" + "JobForServer=" +  "Хотим Получить  JSON".trim() + ""
+                            "&" + "JobForServer=" +  "getscanner".trim() + ""
                             + "&" + "VersionData=" + ВерсияДанных.toString() + "";
                     СтрокаСвязиСсервером=   СтрокаСвязиСсервером + Params;
                     СтрокаСвязиСсервером = СтрокаСвязиСсервером.replace(" ", "%20");

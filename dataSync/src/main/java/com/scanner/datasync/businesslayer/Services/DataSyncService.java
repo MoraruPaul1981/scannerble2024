@@ -23,12 +23,14 @@ import androidx.core.app.ActivityCompat;
 import androidx.core.app.NotificationCompat;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.google.firebase.crashlytics.buildtools.reloc.com.google.common.util.concurrent.AtomicDouble;
 import com.scanner.datasync.businesslayer.Errors.SubClassErrors;
 import com.scanner.datasync.businesslayer.bl_DataSyncService.BinesslogicDataSync;
 import com.scanner.datasync.businesslayer.bl_JbossAdress.QualifierJbossServer2;
 import com.scanner.datasync.businesslayer.bl_JbossAdress.QualifierJbossServer3;
 
 import java.util.LinkedHashMap;
+import java.util.function.ToDoubleBiFunction;
 
 import javax.inject.Inject;
 
@@ -216,13 +218,15 @@ public class DataSyncService extends IntentService {
     @Override
     protected void onHandleIntent(Intent intent) {
         try{
-          /*  // TODO: 22.08.2024  повсе всего Работы Службы Синхронихации запускаем Фрагмент Сканера   , Самая последная Операция
+          // TODO: 22.08.2024  повсе всего Работы Службы Синхронихации запускаем Фрагмент Сканера   , Самая последная Операция
+            // TODO: 26.08.2024  получаем данные от Сервера
             binesslogicDataSync.callOkhhtpDataSyncService(version,   getOkhhtpBuilder,getJbossAdressDebug);
 
+        /*    // TODO: 26.08.2024  полученые данные поднотпаливаем для Записи
             binesslogicDataSync.callJaksonDataSyncService(version,   getHiltJaksonObjectMapper);
-            // TODO: 23.08.2024
-            binesslogicDataSync.callContentResolverDataSyncService(version,resolver);*/
 
+            // TODO: 23.08.2024  записываем Данные
+            binesslogicDataSync.callContentResolverDataSyncService(version,resolver);*/
 
             // TODO: 21.08.2024  
         Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
