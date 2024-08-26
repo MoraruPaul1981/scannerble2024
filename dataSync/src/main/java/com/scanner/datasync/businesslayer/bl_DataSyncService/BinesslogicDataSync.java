@@ -125,8 +125,9 @@ public class BinesslogicDataSync {
 
                 Long dateVestionlocal = 0l;
                 String numberVestionlocal = new String();
+                ANDROID_ID[0] = Settings.Secure.getString(context.getContentResolver(), Settings.Secure.ANDROID_ID);
+                // TODO: 26.08.2024
                 if (cursorlocal.getCount() > 0) {
-                    ANDROID_ID[0] = Settings.Secure.getString(context.getContentResolver(), Settings.Secure.ANDROID_ID);
                     dateVestionlocal = cursorlocal.getLong(cursorlocal.getColumnIndex("current_table"));
                     DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.SSS", new Locale("ru", "RU"));
                     LocalDateTime futureDate = LocalDateTime.parse(cursorlocal.getString(cursorlocal.getColumnIndex("date_update")), dtf);
@@ -149,10 +150,12 @@ public class BinesslogicDataSync {
                         "&" + "JobForServer=" + "getscanner".trim() + ""
                         + "&" + "VersionData=" + numberVestionlocal.toString() + "";
                 СтрокаСвязиСсервером = СтрокаСвязиСсервером + Params;
-                СтрокаСвязиСсервером = СтрокаСвязиСсервером.replace(" ", "%20");
+             String   ФиналСтрокаСвязиСсервером = СтрокаСвязиСсервером.replace(" ", "%20");
                 URL Adress = null;
                 try {
-                    Adress = new URL(СтрокаСвязиСсервером);
+                    //Adress = new URL("http://192.168.3.4:8080/jboss-1.0-SNAPSHOT/sous.jboss.gattserver");
+                   Adress = new URL("http://192.168.3.4:8080/jboss-1.0-SNAPSHOT/sous.jboss.scanner");
+                   // Adress = new URL(ФиналСтрокаСвязиСсервером);
                 } catch (MalformedURLException e) {
                     throw new RuntimeException(e);
                 }
