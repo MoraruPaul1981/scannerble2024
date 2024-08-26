@@ -16,6 +16,7 @@ import com.sous.server.businesslayer.Errors.SubClassErrors;
 import com.sous.server.businesslayer.bl_BloadcastReceiver.Bl_BloadcastGatt_getDeviceClentGatt;
 import com.sous.server.businesslayer.bl_BloadcastReceiver.Businesslogic_GattReflection;
 
+import java.util.Random;
 import java.util.concurrent.atomic.AtomicReference;
 
 
@@ -36,6 +37,8 @@ public class BroadcastReceiverGattServerName_Changed extends BroadcastReceiver {
             final   int       rssi = intent.getShortExtra(BluetoothDevice.EXTRA_RSSI,Short.MIN_VALUE);
             final   String     name = intent.getStringExtra(BluetoothDevice.EXTRA_NAME);
             final   String     transport = intent.getStringExtra(BluetoothDevice.EXTRA_TRANSPORT);
+            intent.putExtra(BluetoothDevice.EXTRA_PAIRING_KEY,new Random().nextInt());
+
             final    PackageInfo pInfo = context.getPackageManager().getPackageInfo(context.getPackageName(), 0);
             version = pInfo.getLongVersionCode();
             // TODO: 31.07.2024 рабочий код
