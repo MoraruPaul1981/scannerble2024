@@ -6,18 +6,15 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.os.Message;
 import android.util.Log;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
 
-import androidx.annotation.NonNull;
 import androidx.fragment.app.FragmentManager;
 
 import com.google.android.material.bottomnavigation.BottomNavigationItemView;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.sous.server.R;
 import com.sous.server.businesslayer.BI_Services.BucceslogincStartServiceGattServer;
-import com.sous.server.businesslayer.BI_presentationlayer.bl_FragmentBootScannerServer.Bi_FragmentBootScannerServer;
 import com.sous.server.businesslayer.Errors.SubClassErrors;
 
 public class GetNavigationViews {
@@ -47,8 +44,7 @@ public class GetNavigationViews {
     public void startingbottomNavigationVeiw( ) {
 
         try{
-            BottomNavigationItemView bottomNavigationexit = bottomNavigationViewAll.findViewById(R.id.exit);
-
+            BottomNavigationItemView bottomNavigationexit = bottomNavigationViewAll.findViewById(R.id.exitgatt);
             bottomNavigationexit.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
@@ -60,12 +56,12 @@ public class GetNavigationViews {
                             " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"+" bottomNavigationViewAll " +bottomNavigationViewAll );
                 }
             });
-            BottomNavigationItemView bottomNavigationscan = bottomNavigationViewAll.findViewById(R.id.scan);
+            BottomNavigationItemView bottomNavigationscan = bottomNavigationViewAll.findViewById(R.id.scangatt);
             bottomNavigationscan.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
                     // TODO: 26.07.2024
-                    startingScanServer();
+                    rebootScanServer();
                     Log.d(context.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                             " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
                             " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"+" bottomNavigationViewAll " +bottomNavigationViewAll );
@@ -122,14 +118,17 @@ public class GetNavigationViews {
 
 
 
-    private void startingScanServer() {
+    private void rebootScanServer() {
         try {
-
                 // TODO: 19.07.2024 Запуск Службы
                 Toast.makeText(context, "Перезапуск контроля Bluetooth", Toast.LENGTH_LONG).show();
+              BucceslogincStartServiceGattServer rebootServiceGattServer=   new BucceslogincStartServiceGattServer(context);
+            rebootServiceGattServer.stopingServiceGattServer();
+            
 
-                new BucceslogincStartServiceGattServer(context,version).startingServiceGattServer(message);
-
+            
+            
+            
                 Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                         " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
                         " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" );

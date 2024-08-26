@@ -35,7 +35,11 @@ import org.greenrobot.eventbus.ThreadMode;
 import java.util.Date;
 import java.util.concurrent.ConcurrentHashMap;
 
+import javax.inject.Inject;
 
+import dagger.hilt.android.AndroidEntryPoint;
+
+@AndroidEntryPoint
 public class FragmentBootServer extends Fragment {
     private Long version;
     private FragmentManager fragmentManager;
@@ -46,7 +50,8 @@ public class FragmentBootServer extends Fragment {
 
     private ImageView imageviewbootscanner;
 
-
+    @Inject
+    BucceslogincStartServiceGattServer bucceslogincStartServiceGattServer;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -88,6 +93,11 @@ public class FragmentBootServer extends Fragment {
             imageviewbootscanner = (ImageView) view.findViewById(R.id.id_imageviewbootscanner);
 
             biFragmentBootScannerServer=new Bi_FragmentBootScannerServer(getContext(),fragmentManager,getActivity(),version);
+
+            // TODO: 25.07.2024 запускам службы двух серверных
+            startingServicesOnlyScan() ;
+
+
 
             Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                     " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
@@ -153,12 +163,6 @@ public class FragmentBootServer extends Fragment {
                     " Класс в процессе... " + this.getClass().getName() + "\n" +
                     " метод в процессе... " + Thread.currentThread().getStackTrace()[2].getMethodName());
 
-
-
-// TODO: 25.07.2024 запускам службы двух серверных
-            startingServicesOnlyScan() ;
-
-
             Log.d(getContext().getClass().getName(), "\n"
                 + " время: " + new Date() + "\n+" +
                 " Класс в процессе... " + this.getClass().getName() + "\n" +
@@ -181,12 +185,8 @@ public class FragmentBootServer extends Fragment {
 
     private void startingServicesOnlyScan() {
         try{
-
             // TODO: 19.07.2024 Запуск Службы
-
-
-         new BucceslogincStartServiceGattServer(getContext(),version).startingServiceGattServer(message);
-
+       bucceslogincStartServiceGattServer.startingServiceGattServer();
             Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                     " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
                     " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" );

@@ -1426,11 +1426,7 @@ public class Bl_FragmentRecyreViewServerSimpleScan {
 @SuppressLint({"RestrictedApi", "Range"})
 public void settingbottomnavigationview_server_scan(){
  try{
-     BadgeDrawable badge =bottomnavigationview_server_scan.getOrCreateBadge(R.id.scan);
-
-     BottomNavigationItemView bottomNavigationAsync = bottomnavigationview_server_scan.findViewById(R.id.scan);
-
-
+     BadgeDrawable badge =bottomnavigationview_server_scan.getOrCreateBadge(R.id.scangatt);
      // TODO: 31.07.2024
      if ( myRecycleViewAdapterServer. getconcurrentHashMapCursor!=null) {
          badge.setBackgroundColor(Color.BLACK);
@@ -1444,19 +1440,6 @@ public void settingbottomnavigationview_server_scan(){
      badge.setBadgeGravity(BadgeDrawable.TOP_END);
 
 // TODO: 31.07.2024 Lister
-
-     bottomNavigationAsync.setOnClickListener(new View.OnClickListener() {
-         @Override
-         public void onClick(View view) {
-             // TODO: 31.07.2024
-             Log.d(context.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
-                     " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                     " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"+" view.getItemId() "+view   );
-         }
-     });
-
-
-     // TODO: 31.07.2024
      bottomnavigationview_server_scan.refreshDrawableState();
      bottomnavigationview_server_scan.requestLayout();
 

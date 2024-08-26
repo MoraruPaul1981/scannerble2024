@@ -51,6 +51,7 @@ import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
 
 import com.sous.server.R;
+import com.sous.server.businesslayer.BI_Services.BucceslogincStartServiceGattServer;
 import com.sous.server.businesslayer.ContentProvoders.ContentProviderServer;
 import com.sous.server.businesslayer.Errors.SubClassErrors;
 import com.sous.server.businesslayer.Eventbus.MessageScannerServer;
@@ -108,6 +109,9 @@ public class ServiceServerScan extends Service {
     @Inject
     GetTest getTest;
 
+    @Inject
+    BucceslogincStartServiceGattServer bucceslogincStartServiceGattServer;
+
     @Override
     public void onCreate() {
         super.onCreate();
@@ -160,17 +164,10 @@ public class ServiceServerScan extends Service {
             launchmanagerBLE();//TODO: запускаем Новый Манаджер BTE
 
             //TODO:получаем Статус Адаптера Bluetooth true, false  и оптравляем статус в активти
-             getStatusEnableBlueadapter = enableBluetoothAdapter();
+             getStatusEnableBlueadapter =bucceslogincStartServiceGattServer. enableBluetoothAdapter(bluetoothAdapter,version,contentProviderServer);
 
 
-            getContentProvider();
 
-
-            langingGPSforGATTServer(  sharedPreferencesGatt);
-
-
-            // TODO: 25.08.2024 TEST
-            getTest.startingTest(bluetoothAdapter);
 
 
 
@@ -204,34 +201,40 @@ public class ServiceServerScan extends Service {
                     " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
                     " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" + " getStatusEnableBlueadapter " +getStatusEnableBlueadapter);
 
+
+            if (getStatusEnableBlueadapter==true) {
+
+                getContentProvider();
+
+                langingGPSforGATTServer(  sharedPreferencesGatt);
+
+
+                // TODO: 25.08.2024 TEST
+                getTest.startingTest(bluetoothAdapter);
+
+
 // TODO: 28.07.2024 LIster
-            getListerBluetoothDevice();
+                getListerBluetoothDevice();
 
-            // TODO: 26.07.2024 starting Fragment Scan
+                // TODO: 26.07.2024 starting Fragment Scan
 
-            callBackFromServiceToRecyreViewFragment(getStatusEnableBlueadapter);
-
-
-            //TODO :  главный метод службы запускаем Gatt Server
+                callBackFromServiceToRecyreViewFragment(getStatusEnableBlueadapter);
 
 
-            mainstartingServerScan();
-
-            //TODO:  для запущеного сервера Gatt ,дополвнительые параметры натсройки Charact and UUID
-             settingGattServerBluetoothGattService();
+                //TODO :  главный метод службы запускаем Gatt Server
 
 
+                mainstartingServerScan();
+
+                //TODO:  для запущеного сервера Gatt ,дополвнительые параметры натсройки Charact and UUID
+                settingGattServerBluetoothGattService();
 
 
-
-
-
-
-            Log.d(getApplicationContext().getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
-                    " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                    " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n");
-
-
+                Log.d(getApplicationContext().getClass().getName(), "\n" + " class " +
+                        Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                        " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                        " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n");
+            }
 
 
             Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
@@ -256,7 +259,6 @@ public class ServiceServerScan extends Service {
             new SubClassErrors(getApplicationContext()).МетодЗаписиОшибокИзServerGatt(valuesЗаписываемОшибки,contentProviderServer);
         }
 
-
         return START_STICKY;
         //  return super.onStartCommand(intent, flags, startId);
     }
@@ -266,6 +268,26 @@ public class ServiceServerScan extends Service {
     @Override
     public void onDestroy() {
         super.onDestroy();
+  try{
+      //TODO:получаем Статус Адаптера Bluetooth true, false  и оптравляем статус в активти
+      Log.d(getApplicationContext().getClass().getName(), "\n"
+                + " время: " + new Date() + "\n+" +
+                " Класс в процессе... " + this.getClass().getName() + "\n" +
+                " метод в процессе... " + Thread.currentThread().getStackTrace()[2].getMethodName());
+    } catch (Exception e) {
+        e.printStackTrace();
+        Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() + " Линия  :"
+                + Thread.currentThread().getStackTrace()[2].getLineNumber());
+        ContentValues valuesЗаписываемОшибки = new ContentValues();
+        valuesЗаписываемОшибки.put("Error", e.toString().toLowerCase());
+        valuesЗаписываемОшибки.put("Klass", this.getClass().getName());
+        valuesЗаписываемОшибки.put("Metod", Thread.currentThread().getStackTrace()[2].getMethodName());
+        valuesЗаписываемОшибки.put("LineError", Thread.currentThread().getStackTrace()[2].getLineNumber());
+        final Object ТекущаяВерсияПрограммы = version;
+        Integer ЛокальнаяВерсияПОСравнение = Integer.parseInt(ТекущаяВерсияПрограммы.toString());
+        valuesЗаписываемОшибки.put("whose_error", ЛокальнаяВерсияПОСравнение);
+        new SubClassErrors(getApplicationContext()).МетодЗаписиОшибок(valuesЗаписываемОшибки);
+    }
     }
 
 
@@ -506,42 +528,7 @@ public class ServiceServerScan extends Service {
 
 
     //TODO: Включаем адаптер is Enabled BLE
-    @SuppressLint("MissingPermission")
-    private Boolean enableBluetoothAdapter() {
-        Boolean getStatusEnableBlueadapter=false;
-        try{
 
-            if (bluetoothAdapter!=null) {
-                if (bluetoothAdapter.isEnabled() ==false) {
-                    bluetoothAdapter.enable();
-                }
-                getStatusEnableBlueadapter=bluetoothAdapter.isEnabled();
-            }
-            while (!bluetoothAdapter.isEnabled());
-            Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
-                    " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                    " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"+ " getStatusEnableBlueadapter  " +getStatusEnableBlueadapter);
-
-
-            Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
-                    " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                    " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"+ " getStatusEnableBlueadapter  " +getStatusEnableBlueadapter);
-        } catch (Exception e) {
-            e.printStackTrace();
-            Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() + " Линия  :"
-                    + Thread.currentThread().getStackTrace()[2].getLineNumber());
-            ContentValues valuesЗаписываемОшибки = new ContentValues();
-            valuesЗаписываемОшибки.put("Error", e.toString().toLowerCase());
-            valuesЗаписываемОшибки.put("Klass", this.getClass().getName());
-            valuesЗаписываемОшибки.put("Metod", Thread.currentThread().getStackTrace()[2].getMethodName());
-            valuesЗаписываемОшибки.put("LineError", Thread.currentThread().getStackTrace()[2].getLineNumber());
-            final Object ТекущаяВерсияПрограммы = version;
-            Integer ЛокальнаяВерсияПОСравнение = Integer.parseInt(ТекущаяВерсияПрограммы.toString());
-            valuesЗаписываемОшибки.put("whose_error", ЛокальнаяВерсияПОСравнение);
-            new SubClassErrors(getApplicationContext()).МетодЗаписиОшибокИзServerGatt(valuesЗаписываемОшибки,contentProviderServer);
-        }
-        return  getStatusEnableBlueadapter ;
-    }
 
     void getListerBluetoothDevice(){
 

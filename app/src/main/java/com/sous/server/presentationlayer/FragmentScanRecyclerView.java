@@ -45,7 +45,9 @@ import org.greenrobot.eventbus.ThreadMode;
 import java.util.Date;
 import java.util.concurrent.ConcurrentHashMap;
 
+import dagger.hilt.android.AndroidEntryPoint;
 
+@AndroidEntryPoint
 public class FragmentScanRecyclerView extends Fragment {
 
     private FragmentManager fragmentManager;
@@ -455,6 +457,7 @@ public class FragmentScanRecyclerView extends Fragment {
         GetNavigationViews getNavigationViews=new GetNavigationViews(getContext(),
                 messageGattServer,bottomnavigationview_server_scan,
                 version,getActivity(),fragmentManager);
+            // TODO: 26.08.2024
         getNavigationViews.startingbottomNavigationVeiw();
 
         getblFragmentRecyreViewServerScan.    setManagerfromRecyclerViewDontData();

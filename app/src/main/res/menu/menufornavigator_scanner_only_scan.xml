@@ -3,9 +3,9 @@
 
 
     <item
-        android:id="@+id/exit"
+        android:id="@+id/exitgatt"
         android:checkable="true"
-        android:contentDescription="exit"
+        android:contentDescription="exitgatt"
         android:enabled="true"
         android:icon="@drawable/icon_scanner_exit_down"
         android:actionMenuTextColor="@color/black"
@@ -16,8 +16,8 @@
 
 
     <item
-        android:id="@+id/scan"
-        android:contentDescription="История"
+        android:id="@+id/scangatt"
+        android:contentDescription="scangatt"
         android:icon="@drawable/icon_bluetooth_start"
         android:title="Скан"
         android:actionMenuTextColor="@color/black"

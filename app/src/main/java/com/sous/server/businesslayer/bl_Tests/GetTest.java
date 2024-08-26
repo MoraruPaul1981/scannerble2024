@@ -66,8 +66,7 @@ public class GetTest {
         try {
 
 
-            BluetoothDevice device =
-                    bluetoothAdapter.getRemoteDevice("70:5F:A3:C4:D2:6C");
+
 
             Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                     " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
