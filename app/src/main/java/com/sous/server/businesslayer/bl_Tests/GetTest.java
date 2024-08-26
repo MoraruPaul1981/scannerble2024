@@ -107,21 +107,23 @@ public class GetTest {
                     .build();
 
 
-            bluetoothAdapter.getBluetoothLeAdvertiser().startAdvertising(advertiseSettings,advertiseData,
-                    new AdvertiseCallback() {
-                @Override
-                public void onStartSuccess(AdvertiseSettings settingsInEffect) {
-                    super.onStartSuccess(settingsInEffect);
-                }
+            if (bluetoothAdapter!=null) {
+                bluetoothAdapter.getBluetoothLeAdvertiser().startAdvertising(advertiseSettings,advertiseData,
+                        new AdvertiseCallback() {
+                    @Override
+                    public void onStartSuccess(AdvertiseSettings settingsInEffect) {
+                        super.onStartSuccess(settingsInEffect);
+                    }
 
-                @Override
-                public void onStartFailure(int errorCode) {
-                    super.onStartFailure(errorCode);
-                }
-            });
+                    @Override
+                    public void onStartFailure(int errorCode) {
+                        super.onStartFailure(errorCode);
+                    }
+                });
+            }
 
 
-         } catch (Exception e) {
+        } catch (Exception e) {
              e.printStackTrace();
              Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" +
                      Thread.currentThread().getStackTrace()[2].getMethodName() + " Линия  :"
