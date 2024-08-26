@@ -5,6 +5,7 @@ import android.content.ContentResolver;
 import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteCursor;
 import android.net.Uri;
 import android.net.wifi.WifiInfo;
@@ -31,6 +32,7 @@ import java.util.Date;
 import java.util.LinkedHashMap;
 import java.util.Locale;
 import java.util.Optional;
+import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.TimeUnit;
 import java.util.zip.GZIPInputStream;
@@ -45,7 +47,10 @@ import io.reactivex.rxjava3.annotations.NonNull;
 import io.reactivex.rxjava3.core.Completable;
 import io.reactivex.rxjava3.core.CompletableObserver;
 import io.reactivex.rxjava3.core.Scheduler;
+import io.reactivex.rxjava3.core.Single;
+import io.reactivex.rxjava3.core.SingleObserver;
 import io.reactivex.rxjava3.disposables.Disposable;
+import io.reactivex.rxjava3.functions.Consumer;
 import io.reactivex.rxjava3.schedulers.Schedulers;
 import okhttp3.Call;
 import okhttp3.Callback;
@@ -102,6 +107,49 @@ public class BinesslogicDataSync {
 
     }
 
+    public Cursor getLocalDataSyncService(@NonNull long version , @NonNull  ContentResolver resolver){
+        // TODO: 26.08.2024
+        Single<Cursor> cursorlocal=    Single.fromCallable(new Callable<Cursor>() {
+            @Override
+            public Cursor call() throws Exception {
+                // TODO: 31.07.2024
+                // TODO: 22.08.2024  Коненпт провайдер для зааписив базу данных
+                Uri uri = Uri.parse("content://com.sous.scanner.prodider/" +"listMacMastersSous" + "");
+               Cursor cursorLocal = resolver.query(uri, null,
+                        "SELECT *  FROM listMacMastersSous", null,null,null);
+                if (cursorLocal.getCount()>0){
+                    cursorLocal.moveToFirst();
+                }
+                // TODO: 31.07.2024
+                Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                        " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                        " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" + "\n"
+                        + " LocalDateTime.now() " + LocalDateTime.now().toString().toUpperCase()+"\n" + " cursorLocal " +cursorLocal );
+                return cursorLocal;
+            }
+        }).subscribeOn(Schedulers.single())
+                .doOnError(new Consumer<Throwable>() {
+            @Override
+            public void accept(Throwable throwable) throws Throwable {
+                throwable.printStackTrace();
+                Log.e(this.getClass().getName(), "Ошибка " +throwable + " Метод :" +
+                        Thread.currentThread().getStackTrace()[2].getMethodName() + " Линия  :"
+                        + Thread.currentThread().getStackTrace()[2].getLineNumber());
+                ContentValues valuesЗаписываемОшибки = new ContentValues();
+                valuesЗаписываемОшибки.put("Error", throwable.toString().toLowerCase());
+                valuesЗаписываемОшибки.put("Klass", this.getClass().getName());
+                valuesЗаписываемОшибки.put("Metod", Thread.currentThread().getStackTrace()[2].getMethodName());
+                valuesЗаписываемОшибки.put("LineError", Thread.currentThread().getStackTrace()[2].getLineNumber());
+                final Object ТекущаяВерсияПрограммы = version;
+                Integer ЛокальнаяВерсияПОСравнение = Integer.parseInt(ТекущаяВерсияПрограммы.toString());
+                valuesЗаписываемОшибки.put("whose_error", ЛокальнаяВерсияПОСравнение);
+                new SubClassErrors(context).МетодЗаписиОшибок(valuesЗаписываемОшибки);
+            }
+        });
+        // TODO: 26.08.2024
+       return cursorlocal.blockingGet();
+
+    }
 
 
 
@@ -140,24 +188,10 @@ public class BinesslogicDataSync {
 
 
     public   void callOkhhtpDataSyncService(@NonNull long version,@NonNull  OkHttpClient.Builder getOkhhtpBuilder,
-                                            @NonNull LinkedHashMap<Integer, String> getJbossAdress ) throws ExecutionException, InterruptedException {
+                                            @NonNull LinkedHashMap<Integer, String> getJbossAdress )
+            throws ExecutionException, InterruptedException {
             // TODO: 22.08.2024  Коненпт провайдер для зааписив базу данных
-            Completable.complete().mergeWith(e->{
-
-                Log.d(context.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
-                        " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                        " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n");
-
-
-            }).concatWith(m->{
-
-                        Log.d(context.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
-                                " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                                " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n");
-                    })
-                    .subscribeOn(Schedulers.single())
-
-                    .blockingSubscribe(new CompletableObserver() {
+            Completable.complete().blockingSubscribe(new CompletableObserver() {
                 @Override
                 public void onSubscribe(@NonNull Disposable d) {
                     // TODO: 31.07.2024

@@ -13,6 +13,7 @@ import android.content.Intent;
 import android.content.Context;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
+import android.database.Cursor;
 import android.os.Build;
 import android.os.IBinder;
 import android.util.Log;
@@ -219,8 +220,13 @@ public class DataSyncService extends IntentService {
     protected void onHandleIntent(Intent intent) {
         try{
           // TODO: 22.08.2024  повсе всего Работы Службы Синхронихации запускаем Фрагмент Сканера   , Самая последная Операция
+            // TODO: 26.08.2024  получаем данные ЛОкальыне с версией данных
+            Cursor cursorlocal =     binesslogicDataSync. getLocalDataSyncService(version,resolver);
+
             // TODO: 26.08.2024  получаем данные от Сервера
             binesslogicDataSync.callOkhhtpDataSyncService(version,   getOkhhtpBuilder,getJbossAdressDebug);
+
+
 
         /*    // TODO: 26.08.2024  полученые данные поднотпаливаем для Записи
             binesslogicDataSync.callJaksonDataSyncService(version,   getHiltJaksonObjectMapper);
