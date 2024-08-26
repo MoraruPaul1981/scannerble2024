@@ -22,9 +22,9 @@ import androidx.loader.content.AsyncTaskLoader;
 
 import com.sous.server.R;
 import com.sous.server.businesslayer.BI_presentationlayer.bl_MainActivityNewServerScanner.Bi_MainActivityNewServerScanner;
-import com.sous.server.businesslayer.bl_UUID.BroadcastreceiverServer.BroadcastReceiverGattServerAlcConn;
-import com.sous.server.businesslayer.bl_UUID.BroadcastreceiverServer.BroadcastReceiverGattServerName_Changed;
-import com.sous.server.businesslayer.bl_UUID.BroadcastreceiverServer.BroadcastReceiverGattServerOthers;
+import com.sous.server.businesslayer.BroadcastreceiverServer.BroadcastReceiverGattServerAlcConn;
+import com.sous.server.businesslayer.BroadcastreceiverServer.BroadcastReceiverGattServerName_Changed;
+import com.sous.server.businesslayer.BroadcastreceiverServer.BroadcastReceiverGattServerOthers;
 import com.sous.server.businesslayer.Errors.SubClassErrors;
 import com.sous.server.businesslayer.Permissions.SetPermissions;
 

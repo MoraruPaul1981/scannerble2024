@@ -1,25 +1,35 @@
-package com.sous.server.businesslayer.bl_UUID.BroadcastreceiverServer;
+package com.sous.server.businesslayer.BroadcastreceiverServer;
 
 import android.annotation.SuppressLint;
+import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
 import android.content.BroadcastReceiver;
 import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageInfo;
+import android.os.ParcelUuid;
 import android.util.Log;
 
+import com.sous.server.businesslayer.BI_Services.BucceslogincStartServiceGattServer;
 import com.sous.server.businesslayer.Errors.SubClassErrors;
+import com.sous.server.businesslayer.bl_BloadcastReceiver.Bl_BloadcastGatt_getDeviceClentGatt;
 import com.sous.server.businesslayer.bl_BloadcastReceiver.Businesslogic_GattReflection;
 
 import java.util.Random;
 import java.util.concurrent.atomic.AtomicReference;
 
+import javax.inject.Inject;
 
-public class BroadcastReceiverGattServerOthers extends BroadcastReceiver {
+import dagger.hilt.android.AndroidEntryPoint;
+
+
+public class BroadcastReceiverGattServerName_Changed extends BroadcastReceiver {
     // TODO: 30.07.2024
     private  Long   version;
     private    AtomicReference<PendingResult> pendingResultAtomicReferenceServer=new AtomicReference<>();
+
+
     @SuppressLint({"MissingPermission", "NewApi"})
     @Override
     public void onReceive(Context context, Intent intent) {
@@ -41,46 +51,41 @@ public class BroadcastReceiverGattServerOthers extends BroadcastReceiver {
 
             switch (intent.getAction()){
                 // TODO: 31.07.2024
-                case   BluetoothDevice.ACTION_ACL_DISCONNECTED :
+                case   BluetoothDevice.ACTION_NAME_CHANGED :
+                case   BluetoothDevice.ACTION_CLASS_CHANGED :
                     // TODO: 31.07.2024
-                    new Businesslogic_GattReflection(context,version).unpairDevice(bluetoothDevice);
-                    Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
-                            " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                            " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" +
-                            "intent.getAction() "+intent.getAction() + " intent.getAction() " +intent.getAction());
-                    break;
-                // TODO: 31.07.2024
-                // TODO: 31.07.2024
-                case  BluetoothDevice.ACTION_BOND_STATE_CHANGED :
+                    final Bl_BloadcastGatt_getDeviceClentGatt blBloadcastGattGetDeviceClentGatt=  new Bl_BloadcastGatt_getDeviceClentGatt(context,version);
+                    blBloadcastGattGetDeviceClentGatt.startingGetDeviceBLECkient(  intent ,   pendingResultAtomicReferenceServer,bluetoothDevice);
+
 
                     new Businesslogic_GattReflection(context,version).unpairDevice(bluetoothDevice);
+
+                    // TODO: 31.07.2024
+                    Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                            " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                            " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" +
+                            "intent.getAction() "+intent.getAction() + " intent.getAction() " +intent.getAction());
+                    break;
+                // TODO: 07.08.2024
+
+                case BluetoothAdapter.ACTION_STATE_CHANGED:
+                    // TODO: 26.08.2024
+                    BucceslogincStartServiceGattServer startServiceGattServer=  new BucceslogincStartServiceGattServer(context);
+
+                    startServiceGattServer. enadleBroadcastManager(version,intent);
+
+
+
+                    // TODO: 31.07.2024
                     Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                             " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
                             " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" +
                             "intent.getAction() "+intent.getAction() + " intent.getAction() " +intent.getAction());
                     break;
 
-                // TODO: 31.07.2024
-                // TODO: 31.07.2024
-                default:{
-                    Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
-                            " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                            " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" +
-                            "intent.getAction() "+intent.getAction() + " intent.getAction() " +intent.getAction());
-                    break;
-                }
             }
 
-
-
-
-
-
-
-
-
-
-            Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+            Log.i(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                     " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
                     " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" +
                     "intent.getAction() "+intent.getAction() + " version " +version);

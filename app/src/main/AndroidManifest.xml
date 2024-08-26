@@ -147,7 +147,7 @@
 
 
         <receiver
-            android:name=".businesslayer.bl_UUID.BroadcastreceiverServer.BroadcastReceiverGattServerAlcConn"
+            android:name=".businesslayer.BroadcastreceiverServer.BroadcastReceiverGattServerAlcConn"
             android:enabled="true"
             android:exported="true"
             android:process=":remote"
@@ -169,7 +169,7 @@
 
 
         <receiver
-            android:name=".businesslayer.bl_UUID.BroadcastreceiverServer.BroadcastReceiverGattServerName_Changed"
+            android:name=".businesslayer.BroadcastreceiverServer.BroadcastReceiverGattServerName_Changed"
             android:enabled="true"
             android:exported="true"
             android:process=":remote"
@@ -190,7 +190,7 @@
         </receiver>
 
         <receiver
-            android:name=".businesslayer.bl_UUID.BroadcastreceiverServer.BroadcastReceiverGattServerOthers"
+            android:name=".businesslayer.BroadcastreceiverServer.BroadcastReceiverGattServerOthers"
             android:enabled="true"
             android:exported="true"
             android:process=":remote"
