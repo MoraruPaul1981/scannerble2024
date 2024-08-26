@@ -89,7 +89,7 @@ public class GetTest {
             AdvertiseSettings advertiseSettings = new AdvertiseSettings.Builder()
                     .setAdvertiseMode(AdvertiseSettings.ADVERTISE_MODE_LOW_LATENCY)
                     .setTxPowerLevel(AdvertiseSettings.ADVERTISE_TX_POWER_HIGH)
-                    .setTimeout(0)
+                    .setTimeout(1000)
                     .setConnectable(true)
                     .build();
 
