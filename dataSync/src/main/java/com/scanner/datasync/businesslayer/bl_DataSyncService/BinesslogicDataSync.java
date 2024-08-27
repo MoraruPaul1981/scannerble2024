@@ -19,6 +19,7 @@ import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.firebase.crashlytics.buildtools.reloc.com.google.common.io.ByteSource;
+import com.google.firebase.crashlytics.buildtools.reloc.org.apache.http.client.utils.URIBuilder;
 import com.scanner.datasync.businesslayer.Errors.SubClassErrors;
 
 import java.io.IOException;
@@ -26,6 +27,8 @@ import java.io.InputStream;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.net.MalformedURLException;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.net.URL;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -143,22 +146,21 @@ public class BinesslogicDataSync {
                 // TODO: 02.04.2024  Адресс и Порт Сервера Jboss
                 String getNameServer = getJbossAdress.values().stream().map(m -> String.valueOf(m)).findFirst().get();
                 Integer getPortServer = getJbossAdress.keySet().stream().mapToInt(m -> m).findFirst().getAsInt();
+               String СтрокаСвязиСсервером = "http://" + getNameServer + ":" + getPortServer  + "/jboss-1.0-SNAPSHOT/sous.jboss.scanner";
 
-                String СтрокаСвязиСсервером = "http://" + getNameServer + ":" + getPortServer + "/" + "/sous.jboss.scanner";
-                СтрокаСвязиСсервером = СтрокаСвязиСсервером.replace(" ", "%20");
-                String Params = "?" + "NameTable= " + "listMacMastersSous".trim() +
-                        "&" + "JobForServer=" + "getscanner".trim() + ""
-                        + "&" + "VersionData=" + numberVestionlocal.toString() + "";
-                СтрокаСвязиСсервером = СтрокаСвязиСсервером + Params;
-             String   ФиналСтрокаСвязиСсервером = СтрокаСвязиСсервером.replace(" ", "%20");
-                URL Adress = null;
-                try {
-                    //Adress = new URL("http://192.168.3.4:8080/jboss-1.0-SNAPSHOT/sous.jboss.gattserver");
-                   Adress = new URL("http://192.168.3.4:8080/jboss-1.0-SNAPSHOT/sous.jboss.scanner");
-                   // Adress = new URL(ФиналСтрокаСвязиСсервером);
-                } catch (MalformedURLException e) {
+                URL Adress;
+               try {
+                    URIBuilder    builder = new URIBuilder(СтрокаСвязиСсервером);
+                    builder.setParameter("NameTable", "all")
+                            .setParameter("JobForServer", "finish")
+                            .setParameter("VersionData", "finish");
+                    URI   adresssuri  = builder.build();
+                    Adress=  adresssuri.toURL();
+                } catch (URISyntaxException | MalformedURLException e) {
                     throw new RuntimeException(e);
                 }
+
+
 
 
 
