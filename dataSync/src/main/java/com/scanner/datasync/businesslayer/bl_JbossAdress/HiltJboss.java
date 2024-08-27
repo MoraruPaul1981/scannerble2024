@@ -25,11 +25,16 @@ public class HiltJboss {
     @Provides
     @Singleton
     @QualifierJbossServer3
-    public LinkedHashMap<Integer, String> getJbossAdressDebug(@ApplicationContext Context context) {
-        LinkedHashMap<Integer, String> МассивПортовСервераDebugandRelize = new LinkedHashMap();
+    public LinkedHashMap<String, String> getJbossAdressDebug(@ApplicationContext Context context) {
+        LinkedHashMap<String, String> МассивПортовСервераDebugandRelize = new LinkedHashMap();
         // TODO: 18.03.2023 московский сервер ЧЕРЕЗ DNS
         // TODO: 18.03.2023 московский сервер
-        МассивПортовСервераDebugandRelize.putIfAbsent(8080, "192.168.3.4");// TODO: 10.11.2022 ДЕбаг
+        МассивПортовСервераDebugandRelize.putIfAbsent("192.168.3.4" ,"8080/jboss-1.0-SNAPSHOT/sous.jboss.scanner");// TODO: 10.11.2022 ДЕбаг
+
+
+        Log.d(context.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" + " МассивПортовСервераDebugandRelize "+МассивПортовСервераDebugandRelize );
 
         return МассивПортовСервераDebugandRelize;
 
@@ -39,8 +44,8 @@ public class HiltJboss {
     @Provides
     @Singleton
     @QualifierJbossServer2
-    public LinkedHashMap<Integer, String> getHiltJbossReliz(@ApplicationContext Context context) {
-        LinkedHashMap<Integer, String> МассивПортовСервераReliz = new LinkedHashMap();
+    public LinkedHashMap<String, String> getHiltJbossReliz(@ApplicationContext Context context) {
+        LinkedHashMap<String, String> МассивПортовСервераReliz = new LinkedHashMap();
         // TODO: 18.03.2023 московский сервер ЧЕРЕЗ DNS
 /*
        МассивПортовСервера.putIfAbsent(8888,"base.dsu1.ru");// TODO: 10.11.2022 РЕЛИЗ  Москвовский
@@ -48,9 +53,13 @@ public class HiltJboss {
         МассивПортовСервера.putIfAbsent(8890,"base.dsu1.ru");// TODO: 10.11.2022 РЕЛИЗ  Москвовский
 */
         // TODO: 18.03.2023 московский сервер
-        МассивПортовСервераReliz.putIfAbsent(8888, "80.70.108.165");// TODO: 10.11.2022 РЕЛИЗ  Москвовский
-        МассивПортовСервераReliz.putIfAbsent(8890, "80.70.108.165");// TODO: 10.11.2022 РЕЛИЗ  Москвовский
-        МассивПортовСервераReliz.putIfAbsent(8889, "80.70.108.165");// TODO: 10.11.2022 РЕЛИЗ  Москвовский
+        МассивПортовСервераReliz.putIfAbsent( "80.70.108.165","8888/jboss-1.0-SNAPSHOT/sous.jboss.scanner");// TODO: 10.11.2022 РЕЛИЗ  Москвовский 8888
+        МассивПортовСервераReliz.putIfAbsent( "80.70.108.165","8890/jboss-1.0-SNAPSHOT/sous.jboss.scanner");// TODO: 10.11.2022 РЕЛИЗ  Москвовский 8890
+        МассивПортовСервераReliz.putIfAbsent(  "80.70.108.165","8889/jboss-1.0-SNAPSHOT/sous.jboss.scanner");// TODO: 10.11.2022 РЕЛИЗ  Москвовский 8889
+
+        Log.d(context.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" + " МассивПортовСервераReliz "+МассивПортовСервераReliz );
         return МассивПортовСервераReliz;
     }
 }

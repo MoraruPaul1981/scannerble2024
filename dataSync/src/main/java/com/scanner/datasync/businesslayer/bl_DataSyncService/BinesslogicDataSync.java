@@ -35,6 +35,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.Date;
 import java.util.LinkedHashMap;
 import java.util.Locale;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutionException;
@@ -115,7 +116,7 @@ public class BinesslogicDataSync {
 
     @SuppressLint("Range")
     public void callOkhhtpDataSyncService(@NonNull long version, @NonNull OkHttpClient.Builder getOkhhtpBuilder,
-                                          @NonNull LinkedHashMap<Integer, String> getJbossAdress,
+                                          @NonNull LinkedHashMap<String, String> getJbossAdress,
                                           @NonNull Cursor cursorlocal)
             throws ExecutionException, InterruptedException {
         // TODO: 22.08.2024  Коненпт провайдер для зааписив базу данных
@@ -125,48 +126,15 @@ public class BinesslogicDataSync {
             public void onSubscribe(@NonNull Disposable d) {
                 // TODO: 31.07.2024
                 // TODO: 23.08.2024
-
-                Long dateVestionlocal = 0l;
-                String numberVestionlocal = new String();
                 ANDROID_ID[0] = Settings.Secure.getString(context.getContentResolver(), Settings.Secure.ANDROID_ID);
                 // TODO: 26.08.2024
-                if (cursorlocal.getCount() > 0) {
-                    dateVestionlocal = cursorlocal.getLong(cursorlocal.getColumnIndex("current_table"));
-                    DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.SSS", new Locale("ru", "RU"));
-                    LocalDateTime futureDate = LocalDateTime.parse(cursorlocal.getString(cursorlocal.getColumnIndex("date_update")), dtf);
-                    numberVestionlocal = dtf.format(futureDate);
-                }
+
+                // TODO: 27.08.2024 получаем данные и вставляем их в  URL для отправки
+                URL Adress = getUrlndParametrs(cursorlocal,getJbossAdress,version);
 
                 Log.d(context.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                         " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                        " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" + " dateVestionlocal " + dateVestionlocal
-                        + " numberVestionlocal " + numberVestionlocal);
-
-
-                // TODO: 02.04.2024  Адресс и Порт Сервера Jboss
-                String getNameServer = getJbossAdress.values().stream().map(m -> String.valueOf(m)).findFirst().get();
-                Integer getPortServer = getJbossAdress.keySet().stream().mapToInt(m -> m).findFirst().getAsInt();
-               String СтрокаСвязиСсервером = "http://" + getNameServer + ":" + getPortServer  + "/jboss-1.0-SNAPSHOT/sous.jboss.scanner";
-
-                URL Adress;
-               try {
-                    URIBuilder    builder = new URIBuilder(СтрокаСвязиСсервером);
-                    builder.setParameter("NameTable", "all")
-                            .setParameter("JobForServer", "finish")
-                            .setParameter("VersionData", "finish");
-                    URI   adresssuri  = builder.build();
-                    Adress=  adresssuri.toURL();
-                } catch (URISyntaxException | MalformedURLException e) {
-                    throw new RuntimeException(e);
-                }
-
-
-
-
-
-                Log.d(context.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
-                        " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                        " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n");
+                        " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" +" Adress " +Adress);
                 OkHttpClient okHttpClientClientScanner = getOkhhtpBuilder.addInterceptor(new Interceptor() {
                             @Override
                             public Response intercept(Chain chain) throws IOException {
@@ -255,6 +223,8 @@ public class BinesslogicDataSync {
                         + " LocalDateTime.now() " + LocalDateTime.now().toString().toUpperCase() + "\n");
             }
 
+
+
             @Override
             public void onComplete() {
                 // TODO: 31.07.2024
@@ -294,7 +264,87 @@ public class BinesslogicDataSync {
     }
 
 
+    @SuppressLint("Range")
+    private URL getUrlndParametrs(@NonNull Cursor cursorlocal , @NonNull LinkedHashMap<String, String> getJbossAdress,@NonNull Long version) {
+        // TODO: 27.08.2024
+        final URL[] Adress = new URL[1];
 
+        Completable.complete().blockingSubscribe(new CompletableObserver() {
+            @Override
+            public void onSubscribe(@NonNull Disposable d) {
+                Long dateVestionlocal = 0l;
+                String numberVestionlocal = new String();
+                if (cursorlocal.getCount() > 0) {
+                    dateVestionlocal = cursorlocal.getLong(cursorlocal.getColumnIndex("current_table"));
+                    DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.SSS", new Locale("ru", "RU"));
+                    LocalDateTime futureDate = LocalDateTime.parse(cursorlocal.getString(cursorlocal.getColumnIndex("date_update")), dtf);
+                    numberVestionlocal = dtf.format(futureDate);
+                }
+
+                Log.d(context.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                        " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                        " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" + " dateVestionlocal " + dateVestionlocal
+                        + " numberVestionlocal " + numberVestionlocal);
+
+                // TODO: 02.04.2024  Адресс и Порт Сервера Jboss
+                String getPortServer = getJbossAdress.values().stream().findFirst().orElseGet(()->"");
+                String getNameServer = getJbossAdress.keySet().stream().findFirst().orElseGet(()->"");
+                String СтрокаСвязиСсервером = "http://" + getNameServer + ":" + getPortServer;
+
+
+                try {
+                    URIBuilder    builder = new URIBuilder(СтрокаСвязиСсервером);
+                    builder.setParameter("NameTable", "all")
+                            .setParameter("JobForServer", "finish")
+                            .setParameter("VersionData", "finish");
+                    URI   adresssuri  = builder.build();
+                    Adress[0] =  adresssuri.toURL();
+                    // TODO: 31.07.2024
+                    Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                            " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                            " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" + "\n"
+                            + " LocalDateTime.now() " + LocalDateTime.now().toString().toUpperCase() + "\n" + "Adress " + Adress[0]);
+                } catch (URISyntaxException | MalformedURLException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+
+            @Override
+            public void onComplete() {
+                // TODO: 31.07.2024
+                Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                        " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                        " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" + "\n"
+                        + " LocalDateTime.now() " + LocalDateTime.now().toString().toUpperCase() + "\n" + "Adress " + Adress[0]);
+            }
+
+            @Override
+            public void onError(@NonNull Throwable e) {
+                e.printStackTrace();
+                Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() + " Линия  :"
+                        + Thread.currentThread().getStackTrace()[2].getLineNumber());
+                ContentValues valuesЗаписываемОшибки = new ContentValues();
+                valuesЗаписываемОшибки.put("Error", e.toString().toLowerCase());
+                valuesЗаписываемОшибки.put("Klass", this.getClass().getName());
+                valuesЗаписываемОшибки.put("Metod", Thread.currentThread().getStackTrace()[2].getMethodName());
+                valuesЗаписываемОшибки.put("LineError", Thread.currentThread().getStackTrace()[2].getLineNumber());
+                final Object ТекущаяВерсияПрограммы = version;
+                Integer ЛокальнаяВерсияПОСравнение = Integer.parseInt(ТекущаяВерсияПрограммы.toString());
+                valuesЗаписываемОшибки.put("whose_error", ЛокальнаяВерсияПОСравнение);
+                new SubClassErrors(context).МетодЗаписиОшибок(valuesЗаписываемОшибки);
+            }
+        });
+
+
+
+        // TODO: 31.07.2024
+        Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" + "\n"
+                + " LocalDateTime.now() " + LocalDateTime.now().toString().toUpperCase() + "\n" + "Adress " + Adress[0]);
+
+        return Adress[0];
+    }
 
 
 
