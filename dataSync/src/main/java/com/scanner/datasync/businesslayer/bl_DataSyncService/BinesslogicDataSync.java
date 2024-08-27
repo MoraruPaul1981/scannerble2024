@@ -272,19 +272,21 @@ public class BinesslogicDataSync {
         Completable.complete().blockingSubscribe(new CompletableObserver() {
             @Override
             public void onSubscribe(@NonNull Disposable d) {
-                Long dateVestionlocal = 0l;
-                String numberVestionlocal = new String();
+                Long  versionlocal=0l;
+                String  bremylocal=new String();
                 if (cursorlocal.getCount() > 0) {
-                    dateVestionlocal = cursorlocal.getLong(cursorlocal.getColumnIndex("current_table"));
+                    // TODO: 27.08.2024
+                   versionlocal = cursorlocal.getLong(cursorlocal.getColumnIndex("current_table"));
+                    // TODO: 27.08.2024 bremy
                     DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.SSS", new Locale("ru", "RU"));
                     LocalDateTime futureDate = LocalDateTime.parse(cursorlocal.getString(cursorlocal.getColumnIndex("date_update")), dtf);
-                    numberVestionlocal = dtf.format(futureDate);
+                    bremylocal = dtf.format(futureDate);
                 }
 
                 Log.d(context.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                         " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                        " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" + " dateVestionlocal " + dateVestionlocal
-                        + " numberVestionlocal " + numberVestionlocal);
+                        " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" + " bremylocal " + bremylocal
+                        + " versionlocal " + versionlocal);
 
                 // TODO: 02.04.2024  Адресс и Порт Сервера Jboss
                 String getPortServer = getJbossAdress.values().stream().findFirst().orElseGet(()->"");
@@ -294,9 +296,10 @@ public class BinesslogicDataSync {
 
                 try {
                     URIBuilder    builder = new URIBuilder(СтрокаСвязиСсервером);
-                    builder.setParameter("NameTable", "all")
-                            .setParameter("JobForServer", "finish")
-                            .setParameter("VersionData", "finish");
+                    builder.setParameter("NameTable", "listMacMastersSous")
+                            .setParameter("JobForServer", "getscanner")
+                            .setParameter("bremylocal", bremylocal)
+                            .setParameter("versionlocal", versionlocal.toString());
                     URI   adresssuri  = builder.build();
                     Adress[0] =  adresssuri.toURL();
                     // TODO: 31.07.2024
