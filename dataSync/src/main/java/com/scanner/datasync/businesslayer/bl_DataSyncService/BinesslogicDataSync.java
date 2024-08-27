@@ -19,6 +19,7 @@ import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.firebase.crashlytics.buildtools.reloc.com.google.common.io.ByteSource;
+import com.google.firebase.crashlytics.buildtools.reloc.org.apache.http.client.methods.HttpGet;
 import com.google.firebase.crashlytics.buildtools.reloc.org.apache.http.client.utils.URIBuilder;
 import com.scanner.datasync.businesslayer.Errors.SubClassErrors;
 
@@ -128,7 +129,6 @@ public class BinesslogicDataSync {
                 // TODO: 23.08.2024
                 ANDROID_ID[0] = Settings.Secure.getString(context.getContentResolver(), Settings.Secure.ANDROID_ID);
                 // TODO: 26.08.2024
-
                 // TODO: 27.08.2024 получаем данные и вставляем их в  URL для отправки
                 URL Adress = getUrlndParametrs(cursorlocal,getJbossAdress,version);
 
@@ -295,7 +295,8 @@ public class BinesslogicDataSync {
 
 
                 try {
-                    URIBuilder    builder = new URIBuilder(СтрокаСвязиСсервером);
+                    HttpGet someHttpGet = new HttpGet(СтрокаСвязиСсервером);
+                    URIBuilder    builder = new URIBuilder(someHttpGet.getURI());
                     builder.setParameter("NameTable", "listMacMastersSous")
                             .setParameter("JobForServer", "getscanner")
                             .setParameter("bremylocal", bremylocal)
