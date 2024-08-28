@@ -210,16 +210,18 @@ public class ContentProviderScanner extends ContentProvider {
         AtomicReference<Uri> ОтветВставкиДанных = new AtomicReference<>();
         try {
             // TODO: 28.08.2024  Запись UPDATE
-         Integer resultUpdate=   binesslogicContentProvider.  workerForUpdateContentProvider(uri, extras, ОтветВставкиДанных,Create_Database_СамаБАзаSQLite);
+         Integer resultUpdate=   binesslogicContentProvider.  workerForUpdateContentProvider(uri, extras, ОтветВставкиДанных,Create_Database_СамаБАзаSQLite,version);
 
             // TODO: 28.08.2024  Запись неосредвствено в базу из Провайдера
             if (resultUpdate==0) {
                 // TODO: 28.08.2024  Запись INSERT
-                resultUpdate=   binesslogicContentProvider.  workerForInsertContentProvider(uri, extras, ОтветВставкиДанных,Create_Database_СамаБАзаSQLite);
+                resultUpdate=   binesslogicContentProvider.  workerForInsertContentProvider(uri, extras, ОтветВставкиДанных,Create_Database_СамаБАзаSQLite,version);
             }
-
             // TODO: 30.10.2021
             getContext().getContentResolver().notifyChange(ОтветВставкиДанных.get(), null);
+            // TODO: 28.08.2024
+            ОтветВставкиДанных.set( Uri.parse("content://"+resultUpdate.toString()));
+
             Log.d(this.getClass().getName(), "\n" + " class " +
                     Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                     " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
