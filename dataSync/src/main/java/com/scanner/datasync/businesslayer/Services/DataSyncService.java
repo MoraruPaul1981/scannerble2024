@@ -240,7 +240,7 @@ public class DataSyncService extends IntentService {
         JsonNode jsonNodeScannerBLE =binesslogincJakson.callJaksonDataSyncService(version,   getHiltJaksonObjectMapper,inputStreamJaksonByteScanner);
 
             // TODO: 23.08.2024  записываем JAKSON в Контент ПРовайер
-            binesslogincJakson.callContentResolverDataSyncService(version,jsonNodeScannerBLE);
+            binesslogincJakson.updateOperaticallContentResolver(version,jsonNodeScannerBLE);
 
             // TODO: 21.08.2024  
         Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +

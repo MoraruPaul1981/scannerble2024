@@ -110,84 +110,13 @@ public class BinesslogincJakson {
     }
 
 
-    // TODO: 28.08.2024
-    public void    callContentResolverDataSyncService(@NonNull long version,
-                                                @NonNull JsonNode  jsonNodeScannerBLE) {
-        // TODO: 28.08.2024
-        Completable completable=   Completable.fromAction(()->{
-// TODO: 28.08.2024
-            Flowable.fromIterable(jsonNodeScannerBLE)
-                    .onBackpressureBuffer().blockingForEach(row->{
-                        // TODO: 31.07.2024
-                        Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
-                                " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                                " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" + "\n"
-                                + " LocalDateTime.now() " + LocalDateTime.now().toString().toUpperCase() + "\n");
-
-                        // TODO: 28.08.2024
-
-
-
-
-
-
-
-
-
-
-
-
-                    },jsonNodeScannerBLE.size());
-
-
-            // TODO: 31.07.2024
-            Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
-                    " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                    " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" + "\n"
-                    + " LocalDateTime.now() " + LocalDateTime.now().toString().toUpperCase() + "\n");
-
-        }).doOnError(e->{
-            e.printStackTrace();
-            Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" +
-                    Thread.currentThread().getStackTrace()[2].getMethodName() + " Линия  :"
-                    + Thread.currentThread().getStackTrace()[2].getLineNumber());
-            ContentValues valuesЗаписываемОшибки = new ContentValues();
-            valuesЗаписываемОшибки.put("Error", e.toString().toLowerCase());
-            valuesЗаписываемОшибки.put("Klass", this.getClass().getName());
-            valuesЗаписываемОшибки.put("Metod", Thread.currentThread().getStackTrace()[2].getMethodName());
-            valuesЗаписываемОшибки.put("LineError", Thread.currentThread().getStackTrace()[2].getLineNumber());
-            final Object ТекущаяВерсияПрограммы = version;
-            Integer ЛокальнаяВерсияПОСравнение = Integer.parseInt(ТекущаяВерсияПрограммы.toString());
-            valuesЗаписываемОшибки.put("whose_error", ЛокальнаяВерсияПОСравнение);
-            new SubClassErrors(context).МетодЗаписиОшибок(valuesЗаписываемОшибки);
-
-        }).doOnComplete(()->{
-            // TODO: 31.07.2024
-            Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
-                    " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                    " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" + "\n"
-                    + " LocalDateTime.now() " + LocalDateTime.now().toString().toUpperCase() + "\n");
-
-
-        });
-        // TODO: 28.08.2024
-        if (jsonNodeScannerBLE.size()>0) {
-            completable.blockingSubscribe();
-        }
-        // TODO: 31.07.2024
-        Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
-                " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" + "\n"
-                + " LocalDateTime.now() " + LocalDateTime.now().toString().toUpperCase() + "\n");
-        // TODO: 28.08.2024
-    }
 
 
 // TODO: 28.08.2024
 
 
 
-    long updateOperation(@NonNull long version, @NonNull JsonNode jsonNodeParentMAP){
+    public long updateOperaticallContentResolver(@NonNull long version, @NonNull JsonNode jsonNodeParentMAP){
         // TODO: 28.08.2024
        AtomicReference<Integer>  updateResult=new AtomicReference<>();
         // TODO: 28.08.2024

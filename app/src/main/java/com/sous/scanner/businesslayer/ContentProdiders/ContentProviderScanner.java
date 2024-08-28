@@ -13,7 +13,6 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.CancellationSignal;
 import android.os.Handler;
-import android.os.Vibrator;
 import android.util.Log;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -24,17 +23,16 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.sous.scanner.businesslayer.Errors.SubClassErrors;
 import com.sous.scanner.datalayer.local.CREATE_DATABASEScanner;
 
-import java.io.Serializable;
+import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.Optional;
 import java.util.concurrent.CopyOnWriteArrayList;
+import java.util.concurrent.atomic.AtomicReference;
 import java.util.function.Consumer;
 
 import javax.inject.Inject;
 
-import dagger.hilt.EntryPoint;
-import dagger.hilt.android.AndroidEntryPoint;
-import dagger.hilt.android.HiltAndroidApp;
+import io.reactivex.rxjava3.core.Flowable;
 
 
 public class ContentProviderScanner extends ContentProvider {
@@ -205,46 +203,60 @@ public class ContentProviderScanner extends ContentProvider {
     public Uri insert(@NonNull Uri uri, @Nullable ContentValues values, @Nullable Bundle extras) {
         //return super.insert(uri, values, extras);
         // TODO: Implement this to handle requests to insert a new row.
-        Uri  ОтветВставкиДанных = null;
+        AtomicReference<Uri> ОтветВставкиДанных = new AtomicReference<>();
         try {
             if (!Create_Database_СамаБАзаSQLite.inTransaction()) {
                 Create_Database_СамаБАзаSQLite.beginTransaction();
             }
             Log.d(this.getClass().getName(), " uri"+uri );
-
-            JsonNode jsonNodeParentMAP=  (JsonNode)  extras.getSerializable("jsonNodeParentMAP");
+            JsonNode jsonNodeScannerBLE=  (JsonNode)  extras.getSerializable("jsonNodeParentMAP");
             String SQlOperInsert= (String) extras.getSerializable("sql" );
             String nametable = (String) extras.getSerializable("nametable");
 
+            if (jsonNodeScannerBLE.size()>0) {
+                // TODO: 28.08.2024
+                Flowable.fromIterable(jsonNodeScannerBLE)
+                        .onBackpressureBuffer().blockingForEach(rowJakson->{
+                            // TODO: 31.07.2024
+                            Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                                    " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                                    " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" + "\n"
+                                    + " LocalDateTime.now() " + LocalDateTime.now().toString().toUpperCase() + "\n");
 
-            SQLiteStatement sqLiteStatementInsert= Create_Database_СамаБАзаSQLite.compileStatement(SQlOperInsert);
-            sqLiteStatementInsert.clearBindings();
-            // TODO: 04.07.2023 цикл данных
-            sqLiteStatementInsert.bindLong(1,jsonNodeParentMAP.get("name").intValue());//"id"
-            sqLiteStatementInsert.bindString(2,jsonNodeParentMAP.get("macadress").asText().trim());//"name"
-            sqLiteStatementInsert.bindLong(3,jsonNodeParentMAP.get("plot").intValue());//"fullname"
-            sqLiteStatementInsert.bindString(4,jsonNodeParentMAP.get("date_update").asText().trim());//"date_update"
-            sqLiteStatementInsert.bindLong(5,jsonNodeParentMAP.get("user_update").intValue());//"user_update"
-            sqLiteStatementInsert.bindLong(6,jsonNodeParentMAP.get("current_table").longValue());//"current_table"
-            sqLiteStatementInsert.bindLong(7,jsonNodeParentMAP.get("uuid").longValue());//"uuid"
-            // TODO: 07.07.2023 ДЛя Состыковки
-            sqLiteStatementInsert.bindLong(8,jsonNodeParentMAP.get("uuid").longValue());//"uuid уже для UUID"
+                            // TODO: 28.08.2024
+                            SQLiteStatement sqLiteStatementInsert= Create_Database_СамаБАзаSQLite.compileStatement(SQlOperInsert);
+                            sqLiteStatementInsert.clearBindings();
+                            // TODO: 04.07.2023 цикл данных
+                            sqLiteStatementInsert.bindString(1,rowJakson.get("name").asText().trim());//"id"
+                            sqLiteStatementInsert.bindString(2,rowJakson.get("macadress").asText().trim());//"name"
+                            sqLiteStatementInsert.bindLong(3,rowJakson.get("plot").intValue());//"fullname"
+                            sqLiteStatementInsert.bindString(4,rowJakson.get("date_update").asText().trim());//"date_update"
+                            sqLiteStatementInsert.bindLong(5,rowJakson.get("user_update").intValue());//"user_update"
+                            sqLiteStatementInsert.bindLong(6,rowJakson.get("current_table").longValue());//"current_table"
+                            sqLiteStatementInsert.bindLong(7,rowJakson.get("uuid").longValue());//"uuid"
+                            // TODO: 07.07.2023 ДЛя Состыковки
+                            sqLiteStatementInsert.bindLong(8,rowJakson.get("uuid").longValue());//"uuid уже для UUID"
 
-       Integer resultUpdate=     sqLiteStatementInsert.executeUpdateDelete();
+                            Integer resultUpdate=     sqLiteStatementInsert.executeUpdateDelete();
 
-            Log.d(this.getClass().getName(), "\n" + " class " +
-                    Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
-                    " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                    " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"
-                    + sqLiteStatementInsert  + "sqLiteStatementInsert");
+                            Log.d(this.getClass().getName(), "\n" + " class " +
+                                    Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                                    " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                                    " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"
+                                    + sqLiteStatementInsert  + "sqLiteStatementInsert");
 
-            ОтветВставкиДанных  = Uri.parse("content://"+resultUpdate.toString());
-            if (resultUpdate> 0) {
-                if (Create_Database_СамаБАзаSQLite.inTransaction()) {
-                    Create_Database_СамаБАзаSQLite.setTransactionSuccessful();
-                    // TODO: 22.09.2022 увеличивает версию данных
-                }
+                            ОтветВставкиДанных.set(Uri.parse("content://" + resultUpdate.toString()));
+                            if (resultUpdate> 0) {
+                                if (Create_Database_СамаБАзаSQLite.inTransaction()) {
+                                    Create_Database_СамаБАзаSQLite.setTransactionSuccessful();
+                                    // TODO: 22.09.2022 увеличивает версию данных
+                                }
+                            }
+
+                        },jsonNodeScannerBLE.size());
             }
+
+
             if (Create_Database_СамаБАзаSQLite.inTransaction()) {
                 Create_Database_СамаБАзаSQLite.endTransaction();
             }
@@ -264,7 +276,7 @@ public class ContentProviderScanner extends ContentProvider {
             valuesЗаписываемОшибки.put("whose_error",ЛокальнаяВерсияПОСравнение);
             new SubClassErrors(getContext()).МетодЗаписиОшибок(valuesЗаписываемОшибки);
         }
-        return ОтветВставкиДанных;
+        return ОтветВставкиДанных.get();
 
     }
 
