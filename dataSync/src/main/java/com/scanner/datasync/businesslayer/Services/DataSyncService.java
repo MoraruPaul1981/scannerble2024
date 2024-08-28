@@ -24,11 +24,13 @@ import androidx.annotation.RequiresApi;
 import androidx.core.app.ActivityCompat;
 import androidx.core.app.NotificationCompat;
 
+import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.firebase.crashlytics.buildtools.reloc.com.google.common.util.concurrent.AtomicDouble;
 import com.scanner.datasync.businesslayer.Errors.SubClassErrors;
 
 import com.scanner.datasync.businesslayer.bl_DataSyncService.BinesslogicDataSync;
+import com.scanner.datasync.businesslayer.bl_Jakson.BinesslogincJakson;
 import com.scanner.datasync.businesslayer.bl_JbossAdress.QualifierJbossServer2;
 import com.scanner.datasync.businesslayer.bl_JbossAdress.QualifierJbossServer3;
 import com.scanner.datasync.datalayer.local.BinesslogicGetCursors;
@@ -62,6 +64,8 @@ public class DataSyncService extends IntentService {
     private  long version;
     @Inject
     BinesslogicDataSync binesslogicDataSync;
+    @Inject
+    BinesslogincJakson binesslogincJakson;
     private  ContentResolver resolver ;
 
 
@@ -232,17 +236,18 @@ public class DataSyncService extends IntentService {
             InputStream inputStreamJaksonByteScanner=     binesslogicDataSync.callOkhhtpDataSyncService(version,
                     getOkhhtpBuilder,getJbossAdressDebug,cursorlocal);
 
-        /*    // TODO: 26.08.2024  полученые данные поднотпаливаем для Записи
-            binesslogicDataSync.callJaksonDataSyncService(version,   getHiltJaksonObjectMapper);
+        // TODO: 26.08.2024  преобразовываем данеы в модель JAKSON
+        JsonNode jsonNodeScannerBLE =binesslogincJakson.callJaksonDataSyncService(version,   getHiltJaksonObjectMapper,inputStreamJaksonByteScanner);
 
-            // TODO: 23.08.2024  записываем Данные
-            binesslogicDataSync.callContentResolverDataSyncService(version,resolver);*/
+            // TODO: 23.08.2024  записываем JAKSON в Контент ПРовайер
+            binesslogincJakson.callContentResolverDataSyncService(version,jsonNodeScannerBLE);
 
             // TODO: 21.08.2024  
         Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                 " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
                 " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" + " cursorlocal " +cursorlocal +
-                " inputStreamJaksonByteScanner "+ inputStreamJaksonByteScanner);
+                " inputStreamJaksonByteScanner "+ inputStreamJaksonByteScanner  +" jsonNodeScannerBLE " +jsonNodeScannerBLE);
+            // TODO: 28.08.2024
     } catch (Exception e) {
         e.printStackTrace();
         Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" +

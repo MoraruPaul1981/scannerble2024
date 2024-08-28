@@ -8,6 +8,7 @@ import android.content.pm.PackageInfo;
 import android.content.pm.ProviderInfo;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.database.sqlite.SQLiteStatement;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.CancellationSignal;
@@ -19,9 +20,11 @@ import androidx.annotation.Nullable;
 import androidx.loader.content.AsyncTaskLoader;
 
 
+import com.fasterxml.jackson.databind.JsonNode;
 import com.sous.scanner.businesslayer.Errors.SubClassErrors;
 import com.sous.scanner.datalayer.local.CREATE_DATABASEScanner;
 
+import java.io.Serializable;
 import java.util.Date;
 import java.util.Optional;
 import java.util.concurrent.CopyOnWriteArrayList;
@@ -196,6 +199,81 @@ public class ContentProviderScanner extends ContentProvider {
         }
         return ОтветВставкиДанных;
     }
+
+    @Nullable
+    @Override
+    public Uri insert(@NonNull Uri uri, @Nullable ContentValues values, @Nullable Bundle extras) {
+        //return super.insert(uri, values, extras);
+        // TODO: Implement this to handle requests to insert a new row.
+        Uri  ОтветВставкиДанных = null;
+        try {
+            if (!Create_Database_СамаБАзаSQLite.inTransaction()) {
+                Create_Database_СамаБАзаSQLite.beginTransaction();
+            }
+            Log.d(this.getClass().getName(), " uri"+uri );
+
+            JsonNode jsonNodeParentMAP=  (JsonNode)  extras.getSerializable("jsonNodeParentMAP");
+            String SQlOperInsert= (String) extras.getSerializable("sql" );
+            String nametable = (String) extras.getSerializable("nametable");
+
+
+            SQLiteStatement sqLiteStatementInsert= Create_Database_СамаБАзаSQLite.compileStatement(SQlOperInsert);
+            sqLiteStatementInsert.clearBindings();
+            // TODO: 04.07.2023 цикл данных
+            sqLiteStatementInsert.bindLong(1,jsonNodeParentMAP.get("name").intValue());//"id"
+            sqLiteStatementInsert.bindString(2,jsonNodeParentMAP.get("macadress").asText().trim());//"name"
+            sqLiteStatementInsert.bindLong(3,jsonNodeParentMAP.get("plot").intValue());//"fullname"
+            sqLiteStatementInsert.bindString(4,jsonNodeParentMAP.get("date_update").asText().trim());//"date_update"
+            sqLiteStatementInsert.bindLong(5,jsonNodeParentMAP.get("user_update").intValue());//"user_update"
+            sqLiteStatementInsert.bindLong(6,jsonNodeParentMAP.get("current_table").longValue());//"current_table"
+            sqLiteStatementInsert.bindLong(7,jsonNodeParentMAP.get("uuid").longValue());//"uuid"
+            // TODO: 07.07.2023 ДЛя Состыковки
+            sqLiteStatementInsert.bindLong(8,jsonNodeParentMAP.get("uuid").longValue());//"uuid уже для UUID"
+
+       Integer resultUpdate=     sqLiteStatementInsert.executeUpdateDelete();
+
+            Log.d(this.getClass().getName(), "\n" + " class " +
+                    Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                    " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                    " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"
+                    + sqLiteStatementInsert  + "sqLiteStatementInsert");
+
+            ОтветВставкиДанных  = Uri.parse("content://"+resultUpdate.toString());
+            if (resultUpdate> 0) {
+                if (Create_Database_СамаБАзаSQLite.inTransaction()) {
+                    Create_Database_СамаБАзаSQLite.setTransactionSuccessful();
+                    // TODO: 22.09.2022 увеличивает версию данных
+                }
+            }
+            if (Create_Database_СамаБАзаSQLite.inTransaction()) {
+                Create_Database_СамаБАзаSQLite.endTransaction();
+            }
+            // TODO: 30.10.2021
+            getContext().getContentResolver().notifyChange(uri, null);
+        } catch (Exception e) {
+            e.printStackTrace();
+            Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() + " Линия  :"
+                    + Thread.currentThread().getStackTrace()[2].getLineNumber());
+            ContentValues valuesЗаписываемОшибки=new ContentValues();
+            valuesЗаписываемОшибки.put("Error",e.toString().toLowerCase());
+            valuesЗаписываемОшибки.put("Klass",this.getClass().getName());
+            valuesЗаписываемОшибки.put("Metod",Thread.currentThread().getStackTrace()[2].getMethodName());
+            valuesЗаписываемОшибки.put("LineError",   Thread.currentThread().getStackTrace()[2].getLineNumber());
+            final Object ТекущаяВерсияПрограммы = version;
+            Integer   ЛокальнаяВерсияПОСравнение = Integer.parseInt(ТекущаяВерсияПрограммы.toString());
+            valuesЗаписываемОшибки.put("whose_error",ЛокальнаяВерсияПОСравнение);
+            new SubClassErrors(getContext()).МетодЗаписиОшибок(valuesЗаписываемОшибки);
+        }
+        return ОтветВставкиДанных;
+
+    }
+
+
+
+
+
+
+
 
 
 
