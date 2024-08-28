@@ -33,6 +33,7 @@ import com.scanner.datasync.businesslayer.bl_JbossAdress.QualifierJbossServer2;
 import com.scanner.datasync.businesslayer.bl_JbossAdress.QualifierJbossServer3;
 import com.scanner.datasync.datalayer.local.BinesslogicGetCursors;
 
+import java.io.InputStream;
 import java.util.LinkedHashMap;
 import java.util.function.ToDoubleBiFunction;
 
@@ -225,13 +226,11 @@ public class DataSyncService extends IntentService {
     protected void onHandleIntent(Intent intent) {
         try{
           // TODO: 22.08.2024  повсе всего Работы Службы Синхронихации запускаем Фрагмент Сканера   , Самая последная Операция
-
-
             // TODO: 26.08.2024  получаем данные ЛОкальыне с версией данных
             Cursor cursorlocal =     binesslogicGetCursors. getLocalDataSyncService(version,resolver);
-
             // TODO: 26.08.2024  получаем данные от Сервера
-            binesslogicDataSync.callOkhhtpDataSyncService(version,   getOkhhtpBuilder,getJbossAdressDebug,cursorlocal);
+            InputStream inputStreamJaksonByteScanner=     binesslogicDataSync.callOkhhtpDataSyncService(version,
+                    getOkhhtpBuilder,getJbossAdressDebug,cursorlocal);
 
         /*    // TODO: 26.08.2024  полученые данные поднотпаливаем для Записи
             binesslogicDataSync.callJaksonDataSyncService(version,   getHiltJaksonObjectMapper);
@@ -242,10 +241,12 @@ public class DataSyncService extends IntentService {
             // TODO: 21.08.2024  
         Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                 " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n");
+                " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" + " cursorlocal " +cursorlocal +
+                " inputStreamJaksonByteScanner "+ inputStreamJaksonByteScanner);
     } catch (Exception e) {
         e.printStackTrace();
-        Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() + " Линия  :"
+        Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" +
+                Thread.currentThread().getStackTrace()[2].getMethodName() + " Линия  :"
                 + Thread.currentThread().getStackTrace()[2].getLineNumber());
         ContentValues valuesЗаписываемОшибки = new ContentValues();
         valuesЗаписываемОшибки.put("Error", e.toString().toLowerCase());
