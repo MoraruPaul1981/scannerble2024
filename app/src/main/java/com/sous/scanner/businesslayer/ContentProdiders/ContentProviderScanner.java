@@ -20,6 +20,7 @@ import androidx.loader.content.AsyncTaskLoader;
 
 
 import com.fasterxml.jackson.databind.JsonNode;
+import com.scanner.datasync.businesslayer.bl_ContentProviders.BinesslogicContentProvider;
 import com.sous.scanner.businesslayer.Errors.SubClassErrors;
 import com.sous.scanner.datalayer.local.CREATE_DATABASEScanner;
 
@@ -43,6 +44,7 @@ public class ContentProviderScanner extends ContentProvider {
     private Integer ТекущаяСтрокаПриДОбавлениииURL=0;
     private     Long  version=0l;
     private  CopyOnWriteArrayList<String> ИменаТаблицыОтАндройда;
+    private BinesslogicContentProvider binesslogicContentProvider;
 
     public @Inject ContentProviderScanner()   {
 
@@ -59,6 +61,8 @@ public class ContentProviderScanner extends ContentProvider {
             version = pInfo.getLongVersionCode();
 
             Create_Database_СамаБАзаSQLite=new CREATE_DATABASEScanner(getContext()).getССылкаНаСозданнуюБазу();
+
+            binesslogicContentProvider=new BinesslogicContentProvider(getContext(), version);
 
 
             if (Create_Database_СамаБАзаSQLite!=null) {
@@ -205,63 +209,24 @@ public class ContentProviderScanner extends ContentProvider {
         // TODO: Implement this to handle requests to insert a new row.
         AtomicReference<Uri> ОтветВставкиДанных = new AtomicReference<>();
         try {
-            if (!Create_Database_СамаБАзаSQLite.inTransaction()) {
-                Create_Database_СамаБАзаSQLite.beginTransaction();
-            }
-            Log.d(this.getClass().getName(), " uri"+uri );
-            JsonNode jsonNodeScannerBLE=  (JsonNode)  extras.getSerializable("jsonNodeParentMAP");
-            String SQlOperInsert= (String) extras.getSerializable("sql" );
-            String nametable = (String) extras.getSerializable("nametable");
+            // TODO: 28.08.2024  Запись UPDATE
+         Integer resultUpdate=   binesslogicContentProvider.  workerForUpdateContentProvider(uri, extras, ОтветВставкиДанных,Create_Database_СамаБАзаSQLite);
 
-            if (jsonNodeScannerBLE.size()>0) {
-                // TODO: 28.08.2024
-                Flowable.fromIterable(jsonNodeScannerBLE)
-                        .onBackpressureBuffer().blockingForEach(rowJakson->{
-                            // TODO: 31.07.2024
-                            Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
-                                    " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                                    " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" + "\n"
-                                    + " LocalDateTime.now() " + LocalDateTime.now().toString().toUpperCase() + "\n");
-
-                            // TODO: 28.08.2024
-                            SQLiteStatement sqLiteStatementInsert= Create_Database_СамаБАзаSQLite.compileStatement(SQlOperInsert);
-                            sqLiteStatementInsert.clearBindings();
-                            // TODO: 04.07.2023 цикл данных
-                            sqLiteStatementInsert.bindString(1,rowJakson.get("name").asText().trim());//"id"
-                            sqLiteStatementInsert.bindString(2,rowJakson.get("macadress").asText().trim());//"name"
-                            sqLiteStatementInsert.bindLong(3,rowJakson.get("plot").intValue());//"fullname"
-                            sqLiteStatementInsert.bindString(4,rowJakson.get("date_update").asText().trim());//"date_update"
-                            sqLiteStatementInsert.bindLong(5,rowJakson.get("user_update").intValue());//"user_update"
-                            sqLiteStatementInsert.bindLong(6,rowJakson.get("current_table").longValue());//"current_table"
-                            sqLiteStatementInsert.bindLong(7,rowJakson.get("uuid").longValue());//"uuid"
-                            // TODO: 07.07.2023 ДЛя Состыковки
-                            sqLiteStatementInsert.bindLong(8,rowJakson.get("uuid").longValue());//"uuid уже для UUID"
-
-                            Integer resultUpdate=     sqLiteStatementInsert.executeUpdateDelete();
-
-                            Log.d(this.getClass().getName(), "\n" + " class " +
-                                    Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
-                                    " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                                    " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"
-                                    + sqLiteStatementInsert  + "sqLiteStatementInsert");
-
-                            ОтветВставкиДанных.set(Uri.parse("content://" + resultUpdate.toString()));
-                            if (resultUpdate> 0) {
-                                if (Create_Database_СамаБАзаSQLite.inTransaction()) {
-                                    Create_Database_СамаБАзаSQLite.setTransactionSuccessful();
-                                    // TODO: 22.09.2022 увеличивает версию данных
-                                }
-                            }
-
-                        },jsonNodeScannerBLE.size());
+            // TODO: 28.08.2024  Запись неосредвствено в базу из Провайдера
+            if (resultUpdate==0) {
+                // TODO: 28.08.2024  Запись INSERT
+                resultUpdate=   binesslogicContentProvider.  workerForInsertContentProvider(uri, extras, ОтветВставкиДанных,Create_Database_СамаБАзаSQLite);
             }
 
-
-            if (Create_Database_СамаБАзаSQLite.inTransaction()) {
-                Create_Database_СамаБАзаSQLite.endTransaction();
-            }
             // TODO: 30.10.2021
             getContext().getContentResolver().notifyChange(uri, null);
+            Log.d(this.getClass().getName(), "\n" + " class " +
+                    Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                    " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                    " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"
+                    + "resultUpdate"  +resultUpdate);
+
+
         } catch (Exception e) {
             e.printStackTrace();
             Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() + " Линия  :"
@@ -279,12 +244,6 @@ public class ContentProviderScanner extends ContentProvider {
         return ОтветВставкиДанных.get();
 
     }
-
-
-
-
-
-
 
 
 
