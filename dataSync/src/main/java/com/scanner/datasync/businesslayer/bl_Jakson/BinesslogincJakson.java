@@ -125,7 +125,9 @@ public class BinesslogincJakson {
           String  SQlOperUpdate=  " UPDATE  listMacMastersSous SET     name=?,macadress=?,  plot=?," +
                   " date_update=?,user_update=? , current_table=?,uuid=?      WHERE  uuid=?  ;";
           // TODO: 28.08.2024
-          Integer getStatementResult =setSqliteStatement(  version,   jsonNodeParentMAP,    SQlOperUpdate);
+          String  SQlOperInsert=  " REPLACE INTO listMacMastersSous VALUES(?,?,?,?,?,?,? ); ;";
+          // TODO: 28.08.2024
+          Integer getStatementResult =setSqliteStatement(  version,   jsonNodeParentMAP,    SQlOperUpdate,SQlOperInsert);
           // TODO: 04.07.2023  UPDARE Organization
           updateResult.set(getStatementResult);
                   // TODO: 31.07.2024
@@ -164,7 +166,7 @@ public class BinesslogincJakson {
 
 
     @SuppressLint("NewApi")
-    Integer setSqliteStatement(@NonNull long version, @NonNull JsonNode jsonNodeParentMAP, @NonNull    String SQlOperInsert){
+    Integer setSqliteStatement(@NonNull long version, @NonNull JsonNode jsonNodeParentMAP, @NonNull    String SQlOperUpdate,@NonNull String  SQlOperInsert){
         // TODO: 28.08.2024
         AtomicReference<Integer>  getStatementResult=new AtomicReference<>();
         // TODO: 28.08.2024
@@ -174,7 +176,8 @@ public class BinesslogincJakson {
             ContentResolver resolver = context.getContentResolver();
             Bundle bundleScannerBLEOtServerJBoss=new Bundle();
             bundleScannerBLEOtServerJBoss.putSerializable("jsonNodeParentMAP", (Serializable) jsonNodeParentMAP);
-            bundleScannerBLEOtServerJBoss.putSerializable("sql", SQlOperInsert);
+            bundleScannerBLEOtServerJBoss.putSerializable("sqlupdate", SQlOperUpdate);
+            bundleScannerBLEOtServerJBoss.putSerializable("sqlinsert", SQlOperInsert);
             bundleScannerBLEOtServerJBoss.putSerializable("nametable", "listMacMastersSous");
 
             Uri    insertData=   resolver.insert(uri, null,bundleScannerBLEOtServerJBoss);

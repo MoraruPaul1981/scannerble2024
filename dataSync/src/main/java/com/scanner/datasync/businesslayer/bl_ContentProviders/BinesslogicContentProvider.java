@@ -44,7 +44,7 @@ public class BinesslogicContentProvider {
         }
         Log.d(this.getClass().getName(), " uri"+ uri);
         JsonNode jsonNodeScannerBLE=  (JsonNode)  extras.getSerializable("jsonNodeParentMAP");
-        String SQlOperInsert= (String) extras.getSerializable("sql" );
+        String SQlOperUpdate= (String) extras.getSerializable("sqlupdate" );
         String nametable = (String) extras.getSerializable("nametable");
 
         if (jsonNodeScannerBLE.size()>0) {
@@ -58,7 +58,7 @@ public class BinesslogicContentProvider {
                                 + " LocalDateTime.now() " + LocalDateTime.now().toString().toUpperCase() + "\n");
 
                         // TODO: 28.08.2024
-                        SQLiteStatement sqLiteStatementInsert= Create_Database_СамаБАзаSQLite.compileStatement(SQlOperInsert);
+                        SQLiteStatement sqLiteStatementInsert= Create_Database_СамаБАзаSQLite.compileStatement(SQlOperUpdate);
                         sqLiteStatementInsert.clearBindings();
                         // TODO: 04.07.2023 цикл данных
                         sqLiteStatementInsert.bindString(1,rowJakson.get("name").asText().trim());//"id"
@@ -110,13 +110,13 @@ public class BinesslogicContentProvider {
 
 
         // TODO: 28.08.2024
-        AtomicReference<Integer>  resultUpdate=new AtomicReference<>();
+        AtomicReference<Long>  resultInsert=new AtomicReference<>();
         if (!Create_Database_СамаБАзаSQLite.inTransaction()) {
             Create_Database_СамаБАзаSQLite.beginTransaction();
         }
         Log.d(this.getClass().getName(), " uri"+ uri);
         JsonNode jsonNodeScannerBLE=  (JsonNode)  extras.getSerializable("jsonNodeParentMAP");
-        String SQlOperInsert= (String) extras.getSerializable("sql" );
+        String SQlOperInsert= (String) extras.getSerializable("sqlinsert" );
         String nametable = (String) extras.getSerializable("nametable");
 
         if (jsonNodeScannerBLE.size()>0) {
@@ -143,16 +143,16 @@ public class BinesslogicContentProvider {
                         // TODO: 07.07.2023 ДЛя Состыковки
                         sqLiteStatementInsert.bindLong(8,rowJakson.get("uuid").longValue());//"uuid уже для UUID"
 
-                        resultUpdate.set(sqLiteStatementInsert.executeUpdateDelete());
+                        resultInsert.set(sqLiteStatementInsert.executeInsert());
 
                         Log.d(this.getClass().getName(), "\n" + " class " +
                                 Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                                 " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
                                 " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"
-                                + sqLiteStatementInsert  + "sqLiteStatementInsert" + " resultUpdate.get() " +resultUpdate.get());
+                                + sqLiteStatementInsert  + "sqLiteStatementInsert" + " resultInsert.get() " +resultInsert.get());
 
-                        ОтветВставкиДанных.set(Uri.parse("content://" + resultUpdate.toString()));
-                        if (resultUpdate.get()> 0) {
+                        ОтветВставкиДанных.set(Uri.parse("content://" + resultInsert.toString()));
+                        if (resultInsert.get()> 0) {
                             if (Create_Database_СамаБАзаSQLite.inTransaction()) {
                                 Create_Database_СамаБАзаSQLite.setTransactionSuccessful();
                                 // TODO: 22.09.2022 увеличивает версию данных
@@ -169,7 +169,7 @@ public class BinesslogicContentProvider {
                 " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
                 " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" + "\n"
                 + " LocalDateTime.now() " + LocalDateTime.now().toString().toUpperCase() + "\n");
-        return  resultUpdate.get();
+        return  resultInsert.get().intValue();
     }
 
 

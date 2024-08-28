@@ -219,7 +219,7 @@ public class ContentProviderScanner extends ContentProvider {
             }
 
             // TODO: 30.10.2021
-            getContext().getContentResolver().notifyChange(uri, null);
+            getContext().getContentResolver().notifyChange(ОтветВставкиДанных.get(), null);
             Log.d(this.getClass().getName(), "\n" + " class " +
                     Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                     " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
