@@ -87,38 +87,91 @@ public class BinesslogicGetCursors {
 
     }
 
+// TODO: 29.08.2024
+public Cursor getMAXBremyLocalDataSyncService(@NonNull long version, @NonNull ContentResolver resolver) {
+    // TODO: 26.08.2024
+    Single<Cursor> cursorlocal = Single.fromCallable(new Callable<Cursor>() {
+                @Override
+                public Cursor call() throws Exception {
+                    // TODO: 31.07.2024
+                    // TODO: 22.08.2024  Коненпт провайдер для зааписив базу данных
+                    Uri uri = Uri.parse("content://com.sous.scanner.prodider/" + "listMacMastersSous" + "");
+                    Cursor cursorLocal = resolver.query(uri, null,
+                            "SELECT * FROM listMacMastersSous where date_update IN ( select max(date_update) FROM listMacMastersSous   )", null, null, null);
+                    if (cursorLocal.getCount() > 0) {
+                        cursorLocal.moveToFirst();
+                    }
+                    // TODO: 31.07.2024
+                    Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                            " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                            " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" + "\n"
+                            + " LocalDateTime.now() " + LocalDateTime.now().toString().toUpperCase() + "\n" + " cursorLocal " + cursorLocal);
+                    return cursorLocal;
+                }
+            }).subscribeOn(Schedulers.single())
+            .doOnError(new Consumer<Throwable>() {
+                @Override
+                public void accept(Throwable throwable) throws Throwable {
+                    throwable.printStackTrace();
+                    Log.e(this.getClass().getName(), "Ошибка " + throwable + " Метод :" +
+                            Thread.currentThread().getStackTrace()[2].getMethodName() + " Линия  :"
+                            + Thread.currentThread().getStackTrace()[2].getLineNumber());
+                    ContentValues valuesЗаписываемОшибки = new ContentValues();
+                    valuesЗаписываемОшибки.put("Error", throwable.toString().toLowerCase());
+                    valuesЗаписываемОшибки.put("Klass", this.getClass().getName());
+                    valuesЗаписываемОшибки.put("Metod", Thread.currentThread().getStackTrace()[2].getMethodName());
+                    valuesЗаписываемОшибки.put("LineError", Thread.currentThread().getStackTrace()[2].getLineNumber());
+                    final Object ТекущаяВерсияПрограммы = version;
+                    Integer ЛокальнаяВерсияПОСравнение = Integer.parseInt(ТекущаяВерсияПрограммы.toString());
+                    valuesЗаписываемОшибки.put("whose_error", ЛокальнаяВерсияПОСравнение);
+                    new SubClassErrors(context).МетодЗаписиОшибок(valuesЗаписываемОшибки);
+                }
+            });
+    // TODO: 26.08.2024
+    return cursorlocal.blockingGet();
 
-    public void callContentResolverDataSyncService(@NonNull long version, @NonNull ContentResolver resolver) {
-        try {
-            // TODO: 22.08.2024  Коненпт провайдер для зааписив базу данных
-            ContentValues contentValues = new ContentValues();
-            // TODO: 22.08.2024  Коненпт провайдер для зааписив базу данных
-            Uri uri = Uri.parse("content://com.sous.scanner.prodider/" + "listMacMastersSous" + "");
-            Integer getVersionforErrorNew = 11;
-            contentValues.put("current_table", getVersionforErrorNew);
-       /*     Uri insertData=   resolver.insert(uri, contentValues);
-            Integer РезультатВставки= Optional.ofNullable(insertData.toString().replaceAll("content://","")).map(Integer::new).orElse(0);*/
-            // TODO: 31.07.2024
-            Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
-                    " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                    " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" + "\n"
-                    + " LocalDateTime.now() " + LocalDateTime.now().toString().toUpperCase() + "\n");
-
-        } catch (Exception e) {
-            e.printStackTrace();
-            Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() + " Линия  :"
-                    + Thread.currentThread().getStackTrace()[2].getLineNumber());
-            ContentValues valuesЗаписываемОшибки = new ContentValues();
-            valuesЗаписываемОшибки.put("Error", e.toString().toLowerCase());
-            valuesЗаписываемОшибки.put("Klass", this.getClass().getName());
-            valuesЗаписываемОшибки.put("Metod", Thread.currentThread().getStackTrace()[2].getMethodName());
-            valuesЗаписываемОшибки.put("LineError", Thread.currentThread().getStackTrace()[2].getLineNumber());
-            final Object ТекущаяВерсияПрограммы = version;
-            Integer ЛокальнаяВерсияПОСравнение = Integer.parseInt(ТекущаяВерсияПрограммы.toString());
-            valuesЗаписываемОшибки.put("whose_error", ЛокальнаяВерсияПОСравнение);
-            new SubClassErrors(context).МетодЗаписиОшибок(valuesЗаписываемОшибки);
-        }
-
+}
+    public Cursor getMAXVersionLocalDataSyncService(@NonNull long version, @NonNull ContentResolver resolver) {
+        // TODO: 26.08.2024
+        Single<Cursor> cursorlocal = Single.fromCallable(new Callable<Cursor>() {
+                    @Override
+                    public Cursor call() throws Exception {
+                        // TODO: 31.07.2024
+                        // TODO: 22.08.2024  Коненпт провайдер для зааписив базу данных
+                        Uri uri = Uri.parse("content://com.sous.scanner.prodider/" + "listMacMastersSous" + "");
+                        Cursor cursorLocal = resolver.query(uri, null,
+                                "SELECT * FROM listMacMastersSous where current_table IN ( select max(current_table) FROM listMacMastersSous   )", null, null, null);
+                        if (cursorLocal.getCount() > 0) {
+                            cursorLocal.moveToFirst();
+                        }
+                        // TODO: 31.07.2024
+                        Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                                " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                                " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" + "\n"
+                                + " LocalDateTime.now() " + LocalDateTime.now().toString().toUpperCase() + "\n" + " cursorLocal " + cursorLocal);
+                        return cursorLocal;
+                    }
+                }).subscribeOn(Schedulers.single())
+                .doOnError(new Consumer<Throwable>() {
+                    @Override
+                    public void accept(Throwable throwable) throws Throwable {
+                        throwable.printStackTrace();
+                        Log.e(this.getClass().getName(), "Ошибка " + throwable + " Метод :" +
+                                Thread.currentThread().getStackTrace()[2].getMethodName() + " Линия  :"
+                                + Thread.currentThread().getStackTrace()[2].getLineNumber());
+                        ContentValues valuesЗаписываемОшибки = new ContentValues();
+                        valuesЗаписываемОшибки.put("Error", throwable.toString().toLowerCase());
+                        valuesЗаписываемОшибки.put("Klass", this.getClass().getName());
+                        valuesЗаписываемОшибки.put("Metod", Thread.currentThread().getStackTrace()[2].getMethodName());
+                        valuesЗаписываемОшибки.put("LineError", Thread.currentThread().getStackTrace()[2].getLineNumber());
+                        final Object ТекущаяВерсияПрограммы = version;
+                        Integer ЛокальнаяВерсияПОСравнение = Integer.parseInt(ТекущаяВерсияПрограммы.toString());
+                        valuesЗаписываемОшибки.put("whose_error", ЛокальнаяВерсияПОСравнение);
+                        new SubClassErrors(context).МетодЗаписиОшибок(valuesЗаписываемОшибки);
+                    }
+                });
+        // TODO: 26.08.2024
+        return cursorlocal.blockingGet();
 
     }
 

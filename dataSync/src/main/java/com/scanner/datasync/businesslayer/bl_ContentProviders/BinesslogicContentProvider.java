@@ -79,10 +79,7 @@ public class BinesslogicContentProvider {
 
                                       // TODO: 28.08.2024
                                     resultUpdate.set(sqLiteStatementInsert.executeUpdateDelete());
-
                                     // TODO: 28.08.2024
-                                    resultUpdate.set( resultUpdate.get());
-
                                     Log.d(this.getClass().getName(), "\n" + " class " +
                                             Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                                             " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
@@ -188,9 +185,6 @@ public class BinesslogicContentProvider {
                             sqLiteStatementInsert.bindLong(8,rowJakson.get("uuid").longValue());//"uuid"
                             // TODO: 28.08.2024
                             resultInsert.set(sqLiteStatementInsert.executeInsert());
-                            // TODO: 28.08.2024
-                            resultInsert.set(resultInsert.get());
-
                             Log.d(this.getClass().getName(), "\n" + " class " +
                                     Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                                     " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +

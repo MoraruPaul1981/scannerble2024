@@ -364,24 +364,19 @@ public class BinesslogicDataSync {
                 throw new RuntimeException(e);
             }
         }else {
-            // DateFormat	dateFormat =   new SimpleDateFormat("yyyy-MM-dd",new Locale("ru", "RU"));
-            DateFormat	dateFormat =   new SimpleDateFormat("yyyy-MM-dd HH:mm:ss",new Locale("ru", "RU"));
+             DateFormat	dateFormat =   new SimpleDateFormat("yyyy-MM-dd",new Locale("ru", "RU"));
             try {
-                //Date datelocal  = dateFormat.parse("1900-01-01");
-                Date datelocal  = dateFormat.parse("2024-08-01 20:33:38");
+                Date datelocal  = dateFormat.parse("1900-01-01");
                 bremylocal = dateFormat.format(datelocal);
-
             } catch (ParseException e) {
                 throw new RuntimeException(e);
             }
-
         }
         // TODO: 31.07.2024
         Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                 " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
                 " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" + "\n"
                 + " LocalDateTime.now() " + LocalDateTime.now().toString().toUpperCase() + "\n" + "bremylocal " + bremylocal);
-
         return  bremylocal;
     }
 

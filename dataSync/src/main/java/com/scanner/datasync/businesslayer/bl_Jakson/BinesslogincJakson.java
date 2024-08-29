@@ -121,9 +121,9 @@ public class BinesslogincJakson {
 
     public long updateOperaticallContentResolver(@NonNull long version, @NonNull JsonNode jsonNodeParentMAP){
         // TODO: 28.08.2024
-       AtomicReference<Integer>  updateResult=new AtomicReference<>();
+       AtomicReference<Integer>  updateResult=new AtomicReference<>(0);
         // TODO: 28.08.2024
-      Completable.fromAction(()->{
+        Completable completableProvider= Completable.fromAction(()->{
 // TODO: 28.08.2024
           String  SQlOperUpdate=  " UPDATE  listMacMastersSous SET     name=?,macadress=?,  plot=?," +
                   " date_update=?,user_update=? , current_table=?,uuid=?      WHERE  uuid=?  ;";
@@ -132,7 +132,7 @@ public class BinesslogincJakson {
           // TODO: 28.08.2024
           Integer getStatementResult =setSqliteStatement(  version,   jsonNodeParentMAP,    SQlOperUpdate,SQlOperInsert);
           // TODO: 04.07.2023  UPDARE Organization
-          updateResult.set(getStatementResult);
+            updateResult.set(getStatementResult);
                   // TODO: 31.07.2024
             Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                     " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
@@ -160,7 +160,14 @@ public class BinesslogincJakson {
                     " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
                     " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" + "\n"
                     + " LocalDateTime.now() " + LocalDateTime.now().toString().toUpperCase() + "\n");
-        }).blockingSubscribe();
+        });
+        if (jsonNodeParentMAP!=null) {
+            completableProvider  .blockingSubscribe();
+        }
+        Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" + "\n"
+                + " LocalDateTime.now() " + LocalDateTime.now().toString().toUpperCase() + "\n");
         // TODO: 28.08.2024
         return updateResult.get();
     }
@@ -169,7 +176,8 @@ public class BinesslogincJakson {
 
 
     @SuppressLint("NewApi")
-    Integer setSqliteStatement(@NonNull long version, @NonNull JsonNode jsonNodeParentMAP, @NonNull    String SQlOperUpdate,@NonNull String  SQlOperInsert){
+    Integer setSqliteStatement(@NonNull long version, @NonNull JsonNode jsonNodeParentMAP,
+                               @NonNull    String SQlOperUpdate,@NonNull String  SQlOperInsert){
         // TODO: 28.08.2024
         AtomicReference<Integer>  getStatementResult=new AtomicReference<>();
         // TODO: 28.08.2024
@@ -189,9 +197,10 @@ public class BinesslogincJakson {
 
                // Uri    insertData=   resolver.insert(uri, contentValues,bundleScannerBLEOtServerJBoss);
                 Bundle insertAndupdateData=   resolver.call(uri,SQlOperUpdate, SQlOperInsert,bundleScannerBLEOtServerJBoss);
-                boolean refreshAndupdateData=   resolver.refresh(uri, bundleScannerBLEOtServerJBoss,new CancellationSignal());
+      ;
                 // TODO: 28.08.2024
-                getStatementResult.set(Optional.ofNullable(insertAndupdateData.toString().replaceAll("content://","")).stream().mapToInt(m->Integer.parseInt(m)).findAny().orElse(0));
+                getStatementResult.set(Optional.ofNullable(insertAndupdateData.toString().replaceAll("content://",""))
+                        .stream().mapToInt(m->Integer.parseInt(m)).findAny().orElse(0));
 
                 // TODO: 31.07.2024
                 Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
