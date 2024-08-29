@@ -368,7 +368,7 @@ public class BinesslogicDataSync {
             DateFormat	dateFormat =   new SimpleDateFormat("yyyy-MM-dd HH:mm:ss",new Locale("ru", "RU"));
             try {
                 //Date datelocal  = dateFormat.parse("1900-01-01");
-                Date datelocal  = dateFormat.parse("2024-08-01 20:33:37.8670013");
+                Date datelocal  = dateFormat.parse("2024-08-01 20:33:38");
                 bremylocal = dateFormat.format(datelocal);
 
             } catch (ParseException e) {
