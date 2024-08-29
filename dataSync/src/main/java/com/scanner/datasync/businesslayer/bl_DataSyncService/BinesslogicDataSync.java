@@ -47,6 +47,7 @@ import java.util.Optional;
 import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.TimeUnit;
+import java.util.concurrent.atomic.AtomicReference;
 import java.util.zip.GZIPInputStream;
 
 import javax.inject.Inject;
@@ -279,107 +280,125 @@ public class BinesslogicDataSync {
     @SuppressLint("Range")
     private URL getUrlndParametrs(@NonNull Cursor cursorlocal , @NonNull LinkedHashMap<String, String> getJbossAdress,@NonNull Long version) {
         // TODO: 27.08.2024
-        final URL[] Adress = new URL[1];
+        AtomicReference <URL> Adress = new AtomicReference<>();
 
-        Completable.complete().blockingSubscribe(new CompletableObserver() {
-            @Override
-            public void onSubscribe(@NonNull Disposable d) {
-                Long  versionlocal=0l;
-                String  bremylocal=null;
-                // TODO: 29.08.2024
-               if (cursorlocal.getCount() >0) {
-                    // TODO: 27.08.2024 version data
-                   versionlocal = cursorlocal.getLong(cursorlocal.getColumnIndex("current_table"));
-                   // TODO: 27.08.2024 bremy
-                   DateFormat dateFormat =new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS", new Locale("ru", "RU"));
-                    // TODO: 27.08.2024 bremy
-                   try {
-                      Date datelocal = dateFormat.parse(cursorlocal.getString(cursorlocal.getColumnIndex("date_update")));
-                       bremylocal = dateFormat.format(datelocal);
-                   } catch (ParseException e) {
-                       throw new RuntimeException(e);
-                   }
-               }else {
-                   DateFormat	dateFormat =   new SimpleDateFormat("yyyy-MM-dd",new Locale("ru"));
-                   try {
-                       Date datelocal  = dateFormat.parse("1900-01-01");
-                       bremylocal = dateFormat.format(datelocal);
+        Completable.fromAction(()->{
 
-                   } catch (ParseException e) {
-                       throw new RuntimeException(e);
-                   }
-
-               }
+            // TODO: 29.08.2024 время
+            String  bremylocal=prossecingBremy(cursorlocal);
+            // TODO: 29.08.2024 версия
+            Long  versionlocal=   prossecingVersion(cursorlocal);
 
 
-                   Log.d(context.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
-                        " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                        " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" + " bremylocal " + bremylocal
-                        + " versionlocal " + versionlocal+ " bremylocal " + bremylocal);
+            Log.d(context.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                    " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                    " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" + " bremylocal " + bremylocal
+                    + " versionlocal " + versionlocal+ " bremylocal " + bremylocal);
 
-                // TODO: 02.04.2024  Адресс и Порт Сервера Jboss
-                String getPortServer = getJbossAdress.values().stream().findFirst().orElseGet(()->"");
-                String getNameServer = getJbossAdress.keySet().stream().findFirst().orElseGet(()->"");
-                String СтрокаСвязиСсервером = "http://" + getNameServer + ":" + getPortServer;
+            // TODO: 02.04.2024  Адресс и Порт Сервера Jboss
+            String getPortServer = getJbossAdress.values().stream().findFirst().orElseGet(()->"");
+            String getNameServer = getJbossAdress.keySet().stream().findFirst().orElseGet(()->"");
+            String СтрокаСвязиСсервером = "http://" + getNameServer + ":" + getPortServer;
 
 
-                try {
-                    HttpGet someHttpGet = new HttpGet(СтрокаСвязиСсервером);
-                    URIBuilder    builder = new URIBuilder(someHttpGet.getURI());
-                    builder.setParameter("NameTable", "listMacMastersSous")
-                            .setParameter("JobForServer", "getscanner")
-                            .setParameter("bremylocal", bremylocal)
-                            .setParameter("versionlocal", versionlocal.toString());
-                    URI   adresssuri  = builder.build();
-                    Adress[0] =  adresssuri.toURL();
-                    // TODO: 31.07.2024
-                    Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
-                            " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                            " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" + "\n"
-                            + " LocalDateTime.now() " + LocalDateTime.now().toString().toUpperCase() + "\n" + "Adress " + Adress[0]);
-                } catch (URISyntaxException | MalformedURLException e) {
-                    throw new RuntimeException(e);
-                }
-            }
-
-            @Override
-            public void onComplete() {
+            try {
+                HttpGet someHttpGet = new HttpGet(СтрокаСвязиСсервером);
+                URIBuilder    builder = new URIBuilder(someHttpGet.getURI());
+                builder.setParameter("NameTable", "listMacMastersSous")
+                        .setParameter("JobForServer", "getscanner")
+                        .setParameter("bremylocal", bremylocal)
+                        .setParameter("versionlocal", versionlocal.toString());
+                URI   adresssuri  = builder.build();
+                Adress.set(adresssuri.toURL());
                 // TODO: 31.07.2024
                 Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                         " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
                         " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" + "\n"
-                        + " LocalDateTime.now() " + LocalDateTime.now().toString().toUpperCase() + "\n" + "Adress " + Adress[0]);
+                        + " LocalDateTime.now() " + LocalDateTime.now().toString().toUpperCase() + "\n" + "Adress.get() " +Adress.get());
+            } catch (URISyntaxException | MalformedURLException e) {
+                throw new RuntimeException(e);
             }
 
-            @Override
-            public void onError(@NonNull Throwable e) {
-                e.printStackTrace();
-                Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() + " Линия  :"
-                        + Thread.currentThread().getStackTrace()[2].getLineNumber());
-                ContentValues valuesЗаписываемОшибки = new ContentValues();
-                valuesЗаписываемОшибки.put("Error", e.toString().toLowerCase());
-                valuesЗаписываемОшибки.put("Klass", this.getClass().getName());
-                valuesЗаписываемОшибки.put("Metod", Thread.currentThread().getStackTrace()[2].getMethodName());
-                valuesЗаписываемОшибки.put("LineError", Thread.currentThread().getStackTrace()[2].getLineNumber());
-                final Object ТекущаяВерсияПрограммы = version;
-                Integer ЛокальнаяВерсияПОСравнение = Integer.parseInt(ТекущаяВерсияПрограммы.toString());
-                valuesЗаписываемОшибки.put("whose_error", ЛокальнаяВерсияПОСравнение);
-                new SubClassErrors(context).МетодЗаписиОшибок(valuesЗаписываемОшибки);
-            }
-        });
 
+        }).doOnError(e->{
+                    e.printStackTrace();
+                    Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() + " Линия  :"
+                            + Thread.currentThread().getStackTrace()[2].getLineNumber());
+                    ContentValues valuesЗаписываемОшибки = new ContentValues();
+                    valuesЗаписываемОшибки.put("Error", e.toString().toLowerCase());
+                    valuesЗаписываемОшибки.put("Klass", this.getClass().getName());
+                    valuesЗаписываемОшибки.put("Metod", Thread.currentThread().getStackTrace()[2].getMethodName());
+                    valuesЗаписываемОшибки.put("LineError", Thread.currentThread().getStackTrace()[2].getLineNumber());
+                    final Object ТекущаяВерсияПрограммы = version;
+                    Integer ЛокальнаяВерсияПОСравнение = Integer.parseInt(ТекущаяВерсияПрограммы.toString());
+                    valuesЗаписываемОшибки.put("whose_error", ЛокальнаяВерсияПОСравнение);
+                    new SubClassErrors(context).МетодЗаписиОшибок(valuesЗаписываемОшибки);
+                })
+                .doOnComplete(()->{
+                    Log.d(context.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                            " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                            " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n");
 
-
+                })
+                .blockingSubscribe( );
         // TODO: 31.07.2024
         Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                 " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
                 " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" + "\n"
-                + " LocalDateTime.now() " + LocalDateTime.now().toString().toUpperCase() + "\n" + "Adress " + Adress[0]);
+                + " LocalDateTime.now() " + LocalDateTime.now().toString().toUpperCase() + "\n" + "Adress " + Adress.get());
 
-        return Adress[0];
+        return Adress.get();
     }
 
 
+    @SuppressLint("Range")
+    private  String prossecingBremy(@NonNull Cursor cursorlocal){
+        String bremylocal=new String();
+        if (cursorlocal.getCount() >0) {
+            DateFormat dateFormat =new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", new Locale("ru", "RU"));
+            // TODO: 27.08.2024 bremy
+            try {
+              Date datelocal = dateFormat.parse(cursorlocal.getString(cursorlocal.getColumnIndex("date_update")));
+                bremylocal = dateFormat.format(datelocal);
+            } catch (ParseException e) {
+                throw new RuntimeException(e);
+            }
+        }else {
+            // DateFormat	dateFormat =   new SimpleDateFormat("yyyy-MM-dd",new Locale("ru", "RU"));
+            DateFormat	dateFormat =   new SimpleDateFormat("yyyy-MM-dd HH:mm:ss",new Locale("ru", "RU"));
+            try {
+                //Date datelocal  = dateFormat.parse("1900-01-01");
+                Date datelocal  = dateFormat.parse("2024-08-01 20:33:37.8670013");
+                bremylocal = dateFormat.format(datelocal);
+
+            } catch (ParseException e) {
+                throw new RuntimeException(e);
+            }
+
+        }
+        // TODO: 31.07.2024
+        Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" + "\n"
+                + " LocalDateTime.now() " + LocalDateTime.now().toString().toUpperCase() + "\n" + "bremylocal " + bremylocal);
+
+        return  bremylocal;
+    }
+
+
+    @SuppressLint("Range")
+    private  Long prossecingVersion(@NonNull Cursor cursorlocal){
+         Long versionlocal=0l;
+        if (cursorlocal.getCount() >0) {
+            // TODO: 27.08.2024 version data
+            versionlocal = cursorlocal.getLong(cursorlocal.getColumnIndex("current_table"));
+        }
+        Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" + "\n"
+                + " LocalDateTime.now() " + LocalDateTime.now().toString().toUpperCase() + "\n" + "versionlocal " + versionlocal);
+        return versionlocal;
+    }
 
 
 
