@@ -36,7 +36,6 @@ public class BinesslogicContentProvider {
 
     public Integer workerForUpdateContentProvider(@NonNull Uri uri,
                                                 @Nullable Bundle extras,
-                                                @Nullable    AtomicReference<Uri> ОтветВставкиДанных,
                                                 @Nullable SQLiteDatabase Create_Database_СамаБАзаSQLite,
                                                   @Nullable Long version) {
 
@@ -78,7 +77,11 @@ public class BinesslogicContentProvider {
                                     // TODO: 07.07.2023 ДЛя Состыковки
                                     sqLiteStatementInsert.bindLong(8,rowJakson.get("uuid").longValue());//"uuid уже для UUID"
 
+                                      // TODO: 28.08.2024
                                     resultUpdate.set(sqLiteStatementInsert.executeUpdateDelete());
+
+                                    // TODO: 28.08.2024
+                                    resultUpdate.set( resultUpdate.get());
 
                                     Log.d(this.getClass().getName(), "\n" + " class " +
                                             Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
@@ -86,20 +89,10 @@ public class BinesslogicContentProvider {
                                             " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"
                                             + sqLiteStatementInsert  + "sqLiteStatementInsert" + " resultUpdate.get() " +resultUpdate.get());
 
-                                    ОтветВставкиДанных.set(Uri.parse("content://" + resultUpdate.toString()));
-                                    if (resultUpdate.get()> 0) {
-                                        if (Create_Database_СамаБАзаSQLite.inTransaction()) {
-                                            Create_Database_СамаБАзаSQLite.setTransactionSuccessful();
-                                            // TODO: 22.09.2022 увеличивает версию данных
-                                        }
-                                    }
                                 },jsonNodeScannerBLE.size());
                     }
 
 
-                    if (Create_Database_СамаБАзаSQLite.inTransaction()) {
-                        Create_Database_СамаБАзаSQLite.endTransaction();
-                    }   // TODO: 31.07.2024
 
 
         }).doOnError(e->{
@@ -120,6 +113,16 @@ public class BinesslogicContentProvider {
 
         })
                 .doOnComplete(()->{
+// TODO: 28.08.2024
+                    if (resultUpdate.get()> 0) {
+                        if (Create_Database_СамаБАзаSQLite.inTransaction()) {
+                            Create_Database_СамаБАзаSQLite.setTransactionSuccessful();
+                            // TODO: 22.09.2022 увеличивает версию данных
+                        }
+                    }
+                    if (Create_Database_СамаБАзаSQLite.inTransaction()) {
+                        Create_Database_СамаБАзаSQLite.endTransaction();
+                    }   // TODO: 31.07.2024
 
                     Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                             " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
@@ -143,7 +146,6 @@ public class BinesslogicContentProvider {
     // TODO: 28.08.2024 Insert
     public Integer workerForInsertContentProvider(@NonNull Uri uri,
                                                   @Nullable Bundle extras,
-                                                  @Nullable    AtomicReference<Uri> ОтветВставкиДанных,
                                                   @Nullable SQLiteDatabase Create_Database_СамаБАзаSQLite,
                                                   @Nullable   Long version) {
 
@@ -176,17 +178,18 @@ public class BinesslogicContentProvider {
                             SQLiteStatement sqLiteStatementInsert= Create_Database_СамаБАзаSQLite.compileStatement(SQlOperInsert);
                             sqLiteStatementInsert.clearBindings();
                             // TODO: 04.07.2023 цикл данных
-                            sqLiteStatementInsert.bindString(1,rowJakson.get("name").asText().trim());//"id"
-                            sqLiteStatementInsert.bindString(2,rowJakson.get("macadress").asText().trim());//"name"
-                            sqLiteStatementInsert.bindLong(3,rowJakson.get("plot").intValue());//"fullname"
-                            sqLiteStatementInsert.bindString(4,rowJakson.get("date_update").asText().trim());//"date_update"
-                            sqLiteStatementInsert.bindLong(5,rowJakson.get("user_update").intValue());//"user_update"
-                            sqLiteStatementInsert.bindLong(6,rowJakson.get("current_table").longValue());//"current_table"
-                            sqLiteStatementInsert.bindLong(7,rowJakson.get("uuid").longValue());//"uuid"
-                            // TODO: 07.07.2023 ДЛя Состыковки
-                            sqLiteStatementInsert.bindLong(8,rowJakson.get("uuid").longValue());//"uuid уже для UUID"
-
+                            sqLiteStatementInsert.bindNull(1 );//"id"
+                            sqLiteStatementInsert.bindString(2,rowJakson.get("name").asText().trim());//"id"
+                            sqLiteStatementInsert.bindString(3,rowJakson.get("macadress").asText().trim());//"name"
+                            sqLiteStatementInsert.bindLong(4,rowJakson.get("plot").intValue());//"fullname"
+                            sqLiteStatementInsert.bindString(5,rowJakson.get("date_update").asText().trim());//"date_update"
+                            sqLiteStatementInsert.bindLong(6,rowJakson.get("user_update").intValue());//"user_update"
+                            sqLiteStatementInsert.bindLong(7,rowJakson.get("current_table").longValue());//"current_table"
+                            sqLiteStatementInsert.bindLong(8,rowJakson.get("uuid").longValue());//"uuid"
+                            // TODO: 28.08.2024
                             resultInsert.set(sqLiteStatementInsert.executeInsert());
+                            // TODO: 28.08.2024
+                            resultInsert.set(resultInsert.get());
 
                             Log.d(this.getClass().getName(), "\n" + " class " +
                                     Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
@@ -194,23 +197,11 @@ public class BinesslogicContentProvider {
                                     " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"
                                     + sqLiteStatementInsert  + "sqLiteStatementInsert" + " resultInsert.get() " +resultInsert.get());
 
-                            ОтветВставкиДанных.set(Uri.parse("content://" + resultInsert.toString()));
-                            if (resultInsert.get()> 0) {
-                                if (Create_Database_СамаБАзаSQLite.inTransaction()) {
-                                    Create_Database_СамаБАзаSQLite.setTransactionSuccessful();
-                                    // TODO: 22.09.2022 увеличивает версию данных
-                                }
-                            }
+
+                            // TODO: 28.08.2024
                         },jsonNodeScannerBLE.size());
             }
-
-
-            if (Create_Database_СамаБАзаSQLite.inTransaction()) {
-                Create_Database_СамаБАзаSQLite.endTransaction();
-            }   // TODO: 31.07.2024
-
-
-
+            // TODO: 28.08.2024
         }).doOnError(e->{
             e.printStackTrace();
             Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" +
@@ -230,6 +221,16 @@ public class BinesslogicContentProvider {
 
         }).doOnComplete(()->{
             // TODO: 28.08.2024
+            if (resultInsert.get()> 0) {
+                if (Create_Database_СамаБАзаSQLite.inTransaction()) {
+                    Create_Database_СамаБАзаSQLite.setTransactionSuccessful();
+                    // TODO: 22.09.2022 увеличивает версию данных
+                }
+            }
+            // TODO: 28.08.2024
+            if (Create_Database_СамаБАзаSQLite.inTransaction()) {
+                Create_Database_СамаБАзаSQLite.endTransaction();
+            }   // TODO: 31.07.2024
             Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                     " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
                     " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" + "\n"

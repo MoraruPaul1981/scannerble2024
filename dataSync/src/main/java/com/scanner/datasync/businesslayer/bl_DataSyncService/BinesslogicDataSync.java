@@ -283,14 +283,14 @@ public class BinesslogicDataSync {
             public void onSubscribe(@NonNull Disposable d) {
                 Long  versionlocal=0l;
                 String  bremylocal=new String();
-                if (cursorlocal.getCount() > 0) {
+         /*       if (cursorlocal.getCount() == 0) {
                     // TODO: 27.08.2024
                    versionlocal = cursorlocal.getLong(cursorlocal.getColumnIndex("current_table"));
                     // TODO: 27.08.2024 bremy
                     DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.SSS", new Locale("ru", "RU"));
                     LocalDateTime futureDate = LocalDateTime.parse(cursorlocal.getString(cursorlocal.getColumnIndex("date_update")), dtf);
                     bremylocal = dtf.format(futureDate);
-                }
+                }*/
 
                 Log.d(context.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                         " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +

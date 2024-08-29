@@ -9,16 +9,23 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteStatement;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.CancellationSignal;
 import android.util.Log;
 
 import com.fasterxml.jackson.core.JsonParser;
+import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.module.SimpleModule;
 import com.scanner.datasync.businesslayer.Errors.SubClassErrors;
+import com.scanner.datasync.datalayer.local.ListmacMasterDeserializer;
+import com.scanner.datasync.datalayer.local.listMacMastersSousListmacmasterssouslistMacMastersSous;
 
 import java.io.InputStream;
 import java.io.Serializable;
+import java.lang.reflect.Type;
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Optional;
 import java.util.concurrent.atomic.AtomicReference;
 
@@ -31,6 +38,7 @@ import dagger.hilt.components.SingletonComponent;
 import io.reactivex.rxjava3.annotations.NonNull;
 import io.reactivex.rxjava3.core.Completable;
 import io.reactivex.rxjava3.core.Flowable;
+import io.reactivex.rxjava3.functions.Action;
 
 @Module
 @InstallIn(SingletonComponent.class)
@@ -54,16 +62,40 @@ public class BinesslogincJakson {
       AtomicReference<JsonNode>  jsonNodeScannerBLE=new AtomicReference<>();
         Completable completable=   Completable.fromAction(()->{
 // TODO: 28.08.2024
+/*            final JsonParser jsonParserScanner= getHiltJaksonObjectMapper.createParser(inputStreamJaksonByteScanner);
+            if (  !jsonParserScanner.isClosed()) {*/
+
             final JsonParser jsonParserScanner= getHiltJaksonObjectMapper.createParser(inputStreamJaksonByteScanner);
-            if (  !jsonParserScanner.isClosed()) {
-                jsonNodeScannerBLE.set(jsonParserScanner.readValueAsTree());
+            jsonNodeScannerBLE.set(jsonParserScanner.readValueAsTree());
+
+            SimpleModule module = new SimpleModule();
+
+            module.addDeserializer(listMacMastersSousListmacmasterssouslistMacMastersSous.class, new ListmacMasterDeserializer());
+            getHiltJaksonObjectMapper.registerModule(module);
+
+
+
+            List<listMacMastersSousListmacmasterssouslistMacMastersSous> foo
+                    =  getHiltJaksonObjectMapper.readValue(inputStreamJaksonByteScanner,
+                    new TypeReference<List<listMacMastersSousListmacmasterssouslistMacMastersSous>>() {
+                @Override
+                public Type getType() {
+                    return super.getType();
+                }
+            });
+
+             /*   List<listMacMastersSousListmacmasterssouslistMacMastersSous> list
+                        = getHiltJaksonObjectMapper.readValue(inputStreamJaksonByteScanner, new TypeReference<>(){});*/
+
+
+            //    jsonNodeScannerBLE.set(jsonParserScanner.readValueAsTree());
                 // TODO: 31.07.2024
                 Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                         " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
                         " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" + "\n"
                         + " LocalDateTime.now() " + LocalDateTime.now().toString().toUpperCase() + "\n" +
                         " jsonNodeScannerBLE " +jsonNodeScannerBLE);
-            }
+          //  }
             // TODO: 31.07.2024
             Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                     " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
@@ -125,7 +157,7 @@ public class BinesslogincJakson {
           String  SQlOperUpdate=  " UPDATE  listMacMastersSous SET     name=?,macadress=?,  plot=?," +
                   " date_update=?,user_update=? , current_table=?,uuid=?      WHERE  uuid=?  ;";
           // TODO: 28.08.2024
-          String  SQlOperInsert=  " REPLACE INTO listMacMastersSous VALUES(?,?,?,?,?,?,? ); ;";
+          String  SQlOperInsert=  " REPLACE INTO listMacMastersSous VALUES(?,?,?,?,?,?,?,? ); ;";
           // TODO: 28.08.2024
           Integer getStatementResult =setSqliteStatement(  version,   jsonNodeParentMAP,    SQlOperUpdate,SQlOperInsert);
           // TODO: 04.07.2023  UPDARE Organization
@@ -170,26 +202,33 @@ public class BinesslogincJakson {
         // TODO: 28.08.2024
         AtomicReference<Integer>  getStatementResult=new AtomicReference<>();
         // TODO: 28.08.2024
-        Completable.fromAction(()->{
-// TODO: 28.08.2024
-            Uri uri = Uri.parse("content://com.sous.scanner.prodider/" +"listMacMastersSous" + "");
-            ContentResolver resolver = context.getContentResolver();
-            Bundle bundleScannerBLEOtServerJBoss=new Bundle();
-            bundleScannerBLEOtServerJBoss.putSerializable("jsonNodeParentMAP", (Serializable) jsonNodeParentMAP);
-            bundleScannerBLEOtServerJBoss.putSerializable("sqlupdate", SQlOperUpdate);
-            bundleScannerBLEOtServerJBoss.putSerializable("sqlinsert", SQlOperInsert);
-            bundleScannerBLEOtServerJBoss.putSerializable("nametable", "listMacMastersSous");
+        Completable.fromAction(new Action() {
+            @Override
+            public void run() throws Throwable {
+                // TODO: 28.08.2024
+                Uri uri = Uri.parse("content://com.sous.scanner.prodider/" +"listMacMastersSous" + "");
+                ContentResolver resolver = context.getContentResolver();
+                Bundle bundleScannerBLEOtServerJBoss=new Bundle();
+                bundleScannerBLEOtServerJBoss.putSerializable("jsonNodeParentMAP", (Serializable) jsonNodeParentMAP);
+                bundleScannerBLEOtServerJBoss.putSerializable("sqlupdate", SQlOperUpdate);
+                bundleScannerBLEOtServerJBoss.putSerializable("sqlinsert", SQlOperInsert);
+                bundleScannerBLEOtServerJBoss.putSerializable("nametable", "listMacMastersSous");
+                // TODO: 28.08.2024  
+                ContentValues contentValues = new ContentValues();
 
-            Uri    insertData=   resolver.insert(uri, null,bundleScannerBLEOtServerJBoss);
-            getStatementResult.set(Optional.ofNullable(insertData.toString().replaceAll("content://","")).stream().mapToInt(m->Integer.parseInt(m)).findAny().orElse(0));
+               // Uri    insertData=   resolver.insert(uri, contentValues,bundleScannerBLEOtServerJBoss);
+                Bundle insertAndupdateData=   resolver.call(uri,SQlOperUpdate, SQlOperInsert,bundleScannerBLEOtServerJBoss);
+                boolean refreshAndupdateData=   resolver.refresh(uri, bundleScannerBLEOtServerJBoss,new CancellationSignal());
+                // TODO: 28.08.2024
+                getStatementResult.set(Optional.ofNullable(insertAndupdateData.toString().replaceAll("content://","")).stream().mapToInt(m->Integer.parseInt(m)).findAny().orElse(0));
 
-            // TODO: 31.07.2024
-            Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
-                    " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                    " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" + "\n"
-                    + " LocalDateTime.now() " + LocalDateTime.now().toString().toUpperCase() + "\n"+
-                    " getStatementResult.get() "+ getStatementResult.get());
-
+                // TODO: 31.07.2024
+                Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                        " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                        " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" + "\n"
+                        + " LocalDateTime.now() " + LocalDateTime.now().toString().toUpperCase() + "\n"+
+                        " getStatementResult.get() "+ getStatementResult.get());
+            }
         }).doOnError(e->{
             e.printStackTrace();
             Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" +

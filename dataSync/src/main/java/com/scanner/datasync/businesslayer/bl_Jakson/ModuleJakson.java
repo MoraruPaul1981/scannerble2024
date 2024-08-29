@@ -46,8 +46,8 @@ public class ModuleJakson  implements  ModuleJaksonInterface {
             mapperJackson = new ObjectMapper(factory);
             mapperJackson.writerWithDefaultPrettyPrinter();
             mapperJackson.setPropertyNamingStrategy(PropertyNamingStrategy.CAMEL_CASE_TO_LOWER_CASE_WITH_UNDERSCORES);
-            mapperJackson.setLocale(new Locale("ru"));
-            DateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS", new Locale("ru"));
+            mapperJackson.setLocale(new Locale("ru","RU"));
+            DateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS", new Locale("ru","RU"));
             mapperJackson.setDateFormat(df);
             mapperJackson.setTimeZone(TimeZone.getTimeZone("Europe/Moscow"));
             mapperJackson.disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS);

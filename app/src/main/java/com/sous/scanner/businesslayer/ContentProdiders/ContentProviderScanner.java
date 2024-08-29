@@ -24,6 +24,7 @@ import com.scanner.datasync.businesslayer.bl_ContentProviders.BinesslogicContent
 import com.sous.scanner.businesslayer.Errors.SubClassErrors;
 import com.sous.scanner.datalayer.local.CREATE_DATABASEScanner;
 
+import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.Optional;
@@ -33,6 +34,7 @@ import java.util.function.Consumer;
 
 import javax.inject.Inject;
 
+import io.reactivex.rxjava3.core.Completable;
 import io.reactivex.rxjava3.core.Flowable;
 
 
@@ -115,6 +117,97 @@ public class ContentProviderScanner extends ContentProvider {
                 " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"   +"    Flowable.fromAction(new Action() { "
                 +   new Date().toLocaleString());
     }
+
+
+
+    @Nullable
+    @Override
+    public Bundle call(@NonNull String method, @Nullable String arg, @Nullable Bundle extras) {
+        //return super.call(method, arg, extras);
+        Bundle insertAndupdateData=new Bundle();
+        // TODO: 28.08.2024
+        try {
+            Uri uri = Uri.parse("content://com.sous.scanner.prodider/" +"listMacMastersSous" + "");
+            // TODO: 28.08.2024  Запись UPDATE
+            Integer resultUpdate=   binesslogicContentProvider.  workerForUpdateContentProvider(uri, extras,Create_Database_СамаБАзаSQLite,version);
+
+            // TODO: 28.08.2024  Запись неосредвствено в базу из Провайдера
+            if (resultUpdate==0) {
+                // TODO: 28.08.2024  Запись INSERT
+                resultUpdate=   binesslogicContentProvider.  workerForInsertContentProvider(uri, extras,Create_Database_СамаБАзаSQLite,version);
+            }
+
+            // TODO: 30.10.2021
+            getContext().getContentResolver().notifyChange(uri, null);
+            // TODO: 28.08.2024
+
+
+            insertAndupdateData.putSerializable("resultUpdateOrInsert",resultUpdate);
+
+            Log.d(this.getClass().getName(), "\n" + " class " +
+                    Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                    " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                    " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"
+                    + "resultUpdate"  +resultUpdate);
+
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() + " Линия  :"
+                    + Thread.currentThread().getStackTrace()[2].getLineNumber());
+            ContentValues valuesЗаписываемОшибки=new ContentValues();
+            valuesЗаписываемОшибки.put("Error",e.toString().toLowerCase());
+            valuesЗаписываемОшибки.put("Klass",this.getClass().getName());
+            valuesЗаписываемОшибки.put("Metod",Thread.currentThread().getStackTrace()[2].getMethodName());
+            valuesЗаписываемОшибки.put("LineError",   Thread.currentThread().getStackTrace()[2].getLineNumber());
+            final Object ТекущаяВерсияПрограммы = version;
+            Integer   ЛокальнаяВерсияПОСравнение = Integer.parseInt(ТекущаяВерсияПрограммы.toString());
+            valuesЗаписываемОшибки.put("whose_error",ЛокальнаяВерсияПОСравнение);
+            new SubClassErrors(getContext()).МетодЗаписиОшибок(valuesЗаписываемОшибки);
+        }
+         return insertAndupdateData;
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -205,47 +298,12 @@ public class ContentProviderScanner extends ContentProvider {
     @Nullable
     @Override
     public Uri insert(@NonNull Uri uri, @Nullable ContentValues values, @Nullable Bundle extras) {
-        //return super.insert(uri, values, extras);
         // TODO: Implement this to handle requests to insert a new row.
-        AtomicReference<Uri> ОтветВставкиДанных = new AtomicReference<>();
-        try {
-            // TODO: 28.08.2024  Запись UPDATE
-         Integer resultUpdate=   binesslogicContentProvider.  workerForUpdateContentProvider(uri, extras, ОтветВставкиДанных,Create_Database_СамаБАзаSQLite,version);
-
-            // TODO: 28.08.2024  Запись неосредвствено в базу из Провайдера
-            if (resultUpdate==0) {
-                // TODO: 28.08.2024  Запись INSERT
-                resultUpdate=   binesslogicContentProvider.  workerForInsertContentProvider(uri, extras, ОтветВставкиДанных,Create_Database_СамаБАзаSQLite,version);
-            }
-            // TODO: 30.10.2021
-            getContext().getContentResolver().notifyChange(ОтветВставкиДанных.get(), null);
-            // TODO: 28.08.2024
-            ОтветВставкиДанных.set( Uri.parse("content://"+resultUpdate.toString()));
-
-            Log.d(this.getClass().getName(), "\n" + " class " +
-                    Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
-                    " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                    " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"
-                    + "resultUpdate"  +resultUpdate);
-
-
-        } catch (Exception e) {
-            e.printStackTrace();
-            Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() + " Линия  :"
-                    + Thread.currentThread().getStackTrace()[2].getLineNumber());
-            ContentValues valuesЗаписываемОшибки=new ContentValues();
-            valuesЗаписываемОшибки.put("Error",e.toString().toLowerCase());
-            valuesЗаписываемОшибки.put("Klass",this.getClass().getName());
-            valuesЗаписываемОшибки.put("Metod",Thread.currentThread().getStackTrace()[2].getMethodName());
-            valuesЗаписываемОшибки.put("LineError",   Thread.currentThread().getStackTrace()[2].getLineNumber());
-            final Object ТекущаяВерсияПрограммы = version;
-            Integer   ЛокальнаяВерсияПОСравнение = Integer.parseInt(ТекущаяВерсияПрограммы.toString());
-            valuesЗаписываемОшибки.put("whose_error",ЛокальнаяВерсияПОСравнение);
-            new SubClassErrors(getContext()).МетодЗаписиОшибок(valuesЗаписываемОшибки);
-        }
-        return ОтветВставкиДанных.get();
-
+        return super.insert(uri, values, extras);
     }
+
+
+
 
 
 
@@ -339,6 +397,55 @@ public class ContentProviderScanner extends ContentProvider {
     public String getType(@NonNull Uri uri) {
         return null;
     }
+
+    @Override
+    public boolean refresh(Uri uri, @Nullable Bundle extras, @Nullable CancellationSignal cancellationSignal) {
+        //return super.refresh(uri, extras, cancellationSignal);
+        //return super.call(method, arg, extras);
+        Boolean insertAndupdateData=false;
+        try {
+            // TODO: 28.08.2024
+            AtomicReference<Uri> ОтветВставкиДанных = new AtomicReference<>();
+            // TODO: 28.08.2024  Запись UPDATE
+            Integer resultUpdate=   binesslogicContentProvider.  workerForUpdateContentProvider(uri, extras,Create_Database_СамаБАзаSQLite,version);
+
+            // TODO: 28.08.2024  Запись неосредвствено в базу из Провайдера
+            if (resultUpdate==0) {
+                // TODO: 28.08.2024  Запись INSERT
+                resultUpdate=   binesslogicContentProvider.  workerForInsertContentProvider(uri, extras,Create_Database_СамаБАзаSQLite,version);
+                // TODO: 28.08.2024
+                insertAndupdateData=true;
+            }
+            // TODO: 30.10.2021
+            getContext().getContentResolver().notifyChange(ОтветВставкиДанных.get(), null);
+            // TODO: 28.08.2024
+            ОтветВставкиДанных.set( Uri.parse("content://"+resultUpdate.toString()));
+
+
+            Log.d(this.getClass().getName(), "\n" + " class " +
+                    Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                    " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                    " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"
+                    + "resultUpdate"  +resultUpdate + " insertAndupdateData " +insertAndupdateData);
+
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() + " Линия  :"
+                    + Thread.currentThread().getStackTrace()[2].getLineNumber());
+            ContentValues valuesЗаписываемОшибки=new ContentValues();
+            valuesЗаписываемОшибки.put("Error",e.toString().toLowerCase());
+            valuesЗаписываемОшибки.put("Klass",this.getClass().getName());
+            valuesЗаписываемОшибки.put("Metod",Thread.currentThread().getStackTrace()[2].getMethodName());
+            valuesЗаписываемОшибки.put("LineError",   Thread.currentThread().getStackTrace()[2].getLineNumber());
+            final Object ТекущаяВерсияПрограммы = version;
+            Integer   ЛокальнаяВерсияПОСравнение = Integer.parseInt(ТекущаяВерсияПрограммы.toString());
+            valuesЗаписываемОшибки.put("whose_error",ЛокальнаяВерсияПОСравнение);
+            new SubClassErrors(getContext()).МетодЗаписиОшибок(valuesЗаписываемОшибки);
+        }
+        return insertAndupdateData;
+    }
+
     @Override
     public int delete(@NonNull Uri uri, @Nullable String selection, @Nullable String[] selectionArgs) {
         return 0;
