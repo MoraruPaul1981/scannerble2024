@@ -179,7 +179,7 @@ public class BinesslogincJakson {
     Integer setSqliteStatement(@NonNull long version, @NonNull JsonNode jsonNodeParentMAP,
                                @NonNull    String SQlOperUpdate,@NonNull String  SQlOperInsert){
         // TODO: 28.08.2024
-        AtomicReference<Integer>  getStatementResult=new AtomicReference<>();
+        AtomicReference<Integer>  getStatementResult=new AtomicReference<>(0);
         // TODO: 28.08.2024
         Completable.fromAction(new Action() {
             @Override
@@ -192,16 +192,11 @@ public class BinesslogincJakson {
                 bundleScannerBLEOtServerJBoss.putSerializable("sqlupdate", SQlOperUpdate);
                 bundleScannerBLEOtServerJBoss.putSerializable("sqlinsert", SQlOperInsert);
                 bundleScannerBLEOtServerJBoss.putSerializable("nametable", "listMacMastersSous");
-                // TODO: 28.08.2024  
-                ContentValues contentValues = new ContentValues();
-
-               // Uri    insertData=   resolver.insert(uri, contentValues,bundleScannerBLEOtServerJBoss);
+                // TODO: 28.08.2024  Само выполение операции
                 Bundle insertAndupdateData=   resolver.call(uri,SQlOperUpdate, SQlOperInsert,bundleScannerBLEOtServerJBoss);
-      ;
+                Integer   resultUpdate = (Integer) insertAndupdateData.getSerializable("resultUpdateOrInsert");
                 // TODO: 28.08.2024
-                getStatementResult.set(Optional.ofNullable(insertAndupdateData.toString().replaceAll("content://",""))
-                        .stream().mapToInt(m->Integer.parseInt(m)).findAny().orElse(0));
-
+                getStatementResult.set(resultUpdate);
                 // TODO: 31.07.2024
                 Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                         " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +

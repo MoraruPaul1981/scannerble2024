@@ -41,7 +41,7 @@ public class BinesslogicContentProvider {
 
 
         // TODO: 28.08.2024
-       AtomicReference<Integer>  resultUpdate=new AtomicReference<>();
+       AtomicReference<Integer>  resultUpdate=new AtomicReference<>(0);
         // TODO: 28.08.2024
         Completable.fromAction(()->{
                     // TODO: 28.08.2024
@@ -148,7 +148,7 @@ public class BinesslogicContentProvider {
 
 
         // TODO: 28.08.2024
-        AtomicReference<Long>  resultInsert=new AtomicReference<>();
+        AtomicReference<Long>  resultInsert=new AtomicReference<>(0);
         // TODO: 28.08.2024
         Completable.fromAction(()->{
             // TODO: 28.08.2024
