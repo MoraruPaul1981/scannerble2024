@@ -24,6 +24,7 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.lifecycle.Lifecycle;
@@ -48,6 +49,7 @@ import com.sous.scanner.businesslayer.bl_EvenBus.EventLocalBroadcastManager;
 import com.sous.scanner.businesslayer.bl_forServices.Businesslogic_JOBServive;
 import com.sous.scanner.businesslayer.bl_forServices.BusinessoginEnableBluetoothAdapter;
 import com.sous.scanner.businesslayer.bl_fragmentscanneruser.BusinesslogicSelectMacAdressGattServer;
+import com.sous.scanner.businesslayer.bl_fragmentscanneruser.BusinessloginOriginallogic;
 import com.sous.scanner.businesslayer.bl_fragmentscanneruser.BusinessloginVibrator;
 import com.sous.scanner.businesslayer.bl_fragmentscanneruser.BusinessloginforfragmentScanner;
 
@@ -62,6 +64,8 @@ import java.util.Date;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
+
+import javax.inject.Inject;
 
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
 import io.reactivex.rxjava3.core.Observer;
@@ -92,6 +96,10 @@ public class FragmentScannerUser extends Fragment {
     private  String  toProccess="В процессе...";
     private  String  toProccessError="Ошибка сервера !!!";
     private  MaterialButton materialButtonEventSameOfficeEvent;
+
+
+    @Inject
+    BusinessloginOriginallogic businessloginOriginallogic;
 
 
     @Override
@@ -132,7 +140,6 @@ public class FragmentScannerUser extends Fragment {
 
     private void settingGtLifeCyrcyleMutable() {
         try{
-
         lifecycleOwner = getActivity();
         lifecycleOwner.getLifecycle().addObserver(new LifecycleEventObserver() {
             @Override
@@ -177,10 +184,14 @@ public class FragmentScannerUser extends Fragment {
             materialtextview_last_state = (MaterialTextView) materialcardview_gattclientonly_bottom.findViewById(R.id.id_materialtextview_last_state);
 
             searchview_maclistdeviceserver = (MaterialTextView) materialcardview_gattclientonly_bottom.findViewById(R.id.id_searchview_maclistdeviceserver);
-// TODO: 07.08.2024 Востанавливаем статус последниуспешый статус
-            materialtextViewGetLastState();
+
+
+            // TODO: 07.08.2024 Востанавливаем статус последниуспешый статус
+           businessloginOriginallogic. materialtextViewGetLastState(preferences,materialtextview_last_state,messageClient);
             // TODO: 19.08.2024 выбор текущаег о МАК адреса через лик
             selectMacaddressviaclick();
+
+            materialtextViewGetLastMac();
 
             Log.d(getContext().getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                     " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
@@ -203,42 +214,37 @@ public class FragmentScannerUser extends Fragment {
         }
     }
 
-    private void materialtextViewGetLastState() {
+
+
+    private void materialtextViewGetLastMac() {
         try{
-        String completeResultContol=    preferences.getString("completeResultContol","");
-        if (completeResultContol.length()>0) {
+            // TODO: 29.08.2024  сохраняем preferences
+            BusinessloginforfragmentScanner businessloginforfragmentScanner=
+                    new BusinessloginforfragmentScanner(getContext(),version,preferences );
 
-            materialtextview_last_state.animate().rotationX(+20l);
-            messageClient.getTarget() .postDelayed(()-> {
-                materialtextview_last_state.animate().rotationX(0);
+            businessloginforfragmentScanner.updateUIFragmentMacSelecting(searchview_maclistdeviceserver,preferences,animation);
 
-                materialtextview_last_state.setText(completeResultContol);
-                materialtextview_last_state.requestLayout();
-                materialtextview_last_state.refreshDrawableState();
-            },200);
+                Log.d(getContext().getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                        " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                        " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n");
 
+        } catch (Exception e) {
+            e.printStackTrace();
+            Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() + " Линия  :"
+                    + Thread.currentThread().getStackTrace()[2].getLineNumber());
+            ContentValues valuesЗаписываемОшибки = new ContentValues();
+            valuesЗаписываемОшибки.put("Error", e.toString().toLowerCase());
+            valuesЗаписываемОшибки.put("Klass", this.getClass().getName());
+            valuesЗаписываемОшибки.put("Metod", Thread.currentThread().getStackTrace()[2].getMethodName());
+            valuesЗаписываемОшибки.put("LineError", Thread.currentThread().getStackTrace()[2].getLineNumber());
+            final Object ТекущаяВерсияПрограммы = version;
+            Integer ЛокальнаяВерсияПОСравнение = Integer.parseInt(ТекущаяВерсияПрограммы.toString());
+            valuesЗаписываемОшибки.put("whose_error", ЛокальнаяВерсияПОСравнение);
+            new SubClassErrors(getContext()).МетодЗаписиОшибок(valuesЗаписываемОшибки);
 
-
-            Log.d(getContext().getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
-                    " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                    " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n");
         }
-    } catch (Exception e) {
-        e.printStackTrace();
-        Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() + " Линия  :"
-                + Thread.currentThread().getStackTrace()[2].getLineNumber());
-        ContentValues valuesЗаписываемОшибки = new ContentValues();
-        valuesЗаписываемОшибки.put("Error", e.toString().toLowerCase());
-        valuesЗаписываемОшибки.put("Klass", this.getClass().getName());
-        valuesЗаписываемОшибки.put("Metod", Thread.currentThread().getStackTrace()[2].getMethodName());
-        valuesЗаписываемОшибки.put("LineError", Thread.currentThread().getStackTrace()[2].getLineNumber());
-        final Object ТекущаяВерсияПрограммы = version;
-        Integer ЛокальнаяВерсияПОСравнение = Integer.parseInt(ТекущаяВерсияПрограммы.toString());
-        valuesЗаписываемОшибки.put("whose_error", ЛокальнаяВерсияПОСравнение);
-        new SubClassErrors(getContext()).МетодЗаписиОшибок(valuesЗаписываемОшибки);
+    }
 
-    }
-    }
 
 
     private void selectMacaddressviaclick() {
@@ -267,7 +273,7 @@ public class FragmentScannerUser extends Fragment {
                             BusinesslogicSelectMacAdressGattServer businesslogicSelectMacAdressGattServer =
                                     new BusinesslogicSelectMacAdressGattServer(getContext(),
                                             version,messageClient,getLayoutInflater()
-                            ,searchview_maclistdeviceserver);
+                            ,searchview_maclistdeviceserver,preferences);
 
                             searchview_maclistdeviceserver.startAnimation(animation);
 

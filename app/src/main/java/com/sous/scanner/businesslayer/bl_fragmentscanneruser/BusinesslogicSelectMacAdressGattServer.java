@@ -3,6 +3,7 @@ package com.sous.scanner.businesslayer.bl_fragmentscanneruser;
 import android.annotation.SuppressLint;
 import android.content.ContentValues;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.graphics.Color;
 import android.graphics.Typeface;
@@ -23,6 +24,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.widget.SearchView;
 import androidx.cursoradapter.widget.CursorAdapter;
@@ -55,17 +57,20 @@ public class BusinesslogicSelectMacAdressGattServer {
     private  String MacTable="listMacMastersSous";
 
     private    BusinesslogicDatabase  businesslogicDatabase;
+    private   SharedPreferences preferences;
 
-    public BusinesslogicSelectMacAdressGattServer( @NonNull  Context context,
-                                                   @NonNull  long version,
-                                                   @NonNull   Message messageClient,
-                                                   @NonNull   LayoutInflater layoutInflater,
-                                                   @NonNull MaterialTextView searchview_maclistdeviceserver) {
+    public BusinesslogicSelectMacAdressGattServer(@NonNull  Context context,
+                                                  @NonNull  long version,
+                                                  @NonNull   Message messageClient,
+                                                  @NonNull   LayoutInflater layoutInflater,
+                                                  @NonNull MaterialTextView searchview_maclistdeviceserver,
+                                                  @Nullable SharedPreferences preferences) {
         this.context = context;
         this.version = version;
         this.messageClient = messageClient;
         this.layoutInflater = layoutInflater;
         this.searchview_maclistdeviceserver = searchview_maclistdeviceserver;
+        this.preferences = preferences;
         // TODO: 19.08.2024
         animation = AnimationUtils.loadAnimation(context, R.anim.slide_in_row_newscanner1);
         animationvibr1 = AnimationUtils.loadAnimation(context,R.anim.slide_singletable2);//
@@ -251,7 +256,7 @@ public class BusinesslogicSelectMacAdressGattServer {
 
 
         }
-                .setTitle("Выберете Mac-адрес")
+                .setTitle("Выберите адрес")
                 .setCancelable(false)
                 .setIcon( R.drawable.icon_newscannertwo)
                 .setView(layoutInflater.inflate( R.layout.simple_for_mac_adress_gatt_searchview, null )).show();
@@ -308,11 +313,18 @@ public class BusinesslogicSelectMacAdressGattServer {
                                 Long getUUID =   bundlePepoles.getLong("getUUID",0l);
                                 // TODO: 19.08.2024
                                 searchview_maclistdeviceserver.setTag(bundlePepoles);
-                                searchview_maclistdeviceserver.setText(getName);
+                                searchview_maclistdeviceserver.setText(geMAc);
                                 // TODO: 15.05.2023 ЗАПОЛЕНИЕ ДАННЫМИ КЛИК
                                 searchview_maclistdeviceserver.startAnimation(animationvibr1);
                                 searchview_maclistdeviceserver.refreshDrawableState();
                                 searchview_maclistdeviceserver.requestLayout();
+
+                                // TODO: 29.08.2024  сохраняем preferences
+                                BusinessloginforfragmentScanner businessloginforfragmentScanner=
+                                        new BusinessloginforfragmentScanner(context,version,preferences );
+
+                                businessloginforfragmentScanner.preferencesSaveEvent("","",geMAc,getName);
+
                                 // TODO: 15.05.2023  ЗАКРЫВАЕТ
                                 alertDialogMacAdress.cancel();
                                 alertDialogMacAdress.dismiss();
