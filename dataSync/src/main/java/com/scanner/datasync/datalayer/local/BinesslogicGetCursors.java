@@ -92,7 +92,8 @@ public class BinesslogicGetCursors {
         try {
             // TODO: 22.08.2024  Коненпт провайдер для зааписив базу данных
             ContentValues contentValues = new ContentValues();
-            Uri uri = Uri.parse("content://com.sous.scanner.prodider/" + "errordsu1" + "");
+            // TODO: 22.08.2024  Коненпт провайдер для зааписив базу данных
+            Uri uri = Uri.parse("content://com.sous.scanner.prodider/" + "listMacMastersSous" + "");
             Integer getVersionforErrorNew = 11;
             contentValues.put("current_table", getVersionforErrorNew);
        /*     Uri insertData=   resolver.insert(uri, contentValues);

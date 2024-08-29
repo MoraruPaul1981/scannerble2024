@@ -32,7 +32,7 @@ public class CREATE_DATABASEScanner extends SQLiteOpenHelper{ ///SQLiteOpenHelpe
     private   Context context;
     private  static AtomicReference<SQLiteDatabase> atomicstoredEntities = new AtomicReference<>();
     private     Long version=0l;
-    private static final int DATABASE_VERSION = 24;
+    private static final int DATABASE_VERSION = 25;
 
 
 

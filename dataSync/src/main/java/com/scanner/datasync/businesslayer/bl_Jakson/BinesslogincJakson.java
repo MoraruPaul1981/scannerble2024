@@ -18,8 +18,7 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.module.SimpleModule;
 import com.scanner.datasync.businesslayer.Errors.SubClassErrors;
-import com.scanner.datasync.datalayer.local.ListmacMasterDeserializer;
-import com.scanner.datasync.datalayer.local.listMacMastersSousListmacmasterssouslistMacMastersSous;
+
 
 import java.io.InputStream;
 import java.io.Serializable;
@@ -62,45 +61,17 @@ public class BinesslogincJakson {
       AtomicReference<JsonNode>  jsonNodeScannerBLE=new AtomicReference<>();
         Completable completable=   Completable.fromAction(()->{
 // TODO: 28.08.2024
-/*            final JsonParser jsonParserScanner= getHiltJaksonObjectMapper.createParser(inputStreamJaksonByteScanner);
-            if (  !jsonParserScanner.isClosed()) {*/
-
             final JsonParser jsonParserScanner= getHiltJaksonObjectMapper.createParser(inputStreamJaksonByteScanner);
-            jsonNodeScannerBLE.set(jsonParserScanner.readValueAsTree());
-
-            SimpleModule module = new SimpleModule();
-
-            module.addDeserializer(listMacMastersSousListmacmasterssouslistMacMastersSous.class, new ListmacMasterDeserializer());
-            getHiltJaksonObjectMapper.registerModule(module);
-
-
-
-            List<listMacMastersSousListmacmasterssouslistMacMastersSous> foo
-                    =  getHiltJaksonObjectMapper.readValue(inputStreamJaksonByteScanner,
-                    new TypeReference<List<listMacMastersSousListmacmasterssouslistMacMastersSous>>() {
-                @Override
-                public Type getType() {
-                    return super.getType();
-                }
-            });
-
-             /*   List<listMacMastersSousListmacmasterssouslistMacMastersSous> list
-                        = getHiltJaksonObjectMapper.readValue(inputStreamJaksonByteScanner, new TypeReference<>(){});*/
-
-
-            //    jsonNodeScannerBLE.set(jsonParserScanner.readValueAsTree());
+            if (  !jsonParserScanner.isClosed()) {
+                // TODO: 29.08.2024
+                jsonNodeScannerBLE.set(jsonParserScanner.readValueAsTree());
                 // TODO: 31.07.2024
                 Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                         " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
                         " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" + "\n"
-                        + " LocalDateTime.now() " + LocalDateTime.now().toString().toUpperCase() + "\n" +
-                        " jsonNodeScannerBLE " +jsonNodeScannerBLE);
-          //  }
-            // TODO: 31.07.2024
-            Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
-                    " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                    " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" + "\n"
-                    + " LocalDateTime.now() " + LocalDateTime.now().toString().toUpperCase() + "\n");
+                        + " LocalDateTime.now() " + LocalDateTime.now().toString().toUpperCase() + "\n"+
+                         " jsonNodeScannerBLE " +jsonNodeScannerBLE.get());
+            }
 
         }).doOnError(e->{
             e.printStackTrace();

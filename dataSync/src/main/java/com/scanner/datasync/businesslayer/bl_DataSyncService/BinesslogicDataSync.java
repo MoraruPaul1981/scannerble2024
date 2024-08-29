@@ -34,6 +34,9 @@ import java.net.MalformedURLException;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.URL;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Date;
@@ -282,20 +285,37 @@ public class BinesslogicDataSync {
             @Override
             public void onSubscribe(@NonNull Disposable d) {
                 Long  versionlocal=0l;
-                String  bremylocal=new String();
-         /*       if (cursorlocal.getCount() == 0) {
-                    // TODO: 27.08.2024
+                String  bremylocal=null;
+                // TODO: 29.08.2024
+               if (cursorlocal.getCount() >0) {
+                    // TODO: 27.08.2024 version data
                    versionlocal = cursorlocal.getLong(cursorlocal.getColumnIndex("current_table"));
+                   // TODO: 27.08.2024 bremy
+                   DateFormat dateFormat =new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS", new Locale("ru", "RU"));
                     // TODO: 27.08.2024 bremy
-                    DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.SSS", new Locale("ru", "RU"));
-                    LocalDateTime futureDate = LocalDateTime.parse(cursorlocal.getString(cursorlocal.getColumnIndex("date_update")), dtf);
-                    bremylocal = dtf.format(futureDate);
-                }*/
+                   try {
+                      Date datelocal = dateFormat.parse(cursorlocal.getString(cursorlocal.getColumnIndex("date_update")));
+                       bremylocal = dateFormat.format(datelocal);
+                   } catch (ParseException e) {
+                       throw new RuntimeException(e);
+                   }
+               }else {
+                   DateFormat	dateFormat =   new SimpleDateFormat("yyyy-MM-dd",new Locale("ru"));
+                   try {
+                       Date datelocal  = dateFormat.parse("1900-01-01");
+                       bremylocal = dateFormat.format(datelocal);
 
-                Log.d(context.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                   } catch (ParseException e) {
+                       throw new RuntimeException(e);
+                   }
+
+               }
+
+
+                   Log.d(context.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                         " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
                         " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" + " bremylocal " + bremylocal
-                        + " versionlocal " + versionlocal);
+                        + " versionlocal " + versionlocal+ " bremylocal " + bremylocal);
 
                 // TODO: 02.04.2024  Адресс и Порт Сервера Jboss
                 String getPortServer = getJbossAdress.values().stream().findFirst().orElseGet(()->"");
