@@ -950,11 +950,11 @@ public class FragmentScannerUser extends Fragment {
                                     BusinessloginforfragmentScanner businessloginforfragmentScanner=
                                             new BusinessloginforfragmentScanner(getContext(),version,preferences);
                                     // TODO: 30.08.2024
-                                    Bundle   searchview_bungle=       businessloginforfragmentScanner.updateUIClickBottonControl(searchview_maclistdeviceserver,preferences);
+                                    String   MacAdresss=       businessloginforfragmentScanner.updateUIClickBottonControlgetMac(searchview_maclistdeviceserver);
                                   /// Bundle   searchview_bungle=    (Bundle)    searchview_maclistdeviceserver.getTag();
-                                    if (searchview_bungle!=null) {
+                                    if (MacAdresss!=null) {
                                         // TODO: 20.08.2024
-                                        workerClickTOService(searchview_bungle);
+                                        workerClickTOService(MacAdresss);
                                         // TODO: 09.08.2024 Блютус Включен
 
                                         addCurrentButonClick(materialButtonClick,toProccess,"#BDC6C8");
@@ -1043,17 +1043,17 @@ public class FragmentScannerUser extends Fragment {
 
 
 
-        private     Bundle   workerClickTOService(@NonNull  Bundle   searchview_bungle) {
+        private     void    workerClickTOService(@NonNull  String   MacAdresss) {
             // TODO: 16.07.2024  startting Fragment Scannig
             try {
                     // TODO: 20.08.2024
-                    businesslogicJobServive.startingServiceSimpleScan("userUIlaunchingfrombackground",searchview_bungle);
+                    businesslogicJobServive.startingServiceSimpleScan("userUIlaunchingfrombackground",MacAdresss);
 
 
                 Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                         " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
                         " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" +
-                         " searchview_bungle  " +searchview_bungle);
+                         " MacAdresss  " +MacAdresss);
             } catch (Exception e) {
                 e.printStackTrace();
                 Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() + " Линия  :"
@@ -1068,7 +1068,7 @@ public class FragmentScannerUser extends Fragment {
                 valuesЗаписываемОшибки.put("whose_error", ЛокальнаяВерсияПОСравнение);
                 new SubClassErrors(getContext()).МетодЗаписиОшибок(valuesЗаписываемОшибки);
             }
-            return  searchview_bungle;
+
         }
 
 

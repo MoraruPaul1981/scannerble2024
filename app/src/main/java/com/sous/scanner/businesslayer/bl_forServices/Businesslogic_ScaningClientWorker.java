@@ -494,13 +494,12 @@ try{
             getListMAC.add( "FC:19:99:79:D6:D4");*/
           ///  getListMAC.add( "70:5F:A3:C4:D2:6C");//TODO Служба безрпасности
 
-            getMacGatt=  bundleFormSearchMacGatt.getString("geMAc","");
-          String  getName=  bundleFormSearchMacGatt.getString("getName","");
+            getMacGatt=  bundleFormSearchMacGatt.getString("MacAdresss","");
 
             Log.d(context.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                     " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
                     " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" + " bundleFormSearchMacGatt " +bundleFormSearchMacGatt+
-                    " getMacGatt " +getMacGatt + " getName "+getName);
+                    " getMacGatt " +getMacGatt);
         }
             Log.d(context.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                     " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
