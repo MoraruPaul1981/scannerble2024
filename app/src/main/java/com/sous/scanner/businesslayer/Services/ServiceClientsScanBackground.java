@@ -2,7 +2,6 @@ package com.sous.scanner.businesslayer.Services;
 
 
 
-import static android.app.job.JobInfo.PRIORITY_MAX;
 import static android.app.job.JobInfo.PRIORITY_MIN;
 
 import android.Manifest;
@@ -12,9 +11,7 @@ import android.app.Notification;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.bluetooth.BluetoothAdapter;
-import android.bluetooth.BluetoothDevice;
 import android.bluetooth.BluetoothManager;
-import android.bluetooth.BluetoothProfile;
 import android.content.ContentValues;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -32,13 +29,11 @@ import androidx.preference.PreferenceManager;
 
 import com.sous.scanner.R;
 import com.sous.scanner.businesslayer.Errors.SubClassErrors;
-import com.sous.scanner.businesslayer.bl_Tests.GetTest;
+import com.sous.scanner.businesslayer.bl_Tests.GetBleAdvertising;
 import com.sous.scanner.businesslayer.bl_forServices.Businesslogic_ScaningClientWorker;
 import com.sous.scanner.businesslayer.bl_forServices.BusinessoginEnableBluetoothAdapter;
 
-import java.time.LocalDateTime;
 import java.util.Date;
-import java.util.function.Consumer;
 
 import javax.inject.Inject;
 
@@ -56,7 +51,7 @@ public class ServiceClientsScanBackground extends IntentService {
 private      SharedPreferences preferences;
 
     @Inject
-    GetTest getTest;
+    GetBleAdvertising getBleAdvertising;
     public ServiceClientsScanBackground( ) {
         super(ServiceClientsScanBackground.class.toString());
     }
@@ -173,7 +168,7 @@ private      SharedPreferences preferences;
 
 
                         // TODO: 25.08.2024 TEST
-                       // getTest.startingTest(bluetoothAdapterPhoneClient);
+                       getBleAdvertising.staringBleAdvertising(bluetoothAdapterPhoneClient);
 
                         Log.d(getApplicationContext().getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                                 " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +

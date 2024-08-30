@@ -1,33 +1,24 @@
 package com.sous.scanner.businesslayer.bl_Tests;
 
 
-import android.Manifest;
 import android.annotation.SuppressLint;
 import android.bluetooth.BluetoothAdapter;
-import android.bluetooth.BluetoothDevice;
 import android.bluetooth.le.AdvertiseCallback;
 import android.bluetooth.le.AdvertiseData;
 import android.bluetooth.le.AdvertiseSettings;
-import android.bluetooth.le.ScanCallback;
-import android.bluetooth.le.ScanResult;
-import android.bluetooth.le.TransportDiscoveryData;
 import android.content.ContentValues;
 import android.content.Context;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
-import android.database.DatabaseErrorHandler;
-import android.database.sqlite.SQLiteDatabase;
 import android.os.ParcelUuid;
+import android.provider.Settings;
 import android.util.Log;
 
 import androidx.annotation.NonNull;
-import androidx.core.app.ActivityCompat;
 
 
 import com.sous.scanner.businesslayer.Errors.SubClassErrors;
 
-import java.util.Date;
-import java.util.List;
 import java.util.UUID;
 
 import javax.inject.Inject;
@@ -39,12 +30,12 @@ import dagger.hilt.components.SingletonComponent;
 
 @Module
 @InstallIn(SingletonComponent.class)
-public class GetTest {
+public class GetBleAdvertising {
     // TODO: 25.08.2024
     Context context;
     long version;
 
-    public @Inject GetTest(@ApplicationContext Context hitcontext) {
+    public @Inject GetBleAdvertising(@ApplicationContext Context hitcontext) {
         // TODO: 25.08.2024
         context = hitcontext;
         // TODO: 25.08.2024
@@ -62,9 +53,10 @@ public class GetTest {
     }
 
     @SuppressLint({"NewApi", "MissingPermission"})
-    public void startingTest(@NonNull BluetoothAdapter bluetoothAdapter) {
+    public void staringBleAdvertising(@NonNull BluetoothAdapter bluetoothAdapter) {
         try {
-
+            String ANDROID_ID = Settings.Secure.getString(context.getContentResolver(), Settings.Secure.ANDROID_ID);
+            bluetoothAdapter.setName(ANDROID_ID);
             Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                     " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
                     " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n");
