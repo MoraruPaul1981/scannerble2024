@@ -47,7 +47,6 @@ import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 import androidx.core.app.ActivityCompat;
 import androidx.core.app.NotificationCompat;
-import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
 
 import com.sous.server.R;
@@ -57,8 +56,7 @@ import com.sous.server.businesslayer.Errors.SubClassErrors;
 import com.sous.server.businesslayer.Eventbus.MessageScannerServer;
 import com.sous.server.businesslayer.Eventbus.ParamentsScannerServer;
 import com.sous.server.businesslayer.Locations.GattLocationListener;
-import com.sous.server.businesslayer.bl_Tests.GetTest;
-import com.sous.server.datalayer.remote.bl_writeandreadScanCatt.WtitingAndreadDataForScanGatt;
+import com.sous.server.businesslayer.bl_Tests.GetBleAdvertising;
 
 
 import org.greenrobot.eventbus.EventBus;
@@ -68,7 +66,6 @@ import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
 import java.util.UUID;
-import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicReference;
 
 import javax.inject.Inject;
@@ -107,7 +104,7 @@ public class ServiceServerScan extends Service {
 
 
     @Inject
-    GetTest getTest;
+    GetBleAdvertising getBleAdvertising;
 
     @Inject
     BucceslogincStartServiceGattServer bucceslogincStartServiceGattServer;
@@ -137,24 +134,6 @@ public class ServiceServerScan extends Service {
             startForeground(111, notification);//
 
 
-            // TODO: 25.08.2024
-            if (ActivityCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.BLUETOOTH_SCAN)
-                    != PackageManager.PERMISSION_GRANTED) {
-                // TODO: Consider calling
-                //    ActivityCompat#requestPermissions
-                // here to request the missing permissions, and then overriding
-                //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
-                //                                          int[] grantResults)
-                // to handle the case where the user grants the permission. See the documentation
-                // for ActivityCompat#requestPermissions for more details.
-                return;
-            }
-
-
-
-
-
-
             PackageInfo pInfo = getApplicationContext().getPackageManager().getPackageInfo(getApplicationContext().getPackageName(), 0);
             version = pInfo.getLongVersionCode();
             sharedPreferencesGatt =              PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
@@ -165,6 +144,20 @@ public class ServiceServerScan extends Service {
 
             //TODO:получаем Статус Адаптера Bluetooth true, false  и оптравляем статус в активти
              getStatusEnableBlueadapter =bucceslogincStartServiceGattServer. enableBluetoothAdapter(bluetoothAdapter,version,contentProviderServer);
+
+
+
+            // TODO: 25.08.2024
+            if (ActivityCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.BLUETOOTH_SCAN) != PackageManager.PERMISSION_GRANTED) {
+                // TODO: Consider calling
+                //    ActivityCompat#requestPermissions
+                // here to request the missing permissions, and then overriding
+                //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+                //                                          int[] grantResults)
+                // to handle the case where the user grants the permission. See the documentation
+                // for ActivityCompat#requestPermissions for more details.
+                return;
+            }
 
 
 
@@ -210,7 +203,7 @@ public class ServiceServerScan extends Service {
 
 
                 // TODO: 25.08.2024 TEST
-                getTest.startingTest(bluetoothAdapter);
+                getBleAdvertising.staringBleAdvertising(bluetoothAdapter);
 
 
 // TODO: 28.07.2024 LIster
