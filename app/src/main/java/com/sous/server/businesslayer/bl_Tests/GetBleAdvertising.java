@@ -64,7 +64,7 @@ public class GetBleAdvertising {
 
             // TODO: 25.08.2024
             String ANDROID_ID = Settings.Secure.getString(context.getContentResolver(), Settings.Secure.ANDROID_ID);
-            bluetoothAdapter.setName(ANDROID_ID);
+
             // Setting LE advertise
             AdvertiseSettings advertiseSettings = new AdvertiseSettings.Builder()
                     .setAdvertiseMode(AdvertiseSettings.ADVERTISE_MODE_LOW_LATENCY)
@@ -87,6 +87,7 @@ public class GetBleAdvertising {
 
 
             if (bluetoothAdapter!=null) {
+                bluetoothAdapter.setName(ANDROID_ID);
                 bluetoothAdapter.getBluetoothLeAdvertiser().startAdvertising(advertiseSettings,advertiseData,
                         new AdvertiseCallback() {
                     @Override
