@@ -4,30 +4,27 @@
 
     <permission android:name="com.sous.gatt.BROADCAST" />
 
-
-    <uses-permission android:name="android.permission.READ_PRIVILEGED_PHONE_STATE"
+    <uses-permission
+        android:name="android.permission.READ_PRIVILEGED_PHONE_STATE"
         tools:ignore="ProtectedPermissions" />
-
     <uses-permission android:name="android.permission.BLUETOOTH" />
     <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
-    <uses-permission android:name="android.permission.BLUETOOTH_SCAN"
+    <uses-permission
+        android:name="android.permission.BLUETOOTH_SCAN"
         android:usesPermissionFlags="neverForLocation"
-        tools:targetApi="s"
         tools:node="replace"
-        />
+        tools:targetApi="s" />
     <uses-permission android:name="android.permission.BLUETOOTH_ADVERTISE" />
-    <uses-permission android:name="android.permission.BLUETOOTH_CONNECT"
-        tools:node="replace"
-        />
-
+    <uses-permission
+        android:name="android.permission.BLUETOOTH_CONNECT"
+        tools:node="replace" />
     <uses-permission android:name="android.permission.BLUETOOTH_ADVERTISE" />
-    <uses-permission android:name="android.permission.BLUETOOTH_PRIVILEGED"
+    <uses-permission
+        android:name="android.permission.BLUETOOTH_PRIVILEGED"
         tools:ignore="ProtectedPermissions" />
-
-    <uses-permission android:name="android.permission.LOCAL_MAC_ADDRESS"
+    <uses-permission
+        android:name="android.permission.LOCAL_MAC_ADDRESS"
         tools:ignore="ProtectedPermissions" />
-
-
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
     <uses-permission android:name="android.permission_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
@@ -36,7 +33,6 @@
     <uses-permission android:name="android.intent.action.USER_PRESENT" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.VIBRATE" />
-
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE_CAMERA" />
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE_CONNECTED_DEVICE" />
@@ -49,26 +45,17 @@
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE_MICROPHONE" />
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE_REMOTE_MESSAGING" />
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE_SYSTEM_EXEMPTED" />
-
-
     <uses-permission android:name="android.permission.REQUEST_OBSERVE_COMPANION_DEVICE_PRESENCE" />
     <uses-permission android:name="android.permission.TRANSMIT_IR" />
     <uses-permission android:name="android.permission.REQUEST_OBSERVE_COMPANION_DEVICE_PRESENCE" />
     <uses-permission android:name="android.permission.REQUEST_COMPANION_USE_DATA_IN_BACKGROUND" />
     <uses-permission android:name="android.permission.REQUEST_COMPANION_RUN_IN_BACKGROUND" />
     <uses-permission android:name="android.permission.REQUEST_COMPANION_USE_DATA_IN_BACKGROUND" />
-
-
-
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
     <uses-permission android:name="android.permission.REQUEST_INSTALL_PACKAGES" />
     <uses-permission android:name="android.permission.VIBRATE" />
     <uses-permission android:name="android.permission.ACTION_LOCKED_BOOT_COMPLETED" />
     <uses-permission android:name="android.permission.WAKE_LOCK" />
-
-
-
-
     <uses-permission
         android:name="android.permission.WRITE_SECURE_SETTINGS"
         tools:ignore="ProtectedPermissions" />
@@ -110,26 +97,26 @@
     <uses-feature android:name="android.hardware.usb.host" />
 
     <application
+        android:name=".GetApplication"
         android:allowBackup="true"
-        android:icon="@mipmap/icon_scanner_new2"
-        android:label="@string/app_name"
-        android:networkSecurityConfig="@xml/network_security_config"
-        android:usesCleartextTraffic="true"
-        android:largeHeap="true"
         android:appCategory="productivity"
         android:hardwareAccelerated="false"
-        android:name="com.sous.scanner.GetApplication"
+        android:icon="@mipmap/icon_scanner_new2"
+        android:label="@string/app_name"
+        android:largeHeap="true"
+        android:networkSecurityConfig="@xml/network_security_config"
         android:roundIcon="@mipmap/icon_scanner_new2_round"
         android:supportsRtl="true"
-        android:theme="@style/Theme.DSU">
+        android:theme="@style/Theme.DSU"
+        android:usesCleartextTraffic="true">
 
 
         <receiver
             android:name=".businesslayer.Broadcastreceiver.BroadcastReceiverACL"
             android:directBootAware="true"
             android:enabled="true"
-            android:process=":remote"
-            android:exported="true">
+            android:exported="true"
+            android:process=":remote">
             <intent-filter>
                 <action android:name="android.bluetooth.device.action.PAIRING_REQUEST" />
                 <action android:name="android.bluetooth.device.action.ACTION_FOUND" />
@@ -147,8 +134,8 @@
             android:name=".businesslayer.Broadcastreceiver.BroadcastReceiverNAME_CHANGED"
             android:directBootAware="true"
             android:enabled="true"
-            android:process=":remote"
-            android:exported="true">
+            android:exported="true"
+            android:process=":remote">
             <intent-filter>
                 <action android:name="android.bluetooth.device.action.PAIRING_REQUEST" />
                 <action android:name="android.bluetooth.device.action.ACTION_FOUND" />
@@ -243,9 +230,6 @@
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity> <!-- android:permission="android.intent.action.BOOT_COMPLETED" -->
-
-
-
         <provider
             android:name=".businesslayer.ContentProdiders.ContentProviderScanner"
             android:authorities="com.sous.scanner.providerscanner"
@@ -258,8 +242,6 @@
             android:process=":providerscanner"
             android:readPermission="true"
             android:writePermission="true" />
-
-
 
         <service
             android:name=".businesslayer.Firebase.MyFirebaseMessagingServiceScanner"
@@ -277,12 +259,6 @@
                 android:name="com.onesignal.NotificationOpened.DEFAULT"
                 android:value="ENABLE" />
         </service>
-
-
-
-
-
-
         <service
             android:name=".businesslayer.Services.ServiceClientsScanBackground"
             android:directBootAware="true"
@@ -325,6 +301,50 @@
                 <action android:name="android.intent.action.ACTION_EXTERNAL_APPLICATIONS_AVAILABLE" />
             </intent-filter>
         </service>
+
+        <service
+            android:name=".businesslayer.Services.AdvertisingService"
+            android:directBootAware="true"
+            android:enabled="true"
+            android:exported="true"
+            android:foregroundServiceType="connectedDevice|location|dataSync"
+            android:permission="android.permission.BIND_JOB_SERVICE"
+            android:showOnLockScreen="true"
+            android:stopWithTask="false"
+            tools:ignore="ForegroundServicePermission">
+            <intent-filter>
+                <action android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+                <action android:name="android.intent.action.USER_PRESENT" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+
+                <action android:name="android.permission.WAKE_LOCK" />
+                <action android:name="android.intent.action.SCREEN_OFF" />
+                <action android:name="android.intent.action.SCREEN_ON" />
+                <action android:name="android.permission.BIND_JOB_SERVICE" />
+                <action android:name="android.intent.action.PACKAGE_INSTALL" />
+                <action android:name="android.intent.action.PACKAGE_ADDED" />
+                <action android:name="android.intent.action.DOWNLOAD_COMPLETE" />
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+                <action android:name="android.intent.action.LOCKED_BOOT_COMPLETED" />
+                <action android:name="android.intent.action.QUICKBOOT_POWERON" />
+                <action android:name="com.htc.intent.action.QUICKBOOT_POWERON" />
+                <action android:name="android.intent.action.USER_PRESENT" />
+                <action android:name="android.intent.action.QUICKBOOT_POWERON" />
+                <action android:name="android.intent.action.USER_PRESENT" />
+                <action android:name="android.permission.FOREGROUND_SERVICE" />
+                <action android:name="android.permission.INSTANT_APP_FOREGROUND_SERVICE" />
+                <action android:name="com.huawei.permission.SYSTEM_ALERT_WINDOW" />
+                <action android:name="android.permission.WAKE_LOCK" />
+                <action android:name="android.permission.SET_ALARM" />
+                <action android:name="com.android.alarm.permission.SET_ALARM" />
+                <action android:name="android.permission.FOREGROUND_SERVICE" />
+                <action android:name="android.permission.INSTANT_APP_FOREGROUND_SERVICE" />
+                <action android:name="android.permission.FOREGROUND_SERVICE" />
+                <action android:name="android.intent.action.ACTION_EXTERNAL_APPLICATIONS_AVAILABLE" />
+            </intent-filter>
+        </service>
+
 
 
 

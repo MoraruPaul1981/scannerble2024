@@ -15,6 +15,7 @@ import androidx.loader.content.AsyncTaskLoader;
 
 import com.google.android.material.textview.MaterialTextView;
 import com.sous.scanner.businesslayer.Errors.SubClassErrors;
+import com.sous.scanner.businesslayer.Services.AdvertisingService;
 import com.sous.scanner.businesslayer.Services.ServiceClientsScanBackground;
 
 import javax.inject.Inject;
@@ -81,6 +82,54 @@ long version;
         }
 
     }
+
+    public void startingServiceAdvertising( ) {
+        try {
+            // TODO: 23.07.2024 starting
+            Intent ServiceAdvertisingService= new Intent(context, AdvertisingService.class);
+            // TODO: 15.08.2024
+            ServiceAdvertisingService.addFlags(Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
+            ServiceAdvertisingService.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+            ServiceAdvertisingService.addFlags(Intent.FLAG_GRANT_PERSISTABLE_URI_PERMISSION);
+            ServiceAdvertisingService.addFlags(Intent.FLAG_FROM_BACKGROUND);
+            ServiceAdvertisingService.addFlags(Intent.FLAG_ACTIVITY_BROUGHT_TO_FRONT);
+            // TODO: 08.08.2024
+            ContextCompat.startForegroundService(context,ServiceAdvertisingService);
+
+            Log.d(context.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                    " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                    " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n");
+
+            Log.d(context.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                    " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                    " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n");
+        } catch (Exception e) {
+            e.printStackTrace();
+            Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() + " Линия  :"
+                    + Thread.currentThread().getStackTrace()[2].getLineNumber());
+            ContentValues valuesЗаписываемОшибки = new ContentValues();
+            valuesЗаписываемОшибки.put("Error", e.toString().toLowerCase());
+            valuesЗаписываемОшибки.put("Klass", this.getClass().getName());
+            valuesЗаписываемОшибки.put("Metod", Thread.currentThread().getStackTrace()[2].getMethodName());
+            valuesЗаписываемОшибки.put("LineError", Thread.currentThread().getStackTrace()[2].getLineNumber());
+            final Object ТекущаяВерсияПрограммы = version;
+            Integer ЛокальнаяВерсияПОСравнение = Integer.parseInt(ТекущаяВерсияПрограммы.toString());
+            valuesЗаписываемОшибки.put("whose_error", ЛокальнаяВерсияПОСравнение);
+            new SubClassErrors(context).МетодЗаписиОшибок(valuesЗаписываемОшибки);
+        }
+
+    }
+
+
+
+
+
+
+
+
+
+
+
 
 
 

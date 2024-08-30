@@ -50,8 +50,7 @@ public class ServiceClientsScanBackground extends IntentService {
    private     NotificationManager notificationManager;
 private      SharedPreferences preferences;
 
-    @Inject
-    GetBleAdvertising getBleAdvertising;
+
     public ServiceClientsScanBackground( ) {
         super(ServiceClientsScanBackground.class.toString());
     }
@@ -166,9 +165,6 @@ private      SharedPreferences preferences;
                         // TODO: 05.08.2024  start Fragment SCANNEer
                         blForServiceScan.    statyingCallBAckFragmentScaner();
 
-
-                        // TODO: 25.08.2024 TEST
-                       getBleAdvertising.staringBleAdvertising(bluetoothAdapterPhoneClient);
 
                         Log.d(getApplicationContext().getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                                 " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
