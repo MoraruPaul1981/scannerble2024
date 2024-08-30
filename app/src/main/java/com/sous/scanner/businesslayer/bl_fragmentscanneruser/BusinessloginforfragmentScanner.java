@@ -334,7 +334,7 @@ public class BusinessloginforfragmentScanner {
      String getMacForClick=new String();
         try{
             // TODO: 30.08.2024
-            getMacForClick=  materialtextview_last_state.getText().toString();
+            getMacForClick=  materialtextview_last_state.getText().toString().trim();
             // TODO: 07.08.2024  перезагружаем внешний вид экрана или точнее компонта Последний Статус
             Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                     " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +

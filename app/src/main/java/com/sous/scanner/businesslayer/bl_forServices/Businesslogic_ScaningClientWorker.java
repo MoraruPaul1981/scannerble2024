@@ -45,6 +45,8 @@ import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentSkipListSet;
 import java.util.concurrent.CopyOnWriteArrayList;
+import java.util.concurrent.LinkedBlockingQueue;
+import java.util.concurrent.LinkedTransferQueue;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicInteger;
 
@@ -260,7 +262,7 @@ public class Businesslogic_ScaningClientWorker {
     public void launchingСomplexbackground(@NonNull Bundle bundleFormSearchMacGatt) {
         try {
             // TODO: 02.08.2024
-            ConcurrentSkipListSet<BluetoothGatt>  getConnectionBluetoothGatt = new ConcurrentSkipListSet();
+            LinkedBlockingQueue<BluetoothGatt> getConnectionBluetoothGatt = new LinkedBlockingQueue();
             // TODO: 02.08.2024
             String  getMacGatt =addbundleFormSearchMacGatt(bundleFormSearchMacGatt);
             // TODO: 25.07.2024
@@ -447,7 +449,7 @@ public class Businesslogic_ScaningClientWorker {
 
     }
 
-    void startingDisponseCallBackAndConnectionForGatt(@NonNull     ConcurrentSkipListSet<BluetoothGatt>  getConnectionBluetoothGatt) {
+    void startingDisponseCallBackAndConnectionForGatt(@NonNull     LinkedBlockingQueue<BluetoothGatt>  getConnectionBluetoothGatt) {
 try{
        getConnectionBluetoothGatt.forEach(new java.util.function.Consumer<BluetoothGatt>() {
             @SuppressLint("MissingPermission")

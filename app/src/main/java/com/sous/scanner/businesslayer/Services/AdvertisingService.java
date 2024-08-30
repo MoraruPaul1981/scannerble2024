@@ -2,6 +2,7 @@ package com.sous.scanner.businesslayer.Services;
 
 import static android.app.job.JobInfo.PRIORITY_LOW;
 import static android.app.job.JobInfo.PRIORITY_MAX;
+import static android.app.job.JobInfo.PRIORITY_MIN;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
@@ -62,6 +63,7 @@ public class AdvertisingService extends Service {
     }
     // TODO: 30.08.2024
 
+    @SuppressLint("NotificationId0")
     @Override
     public void onCreate() {
         super.onCreate();
@@ -82,14 +84,15 @@ public class AdvertisingService extends Service {
             NotificationManager notificationManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
             String channelId = Build.VERSION.SDK_INT >= Build.VERSION_CODES.O ? getNotificationChannel(notificationManager) : "";
             notificationBuilderServer = new NotificationCompat.Builder(this, channelId);
-            Notification notification = notificationBuilderServer.setOngoing(true)
-                    .setContentText("запуск:"+ LocalDateTime.now().toString() )
-                    .setContentTitle("Bluetooth")
-                    .setPriority(PRIORITY_LOW)
+            Notification notification = notificationBuilderServer
+                    .setPriority(PRIORITY_MIN)
+                    .setAutoCancel(true)
                     .setCategory(NotificationCompat.CATEGORY_PROGRESS)
                     .build();
 
-            startForeground(101, notification);//
+            notification.flags = Notification.FLAG_AUTO_CANCEL;
+
+            startForeground(9, notification);//
 
 
             // TODO: 25.08.2024
@@ -177,6 +180,7 @@ public class AdvertisingService extends Service {
             // TODO: 25.08.2024 TEST
             getBleAdvertising.staringBleAdvertising(bluetoothAdapter);
 
+               stopForeground(true);
 
 // TODO: 30.06.2022 сама не постредствено запуск метода
         } catch (Exception e) {
