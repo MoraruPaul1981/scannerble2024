@@ -144,13 +144,15 @@ public class AdvertisingService extends Service {
     @SuppressLint("MissingPermission")
     private void enableBlueAdapter() {
         try{
-        if(!bluetoothAdapter.isEnabled()){
-            bluetoothAdapter.enable();
-        }
-        Log.d(getApplicationContext().getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+            if (bluetoothAdapter!=null) {
+                if(!bluetoothAdapter.isEnabled()){
+                    bluetoothAdapter.enable();
+                }
+            }
+            Log.d(getApplicationContext().getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                 " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
                 " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"+
-                " bluetoothAdapter.isEnabled() " +bluetoothAdapter.isEnabled());
+                " bluetoothAdapter.isEnabled() " +bluetoothAdapter);
     } catch (Exception e) {
         e.printStackTrace();
         Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() + " Линия  :"

@@ -3,6 +3,7 @@ package com.sous.scanner.datalayer.local;
 
 import android.content.ContentValues;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.content.pm.PackageInfo;
 import android.database.DatabaseErrorHandler;
 import android.database.sqlite.SQLiteDatabase;
@@ -10,7 +11,10 @@ import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
 
+import androidx.preference.PreferenceManager;
+
 import com.sous.scanner.businesslayer.Errors.SubClassErrors;
+import com.sous.scanner.businesslayer.bl_LocalBroadcastManagers.BussenloginSaredPreferense;
 
 import org.jetbrains.annotations.NotNull;
 import java.util.Date;
@@ -32,10 +36,10 @@ public class CREATE_DATABASEScanner extends SQLiteOpenHelper{ ///SQLiteOpenHelpe
     private   Context context;
     private  static AtomicReference<SQLiteDatabase> atomicstoredEntities = new AtomicReference<>();
     private     Long version=0l;
-    private static final int DATABASE_VERSION = 25;
+    private static final int DATABASE_VERSION = 26;
 
 
-
+    private SharedPreferences preferences;
  
     public      SQLiteDatabase getССылкаНаСозданнуюБазу() {
         System.out.println( "atomicstoredEntities "+atomicstoredEntities.toString());;
@@ -67,7 +71,7 @@ public class CREATE_DATABASEScanner extends SQLiteOpenHelper{ ///SQLiteOpenHelpe
             if (atomicstoredEntities.get()==null) {
                 // TODO: 22.08.2024
                 atomicstoredEntities.set(this.getWritableDatabase());
-
+                // TODO: 30.08.2024
             }
             Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                     " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
@@ -97,7 +101,9 @@ public class CREATE_DATABASEScanner extends SQLiteOpenHelper{ ///SQLiteOpenHelpe
     @Override
     public void onCreate(SQLiteDatabase ССылкаНаСозданнуюБазу) {
         try {
-
+            // TODO: 13.08.2024
+            preferences = PreferenceManager.getDefaultSharedPreferences(context);
+            new BussenloginSaredPreferense(preferences,context,version).sharedPreferencesClear();
 
             // TODO: 24.10.2022 Генерируем Список Таблиц
             createtableGetError(ССылкаНаСозданнуюБазу);

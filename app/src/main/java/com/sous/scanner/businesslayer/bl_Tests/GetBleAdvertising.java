@@ -56,7 +56,6 @@ public class GetBleAdvertising {
     public void staringBleAdvertising(@NonNull BluetoothAdapter bluetoothAdapter) {
         try {
             String ANDROID_ID = Settings.Secure.getString(context.getContentResolver(), Settings.Secure.ANDROID_ID);
-            bluetoothAdapter.setName(ANDROID_ID);
             Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                     " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
                     " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n");
@@ -79,8 +78,8 @@ public class GetBleAdvertising {
                     .setIncludeTxPowerLevel(true)
                     .addServiceUuid(parcelUuid)
                     .build();
-
             if (bluetoothAdapter!=null) {
+                bluetoothAdapter.setName(ANDROID_ID);
                 bluetoothAdapter.getBluetoothLeAdvertiser().startAdvertising(advertiseSettings, advertiseData,
                         new AdvertiseCallback() {
                             @Override
