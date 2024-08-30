@@ -40,6 +40,7 @@ import com.sous.scanner.businesslayer.Errors.SubClassErrors;
 import com.sous.scanner.datalayer.bl_DataBase.BusinesslogicDatabase;
 
 import java.util.Date;
+import java.util.concurrent.atomic.AtomicReference;
 
 public class BusinesslogicSelectMacAdressGattServer {
 
@@ -82,7 +83,7 @@ public class BusinesslogicSelectMacAdressGattServer {
 
     @SuppressLint("Range")
   public   void AlertDialogSelectionMacAdress( ){
-
+        AtomicReference<String> countMacAdres=new AtomicReference<>("0");
         // TODO: 19.08.2024
         try {
         alertDialogMacAdress = new MaterialAlertDialogBuilder(activity){
@@ -172,6 +173,8 @@ public class BusinesslogicSelectMacAdressGattServer {
                     fillingwhenthereisNodata();
                 }
 
+                    countMacAdres.set(getCountMacRow());
+
 
                     // TODO: 21.08.2024 когда данные есть
                     SimpleCursorAdapter     simpleCursorForSearchView = fillingwhenDataisavailable();
@@ -212,12 +215,19 @@ public class BusinesslogicSelectMacAdressGattServer {
 
             }
 
-
-
-
-
-
-
+            private String   getCountMacRow() {
+                String countMacAdres = new String();
+                if (cursor.getCount()>0) {
+                    Integer  countMac =cursor.getCount();
+                    countMacAdres=String.valueOf(countMac.toString());
+                }
+                Log.d(this.getContext().getClass().getName(), "\n"
+                        + " время: " + new Date()+"\n+" +
+                        " Класс в процессе... " +
+                        this.getContext().getClass().getName()+"\n"+
+                        " метод в процессе... " + Thread.currentThread().getStackTrace()[2].getMethodName());
+                return  countMacAdres;
+            }
 
 
             private void finaloperationforListView() {
@@ -259,6 +269,7 @@ public class BusinesslogicSelectMacAdressGattServer {
 
 
         }
+                // TODO: 30.08.2024
                 .setTitle("Выберите адрес")
                 .setCancelable(false)
                 .setIcon( R.drawable.icon_newscannertwo)
@@ -269,6 +280,7 @@ public class BusinesslogicSelectMacAdressGattServer {
         layoutParams.height =WindowManager.LayoutParams.MATCH_PARENT;
         layoutParams.gravity = Gravity.CENTER;
         alertDialogMacAdress.getWindow().setAttributes(layoutParams);
+        alertDialogMacAdress.  setTitle("Выберите адрес ("+countMacAdres.get()+")");
 
         // TODO: 13.12.2022 ВТОРОЙ СЛУШАТЕЛЬ НА КНОПКУ
         Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
