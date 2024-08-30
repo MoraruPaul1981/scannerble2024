@@ -84,7 +84,6 @@ private      SharedPreferences preferences;
 
             Notification();
 
-
             // TODO: 25.08.2024
             if (ActivityCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.BLUETOOTH_SCAN) != PackageManager.PERMISSION_GRANTED) {
                 // TODO: Consider calling
@@ -96,6 +95,12 @@ private      SharedPreferences preferences;
                 // for ActivityCompat#requestPermissions for more details.
                 return;
             }
+
+
+
+
+
+
 
             Log.d(getApplicationContext().getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                     " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +

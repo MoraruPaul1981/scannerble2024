@@ -944,9 +944,14 @@ public class FragmentScannerUser extends Fragment {
                                             "  disposableClick[0] " + disposableClick[0]);
                                     
                                 }else{
+// TODO: 30.08.2024
 
-                                 Bundle   searchview_bungle=    (Bundle)    searchview_maclistdeviceserver.getTag();
-
+                                    // TODO: 07.08.2024 Обработка пришедшено собтыия от BoadCastReciver
+                                    BusinessloginforfragmentScanner businessloginforfragmentScanner=
+                                            new BusinessloginforfragmentScanner(getContext(),version,preferences);
+                                    // TODO: 30.08.2024
+                                    Bundle   searchview_bungle=       businessloginforfragmentScanner.updateUIClickBottonControl(searchview_maclistdeviceserver,preferences);
+                                  /// Bundle   searchview_bungle=    (Bundle)    searchview_maclistdeviceserver.getTag();
                                     if (searchview_bungle!=null) {
                                         // TODO: 20.08.2024
                                         workerClickTOService(searchview_bungle);

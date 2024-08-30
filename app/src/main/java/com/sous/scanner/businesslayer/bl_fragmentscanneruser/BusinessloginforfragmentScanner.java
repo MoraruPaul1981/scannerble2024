@@ -19,6 +19,8 @@ import com.sous.scanner.businesslayer.bl_EvenBus.EventLocalBroadcastManager;
 
 import java.time.LocalDateTime;
 
+import kotlinx.coroutines.internal.AtomicOp;
+
 public class BusinessloginforfragmentScanner {
 
     // TODO: 07.08.2024
@@ -285,7 +287,48 @@ public class BusinessloginforfragmentScanner {
     }
 
 
+    public Bundle updateUIClickBottonControl(@NonNull  MaterialTextView materialtextview_last_state,SharedPreferences preferences){
+        Bundle bundle = (Bundle) materialtextview_last_state.getTag();
+        try{
+            // TODO: 30.08.2024
+            if (bundle==null) {
+                bundle=new Bundle();
+            }
+            // TODO: 07.08.2024  перезагружаем внешний вид экрана или точнее компонта Последний Статус
+            String getBremy =preferences.getString("getBremy","");
+            String getAction =preferences.getString("getAction","");
+            String getAddress =preferences.getString("getAddress","");
+            String getName =preferences.getString("getName","");
+            String getFirstNameButton =preferences.getString("getMatetilaButtonControl","");
+            // TODO: 07.08.2024
+            bundle.putString("getBremy",getBremy);
+            bundle.putString("getAction",getAction);
+            bundle.putString("getAddress",getAddress);
+            bundle.putString("getName",getName);
+            bundle.putString("getMatetilaButtonControl",getFirstNameButton);
+            materialtextview_last_state.setTag(bundle);
 
+            Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                    " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                    " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" +
+                    " preferences " +preferences);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() + " Линия  :"
+                    + Thread.currentThread().getStackTrace()[2].getLineNumber());
+            ContentValues valuesЗаписываемОшибки = new ContentValues();
+            valuesЗаписываемОшибки.put("Error", e.toString().toLowerCase());
+            valuesЗаписываемОшибки.put("Klass", this.getClass().getName());
+            valuesЗаписываемОшибки.put("Metod", Thread.currentThread().getStackTrace()[2].getMethodName());
+            valuesЗаписываемОшибки.put("LineError", Thread.currentThread().getStackTrace()[2].getLineNumber());
+            final Object ТекущаяВерсияПрограммы = version;
+            Integer ЛокальнаяВерсияПОСравнение = Integer.parseInt(ТекущаяВерсияПрограммы.toString());
+            valuesЗаписываемОшибки.put("whose_error", ЛокальнаяВерсияПОСравнение);
+            new SubClassErrors(context).МетодЗаписиОшибок(valuesЗаписываемОшибки);
+        }
+        return  bundle;
+    }
 
 
 
