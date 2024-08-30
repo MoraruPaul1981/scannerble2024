@@ -73,9 +73,7 @@ public class DataSyncService extends IntentService {
     @QualifierJbossServer3
     public LinkedHashMap<String,String> getJbossAdressDebug;
 
-    @Inject
-    @QualifierJbossServer2
-    public LinkedHashMap<String,String> getHiltJbossReliz;
+
 
     @Inject
     BinesslogicGetCursors binesslogicGetCursors;

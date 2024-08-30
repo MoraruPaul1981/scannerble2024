@@ -129,7 +129,7 @@ public class BinesslogicDataSync {
             throws ExecutionException, InterruptedException {
         // TODO: 22.08.2024  Коненпт провайдер для зааписив базу данных
         final String[] ANDROID_ID = {new String()};
-        final InputStream[] inputStreamJaksonByte = new InputStream[1];
+        AtomicReference<InputStream> inputStreamJaksonByte = new AtomicReference();
         // TODO: 28.08.2024
         Completable.fromAction(()->{
 
@@ -200,9 +200,10 @@ public class BinesslogicDataSync {
                         if (РазмерПришедшегоПотока > 0l) {
                             // TODO: 07.10.2023  gzip
                             byte[] asByteBuffer = response.body().source().readByteArray();
-                            inputStreamJaksonByte[0] = new GZIPInputStream(ByteSource.wrap(asByteBuffer).openBufferedStream(), 2048);//4096
-                            Log.d(this.getClass().getName(), "inputStreamJaksonByte[0] " + inputStreamJaksonByte[0].available() +
-                                    " РазмерПришедшегоПотока " + РазмерПришедшегоПотока + " inputStreamJaksonByte[0] " +inputStreamJaksonByte[0]);
+                            inputStreamJaksonByte.set(new GZIPInputStream(ByteSource.wrap(asByteBuffer).openBufferedStream(), 2048));//4096
+                            // TODO: 30.08.2024
+                            Log.d(this.getClass().getName(), "inputStreamJaksonByte[0] " + inputStreamJaksonByte.get().available() +
+                                    " РазмерПришедшегоПотока " + РазмерПришедшегоПотока + " inputStreamJaksonByte[0] " +inputStreamJaksonByte.get());
 
                         }
                         // TODO: 31.05.2022
@@ -264,7 +265,7 @@ public class BinesslogicDataSync {
                 " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" + "\n"
                 + " LocalDateTime.now() " + LocalDateTime.now().toString().toUpperCase() + "\n");
 
-        return inputStreamJaksonByte[0];
+        return inputStreamJaksonByte.get();
 
     }
 

@@ -173,7 +173,7 @@ private      SharedPreferences preferences;
 
 
                         // TODO: 25.08.2024 TEST
-                        getTest.startingTest(bluetoothAdapterPhoneClient);
+                       // getTest.startingTest(bluetoothAdapterPhoneClient);
 
                         Log.d(getApplicationContext().getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                                 " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
