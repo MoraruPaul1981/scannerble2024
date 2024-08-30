@@ -67,6 +67,7 @@ import java.util.concurrent.TimeUnit;
 
 import javax.inject.Inject;
 
+import dagger.hilt.android.AndroidEntryPoint;
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
 import io.reactivex.rxjava3.core.Observer;
 import io.reactivex.rxjava3.disposables.Disposable;
@@ -74,7 +75,7 @@ import io.reactivex.rxjava3.functions.Action;
 import io.reactivex.rxjava3.functions.Consumer;
 import kotlin.Unit;
 
-
+@AndroidEntryPoint
 public class FragmentScannerUser extends Fragment {
     // TODO: 05.08.2024
     private MyRecycleViewAdapter myRecycleViewAdapter;
@@ -189,9 +190,11 @@ public class FragmentScannerUser extends Fragment {
             // TODO: 07.08.2024 Востанавливаем статус последниуспешый статус
            businessloginOriginallogic. materialtextViewGetLastState(preferences,materialtextview_last_state,messageClient);
             // TODO: 19.08.2024 выбор текущаег о МАК адреса через лик
-            selectMacaddressviaclick();
+            businessloginOriginallogic.    selectMacaddressviaclick(searchview_maclistdeviceserver,getLayoutInflater()
+            ,messageClient,animation,preferences,getActivity());
 
-            materialtextViewGetLastMac();
+// TODO: 30.08.2024  заполняем данными последним Успешынм сервером  с верзху в выаре MAc адресов
+            businessloginOriginallogic.    materialtextViewGetLastMac(preferences,searchview_maclistdeviceserver,animation);
 
             Log.d(getContext().getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                     " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
@@ -216,125 +219,10 @@ public class FragmentScannerUser extends Fragment {
 
 
 
-    private void materialtextViewGetLastMac() {
-        try{
-            // TODO: 29.08.2024  сохраняем preferences
-            BusinessloginforfragmentScanner businessloginforfragmentScanner=
-                    new BusinessloginforfragmentScanner(getContext(),version,preferences );
-
-            businessloginforfragmentScanner.updateUIFragmentMacSelecting(searchview_maclistdeviceserver,preferences,animation);
-
-                Log.d(getContext().getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
-                        " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                        " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n");
-
-        } catch (Exception e) {
-            e.printStackTrace();
-            Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() + " Линия  :"
-                    + Thread.currentThread().getStackTrace()[2].getLineNumber());
-            ContentValues valuesЗаписываемОшибки = new ContentValues();
-            valuesЗаписываемОшибки.put("Error", e.toString().toLowerCase());
-            valuesЗаписываемОшибки.put("Klass", this.getClass().getName());
-            valuesЗаписываемОшибки.put("Metod", Thread.currentThread().getStackTrace()[2].getMethodName());
-            valuesЗаписываемОшибки.put("LineError", Thread.currentThread().getStackTrace()[2].getLineNumber());
-            final Object ТекущаяВерсияПрограммы = version;
-            Integer ЛокальнаяВерсияПОСравнение = Integer.parseInt(ТекущаяВерсияПрограммы.toString());
-            valuesЗаписываемОшибки.put("whose_error", ЛокальнаяВерсияПОСравнение);
-            new SubClassErrors(getContext()).МетодЗаписиОшибок(valuesЗаписываемОшибки);
-
-        }
-    }
 
 
 
-    private void selectMacaddressviaclick() {
-        try{
-            // TODO: 22.02.2023 для второй кнопки
-            RxView.clicks(searchview_maclistdeviceserver)
-                    .throttleFirst(5, TimeUnit.SECONDS)
-                    .observeOn(AndroidSchedulers.mainThread())
-                    .subscribe(new Observer<Unit>() {
-                        @Override
-                        public void onSubscribe(@io.reactivex.rxjava3.annotations.NonNull Disposable d) {
-                            Log.d(this.getClass().getName(),  "  RxView.clicks " +Thread.currentThread().getStackTrace()[2].getMethodName()
-                                    + " время " +new Date().toLocaleString() );
-                        }
-                        @Override
-                        public void onNext(@io.reactivex.rxjava3.annotations.NonNull Unit unit) {
-                            // TODO: 05.08.2024
 
-                            // TODO: 02.08.2024
-                            Log.d(this.getClass().getName(), "\n" + " class " +
-                                    Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
-                                    " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                                    " line " + Thread.currentThread().getStackTrace()[2].getLineNumber());
-
-                            // TODO: 19.08.2024
-                            BusinesslogicSelectMacAdressGattServer businesslogicSelectMacAdressGattServer =
-                                    new BusinesslogicSelectMacAdressGattServer(getContext(),
-                                            version,messageClient,getLayoutInflater()
-                            ,searchview_maclistdeviceserver,preferences);
-
-                            searchview_maclistdeviceserver.startAnimation(animation);
-
-                            businesslogicSelectMacAdressGattServer.selectiongMacAdressGattServer( );
-
-
-                            Log.d(getContext().getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
-                                    " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                                    " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n");
-
-
-                        }
-
-                        @Override
-                        public void onError(@io.reactivex.rxjava3.annotations.NonNull Throwable e) {
-                            e.printStackTrace();
-                            Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() + " Линия  :"
-                                    + Thread.currentThread().getStackTrace()[2].getLineNumber());
-                            ContentValues valuesЗаписываемОшибки = new ContentValues();
-                            valuesЗаписываемОшибки.put("Error", e.toString().toLowerCase());
-                            valuesЗаписываемОшибки.put("Klass", this.getClass().getName());
-                            valuesЗаписываемОшибки.put("Metod", Thread.currentThread().getStackTrace()[2].getMethodName());
-                            valuesЗаписываемОшибки.put("LineError", Thread.currentThread().getStackTrace()[2].getLineNumber());
-                            final Object ТекущаяВерсияПрограммы = version;
-                            Integer ЛокальнаяВерсияПОСравнение = Integer.parseInt(ТекущаяВерсияПрограммы.toString());
-                            valuesЗаписываемОшибки.put("whose_error", ЛокальнаяВерсияПОСравнение);
-                            new SubClassErrors(getContext()).МетодЗаписиОшибок(valuesЗаписываемОшибки);
-                        }
-
-                        @Override
-                        public void onComplete() {
-                            // TODO: 09.08.2024 у вс не вслючен Bluetooth
-
-
-                            Log.d(this.getClass().getName(),  "  RxView.clicks " +Thread.currentThread().getStackTrace()[2].getMethodName()
-                                    + " время " +new Date().toLocaleString() );
-
-                            Log.d(this.getClass().getName(),  "  RxView.clicks " +Thread.currentThread().getStackTrace()[2].getMethodName()
-                                    + " время " +new Date().toLocaleString() );
-                        }
-                    });
-            // TODO: 19.08.2024
-            Log.d(getContext().getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
-                    " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                    " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n");
-        } catch (Exception e) {
-            e.printStackTrace();
-            Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() + " Линия  :"
-                    + Thread.currentThread().getStackTrace()[2].getLineNumber());
-            ContentValues valuesЗаписываемОшибки = new ContentValues();
-            valuesЗаписываемОшибки.put("Error", e.toString().toLowerCase());
-            valuesЗаписываемОшибки.put("Klass", this.getClass().getName());
-            valuesЗаписываемОшибки.put("Metod", Thread.currentThread().getStackTrace()[2].getMethodName());
-            valuesЗаписываемОшибки.put("LineError", Thread.currentThread().getStackTrace()[2].getLineNumber());
-            final Object ТекущаяВерсияПрограммы = version;
-            Integer ЛокальнаяВерсияПОСравнение = Integer.parseInt(ТекущаяВерсияПрограммы.toString());
-            valuesЗаписываемОшибки.put("whose_error", ЛокальнаяВерсияПОСравнение);
-            new SubClassErrors(getContext()).МетодЗаписиОшибок(valuesЗаписываемОшибки);
-
-        }
-    }
 
 
 

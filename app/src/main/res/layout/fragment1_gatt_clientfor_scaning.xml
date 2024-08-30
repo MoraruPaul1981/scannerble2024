@@ -108,7 +108,7 @@
                 android:textAppearance="?android:attr/textAppearanceListItemSmall"
                 android:textSize="16dp"
                 android:textStyle="bold"
-                android:text="мас-адреса"
+                android:hint="мас-адреса"
                 android:visibility="visible" />
             </RelativeLayout>
 
