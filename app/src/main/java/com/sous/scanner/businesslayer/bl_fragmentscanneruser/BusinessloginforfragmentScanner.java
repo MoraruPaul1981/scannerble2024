@@ -103,7 +103,8 @@ public class BusinessloginforfragmentScanner {
                                      @NonNull SharedPreferences preferences,
                                      @NonNull Animation animation ,
                                      @NonNull MaterialButton materialcardview_gattclientonly_bottom,
-                                     @NonNull Message message) {
+                                     @NonNull Message message,
+                                     @NonNull  MaterialTextView searchview_maclistdeviceserver) {
         try{
             // TODO: 07.08.2024  перезагружаем внешний вид экрана или точнее компонта Последний Статус
             String getBremy =preferences.getString("getBremy","");
@@ -143,7 +144,7 @@ public class BusinessloginforfragmentScanner {
 
 
                 // TODO: 29.08.2024  сохраняем preferences
-                afterSuccessfulscanningsavepreferences(materialtextview_last_state, preferences, getName);
+                 afterSuccessfulscanningsavepreferences(  getName,searchview_maclistdeviceserver);
 
 
             }else {
@@ -185,20 +186,19 @@ public class BusinessloginforfragmentScanner {
         }
     }
 
-    private void afterSuccessfulscanningsavepreferences(@NonNull MaterialTextView materialtextview_last_state,
-                                                        @NonNull SharedPreferences preferences,
-                                                        String getName) {
+    private void afterSuccessfulscanningsavepreferences(@NonNull String getName, @NonNull MaterialTextView searchview_maclistdeviceserver) {
         // TODO: 30.08.2024
         try{
-        BusinessloginforfragmentScanner businessloginforfragmentScanner=
-                new BusinessloginforfragmentScanner(context,version, preferences);
-        Bundle bundlegetMac= (Bundle) materialtextview_last_state.getTag();
-        String geMAc=     bundlegetMac.getString("geMAc","");
-        if (geMAc.length()>0) {
-            businessloginforfragmentScanner.preferencesSaveEvent("","",geMAc, getName);
-        }
 
-        Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+         String geMAc=   searchview_maclistdeviceserver.getText().toString().toString();
+
+            if (geMAc.length()>0) {
+                BusinessloginforfragmentScanner businessloginforfragmentScanner=
+                        new BusinessloginforfragmentScanner(context,version, preferences);
+                businessloginforfragmentScanner.preferencesSaveEvent("","",geMAc, getName);
+            }
+
+            Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                 " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
                 " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" +
                 " preferences " +preferences);

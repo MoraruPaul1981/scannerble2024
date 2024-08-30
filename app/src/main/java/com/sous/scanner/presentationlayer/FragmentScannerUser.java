@@ -1232,7 +1232,9 @@ public class FragmentScannerUser extends Fragment {
 
             businessloginforfragmentScanner .eventprocessingOtEventBus(event);
 
-            businessloginforfragmentScanner.  updateUIFragmentScan(materialtextview_last_state,preferences,animation,materialButtonEventSameOfficeEvent, messageClient);
+            businessloginforfragmentScanner.  updateUIFragmentScan(materialtextview_last_state,preferences,animation,
+                    materialButtonEventSameOfficeEvent,
+                    messageClient,searchview_maclistdeviceserver);
             // TODO: 07.08.2024
 
 
