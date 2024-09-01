@@ -44,6 +44,7 @@ public class AdvertisingService extends Service {
 
     @Inject
     GetBleAdvertising getBleAdvertising;
+
     public AdvertisingService() {
         Log.d(this.getClass().getName(), "\n"
                 + " время: " + new Date() + "\n+" +
@@ -175,7 +176,9 @@ public class AdvertisingService extends Service {
                     " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" );
 
             // TODO: 25.08.2024 TEST
-            getBleAdvertising.staringBleAdvertisingSet(bluetoothAdapter);
+            getBleAdvertising.staringAdvertisingSet(bluetoothAdapter);
+
+
 
                stopForeground(true);
 

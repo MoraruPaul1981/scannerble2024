@@ -56,7 +56,7 @@ public class GetBleAdvertising {
     }
 
     @SuppressLint({"NewApi", "MissingPermission"})
-    public void staringBleAdvertising(@NonNull BluetoothAdapter bluetoothAdapter) {
+    public void staringAdvertisingSet(@NonNull BluetoothAdapter bluetoothAdapter) {
         try {
             String ANDROID_ID = Settings.Secure.getString(context.getContentResolver(), Settings.Secure.ANDROID_ID);
             String ANDROID_NAME=Settings.Global.getString(context.getContentResolver(),Settings.Global.DEVICE_NAME);
@@ -75,18 +75,14 @@ public class GetBleAdvertising {
             AdvertisingSetParameters parameters = new  AdvertisingSetParameters.Builder()
                     .setInterval(AdvertisingSetParameters.INTERVAL_HIGH)
                     .setLegacyMode(false)
+                    .setConnectable(true)
+                    .setAnonymous(false)
                     .setInterval(AdvertisingSetParameters.INTERVAL_MAX)
                     .setTxPowerLevel(AdvertisingSetParameters.TX_POWER_HIGH)
                     .setPrimaryPhy(BluetoothDevice.PHY_LE_1M)
                     .setSecondaryPhy(BluetoothDevice.PHY_LE_2M)
                     .build();
 
-
-                    parameters = new AdvertisingSetParameters.Builder()
-                            .setInterval(AdvertisingSetParameters.INTERVAL_MAX)
-                            .setTxPowerLevel(AdvertisingSetParameters.TX_POWER_HIGH)
-                            .setConnectable(false)
-                            .build();
 
             AdvertiseSettings settings = new AdvertiseSettings.Builder()
                     .setAdvertiseMode(AdvertiseSettings.ADVERTISE_MODE_LOW_LATENCY)
@@ -152,7 +148,7 @@ public class GetBleAdvertising {
     }
 
     @SuppressLint({"NewApi", "MissingPermission"})
-    public void staringBleAdverting(@NonNull BluetoothAdapter bluetoothAdapter) {
+    public void staringAdverting(@NonNull BluetoothAdapter bluetoothAdapter) {
         try {
             String ANDROID_ID = Settings.Secure.getString(context.getContentResolver(), Settings.Secure.ANDROID_ID);
             String ANDROID_NAME=Settings.Global.getString(context.getContentResolver(),Settings.Global.DEVICE_NAME);
