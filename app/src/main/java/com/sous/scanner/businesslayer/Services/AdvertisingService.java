@@ -1,7 +1,5 @@
 package com.sous.scanner.businesslayer.Services;
 
-import static android.app.job.JobInfo.PRIORITY_LOW;
-import static android.app.job.JobInfo.PRIORITY_MAX;
 import static android.app.job.JobInfo.PRIORITY_MIN;
 
 import android.Manifest;
@@ -19,19 +17,16 @@ import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.IBinder;
-import android.preference.PreferenceManager;
 import android.util.Log;
 
 import androidx.annotation.RequiresApi;
 import androidx.core.app.ActivityCompat;
 import androidx.core.app.NotificationCompat;
 
-import com.google.common.util.concurrent.AtomicDouble;
 import com.sous.scanner.R;
 import com.sous.scanner.businesslayer.Errors.SubClassErrors;
 import com.sous.scanner.businesslayer.bl_Tests.GetBleAdvertising;
 
-import java.time.LocalDateTime;
 import java.util.Date;
 
 import javax.inject.Inject;
@@ -180,7 +175,7 @@ public class AdvertisingService extends Service {
                     " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" );
 
             // TODO: 25.08.2024 TEST
-            getBleAdvertising.staringBleAdvertising(bluetoothAdapter);
+            getBleAdvertising.staringBleAdvertisingSet(bluetoothAdapter);
 
                stopForeground(true);
 
