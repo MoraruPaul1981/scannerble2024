@@ -62,6 +62,7 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 import java.util.concurrent.TimeUnit;
 
 
@@ -950,9 +951,11 @@ public class FragmentScannerUser extends Fragment {
                                     BusinessloginforfragmentScanner businessloginforfragmentScanner=
                                             new BusinessloginforfragmentScanner(getContext(),version,preferences);
                                     // TODO: 30.08.2024
+
                                     String   MacAdresss=       businessloginforfragmentScanner.updateUIClickBottonControlgetMac(searchview_maclistdeviceserver);
+                                    MacAdresss=       Optional.ofNullable(MacAdresss).map(s->s).orElse("");
                                   /// Bundle   searchview_bungle=    (Bundle)    searchview_maclistdeviceserver.getTag();
-                                    if (MacAdresss!=null) {
+                                    if (MacAdresss.length()>0) {
                                         // TODO: 20.08.2024
                                         workerClickTOService(MacAdresss);
                                         // TODO: 09.08.2024 Блютус Включен
