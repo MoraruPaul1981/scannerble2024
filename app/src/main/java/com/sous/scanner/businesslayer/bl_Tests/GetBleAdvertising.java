@@ -63,31 +63,17 @@ public class GetBleAdvertising {
             String btMac = android.provider.Settings.Secure.getString(context.getContentResolver(), "bluetooth_address");
             // TODO: 01.09.2024
 
-
-
-
             Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                     " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
                     " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n");
 
 
-
-            AdvertisingSetParameters parameters = new  AdvertisingSetParameters.Builder()
-                    .setInterval(AdvertisingSetParameters.INTERVAL_HIGH)
-                    .setLegacyMode(false)
-                    .setConnectable(true)
-                    .setAnonymous(false)
-                    .setInterval(AdvertisingSetParameters.INTERVAL_MAX)
-                    .setTxPowerLevel(AdvertisingSetParameters.TX_POWER_HIGH)
-                    .setPrimaryPhy(BluetoothDevice.PHY_LE_1M)
-                    .setSecondaryPhy(BluetoothDevice.PHY_LE_2M)
-                    .build();
-
-
             AdvertiseSettings settings = new AdvertiseSettings.Builder()
                     .setAdvertiseMode(AdvertiseSettings.ADVERTISE_MODE_LOW_LATENCY)
                     .setTxPowerLevel(AdvertiseSettings.ADVERTISE_TX_POWER_HIGH)
-                    .setConnectable(false)
+                    .setConnectable(true)
+                    .setTimeout(1000)
+                    .setTxPowerLevel(AdvertisingSetParameters.TX_POWER_HIGH)
                     .build();
 
             // UUIDs
@@ -125,7 +111,10 @@ public class GetBleAdvertising {
                 }
             };
 
-            bluetoothAdapter.getBluetoothLeAdvertiser().startAdvertising(settings, advertiseData, mAdvertiseCallback);
+            if (   bluetoothAdapter!=null) {
+                bluetoothAdapter.setName(ANDROID_NAME);
+                bluetoothAdapter.getBluetoothLeAdvertiser().startAdvertising(settings, advertiseData, mAdvertiseCallback);
+            }
 
             Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                     " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
