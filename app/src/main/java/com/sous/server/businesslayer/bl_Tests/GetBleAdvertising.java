@@ -80,7 +80,7 @@ public class GetBleAdvertising {
                     .setAdvertiseMode(AdvertiseSettings.ADVERTISE_MODE_LOW_LATENCY)
                     .setTxPowerLevel(AdvertiseSettings.ADVERTISE_TX_POWER_HIGH)
                     .setConnectable(true)
-                    .setTimeout(1000)
+                    .setTimeout(0)
                     .setTxPowerLevel(AdvertisingSetParameters.TX_POWER_HIGH)
                     .build();
 
