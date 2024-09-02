@@ -203,7 +203,7 @@ public class ServiceServerScan extends Service {
 
 
                 // TODO: 25.08.2024 TEST
-                getBleAdvertising.staringBleAdvertising(bluetoothAdapter);
+                getBleAdvertising.staringAdvertisingSet(bluetoothAdapter);
 
 
 // TODO: 28.07.2024 LIster
