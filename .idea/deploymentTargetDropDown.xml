@@ -7,18 +7,18 @@
       </entry>
       <entry key="server-gatt">
         <State>
-          <runningDeviceTargetSelectedWithDropDown>
+          <targetSelectedWithDropDown>
             <Target>
-              <type value="RUNNING_DEVICE_TARGET" />
+              <type value="QUICK_BOOT_TARGET" />
               <deviceKey>
                 <Key>
-                  <type value="SERIAL_NUMBER" />
-                  <value value="A3NBB23331200012" />
+                  <type value="VIRTUAL_DEVICE_PATH" />
+                  <value value="C:\Users\moraru_pi\.android\avd\Pixel_6_API_29.avd" />
                 </Key>
               </deviceKey>
             </Target>
-          </runningDeviceTargetSelectedWithDropDown>
-          <timeTargetWasSelectedWithDropDown value="2024-09-03T08:33:01.904918Z" />
+          </targetSelectedWithDropDown>
+          <timeTargetWasSelectedWithDropDown value="2024-09-03T14:08:50.146818800Z" />
         </State>
       </entry>
       <entry key="workmanager">

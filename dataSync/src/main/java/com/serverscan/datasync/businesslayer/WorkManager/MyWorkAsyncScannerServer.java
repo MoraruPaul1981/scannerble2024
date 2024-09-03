@@ -24,12 +24,14 @@ import javax.inject.Inject;
 
 public class MyWorkAsyncScannerServer extends Worker {
     private Context context;
-
     private Long version=0l;
     private Message messageWoekManager;
     private  String ИмяСлужбыСинхронизации;
+
     @Inject
      BunissecclogicWorkmanager bunissecclogicWorkmanager;
+
+
     // TODO: 28.09.2022
     public MyWorkAsyncScannerServer(@NonNull Context context, @NonNull WorkerParameters workerParams) {
         super(context, workerParams);
@@ -39,7 +41,7 @@ public class MyWorkAsyncScannerServer extends Worker {
             PackageInfo pInfo = context.getPackageManager().getPackageInfo(context.getPackageName(), 0);
             version = pInfo.getLongVersionCode();
 
-       Data data=     workerParams.getInputData();
+            Data data=     workerParams.getInputData();
             ИмяСлужбыСинхронизации=     data.getString("getname");
             // TODO: 03.09.2024
             bunissecclogicWorkmanager=new BunissecclogicWorkmanager(context);
@@ -75,8 +77,7 @@ public class MyWorkAsyncScannerServer extends Worker {
 
             // TODO: 03.09.2024 запускаем синхрониазцию с ссервром Server GATT
             bunissecclogicWorkmanager.startingAsync(getApplicationContext(),version);
-            
-            
+
             // TODO: 26.07.2024
             Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                     " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +

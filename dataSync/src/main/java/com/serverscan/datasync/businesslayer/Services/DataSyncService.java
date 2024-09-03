@@ -95,16 +95,18 @@ public class DataSyncService extends IntentService {
         @BinderThread
         @Override
         protected boolean onTransact(int code, @NonNull Parcel data, @Nullable Parcel reply, int flags) throws RemoteException {
+            // TODO: 03.09.2024
+            Boolean flagResult=false;
             try {
-
-           Cursor cursorSingle= businesslogicDatabase.getingCursor("SELECT * FROM scannerserversuccess ");
-
-
+           Cursor cursorSingle= businesslogicDatabase.getingCursor("SELECT * FROM scannerserversuccess ",version);
+                // TODO: 03.09.2024
+                if (cursorSingle.getCount()>0) {
+                    flagResult=true;
+                }
                 Log.d(getApplicationContext().getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                         " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
                         " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" + " data " +data+
-                        " cursorSingle " +cursorSingle);
-
+                        " cursorSingle.getCount() " +cursorSingle.getCount());
             } catch (Exception e) {
                 e.printStackTrace();
                 Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() + " Линия  :"
@@ -119,7 +121,8 @@ public class DataSyncService extends IntentService {
                 valuesЗаписываемОшибки.put("whose_error", ЛокальнаяВерсияПОСравнение);
                 new SubClassErrors(getApplicationContext()).МетодЗаписиОшибок(valuesЗаписываемОшибки);
             }
-            return super.onTransact(code, data, reply, flags);
+            //return super.onTransact(code, data, reply, flags);
+            return flagResult;
         }
     }
 

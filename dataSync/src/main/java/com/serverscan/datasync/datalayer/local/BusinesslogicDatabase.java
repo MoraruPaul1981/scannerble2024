@@ -30,11 +30,11 @@ public class BusinesslogicDatabase {
 
     // TODO: 19.08.2024
     private Context context;
-    private  Long version;
+
 
     public @Inject BusinesslogicDatabase(@ApplicationContext Context hitcontext ) {
         // TODO: 25.08.2024
-        this.context = context;
+        this.context = hitcontext;
         // TODO: 25.08.2024
         Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                 " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
@@ -42,7 +42,7 @@ public class BusinesslogicDatabase {
 
     }
 
-    public  Cursor getingCursor(@NonNull String СамЗапрос) {
+    public  Cursor getingCursor(@NonNull String СамЗапрос,@NonNull  Long version) {
         // TODO: 29.08.2024
         Single<Cursor> cursorSingle=   Single.fromCallable(new Callable<Cursor>() {
             @Override
