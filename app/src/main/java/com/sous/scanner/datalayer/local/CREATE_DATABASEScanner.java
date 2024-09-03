@@ -36,7 +36,7 @@ public class CREATE_DATABASEScanner extends SQLiteOpenHelper{ ///SQLiteOpenHelpe
     private   Context context;
     private  static AtomicReference<SQLiteDatabase> atomicstoredEntities = new AtomicReference<>();
     private     Long version=0l;
-    private static final int DATABASE_VERSION = 26;
+    private static final int DATABASE_VERSION = 27;
 
 
     private SharedPreferences preferences;
@@ -246,7 +246,7 @@ public class CREATE_DATABASEScanner extends SQLiteOpenHelper{ ///SQLiteOpenHelpe
         try{
             ССылкаНаСозданнуюБазу.execSQL("drop table  if exists    listMacMastersSous ");//test
             ССылкаНаСозданнуюБазу.execSQL("Create table if not exists    listMacMastersSous  (" +
-                    "_id INTEGER PRIMARY KEY AUTOINCREMENT  ," +
+                    "_id INTEGER   ," +  ////TODO     "_id INTEGER PRIMARY KEY AUTOINCREMENT  ," +
                     "name TEXT      ," +
                     "macadress TEXT  ," +
                     "plot INT," +
