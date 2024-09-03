@@ -3,71 +3,29 @@ package com.sous.server.businesslayer.Services;
 import static android.app.job.JobInfo.PRIORITY_MAX;
 
 import android.Manifest;
-import android.annotation.SuppressLint;
 import android.app.IntentService;
 import android.app.Notification;
-import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.Service;
-import android.bluetooth.BluetoothAdapter;
-import android.bluetooth.BluetoothDevice;
-import android.bluetooth.BluetoothGatt;
-import android.bluetooth.BluetoothGattCharacteristic;
-import android.bluetooth.BluetoothGattDescriptor;
-import android.bluetooth.BluetoothGattServer;
-import android.bluetooth.BluetoothGattServerCallback;
-import android.bluetooth.BluetoothGattService;
-import android.bluetooth.BluetoothManager;
-import android.bluetooth.BluetoothProfile;
 import android.content.ContentValues;
-import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
-import android.content.pm.ProviderInfo;
-import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
-import android.location.GpsStatus;
-import android.location.LocationManager;
 import android.os.Binder;
 import android.os.Build;
-import android.os.Bundle;
-import android.os.Handler;
 import android.os.IBinder;
-import android.os.ParcelUuid;
-import android.os.VibrationEffect;
-import android.os.Vibrator;
-import android.preference.PreferenceManager;
 import android.util.Log;
-import android.view.Gravity;
-import android.widget.Toast;
 
-import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.annotation.RequiresApi;
 import androidx.core.app.ActivityCompat;
 import androidx.core.app.NotificationCompat;
 
-
 import com.sous.server.R;
 import com.sous.server.businesslayer.BI_Services.BuccesloginForServiceServerScan;
-import com.sous.server.businesslayer.ContentProvoders.ContentProviderServer;
 import com.sous.server.businesslayer.Errors.SubClassErrors;
-import com.sous.server.businesslayer.Eventbus.MessageScannerServer;
-import com.sous.server.businesslayer.Eventbus.ParamentsScannerServer;
-import com.sous.server.businesslayer.Locations.GattLocationListener;
-import com.sous.server.businesslayer.bl_Tests.GetBleAdvertising;
 
-
-import org.greenrobot.eventbus.EventBus;
-
-import java.nio.charset.StandardCharsets;
 import java.time.LocalDateTime;
 import java.util.Date;
-import java.util.List;
-import java.util.UUID;
-import java.util.concurrent.atomic.AtomicReference;
 
 import javax.inject.Inject;
 
@@ -87,7 +45,7 @@ public class ServiceServerScan extends Service {
     // TODO: 30.07.2024
     public LocalBinderСерверBLE binderScan = new LocalBinderСерверBLE();
     public Long version = 0l;
-    public  NotificationCompat.Builder notificationBuilderServer;
+    private   NotificationCompat.Builder notificationBuilderServer;
     @Inject
     BuccesloginForServiceServerScan buccesloginForServiceServerScan;
 
@@ -109,7 +67,7 @@ public class ServiceServerScan extends Service {
             Notification notification = notificationBuilderServer.setOngoing(true)
                     .setSmallIcon(R.drawable.icon_bluetooth_start)
                     .setContentText("запуск:"+LocalDateTime.now().toString() )
-                    .setContentTitle("Сервре Bluetooth")
+                    .setContentTitle("Сервер Bluetooth")
                    .setPriority(PRIORITY_MAX)
                     .setCategory(NotificationCompat.CATEGORY_PROGRESS)
                     .build();
@@ -163,6 +121,8 @@ public class ServiceServerScan extends Service {
                     " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n");
 
 
+            // TODO: 03.09.2024 Запускаем КОд Служббы Сервера Ble GATT
+            buccesloginForServiceServerScan.launchBuccesloginForServiceServerScan(this);
 
 
 // TODO: 30.06.2022 сама не постредствено запуск метода

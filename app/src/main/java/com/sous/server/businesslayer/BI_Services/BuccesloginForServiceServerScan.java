@@ -35,6 +35,7 @@ import android.os.ParcelUuid;
 import android.os.PowerManager;
 import android.os.VibrationEffect;
 import android.os.Vibrator;
+import android.preference.PreferenceManager;
 import android.provider.Settings;
 import android.util.Log;
 import android.view.Gravity;
@@ -42,7 +43,6 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
-import androidx.core.app.NotificationCompat;
 import androidx.core.content.ContextCompat;
 
 import com.sous.server.R;
@@ -121,8 +121,35 @@ private  Long version;
 
     public void launchBuccesloginForServiceServerScan(@NotNull  ServiceServerScan getserviceServerScan ) {
         try {
-            // TODO: 23.07.2024 starting
+            // TODO: 23.07.2024 starting  core motods BLE Gatt Server
+            initAdapterBluetoothManager();
+            // TODO: 03.09.2024 запоминим данные в глобальн я память 
+            getPreferenceManager();
+            //TODO:получаем Статус Адаптера Bluetooth true, false  и оптравляем статус в активти
+            getStatusEnableBlueadapter = enableBluetoothAdapter(bluetoothAdapter,version,contentProviderServer);
 
+            if (getStatusEnableBlueadapter==true) {
+                // TODO: 03.09.2024  
+                getContentProvider();
+                // TODO: 03.09.2024
+                langingGPSforGATTServer(  sharedPreferencesGatt);
+                // TODO: 25.08.2024 TEST
+                getBleAdvertising.staringAdvertisingSet(bluetoothAdapter);
+// TODO: 28.07.2024 LIster
+                getListerBluetoothDevice();
+                // TODO: 26.07.2024 starting Fragment Scan
+                callBackFromServiceToRecyreViewFragment(getStatusEnableBlueadapter);
+                //TODO :  главный метод службы запускаем Gatt Server
+                mainstartingServerScan();
+                //TODO:  для запущеного сервера Gatt ,дополвнительые параметры натсройки Charact and UUID
+                settingGattServerBluetoothGattService();
+
+                Log.d(context.getClass().getName(), "\n" + " class " +
+                        Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                        " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                        " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n");
+            }
+            
 
             Log.d(context.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                     " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
@@ -148,13 +175,27 @@ private  Long version;
 
     }
 
-
-
-
-
-
-
-
+    private void getPreferenceManager() {
+        try{
+        sharedPreferencesGatt =              PreferenceManager.getDefaultSharedPreferences(context);
+        Log.d(context.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n");
+    } catch (Exception e) {
+        e.printStackTrace();
+        Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() + " Линия  :"
+                + Thread.currentThread().getStackTrace()[2].getLineNumber());
+        ContentValues valuesЗаписываемОшибки = new ContentValues();
+        valuesЗаписываемОшибки.put("Error", e.toString().toLowerCase());
+        valuesЗаписываемОшибки.put("Klass", this.getClass().getName());
+        valuesЗаписываемОшибки.put("Metod", Thread.currentThread().getStackTrace()[2].getMethodName());
+        valuesЗаписываемОшибки.put("LineError", Thread.currentThread().getStackTrace()[2].getLineNumber());
+        final Object ТекущаяВерсияПрограммы = version;
+        Integer ЛокальнаяВерсияПОСравнение = Integer.parseInt(ТекущаяВерсияПрограммы.toString());
+        valuesЗаписываемОшибки.put("whose_error", ЛокальнаяВерсияПОСравнение);
+        new SubClassErrors(context).МетодЗаписиОшибок(valuesЗаписываемОшибки);
+    }
+    }
 
 
     public void startingServiceGattServer( ) {
@@ -265,7 +306,7 @@ private  Long version;
             Integer ЛокальнаяВерсияПОСравнение = Integer.parseInt(ТекущаяВерсияПрограммы.toString());
             valuesЗаписываемОшибки.put("whose_error", ЛокальнаяВерсияПОСравнение);
             new SubClassErrors(context).МетодЗаписиОшибок(valuesЗаписываемОшибки);
-            // new SubClassErrors(getApplicationContext()).МетодЗаписиОшибокИзServerGatt(valuesЗаписываемОшибки,contentProviderServer);
+            // new SubClassErrors(context).МетодЗаписиОшибокИзServerGatt(valuesЗаписываемОшибки,contentProviderServer);
         }
 
         return  intent;
@@ -306,7 +347,7 @@ private  Long version;
             final Object ТекущаяВерсияПрограммы = version;
             Integer ЛокальнаяВерсияПОСравнение = Integer.parseInt(ТекущаяВерсияПрограммы.toString());
             valuesЗаписываемОшибки.put("whose_error", ЛокальнаяВерсияПОСравнение);
-            new SubClassErrors(context).МетодЗаписиОшибокИзServerGatt(valuesЗаписываемОшибки,contentProviderServer);
+            new SubClassErrors(context).МетодЗаписиОшибок(valuesЗаписываемОшибки);
         }
         return  getStatusEnableBlueadapter ;
     }
@@ -375,14 +416,14 @@ private  Long version;
     }
 
     @SuppressLint("MissingPermission")
-    private void launchmanagerBLE() {
+    private void initAdapterBluetoothManager() {
         try {
-            locationManager = (LocationManager) getApplicationContext().getSystemService(Context.LOCATION_SERVICE);
-            bluetoothManagerServer = (BluetoothManager) getApplicationContext().getSystemService(Context.BLUETOOTH_SERVICE);
+            locationManager = (LocationManager) context.getSystemService(Context.LOCATION_SERVICE);
+            bluetoothManagerServer = (BluetoothManager) context.getSystemService(Context.BLUETOOTH_SERVICE);
             bluetoothAdapter = (BluetoothAdapter) bluetoothManagerServer.getAdapter();
 
 
-            Log.d(getApplicationContext().getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+            Log.d(context.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                     " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
                     " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" );
         } catch (Exception e) {
@@ -397,7 +438,7 @@ private  Long version;
             final Object ТекущаяВерсияПрограммы = version;
             Integer ЛокальнаяВерсияПОСравнение = Integer.parseInt(ТекущаяВерсияПрограммы.toString());
             valuesЗаписываемОшибки.put("whose_error", ЛокальнаяВерсияПОСравнение);
-            new SubClassErrors(getApplicationContext()).МетодЗаписиОшибокИзServerGatt(valuesЗаписываемОшибки,contentProviderServer);
+            new SubClassErrors(context).МетодЗаписиОшибок(valuesЗаписываемОшибки);
         }
     }
 
@@ -420,7 +461,7 @@ private  Long version;
             //TODO: ответ на экран работает ообрубование или нет
             EventBus.getDefault().post(sendmessageScannerStartRecyreViewFragment);
 
-            Log.d(getApplicationContext().getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+            Log.d(context.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                     " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
                     " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"+
                     " getStatusEnableBlueadapter "+getStatusEnableBlueadapter);
@@ -437,7 +478,7 @@ private  Long version;
             final Object ТекущаяВерсияПрограммы = version;
             Integer ЛокальнаяВерсияПОСравнение = Integer.parseInt(ТекущаяВерсияПрограммы.toString());
             valuesЗаписываемОшибки.put("whose_error", ЛокальнаяВерсияПОСравнение);
-            new SubClassErrors(getApplicationContext()).МетодЗаписиОшибокИзServerGatt(valuesЗаписываемОшибки,contentProviderServer);
+            new SubClassErrors(context).МетодЗаписиОшибок(valuesЗаписываемОшибки);
         }
     }
 
@@ -477,16 +518,16 @@ private  Long version;
                             " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"+ " profile  " +profile);
                 }
             };
-            bluetoothAdapter.getProfileProxy(getApplicationContext(),listener,BluetoothProfile.A2DP);
-            bluetoothAdapter.getProfileProxy(getApplicationContext(),listener,BluetoothProfile.GATT);
-            bluetoothAdapter.getProfileProxy(getApplicationContext(),listener, BluetoothProfile.GATT_SERVER);
-            bluetoothAdapter.getProfileProxy(getApplicationContext(),listener,BluetoothProfile.HEADSET);
-            bluetoothAdapter.getProfileProxy(getApplicationContext(),listener,BluetoothProfile.HEALTH);
-            bluetoothAdapter.getProfileProxy(getApplicationContext(),listener,BluetoothProfile.SAP);
-            bluetoothAdapter.getProfileProxy(getApplicationContext(),listener,BluetoothProfile.HEARING_AID);
-            bluetoothAdapter.getProfileProxy(getApplicationContext(),listener,BluetoothProfile.HID_DEVICE);
-            bluetoothAdapter.getProfileProxy(getApplicationContext(),listener,BluetoothProfile.LE_AUDIO);
-            bluetoothAdapter.getProfileProxy(getApplicationContext(),listener,BluetoothProfile.HAP_CLIENT);
+            bluetoothAdapter.getProfileProxy(context,listener,BluetoothProfile.A2DP);
+            bluetoothAdapter.getProfileProxy(context,listener,BluetoothProfile.GATT);
+            bluetoothAdapter.getProfileProxy(context,listener, BluetoothProfile.GATT_SERVER);
+            bluetoothAdapter.getProfileProxy(context,listener,BluetoothProfile.HEADSET);
+            bluetoothAdapter.getProfileProxy(context,listener,BluetoothProfile.HEALTH);
+            bluetoothAdapter.getProfileProxy(context,listener,BluetoothProfile.SAP);
+            bluetoothAdapter.getProfileProxy(context,listener,BluetoothProfile.HEARING_AID);
+            bluetoothAdapter.getProfileProxy(context,listener,BluetoothProfile.HID_DEVICE);
+            bluetoothAdapter.getProfileProxy(context,listener,BluetoothProfile.LE_AUDIO);
+            bluetoothAdapter.getProfileProxy(context,listener,BluetoothProfile.HAP_CLIENT);
             Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                     " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
                     " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n");
@@ -502,7 +543,7 @@ private  Long version;
             final Object ТекущаяВерсияПрограммы = version;
             Integer ЛокальнаяВерсияПОСравнение = Integer.parseInt(ТекущаяВерсияПрограммы.toString());
             valuesЗаписываемОшибки.put("whose_error", ЛокальнаяВерсияПОСравнение);
-            new SubClassErrors(getApplicationContext()).МетодЗаписиОшибокИзServerGatt(valuesЗаписываемОшибки,contentProviderServer);
+            new SubClassErrors(context).МетодЗаписиОшибок(valuesЗаписываемОшибки);
         }
     }
 
@@ -512,14 +553,13 @@ private  Long version;
     @SuppressLint("MissingPermission")
     public  void mainstartingServerScan() {
         try {
-
             Log.d(this.getClass().getName(), "1МетодЗапускаСканиваронияДляАндройд: Запускаем.... Метод Сканирования Для Android binder.isBinderAlive()  " + "\n+" +
-                    "" + binderScan.isBinderAlive() + " date " + new Date().toString().toString() + "" +
+                    ""  + " date " + new Date().toString().toString() + "" +
                     "\n" + " POOL " + Thread.currentThread().getName() +
                     "\n" + " ALL POOLS  " + Thread.getAllStackTraces().entrySet().size());
             // TODO: 26.01.2023 Сервер КОД зарпуска сервера
             // TODO: 31.07.2024
-            getBluetoothGattServer = bluetoothManagerServer.openGattServer(getApplicationContext(), new BluetoothGattServerCallback() {
+            getBluetoothGattServer = bluetoothManagerServer.openGattServer(context, new BluetoothGattServerCallback() {
 
                 @Override
                 public void onConnectionStateChange(BluetoothDevice device, int status, int newState) {
@@ -554,7 +594,7 @@ private  Long version;
                         final Object ТекущаяВерсияПрограммы = version;
                         Integer ЛокальнаяВерсияПОСравнение = Integer.parseInt(ТекущаяВерсияПрограммы.toString());
                         valuesЗаписываемОшибки.put("whose_error", ЛокальнаяВерсияПОСравнение);
-                        new SubClassErrors(getApplicationContext()).МетодЗаписиОшибокИзServerGatt(valuesЗаписываемОшибки, contentProviderServer);
+                        new SubClassErrors(context).МетодЗаписиОшибок(valuesЗаписываемОшибки);
                     }
                 }
 
@@ -608,7 +648,7 @@ private  Long version;
                         final Object ТекущаяВерсияПрограммы = version;
                         Integer ЛокальнаяВерсияПОСравнение = Integer.parseInt(ТекущаяВерсияПрограммы.toString());
                         valuesЗаписываемОшибки.put("whose_error", ЛокальнаяВерсияПОСравнение);
-                        new SubClassErrors(getApplicationContext()).МетодЗаписиОшибокИзServerGatt(valuesЗаписываемОшибки, contentProviderServer);
+                        new SubClassErrors(context).МетодЗаписиОшибок(valuesЗаписываемОшибки);
                     }
                 }
 
@@ -640,7 +680,7 @@ private  Long version;
                         final Object ТекущаяВерсияПрограммы = version;
                         Integer ЛокальнаяВерсияПОСравнение = Integer.parseInt(ТекущаяВерсияПрограммы.toString());
                         valuesЗаписываемОшибки.put("whose_error", ЛокальнаяВерсияПОСравнение);
-                        new SubClassErrors(getApplicationContext()).МетодЗаписиОшибокИзServerGatt(valuesЗаписываемОшибки, contentProviderServer);
+                        new SubClassErrors(context).МетодЗаписиОшибок(valuesЗаписываемОшибки);
                     }
                 }
 
@@ -666,7 +706,7 @@ private  Long version;
             Integer ЛокальнаяВерсияПОСравнение = Integer.parseInt(ТекущаяВерсияПрограммы.toString());
             valuesЗаписываемОшибки.put("whose_error", ЛокальнаяВерсияПОСравнение);
             //TODO:
-            new SubClassErrors(getApplicationContext()).МетодЗаписиОшибокИзServerGatt(valuesЗаписываемОшибки,contentProviderServer);
+            new SubClassErrors(context).МетодЗаписиОшибок(valuesЗаписываемОшибки);
         }
     }
 
@@ -682,7 +722,7 @@ private  Long version;
                 // TODO: 02.09.2024
                 locationManager.requestLocationUpdates( LocationManager.GPS_PROVIDER,
                         3600,
-                        10, new GattLocationListener(getApplicationContext(), sharedPreferencesGatt,  contentProviderServer));
+                        10, new GattLocationListener(context, sharedPreferencesGatt,  contentProviderServer));
 
                 Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                         " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
@@ -693,7 +733,7 @@ private  Long version;
                                 locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER)));
             }else {
 
-                Toast toast = Toast.makeText(getApplicationContext(), "Нет сети и локации !!! ", Toast.LENGTH_LONG);
+                Toast toast = Toast.makeText(context, "Нет сети и локации !!! ", Toast.LENGTH_LONG);
                 toast.setGravity(Gravity.CENTER, toast.getXOffset() / 2, toast.getYOffset() / 2);
                 toast.show();
 
@@ -718,7 +758,7 @@ private  Long version;
             final Object ТекущаяВерсияПрограммы = version;
             Integer ЛокальнаяВерсияПОСравнение = Integer.parseInt(ТекущаяВерсияПрограммы.toString());
             valuesЗаписываемОшибки.put("whose_error", ЛокальнаяВерсияПОСравнение);
-            new SubClassErrors(getApplicationContext()).МетодЗаписиОшибокИзServerGatt(valuesЗаписываемОшибки,contentProviderServer);
+            new SubClassErrors(context).МетодЗаписиОшибок(valuesЗаписываемОшибки);
         }
     }
 
@@ -777,7 +817,7 @@ private  Long version;
             final Object ТекущаяВерсияПрограммы = version;
             Integer ЛокальнаяВерсияПОСравнение = Integer.parseInt(ТекущаяВерсияПрограммы.toString());
             valuesЗаписываемОшибки.put("whose_error", ЛокальнаяВерсияПОСравнение);
-            new SubClassErrors(getApplicationContext()).МетодЗаписиОшибокИзServerGatt(valuesЗаписываемОшибки,contentProviderServer);
+            new SubClassErrors(context).МетодЗаписиОшибок(valuesЗаписываемОшибки);
         }
     }
 
@@ -836,7 +876,7 @@ private  Long version;
             Integer ЛокальнаяВерсияПОСравнение = Integer.parseInt(ТекущаяВерсияПрограммы.toString());
             valuesЗаписываемОшибки.put("whose_error", ЛокальнаяВерсияПОСравнение);
             //TODO:
-            new SubClassErrors(getApplicationContext()).МетодЗаписиОшибокИзServerGatt(valuesЗаписываемОшибки,contentProviderServer);
+            new SubClassErrors(context).МетодЗаписиОшибок(valuesЗаписываемОшибки);
         }
     }
 
@@ -983,7 +1023,7 @@ private  Long version;
             final Object ТекущаяВерсияПрограммы = version;
             Integer ЛокальнаяВерсияПОСравнение = Integer.parseInt(ТекущаяВерсияПрограммы.toString());
             valuesЗаписываемОшибки.put("whose_error", ЛокальнаяВерсияПОСравнение);
-            new SubClassErrors(getApplicationContext()).МетодЗаписиОшибокИзServerGatt(valuesЗаписываемОшибки,contentProviderServer);
+            new SubClassErrors(context).МетодЗаписиОшибок(valuesЗаписываемОшибки);
         }
     }
 
@@ -1025,7 +1065,7 @@ private  Long version;
             final Object ТекущаяВерсияПрограммы = version;
             Integer ЛокальнаяВерсияПОСравнение = Integer.parseInt(ТекущаяВерсияПрограммы.toString());
             valuesЗаписываемОшибки.put("whose_error", ЛокальнаяВерсияПОСравнение);
-            new SubClassErrors(getApplicationContext()).МетодЗаписиОшибокИзServerGatt(valuesЗаписываемОшибки,contentProviderServer);
+            new SubClassErrors(context).МетодЗаписиОшибок(valuesЗаписываемОшибки);
         }
     }
 
@@ -1052,7 +1092,7 @@ private  Long version;
             final Object ТекущаяВерсияПрограммы = version;
             Integer ЛокальнаяВерсияПОСравнение = Integer.parseInt(ТекущаяВерсияПрограммы.toString());
             valuesЗаписываемОшибки.put("whose_error", ЛокальнаяВерсияПОСравнение);
-            new SubClassErrors(getApplicationContext()).МетодЗаписиОшибокИзServerGatt(valuesЗаписываемОшибки,contentProviderServer);
+            new SubClassErrors(context).МетодЗаписиОшибок(valuesЗаписываемОшибки);
 
         }
     }
@@ -1061,7 +1101,7 @@ private  Long version;
     @SuppressLint("MissingPermission")
     private  void МетодКоннектаДеконнектасКлиентамиGattScan(BluetoothDevice device, int status, int newState) {
         try{
-            Vibrator v2 = (Vibrator) getApplicationContext().getSystemService(Context.VIBRATOR_SERVICE);
+            Vibrator v2 = (Vibrator) context.getSystemService(Context.VIBRATOR_SERVICE);
             v2.vibrate(VibrationEffect.createOneShot(100, VibrationEffect.DEFAULT_AMPLITUDE));
             // TODO: 27.02.2023 Переопреляем Адамтер Bluetooth
 
@@ -1131,7 +1171,7 @@ private  Long version;
             final Object ТекущаяВерсияПрограммы = version;
             Integer ЛокальнаяВерсияПОСравнение = Integer.parseInt(ТекущаяВерсияПрограммы.toString());
             valuesЗаписываемОшибки.put("whose_error", ЛокальнаяВерсияПОСравнение);
-            new SubClassErrors(getApplicationContext()).МетодЗаписиОшибокИзServerGatt(valuesЗаписываемОшибки,contentProviderServer);
+            new SubClassErrors(context).МетодЗаписиОшибок(valuesЗаписываемОшибки);
         }
     }
 
@@ -1156,9 +1196,9 @@ private  Long version;
     private void getContentProvider() throws InterruptedException {
         try{
             contentProviderServer=new ContentProviderServer();
-            contentProviderServer.attachInfo(getApplicationContext(),new ProviderInfo());
+            contentProviderServer.attachInfo(context,new ProviderInfo());
             contentProviderServer.onCreate();
-            Log.d(getApplicationContext().getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+            Log.d(context.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                     " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
                     " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n");
 
@@ -1174,7 +1214,7 @@ private  Long version;
             final Object ТекущаяВерсияПрограммы = version;
             Integer ЛокальнаяВерсияПОСравнение = Integer.parseInt(ТекущаяВерсияПрограммы.toString());
             valuesЗаписываемОшибки.put("whose_error", ЛокальнаяВерсияПОСравнение);
-            new SubClassErrors(getApplicationContext()).МетодЗаписиОшибок(valuesЗаписываемОшибки);
+            new SubClassErrors(context).МетодЗаписиОшибок(valuesЗаписываемОшибки);
         }
     }
 

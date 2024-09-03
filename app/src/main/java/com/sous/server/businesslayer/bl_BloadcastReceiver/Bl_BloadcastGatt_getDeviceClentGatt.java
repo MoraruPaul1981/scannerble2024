@@ -112,7 +112,7 @@ public class Bl_BloadcastGatt_getDeviceClentGatt {
                         final Object ТекущаяВерсияПрограммы = version;
                         Integer ЛокальнаяВерсияПОСравнение = Integer.parseInt(ТекущаяВерсияПрограммы.toString());
                         valuesЗаписываемОшибки.put("whose_error", ЛокальнаяВерсияПОСравнение);
-                        new SubClassErrors(context).МетодЗаписиОшибокИзServerGatt(valuesЗаписываемОшибки,contentProviderServer);
+                        new SubClassErrors(context).МетодЗаписиОшибок(valuesЗаписываемОшибки);
                     }
                 })
                 .subscribeOn(Schedulers.computation())
@@ -144,7 +144,7 @@ public class Bl_BloadcastGatt_getDeviceClentGatt {
             final Object ТекущаяВерсияПрограммы = version;
             Integer ЛокальнаяВерсияПОСравнение = Integer.parseInt(ТекущаяВерсияПрограммы.toString());
             valuesЗаписываемОшибки.put("whose_error", ЛокальнаяВерсияПОСравнение);
-            new SubClassErrors(context).МетодЗаписиОшибокИзServerGatt(valuesЗаписываемОшибки,contentProviderServer);
+            new SubClassErrors(context).МетодЗаписиОшибок(valuesЗаписываемОшибки);
         }
     }
 

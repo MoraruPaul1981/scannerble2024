@@ -71,7 +71,7 @@ public class GattLocationListener implements LocationListener {
         final Object ТекущаяВерсияПрограммы = 0;
         Integer ЛокальнаяВерсияПОСравнение = Integer.parseInt(ТекущаяВерсияПрограммы.toString());
         valuesЗаписываемОшибки.put("whose_error", ЛокальнаяВерсияПОСравнение);
-        new SubClassErrors(context).МетодЗаписиОшибокИзServerGatt(valuesЗаписываемОшибки,contentProviderServer);
+            new SubClassErrors(context).МетодЗаписиОшибок(valuesЗаписываемОшибки);
     }
 
         }
@@ -155,7 +155,7 @@ public class GattLocationListener implements LocationListener {
         final Object ТекущаяВерсияПрограммы = 0;
         Integer ЛокальнаяВерсияПОСравнение = Integer.parseInt(ТекущаяВерсияПрограммы.toString());
         valuesЗаписываемОшибки.put("whose_error", ЛокальнаяВерсияПОСравнение);
-        new SubClassErrors(context).МетодЗаписиОшибокИзServerGatt(valuesЗаписываемОшибки,contentProviderServer);
+            new SubClassErrors(context).МетодЗаписиОшибок(valuesЗаписываемОшибки);
     }
 return  addresses;
 

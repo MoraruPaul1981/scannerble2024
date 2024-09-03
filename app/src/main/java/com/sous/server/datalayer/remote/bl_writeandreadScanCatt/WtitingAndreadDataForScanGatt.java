@@ -141,7 +141,7 @@ public class WtitingAndreadDataForScanGatt {
         final Object ТекущаяВерсияПрограммы = version;
         Integer ЛокальнаяВерсияПОСравнение = Integer.parseInt(ТекущаяВерсияПрограммы.toString());
         valuesЗаписываемОшибки.put("whose_error", ЛокальнаяВерсияПОСравнение);
-        new SubClassErrors(context).МетодЗаписиОшибокИзServerGatt(valuesЗаписываемОшибки,contentProviderServer);
+            new SubClassErrors(context).МетодЗаписиОшибок(valuesЗаписываемОшибки);
     }
         return  writeDatabaseScanGatt;
 
@@ -175,7 +175,7 @@ public class WtitingAndreadDataForScanGatt {
             final Object ТекущаяВерсияПрограммы = version;
             Integer ЛокальнаяВерсияПОСравнение = Integer.parseInt(ТекущаяВерсияПрограммы.toString());
             valuesЗаписываемОшибки.put("whose_error", ЛокальнаяВерсияПОСравнение);
-            new SubClassErrors(context).МетодЗаписиОшибокИзServerGatt(valuesЗаписываемОшибки,contentProviderServer);
+           new SubClassErrors(context).МетодЗаписиОшибок(valuesЗаписываемОшибки);
         }
         return  writeDatabaseScanGattDontDevice;
 
@@ -229,7 +229,7 @@ try{
         final Object ТекущаяВерсияПрограммы = version;
         Integer ЛокальнаяВерсияПОСравнение = Integer.parseInt(ТекущаяВерсияПрограммы.toString());
         valuesЗаписываемОшибки.put("whose_error", ЛокальнаяВерсияПОСравнение);
-        new SubClassErrors(context).МетодЗаписиОшибокИзServerGatt(valuesЗаписываемОшибки,contentProviderServer);
+       new SubClassErrors(context).МетодЗаписиОшибок(valuesЗаписываемОшибки);
     }
 
     }
@@ -277,7 +277,7 @@ try{
         final Object ТекущаяВерсияПрограммы = version;
         Integer ЛокальнаяВерсияПОСравнение = Integer.parseInt(ТекущаяВерсияПрограммы.toString());
         valuesЗаписываемОшибки.put("whose_error", ЛокальнаяВерсияПОСравнение);
-        new SubClassErrors(context).МетодЗаписиОшибокИзServerGatt(valuesЗаписываемОшибки,contentProviderServer);
+       new SubClassErrors(context).МетодЗаписиОшибок(valuesЗаписываемОшибки);
     }
 
         return resultAddDeviceToGattaDtabse;
@@ -369,7 +369,7 @@ try{
             final Object ТекущаяВерсияПрограммы = version;
             Integer ЛокальнаяВерсияПОСравнение = Integer.parseInt(ТекущаяВерсияПрограммы.toString());
             valuesЗаписываемОшибки.put("whose_error", ЛокальнаяВерсияПОСравнение);
-            new SubClassErrors(context).МетодЗаписиОшибокИзServerGatt(valuesЗаписываемОшибки,contentProviderServer);
+           new SubClassErrors(context).МетодЗаписиОшибок(valuesЗаписываемОшибки);
         }
         return contentValuesВставкаДанных;
     }
@@ -413,7 +413,7 @@ try{
             final Object ТекущаяВерсияПрограммы = version;
             Integer ЛокальнаяВерсияПОСравнение = Integer.parseInt(ТекущаяВерсияПрограммы.toString());
             valuesЗаписываемОшибки.put("whose_error", ЛокальнаяВерсияПОСравнение);
-            new SubClassErrors(context).МетодЗаписиОшибокИзServerGatt(valuesЗаписываемОшибки,contentProviderServer);
+           new SubClassErrors(context).МетодЗаписиОшибок(valuesЗаписываемОшибки);
         }
         return  ВремяДАнных;
     }
@@ -454,7 +454,7 @@ try{
             final Object ТекущаяВерсияПрограммы = version;
             Integer ЛокальнаяВерсияПОСравнение = Integer.parseInt(ТекущаяВерсияПрограммы.toString());
             valuesЗаписываемОшибки.put("whose_error", ЛокальнаяВерсияПОСравнение);
-            new SubClassErrors(context).МетодЗаписиОшибокИзServerGatt(valuesЗаписываемОшибки,contentProviderServer);
+           new SubClassErrors(context).МетодЗаписиОшибок(valuesЗаписываемОшибки);
         }
         return  ВерсияДАнных;
     }
@@ -493,7 +493,7 @@ try{
             final Object ТекущаяВерсияПрограммы = version;
             Integer ЛокальнаяВерсияПОСравнение = Integer.parseInt(ТекущаяВерсияПрограммы.toString());
             valuesЗаписываемОшибки.put("whose_error", ЛокальнаяВерсияПОСравнение);
-            new SubClassErrors(context).МетодЗаписиОшибокИзServerGatt(valuesЗаписываемОшибки,contentProviderServer);
+           new SubClassErrors(context).МетодЗаписиОшибок(valuesЗаписываемОшибки);
         }
         return Integer.parseInt(resultAddDeviceToGattaDtabse.toString() );
     }
@@ -536,7 +536,7 @@ try{
             final Object ТекущаяВерсияПрограммы = version;
             Integer ЛокальнаяВерсияПОСравнение = Integer.parseInt(ТекущаяВерсияПрограммы.toString());
             valuesЗаписываемОшибки.put("whose_error", ЛокальнаяВерсияПОСравнение);
-            new SubClassErrors(context).МетодЗаписиОшибокИзServerGatt(valuesЗаписываемОшибки,contentProviderServer);
+           new SubClassErrors(context).МетодЗаписиОшибок(valuesЗаписываемОшибки);
         }
         return  cursorConcurrentHashMapGatt;
     }
@@ -569,7 +569,8 @@ try{
             final Object ТекущаяВерсияПрограммы = version;
             Integer ЛокальнаяВерсияПОСравнение = Integer.parseInt(ТекущаяВерсияПрограммы.toString());
             valuesЗаписываемОшибки.put("whose_error", ЛокальнаяВерсияПОСравнение);
-            new SubClassErrors(context).МетодЗаписиОшибокИзServerGatt(valuesЗаписываемОшибки, contentProviderServer);
+            new SubClassErrors(context).МетодЗаписиОшибок(valuesЗаписываемОшибки);
+
         }
 
 
@@ -608,7 +609,7 @@ try{
             final Object ТекущаяВерсияПрограммы = version;
             Integer ЛокальнаяВерсияПОСравнение = Integer.parseInt(ТекущаяВерсияПрограммы.toString());
             valuesЗаписываемОшибки.put("whose_error", ЛокальнаяВерсияПОСравнение);
-            new SubClassErrors(context).МетодЗаписиОшибокИзServerGatt(valuesЗаписываемОшибки,contentProviderServer);
+           new SubClassErrors(context).МетодЗаписиОшибок(valuesЗаписываемОшибки);
         }
     }
 
@@ -656,7 +657,7 @@ try{
             final Object ТекущаяВерсияПрограммы = version;
             Integer ЛокальнаяВерсияПОСравнение = Integer.parseInt(ТекущаяВерсияПрограммы.toString());
             valuesЗаписываемОшибки.put("whose_error", ЛокальнаяВерсияПОСравнение);
-            new SubClassErrors(context).МетодЗаписиОшибокИзServerGatt(valuesЗаписываемОшибки,contentProviderServer);
+           new SubClassErrors(context).МетодЗаписиОшибок(valuesЗаписываемОшибки);
         }
 
     }
@@ -698,7 +699,7 @@ try{
             final Object ТекущаяВерсияПрограммы = version;
             Integer ЛокальнаяВерсияПОСравнение = Integer.parseInt(ТекущаяВерсияПрограммы.toString());
             valuesЗаписываемОшибки.put("whose_error", ЛокальнаяВерсияПОСравнение);
-            new SubClassErrors(context).МетодЗаписиОшибокИзServerGatt(valuesЗаписываемОшибки,contentProviderServer);
+           new SubClassErrors(context).МетодЗаписиОшибок(valuesЗаписываемОшибки);
         }
 
     }
@@ -773,7 +774,8 @@ try{
            final Object ТекущаяВерсияПрограммы = version;
            Integer ЛокальнаяВерсияПОСравнение = Integer.parseInt(ТекущаяВерсияПрограммы.toString());
            valuesЗаписываемОшибки.put("whose_error", ЛокальнаяВерсияПОСравнение);
-           new SubClassErrors(context).МетодЗаписиОшибокИзServerGatt(valuesЗаписываемОшибки, contentProviderServer);
+           new SubClassErrors(context).МетодЗаписиОшибок(valuesЗаписываемОшибки);
+
        }
        return analiysMinuteAndSecund;
 
