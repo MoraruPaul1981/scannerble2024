@@ -1,15 +1,19 @@
 package com.serverscan.datasync.businesslayer.bl_workmangers;
 
+import android.content.ComponentName;
 import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
+import android.content.ServiceConnection;
+import android.os.IBinder;
 import android.util.Log;
 
 import androidx.annotation.NonNull;
-import androidx.core.content.ContextCompat;
 
 import com.serverscan.datasync.businesslayer.Errors.SubClassErrors;
 import com.serverscan.datasync.businesslayer.Services.DataSyncService;
+import com.serverscan.datasync.businesslayer.bl_DataSyncService.BinesslogicDataSyncService;
+import com.serverscan.datasync.businesslayer.bl_DataSyncService.InterfaceDataSyncService;
 
 import javax.inject.Inject;
 
@@ -42,16 +46,19 @@ public class BunissecclogicWorkmanager {
 public  void  startingAsync(@NonNull Context context,@NonNull Long version){
 try {
     // TODO: 26.07.2024
-// TODO: 03.09.2024  запуск службы синхронизвции work mamanger  
-    startingDataSyncService("startingAsync");
-    
+// TODO: 03.09.2024  запуск службы синхронизвции work mamanger
+
+    launchOptions("SyncWorkManager",version);
+
     Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
             " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-            " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n");
-    
+            " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" );
+
+
 } catch (Exception e) {
         e.printStackTrace();
-        Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() + " Линия  :"
+        Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName()
+                + " Линия  :"
                 + Thread.currentThread().getStackTrace()[2].getLineNumber());
         ContentValues valuesЗаписываемОшибки = new ContentValues();
         valuesЗаписываемОшибки.put("Error", e.toString().toLowerCase());
@@ -66,26 +73,81 @@ try {
 
 }
 
-
-    public void startingDataSyncService(@NonNull String stateScartServiceScan ) {
+    public void launchOptions(@NonNull String stateScartServiceScan,@NonNull Long version ) {
         try {
             // TODO: 19.08.2024
-            Intent intentDataSyncService = new Intent(context, DataSyncService.class);
-            intentDataSyncService.addFlags(Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
-            intentDataSyncService.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
-            intentDataSyncService.addFlags(Intent.FLAG_FROM_BACKGROUND);
-            intentDataSyncService.addFlags(Intent.FLAG_ACTIVITY_BROUGHT_TO_FRONT);
-            intentDataSyncService.setAction(stateScartServiceScan);
-            intentDataSyncService.addFlags(Intent.FLAG_GRANT_PERSISTABLE_URI_PERMISSION);
-            // TODO: 24.07.2024
-          context.startService(intentDataSyncService);
-            // TODO: 19.08.2024
+
+            class StartingDataService extends BinesslogicDataSyncService{
+                public StartingDataService(@NonNull Context hiltcontext, @NonNull Long hilversion) {
+                    super(hiltcontext, hilversion);
+                }
+
+                @Override
+                public void startingDataSyncService(@NonNull String stateScartServiceScan) {
+                    super.startingDataSyncService(stateScartServiceScan);
+                    // TODO: 03.09.2024
+                    context.startService(intentDataSyncService);
+                    // TODO: 19.08.2024
+                    // TODO: 26.07.2024
+                    Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                            " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                            " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" );
+                
+                }
+            }
+            // TODO: 03.09.2024
             // TODO: 26.07.2024
             Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                     " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
                     " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" );
 
-            // TODO: 26.07.2024
+            class BindigDataService extends BinesslogicDataSyncService{
+                public BindigDataService(@NonNull Context hiltcontext, @NonNull Long hilversion) {
+                    super(hiltcontext, hilversion);
+                }
+
+                @Override
+                public void startingDataSyncService(@NonNull String stateScartServiceScan) {
+                    // TODO: 03.09.2024
+                    super.startingDataSyncService(stateScartServiceScan);
+                    // TODO: 19.08.2024
+                    context.bindService(intentDataSyncService, new ServiceConnection() {
+                        @Override
+                        public void onServiceConnected(ComponentName componentName, IBinder iBinder) {
+                            // TODO: 26.07.2024
+
+                            if (iBinder.isBinderAlive()) {
+                                // TODO: 28.07.2023  Update
+                                DataSyncService.LocalBinderСерверBLE localBinderОбновлениеПО = (DataSyncService.LocalBinderСерверBLE) iBinder;
+
+                                Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                                        " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                                        " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" );
+                            }
+
+
+
+                            Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                                    " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                                    " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" );
+                        }
+
+                        @Override
+                        public void onServiceDisconnected(ComponentName componentName) {
+                            // TODO: 26.07.2024
+                            Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                                    " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                                    " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" );
+                        }
+                    }, Context.BIND_AUTO_CREATE);
+                 
+                }
+            }
+// TODO: 03.09.2024 запускам службу один из варантов
+            InterfaceDataSyncService interfaceDataSyncService= new BindigDataService(context,version);
+            // TODO: 03.09.2024   биндингом
+            interfaceDataSyncService.startingDataSyncService(stateScartServiceScan);
+
             Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                     " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
                     " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" );
