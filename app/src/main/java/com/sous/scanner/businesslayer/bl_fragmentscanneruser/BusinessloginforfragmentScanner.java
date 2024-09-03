@@ -43,7 +43,7 @@ public class BusinessloginforfragmentScanner {
             editor.putString("getAction",  getAction);
             editor.putString("getAddress", getAddress);
             editor.putString("getName",  getName);
-            editor.putString("getMatetilaButtonControl",  "контроль доступа");
+            editor.putString("getMatetilaButtonControl",  "Контроль");
             editor.apply();
             Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                     " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
