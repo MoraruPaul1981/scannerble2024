@@ -2,7 +2,6 @@ package com.sous.server.businesslayer.bl_Tests;
 
 import android.annotation.SuppressLint;
 import android.bluetooth.BluetoothAdapter;
-import android.bluetooth.BluetoothDevice;
 import android.bluetooth.le.AdvertiseCallback;
 import android.bluetooth.le.AdvertiseData;
 import android.bluetooth.le.AdvertiseSettings;
@@ -19,7 +18,7 @@ import android.util.Log;
 import androidx.annotation.NonNull;
 
 
-import com.serverscan.datasync.Errors.SubClassErrors;
+import com.serverscan.datasync.businesslayer.Errors.SubClassErrors;
 
 import java.util.UUID;
 

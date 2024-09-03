@@ -213,6 +213,10 @@ public class ServiceServerScan extends Service {
     public class LocalBinderСерверBLE extends Binder {
         public ServiceServerScan getService() {
             // Return this instance of LocalService so clients can call public methods
+            Log.d(getApplicationContext().getClass().getName(), "\n"
+                    + " время: " + new Date() + "\n+" +
+                    " Класс в процессе... " + this.getClass().getName() + "\n" +
+                    " метод в процессе... " + Thread.currentThread().getStackTrace()[2].getMethodName());
             return ServiceServerScan.this;
         }
 

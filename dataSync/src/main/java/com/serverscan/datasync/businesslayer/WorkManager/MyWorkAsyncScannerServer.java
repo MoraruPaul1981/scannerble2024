@@ -1,33 +1,25 @@
-package com.serverscan.datasync.WorkManager;
+package com.serverscan.datasync.businesslayer.WorkManager;
 
-import android.annotation.SuppressLint;
 import android.content.ContentValues;
 import android.content.Context;
 import android.content.pm.PackageInfo;
-import android.os.Handler;
-import android.os.Looper;
 import android.os.Message;
 import android.util.Log;
 
 import androidx.annotation.NonNull;
-import androidx.lifecycle.LiveData;
 import androidx.work.Data;
 import androidx.work.WorkInfo;
 import androidx.work.WorkManager;
 import androidx.work.Worker;
 import androidx.work.WorkerParameters;
 
-import com.serverscan.datasync.Errors.SubClassErrors;
-import com.serverscan.datasync.businesslayer.BunissecclogicWorkmanager;
+import com.serverscan.datasync.businesslayer.Errors.SubClassErrors;
+import com.serverscan.datasync.businesslayer.bl_workmangers.BunissecclogicWorkmanager;
 
 import java.util.Date;
 import java.util.List;
-import java.util.concurrent.Executors;
 
 import javax.inject.Inject;
-
-import dagger.hilt.android.AndroidEntryPoint;
-import dagger.hilt.android.HiltAndroidApp;
 
 
 public class MyWorkAsyncScannerServer extends Worker {

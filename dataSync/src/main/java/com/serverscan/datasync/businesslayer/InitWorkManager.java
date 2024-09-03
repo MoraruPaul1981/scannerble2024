@@ -4,7 +4,6 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.util.Log;
 
-import androidx.lifecycle.LiveData;
 import androidx.work.BackoffPolicy;
 import androidx.work.Constraints;
 import androidx.work.Data;
@@ -15,8 +14,8 @@ import androidx.work.WorkInfo;
 import androidx.work.WorkManager;
 import androidx.work.multiprocess.RemoteWorkManager;
 
-import com.serverscan.datasync.Errors.SubClassErrors;
-import com.serverscan.datasync.WorkManager.MyWorkAsyncScannerServer;
+import com.serverscan.datasync.businesslayer.Errors.SubClassErrors;
+import com.serverscan.datasync.businesslayer.WorkManager.MyWorkAsyncScannerServer;
 
 import java.util.Date;
 import java.util.List;

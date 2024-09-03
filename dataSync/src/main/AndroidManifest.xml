@@ -147,7 +147,7 @@
     <application>
   <!--      //TODO  start application library-->
         <service
-            android:name="com.serverscan.datasync.Services.DataSyncService"
+            android:name="com.serverscan.datasync.businesslayer.Services.DataSyncService"
             android:directBootAware="true"
             android:enabled="true"
             android:exported="true"
