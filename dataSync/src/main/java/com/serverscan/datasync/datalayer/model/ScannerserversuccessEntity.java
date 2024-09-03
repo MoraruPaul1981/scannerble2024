@@ -8,20 +8,14 @@ import java.math.BigDecimal;
 import java.util.Date;
 
 public class ScannerserversuccessEntity implements Serializable  {
-
     private static final long serialVersionUID = 1L;
-
 
     @JsonProperty("id")
     private int id;
-
-
     @JsonProperty("operations")
     private String operations;
     @JsonProperty("completedwork")
     private String completedwork;
-
-
     @JsonProperty("namedevice")
     private String namedevice;
     @JsonProperty("macdevice")
@@ -41,10 +35,8 @@ public class ScannerserversuccessEntity implements Serializable  {
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern ="yyyy-MM-dd HH:mm:ss.SSS" )
     private Date dateUpdate;
 
-
     @JsonProperty("uuid")
     private BigDecimal uuid;
-
 
     @JsonProperty("version")
     private Long version;
