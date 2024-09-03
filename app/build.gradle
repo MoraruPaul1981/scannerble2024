@@ -143,5 +143,6 @@ dependencies {
     implementation 'com.fasterxml.jackson.core:jackson-annotations:2.14.2'
     implementation 'com.fasterxml.jackson.dataformat:jackson-dataformat-cbor:2.14.2'
 
-
+    //TODO Annotation
+    implementation 'androidx.annotation:annotation:1.8.2'
 }
