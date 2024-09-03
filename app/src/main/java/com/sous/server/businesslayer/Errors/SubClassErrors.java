@@ -104,34 +104,9 @@ public class SubClassErrors {
 
 
 
-    public  void МетодЗаписиОшибокИзServerGatt(@NonNull   ContentValues contentValuesДляЗаписиОшибки,
-                                               ContentProviderServer contentProviderServer) {
-        try {
-
-            Integer getVersionforErrorNew=        getVersionforErrorNew("SELECT MAX ( current_table  ) AS MAX_R  FROM errordsu1");
-            contentValuesДляЗаписиОшибки.put("current_table",getVersionforErrorNew);
-
-            Long getuuid =new GeneratorUUIDs(). МетодГенерацииUUID();
-            contentValuesДляЗаписиОшибки.put("uuid",getuuid);
 
 
-            Log.i( context.getClass().getName(), "contentValuesДляЗаписиОшибки  " + contentValuesДляЗаписиОшибки);
-            Uri uri = Uri.parse("content://com.sous.server.providerserver/errordsu1" );
-            Uri    insertData=   contentProviderServer.insert(uri, contentValuesДляЗаписиОшибки);
-            Log.w(context.getClass().getName(), " РЕЗУЛЬТАТ РезультатВставки ОШИБКА " +  insertData +
-                    " contentValuesДляЗаписиОшибки  " +contentValuesДляЗаписиОшибки);
-        } catch (Exception e) {
-            e.printStackTrace();
-            Log.e( context.getClass().getName(), "SubClassErrors ДЛЯ SCANNER error " + e +
-                    " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
-                    " Линия  :" + Thread.currentThread().getStackTrace()[2].getLineNumber()+ " date " +new Date().toGMTString());
-        }
-
-    }
-
-
-
-    private   Integer getVersionforErrorNew(@androidx.annotation.NonNull String СамЗапрос) {
+    private   Integer getVersionforErrorNew(@NonNull String СамЗапрос) {
         Integer   ВерсияДАнных = 0;
         try{
             Uri uri = Uri.parse("content://com.sous.server.providerserver/errordsu1" );

@@ -8,20 +8,15 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageInfo;
-import android.os.ParcelUuid;
 import android.util.Log;
 
-import com.sous.server.businesslayer.BI_Services.BucceslogincStartServiceGattServer;
+import com.sous.server.businesslayer.BI_Services.BuccesloginForServiceServerScan;
 import com.sous.server.businesslayer.Errors.SubClassErrors;
 import com.sous.server.businesslayer.bl_BloadcastReceiver.Bl_BloadcastGatt_getDeviceClentGatt;
 import com.sous.server.businesslayer.bl_BloadcastReceiver.Businesslogic_GattReflection;
 
 import java.util.Random;
 import java.util.concurrent.atomic.AtomicReference;
-
-import javax.inject.Inject;
-
-import dagger.hilt.android.AndroidEntryPoint;
 
 
 public class BroadcastReceiverGattServerName_Changed extends BroadcastReceiver {
@@ -70,7 +65,7 @@ public class BroadcastReceiverGattServerName_Changed extends BroadcastReceiver {
 
                 case BluetoothAdapter.ACTION_STATE_CHANGED:
                     // TODO: 26.08.2024
-                    BucceslogincStartServiceGattServer startServiceGattServer=  new BucceslogincStartServiceGattServer(context);
+                    BuccesloginForServiceServerScan startServiceGattServer=  new BuccesloginForServiceServerScan(context);
 
                     startServiceGattServer. enadleBroadcastManager(version,intent);
 

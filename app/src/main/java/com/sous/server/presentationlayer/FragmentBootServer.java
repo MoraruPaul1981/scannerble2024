@@ -22,7 +22,7 @@ import androidx.fragment.app.FragmentManager;
 import androidx.loader.content.AsyncTaskLoader;
 
 import com.sous.server.R;
-import com.sous.server.businesslayer.BI_Services.BucceslogincStartServiceGattServer;
+import com.sous.server.businesslayer.BI_Services.BuccesloginForServiceServerScan;
 import com.sous.server.businesslayer.BI_presentationlayer.bl_FragmentBootScannerServer.Bi_FragmentBootScannerServer;
 import com.sous.server.businesslayer.Errors.SubClassErrors;
 import com.sous.server.businesslayer.Eventbus.MessageScannerServer;
@@ -51,7 +51,7 @@ public class FragmentBootServer extends Fragment {
     private ImageView imageviewbootscanner;
 
     @Inject
-    BucceslogincStartServiceGattServer bucceslogincStartServiceGattServer;
+    BuccesloginForServiceServerScan buccesloginForServiceServerScan;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -186,7 +186,7 @@ public class FragmentBootServer extends Fragment {
     private void startingServicesOnlyScan() {
         try{
             // TODO: 19.07.2024 Запуск Службы
-       bucceslogincStartServiceGattServer.startingServiceGattServer();
+       buccesloginForServiceServerScan.startingServiceGattServer();
             Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                     " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
                     " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" );

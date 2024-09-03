@@ -14,7 +14,7 @@ import androidx.fragment.app.FragmentManager;
 import com.google.android.material.bottomnavigation.BottomNavigationItemView;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.sous.server.R;
-import com.sous.server.businesslayer.BI_Services.BucceslogincStartServiceGattServer;
+import com.sous.server.businesslayer.BI_Services.BuccesloginForServiceServerScan;
 import com.sous.server.businesslayer.Errors.SubClassErrors;
 
 public class GetNavigationViews {
@@ -122,7 +122,7 @@ public class GetNavigationViews {
         try {
                 // TODO: 19.07.2024 Запуск Службы
                 Toast.makeText(context, "Перезапуск контроля Bluetooth", Toast.LENGTH_LONG).show();
-              BucceslogincStartServiceGattServer rebootServiceGattServer=   new BucceslogincStartServiceGattServer(context);
+              BuccesloginForServiceServerScan rebootServiceGattServer=   new BuccesloginForServiceServerScan(context);
             rebootServiceGattServer.stopingServiceGattServer();
             
 

@@ -70,4 +70,7 @@ dependencies {
     ///TODO RXJAVA BLE
     implementation 'io.reactivex.rxjava3:rxandroid:3.0.2'
     implementation group: 'io.reactivex', name: 'rxandroid', version: '1.2.1'
+
+    //TODO Annotation
+    implementation 'androidx.annotation:annotation:1.8.2'
 }
