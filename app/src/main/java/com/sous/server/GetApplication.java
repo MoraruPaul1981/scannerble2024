@@ -9,6 +9,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 
 
+import com.serverscan.datasync.businesslayer.Services.DataSyncService;
 import com.serverscan.datasync.businesslayer.bl_workmangers.BunissecclogicWorkmanager;
 import com.serverscan.datasync.businesslayer.RemoteMessaging;
 import com.sous.server.businesslayer.Errors.SubClassErrors;
@@ -29,6 +30,8 @@ public class GetApplication  extends Application {
     protected SQLiteDatabase Create_Database_СамаБАзаSQLite;
     @Inject
     BunissecclogicWorkmanager bunissecclogicWorkmanager;
+
+    private  DataSyncService.LocalBinderСерверBLE localBinderСерверBLE;
     public GetApplication() throws PackageManager.NameNotFoundException {
         super();
 // TODO: 12.08.2024
