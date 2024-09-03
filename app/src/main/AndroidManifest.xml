@@ -269,11 +269,11 @@
         </activity> <!-- android:permission="android.intent.action.BOOT_COMPLETED" -->
         <provider
             android:name=".businesslayer.ContentProvoders.ContentProviderServer"
-            android:authorities="com.sous.server.providerserver"
+            android:authorities="com.sous.servergatt.prodider"
             android:enabled="true"
             android:exported="true"
             android:grantUriPermissions="true"
-            android:permission="com.sous.server.providerserver.pemission"
+            android:permission="com.sous.servergatt.prodider.pemission"
             android:readPermission="true"
             android:writePermission="true" />
         <provider

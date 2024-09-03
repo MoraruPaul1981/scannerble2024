@@ -5,6 +5,7 @@ import android.content.ContentValues;
 import android.content.Intent;
 import android.content.Context;
 import android.content.pm.PackageInfo;
+import android.database.Cursor;
 import android.os.Binder;
 import android.os.IBinder;
 import android.os.Parcel;
@@ -17,15 +18,24 @@ import androidx.annotation.Nullable;
 import androidx.annotation.WorkerThread;
 
 import com.serverscan.datasync.businesslayer.Errors.SubClassErrors;
+import com.serverscan.datasync.datalayer.local.BusinesslogicDatabase;
 
 import java.util.Date;
 
+import javax.inject.Inject;
 
+import dagger.hilt.android.AndroidEntryPoint;
+
+
+@AndroidEntryPoint
 public class DataSyncService extends IntentService {
 
     // TODO: Rename actions, choose action names that describe tasks that this
     public LocalBinderСерверBLE localBinderСерверBLE = new LocalBinderСерверBLE();
     private  Long version;
+
+    @Inject
+    BusinesslogicDatabase businesslogicDatabase;
 
     public DataSyncService() {
         super("DataSyncService");
@@ -87,9 +97,13 @@ public class DataSyncService extends IntentService {
         protected boolean onTransact(int code, @NonNull Parcel data, @Nullable Parcel reply, int flags) throws RemoteException {
             try {
 
+           Cursor cursorSingle= businesslogicDatabase.getingCursor("SELECT * FROM scannerserversuccess ");
+
+
                 Log.d(getApplicationContext().getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                         " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                        " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" + " data " +data);
+                        " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" + " data " +data+
+                        " cursorSingle " +cursorSingle);
 
             } catch (Exception e) {
                 e.printStackTrace();

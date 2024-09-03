@@ -1,4 +1,4 @@
-package com.serverscan.datasync.datalayer.local.remote;
+package com.serverscan.datasync.datalayer.remote;
 
 public class BinesslogicDataServer {
 }

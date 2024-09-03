@@ -1,8 +1,10 @@
 package com.sous.server.businesslayer.ContentProvoders;
 
 import android.content.ContentValues;
+import android.content.Context;
 import android.content.UriMatcher;
 import android.content.pm.PackageInfo;
+import android.content.pm.ProviderInfo;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
@@ -16,14 +18,17 @@ import androidx.annotation.Nullable;
 import androidx.loader.content.AsyncTaskLoader;
 
 
-
+import com.serverscan.datasync.businesslayer.bl_contentproviders.BinesslogicContentProvider;
 import com.sous.server.businesslayer.Errors.SubClassErrors;
 import com.sous.server.datalayer.local.CREATE_DATABASEServerScanner;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.function.Consumer;
+
+import javax.inject.Inject;
 
 import io.reactivex.rxjava3.core.Flowable;
 import io.reactivex.rxjava3.functions.Action;
@@ -37,49 +42,51 @@ public class ContentProviderServer extends android.content.ContentProvider {
     private Integer ТекущаяСтрокаПриДОбавлениииURL=0;
     private  CopyOnWriteArrayList<String> ИменаТаблицыОтАндройда;
     private Long version=0l;
-    public ContentProviderServer() throws InterruptedException {
-        try{
-            ИменаТаблицыОтАндройда=new CopyOnWriteArrayList<>();
-            ИменаТаблицыОтАндройда.add("errordsu1");
-            ИменаТаблицыОтАндройда.add("scannerserversuccess");
-            ИменаТаблицыОтАндройда.add("scannerlistdevices");
-            Log.d(this.getClass().getName(),  " ContentProviderServerWorkmanger" +uriMatcherДЛяПровайдераКонтентБазаДанных );
-            Log.d(this.getClass().getName(), " ИменаТаблицыОтАндройда "+ИменаТаблицыОтАндройда );
-            uriMatcherДЛяПровайдераКонтентБазаДанных=new UriMatcher(ИменаТаблицыОтАндройда.size());
-            ИменаТаблицыОтАндройда.forEach(new Consumer<String>() {
-                @Override
-                public void accept(String ЭлементТаблица) {
-                    uriMatcherДЛяПровайдераКонтентБазаДанных.addURI("com.sous.server.providerserver",ЭлементТаблица.toString(),ТекущаяСтрокаПриДОбавлениииURL);
-
-                    Log.d(this.getClass().getName(), " ЭлементТаблица "+ЭлементТаблица + " ТекущаяСтрокаПриДОбавлениииURL " +ТекущаяСтрокаПриДОбавлениииURL);
-                    ТекущаяСтрокаПриДОбавлениииURL++;
-                }
-            });
-        } catch (Exception e) {
-            e.printStackTrace();
-            Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() + " Линия  :"
-                    + Thread.currentThread().getStackTrace()[2].getLineNumber());
-            ContentValues valuesЗаписываемОшибки=new ContentValues();
-            valuesЗаписываемОшибки.put("Error",e.toString().toLowerCase());
-            valuesЗаписываемОшибки.put("Klass",this.getClass().getName());
-            valuesЗаписываемОшибки.put("Metod",Thread.currentThread().getStackTrace()[2].getMethodName());
-            valuesЗаписываемОшибки.put("LineError",   Thread.currentThread().getStackTrace()[2].getLineNumber());
-            final Object ТекущаяВерсияПрограммы =version;
-            Integer   ЛокальнаяВерсияПОСравнение = Integer.parseInt(ТекущаяВерсияПрограммы.toString());
-            valuesЗаписываемОшибки.put("whose_error",ЛокальнаяВерсияПОСравнение);
-            new SubClassErrors(getContext()).МетодЗаписиОшибок(valuesЗаписываемОшибки);
-        }
+    private BinesslogicContentProvider binesslogicContentProvider;
+    public @Inject  ContentProviderServer() {
+        Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"   +"    Flowable.fromAction(new Action() { "
+                +   new Date().toLocaleString());
     }
+
+
+
+
+
+
     @Override
     public boolean onCreate() {
         try{
-            if (Create_Database_СамаБАзаSQLite==null) {
-                Log.w(this.getClass().getName(), "Create_Database_СамаБАзаSQLite " + Create_Database_СамаБАзаSQLite);
-                Create_Database_СамаБАзаSQLite=new CREATE_DATABASEServerScanner(getContext()).getССылкаНаСозданнуюБазу();
-                Log.w(this.getClass().getName(), "Create_Database_СамаБАзаSQLite " + Create_Database_СамаБАзаSQLite + " getContext()) " +getContext());
-            }
             PackageInfo pInfo = getContext().getPackageManager().getPackageInfo(getContext().getPackageName(), 0);
             version = pInfo.getLongVersionCode();
+
+            Create_Database_СамаБАзаSQLite= new CREATE_DATABASEServerScanner(getContext()).getССылкаНаСозданнуюБазу();
+            binesslogicContentProvider=new BinesslogicContentProvider(getContext(), version);
+
+            if (Create_Database_СамаБАзаSQLite!=null) {
+                // TODO: 22.08.2024
+                ИменаТаблицыОтАндройда=new CopyOnWriteArrayList<>();
+                ИменаТаблицыОтАндройда.add("errordsu1");
+                ИменаТаблицыОтАндройда.add("scannerserversuccess");
+                Log.d(this.getClass().getName(),  " ContentProviderScanner" +uriMatcherДЛяПровайдераКонтентБазаДанных );
+                Log.d(this.getClass().getName(), " ИменаТаблицыОтАндройда "+ИменаТаблицыОтАндройда );
+                uriMatcherДЛяПровайдераКонтентБазаДанных=new UriMatcher(ИменаТаблицыОтАндройда.size());
+                ИменаТаблицыОтАндройда.forEach(new Consumer<String>() {
+                    @Override
+                    public void accept(String ЭлементТаблица) {
+                        uriMatcherДЛяПровайдераКонтентБазаДанных.addURI("com.sous.servergatt.prodider",ЭлементТаблица.toString(),ТекущаяСтрокаПриДОбавлениииURL);
+                        Log.d(this.getClass().getName(), " ЭлементТаблица "+ЭлементТаблица + " ТекущаяСтрокаПриДОбавлениииURL " +ТекущаяСтрокаПриДОбавлениииURL);
+                        ТекущаяСтрокаПриДОбавлениииURL++;
+                    }
+                });
+            }
+
+
+            Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                    " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                    " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"   +"    Flowable.fromAction(new Action() { "
+                    +   new Date().toLocaleString());
         } catch (Exception e) {
             e.printStackTrace();
             Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() + " Линия  :"
@@ -197,6 +204,17 @@ public class ContentProviderServer extends android.content.ContentProvider {
         }
         return geturiInsert;
     }
+
+
+    @Override
+    public void attachInfo(Context context, ProviderInfo info) {
+        super.attachInfo(context, info);
+        Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"   +"    Flowable.fromAction(new Action() { "
+                +   new Date().toLocaleString());
+    }
+
 
 
     @NonNull
