@@ -24,13 +24,20 @@ import java.util.Date;
 import java.util.List;
 import java.util.concurrent.Executors;
 
+import javax.inject.Inject;
+
+import dagger.hilt.android.AndroidEntryPoint;
+import dagger.hilt.android.HiltAndroidApp;
+
+
 public class MyWorkAsyncScannerServer extends Worker {
     private Context context;
 
     private Long version=0l;
     private Message messageWoekManager;
     private  String ИмяСлужбыСинхронизации;
-    private BunissecclogicWorkmanager bunissecclogicWorkmanager;
+    @Inject
+     BunissecclogicWorkmanager bunissecclogicWorkmanager;
     // TODO: 28.09.2022
     public MyWorkAsyncScannerServer(@NonNull Context context, @NonNull WorkerParameters workerParams) {
         super(context, workerParams);
@@ -42,11 +49,9 @@ public class MyWorkAsyncScannerServer extends Worker {
 
        Data data=     workerParams.getInputData();
             ИмяСлужбыСинхронизации=     data.getString("getname");
-
-            // TODO: 14.08.2024
-             bunissecclogicWorkmanager=new BunissecclogicWorkmanager(getApplicationContext(),version);
-            // TODO: 14.08.2024  
-            messageWoekManager=   bunissecclogicWorkmanager.МетодинициализацииHandler();
+            // TODO: 03.09.2024
+            bunissecclogicWorkmanager=new BunissecclogicWorkmanager(context);
+            
             // TODO: 26.07.2024
             Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                     " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
@@ -75,11 +80,17 @@ public class MyWorkAsyncScannerServer extends Worker {
         try {
             // TODO: 14.08.2024
             List<WorkInfo> workInfo = WorkManager.getInstance(context).getWorkInfosByTag(ИмяСлужбыСинхронизации).get();
+
+
+            // TODO: 03.09.2024 запускаем синхрониазцию с ссервром Server GATT
+            bunissecclogicWorkmanager.startingAsync(getApplicationContext(),version);
+            
+            
             // TODO: 26.07.2024
             Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                     " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
                     " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"+"  doWork " +workInfo.get(0).getState()+"'\n" +
-                    " Bremy " + new Date().toLocaleString());
+                    " Bremy " + new Date().toLocaleString()+" workInfo.size() "+workInfo.size());
 
         } catch (Exception e) {
             e.printStackTrace();

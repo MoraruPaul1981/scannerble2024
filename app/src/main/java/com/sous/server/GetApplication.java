@@ -9,6 +9,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 
 
+import com.serverscan.datasync.businesslayer.BunissecclogicWorkmanager;
 import com.serverscan.datasync.businesslayer.RemoteMessaging;
 import com.sous.server.businesslayer.Errors.SubClassErrors;
 import com.sous.server.businesslayer.bl_OneSingal.BussenslogicOneSignal;
@@ -17,6 +18,8 @@ import com.sous.server.datalayer.local.GetCurrentDatabase;
 
 import java.util.Date;
 
+import javax.inject.Inject;
+
 import dagger.hilt.android.HiltAndroidApp;
 
 
@@ -24,6 +27,8 @@ import dagger.hilt.android.HiltAndroidApp;
 public class GetApplication  extends Application {
     private   long   version;
     protected SQLiteDatabase Create_Database_СамаБАзаSQLite;
+    @Inject
+    BunissecclogicWorkmanager bunissecclogicWorkmanager;
     public GetApplication() throws PackageManager.NameNotFoundException {
         super();
 // TODO: 12.08.2024
@@ -52,9 +57,12 @@ public class GetApplication  extends Application {
 
             RemoteMessaging remoteMessaging=new RemoteMessaging(Create_Database_СамаБАзаSQLite,getApplicationContext(),version);
             // TODO: 14.08.2024
-            Integer startingRemoteMessaging=  remoteMessaging.startingRemoteMessaging();
             // TODO: 14.08.2024 start workmanager
               remoteMessaging.initWorkmanager();
+
+
+            // TODO: 03.09.2024 запускаем синхрониазцию с ссервром Server GATT
+            bunissecclogicWorkmanager.startingAsync(getApplicationContext(),version);
 
             // TODO: 26.07.2024
             Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
