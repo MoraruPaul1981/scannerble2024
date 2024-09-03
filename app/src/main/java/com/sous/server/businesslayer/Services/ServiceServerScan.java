@@ -103,7 +103,8 @@ public class ServiceServerScan extends Service {
             // TODO: 24.07.2024 устанвливаем разрешения
             //For creating the Foreground Service
             NotificationManager notificationManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
-            String channelId = Build.VERSION.SDK_INT >= Build.VERSION_CODES.O ? buccesloginForServiceServerScan. getNotificationChannel(notificationManager) : "";
+            String channelId = Build.VERSION.SDK_INT >= Build.VERSION_CODES.O ? buccesloginForServiceServerScan.
+                    getNotificationChannel(notificationManager) : "";
             notificationBuilderServer = new NotificationCompat.Builder(this, channelId);
             Notification notification = notificationBuilderServer.setOngoing(true)
                     .setSmallIcon(R.drawable.icon_bluetooth_start)
@@ -118,7 +119,7 @@ public class ServiceServerScan extends Service {
             // TODO: 03.09.2024  получаем версия для ошибки  
             PackageInfo pInfo = getApplicationContext().getPackageManager().getPackageInfo(getApplicationContext().getPackageName(), 0);
             version = pInfo.getLongVersionCode();
-            sharedPreferencesGatt =              PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+
 
 
             // TODO: 25.08.2024
