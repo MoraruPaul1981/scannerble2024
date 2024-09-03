@@ -3,21 +3,21 @@ package com.serverscan.datasync.businesslayer.bl_workmangers;
 import android.content.ComponentName;
 import android.content.ContentValues;
 import android.content.Context;
-import android.content.Intent;
 import android.content.ServiceConnection;
 import android.os.Handler;
 import android.os.IBinder;
 import android.os.Looper;
 import android.os.Parcel;
-import android.os.RemoteException;
 import android.util.Log;
 
 import androidx.annotation.NonNull;
 
 import com.serverscan.datasync.businesslayer.Errors.SubClassErrors;
 import com.serverscan.datasync.businesslayer.Services.DataSyncService;
-import com.serverscan.datasync.businesslayer.bl_DataSyncService.BinesslogicDataSyncService;
-import com.serverscan.datasync.businesslayer.bl_DataSyncService.InterfaceDataSyncService;
+import com.serverscan.datasync.businesslayer.bl_datasyncservice.BinesslogicDataSyncService;
+import com.serverscan.datasync.businesslayer.bl_datasyncservice.InterfaceDataSyncService;
+
+import java.util.Random;
 
 import javax.inject.Inject;
 
@@ -109,6 +109,7 @@ try {
                     " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
                     " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" );
 
+            // TODO: 03.09.2024  класс второй
             class BindigDataService extends BinesslogicDataSyncService{
                 public BindigDataService(@NonNull Context hiltcontext, @NonNull Long hilversion) {
                     super(hiltcontext, hilversion);
@@ -127,7 +128,7 @@ try {
                              // TODO: 28.07.2023  Update
                                  localBinderСерверBLE = (DataSyncService.LocalBinderСерверBLE) iBinder;
                                 // TODO: 03.09.2024
-                                startingTransactDataService();
+                                startingTransactDataService(  stateScartServiceScan);
 
                                 Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                                         " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
@@ -181,16 +182,18 @@ try {
 
 
 
-    protected void startingTransactDataService() {
+    protected void startingTransactDataService(@NonNull String stateScartServiceScan) {
         // TODO: 09.08.2024
         try {
-            Parcel p=Parcel.obtain();
-            p.writeInt(65656565);
-            localBinderСерверBLE.transact(0,p,p,0);
+            Parcel data=Parcel.obtain();
+            Parcel reply=Parcel.obtain();
+            data.writeString(stateScartServiceScan);
+            // TODO: 03.09.2024
+        Boolean tranService=    localBinderСерверBLE.transact(new Random().nextInt(),data,reply,0);
 
             Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                     " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                    " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" );
+                    " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"  + " tranService"  +tranService);
 
         } catch (Exception e) {
             e.printStackTrace();

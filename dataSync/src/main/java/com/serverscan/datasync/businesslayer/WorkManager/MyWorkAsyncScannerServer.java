@@ -73,7 +73,6 @@ public class MyWorkAsyncScannerServer extends Worker {
             // TODO: 14.08.2024
             List<WorkInfo> workInfo = WorkManager.getInstance(context).getWorkInfosByTag(ИмяСлужбыСинхронизации).get();
 
-
             // TODO: 03.09.2024 запускаем синхрониазцию с ссервром Server GATT
             bunissecclogicWorkmanager.startingAsync(getApplicationContext(),version);
             

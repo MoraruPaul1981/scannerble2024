@@ -1,4 +1,4 @@
-package com.serverscan.datasync.businesslayer.bl_DataSyncService;
+package com.serverscan.datasync.businesslayer.bl_datasyncservice;
 
 import androidx.annotation.NonNull;
 

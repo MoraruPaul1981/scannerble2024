@@ -210,7 +210,7 @@
 
 
         <!-- This entry makes ExampleLoggerInitializer discoverable. -->
-        <meta-data  android:name="com.serverscan.datasync.businesslayer.RemoteMessaging"
+        <meta-data  android:name="com.serverscan.datasync.businesslayer.bl_workmangers.RemoteMessaging"
             android:value="androidx.startup" />
      <!--   //TODO  end appication library-->
     </application>

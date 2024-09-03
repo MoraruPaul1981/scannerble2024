@@ -1,4 +1,4 @@
-package com.serverscan.datasync.businesslayer.bl_DataSyncService;
+package com.serverscan.datasync.businesslayer.bl_datasyncservice;
 
 import android.content.ContentValues;
 import android.content.Context;
@@ -9,8 +9,6 @@ import androidx.annotation.NonNull;
 
 import com.serverscan.datasync.businesslayer.Errors.SubClassErrors;
 import com.serverscan.datasync.businesslayer.Services.DataSyncService;
-
-import java.util.Calendar;
 
 public class BinesslogicDataSyncService  implements  InterfaceDataSyncService {
 
