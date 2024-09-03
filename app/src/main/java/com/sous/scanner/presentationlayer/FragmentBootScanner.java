@@ -90,17 +90,12 @@ public class FragmentBootScanner extends Fragment {
             me =((MainActivityNewScanner) getActivity()).handlerScannerGattClient;
 
 
-            me.getTarget().post(()->{
-
-
                 // TODO: 22.08.2024  заппускаем сразу вде слуюты синхрониации и скан
                 welaunchtwoservicessyncandscan();
 
                 Log.d(getContext().getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                         " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
                         " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n");
-
-            });
 
 
             Log.d(getContext().getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
