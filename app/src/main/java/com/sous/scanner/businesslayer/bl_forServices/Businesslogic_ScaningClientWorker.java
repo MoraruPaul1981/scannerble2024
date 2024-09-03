@@ -271,7 +271,7 @@ public class Businesslogic_ScaningClientWorker {
                 if (bluetoothAdapterPhoneClient.isEnabled()) {
                     // TODO: 20.08.2024
                     int DurectionTimeGatt=      getRandomNumberUsingMilisecond(150,800);
-                 Observable.range(      1,3)
+                 Observable.range(      1,6)
                             .zipWith( Observable.just("")
                                     .delay(DurectionTimeGatt,TimeUnit.MILLISECONDS)
                                     .repeatWhen(repeat->repeat.delay(10,TimeUnit.SECONDS)), (item, interval) -> item)
@@ -329,7 +329,7 @@ public class Businesslogic_ScaningClientWorker {
                                             " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
                                             " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" + "\n"+
                                             " numberoftheСurrentscanningattempt " +numberoftheСurrentscanningattempt);
-                                    if (numberoftheСurrentscanningattempt>=2 ||
+                                    if (numberoftheСurrentscanningattempt>=4 ||
                                             disposablerange.isDisposed()) {
                                         // TODO: 09.08.2024
 
