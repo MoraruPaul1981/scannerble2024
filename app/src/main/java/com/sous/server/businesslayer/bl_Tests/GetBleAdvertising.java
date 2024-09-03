@@ -101,7 +101,7 @@ public class GetBleAdvertising {
                     super.onStartSuccess(settingsInEffect);
                     // TODO: 01.09.2024
                     Parcel parcel=Parcel.obtain();
-                    parcel.writeInt(565656556);
+                    parcel.writeString(ANDROID_ID);
                     settingsInEffect.writeToParcel(parcel,0);
 
                     Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +

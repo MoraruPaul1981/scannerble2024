@@ -98,11 +98,17 @@ public class DataSyncService extends IntentService {
             // TODO: 03.09.2024
             Boolean flagResult=false;
             try {
+                // TODO: 03.09.2024 get DATA
            Cursor cursorSingle= businesslogicDatabase.getingCursor("SELECT * FROM scannerserversuccess ",version);
                 // TODO: 03.09.2024
                 if (cursorSingle.getCount()>0) {
                     flagResult=true;
                 }
+                // TODO: 03.09.2024 get InputStream   for sending an server
+
+
+
+
                 Log.d(getApplicationContext().getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                         " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
                         " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" + " data " +data+
