@@ -80,6 +80,8 @@ public class ServiceServerScan extends Service {
 
 
 
+
+
             // TODO: 25.08.2024
             if (ActivityCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.BLUETOOTH_SCAN) != PackageManager.PERMISSION_GRANTED) {
                 // TODO: Consider calling

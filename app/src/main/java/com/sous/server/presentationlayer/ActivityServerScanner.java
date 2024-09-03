@@ -76,6 +76,7 @@ public class ActivityServerScanner extends AppCompatActivity {
        new SetPermissions(version).additionalpermissionsBle(this,getApplicationContext());
 
 
+
             getmessageGattServer();
 
             startinggeregisterReceiver();

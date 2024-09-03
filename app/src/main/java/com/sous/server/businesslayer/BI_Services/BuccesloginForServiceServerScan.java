@@ -25,7 +25,7 @@ import android.content.pm.PackageManager;
 import android.content.pm.ProviderInfo;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import android.location.GpsStatus;
+import android.location.GnssStatus;
 import android.location.LocationManager;
 import android.net.Uri;
 import android.os.Build;
@@ -61,6 +61,7 @@ import java.nio.charset.StandardCharsets;
 import java.util.Date;
 import java.util.List;
 import java.util.UUID;
+import java.util.concurrent.Executors;
 import java.util.concurrent.atomic.AtomicReference;
 
 import javax.inject.Inject;
@@ -98,6 +99,7 @@ private  Long version;
 
     private ContentProviderServer contentProviderServer;
 
+
     @Inject
     GetBleAdvertising getBleAdvertising;
 
@@ -132,7 +134,7 @@ private  Long version;
                 // TODO: 03.09.2024  
                 getContentProvider();
                 // TODO: 03.09.2024
-                langingGPSforGATTServer(  sharedPreferencesGatt);
+                langingGPSLocations( );
                 // TODO: 25.08.2024 TEST
                 getBleAdvertising.staringAdvertisingSet(bluetoothAdapter);
 // TODO: 28.07.2024 LIster
@@ -714,15 +716,17 @@ private  Long version;
 
 
     @SuppressLint({"MissingPermission", "NewApi"})
-    private void langingGPSforGATTServer(@NonNull SharedPreferences sharedPreferencesGatt) {
+    private void langingGPSLocations( ) {
         try{
 
             if (locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)
-                    && locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER)){
-                // TODO: 02.09.2024
-                locationManager.requestLocationUpdates( LocationManager.GPS_PROVIDER,
-                        3600,
-                        10, new GattLocationListener(context, sharedPreferencesGatt,  contentProviderServer));
+                    && locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER)
+            && locationManager.isLocationEnabled()){
+                // TODO: 03.09.2024  получаем место нахожение
+            locationManager.requestLocationUpdates( LocationManager.GPS_PROVIDER,
+                        36000,
+                        10, Executors.newCachedThreadPool(),
+                    new GattLocationListener(context, sharedPreferencesGatt,handler,version,  locationManager));
 
                 Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                         " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
@@ -762,64 +766,7 @@ private  Long version;
         }
     }
 
-    @SuppressLint("MissingPermission")
-    private void langingGPSLister(@NonNull SharedPreferences sharedPreferencesGatt) {
-        try{
 
-            if (locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)
-                    && locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER)){
-                // TODO: 02.09.2024
-
-
-                locationManager.addGpsStatusListener(new GpsStatus.Listener() {
-                    @Override
-                    public void onGpsStatusChanged(int event) {
-                        // TODO: 03.09.2024
-                        switch (event) {
-                            case GpsStatus.GPS_EVENT_STARTED:
-                                Log.i(this.getClass().getName(), "GpsStatusChanged started");
-
-                                break;
-
-                            case GpsStatus.GPS_EVENT_STOPPED:
-                                Log.i(this.getClass().getName(), "GpsStatusChanged stopped");
-                                break;
-
-                            case GpsStatus.GPS_EVENT_FIRST_FIX:
-                                break;
-
-                            case GpsStatus.GPS_EVENT_SATELLITE_STATUS:
-                                break;
-                        }
-                    }
-                });
-
-            }
-
-            Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
-                    " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                    " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"  + "\n" +
-                    "locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER  " +
-                    locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER +"\n"+
-                            " locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER "+
-                            locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER)));
-
-
-        } catch (Exception e) {
-            e.printStackTrace();
-            Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() + " Линия  :"
-                    + Thread.currentThread().getStackTrace()[2].getLineNumber());
-            ContentValues valuesЗаписываемОшибки = new ContentValues();
-            valuesЗаписываемОшибки.put("Error", e.toString().toLowerCase());
-            valuesЗаписываемОшибки.put("Klass", this.getClass().getName());
-            valuesЗаписываемОшибки.put("Metod", Thread.currentThread().getStackTrace()[2].getMethodName());
-            valuesЗаписываемОшибки.put("LineError", Thread.currentThread().getStackTrace()[2].getLineNumber());
-            final Object ТекущаяВерсияПрограммы = version;
-            Integer ЛокальнаяВерсияПОСравнение = Integer.parseInt(ТекущаяВерсияПрограммы.toString());
-            valuesЗаписываемОшибки.put("whose_error", ЛокальнаяВерсияПОСравнение);
-            new SubClassErrors(context).МетодЗаписиОшибок(valuesЗаписываемОшибки);
-        }
-    }
 
 
 
