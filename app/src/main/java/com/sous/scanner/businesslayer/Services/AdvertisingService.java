@@ -242,15 +242,8 @@ public class AdvertisingService extends Service {
 
     public   void cancelNotification(Context ctx, int notifyId) {
         try{
-        String ns = Context.NOTIFICATION_SERVICE;
-        NotificationManager nMgr = (NotificationManager) ctx.getSystemService(ns);
-        nMgr.cancel(notifyId);
         // TODO: 04.09.2024
-        notificationManager.cancel(notifyId);
-        // TODO: 04.09.2024
-        NotificationManagerCompat.from(ctx).cancelAll();
-
-        nMgr.deleteNotificationChannel(channelId);
+        NotificationManagerCompat.from(ctx).cancel(notifyId);
         Log.d(getApplicationContext().getClass().getName(), "\n"
                 + " время: " + new Date() + "\n+" +
                 " Класс в процессе... " + this.getClass().getName() + "\n" +
