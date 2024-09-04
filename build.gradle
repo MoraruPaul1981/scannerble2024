@@ -3,36 +3,37 @@ buildscript {
 
     def onesignal_app_id = "f385d025-3b73-4862-8148-985943299116"
 
-    dependencies {
-        classpath 'com.google.gms:google-services:4.4.2'
-
-        classpath 'com.android.tools.build:gradle:8.3.2'
-        classpath 'androidx.navigation:navigation-safe-args-gradle-plugin:2.5.0'
-// other plugins...
-        classpath 'com.google.dagger:hilt-android-gradle-plugin:2.44'
-        classpath 'org.jetbrains.kotlin:kotlin-gradle-plugin:1.7.0'
-        classpath 'gradle.plugin.com.onesignal:onesignal-gradle-plugin:[0.12.1, 4.99.99]'
-    }
 
     repositories {
         google()
         mavenCentral()
         gradlePluginPortal()
         jcenter()
-
-
     }
+
+
+    dependencies {
+        classpath 'com.google.gms:google-services:4.4.2'
+        classpath 'com.android.tools.build:gradle:8.3.2'
+        classpath 'androidx.navigation:navigation-safe-args-gradle-plugin:2.5.0'
+        classpath 'com.google.dagger:hilt-android-gradle-plugin:2.44'
+        classpath 'org.jetbrains.kotlin:kotlin-gradle-plugin:1.7.0'
+        classpath 'gradle.plugin.com.onesignal:onesignal-gradle-plugin:[0.12.1, 0.99.99]'
+        classpath 'com.google.firebase:firebase-crashlytics-buildtools:3.0.2'
+    }
+
+
 
 
 }
 
 
 plugins {
-    id 'com.android.application' version '7.4.2' apply false
-    id 'com.android.library' version '7.4.2' apply false
+    id 'com.android.application' version '8.0.0' apply false
+    id 'com.android.library' version '8.0.0' apply false
     id 'com.google.gms.google-services' version '4.4.2' apply false
     id  'com.google.dagger.hilt.android' version '2.44' apply false
-    id  'org.jetbrains.kotlin.android' version '1.8.22' apply false
+    id 'org.jetbrains.kotlin.android' version '1.9.23' apply false
 
 
 }
