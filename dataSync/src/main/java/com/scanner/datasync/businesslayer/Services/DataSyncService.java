@@ -26,7 +26,6 @@ import androidx.core.app.NotificationCompat;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.google.firebase.crashlytics.buildtools.reloc.com.google.common.util.concurrent.AtomicDouble;
 import com.scanner.datasync.businesslayer.Errors.SubClassErrors;
 
 import com.scanner.datasync.businesslayer.bl_DataSyncService.BinesslogicDataSync;

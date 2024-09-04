@@ -3,7 +3,6 @@ plugins {
     id 'com.google.gms.google-services'
     id 'com.google.dagger.hilt.android'
     id 'org.jetbrains.kotlin.android'
-
 }
 
 
@@ -65,7 +64,9 @@ android {
 }
 
 dependencies {
+
     //TODO PUBLIC
+    implementation 'com.google.firebase:firebase-crashlytics-buildtools:3.0.2'
     implementation 'androidx.appcompat:appcompat:1.6.0'
     implementation 'com.google.android.material:material:1.8.0'
     implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
@@ -75,9 +76,6 @@ dependencies {
     testImplementation 'junit:junit:4.13.2'
     androidTestImplementation 'androidx.test.ext:junit:1.1.5'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.1'
-
-
-
 
     //TODO GOOGLE
     implementation 'com.google.firebase:firebase-crashlytics-buildtools:3.0.2'
@@ -89,15 +87,10 @@ dependencies {
     implementation platform('com.google.firebase:firebase-bom:33.2.0')
     implementation 'com.google.firebase:firebase-analytics'
 
-
-
-
 //TODO EventBus
     implementation 'org.greenrobot:eventbus:3.3.1'
-
     //TODO OneSignal
     implementation 'com.onesignal:OneSignal:4.8.3'
-
 
 //TODO HINT Dagger2
     implementation 'com.google.dagger:hilt-android:2.44'
@@ -120,9 +113,6 @@ dependencies {
     implementation "com.polidea.rxandroidble3:rxandroidble:1.17.2"
     //TODO binding
     implementation 'com.jakewharton.rxbinding4:rxbinding:4.0.0'
-
-
-
 
     //TODO jackson
     implementation 'com.fasterxml.jackson.core:jackson-databind:2.14.2'
