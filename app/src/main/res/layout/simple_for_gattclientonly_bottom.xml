@@ -36,11 +36,11 @@
             android:gravity="center"
             style="@style/Widget.MaterialComponents.ExtendedFloatingActionButton.Icon"
             app:cardCornerRadius="10dp"
-            app:cardElevation="4dp"
+            app:cardElevation="5dp"
             app:cardMaxElevation="15dp"
             app:cornerRadius='150dp'
             app:backgroundTint="#BDC6C8"
-            android:translationZ="10dp"
+            android:translationZ="50dp"
             app:rippleColor="#5765B3"
             app:strokeColor="#F2F6F3"
             app:strokeWidth="2dp"
