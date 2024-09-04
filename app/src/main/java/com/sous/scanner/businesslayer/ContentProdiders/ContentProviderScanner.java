@@ -226,11 +226,7 @@ public class ContentProviderScanner extends ContentProvider {
                 case 1:
                     table = "listMacMastersSous";
                     break;
-                default:
-                    table=    Optional.ofNullable(uri).map(Emmeter->Emmeter.toString().replace("content://com.sous.scanner.prodider/","")).get();
-                    Log.w(getContext().getClass().getName(),
-                            " defaluit table  " + table  + " uri " + uri);/////
-                    break;
+
             }
             Log.d(this.getClass().getName(), " table"+ table);
         } catch (Exception e) {
