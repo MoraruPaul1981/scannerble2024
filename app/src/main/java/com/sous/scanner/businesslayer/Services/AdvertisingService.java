@@ -22,6 +22,7 @@ import android.util.Log;
 import androidx.annotation.RequiresApi;
 import androidx.core.app.ActivityCompat;
 import androidx.core.app.NotificationCompat;
+import androidx.core.app.NotificationManagerCompat;
 
 import com.sous.scanner.R;
 import com.sous.scanner.businesslayer.Errors.SubClassErrors;
@@ -41,6 +42,9 @@ public class AdvertisingService extends Service {
     protected  NotificationCompat.Builder notificationBuilderServer;
     protected BluetoothManager bluetoothManagerServer;
     protected BluetoothAdapter bluetoothAdapter;
+    private  Integer notifyId=9;
+    private    NotificationManager notificationManager;
+    private  String channelId = "channelid";
 
     @Inject
     GetBleAdvertising getBleAdvertising;
@@ -77,18 +81,18 @@ public class AdvertisingService extends Service {
 
             // TODO: 24.07.2024 устанвливаем разрешения
             //For creating the Foreground Service
-            NotificationManager notificationManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
+              notificationManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
             String channelId = Build.VERSION.SDK_INT >= Build.VERSION_CODES.O ? getNotificationChannel(notificationManager) : "";
             notificationBuilderServer = new NotificationCompat.Builder(this, channelId);
             Notification notification = notificationBuilderServer
                     .setPriority(PRIORITY_MIN)
                     .setAutoCancel(true)
-                    .setCategory(NotificationCompat.CATEGORY_PROGRESS)
+                    .setCategory(NotificationCompat.CATEGORY_TRANSPORT)
                     .build();
 
             notification.flags = Notification.FLAG_AUTO_CANCEL;
 
-            startForeground(9, notification);//
+            startForeground(notifyId, notification);//
 
 
             // TODO: 25.08.2024
@@ -178,9 +182,9 @@ public class AdvertisingService extends Service {
             // TODO: 25.08.2024 TEST
             getBleAdvertising.staringAdvertisingSet(bluetoothAdapter);
 
+            cancelNotification(getApplicationContext(),notifyId);
 
-
-               stopForeground(true);
+              stopForeground(true);
 
 // TODO: 30.06.2022 сама не постредствено запуск метода
         } catch (Exception e) {
@@ -228,13 +232,44 @@ public class AdvertisingService extends Service {
 
     @RequiresApi(Build.VERSION_CODES.O)
     private String getNotificationChannel(NotificationManager notificationManager){
-        String channelId = "channelid";
         String channelName = getResources().getString(R.string.app_name);
         NotificationChannel channel = new NotificationChannel(channelId, channelName, NotificationManager.IMPORTANCE_HIGH);
         channel.setImportance(NotificationManager.IMPORTANCE_NONE);
         channel.setLockscreenVisibility(Notification.VISIBILITY_PRIVATE);
         notificationManager.createNotificationChannel(channel);
         return channelId;
+    }
+
+    public   void cancelNotification(Context ctx, int notifyId) {
+        try{
+        String ns = Context.NOTIFICATION_SERVICE;
+        NotificationManager nMgr = (NotificationManager) ctx.getSystemService(ns);
+        nMgr.cancel(notifyId);
+        // TODO: 04.09.2024
+        notificationManager.cancel(notifyId);
+        // TODO: 04.09.2024
+        NotificationManagerCompat.from(ctx).cancelAll();
+
+        nMgr.deleteNotificationChannel(channelId);
+        Log.d(getApplicationContext().getClass().getName(), "\n"
+                + " время: " + new Date() + "\n+" +
+                " Класс в процессе... " + this.getClass().getName() + "\n" +
+                " метод в процессе... " + Thread.currentThread().getStackTrace()[2].getMethodName());
+    } catch (Exception e) {
+        e.printStackTrace();
+        Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() + " Линия  :"
+                + Thread.currentThread().getStackTrace()[2].getLineNumber());
+        ContentValues valuesЗаписываемОшибки = new ContentValues();
+        valuesЗаписываемОшибки.put("Error", e.toString().toLowerCase());
+        valuesЗаписываемОшибки.put("Klass", this.getClass().getName());
+        valuesЗаписываемОшибки.put("Metod", Thread.currentThread().getStackTrace()[2].getMethodName());
+        valuesЗаписываемОшибки.put("LineError", Thread.currentThread().getStackTrace()[2].getLineNumber());
+        final Object ТекущаяВерсияПрограммы = version;
+        Integer ЛокальнаяВерсияПОСравнение = Integer.parseInt(ТекущаяВерсияПрограммы.toString());
+        valuesЗаписываемОшибки.put("whose_error", ЛокальнаяВерсияПОСравнение);
+        new SubClassErrors(getApplicationContext()).МетодЗаписиОшибок(valuesЗаписываемОшибки);
+    }
+
     }
 
 }
