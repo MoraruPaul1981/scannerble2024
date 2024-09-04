@@ -172,7 +172,6 @@ public class ContentProviderServer extends android.content.ContentProvider {
             if (Create_Database_СамаБАзаSQLite.inTransaction()) {
                 Create_Database_СамаБАзаSQLite.endTransaction();
             }
-
             Log.d(getContext().getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                     " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
                     " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"+
