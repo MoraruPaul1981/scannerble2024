@@ -229,11 +229,6 @@ public class ContentProviderServer extends android.content.ContentProvider {
                 case 1:
                     table = "scannerserversuccess";
                     break;
-                default:
-                    table=    Optional.ofNullable(uri).map(Emmeter->Emmeter.toString().replace("content://com.dsy.dsu.providerdatabase/","")).get();
-                    Log.w(getContext().getClass().getName(),
-                            " defaluit table  " + table  + " uri " + uri);/////
-                    break;
             }
             Log.d(this.getClass().getName(), " table"+ table);
             PackageInfo pInfo = getContext().getPackageManager().getPackageInfo(getContext().getPackageName(), 0);

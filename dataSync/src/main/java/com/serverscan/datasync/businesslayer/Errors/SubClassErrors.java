@@ -20,7 +20,7 @@ public class SubClassErrors {
         try {
             Log.i( context.getClass().getName(), "contentValuesДляЗаписиОшибки  " + contentValuesДляЗаписиОшибки);
 
-            Uri uri = Uri.parse("content://com.sous.server.providerserver/errordsu1" );
+            Uri uri = Uri.parse("content://com.sous.servergatt.prodider/errordsu1" );
             ContentResolver resolver = context. getContentResolver();
             Uri    insertData=   resolver.insert(uri, contentValuesДляЗаписиОшибки);
             Integer РезультатВставки= Optional.ofNullable(insertData.toString().replaceAll("content://","")).map(Integer::new).orElse(0);

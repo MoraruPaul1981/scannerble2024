@@ -381,7 +381,7 @@ try{
     public   String      getDateStoreOperationsDeviceFronDatabase(@androidx.annotation.NonNull String СамЗапрос) {
         String ВремяДАнных=new String();
         try{
-            Uri uri = Uri.parse("content://com.sous.server.providerserver/scannerserversuccess" );
+            Uri uri = Uri.parse("content://com.sous.servergatt.prodider/scannerserversuccess" );
             Cursor cursorПолучаемДЛяСевреа = contentProviderServer.query(uri, null, СамЗапрос, null,null,null);
             if (cursorПолучаемДЛяСевреа.getCount()>0){
                 cursorПолучаемДЛяСевреа.moveToFirst();
@@ -429,7 +429,7 @@ try{
     public  Integer МетодПоискДАнныхПоБазе(@androidx.annotation.NonNull String СамЗапрос) {
         Integer   ВерсияДАнных = 0;
         try{
-            Uri uri = Uri.parse("content://com.sous.server.providerserver/scannerserversuccess" );
+            Uri uri = Uri.parse("content://com.sous.servergatt.prodider/scannerserversuccess" );
 
             Cursor cursorПолучаемДЛяСевреа = contentProviderServer.query(uri, null, СамЗапрос, null,null,null);
 
@@ -468,7 +468,8 @@ try{
     private Integer wtireNewSucceesDeviceOtGattServer(@androidx.annotation.NonNull ContentValues   contentValuesВставкаДанныхGattServer) {
         Uri    resultAddDeviceToGattaDtabse = null;
         try {
-            Uri uri = Uri.parse("content://com.sous.server.providerserver/scannerserversuccess" );
+            Uri uri = Uri.parse("content://com.sous.servergatt.prodider/scannerserversuccess" );
+            // TODO: 04.09.2024  вставка данных на сервере 
             resultAddDeviceToGattaDtabse=   contentProviderServer.insert(uri, contentValuesВставкаДанныхGattServer);
 
             Log.d(context.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
@@ -513,7 +514,7 @@ try{
         ConcurrentHashMap<String,Cursor> cursorConcurrentHashMapGatt=new ConcurrentHashMap<>();
         try{
 
-            Uri uri = Uri.parse("content://com.sous.server.providerserver/scannerserversuccess" );
+            Uri uri = Uri.parse("content://com.sous.servergatt.prodider/scannerserversuccess" );
             successfuldevices = contentProviderServer.query(uri, null, СамЗапрос, null,null,null);
             if (successfuldevices.getCount()>0){
                 // TODO: 19.07.2024  Запаопление данными Курсора

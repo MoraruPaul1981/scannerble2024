@@ -109,7 +109,7 @@ public class SubClassErrors {
     private   Integer getVersionforErrorNew(@NonNull String СамЗапрос) {
         Integer   ВерсияДАнных = 0;
         try{
-            Uri uri = Uri.parse("content://com.sous.server.providerserver/errordsu1" );
+            Uri uri = Uri.parse("content://com.sous.servergatt.prodider/errordsu1" );
             ContentResolver resolver = context. getContentResolver();
 
             Cursor cursorПолучаемДЛяСевреа = resolver.query(uri, null, СамЗапрос, null,null,null);
