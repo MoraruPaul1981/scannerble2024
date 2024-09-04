@@ -29,6 +29,7 @@ import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.Optional;
 import java.util.concurrent.CopyOnWriteArrayList;
+import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.atomic.AtomicReference;
 import java.util.function.Consumer;
 
@@ -45,7 +46,7 @@ public class ContentProviderScanner extends ContentProvider {
     private Handler handler;
     private Integer ТекущаяСтрокаПриДОбавлениииURL=0;
     private     Long  version=0l;
-    private  CopyOnWriteArrayList<String> ИменаТаблицыОтАндройда;
+
     private BinesslogicContentProvider binesslogicContentProvider;
 
     public @Inject ContentProviderScanner()   {
@@ -69,20 +70,14 @@ public class ContentProviderScanner extends ContentProvider {
 
             if (Create_Database_СамаБАзаSQLite!=null) {
                 // TODO: 22.08.2024
-                ИменаТаблицыОтАндройда=new CopyOnWriteArrayList<>();
-                ИменаТаблицыОтАндройда.add("errordsu1");
-                ИменаТаблицыОтАндройда.add("listMacMastersSous");
-                Log.d(this.getClass().getName(),  " ContentProviderScanner" +uriMatcherДЛяПровайдераКонтентБазаДанных );
-                Log.d(this.getClass().getName(), " ИменаТаблицыОтАндройда "+ИменаТаблицыОтАндройда );
-                uriMatcherДЛяПровайдераКонтентБазаДанных=new UriMatcher(ИменаТаблицыОтАндройда.size());
-                ИменаТаблицыОтАндройда.forEach(new Consumer<String>() {
-                    @Override
-                    public void accept(String ЭлементТаблица) {
-                        uriMatcherДЛяПровайдераКонтентБазаДанных.addURI("com.sous.scanner.prodider",ЭлементТаблица.toString(),ТекущаяСтрокаПриДОбавлениииURL);
-                        Log.d(this.getClass().getName(), " ЭлементТаблица "+ЭлементТаблица + " ТекущаяСтрокаПриДОбавлениииURL " +ТекущаяСтрокаПриДОбавлениииURL);
-                        ТекущаяСтрокаПриДОбавлениииURL++;
-                    }
-                });
+                uriMatcherДЛяПровайдераКонтентБазаДанных=new UriMatcher(1);
+                uriMatcherДЛяПровайдераКонтентБазаДанных.addURI("com.sous.scanner.prodider","errordsu1",0);
+                uriMatcherДЛяПровайдераКонтентБазаДанных.addURI("com.sous.scanner.prodider","listMacMastersSous",1);
+
+                Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                        " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                        " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"   +"    Flowable.fromAction(new Action() { "
+                        +   new Date().toLocaleString());
             }
 
             Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
