@@ -84,8 +84,7 @@ public class BinesslogicFragBootScanner {
 
                     businesslogicJobServive.startingServiceSimpleScan("fistlauntfrombackground");
 
-                    // TODO: 30.08.2024   Service Advertising
-                    businesslogicJobServive.startingServiceAdvertising( );
+
 
                 }
                 Log.d(context.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
@@ -140,8 +139,7 @@ public class BinesslogicFragBootScanner {
                         
                         // TODO: 22.08.2024  Сразу переходим на запуск Службы Сканирование Bluetooth Client
                         businesslogicJobServive.startingServiceSimpleScan("fistlauntfrombackground");
-                        // TODO: 30.08.2024   Service Advertising
-                        businesslogicJobServive.startingServiceAdvertising( );
+
                         
                         Log.d(context.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                                 " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +

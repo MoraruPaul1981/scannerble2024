@@ -97,10 +97,10 @@ public class FragmentScannerUser extends Fragment {
 
     private  String  toWork="Контроль";
     private  String  toProccess="В процессе...";
-    private  String  toProccessError="Ошибка сервера !!!";
-    private  MaterialButton materialButtonEventSameOfficeEvent;
+    private  String  toProccessError="Ошибка"+"\n"+"контроля !!!";
+    private  String toProccessSuccess="Успешно";
 
-
+    private MaterialButton materialButtonEventSameOffice;
     @Inject
     BusinessloginOriginallogic businessloginOriginallogic;
 
@@ -572,7 +572,6 @@ public class FragmentScannerUser extends Fragment {
 
     // TODO: 28.02.2022 начало  MyViewHolderДляЧата
     protected class MyViewHolder extends RecyclerView.ViewHolder {
-        private MaterialButton materialButtonEventSameOffice;
 
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -600,7 +599,6 @@ public class FragmentScannerUser extends Fragment {
                 Log.d(this.getClass().getName(), " отработоатл new SubClassBuccessLogin_ГлавныйКлассБизнесЛогикиФрагмент1 itemView   " + itemView);
                 // TODO: 08.02.2023 кнопка на работы
                 materialButtonEventSameOffice = itemView.findViewById(R.id.id_materialbutton_enter_and_exit_employee);
-                materialButtonEventSameOfficeEvent=materialButtonEventSameOffice;
                 // TODO: 17.07.2024
                 Log.d(getContext().getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                         " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
@@ -753,11 +751,11 @@ public class FragmentScannerUser extends Fragment {
                 // TODO: 17.07.2024  Сотрудник ПРИХОДИТ
                 if (position==0) {
                       // TODO: 06.08.2024
-                    addCurrentButonClick(holder.materialButtonEventSameOffice,toWork,"#BDC6C8");
+                    addCurrentButonClick(materialButtonEventSameOffice,toWork,"#BDC6C8");
 
-                    animationCurrentButonClick(holder.materialButtonEventSameOffice,100);
+                    animationCurrentButonClick(materialButtonEventSameOffice,100);
                     // TODO: 06.08.2024  
-                    eventButtonemployeeArrived(holder.materialButtonEventSameOffice);
+                    eventButtonemployeeArrived(materialButtonEventSameOffice);
 
                     // TODO: 08.08.2024
                     getLocalBroadcastManagerRebootUI (holder);
@@ -1109,14 +1107,14 @@ public class FragmentScannerUser extends Fragment {
 
 
                             messageClient.getTarget().postDelayed(()->{
-                                addCurrentButonClick(holder.materialButtonEventSameOffice,toWork,"#BDC6C8");
-                                addCurrentButonChangetextClick(holder.materialButtonEventSameOffice,toWork,"#000000");
+                                addCurrentButonClick(materialButtonEventSameOffice,toWork,"#BDC6C8");
+                                addCurrentButonChangetextClick(materialButtonEventSameOffice,toWork,"#000000");
                             },3000);
 
 
                             messageClient.getTarget().post(()->{
-                                addCurrentButonChangetextClick(holder.materialButtonEventSameOffice,toProccessError,"#A10B0B");
-                                animationCurrentButonClick(holder.materialButtonEventSameOffice,100);
+                                addCurrentButonChangetextClick(materialButtonEventSameOffice,toProccessError,"#A10B0B");
+                                animationCurrentButonClick(materialButtonEventSameOffice,100);
 
                             });
 
@@ -1254,9 +1252,11 @@ public class FragmentScannerUser extends Fragment {
 
             businessloginforfragmentScanner .eventprocessingOtEventBus(event);
 
-            businessloginforfragmentScanner.  updateUIFragmentScan(materialtextview_last_state,preferences,animation,
-                    materialButtonEventSameOfficeEvent,
-                    messageClient,searchview_maclistdeviceserver);
+           businessloginforfragmentScanner.  updateUIFragmentScan(materialtextview_last_state,
+                    preferences,animation,
+                    materialButtonEventSameOffice,
+                    messageClient,
+                    searchview_maclistdeviceserver, toProccessError, toProccessSuccess);
             // TODO: 07.08.2024
 
 

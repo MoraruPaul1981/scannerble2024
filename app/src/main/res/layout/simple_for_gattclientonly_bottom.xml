@@ -44,6 +44,7 @@
             app:rippleColor="#5765B3"
             app:strokeColor="#F2F6F3"
             app:strokeWidth="2dp"
+            android:textSize="10dp"
             android:hint="#статус задачи" />
 
 

@@ -15,6 +15,7 @@ import androidx.preference.PreferenceManager;
 
 import com.sous.scanner.businesslayer.Errors.SubClassErrors;
 import com.sous.scanner.businesslayer.bl_LocalBroadcastManagers.BussenloginSaredPreferense;
+import com.sous.scanner.businesslayer.bl_forServices.Businesslogic_JOBServive;
 
 import org.jetbrains.annotations.NotNull;
 import java.util.Date;
@@ -109,6 +110,12 @@ public class CREATE_DATABASEScanner extends SQLiteOpenHelper{ ///SQLiteOpenHelpe
             createtableGetError(ССылкаНаСозданнуюБазу);
             // TODO: 15.08.2024
             listMacMastersSous(ССылкаНаСозданнуюБазу);
+
+// TODO: 04.09.2024 on adversing
+
+            Businesslogic_JOBServive businesslogicJobServive=new Businesslogic_JOBServive(context);
+            businesslogicJobServive.startingServiceAdvertising( );
+
 
             // TODO: 03.06.2022
             Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +

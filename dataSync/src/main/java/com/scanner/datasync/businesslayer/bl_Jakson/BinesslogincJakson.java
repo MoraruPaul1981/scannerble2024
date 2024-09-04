@@ -125,10 +125,10 @@ public class BinesslogincJakson {
         // TODO: 28.08.2024
         Completable completableProvider= Completable.fromAction(()->{
 // TODO: 28.08.2024
-          String  SQlOperUpdate=  " UPDATE  listMacMastersSous SET     name=?,macadress=?,  plot=?," +
+          String  SQlOperUpdate=  " UPDATE  listMacMastersSous SET   _id=?,   name=?,macadress=?,  plot=?," +
                   " date_update=?,user_update=? , current_table=?,uuid=?      WHERE  uuid=?  ;";
           // TODO: 28.08.2024
-          String  SQlOperInsert=  " REPLACE INTO listMacMastersSous VALUES(?,?,?,?,?,?,?,? ); ;";
+          String  SQlOperInsert=  " REPLACE INTO listMacMastersSous VALUES(?,?,?,?,?,?,?,? );";
           // TODO: 28.08.2024
           Integer getStatementResult =setSqliteStatement(  version,   jsonNodeParentMAP,    SQlOperUpdate,SQlOperInsert);
           // TODO: 04.07.2023  UPDARE Organization

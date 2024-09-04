@@ -4,10 +4,10 @@
     <selectionStates>
       <SelectionState runConfigName="client-gatt">
         <option name="selectionMode" value="DROPDOWN" />
-        <DropdownSelection timestamp="2024-08-30T13:37:09.182314500Z">
+        <DropdownSelection timestamp="2024-09-04T05:11:03.977159100Z">
           <Target type="DEFAULT_BOOT">
             <handle>
-              <DeviceId pluginId="LocalEmulator" identifier="path=C:\Users\moraru_pi\.android\avd\Pixel_6_API_29.avd" />
+              <DeviceId pluginId="PhysicalDevice" identifier="serial=A3NBB23331200012" />
             </handle>
           </Target>
         </DropdownSelection>

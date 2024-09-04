@@ -104,7 +104,9 @@ public class BusinessloginforfragmentScanner {
                                      @NonNull Animation animation ,
                                      @NonNull MaterialButton materialcardview_gattclientonly_bottom,
                                      @NonNull Message message,
-                                     @NonNull  MaterialTextView searchview_maclistdeviceserver) {
+                                     @NonNull  MaterialTextView searchview_maclistdeviceserver,
+                                     @NonNull String toProccessError,
+                                     @NonNull String toProccessSuccess ) {
         try{
             // TODO: 07.08.2024  перезагружаем внешний вид экрана или точнее компонта Последний Статус
             String getBremy =preferences.getString("getBremy","");
@@ -138,7 +140,7 @@ public class BusinessloginforfragmentScanner {
                 materialtextview_last_state.setText(completeResultContol);
                 materialtextview_last_state.startAnimation(animation);
                 // TODO: 07.08.2024
-                materialcardview_gattclientonly_bottom.setText("Успешно");
+                materialcardview_gattclientonly_bottom.setText(toProccessSuccess);
 
                 // TODO: 30.08.2024
 
@@ -148,9 +150,9 @@ public class BusinessloginforfragmentScanner {
 
 
             }else {
-                materialtextview_last_state.setError("ошибка контроля");
+                materialtextview_last_state.setError(null);
                 // TODO: 07.08.2024
-                materialcardview_gattclientonly_bottom.setText("нет Успешно");
+                materialcardview_gattclientonly_bottom.setText(toProccessError);
                 materialcardview_gattclientonly_bottom.setTextColor(Color.RED);
             }
             materialtextview_last_state.refreshDrawableState();
@@ -158,10 +160,6 @@ public class BusinessloginforfragmentScanner {
             // TODO: 07.08.2024
             materialcardview_gattclientonly_bottom.refreshDrawableState();
             materialcardview_gattclientonly_bottom.requestLayout();
-
-
-
-
 
 
 

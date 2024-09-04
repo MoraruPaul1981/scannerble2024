@@ -67,15 +67,16 @@ public class BinesslogicContentProvider {
                                     SQLiteStatement sqLiteStatementInsert= Create_Database_СамаБАзаSQLite.compileStatement(SQlOperUpdate);
                                     sqLiteStatementInsert.clearBindings();
                                     // TODO: 04.07.2023 цикл данных
-                                    sqLiteStatementInsert.bindString(1,rowJakson.get("name").asText().trim());//"id"
-                                    sqLiteStatementInsert.bindString(2,rowJakson.get("macadress").asText().trim());//"name"
-                                    sqLiteStatementInsert.bindLong(3,rowJakson.get("plot").intValue());//"fullname"
-                                    sqLiteStatementInsert.bindString(4,rowJakson.get("date_update").asText().trim());//"date_update"
-                                    sqLiteStatementInsert.bindLong(5,rowJakson.get("user_update").intValue());//"user_update"
-                                    sqLiteStatementInsert.bindLong(6,rowJakson.get("current_table").longValue());//"current_table"
-                                    sqLiteStatementInsert.bindLong(7,rowJakson.get("uuid").longValue());//"uuid"
+                                    sqLiteStatementInsert.bindLong(1,rowJakson.get("id").intValue() );//"id"
+                                    sqLiteStatementInsert.bindString(2,rowJakson.get("name").asText().trim());//"id"
+                                    sqLiteStatementInsert.bindString(3,rowJakson.get("macadress").asText().trim());//"name"
+                                    sqLiteStatementInsert.bindLong(4,rowJakson.get("plot").intValue());//"fullname"
+                                    sqLiteStatementInsert.bindString(5,rowJakson.get("date_update").asText().trim());//"date_update"
+                                    sqLiteStatementInsert.bindLong(6,rowJakson.get("user_update").intValue());//"user_update"
+                                    sqLiteStatementInsert.bindLong(7,rowJakson.get("current_table").longValue());//"current_table"
+                                    sqLiteStatementInsert.bindLong(8,rowJakson.get("uuid").longValue());//"uuid"
                                     // TODO: 07.07.2023 ДЛя Состыковки
-                                    sqLiteStatementInsert.bindLong(8,rowJakson.get("uuid").longValue());//"uuid уже для UUID"
+                                    sqLiteStatementInsert.bindLong(9,rowJakson.get("uuid").longValue());//"uuid уже для UUID"
 
                                       // TODO: 28.08.2024
                                     resultUpdate.set(sqLiteStatementInsert.executeUpdateDelete());
@@ -175,7 +176,7 @@ public class BinesslogicContentProvider {
                             SQLiteStatement sqLiteStatementInsert= Create_Database_СамаБАзаSQLite.compileStatement(SQlOperInsert);
                             sqLiteStatementInsert.clearBindings();
                             // TODO: 04.07.2023 цикл данных
-                            sqLiteStatementInsert.bindNull(1 );//"id"
+                            sqLiteStatementInsert.bindLong(1,rowJakson.get("id").intValue() );//"id"
                             sqLiteStatementInsert.bindString(2,rowJakson.get("name").asText().trim());//"id"
                             sqLiteStatementInsert.bindString(3,rowJakson.get("macadress").asText().trim());//"name"
                             sqLiteStatementInsert.bindLong(4,rowJakson.get("plot").intValue());//"fullname"
