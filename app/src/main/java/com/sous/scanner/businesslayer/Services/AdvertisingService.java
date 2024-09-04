@@ -87,16 +87,13 @@ public class AdvertisingService extends Service {
             Notification notification = notificationBuilderServer
                     .setPriority(PRIORITY_MIN)
                     .setAutoCancel(true)
+                    .setVisibility(NotificationCompat.VISIBILITY_PRIVATE)
                     .setCategory(NotificationCompat.CATEGORY_TRANSPORT)
                     .build();
 
             notification.flags = Notification.FLAG_AUTO_CANCEL;
 
             startForeground(notifyId, notification);//
-
-
-            // TODO: 25.08.2024
-
 
             PackageInfo pInfo = getApplicationContext().getPackageManager().getPackageInfo(getApplicationContext().getPackageName(), 0);
             version = pInfo.getLongVersionCode();
@@ -182,9 +179,10 @@ public class AdvertisingService extends Service {
             // TODO: 25.08.2024 TEST
             getBleAdvertising.staringAdvertisingSet(bluetoothAdapter);
 
-            cancelNotification(getApplicationContext(),notifyId);
+            // TODO: 25.08.2024
+            //cancelNotification(getApplicationContext(),notifyId);
 
-              stopForeground(true);
+            ///  stopForeground(true);
 
 // TODO: 30.06.2022 сама не постредствено запуск метода
         } catch (Exception e) {
@@ -233,10 +231,11 @@ public class AdvertisingService extends Service {
     @RequiresApi(Build.VERSION_CODES.O)
     private String getNotificationChannel(NotificationManager notificationManager){
         String channelName = getResources().getString(R.string.app_name);
-        NotificationChannel channel = new NotificationChannel(channelId, channelName, NotificationManager.IMPORTANCE_HIGH);
+        NotificationChannel channel = new NotificationChannel(channelId, channelName, NotificationManager.IMPORTANCE_NONE);
         channel.setImportance(NotificationManager.IMPORTANCE_NONE);
         channel.setLockscreenVisibility(Notification.VISIBILITY_PRIVATE);
         notificationManager.createNotificationChannel(channel);
+        notificationManager.cancel(notifyId);
         return channelId;
     }
 
@@ -244,6 +243,7 @@ public class AdvertisingService extends Service {
         try{
         // TODO: 04.09.2024
         NotificationManagerCompat.from(ctx).cancel(notifyId);
+        notificationManager.cancel(notifyId);
         Log.d(getApplicationContext().getClass().getName(), "\n"
                 + " время: " + new Date() + "\n+" +
                 " Класс в процессе... " + this.getClass().getName() + "\n" +
