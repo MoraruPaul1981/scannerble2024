@@ -185,11 +185,9 @@ try {
     protected void startingTransactDataService(@NonNull String stateScartServiceScan) {
         // TODO: 09.08.2024
         try {
-            Parcel data=Parcel.obtain();
-            Parcel reply=Parcel.obtain();
-            data.writeString(stateScartServiceScan);
+
             // TODO: 03.09.2024
-        Boolean tranService=    localBinderСерверBLE.transact(new Random().nextInt(),data,reply,0);
+        Boolean tranService=    localBinderСерверBLE.getService().onTransact(context,version,stateScartServiceScan);
 
             Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                     " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
