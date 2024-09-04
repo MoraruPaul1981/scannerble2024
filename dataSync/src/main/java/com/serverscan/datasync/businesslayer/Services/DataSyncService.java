@@ -18,8 +18,12 @@ import androidx.annotation.Nullable;
 import androidx.annotation.WorkerThread;
 
 import com.serverscan.datasync.businesslayer.Errors.SubClassErrors;
+import com.serverscan.datasync.businesslayer.bl_Jakson.BinesslogicJakson;
+import com.serverscan.datasync.datalayer.generatorjakson.GenerationJaksonJSON;
+import com.serverscan.datasync.datalayer.generatorjakson.GenetarorJaksonJSON;
 import com.serverscan.datasync.datalayer.local.BusinesslogicDatabase;
 
+import java.io.InputStream;
 import java.util.Date;
 import java.util.concurrent.atomic.AtomicReference;
 
@@ -39,6 +43,12 @@ public class DataSyncService extends IntentService {
 
     @Inject
     BusinesslogicDatabase businesslogicDatabase;
+
+    @Inject
+    GenerationJaksonJSON genetarorJaksonJSON;
+
+    @Inject
+    BinesslogicJakson binesslogicJakson;
 
     public DataSyncService() {
         super("DataSyncService");
@@ -127,26 +137,40 @@ public class DataSyncService extends IntentService {
 
 
     @BinderThread
-    public boolean onTransact(@NonNull Context context ,@NonNull Long version,@NonNull String stateScartServiceScan) throws RemoteException {
+    public void onTransact(@NonNull Context context ,@NonNull Long version,@NonNull String stateScartServiceScan) throws RemoteException {
         // TODO: 03.09.2024
-       AtomicReference<Boolean>  flagResult=new AtomicReference<>();
         // TODO: 04.09.2024
       Completable.fromAction(()->{
                   // TODO: 03.09.2024 get DATA
                   Cursor cursorSingle= businesslogicDatabase.getingCursor("SELECT * FROM scannerserversuccess ",version);
                   // TODO: 03.09.2024
                   if (cursorSingle.getCount()>0) {
-                      flagResult.set(true);
+
+                      // TODO: 03.09.2024 get Stream based on Cursor
+                      InputStream inputStreamJakson=      genetarorJaksonJSON.genetarorJaksonJSON();
+
+                      // TODO: 03.09.2024 sending  Stream to Server
+                      StringBuffer stringBufferJsonForJboss=      binesslogicJakson.  sendOkhhtpServiceForJboss();
+                      // TODO: 04.09.2024
+                      // TODO: 03.09.2024 get InputStream   for sending an server
+                      Log.d(getApplicationContext().getClass().getName(), "\n" + " class " +
+                              Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                              " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                              " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"+
+                              " stringBufferJsonForJboss " +stringBufferJsonForJboss);
+
                   }
                   // TODO: 03.09.2024 get InputStream   for sending an server
-                  Log.d(getApplicationContext().getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                  Log.d(getApplicationContext().getClass().getName(), "\n" + " class " +
+                          Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                           " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
                           " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"+
                           " cursorSingle.getCount() " +cursorSingle.getCount());
 
       }).doOnError(e->{
                   e.printStackTrace();
-                  Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() + " Линия  :"
+                  Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" +
+                          Thread.currentThread().getStackTrace()[2].getMethodName() + " Линия  :"
                           + Thread.currentThread().getStackTrace()[2].getLineNumber());
                   ContentValues valuesЗаписываемОшибки = new ContentValues();
                   valuesЗаписываемОшибки.put("Error", e.toString().toLowerCase());
@@ -161,15 +185,15 @@ public class DataSyncService extends IntentService {
       })
               .doOnComplete(()->{
                   // TODO: 04.09.2024
-                  Log.d(getApplicationContext().getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                  Log.d(getApplicationContext().getClass().getName(), "\n" + " class " +
+                          Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                           " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
                           " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n");
 
               }).subscribe();
-        Log.d(getApplicationContext().getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+        Log.d(getApplicationContext().getClass().getName(), "\n" + " class " +
+                Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                 " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
                 " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n");
-        //return super.onTransact(code, data, reply, flags);
-        return flagResult.get();
     }
 }

@@ -43,6 +43,7 @@ import com.sous.server.R;
 import com.sous.server.businesslayer.BI_presentationlayer.bl_FragmentServerRecyreView.BlgeneralServer;
 import com.sous.server.businesslayer.ContentProvoders.ContentProviderServer;
 import com.sous.server.businesslayer.Errors.SubClassErrors;
+import com.sous.server.datalayer.remote.bl_writeandreadScanCatt.BunissecclogicCursorLister;
 import com.sous.server.datalayer.remote.bl_writeandreadScanCatt.WtitingAndreadDataForScanGatt;
 
 import org.jetbrains.annotations.NotNull;
@@ -51,6 +52,8 @@ import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 import java.util.concurrent.ConcurrentHashMap;
+
+import javax.inject.Inject;
 
 public class Bl_FragmentRecyreViewServerSimpleScan {
 
@@ -523,14 +526,24 @@ public class Bl_FragmentRecyreViewServerSimpleScan {
     class MyRecycleViewAdapterServer extends RecyclerView.Adapter<MyViewHolder> {
         public  Cursor  getconcurrentHashMapCursor;
 
+        @Inject
+        BunissecclogicCursorLister bunissecclogicCursorLister;
+
         public MyRecycleViewAdapterServer(@Nullable  Cursor  mapconcurrentHashMapCursor) {
             // TODO: 15.08.2024
             if (mapconcurrentHashMapCursor!=null) {
                 if ( getconcurrentHashMapCursor!=null) {
                     getconcurrentHashMapCursor.close();;
                 }
+                // TODO: 04.09.2024 Заполяем текущий Курсор Даннымииз Службы  
                 getconcurrentHashMapCursor = mapconcurrentHashMapCursor;
+                
+                // TODO: 04.09.2024  запускаем СЛУШАТЕЛЯ курсора
+                bunissecclogicCursorLister.startingListerCursor(getconcurrentHashMapCursor, version,messageGattServer);
+
+ 
             }
+
             //TODO
             Log.d(context.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                     " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
