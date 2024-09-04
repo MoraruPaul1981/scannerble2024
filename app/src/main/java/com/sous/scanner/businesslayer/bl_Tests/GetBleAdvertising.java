@@ -99,14 +99,14 @@ public class GetBleAdvertising {
 
                     Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                             " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                            " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n");
+                            " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"  + " Parcel parcel=Parcel.obtain(); ");
                 }
 
                 @Override
                 public void onStartFailure(int errorCode) {
                     Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                             " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                            " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n");
+                            " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"+ " Parcel parcel=Parcel.obtain(); ");
                     super.onStartFailure(errorCode);
                 }
             };
