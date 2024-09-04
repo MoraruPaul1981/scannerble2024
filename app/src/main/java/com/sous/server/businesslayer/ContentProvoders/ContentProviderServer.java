@@ -24,8 +24,8 @@ import com.sous.server.datalayer.local.CREATE_DATABASEServerScanner;
 
 import java.util.Date;
 import java.util.List;
-import java.util.Optional;
 import java.util.concurrent.CopyOnWriteArrayList;
+import java.util.concurrent.atomic.AtomicInteger;
 import java.util.function.Consumer;
 
 import javax.inject.Inject;
@@ -35,12 +35,9 @@ import io.reactivex.rxjava3.functions.Action;
 
 
 public class ContentProviderServer extends android.content.ContentProvider {
-    private   UriMatcher uriMatcherДЛяПровайдераКонтентБазаДанных;
+    private   UriMatcher uriMatcherGattServer;
     private SQLiteDatabase Create_Database_СамаБАзаSQLite;
-    private AsyncTaskLoader<?> asyncTaskLoader;
-    private Handler handler;
-    private Integer ТекущаяСтрокаПриДОбавлениииURL=0;
-    private  CopyOnWriteArrayList<String> ИменаТаблицыОтАндройда;
+
     private Long version=0l;
     private BinesslogicContentProvider binesslogicContentProvider;
     public @Inject  ContentProviderServer() {
@@ -66,20 +63,15 @@ public class ContentProviderServer extends android.content.ContentProvider {
 
             if (Create_Database_СамаБАзаSQLite!=null) {
                 // TODO: 22.08.2024
-                ИменаТаблицыОтАндройда=new CopyOnWriteArrayList<>();
-                ИменаТаблицыОтАндройда.add("errordsu1");
-                ИменаТаблицыОтАндройда.add("scannerserversuccess");
-                Log.d(this.getClass().getName(),  " ContentProviderScanner" +uriMatcherДЛяПровайдераКонтентБазаДанных );
-                Log.d(this.getClass().getName(), " ИменаТаблицыОтАндройда "+ИменаТаблицыОтАндройда );
-                uriMatcherДЛяПровайдераКонтентБазаДанных=new UriMatcher(ИменаТаблицыОтАндройда.size());
-                ИменаТаблицыОтАндройда.forEach(new Consumer<String>() {
-                    @Override
-                    public void accept(String ЭлементТаблица) {
-                        uriMatcherДЛяПровайдераКонтентБазаДанных.addURI("com.sous.servergatt.prodider",ЭлементТаблица.toString(),ТекущаяСтрокаПриДОбавлениииURL);
-                        Log.d(this.getClass().getName(), " ЭлементТаблица "+ЭлементТаблица + " ТекущаяСтрокаПриДОбавлениииURL " +ТекущаяСтрокаПриДОбавлениииURL);
-                        ТекущаяСтрокаПриДОбавлениииURL++;
-                    }
-                });
+                uriMatcherGattServer =new UriMatcher(1);
+                // TODO: 04.09.2024
+                uriMatcherGattServer.addURI("com.sous.servergatt.prodider","errordsu1",0);
+                uriMatcherGattServer.addURI("com.sous.servergatt.prodider","scannerserversuccess",1);
+
+                Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                        " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                        " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"   +"    Flowable.fromAction(new Action() { "
+                        +   new Date().toLocaleString());
             }
 
 
@@ -222,7 +214,7 @@ public class ContentProviderServer extends android.content.ContentProvider {
         String table = new String();
         try{
             Log.d(this.getClass().getName(), " uri"+ uri);
-            switch (uriMatcherДЛяПровайдераКонтентБазаДанных.match(uri)) {
+            switch (uriMatcherGattServer.match(uri)) {
                 case 0:
                     table = "errordsu1";
                     break;
