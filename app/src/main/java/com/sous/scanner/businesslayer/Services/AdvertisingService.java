@@ -182,7 +182,7 @@ public class AdvertisingService extends Service {
             // TODO: 25.08.2024
             //cancelNotification(getApplicationContext(),notifyId);
 
-            ///  stopForeground(true);
+             stopForeground(true);
 
 // TODO: 30.06.2022 сама не постредствено запуск метода
         } catch (Exception e) {
