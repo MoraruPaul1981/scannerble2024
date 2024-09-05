@@ -6,7 +6,20 @@
         <State />
       </entry>
       <entry key="server-gatt">
-        <State />
+        <State>
+          <targetSelectedWithDropDown>
+            <Target>
+              <type value="QUICK_BOOT_TARGET" />
+              <deviceKey>
+                <Key>
+                  <type value="VIRTUAL_DEVICE_PATH" />
+                  <value value="C:\Users\moraru_pi\.android\avd\Pixel_6_API_29.avd" />
+                </Key>
+              </deviceKey>
+            </Target>
+          </targetSelectedWithDropDown>
+          <timeTargetWasSelectedWithDropDown value="2024-09-05T15:25:13.119330300Z" />
+        </State>
       </entry>
       <entry key="workmanager">
         <State />
