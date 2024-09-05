@@ -67,7 +67,7 @@ public class BinesslogicJakson {
             @NonNull long version, @NonNull OkHttpClient.Builder getOkhhtpBuilder,
                                                  @NonNull LinkedHashMap<String, String> getJbossAdress,
                                                  @NonNull Cursor cursorlocal,
-                                                  @NonNull InputStream inputStreamJakson)
+                                                  byte[] ByteJakson)
             throws ExecutionException, InterruptedException {
         // TODO: 22.08.2024  Коненпт провайдер для зааписив базу данных
         final String[] ANDROID_ID = {new String()};

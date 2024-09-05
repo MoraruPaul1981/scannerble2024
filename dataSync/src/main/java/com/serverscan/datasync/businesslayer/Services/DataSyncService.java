@@ -8,14 +8,12 @@ import android.content.pm.PackageInfo;
 import android.database.Cursor;
 import android.os.Binder;
 import android.os.IBinder;
-import android.os.Parcel;
 import android.os.RemoteException;
 import android.util.Log;
 
 import androidx.annotation.BinderThread;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.annotation.WorkerThread;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.serverscan.datasync.businesslayer.Errors.SubClassErrors;
@@ -24,16 +22,14 @@ import com.serverscan.datasync.businesslayer.bl_jbossadress.QualifierJbossServer
 import com.serverscan.datasync.datalayer.generatorjakson.GenerationJaksonJSON;
 import com.serverscan.datasync.datalayer.local.BusinesslogicDatabase;
 
-import java.io.InputStream;
 import java.util.Date;
 import java.util.LinkedHashMap;
-import java.util.concurrent.atomic.AtomicReference;
+import java.util.List;
 
 import javax.inject.Inject;
 
 import dagger.hilt.android.AndroidEntryPoint;
 import io.reactivex.rxjava3.core.Completable;
-import io.reactivex.rxjava3.core.Single;
 import okhttp3.OkHttpClient;
 
 
@@ -160,12 +156,14 @@ public class DataSyncService extends IntentService {
                   // TODO: 03.09.2024
                   if (cursorSingle.getCount()>0) {
 
+                      // TODO: 23.08.2024 Генерирум List базе курсора в Обьекты Листа ЧТобы ПОтом ПОлучить Jakson Json
+                      List<?>  listForJakson=     genetarorJaksonJSON.genetarorListFor(context,version,cursorSingle);
                       // TODO: 03.09.2024 get Stream based on Cursor
-                      InputStream inputStreamJakson=      genetarorJaksonJSON.genetarorJaksonJSON(context,version,cursorSingle);
+                      byte[] ByteJakson=      genetarorJaksonJSON.genetarorJaksonJSON(context,version,     listForJakson  ,getHiltJaksonObjectMapper     );
 
                       // TODO: 03.09.2024 sending  Stream to Server
                       StringBuffer stringBufferJsonForJboss=      binesslogicJakson.
-                              sendOkhhtpServiceForJboss(context,version,getOkhhtpBuilder,getJbossAdressDebug,cursorSingle ,inputStreamJakson);
+                              sendOkhhtpServiceForJboss(context,version,getOkhhtpBuilder,getJbossAdressDebug,cursorSingle ,ByteJakson);
                       // TODO: 04.09.2024
                       // TODO: 03.09.2024 get InputStream   for sending an server
                       Log.d(getApplicationContext().getClass().getName(), "\n" + " class " +
