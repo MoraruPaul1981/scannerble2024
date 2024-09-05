@@ -43,7 +43,7 @@ public class GenerationJaksonJSON {
     // TODO: 04.09.2024
 
 
-    public InputStream genetarorJaksonJSON(@NonNull long version, @NonNull Cursor cursorlocal)
+    public InputStream genetarorJaksonJSON(@NonNull Context  context,@NonNull long version, @NonNull Cursor cursorlocal)
             throws ExecutionException, InterruptedException {
         // TODO: 22.08.2024  Коненпт провайдер для зааписив базу данных
         final String[] ANDROID_ID = {new String()};

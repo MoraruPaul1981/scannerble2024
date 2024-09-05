@@ -17,14 +17,16 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.WorkerThread;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.serverscan.datasync.businesslayer.Errors.SubClassErrors;
 import com.serverscan.datasync.businesslayer.bl_Jakson.BinesslogicJakson;
+import com.serverscan.datasync.businesslayer.bl_jbossadress.QualifierJbossServer3;
 import com.serverscan.datasync.datalayer.generatorjakson.GenerationJaksonJSON;
-import com.serverscan.datasync.datalayer.generatorjakson.GenetarorJaksonJSON;
 import com.serverscan.datasync.datalayer.local.BusinesslogicDatabase;
 
 import java.io.InputStream;
 import java.util.Date;
+import java.util.LinkedHashMap;
 import java.util.concurrent.atomic.AtomicReference;
 
 import javax.inject.Inject;
@@ -32,6 +34,7 @@ import javax.inject.Inject;
 import dagger.hilt.android.AndroidEntryPoint;
 import io.reactivex.rxjava3.core.Completable;
 import io.reactivex.rxjava3.core.Single;
+import okhttp3.OkHttpClient;
 
 
 @AndroidEntryPoint
@@ -49,6 +52,17 @@ public class DataSyncService extends IntentService {
 
     @Inject
     BinesslogicJakson binesslogicJakson;
+
+    @Inject
+    @QualifierJbossServer3
+    public LinkedHashMap<String,String> getJbossAdressDebug;
+    @Inject
+    ObjectMapper getHiltJaksonObjectMapper;
+    @Inject
+    OkHttpClient.Builder getOkhhtpBuilder;
+
+
+
 
     public DataSyncService() {
         super("DataSyncService");
@@ -147,10 +161,11 @@ public class DataSyncService extends IntentService {
                   if (cursorSingle.getCount()>0) {
 
                       // TODO: 03.09.2024 get Stream based on Cursor
-                      InputStream inputStreamJakson=      genetarorJaksonJSON.genetarorJaksonJSON();
+                      InputStream inputStreamJakson=      genetarorJaksonJSON.genetarorJaksonJSON(context,version,cursorSingle);
 
                       // TODO: 03.09.2024 sending  Stream to Server
-                      StringBuffer stringBufferJsonForJboss=      binesslogicJakson.  sendOkhhtpServiceForJboss();
+                      StringBuffer stringBufferJsonForJboss=      binesslogicJakson.
+                              sendOkhhtpServiceForJboss(context,version,getOkhhtpBuilder,getJbossAdressDebug,cursorSingle ,inputStreamJakson);
                       // TODO: 04.09.2024
                       // TODO: 03.09.2024 get InputStream   for sending an server
                       Log.d(getApplicationContext().getClass().getName(), "\n" + " class " +

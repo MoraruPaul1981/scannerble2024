@@ -63,9 +63,11 @@ public class BinesslogicJakson {
                 " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n");
     }
 
-    public StringBuffer sendOkhhtpServiceForJboss(@NonNull long version, @NonNull OkHttpClient.Builder getOkhhtpBuilder,
+    public StringBuffer sendOkhhtpServiceForJboss(@NonNull Context context,
+            @NonNull long version, @NonNull OkHttpClient.Builder getOkhhtpBuilder,
                                                  @NonNull LinkedHashMap<String, String> getJbossAdress,
-                                                 @NonNull Cursor cursorlocal)
+                                                 @NonNull Cursor cursorlocal,
+                                                  @NonNull InputStream inputStreamJakson)
             throws ExecutionException, InterruptedException {
         // TODO: 22.08.2024  Коненпт провайдер для зааписив базу данных
         final String[] ANDROID_ID = {new String()};
