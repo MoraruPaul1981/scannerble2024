@@ -13,12 +13,15 @@ import com.google.firebase.crashlytics.buildtools.reloc.org.apache.http.client.m
 import com.google.firebase.crashlytics.buildtools.reloc.org.apache.http.client.utils.URIBuilder;
 import com.serverscan.datasync.businesslayer.Errors.SubClassErrors;
 
+import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.net.MalformedURLException;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.URL;
+import java.nio.charset.StandardCharsets;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -75,7 +78,7 @@ public class BinesslogicJakson {
             throws ExecutionException, InterruptedException {
         // TODO: 22.08.2024  Коненпт провайдер для зааписив базу данных
         final String[] ANDROID_ID = {new String()};
-        AtomicReference<StringBuffer> inputStreamJaksonSend = new AtomicReference();
+        AtomicReference<StringBuffer> stringBufferSendJboss = new AtomicReference();
         // TODO: 28.08.2024
         Completable.fromAction(()->{
 
@@ -200,27 +203,30 @@ public class BinesslogicJakson {
                                 // TODO: 29.09.2023
                                 Integer КакаяКодировка = Integer.parseInt(Optional.ofNullable(response.header("getcharsets")).map(String::new).orElse("0"));
                                 Boolean ФлагgZIPOutputStream = Boolean.parseBoolean(Optional.ofNullable(response.header("GZIPOutputStream")).map(String::new).orElse("false"));
-                                if (РазмерПришедшегоПотока > 0l) {
+                                if (РазмерПришедшегоПотока>0l) {
+                                    // TODO: 07.10.2023
                                     // TODO: 07.10.2023  gzip
-                                    byte[] asByteBuffer = response.body().source().readByteArray();
-                                    // TODO: 04.09.2024  
-                                    InputStream callOtServerJboss=            new GZIPInputStream(ByteSource.wrap(asByteBuffer).openBufferedStream(), 2048);//4096
-                                    // TODO: 30.08.2024
-                                    // TODO: 23.08.2024
-                                    Log.d(context.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
-                                            " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                                            " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" + " callOtServerJboss.available() " +callOtServerJboss.available());
+                                    InputStream inputStreamОтПинга = new GZIPInputStream(response.body().source().inputStream(),2048);//4096
 
+                                    BufferedReader РидерОтСервераМетодаGET;//
+                                    if (КакаяКодировка==8) {
+                                        РидерОтСервераМетодаGET = new BufferedReader(new InputStreamReader(inputStreamОтПинга, StandardCharsets.UTF_8));
+                                    } else {
+                                        РидерОтСервераМетодаGET = new BufferedReader(new InputStreamReader(inputStreamОтПинга, StandardCharsets.UTF_16));
+                                    }
+                                    stringBufferSendJboss.set(РидерОтСервераМетодаGET.lines().collect(StringBuffer::new, (sb, i) -> sb.append(i), StringBuffer::append));
+
+                                    Log.d(this.getClass().getName(), " stringBufferSendJboss " +  stringBufferSendJboss.get() +
+                                            " РазмерПришедшегоПотока " +РазмерПришедшегоПотока);
                                 }
+
                                 // TODO: 31.05.2022
                                 dispatcherДанныеОтСервера.executorService().shutdown();
                                 // TODO: 23.08.2024
                                 Log.d(context.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                                         " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
                                         " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n");
-
                             }
-
                         }
                     });
                     //TODO
@@ -266,7 +272,7 @@ public class BinesslogicJakson {
                 " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" + "\n"
                 + " LocalDateTime.now() " + LocalDateTime.now().toString().toUpperCase() + "\n");
 
-        return inputStreamJaksonSend.get();
+        return stringBufferSendJboss.get();
 
     }
 

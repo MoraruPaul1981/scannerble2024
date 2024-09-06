@@ -7,7 +7,6 @@ import android.content.ServiceConnection;
 import android.os.Handler;
 import android.os.IBinder;
 import android.os.Looper;
-import android.os.Parcel;
 import android.util.Log;
 
 import androidx.annotation.NonNull;
@@ -16,8 +15,7 @@ import com.serverscan.datasync.businesslayer.Errors.SubClassErrors;
 import com.serverscan.datasync.businesslayer.Services.DataSyncService;
 import com.serverscan.datasync.businesslayer.bl_datasyncservice.BinesslogicDataSyncService;
 import com.serverscan.datasync.businesslayer.bl_datasyncservice.InterfaceDataSyncService;
-
-import java.util.Random;
+import com.serverscan.datasync.businesslayer.bl_network.WorkerStatusNewtorks;
 
 import javax.inject.Inject;
 
@@ -55,8 +53,12 @@ try {
     // TODO: 26.07.2024
 
 // TODO: 03.09.2024  запуск службы синхронизвции work mamanger
-
-    launchOptions("SyncWorkManager",version);
+    WorkerStatusNewtorks workerStatusNewtorks=new WorkerStatusNewtorks(context,version);
+    Boolean StatusNewtwork= workerStatusNewtorks.getStatusNewtwork();
+    if (StatusNewtwork==true) {
+        // TODO: 06.09.2024
+        launchAsyncWithJboss("SyncWorkManager",version);
+    }
 
     Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
             " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
@@ -81,7 +83,7 @@ try {
 
 }
 
-    public void launchOptions(@NonNull String stateScartServiceScan,@NonNull Long version ) {
+    public void launchAsyncWithJboss(@NonNull String stateScartServiceScan, @NonNull Long version ) {
         try {
             // TODO: 19.08.2024
 
