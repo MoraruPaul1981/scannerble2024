@@ -109,14 +109,14 @@ public class BinesslogicJakson {
                             .readTimeout(1, TimeUnit.MINUTES)
                             .build();
                     ///  MediaType JSON = MediaType.parse("application/json; charset=utf-16");
-                    Request requestGET = new Request.Builder().get().url(Adress).build();
+                    Request requestPost = new Request.Builder().get().url(Adress).build();
                     Dispatcher dispatcherДанныеОтСервера = okHttpClientGattServer.dispatcher();
                     // TODO: 23.08.2024
                     Log.d(context.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                             " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
                             " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n");
 
-                    okHttpClientGattServer.newCall(requestGET).enqueue(new Callback() {
+                    okHttpClientGattServer.newCall(requestPost).enqueue(new Callback() {
                         @Override
                         public void onFailure(@androidx.annotation.NonNull Call call, @androidx.annotation.NonNull IOException e) {
                             // TODO: 31.05.2022
@@ -176,12 +176,7 @@ public class BinesslogicJakson {
                             + " LocalDateTime.now() " + LocalDateTime.now().toString().toUpperCase() + "\n");
 
                 }).doOnComplete(()->{
-
                     // TODO: 31.07.2024
-                    if (cursorlocal!=null) {
-                        cursorlocal.close();
-                    }
-
                     Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                             " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
                             " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" + "\n"
