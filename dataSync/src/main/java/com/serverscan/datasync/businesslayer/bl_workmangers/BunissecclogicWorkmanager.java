@@ -4,9 +4,11 @@ import android.content.ComponentName;
 import android.content.ContentValues;
 import android.content.Context;
 import android.content.ServiceConnection;
+import android.content.SharedPreferences;
 import android.os.Handler;
 import android.os.IBinder;
 import android.os.Looper;
+import android.preference.PreferenceManager;
 import android.util.Log;
 
 import androidx.annotation.NonNull;
@@ -35,11 +37,13 @@ public class BunissecclogicWorkmanager {
 
     private  DataSyncService.LocalBinderСерверBLE localBinderСерверBLE;
     final private Handler handler=new Handler(Looper.getMainLooper());
+    private SharedPreferences preferences;
 
     public @Inject BunissecclogicWorkmanager(@ApplicationContext Context hitcontext ) {
         // TODO: 25.08.2024
         context = hitcontext;
         // TODO: 25.08.2024
+        preferences = PreferenceManager.getDefaultSharedPreferences(context);
         Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                 " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
                 " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n");
@@ -130,7 +134,7 @@ try {
                              // TODO: 28.07.2023  Update
                                  localBinderСерверBLE = (DataSyncService.LocalBinderСерверBLE) iBinder;
                                 // TODO: 03.09.2024
-                                startingTransactDataService(  stateScartServiceScan);
+                                startingTransactDataService(     preferences);
 
                                 Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                                         " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
@@ -184,11 +188,11 @@ try {
 
 
 
-    protected void startingTransactDataService(@NonNull String stateScartServiceScan) {
+    protected void startingTransactDataService( @NonNull  SharedPreferences preferences) {
         // TODO: 09.08.2024
         try {
             // TODO: 03.09.2024 Запускаем синхронизацию с сервером JBOSS
-       localBinderСерверBLE.getService().onTransact(context,version);
+       localBinderСерверBLE.getService().onTransact(context,version,preferences);
 
             Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                     " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +

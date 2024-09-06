@@ -31,6 +31,8 @@ public class GetApplication  extends Application {
     @Inject
     BunissecclogicWorkmanager bunissecclogicWorkmanager;
 
+
+
     private  DataSyncService.LocalBinderСерверBLE localBinderСерверBLE;
     public GetApplication() throws PackageManager.NameNotFoundException {
         super();

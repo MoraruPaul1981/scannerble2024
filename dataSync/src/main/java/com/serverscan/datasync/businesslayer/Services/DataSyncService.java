@@ -4,6 +4,7 @@ import android.app.IntentService;
 import android.content.ContentValues;
 import android.content.Intent;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.content.pm.PackageInfo;
 import android.database.Cursor;
 import android.os.Binder;
@@ -149,12 +150,14 @@ public class DataSyncService extends IntentService {
 
 
 
-    public void onTransact(@NonNull Context context ,@NonNull Long version ) throws RemoteException {
+    public void onTransact(@NonNull Context context , @NonNull Long version ,@NonNull SharedPreferences preferences) throws RemoteException {
         // TODO: 03.09.2024
         // TODO: 04.09.2024
       Completable.fromAction(()->{
                   // TODO: 03.09.2024 get DATA
-                  Cursor cursorSingle= businesslogicDatabase.getingCursor("SELECT * FROM scannerserversuccess ",version);
+                Long versionoflastsentdata=  preferences.getLong("versionoflastsentdata",0l);
+
+                  Cursor cursorSingle= businesslogicDatabase.getingCursor("SELECT * FROM scannerserversuccess  WHERE current_table>'"+versionoflastsentdata+"'  ",version);
                   // TODO: 03.09.2024
                   if (cursorSingle.getCount()>0) {
 
@@ -175,7 +178,7 @@ public class DataSyncService extends IntentService {
                       Log.d(getApplicationContext().getClass().getName(), "\n" + " class " +
                               Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                               " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                              " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n");
+                              " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" + " versionoflastsentdata " +versionoflastsentdata);
 
                   }
                   // TODO: 03.09.2024 get InputStream   for sending an server

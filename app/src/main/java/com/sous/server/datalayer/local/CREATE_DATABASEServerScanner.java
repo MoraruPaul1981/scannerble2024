@@ -2,12 +2,16 @@ package com.sous.server.datalayer.local;
 
 import android.content.ContentValues;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.content.pm.PackageInfo;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
+import androidx.preference.PreferenceManager;
+
 import com.sous.server.businesslayer.Errors.SubClassErrors;
+import com.sous.server.businesslayer.bl_preferences.BussenloginSaredPreferense;
 
 import org.jetbrains.annotations.NotNull;
 import java.util.Date;
@@ -24,8 +28,11 @@ public class CREATE_DATABASEServerScanner extends SQLiteOpenHelper{ ///SQLiteOpe
    // private static     SQLiteDatabase ССылкаНаСозданнуюБазу;
     private static final int DATABASE_VERSION = 8;
     private Long version=0l;
+    private SharedPreferences preferences;
+
+
     public static SQLiteDatabase getССылкаНаСозданнуюБазу() {
-        System.out.println( "atomicstoredEntities "+atomicstoredEntities.toString());;
+        System.out.println( "atomicstoredEntities "+atomicstoredEntities.toString());
         return atomicstoredEntities.get();
     }
 
@@ -60,7 +67,10 @@ public class CREATE_DATABASEServerScanner extends SQLiteOpenHelper{ ///SQLiteOpe
     @Override
     public void onCreate(SQLiteDatabase ССылкаНаСозданнуюБазу) {
         try {
-            Log.d(this.getClass().getName(), "сработала ... НАЧАЛО  СОЗДАНИЯ ТАЛИЦ ");
+
+            // TODO: 13.08.2024
+            preferences = PreferenceManager.getDefaultSharedPreferences(context);
+            new BussenloginSaredPreferense(preferences,context,version).sharedPreferencesClear();
             // TODO: 03.06.2022  таблиц
             МетодСозданиеТаблицError(ССылкаНаСозданнуюБазу);
 
@@ -68,7 +78,10 @@ public class CREATE_DATABASEServerScanner extends SQLiteOpenHelper{ ///SQLiteOpe
 
             МетодСозданиеТаблицДляСправочникEnableDevice(ССылкаНаСозданнуюБазу);
 
-            Log.d(this.getClass().getName(), " сработала ... КОНЕЦ СОЗДАНИЯ ТАБЛИЦ ВИЮ ТРИГЕР " +new Date().toGMTString());
+            // TODO: 03.06.2022
+            Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                    " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                    " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" );
         } catch (Exception e) {
             e.printStackTrace();
             Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() + " Линия  :"
