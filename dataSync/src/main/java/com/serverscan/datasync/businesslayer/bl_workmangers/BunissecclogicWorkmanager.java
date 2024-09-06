@@ -185,8 +185,8 @@ try {
     protected void startingTransactDataService(@NonNull String stateScartServiceScan) {
         // TODO: 09.08.2024
         try {
-            // TODO: 03.09.2024
-       localBinderСерверBLE.getService().onTransact(context,version,stateScartServiceScan);
+            // TODO: 03.09.2024 Запускаем синхронизацию с сервером JBOSS
+       localBinderСерверBLE.getService().onTransact(context,version);
 
             Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                     " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +

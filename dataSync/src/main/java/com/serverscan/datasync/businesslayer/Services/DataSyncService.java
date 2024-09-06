@@ -149,7 +149,7 @@ public class DataSyncService extends IntentService {
 
 
 
-    public void onTransact(@NonNull Context context ,@NonNull Long version,@NonNull String stateScartServiceScan) throws RemoteException {
+    public void onTransact(@NonNull Context context ,@NonNull Long version ) throws RemoteException {
         // TODO: 03.09.2024
         // TODO: 04.09.2024
       Completable.fromAction(()->{
@@ -166,7 +166,11 @@ public class DataSyncService extends IntentService {
                       // TODO: 03.09.2024 sending  Stream to Server
                       StringBuffer stringBufferJsonForJboss=      binesslogicJakson.
                               sendOkhhtpServiceForJboss(context,version,getOkhhtpBuilder,getJbossAdressDebug,cursorSingle ,ByteJakson);
-                      // TODO: 04.09.2024
+
+
+                      // TODO: 31.07.2024 close database
+                      clostingdatabase(cursorSingle);
+
                       // TODO: 03.09.2024 get InputStream   for sending an server
                       Log.d(getApplicationContext().getClass().getName(), "\n" + " class " +
                               Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
@@ -206,6 +210,16 @@ public class DataSyncService extends IntentService {
                           " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n");
 
               }).subscribe();
+        Log.d(getApplicationContext().getClass().getName(), "\n" + " class " +
+                Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n");
+    }
+
+    private   void clostingdatabase(Cursor cursorSingle) {
+        if (cursorSingle !=null) {
+            cursorSingle.close();
+        }
         Log.d(getApplicationContext().getClass().getName(), "\n" + " class " +
                 Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                 " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +

@@ -161,10 +161,6 @@ public List<ScannerserversuccessEntity> genetarorListFor(@NonNull Context  conte
                                 + " LocalDateTime.now() " + LocalDateTime.now().toString().toUpperCase() + "\n");
                     } while (  cursorlocal.moveToNext());
                     // TODO: 06.09.2024 ЗАполяем данными Класс Для Отправки НА сервер
-                    // TODO: 31.07.2024
-                    if (cursorlocal!=null) {
-                        cursorlocal.close();
-                    }
                     // TODO: 06.09.2024 end
                 }).doOnComplete(()->{
                     Log.d(this.getClass().getName(), "\n" + " class " +
@@ -190,7 +186,8 @@ public List<ScannerserversuccessEntity> genetarorListFor(@NonNull Context  conte
                     new SubClassErrors(context).МетодЗаписиОшибок(valuesЗаписываемОшибки);
 
                 })
-                .subscribeOn(Schedulers.single()).blockingSubscribe();
+                .subscribeOn(Schedulers.single())
+                .blockingSubscribe();
         // TODO: 31.07.2024
         Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                 " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +

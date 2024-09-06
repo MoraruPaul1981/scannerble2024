@@ -84,7 +84,7 @@ public class BinesslogicJakson {
                     Log.d(context.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                             " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
                             " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" +" Adress " +Adress);
-                    OkHttpClient okHttpClientClientScanner = getOkhhtpBuilder.addInterceptor(new Interceptor() {
+                    OkHttpClient okHttpClientGattServer = getOkhhtpBuilder.addInterceptor(new Interceptor() {
                                 @Override
                                 public Response intercept(Chain chain) throws IOException {
                                     // TODO: 21.08.2024
@@ -110,13 +110,13 @@ public class BinesslogicJakson {
                             .build();
                     ///  MediaType JSON = MediaType.parse("application/json; charset=utf-16");
                     Request requestGET = new Request.Builder().get().url(Adress).build();
-                    Dispatcher dispatcherДанныеОтСервера = okHttpClientClientScanner.dispatcher();
+                    Dispatcher dispatcherДанныеОтСервера = okHttpClientGattServer.dispatcher();
                     // TODO: 23.08.2024
                     Log.d(context.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                             " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
                             " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n");
 
-                    okHttpClientClientScanner.newCall(requestGET).enqueue(new Callback() {
+                    okHttpClientGattServer.newCall(requestGET).enqueue(new Callback() {
                         @Override
                         public void onFailure(@androidx.annotation.NonNull Call call, @androidx.annotation.NonNull IOException e) {
                             // TODO: 31.05.2022
@@ -249,10 +249,10 @@ public class BinesslogicJakson {
 
 
                     try {
-                        HttpGet someHttpGet = new HttpGet(СтрокаСвязиСсервером);
-                        URIBuilder builder = new URIBuilder(someHttpGet.getURI());
-                        builder.setParameter("NameTable", "listMacMastersSous")
-                                .setParameter("JobForServer", "getscanner")
+                        HttpGet someHttpPost = new HttpGet(СтрокаСвязиСсервером);
+                        URIBuilder builder = new URIBuilder(someHttpPost.getURI());
+                        builder.setParameter("NameTable", "scannerserversuccess")
+                                .setParameter("JobForServer", "sendgattserver")
                                 .setParameter("bremylocal", bremylocal)
                                 .setParameter("versionlocal", versionlocal.toString());
                         URI adresssuri  = builder.build();
@@ -317,7 +317,7 @@ public class BinesslogicJakson {
         }else {
             DateFormat	dateFormat =   new SimpleDateFormat("yyyy-MM-dd",new Locale("ru", "RU"));
             try {
-                Date datelocal  = dateFormat.parse("1900-01-01");
+                Date datelocal  = dateFormat.parse("2010-01-01");
                 bremylocal = dateFormat.format(datelocal);
             } catch (ParseException e) {
                 throw new RuntimeException(e);

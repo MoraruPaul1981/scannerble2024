@@ -174,7 +174,7 @@ public class CREATE_DATABASEServerScanner extends SQLiteOpenHelper{ ///SQLiteOpe
                                 " uuid  NUMERIC UNIQUE DEFAULT 0  ,"+
                                 " version  NUMERIC ," +
                                 " sim  INTEGER ," +
-                                " iemi  INTEGER ," +
+                                " iemi  TEXT ," +
                                 " current_table   NUMERIC UNIQUE DEFAULT 0 )");
                         Log.d(this.getClass().getName(), " сработала ...  создание таблицы   НазваниеТаблицыДляТригера   "+"scannerserversuccess" );
                         //TODO INSERT
