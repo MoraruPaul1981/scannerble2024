@@ -4,7 +4,9 @@ package com.serverscan.datasync.businesslayer.bl_Jakson;
 import android.annotation.SuppressLint;
 import android.content.ContentValues;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.database.Cursor;
+import android.preference.PreferenceManager;
 import android.provider.Settings;
 import android.util.Log;
 
@@ -12,6 +14,7 @@ import com.google.firebase.crashlytics.buildtools.reloc.com.google.common.io.Byt
 import com.google.firebase.crashlytics.buildtools.reloc.org.apache.http.client.methods.HttpGet;
 import com.google.firebase.crashlytics.buildtools.reloc.org.apache.http.client.utils.URIBuilder;
 import com.serverscan.datasync.businesslayer.Errors.SubClassErrors;
+import com.serverscan.datasync.businesslayer.bl_preferences.BussenloginSaredPreferense;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -58,18 +61,24 @@ import okio.BufferedSink;
 @Module
 @InstallIn(SingletonComponent.class)
 public class BinesslogicJakson {
+    private SharedPreferences preferences;
 
-    Context context;
+    private Context context;
 
     public @Inject BinesslogicJakson(@ApplicationContext Context hiltcontext) {
         // TODO: 22.08.2024
         // TODO: 21.08.2024
         context = hiltcontext;
+        // TODO: 06.09.2024
+        preferences = PreferenceManager.getDefaultSharedPreferences(context);
+
         Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                 " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
                 " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n");
     }
 
+
+    @SuppressLint("NewApi")
     public StringBuffer sendOkhhtpServiceForJboss(@NonNull Context context,
             @NonNull long version, @NonNull OkHttpClient.Builder getOkhhtpBuilder,
                                                  @NonNull LinkedHashMap<String, String> getJbossAdress,
@@ -220,12 +229,19 @@ public class BinesslogicJakson {
                                             " РазмерПришедшегоПотока " +РазмерПришедшегоПотока);
                                 }
 
+                                 Long буферОтветотJboss=Optional.ofNullable(stringBufferSendJboss.get().toString()).stream().mapToLong(m-> Long.parseLong(m)).findAny().orElse(0l);
+
+                                if (буферОтветотJboss>0) {
+                                    new BussenloginSaredPreferense(preferences,context,version).sharedPreferencesAfterSuccessJbossVErsion(context,version,буферОтветотJboss);
+                                }
+
+
                                 // TODO: 31.05.2022
                                 dispatcherДанныеОтСервера.executorService().shutdown();
                                 // TODO: 23.08.2024
                                 Log.d(context.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                                         " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                                        " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n");
+                                        " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" + " буферОтветотJboss " +буферОтветотJboss);
                             }
                         }
                     });
