@@ -31,6 +31,7 @@ import java.util.concurrent.ExecutionException;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicReference;
 import java.util.zip.GZIPInputStream;
+import java.util.zip.GZIPOutputStream;
 
 import javax.inject.Inject;
 
@@ -44,9 +45,12 @@ import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.Dispatcher;
 import okhttp3.Interceptor;
+import okhttp3.MediaType;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
+import okhttp3.RequestBody;
 import okhttp3.Response;
+import okio.BufferedSink;
 
 @Module
 @InstallIn(SingletonComponent.class)
@@ -91,7 +95,7 @@ public class BinesslogicJakson {
                                     Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                                             " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
                                             " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n");
-
+                                    // TODO: 06.09.2024
                                     Request originalRequest = chain.request();
                                     Request.Builder builder = originalRequest.newBuilder()
                                             .header("Content-Type", "application/gzip" + " ;charset=UTF-8")
@@ -108,8 +112,65 @@ public class BinesslogicJakson {
                             .writeTimeout(1, TimeUnit.MINUTES)
                             .readTimeout(1, TimeUnit.MINUTES)
                             .build();
+                    // TODO: 06.09.2024 POST
+                    MediaType JSON = MediaType.parse("application/octet-stream; charset=utf-8");
+                    RequestBody requestBody = new RequestBody() {
+                        @Override
+                        public MediaType contentType() {
+                            try{
+                                Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                                        " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                                        " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n");
+                            } catch (Exception e) {
+                                e.printStackTrace();
+                                Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :"
+                                        + Thread.currentThread().getStackTrace()[2].getMethodName() + " Линия  :"
+                                        + Thread.currentThread().getStackTrace()[2].getLineNumber());
+                                ContentValues valuesЗаписываемОшибки = new ContentValues();
+                                valuesЗаписываемОшибки.put("Error", e.toString().toLowerCase());
+                                valuesЗаписываемОшибки.put("Klass", this.getClass().getName());
+                                valuesЗаписываемОшибки.put("Metod", Thread.currentThread().getStackTrace()[2].getMethodName());
+                                valuesЗаписываемОшибки.put("LineError", Thread.currentThread().getStackTrace()[2].getLineNumber());
+                                final Object ТекущаяВерсияПрограммы = version;
+                                Integer ЛокальнаяВерсияПОСравнение = Integer.parseInt(ТекущаяВерсияПрограммы.toString());
+                                valuesЗаписываемОшибки.put("whose_error", ЛокальнаяВерсияПОСравнение);
+                                new SubClassErrors(context).МетодЗаписиОшибок(valuesЗаписываемОшибки);
+                            }
+                            return JSON;
+                        }
+
+                        @Override
+                        public void writeTo(BufferedSink sink) throws IOException {
+                            // TODO: 21.09.2023 SEND BITY FROM SERVEER
+                            try (GZIPOutputStream gzipOutputStream =       new GZIPOutputStream(sink.outputStream(),2048,true );){///4096
+                                // TODO: 07.10.2023  wreting to server..
+                                gzipOutputStream.write(ByteJakson);
+                                gzipOutputStream.finish();
+                                gzipOutputStream.close();
+                                Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                                        " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                                        " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n");
+                            } catch (Exception e) {
+                                e.printStackTrace();
+                                Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :"
+                                        + Thread.currentThread().getStackTrace()[2].getMethodName() + " Линия  :"
+                                        + Thread.currentThread().getStackTrace()[2].getLineNumber());
+                                ContentValues valuesЗаписываемОшибки = new ContentValues();
+                                valuesЗаписываемОшибки.put("Error", e.toString().toLowerCase());
+                                valuesЗаписываемОшибки.put("Klass", this.getClass().getName());
+                                valuesЗаписываемОшибки.put("Metod", Thread.currentThread().getStackTrace()[2].getMethodName());
+                                valuesЗаписываемОшибки.put("LineError", Thread.currentThread().getStackTrace()[2].getLineNumber());
+                                final Object ТекущаяВерсияПрограммы = version;
+                                Integer ЛокальнаяВерсияПОСравнение = Integer.parseInt(ТекущаяВерсияПрограммы.toString());
+                                valuesЗаписываемОшибки.put("whose_error", ЛокальнаяВерсияПОСравнение);
+                                new SubClassErrors(context).МетодЗаписиОшибок(valuesЗаписываемОшибки);
+                            }
+                        }
+                    };
+
+
                     ///  MediaType JSON = MediaType.parse("application/json; charset=utf-16");
-                    Request requestPost = new Request.Builder().get().url(Adress).build();
+                    Request requestPost = new Request.Builder().post(requestBody).url(Adress).build();
                     Dispatcher dispatcherДанныеОтСервера = okHttpClientGattServer.dispatcher();
                     // TODO: 23.08.2024
                     Log.d(context.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
@@ -301,7 +362,7 @@ public class BinesslogicJakson {
     private  String prossecingBremy(@NonNull Cursor cursorlocal){
         String bremylocal=new String();
         if (cursorlocal.getCount() >0) {
-            DateFormat dateFormat =new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", new Locale("ru", "RU"));
+            DateFormat dateFormat =new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS", new Locale("ru", "RU"));
             // TODO: 27.08.2024 bremy
             try {
                 Date datelocal = dateFormat.parse(cursorlocal.getString(cursorlocal.getColumnIndex("date_update")));

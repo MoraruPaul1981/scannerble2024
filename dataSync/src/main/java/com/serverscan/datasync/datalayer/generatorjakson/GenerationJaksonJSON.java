@@ -163,6 +163,10 @@ public List<ScannerserversuccessEntity> genetarorListFor(@NonNull Context  conte
                     // TODO: 06.09.2024 ЗАполяем данными Класс Для Отправки НА сервер
                     // TODO: 06.09.2024 end
                 }).doOnComplete(()->{
+                    // TODO: 06.09.2024
+                    if (cursorlocal!=null) {
+                        cursorlocal.moveToFirst();
+                    }
                     Log.d(this.getClass().getName(), "\n" + " class " +
                             Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                             " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +

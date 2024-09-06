@@ -18,6 +18,7 @@ import com.sous.server.businesslayer.Errors.SubClassErrors;
 import com.sous.server.businesslayer.Eventbus.MessageScannerServer;
 import com.sous.server.businesslayer.Eventbus.ParamentsScannerServer;
 import com.sous.server.businesslayer.bl_UUID.GeneratorUUIDs;
+import com.sous.server.businesslayer.bl_dates.WorkerDates;
 
 import org.greenrobot.eventbus.EventBus;
 
@@ -33,6 +34,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.Locale;
+import java.util.TimeZone;
 import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentSkipListSet;
@@ -308,9 +310,11 @@ try{
 
 
             // TODO: 25.07.2024  Создаем Новую Даты
-                LocalDateTime futureDate = LocalDateTime.now();
-                DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy.MM.dd HH.mm.ss.SSS");
-                  String date_update=   dtf.format(futureDate);
+            WorkerDates workerDates=new WorkerDates(context,version);
+            Date date_update = workerDates.dateCreation();
+            String date_updatestring=  workerDates.datesasaString(date_update);
+            date_update = workerDates.datesasDates(date_updatestring);
+
 
             // TODO: 25.07.2024 set date
             contentValuesВставкаДанных.put("date_update", date_update.toString());

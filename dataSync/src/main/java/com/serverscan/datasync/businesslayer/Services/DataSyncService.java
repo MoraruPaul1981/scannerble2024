@@ -175,8 +175,7 @@ public class DataSyncService extends IntentService {
                       Log.d(getApplicationContext().getClass().getName(), "\n" + " class " +
                               Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                               " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                              " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"+
-                              " stringBufferJsonForJboss " +stringBufferJsonForJboss);
+                              " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n");
 
                   }
                   // TODO: 03.09.2024 get InputStream   for sending an server
