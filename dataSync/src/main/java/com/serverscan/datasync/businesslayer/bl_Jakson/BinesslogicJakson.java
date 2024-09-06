@@ -229,10 +229,12 @@ public class BinesslogicJakson {
                                             " РазмерПришедшегоПотока " +РазмерПришедшегоПотока);
                                 }
 
-                                 Long буферОтветотJboss=Optional.ofNullable(stringBufferSendJboss.get().toString()).stream().mapToLong(m-> Long.parseLong(m)).findAny().orElse(0l);
+                                 String буферОтветотJboss=Optional.ofNullable(stringBufferSendJboss.get() ).stream().map(String::new).findAny().orElseGet(()->"");
+                                // TODO: 06.09.2024  
+                                 Long буферОтветотJbossfinal=Optional.ofNullable(буферОтветотJboss).stream().mapToLong(Long::new).findAny().orElseGet(()->0l);
 
-                                if (буферОтветотJboss>0) {
-                                    new BussenloginSaredPreferense(preferences,context,version).sharedPreferencesAfterSuccessJbossVErsion(context,version,буферОтветотJboss);
+                                if (буферОтветотJbossfinal>0) {
+                                    new BussenloginSaredPreferense(preferences,context,version).sharedPreferencesAfterSuccessJbossVErsion(context,version,буферОтветотJbossfinal);
                                 }
 
 
