@@ -12,6 +12,7 @@ import com.fasterxml.jackson.databind.ObjectWriter;
 import com.fasterxml.jackson.databind.SequenceWriter;
 import com.google.firebase.crashlytics.buildtools.reloc.com.google.common.util.concurrent.AtomicDouble;
 import com.serverscan.datasync.businesslayer.Errors.SubClassErrors;
+import com.serverscan.datasync.businesslayer.bl_dates.WorkerDates;
 import com.serverscan.datasync.datalayer.model.ScannerserversuccessEntity;
 
 import java.io.ByteArrayOutputStream;
@@ -25,6 +26,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 import java.util.Optional;
+import java.util.TimeZone;
 import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.atomic.AtomicReference;
@@ -257,9 +259,10 @@ public List<ScannerserversuccessEntity> genetarorListFor(@NonNull Context  conte
 
 
             // TODO: 06.09.2024 get DATETIME
-            DateFormat dateFormat =new SimpleDateFormat("yyyy.MM.dd HH.mm.ss.SSS", new Locale("ru", "RU"));
-             Date datedateupdate = dateFormat.parse(cursorlocal.getString(cursorlocal.getColumnIndex("date_update")));
-            scannerserversuccessEntity.setDateUpdate(datedateupdate);
+            WorkerDates workerDates=new WorkerDates(context,version);
+            String datestring=cursorlocal.getString(cursorlocal.getColumnIndex("date_update"));
+            Date   Date_update = workerDates.datesasDates(datestring);
+            scannerserversuccessEntity.setDateUpdate(Date_update);
 
             // TODO: 06.09.2024 UUID
             BigDecimal bigDecimaluuid=BigDecimal.valueOf(uuid);

@@ -312,12 +312,12 @@ try{
             // TODO: 25.07.2024  Создаем Новую Даты
             WorkerDates workerDates=new WorkerDates(context,version);
             Date date_update = workerDates.dateCreation();
-            String date_updatestring=  workerDates.datesasaString(date_update);
-            date_update = workerDates.datesasDates(date_updatestring);
+            String date_updatefinal=  workerDates.datesasaString(date_update);
+            //date_update = workerDates.datesasDates(date_updatestring);
 
 
             // TODO: 25.07.2024 set date
-            contentValuesВставкаДанных.put("date_update", date_update.toString());
+            contentValuesВставкаДанных.put("date_update", date_updatefinal);
 
             contentValuesВставкаДанных.put("completedwork", "Успешный контроль");
             contentValuesВставкаДанных.put("operations", getAction);
