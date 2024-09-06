@@ -30,6 +30,7 @@ import javax.inject.Inject;
 
 import dagger.hilt.android.AndroidEntryPoint;
 import io.reactivex.rxjava3.core.Completable;
+import io.reactivex.rxjava3.schedulers.Schedulers;
 import okhttp3.OkHttpClient;
 
 
@@ -146,7 +147,7 @@ public class DataSyncService extends IntentService {
 
 
 
-    @BinderThread
+
     public void onTransact(@NonNull Context context ,@NonNull Long version,@NonNull String stateScartServiceScan) throws RemoteException {
         // TODO: 03.09.2024
         // TODO: 04.09.2024
@@ -203,7 +204,7 @@ public class DataSyncService extends IntentService {
                           " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
                           " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n");
 
-              }).subscribe();
+              }).blockingSubscribe();
         Log.d(getApplicationContext().getClass().getName(), "\n" + " class " +
                 Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                 " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +

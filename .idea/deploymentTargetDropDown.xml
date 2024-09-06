@@ -2,9 +2,6 @@
 <project version="4">
   <component name="deploymentTargetDropDown">
     <value>
-      <entry key="app.appdocuments_Model">
-        <State />
-      </entry>
       <entry key="server-gatt">
         <State>
           <targetSelectedWithDropDown>
@@ -20,9 +17,6 @@
           </targetSelectedWithDropDown>
           <timeTargetWasSelectedWithDropDown value="2024-09-05T15:25:13.119330300Z" />
         </State>
-      </entry>
-      <entry key="workmanager">
-        <State />
       </entry>
     </value>
   </component>

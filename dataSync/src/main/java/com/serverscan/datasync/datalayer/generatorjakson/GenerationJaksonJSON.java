@@ -1,6 +1,7 @@
 package com.serverscan.datasync.datalayer.generatorjakson;
 
 
+import android.annotation.SuppressLint;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
@@ -12,10 +13,14 @@ import com.fasterxml.jackson.databind.SequenceWriter;
 import com.serverscan.datasync.businesslayer.Errors.SubClassErrors;
 import com.serverscan.datasync.datalayer.model.ScannerserversuccessEntity;
 
+import org.reactivestreams.Publisher;
+
 import java.io.ByteArrayOutputStream;
 import java.time.LocalDateTime;
+import java.util.Date;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
+import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.atomic.AtomicReference;
 
 import javax.inject.Inject;
@@ -27,6 +32,10 @@ import dagger.hilt.components.SingletonComponent;
 import io.reactivex.rxjava3.annotations.NonNull;
 import io.reactivex.rxjava3.core.Completable;
 import io.reactivex.rxjava3.core.Flowable;
+import io.reactivex.rxjava3.core.Observable;
+import io.reactivex.rxjava3.functions.Consumer;
+import io.reactivex.rxjava3.functions.Function;
+import io.reactivex.rxjava3.schedulers.Schedulers;
 
 @Module
 @InstallIn(SingletonComponent.class)
@@ -126,45 +135,70 @@ public class GenerationJaksonJSON {
 
 
 // TODO: 05.09.2024
-    public List<?> genetarorListFor(@NonNull Context  context, @NonNull long version, @NonNull Cursor cursorlocal)
-            throws ExecutionException, InterruptedException {
+@SuppressLint("Range")
+public List<?> genetarorListFor(@NonNull Context  context, @NonNull long version, @NonNull Cursor cursorlocal) {
         // TODO: 22.08.2024  Коненпт провайдер для зааписив базу данных
-        final String[] ANDROID_ID = {new String()};
         AtomicReference<List<?>> inputStreamJaksonSend = new AtomicReference();
         // TODO: 28.08.2024
         Completable.fromAction(()->{
 
+                    // TODO: 06.09.2024 ЗАполяем данными Класс Для Отправки НА сервер
+            Flowable flowablerowgenetator= (Flowable) Flowable.range(0,cursorlocal.getCount())
+                            .onBackpressureBuffer()
+                    .map(iterat->  cursorlocal.move(iterat))
+                    .map(b->{
+                        // TODO: 06.09.2024  созадем эксемплр класс
+                        ScannerserversuccessEntity scannerserversuccessEntity=new ScannerserversuccessEntity();
 
-                    Flowable.fromArray(cursorlocal.moveToNext()).map(m->{
-
+                   Integer getId=     cursorlocal.getInt(cursorlocal.getColumnIndex("id"));
                         Log.d(this.getClass().getName(), "\n" + " class " +
                                 Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                                 " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
                                 " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" + "\n"
-                                + " LocalDateTime.now() " + LocalDateTime.now().toString().toUpperCase() + "\n"+m);
-                         return m;
-                    });
+                                + " LocalDateTime.now() " + LocalDateTime.now().toString().toUpperCase() + "\n" +" getId " +getId);
+                        return  b;
+                    })
+                            .doOnError(e->{
+                                e.printStackTrace();
+                                Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :"
+                                        + Thread.currentThread().getStackTrace()[2].getMethodName() + " Линия  :"
+                                        + Thread.currentThread().getStackTrace()[2].getLineNumber());
+                                ContentValues valuesЗаписываемОшибки = new ContentValues();
+                                valuesЗаписываемОшибки.put("Error", e.toString().toLowerCase());
+                                valuesЗаписываемОшибки.put("Klass", this.getClass().getName());
+                                valuesЗаписываемОшибки.put("Metod", Thread.currentThread().getStackTrace()[2].getMethodName());
+                                valuesЗаписываемОшибки.put("LineError", Thread.currentThread().getStackTrace()[2].getLineNumber());
+                                final Object ТекущаяВерсияПрограммы = version;
+                                Integer ЛокальнаяВерсияПОСравнение = Integer.parseInt(ТекущаяВерсияПрограммы.toString());
+                                valuesЗаписываемОшибки.put("whose_error", ЛокальнаяВерсияПОСравнение);
+                                new SubClassErrors(context).МетодЗаписиОшибок(valuesЗаписываемОшибки);
 
-                    // TODO: 23.08.2024
-                  ScannerserversuccessEntity scannerserversuccessEntity=new ScannerserversuccessEntity();
+                            }).doOnComplete(()->{
+                                // TODO: 06.09.2024
+                                // TODO: 31.07.2024
+                                if (cursorlocal!=null) {
+                                    cursorlocal.close();
+                                }
+                                Log.d(this.getClass().getName(), "\n" + " class " +
+                                        Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                                        " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                                        " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" + "\n"
+                                        + " LocalDateTime.now() " + LocalDateTime.now().toString().toUpperCase() + "\n");
+                            }).subscribeOn(Schedulers.single());
 
-
-
-
-
+                    if (cursorlocal!=null) {
+                        flowablerowgenetator.blockingSubscribe();
+                    }
                     Log.d(this.getClass().getName(), "\n" + " class " +
                             Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                             " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
                             " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" + "\n"
                             + " LocalDateTime.now() " + LocalDateTime.now().toString().toUpperCase() + "\n");
 
+
+                    // TODO: 06.09.2024 end
+
                 }).doOnComplete(()->{
-
-                    // TODO: 31.07.2024
-                    if (cursorlocal!=null) {
-                        cursorlocal.close();
-                    }
-
                     Log.d(this.getClass().getName(), "\n" + " class " +
                             Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                             " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
