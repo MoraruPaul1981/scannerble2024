@@ -21,6 +21,7 @@ import com.serverscan.datasync.businesslayer.bl_Jakson.BinesslogicJakson;
 import com.serverscan.datasync.businesslayer.bl_jbossadress.QualifierJbossServer3;
 import com.serverscan.datasync.datalayer.generatorjakson.GenerationJaksonJSON;
 import com.serverscan.datasync.datalayer.local.BusinesslogicDatabase;
+import com.serverscan.datasync.datalayer.model.ScannerserversuccessEntity;
 
 import java.util.Date;
 import java.util.LinkedHashMap;
@@ -158,7 +159,7 @@ public class DataSyncService extends IntentService {
                   if (cursorSingle.getCount()>0) {
 
                       // TODO: 23.08.2024 Генерирум List базе курсора в Обьекты Листа ЧТобы ПОтом ПОлучить Jakson Json
-                      List<?>  listForJakson=     genetarorJaksonJSON.genetarorListFor(context,version,cursorSingle);
+                      List<ScannerserversuccessEntity>  listForJakson=     genetarorJaksonJSON.genetarorListFor(context,version,cursorSingle);
                       // TODO: 03.09.2024 get Stream based on Cursor
                       byte[] ByteJakson=      genetarorJaksonJSON.genetarorJaksonJSON(context,version,     listForJakson  ,getHiltJaksonObjectMapper     );
 
@@ -204,7 +205,7 @@ public class DataSyncService extends IntentService {
                           " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
                           " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n");
 
-              }).blockingSubscribe();
+              }).subscribe();
         Log.d(getApplicationContext().getClass().getName(), "\n" + " class " +
                 Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                 " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
