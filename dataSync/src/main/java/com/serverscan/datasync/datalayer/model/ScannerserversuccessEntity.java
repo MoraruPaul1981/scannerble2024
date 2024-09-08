@@ -44,7 +44,7 @@ public class ScannerserversuccessEntity implements Serializable  {
     private Integer sim;
     @JsonProperty("iemi")
     private String iemi;
-    @JsonProperty("currentTable")
+    @JsonProperty("current_table")
     private BigDecimal currentTable;
 
     public int getId() {

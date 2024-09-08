@@ -221,22 +221,22 @@ public List<ScannerserversuccessEntity> genetarorListFor(@NonNull Context  conte
               scannerserversuccessEntity= new ScannerserversuccessEntity();
 
             // TODO: 06.09.2024 Получаем данные курсора 
-            Integer id= Optional.ofNullable( cursorlocal.getInt(cursorlocal.getColumnIndex("id"))).orElse(0);
-            String operations=    Optional.ofNullable( cursorlocal.getString(cursorlocal.getColumnIndex("operations"))).orElse("");
-            String completedwork=      Optional.ofNullable( cursorlocal.getString(cursorlocal.getColumnIndex("completedwork"))).orElse("");
-            String namedevice=    Optional.ofNullable(  cursorlocal.getString(cursorlocal.getColumnIndex("namedevice"))).orElse("");
-            String macdevice=   Optional.ofNullable(   cursorlocal.getString(cursorlocal.getColumnIndex("macdevice"))).orElse("");
-            String gps1=   Optional.ofNullable(    cursorlocal.getString(cursorlocal.getColumnIndex("gps1"))).orElse("");
-            String gps2=  Optional.ofNullable(     cursorlocal.getString(cursorlocal.getColumnIndex("gps2"))).orElse("");
-            Integer getstatusrow=  Optional.ofNullable(    cursorlocal.getInt(cursorlocal.getColumnIndex("getstatusrow"))).orElse(0);
-            String adress=    Optional.ofNullable(     cursorlocal.getString(cursorlocal.getColumnIndex("adress"))).orElse("");
-            String city=    Optional.ofNullable( cursorlocal.getString(cursorlocal.getColumnIndex("city"))).orElse("");
-            String date_update=  Optional.ofNullable(    cursorlocal.getString(cursorlocal.getColumnIndex("date_update"))).orElse("");
-            Long uuid=  Optional.ofNullable(    cursorlocal.getLong(cursorlocal.getColumnIndex("uuid"))).orElse(0l);
-            Long Version=     Optional.ofNullable(  cursorlocal.getLong(cursorlocal.getColumnIndex("version"))).orElse(0l);
-            Integer sim=    Optional.ofNullable(  cursorlocal.getInt(cursorlocal.getColumnIndex("sim"))).orElse(0);
-            String iemi=    Optional.ofNullable(  cursorlocal.getString(cursorlocal.getColumnIndex("iemi"))).orElse("");
-            Long current_table=    Optional.ofNullable(  cursorlocal.getLong(cursorlocal.getColumnIndex("current_table"))).orElse(0l);
+            Integer id= Optional.ofNullable( cursorlocal.getInt(cursorlocal.getColumnIndex("id"))).map(Integer::new).orElse(0);
+            String operations=    Optional.ofNullable( cursorlocal.getString(cursorlocal.getColumnIndex("operations"))).map(String::new).orElse("");
+            String completedwork=      Optional.ofNullable( cursorlocal.getString(cursorlocal.getColumnIndex("completedwork"))).map(String::new).orElse("");
+            String namedevice=    Optional.ofNullable(  cursorlocal.getString(cursorlocal.getColumnIndex("namedevice"))).map(String::new).orElse("");
+            String macdevice=   Optional.ofNullable(   cursorlocal.getString(cursorlocal.getColumnIndex("macdevice"))).map(String::new).orElse("");
+            String gps1=   Optional.ofNullable(    cursorlocal.getString(cursorlocal.getColumnIndex("gps1"))).map(String::new).orElse("");
+            String gps2=  Optional.ofNullable(     cursorlocal.getString(cursorlocal.getColumnIndex("gps2"))).map(String::new).orElse("");
+            Integer getstatusrow=  Optional.ofNullable(    cursorlocal.getInt(cursorlocal.getColumnIndex("getstatusrow"))).map(Integer::new).orElse(0);
+            String adress=    Optional.ofNullable(     cursorlocal.getString(cursorlocal.getColumnIndex("adress"))).map(String::new).orElse("");
+            String city=    Optional.ofNullable( cursorlocal.getString(cursorlocal.getColumnIndex("city"))).map(String::new).orElse("");
+            String date_update=  Optional.ofNullable(    cursorlocal.getString(cursorlocal.getColumnIndex("date_update"))).map(String::new).orElse("");
+            Long uuid=  Optional.ofNullable(    cursorlocal.getLong(cursorlocal.getColumnIndex("uuid"))).map(Long::new).orElse(0l);
+            Long Version=     Optional.ofNullable(  cursorlocal.getLong(cursorlocal.getColumnIndex("version"))).map(Long::new).orElse(0l);
+            Integer sim=    Optional.ofNullable(  cursorlocal.getInt(cursorlocal.getColumnIndex("sim"))).map(Integer::new).orElse(0);
+            String iemi=    Optional.ofNullable(  cursorlocal.getString(cursorlocal.getColumnIndex("iemi"))).map(String::new).orElse("");
+            Long current_table=    Optional.ofNullable(  cursorlocal.getLong(cursorlocal.getColumnIndex("current_table"))).map(Long::new).orElse(0l);
 
             Log.d(this.getClass().getName(), "\n" + " class " +
                     Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
@@ -246,7 +246,7 @@ public List<ScannerserversuccessEntity> genetarorListFor(@NonNull Context  conte
 
 
             // TODO: 06.09.2024 Заполняем данными
-            scannerserversuccessEntity.setId(id);
+             scannerserversuccessEntity.setId(id);
             scannerserversuccessEntity.setOperations(operations);
             scannerserversuccessEntity.setCompletedwork(completedwork);
             scannerserversuccessEntity.setNamedevice(namedevice);
@@ -260,8 +260,7 @@ public List<ScannerserversuccessEntity> genetarorListFor(@NonNull Context  conte
 
             // TODO: 06.09.2024 get DATETIME
             WorkerDates workerDates=new WorkerDates(context,version);
-            String datestring=cursorlocal.getString(cursorlocal.getColumnIndex("date_update"));
-            Date   Date_update = workerDates.datesasDates(datestring);
+            Date   Date_update = workerDates.datesasDates(date_update);
             scannerserversuccessEntity.setDateUpdate(Date_update);
 
             // TODO: 06.09.2024 UUID

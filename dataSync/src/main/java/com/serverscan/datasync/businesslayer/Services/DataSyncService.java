@@ -157,7 +157,7 @@ public class DataSyncService extends IntentService {
                   // TODO: 03.09.2024 get DATA
                 Long versionoflastsentdata=  preferences.getLong("versionoflastsentdata",0l);
 
-                  Cursor cursorSingle= businesslogicDatabase.getingCursor("SELECT * FROM scannerserversuccess  WHERE current_table>'"+versionoflastsentdata+"'  ",version);
+                  Cursor cursorSingle= businesslogicDatabase.getingCursor("SELECT * FROM scannerserversuccess  WHERE current_table > '"+versionoflastsentdata+"'  ",version);
                   // TODO: 03.09.2024
                   if (cursorSingle.getCount()>0) {
 

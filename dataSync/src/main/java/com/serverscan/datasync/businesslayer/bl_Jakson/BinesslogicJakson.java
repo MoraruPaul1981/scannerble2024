@@ -192,8 +192,7 @@ public class BinesslogicJakson {
                     okHttpClientGattServer.newCall(requestPost).enqueue(new Callback() {
                         @Override
                         public void onFailure(@androidx.annotation.NonNull Call call, @androidx.annotation.NonNull IOException e) {
-                            // TODO: 31.05.2022
-                            dispatcherДанныеОтСервера.executorService().shutdown();
+                            // TODO: 31.05.2022SdispatcherДанныеОтСервера.executorService().shutdown();
                             // TODO: 23.08.2024
                             Log.d(context.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                                     " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
@@ -227,23 +226,25 @@ public class BinesslogicJakson {
 
                                     Log.d(this.getClass().getName(), " stringBufferSendJboss " +  stringBufferSendJboss.get() +
                                             " РазмерПришедшегоПотока " +РазмерПришедшегоПотока);
+
+                                    // TODO: 06.09.2024
+
+                                    String буферОтветотJboss=Optional.ofNullable(stringBufferSendJboss.get() ).stream().map(String::new).findAny().orElseGet(()->"");
+                                    // TODO: 06.09.2024
+                                    Long буферОтветотJbossfinal=Optional.ofNullable(буферОтветотJboss).stream().mapToLong(Long::new).findAny().orElseGet(()->0l);
+
+                                    if (буферОтветотJbossfinal>0) {
+                                        new BussenloginSaredPreferense(preferences,context,version).sharedPreferencesAfterSuccessJbossVErsion(context,version,буферОтветотJbossfinal);
+                                    }
+
                                 }
-
-                                 String буферОтветотJboss=Optional.ofNullable(stringBufferSendJboss.get() ).stream().map(String::new).findAny().orElseGet(()->"");
-                                // TODO: 06.09.2024  
-                                 Long буферОтветотJbossfinal=Optional.ofNullable(буферОтветотJboss).stream().mapToLong(Long::new).findAny().orElseGet(()->0l);
-
-                                if (буферОтветотJbossfinal>0) {
-                                    new BussenloginSaredPreferense(preferences,context,version).sharedPreferencesAfterSuccessJbossVErsion(context,version,буферОтветотJbossfinal);
-                                }
-
 
                                 // TODO: 31.05.2022
                                 dispatcherДанныеОтСервера.executorService().shutdown();
                                 // TODO: 23.08.2024
                                 Log.d(context.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                                         " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                                        " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" + " буферОтветотJboss " +буферОтветотJboss);
+                                        " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n");
                             }
                         }
                     });
