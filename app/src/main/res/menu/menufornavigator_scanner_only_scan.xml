@@ -12,7 +12,15 @@
         android:tooltipText="Выйти"
         android:title="Выйти" />
 
-
+    <item
+        android:id="@+id/async"
+        android:checkable="true"
+        android:contentDescription="async"
+        android:enabled="true"
+        android:icon="@drawable/icon_sous_gattscannerasync"
+        android:actionMenuTextColor="@color/black"
+        android:tooltipText="Обмен"
+        android:title="Обмен" />
 
 
     <item
