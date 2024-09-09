@@ -14,6 +14,8 @@ import com.google.firebase.crashlytics.buildtools.reloc.com.google.common.io.Byt
 import com.google.firebase.crashlytics.buildtools.reloc.org.apache.http.client.methods.HttpGet;
 import com.google.firebase.crashlytics.buildtools.reloc.org.apache.http.client.utils.URIBuilder;
 import com.serverscan.datasync.businesslayer.Errors.SubClassErrors;
+import com.serverscan.datasync.businesslayer.bl_okhttpclient.GetOkhhtpBuilder;
+import com.serverscan.datasync.businesslayer.bl_okhttpclient.QualifierOkhhtp;
 import com.serverscan.datasync.businesslayer.bl_preferences.BussenloginSaredPreferense;
 
 import java.io.BufferedReader;
@@ -65,6 +67,12 @@ public class BinesslogicJakson {
 
     private Context context;
 
+    @Inject
+    @QualifierOkhhtp
+    OkHttpClient.Builder getOkhhtpBuilder;
+
+
+
     public @Inject BinesslogicJakson(@ApplicationContext Context hiltcontext) {
         // TODO: 22.08.2024
         // TODO: 21.08.2024
@@ -80,8 +88,8 @@ public class BinesslogicJakson {
 
     @SuppressLint("NewApi")
     public  Long   sendOkhhtpServiceForJboss(@NonNull Context context,
-            @NonNull long version, @NonNull OkHttpClient.Builder getOkhhtpBuilder,
-                                                 @NonNull LinkedHashMap<String, String> getJbossAdress,
+            @NonNull long version,
+                                             @NonNull LinkedHashMap<String, String> getJbossAdress,
                                                  @NonNull Cursor cursorlocal,
                                                   byte[] ByteJakson)
             throws ExecutionException, InterruptedException {

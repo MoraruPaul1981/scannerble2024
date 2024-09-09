@@ -62,9 +62,7 @@ public class DataSyncService extends IntentService {
     public LinkedHashMap<String,String> getJbossAdressDebug;
     @Inject
     ObjectMapper getHiltJaksonObjectMapper;
-    @Inject
-    @QualifierOkhhtp
-    OkHttpClient.Builder getOkhhtpBuilder;
+
 
 
     private SharedPreferences preferencesGatt;
@@ -176,7 +174,7 @@ public class DataSyncService extends IntentService {
 
                       // TODO: 03.09.2024 sending  Stream to Server
                       Long буферОтветотJbossfinal=      binesslogicJakson.
-                              sendOkhhtpServiceForJboss(context,version,getOkhhtpBuilder,getJbossAdressDebug,cursorSingle ,ByteJakson);
+                              sendOkhhtpServiceForJboss(context,version,getJbossAdressDebug,cursorSingle ,ByteJakson);
 
                       // TODO: 09.09.2024 ПОлученую версию данных от серврера запоминаем
                       if (буферОтветотJbossfinal>0) {
