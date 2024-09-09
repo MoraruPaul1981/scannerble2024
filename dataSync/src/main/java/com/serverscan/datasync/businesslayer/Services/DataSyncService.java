@@ -7,6 +7,7 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.pm.PackageInfo;
 import android.database.Cursor;
+import android.database.sqlite.SQLiteStatement;
 import android.os.Binder;
 import android.os.IBinder;
 import android.os.RemoteException;

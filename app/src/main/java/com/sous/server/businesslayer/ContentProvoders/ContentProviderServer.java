@@ -63,10 +63,11 @@ public class ContentProviderServer extends android.content.ContentProvider {
 
             if (Create_Database_СамаБАзаSQLite!=null) {
                 // TODO: 22.08.2024
-                uriMatcherGattServer =new UriMatcher(1);
+                uriMatcherGattServer =new UriMatcher(2);
                 // TODO: 04.09.2024
                 uriMatcherGattServer.addURI("com.sous.servergatt.prodider","errordsu1",0);
                 uriMatcherGattServer.addURI("com.sous.servergatt.prodider","scannerserversuccess",1);
+                uriMatcherGattServer.addURI("com.sous.servergatt.prodider","gattserverdataversion",2);
 
                 Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                         " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
