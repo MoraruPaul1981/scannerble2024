@@ -92,8 +92,8 @@ Context context;
         ContentResolver contentProviderNewVersion=context.getContentResolver();
 
             Uri uri = Uri.parse("content://com.sous.servergatt.prodider/gattserverdataversion" );
-            Cursor cursorNewVesionGattServer = contentProviderNewVersion.query(uri, null, "SELECT  " +
-                    "  MAX ( versionremote )   FROM scannerserversuccess  WHERE NOT IS NULL ", null,null,null);
+            Cursor cursorNewVesionGattServer = contentProviderNewVersion.query(uri, null,
+                    "  SELECT MAX ( versionremote )   FROM gattserverdataversion  WHERE versionremote  IS NOT  NULL  ", null,null,null);
         // TODO: 09.09.2024
             if (cursorNewVesionGattServer.getCount()>0){
                 cursorNewVesionGattServer.moveToFirst();

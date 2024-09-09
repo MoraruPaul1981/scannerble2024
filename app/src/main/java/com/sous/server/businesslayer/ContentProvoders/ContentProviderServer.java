@@ -213,6 +213,8 @@ public class ContentProviderServer extends android.content.ContentProvider {
     private String МетодОпределяемТаблицу(@NonNull Uri uri) {
         String table = new String();
         try{
+            PackageInfo pInfo = getContext().getPackageManager().getPackageInfo(getContext().getPackageName(), 0);
+            version = pInfo.getLongVersionCode();
             Log.d(this.getClass().getName(), " uri"+ uri);
             switch (uriMatcherGattServer.match(uri)) {
                 case 0:
@@ -221,10 +223,14 @@ public class ContentProviderServer extends android.content.ContentProvider {
                 case 1:
                     table = "scannerserversuccess";
                     break;
+                case 2:
+                    table = "gattserverdataversion";
+                    break;
             }
-            Log.d(this.getClass().getName(), " table"+ table);
-            PackageInfo pInfo = getContext().getPackageManager().getPackageInfo(getContext().getPackageName(), 0);
-            version = pInfo.getLongVersionCode();
+            Log.i(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                    " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                    " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" +
+                    " table"+ table+" uri"+ uri);
         } catch (Exception e) {
             e.printStackTrace();
             Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() + " Линия  :"

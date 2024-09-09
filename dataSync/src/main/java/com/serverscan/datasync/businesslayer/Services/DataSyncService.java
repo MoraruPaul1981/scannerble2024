@@ -161,8 +161,8 @@ public class DataSyncService extends IntentService {
         // TODO: 04.09.2024
       Completable.fromAction(()->{
                   // TODO: 03.09.2024 get DATA
-                Long versionoflastsentdata=Long.parseLong(preferencesGatt.getString("versionoflastsentdata","0")) ;
-
+                  Long versionoflastsentdata=    new BinesslogicVersions(context).getanewVersionofgatt(context,version);
+                  // TODO: 09.09.2024 получаем данные которые надотправить на сервер  GATT SEVER  
                   Cursor cursorSingle= businesslogicDatabase.getingCursor("SELECT * FROM scannerserversuccess  WHERE current_table > '"+versionoflastsentdata.toString()+"'  ",version);
                   // TODO: 03.09.2024
                   if (cursorSingle.getCount()>0) {
