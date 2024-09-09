@@ -22,6 +22,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.serverscan.datasync.businesslayer.Errors.SubClassErrors;
 import com.serverscan.datasync.businesslayer.bl_Jakson.BinesslogicJakson;
 import com.serverscan.datasync.businesslayer.bl_jbossadress.QualifierJbossServer3;
+import com.serverscan.datasync.businesslayer.bl_okhttpclient.QualifierOkhhtp;
 import com.serverscan.datasync.businesslayer.bl_preferences.BussenloginSaredPreferense;
 import com.serverscan.datasync.businesslayer.bl_versionsgatt.BinesslogicVersions;
 import com.serverscan.datasync.datalayer.generatorjakson.GenerationJaksonJSON;
@@ -62,6 +63,7 @@ public class DataSyncService extends IntentService {
     @Inject
     ObjectMapper getHiltJaksonObjectMapper;
     @Inject
+    @QualifierOkhhtp
     OkHttpClient.Builder getOkhhtpBuilder;
 
 

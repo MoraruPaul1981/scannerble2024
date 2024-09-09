@@ -194,6 +194,8 @@ public class BinesslogicJakson {
                         public void onFailure(@androidx.annotation.NonNull Call call, @androidx.annotation.NonNull IOException e) {
                             // TODO: 31.05.2022SdispatcherДанныеОтСервера.executorService().shutdown();
                             // TODO: 23.08.2024
+                            // TODO: 31.05.2022
+                            dispatcherДанныеОтСервера.executorService().shutdown();
                             Log.d(context.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                                     " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
                                     " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n");
