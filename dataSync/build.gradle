@@ -58,7 +58,7 @@ dependencies {
     testAnnotationProcessor 'com.google.dagger:hilt-compiler:2.44'
 
     //TODO работа с сетью
-    implementation 'com.squareup.okhttp3:okhttp:4.10.0'
+    implementation 'com.squareup.okhttp3:okhttp:4.12.0'
 
     //TODO jackson
     implementation 'com.fasterxml.jackson.core:jackson-databind:2.14.2'

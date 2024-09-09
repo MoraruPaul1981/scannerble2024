@@ -86,13 +86,11 @@ public class BinesslogicJakson {
                                                   byte[] ByteJakson)
             throws ExecutionException, InterruptedException {
         // TODO: 22.08.2024  Коненпт провайдер для зааписив базу данных
-        final String[] ANDROID_ID = {new String()};
-        AtomicReference<Long> буферОтветотJbossfinal= new AtomicReference();
+        AtomicReference<Long> буферОтветотJbossfinal= new AtomicReference(0l);
+        try {
         // TODO: 28.08.2024
-        Completable.fromAction(()->{
-
                     // TODO: 23.08.2024
-                    ANDROID_ID[0] = Settings.Secure.getString(context.getContentResolver(), Settings.Secure.ANDROID_ID);
+        String ANDROID_ID= Settings.Secure.getString(context.getContentResolver(), Settings.Secure.ANDROID_ID);
                     // TODO: 26.08.2024
                     // TODO: 27.08.2024 получаем данные и вставляем их в  URL для отправки
                     URL Adress = getUrlndParametrs(cursorlocal,getJbossAdress,version);
@@ -114,9 +112,9 @@ public class BinesslogicJakson {
                                             .header("Accept-Encoding", "gzip,deflate,sdch")
                                             .header("Connection", "Keep-Alive")
                                             .header("Accept-Language", "ru-RU")
-                                            .header("identifier", ANDROID_ID[0])
-                                            .header("p_identifier", ANDROID_ID[0])
-                                            .header("id_device_androis", ANDROID_ID[0]);
+                                            .header("identifier", ANDROID_ID)
+                                            .header("p_identifier", ANDROID_ID)
+                                            .header("id_device_androis", ANDROID_ID);
                                     Request newRequest = builder.build();
                                     return chain.proceed(newRequest);
                                 }
@@ -129,25 +127,10 @@ public class BinesslogicJakson {
                     RequestBody requestBody = new RequestBody() {
                         @Override
                         public MediaType contentType() {
-                            try{
+
                                 Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                                         " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
                                         " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n");
-                            } catch (Exception e) {
-                                e.printStackTrace();
-                                Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :"
-                                        + Thread.currentThread().getStackTrace()[2].getMethodName() + " Линия  :"
-                                        + Thread.currentThread().getStackTrace()[2].getLineNumber());
-                                ContentValues valuesЗаписываемОшибки = new ContentValues();
-                                valuesЗаписываемОшибки.put("Error", e.toString().toLowerCase());
-                                valuesЗаписываемОшибки.put("Klass", this.getClass().getName());
-                                valuesЗаписываемОшибки.put("Metod", Thread.currentThread().getStackTrace()[2].getMethodName());
-                                valuesЗаписываемОшибки.put("LineError", Thread.currentThread().getStackTrace()[2].getLineNumber());
-                                final Object ТекущаяВерсияПрограммы = version;
-                                Integer ЛокальнаяВерсияПОСравнение = Integer.parseInt(ТекущаяВерсияПрограммы.toString());
-                                valuesЗаписываемОшибки.put("whose_error", ЛокальнаяВерсияПОСравнение);
-                                new SubClassErrors(context).МетодЗаписиОшибок(valuesЗаписываемОшибки);
-                            }
                             return JSON;
                         }
 
@@ -195,7 +178,7 @@ public class BinesslogicJakson {
                             // TODO: 31.05.2022SdispatcherДанныеОтСервера.executorService().shutdown();
                             // TODO: 23.08.2024
                             // TODO: 31.05.2022
-                            dispatcherДанныеОтСервера.executorService().shutdown();
+                            dispatcherДанныеОтСервера.executorService().shutdownNow();
                             Log.d(context.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                                     " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
                                     " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n");
@@ -231,7 +214,7 @@ public class BinesslogicJakson {
                                 }
 
                                 // TODO: 31.05.2022
-                                dispatcherДанныеОтСервера.executorService().shutdown();
+                                dispatcherДанныеОтСервера.executorService().shutdownNow();
                                 // TODO: 23.08.2024
                                 Log.d(context.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                                         " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
@@ -242,46 +225,38 @@ public class BinesslogicJakson {
                     //TODO
                     try {
                         dispatcherДанныеОтСервера.executorService().awaitTermination(1, TimeUnit.DAYS);
+                        // TODO: 09.09.2024
+                        dispatcherДанныеОтСервера.cancelAll();
+                        // TODO: 09.09.2024
                     } catch (InterruptedException e) {
                         throw new RuntimeException(e);
                     }
-                    dispatcherДанныеОтСервера.cancelAll();
-
                     Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                             " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
                             " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" + "\n"
                             + " LocalDateTime.now() " + LocalDateTime.now().toString().toUpperCase() + "\n");
 
-                }).doOnComplete(()->{
-                    // TODO: 31.07.2024
-                    Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
-                            " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                            " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" + "\n"
-                            + " LocalDateTime.now() " + LocalDateTime.now().toString().toUpperCase() + "\n");
 
-                })
-                .doOnError(e->{
-                    e.printStackTrace();
-                    Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :"
-                            + Thread.currentThread().getStackTrace()[2].getMethodName() + " Линия  :"
-                            + Thread.currentThread().getStackTrace()[2].getLineNumber());
-                    ContentValues valuesЗаписываемОшибки = new ContentValues();
-                    valuesЗаписываемОшибки.put("Error", e.toString().toLowerCase());
-                    valuesЗаписываемОшибки.put("Klass", this.getClass().getName());
-                    valuesЗаписываемОшибки.put("Metod", Thread.currentThread().getStackTrace()[2].getMethodName());
-                    valuesЗаписываемОшибки.put("LineError", Thread.currentThread().getStackTrace()[2].getLineNumber());
-                    final Object ТекущаяВерсияПрограммы = version;
-                    Integer ЛокальнаяВерсияПОСравнение = Integer.parseInt(ТекущаяВерсияПрограммы.toString());
-                    valuesЗаписываемОшибки.put("whose_error", ЛокальнаяВерсияПОСравнение);
-                    new SubClassErrors(context).МетодЗаписиОшибок(valuesЗаписываемОшибки);
-
-                }).blockingSubscribe();
         // TODO: 31.07.2024
         Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                 " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
                 " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" + "\n"
                 + " LocalDateTime.now() " + LocalDateTime.now().toString().toUpperCase() + "\n");
-
+    } catch (Exception e) {
+        e.printStackTrace();
+        Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :"
+                + Thread.currentThread().getStackTrace()[2].getMethodName() + " Линия  :"
+                + Thread.currentThread().getStackTrace()[2].getLineNumber());
+        ContentValues valuesЗаписываемОшибки = new ContentValues();
+        valuesЗаписываемОшибки.put("Error", e.toString().toLowerCase());
+        valuesЗаписываемОшибки.put("Klass", this.getClass().getName());
+        valuesЗаписываемОшибки.put("Metod", Thread.currentThread().getStackTrace()[2].getMethodName());
+        valuesЗаписываемОшибки.put("LineError", Thread.currentThread().getStackTrace()[2].getLineNumber());
+        final Object ТекущаяВерсияПрограммы = version;
+        Integer ЛокальнаяВерсияПОСравнение = Integer.parseInt(ТекущаяВерсияПрограммы.toString());
+        valuesЗаписываемОшибки.put("whose_error", ЛокальнаяВерсияПОСравнение);
+        new SubClassErrors(context).МетодЗаписиОшибок(valuesЗаписываемОшибки);
+    }
         return буферОтветотJbossfinal.get();
 
     }
