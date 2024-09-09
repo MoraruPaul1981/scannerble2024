@@ -103,7 +103,7 @@ public class InitWorkManager {
             }else {
 // TODO: 14.08.2024  
                 RemoteWorkManager.getInstance(context.getApplicationContext()).enqueueUniquePeriodicWork(ИмяСлужбыСинхронизации,
-                        ExistingPeriodicWorkPolicy.UPDATE, periodicWorkRequestСинхронизация);
+                        ExistingPeriodicWorkPolicy.KEEP, periodicWorkRequestСинхронизация);
                 // TODO: 26.07.2024
                 Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                         " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
