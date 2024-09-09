@@ -155,6 +155,8 @@ public class ServiceServerScan extends Service {
     public void onDestroy() {
         super.onDestroy();
   try{
+      // TODO: 09.09.2024
+      stopForeground(true);
       //TODO:получаем Статус Адаптера Bluetooth true, false  и оптравляем статус в активти
       Log.d(getApplicationContext().getClass().getName(), "\n"
                 + " время: " + new Date() + "\n+" +

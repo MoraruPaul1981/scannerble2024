@@ -227,7 +227,7 @@ public class DataSyncService extends IntentService {
                           " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
                           " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n");
 
-              }).blockingSubscribe();
+              }).subscribe();
         Log.d(getApplicationContext().getClass().getName(), "\n" + " class " +
                 Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                 " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
