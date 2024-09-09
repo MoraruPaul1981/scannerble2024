@@ -79,7 +79,7 @@ public class BinesslogicJakson {
 
 
     @SuppressLint("NewApi")
-    public StringBuffer sendOkhhtpServiceForJboss(@NonNull Context context,
+    public  Long   sendOkhhtpServiceForJboss(@NonNull Context context,
             @NonNull long version, @NonNull OkHttpClient.Builder getOkhhtpBuilder,
                                                  @NonNull LinkedHashMap<String, String> getJbossAdress,
                                                  @NonNull Cursor cursorlocal,
@@ -87,7 +87,7 @@ public class BinesslogicJakson {
             throws ExecutionException, InterruptedException {
         // TODO: 22.08.2024  Коненпт провайдер для зааписив базу данных
         final String[] ANDROID_ID = {new String()};
-        AtomicReference<StringBuffer> stringBufferSendJboss = new AtomicReference();
+        AtomicReference<Long> буферОтветотJbossfinal= new AtomicReference();
         // TODO: 28.08.2024
         Completable.fromAction(()->{
 
@@ -213,29 +213,18 @@ public class BinesslogicJakson {
                                 Boolean ФлагgZIPOutputStream = Boolean.parseBoolean(Optional.ofNullable(response.header("GZIPOutputStream")).map(String::new).orElse("false"));
                                 if (РазмерПришедшегоПотока>0l) {
                                     // TODO: 07.10.2023
-                                    // TODO: 07.10.2023  gzip
-                                    InputStream inputStreamОтПинга = new GZIPInputStream(response.body().source().inputStream(),2048);//4096
 
-                                    BufferedReader РидерОтСервераМетодаGET;//
-                                    if (КакаяКодировка==8) {
-                                        РидерОтСервераМетодаGET = new BufferedReader(new InputStreamReader(inputStreamОтПинга, StandardCharsets.UTF_8));
-                                    } else {
-                                        РидерОтСервераМетодаGET = new BufferedReader(new InputStreamReader(inputStreamОтПинга, StandardCharsets.UTF_16));
-                                    }
-                                    stringBufferSendJboss.set(РидерОтСервераМетодаGET.lines().collect(StringBuffer::new, (sb, i) -> sb.append(i), StringBuffer::append));
+                                    // TODO: 07.10.2023  Пришел ПОТОК
+                                    InputStream inputStreamOtgattserver = new GZIPInputStream(response.body().source().inputStream(),2048);//4096
 
-                                    Log.d(this.getClass().getName(), " stringBufferSendJboss " +  stringBufferSendJboss.get() +
-                                            " РазмерПришедшегоПотока " +РазмерПришедшегоПотока);
+                                         // TODO: 07.10.2023  Обрабаотываем версию от сервера
+                                    буферОтветотJbossfinal.set(versionOtGattServerCallback(inputStreamOtgattserver,КакаяКодировка,version));
 
-                                    // TODO: 06.09.2024
+                                    Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                                            " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                                            " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" + " буферОтветотJbossfinal " +буферОтветотJbossfinal );
 
-                                    String буферОтветотJboss=Optional.ofNullable(stringBufferSendJboss.get() ).stream().map(String::new).findAny().orElseGet(()->"");
-                                    // TODO: 06.09.2024
-                                    Long буферОтветотJbossfinal=Optional.ofNullable(буферОтветотJboss).stream().mapToLong(Long::new).findAny().orElseGet(()->0l);
 
-                                    if (буферОтветотJbossfinal>0) {
-                                        new BussenloginSaredPreferense(preferences,context,version).sharedPreferencesAfterSuccessJbossVErsion(context,version,буферОтветотJbossfinal);
-                                    }
 
                                 }
 
@@ -291,9 +280,58 @@ public class BinesslogicJakson {
                 " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" + "\n"
                 + " LocalDateTime.now() " + LocalDateTime.now().toString().toUpperCase() + "\n");
 
-        return stringBufferSendJboss.get();
+        return буферОтветотJbossfinal.get();
 
     }
+
+
+
+    @SuppressLint("NewApi")
+    Long versionOtGattServerCallback(@NonNull  InputStream inputStreamOtgattserver, @NonNull Integer КакаяКодировка,@NonNull Long version){
+        // TODO: 09.09.2024
+        Long буферОтветотJbossfinal=0l;
+        try{
+
+        BufferedReader РидерОтСервераМетодаGET;//
+        if (КакаяКодировка==8) {
+            РидерОтСервераМетодаGET = new BufferedReader(new InputStreamReader(inputStreamOtgattserver, StandardCharsets.UTF_8));
+        } else {
+            РидерОтСервераМетодаGET = new BufferedReader(new InputStreamReader(inputStreamOtgattserver, StandardCharsets.UTF_16));
+        }
+        StringBuffer stringBufferGattSVersion=РидерОтСервераМетодаGET.lines().collect(StringBuffer::new, (sb, i) -> sb.append(i), StringBuffer::append);
+
+        // TODO: 06.09.2024
+         String буферОтветотJboss=Optional.ofNullable(stringBufferGattSVersion).stream().map(String::new).findAny().orElseGet(()->"");
+        // TODO: 06.09.2024
+          буферОтветотJbossfinal=Optional.ofNullable(буферОтветотJboss).stream().mapToLong(Long::new).findAny().orElseGet(()->0l);
+
+        Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" + " буферОтветотJbossfinal " +буферОтветотJbossfinal );
+    } catch (Exception e) {
+        e.printStackTrace();
+        Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName()
+                + " Линия  :"
+                + Thread.currentThread().getStackTrace()[2].getLineNumber());
+        ContentValues valuesЗаписываемОшибки = new ContentValues();
+        valuesЗаписываемОшибки.put("Error", e.toString().toLowerCase());
+        valuesЗаписываемОшибки.put("Klass", this.getClass().getName());
+        valuesЗаписываемОшибки.put("Metod", Thread.currentThread().getStackTrace()[2].getMethodName());
+        valuesЗаписываемОшибки.put("LineError", Thread.currentThread().getStackTrace()[2].getLineNumber());
+        final Object ТекущаяВерсияПрограммы = version;
+        Integer ЛокальнаяВерсияПОСравнение = Integer.parseInt(ТекущаяВерсияПрограммы.toString());
+        valuesЗаписываемОшибки.put("whose_error", ЛокальнаяВерсияПОСравнение);
+        new SubClassErrors(context).МетодЗаписиОшибок(valuesЗаписываемОшибки);
+    }
+    return  буферОтветотJbossfinal;
+
+    }
+
+
+
+
+
+
 
 
 

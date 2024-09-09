@@ -155,7 +155,7 @@ public class BussenloginSaredPreferense {
     public void    sharedPreferencesAfterSuccessJbossVErsion(@NonNull Context context, @NonNull Long version,@NonNull Long буферОтветотJboss ) {
         try{
             SharedPreferences.Editor editor = preferences.edit();
-            editor.putLong("versionoflastsentdata", буферОтветотJboss);
+            editor.putString("versionoflastsentdata", буферОтветотJboss.toString());
             editor.apply();
 
             Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +

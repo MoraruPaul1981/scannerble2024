@@ -21,6 +21,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.serverscan.datasync.businesslayer.Errors.SubClassErrors;
 import com.serverscan.datasync.businesslayer.bl_Jakson.BinesslogicJakson;
 import com.serverscan.datasync.businesslayer.bl_jbossadress.QualifierJbossServer3;
+import com.serverscan.datasync.businesslayer.bl_preferences.BussenloginSaredPreferense;
+import com.serverscan.datasync.businesslayer.bl_versionsgatt.BinesslogicVersions;
 import com.serverscan.datasync.datalayer.generatorjakson.GenerationJaksonJSON;
 import com.serverscan.datasync.datalayer.local.BusinesslogicDatabase;
 import com.serverscan.datasync.datalayer.model.ScannerserversuccessEntity;
@@ -158,9 +160,9 @@ public class DataSyncService extends IntentService {
         // TODO: 04.09.2024
       Completable.fromAction(()->{
                   // TODO: 03.09.2024 get DATA
-                Long versionoflastsentdata=  preferencesGatt.getLong("versionoflastsentdata",0l);
+                Long versionoflastsentdata=Long.parseLong(preferencesGatt.getString("versionoflastsentdata","0")) ;
 
-                  Cursor cursorSingle= businesslogicDatabase.getingCursor("SELECT * FROM scannerserversuccess  WHERE current_table > '"+versionoflastsentdata+"'  ",version);
+                  Cursor cursorSingle= businesslogicDatabase.getingCursor("SELECT * FROM scannerserversuccess  WHERE current_table > '"+versionoflastsentdata.toString()+"'  ",version);
                   // TODO: 03.09.2024
                   if (cursorSingle.getCount()>0) {
 
@@ -170,8 +172,18 @@ public class DataSyncService extends IntentService {
                       byte[] ByteJakson=      genetarorJaksonJSON.genetarorJaksonJSON(context,version,     listForJakson  ,getHiltJaksonObjectMapper     );
 
                       // TODO: 03.09.2024 sending  Stream to Server
-                      StringBuffer stringBufferJsonForJboss=      binesslogicJakson.
+                      Long буферОтветотJbossfinal=      binesslogicJakson.
                               sendOkhhtpServiceForJboss(context,version,getOkhhtpBuilder,getJbossAdressDebug,cursorSingle ,ByteJakson);
+
+                      // TODO: 09.09.2024 ПОлученую версию данных от серврера запоминаем
+                      if (буферОтветотJbossfinal>0) {
+                          new BinesslogicVersions(context).recordinganewVersionofgatt(context,version,буферОтветотJbossfinal);
+                      }
+                      // TODO: 03.09.2024 get InputStream   for sending an server
+                      Log.d(getApplicationContext().getClass().getName(), "\n" + " class " +
+                              Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                              " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                              " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" + " буферОтветотJbossfinal " +буферОтветотJbossfinal);
 
 
                       // TODO: 31.07.2024 close database

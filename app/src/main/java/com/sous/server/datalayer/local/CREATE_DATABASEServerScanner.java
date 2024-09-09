@@ -10,8 +10,6 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
-import androidx.preference.PreferenceManager;
-
 import com.sous.server.businesslayer.Errors.SubClassErrors;
 import com.sous.server.businesslayer.bl_preferences.BussenloginSaredPreferense;
 
@@ -28,7 +26,7 @@ public class CREATE_DATABASEServerScanner extends SQLiteOpenHelper{ ///SQLiteOpe
 
     private static  AtomicReference<SQLiteDatabase> atomicstoredEntities = new AtomicReference<>();
    // private static     SQLiteDatabase ССылкаНаСозданнуюБазу;
-    private static final int DATABASE_VERSION = 8;
+    private static final int DATABASE_VERSION = 9;
     private Long version=0l;
     private SharedPreferences preferencesGatt;
 
@@ -77,7 +75,7 @@ public class CREATE_DATABASEServerScanner extends SQLiteOpenHelper{ ///SQLiteOpe
 
             МетодСозданиеТаблицДляЗаписиСканирования(ССылкаНаСозданнуюБазу);
 
-            МетодСозданиеТаблицДляСправочникEnableDevice(ССылкаНаСозданнуюБазу);
+            МетодСозданиеТаблицДляВерсияДанных(ССылкаНаСозданнуюБазу);
 
             // TODO: 03.06.2022
             Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
@@ -214,14 +212,15 @@ public class CREATE_DATABASEServerScanner extends SQLiteOpenHelper{ ///SQLiteOpe
         }
     }
 
-    private void МетодСозданиеТаблицДляСправочникEnableDevice(@NotNull SQLiteDatabase ССылкаНаСозданнуюБазу) {//BEFORE   INSERT , UPDATE , DELETE
+    private void МетодСозданиеТаблицДляВерсияДанных(@NotNull SQLiteDatabase ССылкаНаСозданнуюБазу) {//BEFORE   INSERT , UPDATE , DELETE
         try{
                     ССылкаНаСозданнуюБазу.execSQL("drop table  if exists   "+"scannerlistdevices"+"");//test
-                    ССылкаНаСозданнуюБазу.execSQL("Create table if not exists   "+"scannerlistdevices"+" (" +
+                    ССылкаНаСозданнуюБазу.execSQL("drop table  if exists   "+"gattserverdataversion"+"");//test
+                    ССылкаНаСозданнуюБазу.execSQL("Create table if not exists   "+"gattserverdataversion"+" (" +
                             "id INTEGER PRIMARY KEY AUTOINCREMENT  ," +
-                            " name TEXT      ," +
-                            "macadress TEXT  ," +
-                            "person INT   )");
+                            "versionlocal TEXT ," +
+                            "versionremote TEXT  ," +
+                            "date_update NUMERIC  )");
                     Log.d(this.getClass().getName(), " сработала ...  создание таблицы   НазваниеТаблицыДляТригера   "+"scannerserversuccess" );
                     //TODO INSERT
 
