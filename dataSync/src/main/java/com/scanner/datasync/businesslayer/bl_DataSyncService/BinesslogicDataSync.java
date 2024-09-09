@@ -15,6 +15,7 @@ import com.google.firebase.crashlytics.buildtools.reloc.com.google.common.io.Byt
 import com.google.firebase.crashlytics.buildtools.reloc.org.apache.http.client.methods.HttpGet;
 import com.google.firebase.crashlytics.buildtools.reloc.org.apache.http.client.utils.URIBuilder;
 import com.scanner.datasync.businesslayer.Errors.SubClassErrors;
+import com.scanner.datasync.businesslayer.bl_Okhhtp.QualifierOkhhtp;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -57,7 +58,9 @@ import okhttp3.Response;
 public class BinesslogicDataSync {
 
     Context context;
-
+    @Inject
+    @QualifierOkhhtp
+    OkHttpClient.Builder getOkhhtpBuilder;
 
     public @Inject BinesslogicDataSync(@ApplicationContext Context hiltcontext) {
         // TODO: 22.08.2024
@@ -101,7 +104,7 @@ public class BinesslogicDataSync {
 
 
     @SuppressLint("Range")
-    public    InputStream    callOkhhtpDataSyncService(@NonNull long version, @NonNull OkHttpClient.Builder getOkhhtpBuilder,
+    public    InputStream    callOkhhtpDataSyncService(@NonNull long version,
                                           @NonNull LinkedHashMap<String, String> getJbossAdress,
                                           @NonNull Cursor cursorlocal)
             throws ExecutionException, InterruptedException {

@@ -58,8 +58,7 @@ public class DataSyncService extends IntentService {
     // TODO: Rename actions, choose action names that describe tasks that this
     @Inject
     ObjectMapper getHiltJaksonObjectMapper;
-    @Inject
-    OkHttpClient.Builder getOkhhtpBuilder;
+
     private  long version;
     @Inject
     BinesslogicDataSync binesslogicDataSync;
@@ -223,8 +222,7 @@ public class DataSyncService extends IntentService {
            // Cursor cursorlocal =     binesslogicGetCursors. getMAXBremyLocalDataSyncService(version,resolver);
             Cursor cursorlocal =     binesslogicGetCursors. getMAXVersionLocalDataSyncService(version,resolver);
             // TODO: 26.08.2024  получаем данные от Сервера
-            InputStream inputStreamJaksonByteScanner=     binesslogicDataSync.callOkhhtpDataSyncService(version,
-                    getOkhhtpBuilder,getJbossAdressDebug,cursorlocal);
+            InputStream inputStreamJaksonByteScanner=     binesslogicDataSync.callOkhhtpDataSyncService(version,getJbossAdressDebug,cursorlocal);
 
         // TODO: 26.08.2024  преобразовываем данеы в модель JAKSON
         JsonNode jsonNodeScannerBLE =binesslogincJakson.callJaksonDataSyncService(version,   getHiltJaksonObjectMapper,inputStreamJaksonByteScanner);

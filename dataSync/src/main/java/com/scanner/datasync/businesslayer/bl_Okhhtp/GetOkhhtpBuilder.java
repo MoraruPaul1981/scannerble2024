@@ -32,6 +32,7 @@ public class GetOkhhtpBuilder   implements  OkhhtpInterface {
 
 
     @Singleton
+    @QualifierOkhhtp
     @Provides
     @Override
     public  OkHttpClient.Builder getOkhhtpBuilder(@ApplicationContext Context hiltcontext ) {
@@ -42,7 +43,7 @@ public class GetOkhhtpBuilder   implements  OkhhtpInterface {
 
 
             builder=     new OkHttpClient().newBuilder();
-            builder.connectionPool(new ConnectionPool(100,5, TimeUnit.SECONDS));
+            builder.connectionPool(new ConnectionPool(20, 30, TimeUnit.SECONDS));
             Log.i(this.getClass().getName(),  " OkHttpClient"+
                     Thread.currentThread().getStackTrace()[2].getMethodName()+
                     " время " +new Date().toLocaleString() );
