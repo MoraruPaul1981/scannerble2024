@@ -37,13 +37,12 @@ public class BunissecclogicWorkmanager {
 
     private  DataSyncService.LocalBinderСерверBLE localBinderСерверBLE;
     final private Handler handler=new Handler(Looper.getMainLooper());
-    private SharedPreferences preferences;
+
 
     public @Inject BunissecclogicWorkmanager(@ApplicationContext Context hitcontext ) {
         // TODO: 25.08.2024
         context = hitcontext;
         // TODO: 25.08.2024
-        preferences = PreferenceManager.getDefaultSharedPreferences(context);
         Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                 " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
                 " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n");
@@ -134,7 +133,7 @@ try {
                              // TODO: 28.07.2023  Update
                                  localBinderСерверBLE = (DataSyncService.LocalBinderСерверBLE) iBinder;
                                 // TODO: 03.09.2024
-                                startingTransactDataService(     preferences);
+                                startingTransactDataService(      );
 
                                 Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                                         " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
@@ -188,11 +187,11 @@ try {
 
 
 
-    protected void startingTransactDataService( @NonNull  SharedPreferences preferences) {
+    protected void startingTransactDataService(  ) {
         // TODO: 09.08.2024
         try {
             // TODO: 03.09.2024 Запускаем синхронизацию с сервером JBOSS
-       localBinderСерверBLE.getService().onTransact(context,version,preferences);
+       localBinderСерверBLE.getService().onTransact(context,version );
 
             Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                     " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +

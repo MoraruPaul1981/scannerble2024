@@ -89,7 +89,7 @@ private  Long version;
 
     private UUID getPublicUUIDScan = ParcelUuid.fromString("70000007-0000-1000-8000-00805f9b34fb").getUuid();
     private LocationManager locationManager;
-    private      SharedPreferences sharedPreferencesGatt;
+
     private AtomicReference<byte[]> atomicReferenceValue = new AtomicReference<>();
     private Cursor successfuldevices;
 
@@ -121,7 +121,7 @@ private  Long version;
 
 
 
-    public void launchBuccesloginForServiceServerScan(@NotNull  ServiceServerScan getserviceServerScan ) {
+    public void launchBuccesloginForServiceServerScan(@NotNull  ServiceServerScan getserviceServerScan ,@NotNull  SharedPreferences preferencesGatt) {
         try {
             // TODO: 23.07.2024 starting  core motods BLE Gatt Server
             initAdapterBluetoothManager();
@@ -134,7 +134,7 @@ private  Long version;
                 // TODO: 03.09.2024  
                 getContentProvider();
                 // TODO: 03.09.2024
-                langingGPSLocations( );
+                langingGPSLocations( preferencesGatt);
                 // TODO: 25.08.2024 TEST
                 getBleAdvertising.staringAdvertisingSet(bluetoothAdapter);
 // TODO: 28.07.2024 LIster
@@ -179,7 +179,7 @@ private  Long version;
 
     private void getPreferenceManager() {
         try{
-        sharedPreferencesGatt =              PreferenceManager.getDefaultSharedPreferences(context);
+
         Log.d(context.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                 " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
                 " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n");
@@ -716,7 +716,7 @@ private  Long version;
 
 
     @SuppressLint({"MissingPermission", "NewApi"})
-    private void langingGPSLocations( ) {
+    private void langingGPSLocations( @NotNull SharedPreferences sharedPreferencesGatt) {
         try{
 
             if (locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)

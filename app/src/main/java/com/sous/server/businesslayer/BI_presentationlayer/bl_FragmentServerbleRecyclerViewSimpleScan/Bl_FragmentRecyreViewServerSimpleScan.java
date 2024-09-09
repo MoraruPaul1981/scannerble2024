@@ -117,7 +117,7 @@ public class Bl_FragmentRecyreViewServerSimpleScan {
 
         getContentProvider();
 
-        sharedPreferencesGatt     = PreferenceManager.getDefaultSharedPreferences(context);
+
 
         Log.d(context.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                 " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +

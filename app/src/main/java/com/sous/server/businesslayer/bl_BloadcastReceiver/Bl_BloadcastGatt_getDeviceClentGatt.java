@@ -44,14 +44,15 @@ public class Bl_BloadcastGatt_getDeviceClentGatt {
     public synchronized void  startingGetDeviceBLECkient(  @NonNull Intent intent,
                                              @NonNull AtomicReference<BroadcastReceiver.PendingResult>
                                                      pendingResultAtomicReference,
-                                             @NonNull final BluetoothDevice     bluetoothDevice) {
+                                             @NonNull final BluetoothDevice     bluetoothDevice,
+                                                           @NonNull SharedPreferences preferencesGatt) {
         Completable.fromAction(new Action() {
                     @SuppressLint("MissingPermission")
                     @Override
                     public void run() throws Throwable {
 
 
-                        SharedPreferences          sharedPreferencesGatt     = PreferenceManager.getDefaultSharedPreferences(context);
+
                         // TODO: 29.07.2024
                         getContentProvider();
                         // TODO: 29.07.2024
@@ -70,7 +71,7 @@ public class Bl_BloadcastGatt_getDeviceClentGatt {
                         WtitingAndreadDataForScanGatt wtitingAndreadDataForScanGatt = new WtitingAndreadDataForScanGatt(context,
                                 version,
                                 contentProviderServer,
-                                sharedPreferencesGatt);
+                                preferencesGatt);
                         ConcurrentHashMap<Integer,ContentValues> writeDatabaseScanGatt  =    wtitingAndreadDataForScanGatt
                                 .writeDatabaseScanGatt(bluetoothDevice,  intent.getAction());
 

@@ -1,5 +1,7 @@
 package com.sous.server.businesslayer.BroadcastreceiverServer;
 
+import static android.content.Context.MODE_PRIVATE;
+
 import android.annotation.SuppressLint;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
@@ -7,6 +9,7 @@ import android.content.BroadcastReceiver;
 import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageInfo;
 import android.util.Log;
 
@@ -24,7 +27,7 @@ public class BroadcastReceiverGattServerName_Changed extends BroadcastReceiver {
     private  Long   version;
     private    AtomicReference<PendingResult> pendingResultAtomicReferenceServer=new AtomicReference<>();
 
-
+    private SharedPreferences preferencesGatt;
     @SuppressLint({"MissingPermission", "NewApi"})
     @Override
     public void onReceive(Context context, Intent intent) {
@@ -32,6 +35,10 @@ public class BroadcastReceiverGattServerName_Changed extends BroadcastReceiver {
         try{
             // TODO: 30.07.2024
             pendingResultAtomicReferenceServer.set(goAsync());
+
+
+            preferencesGatt =context. getSharedPreferences("MyPrefs", MODE_PRIVATE);
+
 
             // TODO: 31.07.2024 Получаем сам девайс
          final   BluetoothDevice     bluetoothDevice = intent.getParcelableExtra(BluetoothDevice.EXTRA_DEVICE);
@@ -50,7 +57,7 @@ public class BroadcastReceiverGattServerName_Changed extends BroadcastReceiver {
                 case   BluetoothDevice.ACTION_CLASS_CHANGED :
                     // TODO: 31.07.2024
                     final Bl_BloadcastGatt_getDeviceClentGatt blBloadcastGattGetDeviceClentGatt=  new Bl_BloadcastGatt_getDeviceClentGatt(context,version);
-                    blBloadcastGattGetDeviceClentGatt.startingGetDeviceBLECkient(  intent ,   pendingResultAtomicReferenceServer,bluetoothDevice);
+                    blBloadcastGattGetDeviceClentGatt.startingGetDeviceBLECkient(  intent ,   pendingResultAtomicReferenceServer,bluetoothDevice,preferencesGatt);
 
 
                     new Businesslogic_GattReflection(context,version).unpairDevice(bluetoothDevice);

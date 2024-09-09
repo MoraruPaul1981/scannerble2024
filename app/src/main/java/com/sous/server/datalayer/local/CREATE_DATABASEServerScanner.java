@@ -1,5 +1,7 @@
 package com.sous.server.datalayer.local;
 
+import static android.content.Context.MODE_PRIVATE;
+
 import android.content.ContentValues;
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -28,7 +30,7 @@ public class CREATE_DATABASEServerScanner extends SQLiteOpenHelper{ ///SQLiteOpe
    // private static     SQLiteDatabase ССылкаНаСозданнуюБазу;
     private static final int DATABASE_VERSION = 8;
     private Long version=0l;
-    private SharedPreferences preferences;
+    private SharedPreferences preferencesGatt;
 
 
     public static SQLiteDatabase getССылкаНаСозданнуюБазу() {
@@ -67,10 +69,9 @@ public class CREATE_DATABASEServerScanner extends SQLiteOpenHelper{ ///SQLiteOpe
     @Override
     public void onCreate(SQLiteDatabase ССылкаНаСозданнуюБазу) {
         try {
-
+            preferencesGatt =context. getSharedPreferences("MyPrefs", MODE_PRIVATE);
             // TODO: 13.08.2024
-            preferences = PreferenceManager.getDefaultSharedPreferences(context);
-            new BussenloginSaredPreferense(preferences,context,version).sharedPreferencesClear();
+            new BussenloginSaredPreferense(preferencesGatt,context,version).sharedPreferencesClear();
             // TODO: 03.06.2022  таблиц
             МетодСозданиеТаблицError(ССылкаНаСозданнуюБазу);
 

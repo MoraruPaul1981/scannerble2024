@@ -9,6 +9,7 @@ import android.app.NotificationManager;
 import android.app.Service;
 import android.content.ContentValues;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.os.Binder;
@@ -48,7 +49,7 @@ public class ServiceServerScan extends Service {
     private   NotificationCompat.Builder notificationBuilderServer;
     @Inject
     BuccesloginForServiceServerScan buccesloginForServiceServerScan;
-
+    private SharedPreferences preferencesGatt;
     @Override
     public void onCreate() {
         super.onCreate();
@@ -58,6 +59,7 @@ public class ServiceServerScan extends Service {
                     " Класс в процессе... " + this.getClass().getName() + "\n" +
                     " метод в процессе... " + Thread.currentThread().getStackTrace()[2].getMethodName());
 
+            preferencesGatt =getApplicationContext(). getSharedPreferences("MyPrefs", MODE_PRIVATE);
             // TODO: 24.07.2024 устанвливаем разрешения
             //For creating the Foreground Service
             NotificationManager notificationManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
@@ -118,14 +120,14 @@ public class ServiceServerScan extends Service {
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
         try {
-            Log.d(getApplicationContext().getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
-                    " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                    " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n");
 
 
             // TODO: 03.09.2024 Запускаем КОд Служббы Сервера Ble GATT
-            buccesloginForServiceServerScan.launchBuccesloginForServiceServerScan(this);
+            buccesloginForServiceServerScan.launchBuccesloginForServiceServerScan(this,preferencesGatt);
 
+            Log.d(getApplicationContext().getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                    " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                    " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n");
 
 // TODO: 30.06.2022 сама не постредствено запуск метода
         } catch (Exception e) {

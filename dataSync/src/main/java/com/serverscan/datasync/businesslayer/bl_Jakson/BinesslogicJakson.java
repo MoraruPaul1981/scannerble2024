@@ -70,7 +70,7 @@ public class BinesslogicJakson {
         // TODO: 21.08.2024
         context = hiltcontext;
         // TODO: 06.09.2024
-        preferences = PreferenceManager.getDefaultSharedPreferences(context);
+
 
         Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                 " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +

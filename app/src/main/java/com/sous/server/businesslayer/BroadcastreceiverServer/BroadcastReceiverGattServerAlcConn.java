@@ -1,5 +1,7 @@
 package com.sous.server.businesslayer.BroadcastreceiverServer;
 
+import static android.content.Context.MODE_PRIVATE;
+
 import android.annotation.SuppressLint;
 import android.bluetooth.BluetoothA2dp;
 import android.bluetooth.BluetoothDevice;
@@ -10,6 +12,7 @@ import android.content.BroadcastReceiver;
 import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageInfo;
 import android.os.Bundle;
 import android.os.ParcelUuid;
@@ -27,6 +30,8 @@ public class BroadcastReceiverGattServerAlcConn extends BroadcastReceiver {
     // TODO: 30.07.2024
     private  Long   version;
     private    AtomicReference<PendingResult> pendingResultAtomicReferenceServer=new AtomicReference<>();
+
+    private SharedPreferences preferencesGatt;
     @SuppressLint({"MissingPermission", "NewApi"})
     @Override
     public void onReceive(Context context, Intent intent) {
@@ -34,6 +39,9 @@ public class BroadcastReceiverGattServerAlcConn extends BroadcastReceiver {
         try{
             // TODO: 30.07.2024
             pendingResultAtomicReferenceServer.set(goAsync());
+
+            preferencesGatt =context. getSharedPreferences("MyPrefs", MODE_PRIVATE);
+
 
             // TODO: 31.07.2024 Получаем сам девайс
          final   BluetoothDevice     bluetoothDevice = intent.getParcelableExtra(BluetoothDevice.EXTRA_DEVICE);
@@ -55,7 +63,7 @@ public class BroadcastReceiverGattServerAlcConn extends BroadcastReceiver {
                     // TODO: 07.08.2024
                     final Bl_BloadcastGatt_getDeviceClentGatt blBloadcastGattGetDeviceClentGatt=  new Bl_BloadcastGatt_getDeviceClentGatt(context,version);
 
-                    blBloadcastGattGetDeviceClentGatt.startingGetDeviceBLECkient(  intent ,   pendingResultAtomicReferenceServer,bluetoothDevice);
+                    blBloadcastGattGetDeviceClentGatt.startingGetDeviceBLECkient(  intent ,   pendingResultAtomicReferenceServer,bluetoothDevice,preferencesGatt);
                     // TODO: 30.07.2024
 
 

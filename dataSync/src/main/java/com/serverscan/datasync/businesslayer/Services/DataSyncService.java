@@ -10,6 +10,7 @@ import android.database.Cursor;
 import android.os.Binder;
 import android.os.IBinder;
 import android.os.RemoteException;
+import android.preference.PreferenceManager;
 import android.util.Log;
 
 import androidx.annotation.BinderThread;
@@ -61,7 +62,7 @@ public class DataSyncService extends IntentService {
     OkHttpClient.Builder getOkhhtpBuilder;
 
 
-
+    private SharedPreferences preferencesGatt;
 
     public DataSyncService() {
         super("DataSyncService");
@@ -73,6 +74,7 @@ public class DataSyncService extends IntentService {
         try{
         PackageInfo pInfo = getApplicationContext().getPackageManager().getPackageInfo(getApplicationContext().getPackageName(), 0);
         version = pInfo.getLongVersionCode();
+            preferencesGatt =getApplicationContext(). getSharedPreferences("MyPrefs", MODE_PRIVATE);
         Log.d(getApplicationContext().getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() +
                 "\n" +
                 " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
@@ -150,12 +152,13 @@ public class DataSyncService extends IntentService {
 
 
 
-    public void onTransact(@NonNull Context context , @NonNull Long version ,@NonNull SharedPreferences preferences) throws RemoteException {
+    public void onTransact(@NonNull Context context , @NonNull Long version  ) throws RemoteException {
         // TODO: 03.09.2024
+
         // TODO: 04.09.2024
       Completable.fromAction(()->{
                   // TODO: 03.09.2024 get DATA
-                Long versionoflastsentdata=  preferences.getLong("versionoflastsentdata",0l);
+                Long versionoflastsentdata=  preferencesGatt.getLong("versionoflastsentdata",0l);
 
                   Cursor cursorSingle= businesslogicDatabase.getingCursor("SELECT * FROM scannerserversuccess  WHERE current_table > '"+versionoflastsentdata+"'  ",version);
                   // TODO: 03.09.2024
