@@ -56,7 +56,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:padding="2dp"
-                android:text="Последний статус" />
+                android:text="Скан Bluetooth" />
 
         </com.google.android.material.tabs.TabLayout>
 
@@ -157,6 +157,7 @@
                 android:textColorHint="#7F8080"
                 android:textSize="17sp"
                 android:textStyle="bold"
+                android:tooltipText="Последний статус"
                 android:translationZ="50dp" />
 
 

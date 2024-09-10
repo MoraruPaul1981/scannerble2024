@@ -1,6 +1,7 @@
 package com.sous.scanner.businesslayer.bl_Tests;
 
 
+import android.Manifest;
 import android.annotation.SuppressLint;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
@@ -18,6 +19,7 @@ import android.provider.Settings;
 import android.util.Log;
 
 import androidx.annotation.NonNull;
+import androidx.core.app.ActivityCompat;
 
 
 import com.sous.scanner.businesslayer.Errors.SubClassErrors;
@@ -55,11 +57,11 @@ public class GetBleAdvertising {
 
     }
 
-    @SuppressLint({"NewApi", "MissingPermission"})
+
     public void staringAdvertisingSet(@NonNull BluetoothAdapter bluetoothAdapter) {
         try {
             String ANDROID_ID = Settings.Secure.getString(context.getContentResolver(), Settings.Secure.ANDROID_ID);
-            String ANDROID_NAME=Settings.Global.getString(context.getContentResolver(),Settings.Global.DEVICE_NAME);
+            String ANDROID_NAME = Settings.Global.getString(context.getContentResolver(), Settings.Global.DEVICE_NAME);
             String btMac = android.provider.Settings.Secure.getString(context.getContentResolver(), "bluetooth_address");
             // TODO: 01.09.2024
 
@@ -87,7 +89,7 @@ public class GetBleAdvertising {
                     .addServiceUuid(parcelUuid)
                     .build();
 
-            AdvertiseCallback   mAdvertiseCallback = new AdvertiseCallback() {
+            AdvertiseCallback mAdvertiseCallback = new AdvertiseCallback() {
 
                 @Override
                 public void onStartSuccess(AdvertiseSettings settingsInEffect) {
@@ -95,19 +97,29 @@ public class GetBleAdvertising {
                     // TODO: 01.09.2024
                     Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                             " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                            " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"  + " Parcel parcel=Parcel.obtain(); ");
+                            " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" + " Parcel parcel=Parcel.obtain(); ");
                 }
 
                 @Override
                 public void onStartFailure(int errorCode) {
                     Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                             " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                            " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"+ " Parcel parcel=Parcel.obtain(); ");
+                            " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" + " Parcel parcel=Parcel.obtain(); ");
                     super.onStartFailure(errorCode);
                 }
             };
 
-            if (   bluetoothAdapter!=null) {
+            if (bluetoothAdapter != null) {
+                if (ActivityCompat.checkSelfPermission(context, Manifest.permission.BLUETOOTH_CONNECT) != PackageManager.PERMISSION_GRANTED) {
+                    // TODO: Consider calling
+                    //    ActivityCompat#requestPermissions
+                    // here to request the missing permissions, and then overriding
+                    //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+                    //                                          int[] grantResults)
+                    // to handle the case where the user grants the permission. See the documentation
+                    // for ActivityCompat#requestPermissions for more details.
+                    return;
+                }
                 bluetoothAdapter.setName(ANDROID_NAME);
                 bluetoothAdapter.getBluetoothLeAdvertiser().startAdvertising(settings, advertiseData, mAdvertiseCallback);
             }

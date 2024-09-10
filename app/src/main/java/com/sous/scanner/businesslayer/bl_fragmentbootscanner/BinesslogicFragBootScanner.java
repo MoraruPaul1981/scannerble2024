@@ -65,33 +65,36 @@ public class BinesslogicFragBootScanner {
     public void startingServicedataSync (long versionhilt) {
         this.version = versionhilt;
         // TODO: 22.08.2024
-        Completable.complete().blockingSubscribe(new CompletableObserver() {
+        Completable.fromAction(()->{
+
+            connectivityManager = (ConnectivityManager)context.getSystemService(Context.CONNECTIVITY_SERVICE);
+            NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
+            // TODO: 22.08.2024 Парименимае Решение Запускаем Сихронизацию
+
+            if ( Optional.ofNullable(activeNetworkInfo).isPresent()  ) {
+                // TODO: 22.08.2024  Запускаем слуджу Синжрониазции
+                if (activeNetworkInfo.isConnected()) {
+                    // TODO: 22.08.2024
+                    remoteMessaging.startingServicedataSync(context,version);
+                }
+
+            }else {
+                // TODO: 22.08.2024  Сразу переходим на запуск Службы Сканирование Bluetooth Client
+
+                businesslogicJobServive.startingServiceSimpleScan("fistlauntfrombackground");
+
+
+
+            }
+            Log.d(context.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                    " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                    " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"   +
+                    "  locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER) " +
+                    " activeNetworkInfo  " +activeNetworkInfo );
+        }).blockingSubscribe(new CompletableObserver() {
             @Override
             public void onSubscribe(@NonNull Disposable d) {
-                connectivityManager = (ConnectivityManager)context.getSystemService(Context.CONNECTIVITY_SERVICE);
-                NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
-                // TODO: 22.08.2024 Парименимае Решение Запускаем Сихронизацию
 
-                if ( Optional.ofNullable(activeNetworkInfo).isPresent()  ) {
-                    // TODO: 22.08.2024  Запускаем слуджу Синжрониазции
-                    if (activeNetworkInfo.isConnected()) {
-                        // TODO: 22.08.2024
-                        remoteMessaging.startingServicedataSync(context,version);
-                    }
-
-                }else {
-                    // TODO: 22.08.2024  Сразу переходим на запуск Службы Сканирование Bluetooth Client
-
-                    businesslogicJobServive.startingServiceSimpleScan("fistlauntfrombackground");
-
-
-
-                }
-                Log.d(context.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
-                        " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                        " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"   +
-                        "  locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER) " +
-                        " activeNetworkInfo  " +activeNetworkInfo );
             }
 
             @Override
