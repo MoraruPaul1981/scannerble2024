@@ -142,17 +142,18 @@ Context context;
             Uri uri = Uri.parse("content://com.sous.servergatt.prodider/gattserverdataversion" );
             // TODO: 09.09.2024
             ContentValues contentValuesdvensedScannerserversuccess =new ContentValues();
-            contentValuesdvensedScannerserversuccess.put("current_table",буферОтветотJbossfinal);
+            contentValuesdvensedScannerserversuccess.put("versionremote",буферОтветотJbossfinal);
 
             // TODO: 25.07.2024  Создаем Новую Даты
             WorkerDates workerDates=new WorkerDates(context,version);
             Date date_update = workerDates.dateCreation();
             String date_updatefinal=  workerDates.datesasaString(date_update);
             contentValuesdvensedScannerserversuccess.put("date_update",date_updatefinal);
+            contentValuesdvensedScannerserversuccess.put("id",1);
 
 
          Bundle bUpdate=  new Bundle();
-            String  SQlOperUpdate=  " UPDATE  scannerserversuccess SET     current_table=?      WHERE  current_table < ?  ;";
+            String  SQlOperUpdate=  " UPDATE  gattserverdataversion  SET     versionremote=?  ,date_update=?  WHERE id =?    ;";
         //    String  SQlOperInsert=  " REPLACE INTO gattserverdataversion VALUES(?,?,?,? );";
             bUpdate.putString("sql",SQlOperUpdate );
             // TODO: 09.09.2024 new Date

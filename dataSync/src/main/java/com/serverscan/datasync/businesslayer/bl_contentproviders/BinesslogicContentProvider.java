@@ -159,12 +159,10 @@ public class BinesslogicContentProvider {
                         SQLiteStatement sqLiteStatementInsert= Create_Database_СамаБАзаSQLite.compileStatement(SqlUpdate);
                         sqLiteStatementInsert.clearBindings();
                         // TODO: 04.07.2023 цикл данных
-                        sqLiteStatementInsert.bindNull(1 );//"id"
-                        sqLiteStatementInsert.bindNull(2);//"uuid уже для UUID"
-                        sqLiteStatementInsert.bindLong(3,contentValues.getAsLong("current_table"));//"uuid уже для UUID"
-                        sqLiteStatementInsert.bindString(4,contentValues.getAsString("date_update"));//"uuid уже для UUID"
+                        sqLiteStatementInsert.bindLong(1,contentValues.getAsLong("versionremote"));//"uuid уже для UUID"
+                        sqLiteStatementInsert.bindString(2,contentValues.getAsString("date_update"));//"uuid уже для UUID"
                         // TODO: 07.07.2023 ДЛя Состыковки
-                        sqLiteStatementInsert.bindLong(5,contentValues.getAsLong("current_table"));//"uuid уже для UUID"
+                        sqLiteStatementInsert.bindLong(3,contentValues.getAsLong("id"));//"uuid уже для UUID"
                         // TODO: 28.08.2024
                         resultUpdate.set(sqLiteStatementInsert.executeUpdateDelete());
                         // TODO: 28.08.2024
