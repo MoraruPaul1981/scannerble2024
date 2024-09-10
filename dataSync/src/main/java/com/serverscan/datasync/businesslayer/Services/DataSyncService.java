@@ -176,12 +176,9 @@ public class DataSyncService extends IntentService {
                       Long буферОтветотJbossfinal=      binesslogicJakson.
                               sendOkhhtpServiceForJboss(context,version,getJbossAdressDebug,cursorSingle ,ByteJakson);
 
-                      // TODO: 10.09.2024 дополнительное увеличение версии данных уже в рабочей текуще версии чтобы большене вставлять дополнительно
-                      new BinesslogicVersions(context).  recordinganewVersionAdvensedScannerserversuccess(context,version,369l);
-
-
+                      
                       // TODO: 09.09.2024 ПОлученую версию данных от серврера запоминаем
-                      if (буферОтветотJbossfinal>0 && versionoflastsentdata>буферОтветотJbossfinal) {
+                      if (буферОтветотJbossfinal>0 ) {
                           ///new BinesslogicVersions(context).recordinganewVersionofgatt(context,version,буферОтветотJbossfinal);
                           // TODO: 10.09.2024 дополнительное увеличение версии данных уже в рабочей текуще версии чтобы большене вставлять дополнительно
                           new BinesslogicVersions(context).  recordinganewVersionAdvensedScannerserversuccess(context,version,буферОтветотJbossfinal);

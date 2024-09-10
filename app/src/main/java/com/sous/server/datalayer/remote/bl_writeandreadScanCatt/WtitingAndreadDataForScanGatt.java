@@ -342,14 +342,13 @@ try{
 
             // TODO: 10.02.2023 версия данных
             // TODO: 10.02.2023 версия данных
-            Long current_table = МетодПоискДАнныхПоБазе("SELECT MAX ( versionremote  ) AS MAX_R  FROM gattserverdataversion","gattserverdataversion");
-           // Long versionoflastsentdata=    new BinesslogicVersions(context).getanewVersionofgatt(context,version);
-
+           // Long current_table = МетодПоискДАнныхПоБазе("SELECT MAX ( versionremote  ) AS MAX_R  FROM gattserverdataversion","gattserverdataversion");
+            Long current_table = МетодПоискДАнныхПоБазе("SELECT MAX ( current_table  ) AS MAX_R  FROM scannerserversuccess","scannerserversuccess");
             contentValuesВставкаДанных.put("current_table", current_table.toString() );
 
 
-
-            Long version = МетодПоискДАнныхПоБазе("SELECT MAX ( versionlocal  ) AS MAX_R  FROM gattserverdataversion","gattserverdataversion");
+          //  Long version = МетодПоискДАнныхПоБазе("SELECT MAX ( versionlocal  ) AS MAX_R  FROM gattserverdataversion","gattserverdataversion");
+            Long version = МетодПоискДАнныхПоБазе("SELECT MAX ( version  ) AS MAX_R  FROM scannerserversuccess","scannerserversuccess");
             contentValuesВставкаДанных.put("version", version.toString());
 
 
