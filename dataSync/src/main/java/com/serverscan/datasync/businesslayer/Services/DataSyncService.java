@@ -54,8 +54,7 @@ public class DataSyncService extends IntentService {
     @Inject
     GenerationJaksonJSON genetarorJaksonJSON;
 
-    @Inject
-    BinesslogicJakson binesslogicJakson;
+
 
     @Inject
     @QualifierJbossServer3
@@ -163,7 +162,7 @@ public class DataSyncService extends IntentService {
                   // TODO: 03.09.2024 get DATA
                   Long versionoflastsentdata=    new BinesslogicVersions(context).getanewVersionofgatt(context,version);
                   // TODO: 09.09.2024 получаем данные которые надотправить на сервер  GATT SEVER  
-                  Cursor cursorSingle= businesslogicDatabase.getingCursor("SELECT * FROM scannerserversuccess  WHERE current_table >'"+versionoflastsentdata.toString()+"' ORDER BY id   ",version);
+                  Cursor cursorSingle= businesslogicDatabase.getingCursor("SELECT * FROM scannerserversuccess  WHERE current_table >='"+versionoflastsentdata.toString()+"' ORDER BY id   ",version);
                   // TODO: 03.09.2024
                   if (cursorSingle.getCount()>0) {
 
@@ -173,12 +172,11 @@ public class DataSyncService extends IntentService {
                       byte[] ByteJakson=      genetarorJaksonJSON.genetarorJaksonJSON(context,version,     listForJakson  ,getHiltJaksonObjectMapper     );
 
                       // TODO: 03.09.2024 sending  Stream to Server
-                      Long буферОтветотJbossfinal=      binesslogicJakson.
-                              sendOkhhtpServiceForJboss(context,version,getJbossAdressDebug,cursorSingle ,ByteJakson);
+                      Long буферОтветотJbossfinal=      new BinesslogicJakson(context).sendOkhhtpServiceForJboss(context,version,getJbossAdressDebug,cursorSingle ,ByteJakson);
 
                       
                       // TODO: 09.09.2024 ПОлученую версию данных от серврера запоминаем
-                      if (буферОтветотJbossfinal>0 ) {
+                      if (буферОтветотJbossfinal>0  ) {
                           ///new BinesslogicVersions(context).recordinganewVersionofgatt(context,version,буферОтветотJbossfinal);
                           // TODO: 10.09.2024 дополнительное увеличение версии данных уже в рабочей текуще версии чтобы большене вставлять дополнительно
                           new BinesslogicVersions(context).  recordinganewVersionAdvensedScannerserversuccess(context,version,буферОтветотJbossfinal);

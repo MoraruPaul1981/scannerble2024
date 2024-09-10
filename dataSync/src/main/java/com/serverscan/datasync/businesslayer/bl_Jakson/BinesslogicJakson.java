@@ -60,20 +60,17 @@ import okhttp3.RequestBody;
 import okhttp3.Response;
 import okio.BufferedSink;
 
-@Module
-@InstallIn(SingletonComponent.class)
+
 public class BinesslogicJakson {
     private SharedPreferences preferences;
 
     private Context context;
 
-    @Inject
-    @QualifierOkhhtp
-    OkHttpClient.Builder getOkhhtpBuilder;
 
 
 
-    public @Inject BinesslogicJakson(@ApplicationContext Context hiltcontext) {
+
+    public  BinesslogicJakson(@NonNull  Context hiltcontext) {
         // TODO: 22.08.2024
         // TODO: 21.08.2024
         context = hiltcontext;
@@ -106,7 +103,7 @@ public class BinesslogicJakson {
                     Log.d(context.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                             " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
                             " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" +" Adress " +Adress);
-                    OkHttpClient okHttpClientGattServer = getOkhhtpBuilder.addInterceptor(new Interceptor() {
+                    OkHttpClient okHttpClientGattServer =new GetOkhhtpBuilder().getOkhhtpBuilder(context) .addInterceptor(new Interceptor() {
                                 @Override
                                 public Response intercept(Chain chain) throws IOException {
                                     // TODO: 21.08.2024
@@ -185,6 +182,8 @@ public class BinesslogicJakson {
                         public void onFailure(@androidx.annotation.NonNull Call call, @androidx.annotation.NonNull IOException e) {
                             // TODO: 31.05.2022SdispatcherДанныеОтСервера.executorService().shutdown();
                             // TODO: 23.08.2024
+                            // TODO: 10.09.2024  cancel
+                            call.cancel();
                             // TODO: 31.05.2022
                             dispatcherДанныеОтСервера.executorService().shutdownNow();
                             Log.d(context.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
@@ -213,6 +212,8 @@ public class BinesslogicJakson {
                                          // TODO: 07.10.2023  Обрабаотываем версию от сервера
                                     буферОтветотJbossfinal.set(versionOtGattServerCallback(inputStreamOtgattserver,КакаяКодировка,version));
 
+
+
                                     Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                                             " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
                                             " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" + " буферОтветотJbossfinal " +буферОтветотJbossfinal );
@@ -220,6 +221,10 @@ public class BinesslogicJakson {
 
 
                                 }
+
+                                // TODO: 10.09.2024  cancel
+                                call.cancel();
+                                response.close();
 
                                 // TODO: 31.05.2022
                                 dispatcherДанныеОтСервера.executorService().shutdownNow();
@@ -235,6 +240,7 @@ public class BinesslogicJakson {
                         dispatcherДанныеОтСервера.executorService().awaitTermination(1, TimeUnit.DAYS);
                         // TODO: 09.09.2024
                         dispatcherДанныеОтСервера.cancelAll();
+                        // TODO: 10.09.2024
                         // TODO: 09.09.2024
                     } catch (InterruptedException e) {
                         throw new RuntimeException(e);
