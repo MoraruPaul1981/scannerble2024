@@ -26,7 +26,7 @@ public class CREATE_DATABASEServerScanner extends SQLiteOpenHelper{ ///SQLiteOpe
 
     private static  AtomicReference<SQLiteDatabase> atomicstoredEntities = new AtomicReference<>();
    // private static     SQLiteDatabase ССылкаНаСозданнуюБазу;
-    private static final int DATABASE_VERSION = 10;
+    private static final int DATABASE_VERSION = 18;
     private Long version=0l;
     private SharedPreferences preferencesGatt;
 
@@ -214,15 +214,16 @@ public class CREATE_DATABASEServerScanner extends SQLiteOpenHelper{ ///SQLiteOpe
 
     private void МетодСозданиеТаблицДляВерсияДанных(@NotNull SQLiteDatabase ССылкаНаСозданнуюБазу) {//BEFORE   INSERT , UPDATE , DELETE
         try{
-                    ССылкаНаСозданнуюБазу.execSQL("drop table  if exists   "+"scannerlistdevices"+"");//test
                     ССылкаНаСозданнуюБазу.execSQL("drop table  if exists   "+"gattserverdataversion"+"");//test
                     ССылкаНаСозданнуюБазу.execSQL("Create table if not exists   "+"gattserverdataversion"+" (" +
-                            "id INTEGER PRIMARY KEY AUTOINCREMENT  ," +
+                            "id INTEGER    ," +
                             "versionlocal NUMERIC ," +
                             "versionremote NUMERIC  ," +
                             "date_update NUMERIC  )");
                     Log.d(this.getClass().getName(), " сработала ...  создание таблицы   НазваниеТаблицыДляТригера   "+"scannerserversuccess" );
                     //TODO INSERT
+            ССылкаНаСозданнуюБазу.execSQL("INSERT INTO gattserverdataversion  (versionlocal,versionremote) VALUES('0','0');");//test
+
 
                     // TODO: 03.06.2022
                     Log.d(this.getClass().getName(), " сработала ...  создание таблицы   NOT EXISTS ScannerTableINSERT   "+"scannerserversuccess" );

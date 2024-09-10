@@ -13,6 +13,7 @@ import android.util.Log;
 
 import androidx.work.impl.Scheduler;
 
+import com.serverscan.datasync.businesslayer.bl_versionsgatt.BinesslogicVersions;
 import com.sous.server.businesslayer.ContentProvoders.ContentProviderServer;
 import com.sous.server.businesslayer.Errors.SubClassErrors;
 import com.sous.server.businesslayer.Eventbus.MessageScannerServer;
@@ -341,13 +342,15 @@ try{
 
             // TODO: 10.02.2023 версия данных
             // TODO: 10.02.2023 версия данных
-            Integer current_table = МетодПоискДАнныхПоБазе("SELECT MAX ( current_table  ) AS MAX_R  FROM scannerserversuccess");
-            contentValuesВставкаДанных.put("current_table", current_table);
+            Long current_table = МетодПоискДАнныхПоБазе("SELECT MAX ( versionremote  ) AS MAX_R  FROM gattserverdataversion","gattserverdataversion");
+           // Long versionoflastsentdata=    new BinesslogicVersions(context).getanewVersionofgatt(context,version);
+
+            contentValuesВставкаДанных.put("current_table", current_table.toString() );
 
 
 
-            Integer version = МетодПоискДАнныхПоБазе("SELECT MAX ( version  ) AS MAX_R  FROM scannerserversuccess");
-            contentValuesВставкаДанных.put("version", version);
+            Long version = МетодПоискДАнныхПоБазе("SELECT MAX ( versionlocal  ) AS MAX_R  FROM gattserverdataversion","gattserverdataversion");
+            contentValuesВставкаДанных.put("version", version.toString());
 
 
             Long getuuid =new GeneratorUUIDs(). МетодГенерацииUUID();
@@ -430,19 +433,21 @@ try{
 
 
     // TODO: 10.02.2023 МЕТОД ВЫБОР ДАННЫХ
-    public  Integer МетодПоискДАнныхПоБазе(@androidx.annotation.NonNull String СамЗапрос) {
-        Integer   ВерсияДАнных = 0;
+    public  Long МетодПоискДАнныхПоБазе(@NonNull String СамЗапрос,@NonNull String nametable) {
+        Long   ВерсияДАнных = 0l;
         try{
-            Uri uri = Uri.parse("content://com.sous.servergatt.prodider/scannerserversuccess" );
+            Uri uri = Uri.parse("content://com.sous.servergatt.prodider/"+nametable+"" );
 
             Cursor cursorПолучаемДЛяСевреа = contentProviderServer.query(uri, null, СамЗапрос, null,null,null);
 
-            if (cursorПолучаемДЛяСевреа.getCount()>0){
+            if (cursorПолучаемДЛяСевреа.getCount()>0) {
                 cursorПолучаемДЛяСевреа.moveToFirst();
-                ВерсияДАнных=      cursorПолучаемДЛяСевреа.getInt(0);
-                Log.i(this.getClass().getName(), "ВерсияДАнных"+ ВерсияДАнных) ;
-                ВерсияДАнных++;
+                ВерсияДАнных = cursorПолучаемДЛяСевреа.getLong(0);
+                Log.i(this.getClass().getName(), "ВерсияДАнных" + ВерсияДАнных);
+                // TODO: 10.09.2024  уеличиваем на 1 ++
             }
+            // TODO: 10.09.2024  уеличиваем на 1 ++
+            ВерсияДАнных++;
             Log.w(context.getClass().getName(), " РЕЗУЛЬТАТ insertData  cursorПолучаемДЛяСевреа  " +  cursorПолучаемДЛяСевреа.toString() );
             cursorПолучаемДЛяСевреа.close();
             Log.i(this.getClass().getName(),  "  " +Thread.currentThread().getStackTrace()[2].getMethodName()+ " время " +new Date().toLocaleString() );

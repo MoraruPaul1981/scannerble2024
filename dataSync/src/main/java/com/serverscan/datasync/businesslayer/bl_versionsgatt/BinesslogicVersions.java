@@ -1,12 +1,14 @@
 package com.serverscan.datasync.businesslayer.bl_versionsgatt;
 
 
+import android.annotation.SuppressLint;
 import android.content.ContentProvider;
 import android.content.ContentResolver;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.net.Uri;
+import android.os.Bundle;
 import android.util.Log;
 import androidx.annotation.NonNull;
 import com.serverscan.datasync.businesslayer.Errors.SubClassErrors;
@@ -132,8 +134,56 @@ Context context;
      return  newVersionGatt;
     }
 
+    @SuppressLint("NewApi")
+    public void  recordinganewVersionAdvensedScannerserversuccess  (@NotNull Context context , @NotNull Long version ,
+                                                                    @NonNull Long буферОтветотJbossfinal){
+        try{
+            ContentResolver contentProviderNewVersion=context.getContentResolver();
+            Uri uri = Uri.parse("content://com.sous.servergatt.prodider/gattserverdataversion" );
+            // TODO: 09.09.2024
+            ContentValues contentValuesdvensedScannerserversuccess =new ContentValues();
+            contentValuesdvensedScannerserversuccess.put("current_table",буферОтветотJbossfinal);
+
+            // TODO: 25.07.2024  Создаем Новую Даты
+            WorkerDates workerDates=new WorkerDates(context,version);
+            Date date_update = workerDates.dateCreation();
+            String date_updatefinal=  workerDates.datesasaString(date_update);
+            contentValuesdvensedScannerserversuccess.put("date_update",date_updatefinal);
 
 
+         Bundle bUpdate=  new Bundle();
+            String  SQlOperUpdate=  " UPDATE  scannerserversuccess SET     current_table=?      WHERE  current_table < ?  ;";
+        //    String  SQlOperInsert=  " REPLACE INTO gattserverdataversion VALUES(?,?,?,? );";
+            bUpdate.putString("sql",SQlOperUpdate );
+            // TODO: 09.09.2024 new Date
+
+            // TODO: 09.09.2024 сама операция
+          int urlNewVersionGattServer=   contentProviderNewVersion.update(uri, contentValuesdvensedScannerserversuccess,bUpdate);
+            Integer resultNewVersionGattServer= Optional.ofNullable(urlNewVersionGattServer).map(Integer::new).orElse(0);
+
+
+            Log.d(context.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                    " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                    " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"+ " resultNewVersionGattServer " +resultNewVersionGattServer);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            Log.e(this.getClass().getName(), "Ошибка " + e +
+                    " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() + " Линия  :"
+                    + Thread.currentThread().getStackTrace()[2].getLineNumber());
+            ContentValues valuesЗаписываемОшибки = new ContentValues();
+            valuesЗаписываемОшибки.put("Error", e.toString().toLowerCase());
+            valuesЗаписываемОшибки.put("Klass", this.getClass().getName());
+            valuesЗаписываемОшибки.put("Metod", Thread.currentThread().getStackTrace()[2].getMethodName());
+            valuesЗаписываемОшибки.put("LineError", Thread.currentThread().getStackTrace()[2].getLineNumber());
+            final Object ТекущаяВерсияПрограммы = version;
+            Integer ЛокальнаяВерсияПОСравнение = Integer.parseInt(ТекущаяВерсияПрограммы.toString());
+            valuesЗаписываемОшибки.put("whose_error", ЛокальнаяВерсияПОСравнение);
+            new SubClassErrors(context).МетодЗаписиОшибок(valuesЗаписываемОшибки);
+        }
+
+
+    }
 
 
 

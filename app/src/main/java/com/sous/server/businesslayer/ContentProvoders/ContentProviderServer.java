@@ -345,6 +345,46 @@ public class ContentProviderServer extends android.content.ContentProvider {
         return 0;
     }
 
+    @Override
+    public int update(@NonNull Uri uri, @Nullable ContentValues values, @Nullable Bundle extras) {
+        int geturiUpdate = 0;
+        try {
+
+            Log.d(this.getClass().getName(), " uri"+uri );
+            // TODO: 14.10.2022 метод определения текущней таблицы
+            String table = МетодОпределяемТаблицу(uri);
+
+            String  SQlOperUpdate=   extras.getString("sql");
+
+           // geturiUpdate=  binesslogicContentProvider.workerForInsertContentProvider(SQlOperUpdate,values,Create_Database_СамаБАзаSQLite,version);
+            geturiUpdate=  binesslogicContentProvider.workerForUpdateContentProvider(SQlOperUpdate,values,Create_Database_СамаБАзаSQLite,version);
+
+
+            Log.d(getContext().getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                    " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                    " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"+
+                    " geturiUpdate  " +geturiUpdate);
+
+            PackageInfo pInfo = getContext().getPackageManager().getPackageInfo(getContext().getPackageName(), 0);
+            version = pInfo.getLongVersionCode();
+        } catch (Exception e) {
+            e.printStackTrace();
+            Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() + " Линия  :"
+                    + Thread.currentThread().getStackTrace()[2].getLineNumber());
+            ContentValues valuesЗаписываемОшибки=new ContentValues();
+            valuesЗаписываемОшибки.put("Error",e.toString().toLowerCase());
+            valuesЗаписываемОшибки.put("Klass",this.getClass().getName());
+            valuesЗаписываемОшибки.put("Metod",Thread.currentThread().getStackTrace()[2].getMethodName());
+            valuesЗаписываемОшибки.put("LineError",   Thread.currentThread().getStackTrace()[2].getLineNumber());
+            final Object ТекущаяВерсияПрограммы =version;
+            Integer   ЛокальнаяВерсияПОСравнение = Integer.parseInt(ТекущаяВерсияПрограммы.toString());
+            valuesЗаписываемОшибки.put("whose_error",ЛокальнаяВерсияПОСравнение);
+            new SubClassErrors(getContext()).МетодЗаписиОшибок(valuesЗаписываемОшибки);
+        }
+        return geturiUpdate;
+        //return super.update(uri, values, extras);
+    }
+
 
 }
 
