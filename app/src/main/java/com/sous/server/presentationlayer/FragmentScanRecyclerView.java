@@ -2,14 +2,10 @@ package com.sous.server.presentationlayer;
 
 import android.annotation.SuppressLint;
 import android.content.ContentValues;
-import android.content.Intent;
-import android.content.SharedPreferences;
 import android.content.pm.PackageInfo;
-import android.content.pm.ProviderInfo;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.os.Message;
-import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -30,15 +26,12 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.card.MaterialCardView;
 import com.google.android.material.tabs.TabLayout;
-import com.serverscan.datasync.businesslayer.Services.DataSyncService;
 import com.sous.server.R;
 import com.sous.server.businesslayer.BI_presentationlayer.bl_FragmentServerbleRecyclerViewSimpleScan.Bl_FragmentRecyreViewServerSimpleScan;
 import com.sous.server.businesslayer.BI_presentationlayer.bl_navigationView.GetNavigationViews;
-import com.sous.server.businesslayer.ContentProvoders.ContentProviderServer;
 import com.sous.server.businesslayer.Errors.SubClassErrors;
 import com.sous.server.businesslayer.Eventbus.MessageScannerServer;
 import com.sous.server.businesslayer.Eventbus.ParamentsScannerServer;
-import com.sous.server.datalayer.remote.bl_writeandreadScanCatt.WtitingAndreadDataForScanGatt;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -459,8 +452,17 @@ public class FragmentScanRecyclerView extends Fragment {
         GetNavigationViews getNavigationViews=new GetNavigationViews(getContext(),
                 messageGattServer,bottomnavigationview_server_scan,
                 version,getActivity(),fragmentManager);
-            // TODO: 26.08.2024
-        getNavigationViews.startingbottomNavigationVeiw();
+
+
+            // TODO: 26.08.2024  ТРИ Кнопки снизу
+        getNavigationViews.clickbottomNavigationVeiwExit();
+
+        getNavigationViews.clickbottomNavigationVeiwScan();
+
+        getNavigationViews.clickbottomNavigationVeiwAsync();
+
+
+
 
         getblFragmentRecyreViewServerScan.    setManagerfromRecyclerViewDontData();
         getblFragmentRecyreViewServerScan.     addAdapterServerforRecyreview(null);
