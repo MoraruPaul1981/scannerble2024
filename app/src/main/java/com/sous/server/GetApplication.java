@@ -67,7 +67,7 @@ public class GetApplication  extends Application {
 
 
             // TODO: 03.09.2024 запускаем синхрониазцию с ссервром Server GATT
-            bunissecclogicWorkmanager.startingAsync(getApplicationContext(),version);
+           //// bunissecclogicWorkmanager.startingAsync(getApplicationContext(),version);
 
             // TODO: 26.07.2024
             Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
