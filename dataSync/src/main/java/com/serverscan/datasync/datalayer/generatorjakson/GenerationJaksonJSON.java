@@ -228,7 +228,7 @@ public List<ScannerserversuccessEntity> genetarorListFor(@NonNull Context  conte
             String macdevice=   Optional.ofNullable(   cursorlocal.getString(cursorlocal.getColumnIndex("macdevice"))).map(String::new).orElse("");
             String gps1=   Optional.ofNullable(    cursorlocal.getString(cursorlocal.getColumnIndex("gps1"))).map(String::new).orElse("");
             String gps2=  Optional.ofNullable(     cursorlocal.getString(cursorlocal.getColumnIndex("gps2"))).map(String::new).orElse("");
-            Integer getstatusrow=  Optional.ofNullable(    cursorlocal.getInt(cursorlocal.getColumnIndex("getstatusrow"))).map(Integer::new).orElse(0);
+            String fio=   Optional.ofNullable(     cursorlocal.getString(cursorlocal.getColumnIndex("getstatusrow"))).map(String::new).orElse("");
             String adress=    Optional.ofNullable(     cursorlocal.getString(cursorlocal.getColumnIndex("adress"))).map(String::new).orElse("");
             String city=    Optional.ofNullable( cursorlocal.getString(cursorlocal.getColumnIndex("city"))).map(String::new).orElse("");
             String date_update=  Optional.ofNullable(    cursorlocal.getString(cursorlocal.getColumnIndex("date_update"))).map(String::new).orElse("");
@@ -253,7 +253,7 @@ public List<ScannerserversuccessEntity> genetarorListFor(@NonNull Context  conte
             scannerserversuccessEntity.setMacdevice(macdevice);
             scannerserversuccessEntity.setGps1(gps1);
             scannerserversuccessEntity.setGps2(gps2);
-            scannerserversuccessEntity.setGetstatusrow(getstatusrow);
+            scannerserversuccessEntity.setGetstatusrow(fio);
             scannerserversuccessEntity.setAdress(adress);
             scannerserversuccessEntity.setCity(city);
 

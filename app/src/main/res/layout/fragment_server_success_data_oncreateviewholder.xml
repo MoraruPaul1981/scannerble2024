@@ -18,16 +18,27 @@
     app:strokeWidth="2dp"
     android:translationZ="5dp"
     android:animateLayoutChanges="true"
-    tools:context=".presentationlayer.FragmentGattRecyclerView">
+    tools:context=".presentationlayer.ActivityServerScanner">
 
 
-    <RelativeLayout
-        android:id="@+id/id_relativeLayout_server_ble"
-        android:layout_height="match_parent"
+    <TableLayout
+        android:id="@+id/tablelayoutgattserver"
+        android:shrinkColumns="*"
+        android:stretchColumns="*"
+        android:gravity="center"
+        android:background="#FFFFFF"
         android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
-        android:layout_margin="1dp"
-        android:orientation="vertical">
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="1dp"
+            android:padding="1dp"
+            android:layout_column="0"
+            android:background="#FFFFFF"
+            android:gravity="center_vertical|center_horizontal">
 
 
         <com.google.android.material.tabs.TabLayout
@@ -54,7 +65,17 @@
                 android:text="девайс" />
         </com.google.android.material.tabs.TabLayout>
 
+        </TableRow>
 
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="1dp"
+            android:padding="1dp"
+            android:layout_column="0"
+            android:background="#FFFFFF"
+            android:gravity="center_vertical|center_horizontal">
         <!-- //TODO:   id currentROW  -->
 
         <com.google.android.material.textfield.TextInputLayout
@@ -83,7 +104,18 @@
                 android:text="id value " />
         </com.google.android.material.textfield.TextInputLayout>
 
+        </TableRow>
 
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="1dp"
+            android:padding="1dp"
+            android:layout_column="0"
+            android:background="#FFFFFF"
+            android:gravity="center_vertical|center_horizontal">
+        <!-- //TODO:   id currentROW  -->
 
         <!-- //TODO:   namedevice  -->
 
@@ -113,6 +145,20 @@
                 android:text="namedevice value " />
         </com.google.android.material.textfield.TextInputLayout>
 
+        </TableRow>
+
+
+
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="1dp"
+            android:padding="1dp"
+            android:layout_column="0"
+            android:background="#FFFFFF"
+            android:gravity="center_vertical|center_horizontal">
+        <!-- //TODO:   id currentROW  -->
 
 
         <!-- //TODO:   macdevice  -->
@@ -143,7 +189,19 @@
                 android:text="macdevice value " />
         </com.google.android.material.textfield.TextInputLayout>
 
+        </TableRow>
 
+
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="1dp"
+            android:padding="1dp"
+            android:layout_column="0"
+            android:background="#FFFFFF"
+            android:gravity="center_vertical|center_horizontal">
+        <!-- //TODO:   id currentROW  -->
 
         <!-- //TODO:   completedwork  -->
 
@@ -174,9 +232,21 @@
         </com.google.android.material.textfield.TextInputLayout>
 
 
+        </TableRow>
 
 
 
+
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="1dp"
+            android:padding="1dp"
+            android:layout_column="0"
+            android:background="#FFFFFF"
+            android:gravity="center_vertical|center_horizontal">
+        <!-- //TODO:   id currentROW  -->
 
         <!-- //TODO:   date_update  -->
 
@@ -208,6 +278,24 @@
 
 
 
+        </TableRow>
+
+
+
+
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="1dp"
+            android:padding="1dp"
+            android:layout_column="0"
+            android:background="#FFFFFF"
+            android:gravity="center_vertical|center_horizontal">
+        <!-- //TODO:   id currentROW  -->
+
+
+
         <!-- //TODO:   city  -->
 
         <com.google.android.material.textfield.TextInputLayout
@@ -236,6 +324,23 @@
                 android:text="city value " />
         </com.google.android.material.textfield.TextInputLayout>
 
+
+        </TableRow>
+
+
+
+
+
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="1dp"
+            android:padding="1dp"
+            android:layout_column="0"
+            android:background="#FFFFFF"
+            android:gravity="center_vertical|center_horizontal">
+        <!-- //TODO:   id currentROW  -->
 
 
 
@@ -269,6 +374,22 @@
 
 
 
+        </TableRow>
+
+
+
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="1dp"
+            android:padding="1dp"
+            android:layout_column="0"
+            android:background="#FFFFFF"
+            android:gravity="center_vertical|center_horizontal">
+        <!-- //TODO:   id currentROW  -->
+
+
         <!-- //TODO:   gps1  -->
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/id_textinputlayout_gps1"
@@ -297,6 +418,23 @@
 
 
 
+        </TableRow>
+
+
+
+
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="1dp"
+            android:padding="1dp"
+            android:layout_column="0"
+            android:background="#FFFFFF"
+            android:gravity="center_vertical|center_horizontal">
+        <!-- //TODO:   id currentROW  -->
+
+
         <!-- //TODO:   gps2  -->
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/id_textinputlayout_gps2"
@@ -323,7 +461,15 @@
                 android:text="gps2 value " />
         </com.google.android.material.textfield.TextInputLayout>
 
-    </RelativeLayout>
+        </TableRow>
+
+
+
+
+
+
+
+    </TableLayout>
 </com.google.android.material.card.MaterialCardView>
 
 

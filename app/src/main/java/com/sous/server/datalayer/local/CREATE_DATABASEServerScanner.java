@@ -26,7 +26,7 @@ public class CREATE_DATABASEServerScanner extends SQLiteOpenHelper{ ///SQLiteOpe
 
     private static  AtomicReference<SQLiteDatabase> atomicstoredEntities = new AtomicReference<>();
    // private static     SQLiteDatabase ССылкаНаСозданнуюБазу;
-    private static final int DATABASE_VERSION = 19;
+    private static final int DATABASE_VERSION = 20;
     private Long version=0l;
     private SharedPreferences preferencesGatt;
 
@@ -179,7 +179,7 @@ public class CREATE_DATABASEServerScanner extends SQLiteOpenHelper{ ///SQLiteOpe
                                 " macdevice TEXT ," +
                                 " gps1  NUMERIC ," +
                                 " gps2  NUMERIC ," +
-                                " getstatusrow INTEGER  DEFAULT 0 ," +
+                                " getstatusrow TEXT ," +
                                 " adress TEXT ," +
                                 " city TEXT ," +
                                 " date_update NUMERIC   ," +
