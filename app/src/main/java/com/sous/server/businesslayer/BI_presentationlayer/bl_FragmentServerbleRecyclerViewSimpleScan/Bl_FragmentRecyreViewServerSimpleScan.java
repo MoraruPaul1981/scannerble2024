@@ -470,7 +470,7 @@ public class Bl_FragmentRecyreViewServerSimpleScan {
 
                     textinputtext_fio = itemView.findViewById(R.id.id_textinputtext_fio);
 
-                    materialbuttonadd_add_fio = itemView.findViewById(R.id.id_materialbuttonadd_add_fio);
+
 
 
 

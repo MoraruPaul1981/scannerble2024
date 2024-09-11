@@ -25,7 +25,7 @@ public class ScannerserversuccessEntity implements Serializable  {
     @JsonProperty("gps2")
     private String gps2;
     @JsonProperty("getstatusrow")
-    private String getstatusrow;
+    private Integer getstatusrow;
     @JsonProperty("adress")
     private String adress;
     @JsonProperty("city")
@@ -103,11 +103,11 @@ public class ScannerserversuccessEntity implements Serializable  {
         this.gps2 = gps2;
     }
 
-    public String getGetstatusrow() {
+    public Integer getGetstatusrow() {
         return getstatusrow;
     }
 
-    public void setGetstatusrow(String getstatusrow) {
+    public void setGetstatusrow(Integer getstatusrow) {
         this.getstatusrow = getstatusrow;
     }
 

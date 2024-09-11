@@ -45,26 +45,30 @@
             android:id="@+id/id_tabLayout_gatt_server_ble"
             android:layout_centerHorizontal="true"
             android:layout_alignParentTop="true"
-            android:layout_width="180dp"
-            android:layout_height="25dp"
-            android:layout_margin="5dp"
+            android:layout_width="200dp"
+            android:layout_height="35dp"
+            android:layout_margin="2dp"
+            android:padding="2dp"
             android:elevation="3dp"
             app:tabMinWidth="100dp"
-            app:tabIndicatorColor="#E1D9D9"
+            app:tabIndicatorColor="#121010"
             app:tabIndicatorHeight="2dp"
             app:tabTextColor="#050505"
             app:tabSelectedTextColor="#10100F"
             app:tabMode="fixed"
-            app:tabTextAppearance="@style/TextAppearance.AppCompat.Caption"
-            android:drawableLeft="@drawable/icon_ble_mac_list"
-            android:padding="2dp">
+            app:tabTextAppearance="@style/TextAppearance.AppCompat.Caption">
+
             <com.google.android.material.tabs.TabItem
                 android:id="@+id/id_tabItem_server_ble"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:drawableLeft="@drawable/icon_ble_mac_list"
+                android:icon="@drawable/icon_bluetooth_start"
                 android:textSize="12sp"
                 android:text="девайс" />
+
+
+
+
         </com.google.android.material.tabs.TabLayout>
 
         </TableRow>
@@ -164,25 +168,6 @@
 
 
 
-                <com.google.android.material.button.MaterialButton
-                    style="@style/Widget.MaterialComponents.Button.TextButton"
-                    android:id="@+id/id_materialbuttonadd_add_fio"
-                    android:layout_width="43dp"
-                    android:layout_height="50dp"
-                    android:layout_marginTop="7dp"
-                    android:layout_marginEnd="5dp"
-                    android:layout_marginStart="1dp"
-                    android:layout_alignParentRight="true"
-                    android:layout_alignParentTop="true"
-                    android:minHeight="50dp"
-                    android:backgroundTint="#353737"
-                    android:backgroundTintMode="screen"
-                    android:stateListAnimator="@drawable/icon_gattserver_save_fio"
-                    app:icon="@drawable/icon_gatt_serveradd_fio"
-                    app:iconSize="27dp"
-                    app:cornerRadius="10dp"
-                    app:iconTint="#FAF9F9"
-                    app:rippleColor="#FFFFFF" />
 
 
 
