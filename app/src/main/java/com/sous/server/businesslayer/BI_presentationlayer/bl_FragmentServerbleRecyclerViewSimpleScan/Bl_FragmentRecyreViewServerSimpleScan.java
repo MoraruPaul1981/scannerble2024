@@ -28,7 +28,9 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.badge.BadgeDrawable;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.android.material.button.MaterialButton;
 import com.google.android.material.card.MaterialCardView;
+import com.google.android.material.tabs.TabItem;
 import com.google.android.material.tabs.TabLayout;
 import com.google.android.material.textfield.TextInputEditText;
 import com.sous.server.R;
@@ -406,6 +408,7 @@ public class Bl_FragmentRecyreViewServerSimpleScan {
         private    TextInputEditText   textinputtext_id_currentrow;
         private    TextInputEditText textinputtext_namedevice;
         private    TextInputEditText textinputtext_fio;
+        private MaterialButton materialbuttonadd_add_fio;
 
         private    TextInputEditText textinputtext_macdevice;
         private    TextInputEditText  textinputtext_completedwork;
@@ -466,6 +469,13 @@ public class Bl_FragmentRecyreViewServerSimpleScan {
                     textinputtext_id_currentrow = itemView.findViewById(R.id.id_textinputtext_id_currentrow);
 
                     textinputtext_fio = itemView.findViewById(R.id.id_textinputtext_fio);
+
+                    materialbuttonadd_add_fio = itemView.findViewById(R.id.id_materialbuttonadd_add_fio);
+
+
+
+
+
 
                     textinputtext_namedevice = itemView.findViewById(R.id.id_textinputtext_namedevice);
 

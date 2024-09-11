@@ -86,11 +86,13 @@
             android:layout_below="@+id/id_tabLayout_server_ble"
             android:layout_centerHorizontal="true"
             android:layout_margin="2dp"
-
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:boxBackgroundMode="outline"
+            android:focusable="false"
+            android:clickable="false"
             android:focusableInTouchMode="true">
+
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/id_textinputtext_id_currentrow"
                 android:backgroundTint="#707B7C"
@@ -102,6 +104,8 @@
                 android:minHeight="30dp"
                 android:textSize="12sp"
                 android:textStyle="bold"
+                android:focusable="false"
+                android:clickable="false"
                 android:hint="id"
                 android:text="id value " />
         </com.google.android.material.textfield.TextInputLayout>
@@ -138,6 +142,7 @@
                     android:layout_height="wrap_content"
                     app:boxBackgroundMode="outline"
                     android:focusableInTouchMode="true">
+
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/id_textinputtext_fio"
                         android:backgroundTint="#707B7C"
@@ -150,8 +155,10 @@
                         android:minHeight="30dp"
                         android:textSize="12sp"
                         android:textStyle="bold"
+                        android:focusable="false"
+                        android:clickable="false"
                         android:hint="фио"
-                        android:text="fio">
+                        android:text="fio value">
                     </com.google.android.material.textfield.TextInputEditText>
                 </com.google.android.material.textfield.TextInputLayout>
 
@@ -159,7 +166,7 @@
 
                 <com.google.android.material.button.MaterialButton
                     style="@style/Widget.MaterialComponents.Button.TextButton"
-                    android:id="@+id/materialbuttonadd_add_fio"
+                    android:id="@+id/id_materialbuttonadd_add_fio"
                     android:layout_width="43dp"
                     android:layout_height="50dp"
                     android:layout_marginTop="7dp"
@@ -170,7 +177,7 @@
                     android:minHeight="50dp"
                     android:backgroundTint="#353737"
                     android:backgroundTintMode="screen"
-                    android:stateListAnimator="@drawable/icon_gatt_serveradd_fio"
+                    android:stateListAnimator="@drawable/icon_gattserver_save_fio"
                     app:icon="@drawable/icon_gatt_serveradd_fio"
                     app:iconSize="27dp"
                     app:cornerRadius="10dp"
@@ -228,10 +235,12 @@
             app:boxBackgroundMode="outline"
             android:layout_centerHorizontal="true"
             android:layout_margin="2dp"
-
+            android:focusable="false"
+            android:clickable="false"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:focusableInTouchMode="true">
+
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/id_textinputtext_macdevice"
                 android:backgroundTint="#707B7C"
@@ -242,6 +251,8 @@
                  android:layout_height="wrap_content"
                 android:minHeight="30dp"
                 android:textSize="12sp"
+                android:focusable="false"
+                android:clickable="false"
                 android:textStyle="bold"
                 android:hint="мак-адрес"
                 android:text="macdevice value " />
@@ -270,7 +281,8 @@
                 android:layout_below="@+id/id_textinputlayout_id_currentrow"
                 android:layout_centerHorizontal="true"
                 android:layout_margin="2dp"
-
+                android:focusable="false"
+                android:clickable="false"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:boxBackgroundMode="outline"
@@ -286,6 +298,8 @@
                     android:minHeight="30dp"
                     android:textSize="12sp"
                     android:textStyle="bold"
+                    android:focusable="false"
+                    android:clickable="false"
                     android:hint="девайс"
                     android:text="namedevice value " />
             </com.google.android.material.textfield.TextInputLayout>
@@ -316,7 +330,8 @@
             android:layout_below="@+id/id_textinputlayout_macdevice"
             android:layout_centerHorizontal="true"
             android:layout_margin="2dp"
-
+            android:focusable="false"
+            android:clickable="false"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:focusableInTouchMode="true">
@@ -331,6 +346,8 @@
                 android:gravity="center"
                 android:textSize="12sp"
                 android:textStyle="bold"
+                android:focusable="false"
+                android:clickable="false"
                 android:hint="статус"
                 android:text="completedwork value " />
         </com.google.android.material.textfield.TextInputLayout>
@@ -361,7 +378,8 @@
             android:layout_below="@+id/id_textinputlayout_completedwork"
             android:layout_centerHorizontal="true"
             android:layout_margin="2dp"
-
+            android:focusable="false"
+            android:clickable="false"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:focusableInTouchMode="true">
@@ -377,6 +395,8 @@
                 android:textSize="12sp"
                 android:textStyle="bold"
                 android:hint="дата"
+                android:focusable="false"
+                android:clickable="false"
                 android:text="date_update value " />
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -409,7 +429,8 @@
             android:layout_below="@+id/id_textinputlayout_date_update"
             android:layout_centerHorizontal="true"
             android:layout_margin="2dp"
-
+            android:focusable="false"
+            android:clickable="false"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:focusableInTouchMode="true">
@@ -425,6 +446,8 @@
                 android:textSize="12sp"
                 android:textStyle="bold"
                 android:hint="город"
+                android:focusable="false"
+                android:clickable="false"
                 android:text="city value " />
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -457,7 +480,8 @@
             android:layout_below="@+id/id_textinputlayout_city"
             android:layout_centerHorizontal="true"
             android:layout_margin="2dp"
-
+            android:focusable="false"
+            android:clickable="false"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:focusableInTouchMode="true">
@@ -473,6 +497,8 @@
                 android:textSize="12sp"
                 android:textStyle="bold"
                 android:hint="адрес"
+                android:focusable="false"
+                android:clickable="false"
                 android:text="adress value " />
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -517,6 +543,8 @@
                 android:textSize="12sp"
                 android:textStyle="bold"
                 android:hint="gps1"
+                android:focusable="false"
+                android:clickable="false"
                 android:text="gps1  value " />
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -547,6 +575,8 @@
             android:layout_below="@+id/id_textinputlayout_gps1"
             android:layout_centerHorizontal="true"
             android:layout_margin="2dp"
+            android:focusable="false"
+            android:clickable="false"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:focusableInTouchMode="true">
@@ -562,6 +592,8 @@
                 android:textSize="12sp"
                 android:textStyle="bold"
                 android:hint="gps2"
+                android:focusable="false"
+                android:clickable="false"
                 android:text="gps2 value " />
         </com.google.android.material.textfield.TextInputLayout>
 
