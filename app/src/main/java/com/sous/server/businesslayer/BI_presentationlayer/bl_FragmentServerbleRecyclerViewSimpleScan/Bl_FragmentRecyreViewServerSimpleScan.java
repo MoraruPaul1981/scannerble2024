@@ -2,22 +2,15 @@ package com.sous.server.businesslayer.BI_presentationlayer.bl_FragmentServerbleR
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
-import android.bluetooth.BluetoothAdapter;
 import android.content.ContentValues;
 import android.content.Context;
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.ProviderInfo;
 import android.database.Cursor;
 import android.graphics.Color;
-import android.graphics.drawable.Drawable;
-import android.os.Handler;
 import android.os.Message;
-import android.preference.PreferenceManager;
 import android.util.Log;
-import android.view.Gravity;
 import android.view.LayoutInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
@@ -34,19 +27,15 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.badge.BadgeDrawable;
-import com.google.android.material.bottomnavigation.BottomNavigationItemView;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.card.MaterialCardView;
 import com.google.android.material.tabs.TabLayout;
 import com.google.android.material.textfield.TextInputEditText;
 import com.sous.server.R;
-import com.sous.server.businesslayer.BI_presentationlayer.bl_FragmentServerRecyreView.BlgeneralServer;
 import com.sous.server.businesslayer.ContentProvoders.ContentProviderServer;
 import com.sous.server.businesslayer.Errors.SubClassErrors;
 import com.sous.server.datalayer.remote.bl_writeandreadScanCatt.BunissecclogicCursorLister;
 import com.sous.server.datalayer.remote.bl_writeandreadScanCatt.WtitingAndreadDataForScanGatt;
-
-import org.jetbrains.annotations.NotNull;
 
 import java.util.Date;
 import java.util.List;
@@ -411,11 +400,12 @@ public class Bl_FragmentRecyreViewServerSimpleScan {
     protected class MyViewHolder extends RecyclerView.ViewHolder {
         private MaterialCardView  card_server_success_data_oncreateviewholder;
 
-        private TabLayout  tabLayout_server_ble;
+        private TabLayout tabLayout_gatt_server_ble;
         private TabLayout  tabLayout_server_ble_parent;
         // TODO: 18.07.2024 TextInputEditText все компонеты
         private    TextInputEditText   textinputtext_id_currentrow;
         private    TextInputEditText textinputtext_namedevice;
+        private    TextInputEditText textinputtext_fio;
 
         private    TextInputEditText textinputtext_macdevice;
         private    TextInputEditText  textinputtext_completedwork;
@@ -468,12 +458,14 @@ public class Bl_FragmentRecyreViewServerSimpleScan {
                     //TODO Если инициализация проша тогда Инициализируем Компоненты
                 if (card_server_success_data_oncreateviewholder!=null) {
 
-                     tabLayout_server_ble = itemView.findViewById(R.id.id_tabLayout_server_ble);
+                    tabLayout_gatt_server_ble = itemView.findViewById(R.id.id_tabLayout_gatt_server_ble);
 
                    tabLayout_server_ble_parent = itemView.findViewById(R.id.id_tabLayout_server_ble_parent);
 
                     // TODO: 18.07.2024 TextInputEditText все компонеты
                     textinputtext_id_currentrow = itemView.findViewById(R.id.id_textinputtext_id_currentrow);
+
+                    textinputtext_fio = itemView.findViewById(R.id.id_textinputtext_fio);
 
                     textinputtext_namedevice = itemView.findViewById(R.id.id_textinputtext_namedevice);
 
@@ -841,14 +833,14 @@ public class Bl_FragmentRecyreViewServerSimpleScan {
     private void getAnimationtabLayout_server_ble(@NonNull MyViewHolder holder) {
         try{
         Animation animationscroll  = AnimationUtils.loadAnimation(context, R.anim.fadein);
-        holder.tabLayout_server_ble.startAnimation(animationscroll);
+        holder.tabLayout_gatt_server_ble.startAnimation(animationscroll);
 
         messageGattServer.getTarget().postDelayed(()->{
-            holder.tabLayout_server_ble.setBackgroundColor(Color.WHITE);
+            holder.tabLayout_gatt_server_ble.setBackgroundColor(Color.WHITE);
 
 
         },1500);
-            holder.tabLayout_server_ble.setBackgroundColor(Color.GRAY);
+            holder.tabLayout_gatt_server_ble.setBackgroundColor(Color.GRAY);
 
     } catch (Exception e) {
         e.printStackTrace();
@@ -1372,7 +1364,7 @@ public class Bl_FragmentRecyreViewServerSimpleScan {
 
     private void tabLayoutClick(@NonNull MyViewHolder holder) {
         try {
-            holder.tabLayout_server_ble.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+            holder.tabLayout_gatt_server_ble.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
                 @Override
                 public void onTabSelected(TabLayout.Tab tab) {
                     Log.d(context.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
