@@ -84,11 +84,10 @@ public class BinesslogicJakson {
 
 
     @SuppressLint("NewApi")
-    public  Long   sendOkhhtpServiceForJboss(@NonNull Context context,
-            @NonNull long version,
-                                             @NonNull LinkedHashMap<String, String> getJbossAdress,
-                                                 @NonNull Cursor cursorlocal,
-                                                  byte[] ByteJakson)
+    public  Long   sendOkhhtpServiceForJboss(@NonNull Context context, @NonNull long version,
+                                             @NonNull LinkedHashMap<String, String> getJbossAdress, @NonNull Cursor cursorlocal,
+                                             @NonNull  byte[] ByteJakson,
+                                             @NonNull OkHttpClient.Builder getOkhhtpBuilder)
             throws ExecutionException, InterruptedException {
         // TODO: 22.08.2024  Коненпт провайдер для зааписив базу данных
         AtomicReference<Long> буферОтветотJbossfinal= new AtomicReference(0l);
@@ -103,7 +102,7 @@ public class BinesslogicJakson {
                     Log.d(context.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                             " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
                             " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" +" Adress " +Adress);
-                    OkHttpClient okHttpClientGattServer =new GetOkhhtpBuilder().getOkhhtpBuilder(context) .addInterceptor(new Interceptor() {
+                    OkHttpClient okHttpClientGattServer =getOkhhtpBuilder.addInterceptor(new Interceptor() {
                                 @Override
                                 public Response intercept(Chain chain) throws IOException {
                                     // TODO: 21.08.2024
@@ -240,6 +239,7 @@ public class BinesslogicJakson {
                         dispatcherДанныеОтСервера.executorService().awaitTermination(1, TimeUnit.DAYS);
                         // TODO: 09.09.2024
                         dispatcherДанныеОтСервера.cancelAll();
+                        okHttpClientGattServer.connectionPool().evictAll();
                         // TODO: 10.09.2024
                         // TODO: 09.09.2024
                     } catch (InterruptedException e) {

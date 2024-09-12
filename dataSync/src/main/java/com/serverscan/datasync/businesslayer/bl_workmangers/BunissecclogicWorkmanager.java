@@ -1,23 +1,26 @@
 package com.serverscan.datasync.businesslayer.bl_workmangers;
 
+import android.content.ComponentCallbacks;
 import android.content.ComponentName;
 import android.content.ContentValues;
 import android.content.Context;
+import android.content.Intent;
 import android.content.ServiceConnection;
-import android.content.SharedPreferences;
+import android.content.res.Configuration;
 import android.os.Handler;
 import android.os.IBinder;
 import android.os.Looper;
-import android.preference.PreferenceManager;
 import android.util.Log;
 
 import androidx.annotation.NonNull;
 
 import com.serverscan.datasync.businesslayer.Errors.SubClassErrors;
 import com.serverscan.datasync.businesslayer.Services.DataSyncService;
-import com.serverscan.datasync.businesslayer.bl_datasyncservice.BinesslogicDataSyncService;
-import com.serverscan.datasync.businesslayer.bl_datasyncservice.InterfaceDataSyncService;
+import com.serverscan.datasync.businesslayer.bl_datasyncservice.BinesslogicDataSyncServicestartingStarting;
+import com.serverscan.datasync.businesslayer.bl_datasyncservice.InterfaceDataSyncServicestarting;
 import com.serverscan.datasync.businesslayer.bl_network.WorkerStatusNewtorks;
+
+import java.util.Random;
 
 import javax.inject.Inject;
 
@@ -90,8 +93,8 @@ try {
         try {
             // TODO: 19.08.2024
 
-            class StartingDataService extends BinesslogicDataSyncService{
-                public StartingDataService(@NonNull Context hiltcontext, @NonNull Long hilversion) {
+            class StartingDataServicestartingStarting extends BinesslogicDataSyncServicestartingStarting {
+                public StartingDataServicestartingStarting(@NonNull Context hiltcontext, @NonNull Long hilversion) {
                     super(hiltcontext, hilversion);
                 }
 
@@ -115,8 +118,8 @@ try {
                     " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" );
 
             // TODO: 03.09.2024  класс второй
-            class BindigDataService extends BinesslogicDataSyncService{
-                public BindigDataService(@NonNull Context hiltcontext, @NonNull Long hilversion) {
+            class BindigDataServicestartingStarting extends BinesslogicDataSyncServicestartingStarting {
+                public BindigDataServicestartingStarting(@NonNull Context hiltcontext, @NonNull Long hilversion) {
                     super(hiltcontext, hilversion);
                 }
 
@@ -157,9 +160,9 @@ try {
                 }
             }
 // TODO: 03.09.2024 запускам службу один из варантов
-            InterfaceDataSyncService interfaceDataSyncService= new BindigDataService(context,version);
+            InterfaceDataSyncServicestarting interfaceDataSyncServicestarting = new BindigDataServicestartingStarting(context,version);
             // TODO: 03.09.2024   биндингом
-            interfaceDataSyncService.startingDataSyncService(stateScartServiceScan);
+            interfaceDataSyncServicestarting.startingDataSyncService(stateScartServiceScan);
 
             Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                     " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
@@ -191,7 +194,23 @@ try {
         // TODO: 09.08.2024
         try {
             // TODO: 03.09.2024 Запускаем синхронизацию с сервером JBOSS
-       localBinderСерверBLE.getService().onTransact(context,version );
+
+            localBinderСерверBLE.getService().onStartCommand(new Intent(),new Random().nextInt(),new Random().nextInt());
+       localBinderСерверBLE.getService().registerComponentCallbacks(new ComponentCallbacks() {
+           @Override
+           public void onConfigurationChanged(@NonNull Configuration configuration) {
+               Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                       " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                       " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n");
+           }
+
+           @Override
+           public void onLowMemory() {
+               Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                       " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                       " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n");
+           }
+       });
 
             Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                     " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +

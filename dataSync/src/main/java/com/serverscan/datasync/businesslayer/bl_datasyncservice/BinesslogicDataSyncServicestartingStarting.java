@@ -10,12 +10,12 @@ import androidx.annotation.NonNull;
 import com.serverscan.datasync.businesslayer.Errors.SubClassErrors;
 import com.serverscan.datasync.businesslayer.Services.DataSyncService;
 
-public class BinesslogicDataSyncService  implements  InterfaceDataSyncService {
+public class BinesslogicDataSyncServicestartingStarting implements InterfaceDataSyncServicestarting {
 
   public    Intent intentDataSyncService;
     public  Context context;
     public   Long version;
-    public BinesslogicDataSyncService(@NonNull Context hiltcontext, @NonNull Long hilversion) {
+    public BinesslogicDataSyncServicestartingStarting(@NonNull Context hiltcontext, @NonNull Long hilversion) {
         // TODO: 03.09.2024
         context=hiltcontext;
         version=hilversion;
