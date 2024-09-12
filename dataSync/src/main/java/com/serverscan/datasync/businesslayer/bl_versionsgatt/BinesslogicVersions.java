@@ -2,7 +2,6 @@ package com.serverscan.datasync.businesslayer.bl_versionsgatt;
 
 
 import android.annotation.SuppressLint;
-import android.content.ContentProvider;
 import android.content.ContentResolver;
 import android.content.ContentValues;
 import android.content.Context;
@@ -13,6 +12,7 @@ import android.util.Log;
 import androidx.annotation.NonNull;
 import com.serverscan.datasync.businesslayer.Errors.SubClassErrors;
 import com.serverscan.datasync.businesslayer.bl_dates.WorkerDates;
+import com.serverscan.datasync.datalayer.findingtodata.FindingDataForGatServer;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -135,9 +135,13 @@ Context context;
     }
 
     @SuppressLint("NewApi")
-    public void  recordinganewVersionAdvensedScannerserversuccess  (@NotNull Context context , @NotNull Long version ,
-                                                                    @NonNull Long буферОтветотJbossfinal){
+    public void  recordinganewVersionAdvensedScannerserversuccess  (@NotNull Context context , @NotNull Long version){
         try{
+
+            FindingDataForGatServer findingDataForGatServer=new FindingDataForGatServer();
+            // Long current_table = findVersonGattServer("SELECT MAX ( versionremote  ) AS MAX_R  FROM gattserverdataversion","gattserverdataversion");
+            Long буферОтветотJbossfinal =findingDataForGatServer.findVersonGattServer("SELECT MAX ( current_table  ) AS MAX_R  FROM scannerserversuccess","scannerserversuccess");
+
             ContentResolver contentProviderNewVersion=context.getContentResolver();
             Uri uri = Uri.parse("content://com.sous.servergatt.prodider/gattserverdataversion" );
             // TODO: 09.09.2024

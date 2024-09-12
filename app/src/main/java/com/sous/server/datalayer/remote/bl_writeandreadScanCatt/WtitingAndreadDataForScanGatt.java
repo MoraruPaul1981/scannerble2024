@@ -7,13 +7,8 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.net.Uri;
-import android.os.VibrationEffect;
-import android.os.Vibrator;
 import android.util.Log;
 
-import androidx.work.impl.Scheduler;
-
-import com.serverscan.datasync.businesslayer.bl_versionsgatt.BinesslogicVersions;
 import com.sous.server.businesslayer.ContentProvoders.ContentProviderServer;
 import com.sous.server.businesslayer.Errors.SubClassErrors;
 import com.sous.server.businesslayer.Eventbus.MessageScannerServer;
@@ -23,33 +18,13 @@ import com.sous.server.businesslayer.bl_dates.WorkerDates;
 
 import org.greenrobot.eventbus.EventBus;
 
-import java.math.BigInteger;
-import java.text.DateFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.time.Duration;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.Calendar;
 import java.util.Date;
-import java.util.GregorianCalendar;
-import java.util.Locale;
-import java.util.TimeZone;
-import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
-import java.util.concurrent.ConcurrentSkipListSet;
-import java.util.concurrent.TimeUnit;
-import java.util.function.LongToDoubleFunction;
 
-import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
 import io.reactivex.rxjava3.annotations.NonNull;
-import io.reactivex.rxjava3.core.Completable;
-import io.reactivex.rxjava3.core.CompletableObserver;
-import io.reactivex.rxjava3.disposables.Disposable;
-import io.reactivex.rxjava3.functions.Action;
-import io.reactivex.rxjava3.functions.Consumer;
-import io.reactivex.rxjava3.schedulers.Schedulers;
 
 public class WtitingAndreadDataForScanGatt {
     // TODO: 25.07.2024
@@ -59,7 +34,7 @@ public class WtitingAndreadDataForScanGatt {
     private  SharedPreferences sharedPreferencesGatt;
     private  Cursor successfuldevices;
     protected ConcurrentHashMap<String,ContentValues>       contentValuesConcurrentHashMap=new ConcurrentHashMap<>();
-    private  Integer dateLimitforrecording=10;
+    private  Integer dateLimitforrecording=60;
 
     public WtitingAndreadDataForScanGatt(Context context, Long version,
                                          ContentProviderServer contentProviderServer,
@@ -342,13 +317,13 @@ try{
 
             // TODO: 10.02.2023 версия данных
             // TODO: 10.02.2023 версия данных
-           // Long current_table = МетодПоискДАнныхПоБазе("SELECT MAX ( versionremote  ) AS MAX_R  FROM gattserverdataversion","gattserverdataversion");
-            Long current_table = МетодПоискДАнныхПоБазе("SELECT MAX ( current_table  ) AS MAX_R  FROM scannerserversuccess","scannerserversuccess");
+           // Long current_table = upVesrionScannerGatt("SELECT MAX ( versionremote  ) AS MAX_R  FROM gattserverdataversion","gattserverdataversion");
+            Long current_table = upVesrionScannerGatt("SELECT MAX ( current_table  ) AS MAX_R  FROM scannerserversuccess","scannerserversuccess");
             contentValuesВставкаДанных.put("current_table", current_table.toString() );
 
 
-          //  Long version = МетодПоискДАнныхПоБазе("SELECT MAX ( versionlocal  ) AS MAX_R  FROM gattserverdataversion","gattserverdataversion");
-            Long version = МетодПоискДАнныхПоБазе("SELECT MAX ( version  ) AS MAX_R  FROM scannerserversuccess","scannerserversuccess");
+          //  Long version = upVesrionScannerGatt("SELECT MAX ( versionlocal  ) AS MAX_R  FROM gattserverdataversion","gattserverdataversion");
+            Long version = upVesrionScannerGatt("SELECT MAX ( version  ) AS MAX_R  FROM scannerserversuccess","scannerserversuccess");
             contentValuesВставкаДанных.put("version", version.toString());
 
 
@@ -432,7 +407,7 @@ try{
 
 
     // TODO: 10.02.2023 МЕТОД ВЫБОР ДАННЫХ
-    public  Long МетодПоискДАнныхПоБазе(@NonNull String СамЗапрос,@NonNull String nametable) {
+    public  Long upVesrionScannerGatt(@NonNull String СамЗапрос, @NonNull String nametable) {
         Long   ВерсияДАнных = 0l;
         try{
             Uri uri = Uri.parse("content://com.sous.servergatt.prodider/"+nametable+"" );

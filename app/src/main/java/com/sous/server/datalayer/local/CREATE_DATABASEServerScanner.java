@@ -26,7 +26,7 @@ public class CREATE_DATABASEServerScanner extends SQLiteOpenHelper{ ///SQLiteOpe
 
     private static  AtomicReference<SQLiteDatabase> atomicstoredEntities = new AtomicReference<>();
    // private static     SQLiteDatabase ССылкаНаСозданнуюБазу;
-    private static final int DATABASE_VERSION = 20;
+    private static final int DATABASE_VERSION = 22;
     private Long version=0l;
     private SharedPreferences preferencesGatt;
 
@@ -182,7 +182,7 @@ public class CREATE_DATABASEServerScanner extends SQLiteOpenHelper{ ///SQLiteOpe
                                 " macdevice TEXT ," +
                                 " gps1  NUMERIC ," +
                                 " gps2  NUMERIC ," +
-                                " getstatusrow TEXT ," +
+                                " fio TEXT ," +
                                 " adress TEXT ," +
                                 " city TEXT ," +
                                 " date_update NUMERIC   ," +
@@ -263,17 +263,14 @@ public class CREATE_DATABASEServerScanner extends SQLiteOpenHelper{ ///SQLiteOpe
 
     private void МетодСозданиеТаблицДляСостыковкиФИОсостовная(@NotNull SQLiteDatabase ССылкаНаСозданнуюБазу) {//BEFORE   INSERT , UPDATE , DELETE
         try{
-            ССылкаНаСозданнуюБазу.execSQL("drop table  if exists   "+"connectionmaсwithfullname"+"");//test
-            ССылкаНаСозданнуюБазу.execSQL("Create table if not exists   "+"connectionmaсwithfullname"+" (" +
-                    "id  INTEGER  PRIMARY KEY AUTOINCREMENT    ," +
+            ССылкаНаСозданнуюБазу.execSQL("drop table  if exists   "+"completeallmacadressusers"+"");//test
+            ССылкаНаСозданнуюБазу.execSQL("Create table if not exists   "+"completeallmacadressusers"+" (" +
+                    " id  INTEGER      ," +
                     " fio  TEXT ," +
-                    " useridfio INTEGER  ," +
-                    " namedevice TEXT  ," +
-                    " macdevice TEXT ," +
+                    " mac TEXT  ," +
                     " date_update NUMERIC   ," +
-                    " uuid  NUMERIC UNIQUE DEFAULT 0  ,"+
-                    " version  NUMERIC ," +
-                    " current_table   NUMERIC UNIQUE DEFAULT 0 )");
+                    " current_table   NUMERIC UNIQUE DEFAULT 0 ,"+
+                    " uuid  NUMERIC UNIQUE DEFAULT 0 ) ");
             Log.d(this.getClass().getName(), " сработала ...  создание таблицы   НазваниеТаблицыДляТригера   "+"scannerserversuccess" );
             //TODO INSERT
 

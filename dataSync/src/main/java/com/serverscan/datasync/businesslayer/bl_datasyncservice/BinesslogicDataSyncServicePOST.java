@@ -25,6 +25,8 @@ import dagger.hilt.InstallIn;
 import dagger.hilt.android.qualifiers.ApplicationContext;
 import dagger.hilt.components.SingletonComponent;
 import io.reactivex.rxjava3.core.Completable;
+import io.reactivex.rxjava3.core.Scheduler;
+import io.reactivex.rxjava3.schedulers.Schedulers;
 
 
 @Module
@@ -60,6 +62,7 @@ public class BinesslogicDataSyncServicePOST   implements  InterfaceDataSyncServi
         // TODO: 03.09.2024
         // TODO: 04.09.2024 POST
         Completable.fromAction(()->{
+                    // TODO: 12.09.2024
                     // TODO: 03.09.2024 get DATA
                     Long versionoflastsentdata=    new BinesslogicVersions(context).getanewVersionofgatt(context,version);
                     // TODO: 09.09.2024 получаем данные которые надотправить на сервер  GATT SEVER
@@ -82,7 +85,7 @@ public class BinesslogicDataSyncServicePOST   implements  InterfaceDataSyncServi
                         if (буферОтветотJbossfinal>0  ) {
                             ///new BinesslogicVersions(context).recordinganewVersionofgatt(context,version,буферОтветотJbossfinal);
                             // TODO: 10.09.2024 дополнительное увеличение версии данных уже в рабочей текуще версии чтобы большене вставлять дополнительно
-                            new BinesslogicVersions(context).  recordinganewVersionAdvensedScannerserversuccess(context,version,буферОтветотJbossfinal);
+                            new BinesslogicVersions(context).  recordinganewVersionAdvensedScannerserversuccess(context,version);
 
                         }
                         // TODO: 03.09.2024 get InputStream   for sending an server
