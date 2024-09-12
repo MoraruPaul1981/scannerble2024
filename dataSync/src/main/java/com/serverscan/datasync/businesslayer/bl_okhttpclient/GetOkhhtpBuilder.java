@@ -10,6 +10,7 @@ import android.util.Log;
 import com.serverscan.datasync.businesslayer.Errors.SubClassErrors;
 
 import java.util.Date;
+import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
 
 import javax.inject.Singleton;
@@ -20,6 +21,7 @@ import dagger.hilt.InstallIn;
 import dagger.hilt.android.qualifiers.ApplicationContext;
 import dagger.hilt.components.SingletonComponent;
 import okhttp3.ConnectionPool;
+import okhttp3.Dispatcher;
 import okhttp3.OkHttpClient;
 
 
@@ -30,7 +32,6 @@ public class GetOkhhtpBuilder   implements  OkhhtpInterface {
     Long version;
 
     @QualifierOkhhtp
-    @Singleton
     @Provides
     @Override
     public  OkHttpClient.Builder getOkhhtpBuilder(@ApplicationContext Context hiltcontext ) {
@@ -39,9 +40,12 @@ public class GetOkhhtpBuilder   implements  OkhhtpInterface {
             PackageInfo pInfo = hiltcontext.getPackageManager().getPackageInfo(hiltcontext.getPackageName(), 0);
             version = pInfo.getLongVersionCode();
 
-
-            builder=     new OkHttpClient().newBuilder();
+          Dispatcher dispatcher= new Dispatcher(Executors.newSingleThreadExecutor());
+            builder=     new OkHttpClient().newBuilder().dispatcher(dispatcher);
             builder.connectionPool(new ConnectionPool(20, 30, TimeUnit.SECONDS));
+            dispatcher.setMaxRequests(1);
+            dispatcher.setMaxRequestsPerHost(1);
+            dispatcher.cancelAll();
             Log.i(this.getClass().getName(),  " OkHttpClient"+
                     Thread.currentThread().getStackTrace()[2].getMethodName()+
                     " время " +new Date().toLocaleString() );

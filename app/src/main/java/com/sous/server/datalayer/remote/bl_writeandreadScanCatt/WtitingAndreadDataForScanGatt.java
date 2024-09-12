@@ -34,7 +34,7 @@ public class WtitingAndreadDataForScanGatt {
     private  SharedPreferences sharedPreferencesGatt;
     private  Cursor successfuldevices;
     protected ConcurrentHashMap<String,ContentValues>       contentValuesConcurrentHashMap=new ConcurrentHashMap<>();
-    private  Integer dateLimitforrecording=60;
+    private  Integer dateLimitAnrecord=65;
 
     public WtitingAndreadDataForScanGatt(Context context, Long version,
                                          ContentProviderServer contentProviderServer,
@@ -64,36 +64,36 @@ public class WtitingAndreadDataForScanGatt {
 
                         // TODO: 25.07.2024
 
-                        String   getcurrentDatefromthedatabase =  getDateStoreOperationsDeviceFronDatabase("SELECT  " +
+                        String   dateLocaleBase =  getDateStoreOperationsDeviceFronDatabase("SELECT  " +
                                 "  MAX ( date_update )   FROM scannerserversuccess " +
                                 " WHERE   macdevice = '"+ contentValuesВставкаДанных.getAsString("macdevice").trim() +"'");
 
                         Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                                 " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
                                 " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" +
-                                "  getcurrentDatefromthedatabase " +getcurrentDatefromthedatabase);
+                                "  dateLocaleBase " +dateLocaleBase);
 
 
 // TODO: 25.07.2024  результат дата старше полу часа или нет АНАЛИЗ ДАТ
                         ConcurrentHashMap<Integer,Integer>   analiysMinuteAndSecund =
-                                findoutthedateDifference(getcurrentDatefromthedatabase, contentValuesВставкаДанных.getAsString("date_update").trim());
+                                findoutthedateDifference(dateLocaleBase, contentValuesВставкаДанных.getAsString("date_update").trim());
 
                         Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                                 " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
                                 " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" +
-                                "  getcurrentDatefromthedatabase " +getcurrentDatefromthedatabase+"\n" + "analiysMinuteAndSecund  " +analiysMinuteAndSecund);
+                                "  dateLimitAnrecord " +dateLimitAnrecord+"\n" + "analiysMinuteAndSecund  " +analiysMinuteAndSecund);
 
 
 // TODO: 30.07.2024 САМА ЗАПИСЬ В БАЗУ
                         if (analiysMinuteAndSecund.size()>0) {
                             // TODO: 30.07.2024
                             Integer resultAddDeviceToGattaDtabse = entryitselfintothedatabase(analiysMinuteAndSecund, contentValuesВставкаДанных,
-                               getcurrentDatefromthedatabase);
+                                    dateLimitAnrecord);
 
                             Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                                     " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
                                     " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" +
-                                    "  getcurrentDatefromthedatabase " +getcurrentDatefromthedatabase+"\n" + "analiysMinuteAndSecund  " +analiysMinuteAndSecund);
+                                    "  dateLimitAnrecord " +dateLimitAnrecord+"\n" + "analiysMinuteAndSecund  " +analiysMinuteAndSecund);
 
                             // TODO: 31.07.2024 main add data for before send
 
@@ -218,13 +218,13 @@ try{
     // TODO: 30.07.2024 САМА ЗАПИСЬ В БАЗУ
     private Integer entryitselfintothedatabase(ConcurrentHashMap<Integer, Integer> analiysMinuteAndSecund,
                                                ContentValues contentValuesВставкаДанных,
-                                               String getcurrentDatefromthedatabase) {
+                                               Integer dateLimitAnrecord) {
         Integer       resultAddDeviceToGattaDtabse=0;
 // TODO: 30.07.2024
         try{
 
                     // TODO: 30.07.2024  get Seconds
-                    if (analiysMinuteAndSecund.values().stream().findAny().get()>=dateLimitforrecording) {
+                    if (analiysMinuteAndSecund.values().stream().findAny().get()>=dateLimitAnrecord) {
 
                         // TODO: 09.02.2023  запись в базу дивайса Отметка сотрдунка
                         resultAddDeviceToGattaDtabse = wtireNewSucceesDeviceOtGattServer(contentValuesВставкаДанных);
@@ -232,7 +232,7 @@ try{
                         Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                                 " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
                                 " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" +
-                                "  getcurrentDatefromthedatabase " + getcurrentDatefromthedatabase +"\n" + "analiysMinuteAndSecund  " + analiysMinuteAndSecund);
+                                "  dateLimitAnrecord " + dateLimitAnrecord +"\n" + "analiysMinuteAndSecund  " + analiysMinuteAndSecund);
                     }
 
                 // TODO: 30.07.2024
@@ -690,30 +690,30 @@ try{
 
 
 
-   ConcurrentHashMap<Integer,Integer>   findoutthedateDifference(@NonNull String getcurrentDatefromthedatabase,@NonNull String getLiveDatefromthedatabase) {
+   ConcurrentHashMap<Integer,Integer>   findoutthedateDifference(@NonNull String dateLocaleBase,@NonNull String dateLocaleNew) {
        // TODO: 30.07.2024 анализ
        ConcurrentHashMap<Integer,Integer>   analiysMinuteAndSecund=new ConcurrentHashMap<>();
        try {
            Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                    " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                   " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"+ " getcurrentDatefromthedatabase " +getcurrentDatefromthedatabase
-                   + "\n"+ " getLiveDatefromthedatabase " +getLiveDatefromthedatabase);
+                   " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"+ " dateLocaleNew " +dateLocaleNew
+                   + "\n"+ " dateLocaleBase " +dateLocaleBase);
 
            // TODO: 25.07.2024 обрабоатываем даты
            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy.MM.dd HH.mm.ss.SSS");
 
            LocalDateTime   LiveDate = null;
-           if (getLiveDatefromthedatabase!=null) {
+           if (dateLocaleNew!=null) {
                try {
-                   LiveDate = LocalDateTime.parse(getLiveDatefromthedatabase, formatter);
+                   LiveDate = LocalDateTime.parse(dateLocaleNew, formatter);
                } catch (Exception e) {
                    //throw new RuntimeException(e);
                }
            }
            LocalDateTime   databaseDate = null;
-           if (getcurrentDatefromthedatabase!=null) {
+           if (dateLocaleBase!=null) {
                try {
-                   databaseDate = LocalDateTime.parse(getcurrentDatefromthedatabase, formatter);
+                   databaseDate = LocalDateTime.parse(dateLocaleBase, formatter);
                } catch (Exception e) {
                  //  throw new RuntimeException(e);
                }
@@ -722,28 +722,28 @@ try{
                    " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
                    " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"+ " LiveDate " +LiveDate+"\n" + "databaseDate " +databaseDate);
 
-           int getMinute = 0;
+           int getSecond = 0;
            Long getSecund = null;
 
            if (databaseDate !=null  && LiveDate!=null ) {
                // TODO: 30.07.2024 если дата в базе есть Есть с чем сравнивать ,
-               getMinute = Math.abs(LiveDate.getMinute() - databaseDate.getMinute());
+               getSecond = Math.abs(LiveDate.getSecond() - databaseDate.getSecond());
                // getMinute = TimeUnit.MINUTES.convert(diff, TimeUnit.MILLISECONDS);
                //int getSecund = Math.abs(LiveDate.getSecond() - databaseDate.getSecond());
                Duration duration = Duration.between(databaseDate, LiveDate);
                getSecund = duration.getSeconds();
 
                // TODO: 30.07.2024 add dat analys
-               analiysMinuteAndSecund.putIfAbsent(getMinute, getSecund.intValue());
+               analiysMinuteAndSecund.putIfAbsent(getSecond, getSecund.intValue());
            }else {
 
                // TODO: 30.07.2024 add dat analys  ,А это первйц заппруске
-               analiysMinuteAndSecund.putIfAbsent(dateLimitforrecording, dateLimitforrecording);
+               analiysMinuteAndSecund.putIfAbsent(dateLimitAnrecord, dateLimitAnrecord);
            }
 
            Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                    " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                   " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"+ " getMinute " +getMinute+
+                   " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"+ " getSecund " +getSecund+
                    " getSecund " +getSecund + "analiysMinuteAndSecund " +analiysMinuteAndSecund );
 
        } catch (Exception e) {

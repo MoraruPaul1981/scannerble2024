@@ -5,7 +5,6 @@ import android.content.Context;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
-import android.os.RemoteException;
 import android.util.Log;
 
 import androidx.annotation.NonNull;
@@ -25,8 +24,6 @@ import dagger.hilt.InstallIn;
 import dagger.hilt.android.qualifiers.ApplicationContext;
 import dagger.hilt.components.SingletonComponent;
 import io.reactivex.rxjava3.core.Completable;
-import io.reactivex.rxjava3.core.Scheduler;
-import io.reactivex.rxjava3.schedulers.Schedulers;
 
 
 @Module
@@ -85,7 +82,7 @@ public class BinesslogicDataSyncServicePOST   implements  InterfaceDataSyncServi
                         if (буферОтветотJbossfinal>0  ) {
                             ///new BinesslogicVersions(context).recordinganewVersionofgatt(context,version,буферОтветотJbossfinal);
                             // TODO: 10.09.2024 дополнительное увеличение версии данных уже в рабочей текуще версии чтобы большене вставлять дополнительно
-                            new BinesslogicVersions(context).  recordinganewVersionAdvensedScannerserversuccess(context,version);
+                            new BinesslogicVersions(context).recordingAfterNewVersionwealign(context,version);
 
                         }
                         // TODO: 03.09.2024 get InputStream   for sending an server

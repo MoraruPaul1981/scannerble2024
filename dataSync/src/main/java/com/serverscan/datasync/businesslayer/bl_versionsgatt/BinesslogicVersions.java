@@ -135,7 +135,7 @@ Context context;
     }
 
     @SuppressLint("NewApi")
-    public void  recordinganewVersionAdvensedScannerserversuccess  (@NotNull Context context , @NotNull Long version){
+    public void recordingAfterNewVersionwealign(@NotNull Context context , @NotNull Long version){
         try{
 
             FindingDataForGatServer findingDataForGatServer=new FindingDataForGatServer();

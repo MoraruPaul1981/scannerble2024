@@ -119,6 +119,8 @@ try {
 
             // TODO: 03.09.2024  класс второй
             class BindigDataServicestartingStarting extends BinesslogicDataSyncServicestartingStarting {
+                // TODO: 12.09.2024  
+                ServiceConnection serviceConnection;
                 public BindigDataServicestartingStarting(@NonNull Context hiltcontext, @NonNull Long hilversion) {
                     super(hiltcontext, hilversion);
                 }
@@ -127,16 +129,16 @@ try {
                 public void startingDataSyncService(@NonNull String stateScartServiceScan) {
                     // TODO: 03.09.2024
                     super.startingDataSyncService(stateScartServiceScan);
-                    // TODO: 19.08.2024
-                    context.bindService(intentDataSyncService, new ServiceConnection() {
+                    // TODO: 12.09.2024  
+                      serviceConnection=    new ServiceConnection() {
                         @Override
                         public void onServiceConnected(ComponentName componentName, IBinder iBinder) {
                             // TODO: 26.07.2024
                             if (iBinder.isBinderAlive()) {
-                             // TODO: 28.07.2023  Update
-                                 localBinderСерверBLE = (DataSyncService.LocalBinderСерверBLE) iBinder;
+                                // TODO: 28.07.2023  Update
+                                localBinderСерверBLE = (DataSyncService.LocalBinderСерверBLE) iBinder;
                                 // TODO: 03.09.2024
-                                startingTransactDataService(      );
+                                startingTransactDataService(           serviceConnection    );
 
                                 Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                                         " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
@@ -155,7 +157,14 @@ try {
                                     " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
                                     " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" );
                         }
-                    }, Context.BIND_AUTO_CREATE);
+                    };
+                    // TODO: 19.08.2024
+                   // context.bindService(intentDataSyncService,serviceConnection , Context.BIND_AUTO_CREATE);
+                    context.bindService(intentDataSyncService,serviceConnection , Context.BIND_IMPORTANT |Context.BIND_AUTO_CREATE);
+                    // TODO: 26.07.2024
+                    Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                            " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                            " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" );
                  
                 }
             }
@@ -190,27 +199,18 @@ try {
 
 
 
-    protected void startingTransactDataService(  ) {
+    protected void startingTransactDataService( @NonNull        ServiceConnection serviceConnection ) {
         // TODO: 09.08.2024
         try {
             // TODO: 03.09.2024 Запускаем синхронизацию с сервером JBOSS
+      Intent intentjboss=      new Intent();
 
             localBinderСерверBLE.getService().onStartCommand(new Intent(),new Random().nextInt(),new Random().nextInt());
-       localBinderСерверBLE.getService().registerComponentCallbacks(new ComponentCallbacks() {
-           @Override
-           public void onConfigurationChanged(@NonNull Configuration configuration) {
-               Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
-                       " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                       " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n");
-           }
 
-           @Override
-           public void onLowMemory() {
-               Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
-                       " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                       " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n");
-           }
-       });
+
+            // TODO: 12.09.2024 closing 
+            context.unbindService(serviceConnection);
+
 
             Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                     " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +

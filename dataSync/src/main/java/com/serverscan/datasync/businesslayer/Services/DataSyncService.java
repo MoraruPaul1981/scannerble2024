@@ -96,10 +96,8 @@ public class DataSyncService extends IntentService {
     public int onStartCommand(@Nullable Intent intent, int flags, int startId) {
         try{
 
-
             // TODO: 12.09.2024 запуск обработки POST gatt server jboss
             binesslogicDataSyncServicePOST.onTransact(getApplicationContext(),version,this);
-
 
             Log.d(getApplicationContext().getClass().getName(), "\n"
                     + " class " + Thread.currentThread().getStackTrace()[2].getClassName() +
@@ -129,6 +127,8 @@ public class DataSyncService extends IntentService {
     @Override
     public void onDestroy() {
         super.onDestroy();
+        // TODO: 12.09.2024
+       // getOkhhtpBuilder=null;
         // Return this instance of LocalService so clients can call public methods
         Log.d(getApplicationContext().getClass().getName(), "\n"
                 + " время: " + new Date() + "\n+" +
