@@ -173,7 +173,7 @@ public class BinesslogicJakson {
 
                     ///  MediaType JSON = MediaType.parse("application/json; charset=utf-16");
                     Request requestPost = new Request.Builder().post(requestBody).url(Adress).build();
-                    Dispatcher dispatcherДанныеОтСервера = okHttpClientGattServer.dispatcher();
+                   /* Dispatcher dispatcherДанныеОтСервера = okHttpClientGattServer.dispatcher();*/
                     // TODO: 23.08.2024
                     Log.d(context.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                             " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
@@ -187,7 +187,7 @@ public class BinesslogicJakson {
                             // TODO: 10.09.2024  cancel
                             call.cancel();
                             // TODO: 31.05.2022
-                            dispatcherДанныеОтСервера.executorService().shutdownNow();
+           /*                 dispatcherДанныеОтСервера.executorService().shutdown();*/
                             Log.d(context.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                                     " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
                                     " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n");
@@ -229,7 +229,7 @@ public class BinesslogicJakson {
                                 response.close();
 
                                 // TODO: 31.05.2022
-                                dispatcherДанныеОтСервера.executorService().shutdownNow();
+                            /*    dispatcherДанныеОтСервера.executorService().shutdown();*/
                                 // TODO: 23.08.2024
                                 Log.d(context.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                                         " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
@@ -238,7 +238,7 @@ public class BinesslogicJakson {
                         }
                     });
                     //TODO
-                    try {
+          /*          try {
                         dispatcherДанныеОтСервера.executorService().awaitTermination(1, TimeUnit.DAYS);
                         // TODO: 09.09.2024
                         dispatcherДанныеОтСервера.cancelAll();
@@ -247,7 +247,7 @@ public class BinesslogicJakson {
                         // TODO: 09.09.2024
                     } catch (InterruptedException e) {
                         throw new RuntimeException(e);
-                    }
+                    }*/
                     Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                             " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
                             " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" + "\n"

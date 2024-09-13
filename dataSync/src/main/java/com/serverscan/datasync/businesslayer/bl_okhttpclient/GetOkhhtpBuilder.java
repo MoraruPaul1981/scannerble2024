@@ -32,6 +32,7 @@ public class GetOkhhtpBuilder   implements  OkhhtpInterface {
     Long version;
 
     @QualifierOkhhtp
+    @Singleton
     @Provides
     @Override
     public  OkHttpClient.Builder getOkhhtpBuilder(@ApplicationContext Context hiltcontext ) {
@@ -40,12 +41,12 @@ public class GetOkhhtpBuilder   implements  OkhhtpInterface {
             PackageInfo pInfo = hiltcontext.getPackageManager().getPackageInfo(hiltcontext.getPackageName(), 0);
             version = pInfo.getLongVersionCode();
 
-          Dispatcher dispatcher= new Dispatcher(Executors.newSingleThreadExecutor());
+          Dispatcher dispatcher= new Dispatcher(Executors.newFixedThreadPool(10));
             builder=     new OkHttpClient().newBuilder().dispatcher(dispatcher);
             builder.connectionPool(new ConnectionPool(20, 30, TimeUnit.SECONDS));
-            dispatcher.setMaxRequests(1);
+          /*  dispatcher.setMaxRequests(1);
             dispatcher.setMaxRequestsPerHost(1);
-            dispatcher.cancelAll();
+            dispatcher.cancelAll();*/
             Log.i(this.getClass().getName(),  " OkHttpClient"+
                     Thread.currentThread().getStackTrace()[2].getMethodName()+
                     " время " +new Date().toLocaleString() );
