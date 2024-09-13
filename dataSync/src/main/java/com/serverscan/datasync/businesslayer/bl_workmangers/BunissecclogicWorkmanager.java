@@ -1,12 +1,10 @@
 package com.serverscan.datasync.businesslayer.bl_workmangers;
 
-import android.content.ComponentCallbacks;
 import android.content.ComponentName;
 import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
 import android.content.ServiceConnection;
-import android.content.res.Configuration;
 import android.os.Handler;
 import android.os.IBinder;
 import android.os.Looper;
@@ -16,7 +14,7 @@ import androidx.annotation.NonNull;
 
 import com.serverscan.datasync.businesslayer.Errors.SubClassErrors;
 import com.serverscan.datasync.businesslayer.Services.DataSyncService;
-import com.serverscan.datasync.businesslayer.bl_datasyncservice.BinesslogicDataSyncServicestartingStarting;
+import com.serverscan.datasync.businesslayer.bl_datasyncservice.BinesslogicDataSyncStarting;
 import com.serverscan.datasync.businesslayer.bl_datasyncservice.InterfaceDataSyncServicestarting;
 import com.serverscan.datasync.businesslayer.bl_network.WorkerStatusNewtorks;
 
@@ -93,8 +91,8 @@ try {
         try {
             // TODO: 19.08.2024
 
-            class StartingDataServicestartingStarting extends BinesslogicDataSyncServicestartingStarting {
-                public StartingDataServicestartingStarting(@NonNull Context hiltcontext, @NonNull Long hilversion) {
+            class StartingDataStarting extends BinesslogicDataSyncStarting {
+                public StartingDataStarting(@NonNull Context hiltcontext, @NonNull Long hilversion) {
                     super(hiltcontext, hilversion);
                 }
 
@@ -118,10 +116,10 @@ try {
                     " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" );
 
             // TODO: 03.09.2024  класс второй
-            class BindigDataServicestartingStarting extends BinesslogicDataSyncServicestartingStarting {
+            class BindigDataStarting extends BinesslogicDataSyncStarting {
                 // TODO: 12.09.2024  
                 ServiceConnection serviceConnection;
-                public BindigDataServicestartingStarting(@NonNull Context hiltcontext, @NonNull Long hilversion) {
+                public BindigDataStarting(@NonNull Context hiltcontext, @NonNull Long hilversion) {
                     super(hiltcontext, hilversion);
                 }
 
@@ -169,7 +167,7 @@ try {
                 }
             }
 // TODO: 03.09.2024 запускам службу один из варантов
-            InterfaceDataSyncServicestarting interfaceDataSyncServicestarting = new BindigDataServicestartingStarting(context,version);
+            InterfaceDataSyncServicestarting interfaceDataSyncServicestarting = new BindigDataStarting(context,version);
             // TODO: 03.09.2024   биндингом
             interfaceDataSyncServicestarting.startingDataSyncService(stateScartServiceScan);
 
@@ -204,14 +202,7 @@ try {
         try {
             // TODO: 03.09.2024 Запускаем синхронизацию с сервером JBOSS
                Intent intentjboss=      new Intent();
-
             localBinderСерверBLE.getService().onStartCommand(intentjboss,new Random().nextInt(),new Random().nextInt());
-
-
-
-
-
-
 
             // TODO: 12.09.2024 closing 
             context.unbindService(serviceConnection);

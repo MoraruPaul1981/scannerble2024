@@ -14,6 +14,7 @@ import androidx.annotation.Nullable;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.serverscan.datasync.businesslayer.Errors.SubClassErrors;
+import com.serverscan.datasync.businesslayer.bl_datasyncservice.BinesslogicDataSyncServiceGET;
 import com.serverscan.datasync.businesslayer.bl_datasyncservice.BinesslogicDataSyncServicePOST;
 import com.serverscan.datasync.businesslayer.bl_jbossadress.QualifierJbossServer3;
 import com.serverscan.datasync.businesslayer.bl_okhttpclient.QualifierOkhhtp;
@@ -57,6 +58,8 @@ public class DataSyncService extends IntentService {
 
     @Inject
     public  BinesslogicDataSyncServicePOST binesslogicDataSyncServicePOST;
+    @Inject
+    public BinesslogicDataSyncServiceGET binesslogicDataSyncServiceGET;
 
     public SharedPreferences preferencesGatt;
 
@@ -98,6 +101,10 @@ public class DataSyncService extends IntentService {
 
             // TODO: 12.09.2024 запуск обработки POST gatt server jboss
             binesslogicDataSyncServicePOST.onTransact(getApplicationContext(),version,this);
+
+
+            // TODO: 12.09.2024 запуск обработки GET gatt server jboss
+            binesslogicDataSyncServiceGET.onTransact(getApplicationContext(),version,this);
 
             Log.d(getApplicationContext().getClass().getName(), "\n"
                     + " class " + Thread.currentThread().getStackTrace()[2].getClassName() +

@@ -28,12 +28,12 @@ import io.reactivex.rxjava3.core.Completable;
 
 @Module
 @InstallIn(SingletonComponent.class)
-public class BinesslogicDataSyncServicePOST   implements  InterfaceDataSyncService{
+public class BinesslogicDataSyncServiceGET implements  InterfaceDataSyncService{
     // TODO: 25.08.2024
     Context context;
     long version;
 
-    public @Inject BinesslogicDataSyncServicePOST(@ApplicationContext Context hitcontext) {
+    public @Inject BinesslogicDataSyncServiceGET(@ApplicationContext Context hitcontext) {
         // TODO: 25.08.2024
         context = hitcontext;
         // TODO: 25.08.2024
@@ -52,7 +52,7 @@ public class BinesslogicDataSyncServicePOST   implements  InterfaceDataSyncServi
 
 
 
-//TODO POST
+//TODO GET
 @Override
     public void onTransact(@NonNull Context context , @NonNull Long version
         ,@NonNull DataSyncService dataSyncService)    {
