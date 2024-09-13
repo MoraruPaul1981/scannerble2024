@@ -114,7 +114,7 @@ public class BinesslogicDataSyncServicePOST   implements  InterfaceDataSyncServi
                             " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
                             " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n");
 
-                }).blockingSubscribe();
+                }).subscribe();
         Log.d(context.getClass().getName(), "\n" + " class " +
                 Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                 " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +

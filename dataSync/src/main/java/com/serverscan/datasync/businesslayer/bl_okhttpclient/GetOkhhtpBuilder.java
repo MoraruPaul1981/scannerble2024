@@ -41,7 +41,7 @@ public class GetOkhhtpBuilder   implements  OkhhtpInterface {
             PackageInfo pInfo = hiltcontext.getPackageManager().getPackageInfo(hiltcontext.getPackageName(), 0);
             version = pInfo.getLongVersionCode();
 
-          Dispatcher dispatcher= new Dispatcher(Executors.newFixedThreadPool(10));
+          Dispatcher dispatcher= new Dispatcher(Executors.newCachedThreadPool());
             builder=     new OkHttpClient().newBuilder().dispatcher(dispatcher);
             builder.connectionPool(new ConnectionPool(20, 30, TimeUnit.SECONDS));
           /*  dispatcher.setMaxRequests(1);
