@@ -17,6 +17,7 @@ import com.serverscan.datasync.businesslayer.Errors.SubClassErrors;
 import com.serverscan.datasync.businesslayer.bl_okhttpclient.GetOkhhtpBuilder;
 import com.serverscan.datasync.businesslayer.bl_okhttpclient.QualifierOkhhtp;
 import com.serverscan.datasync.businesslayer.bl_preferences.BussenloginSaredPreferense;
+import com.serverscan.datasync.businesslayer.bl_versionsgatt.BinesslogicVersions;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -85,7 +86,7 @@ public class BinesslogicJakson {
 
 
     @SuppressLint("NewApi")
-    public  Long   sendOkhhtpServiceForJboss(@NonNull Context context, @NonNull long version,
+    public  void    sendOkhhtpServiceForJboss(@NonNull Context context, @NonNull long version,
                                              @NonNull LinkedHashMap<String, String> getJbossAdress, @NonNull Cursor cursorlocal,
                                              @NonNull  byte[] ByteJakson,
                                              @NonNull OkHttpClient.Builder getOkhhtpBuilder)
@@ -169,11 +170,8 @@ public class BinesslogicJakson {
                             }
                         }
                     };
-
-
                     ///  MediaType JSON = MediaType.parse("application/json; charset=utf-16");
                     Request requestPost = new Request.Builder().post(requestBody).url(Adress).build();
-                   /* Dispatcher dispatcherДанныеОтСервера = okHttpClientGattServer.dispatcher();*/
                     // TODO: 23.08.2024
                     Log.d(context.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                             " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
@@ -182,8 +180,9 @@ public class BinesslogicJakson {
                     okHttpClientGattServer.newCall(requestPost).enqueue(new Callback() {
                         @Override
                         public void onFailure(@androidx.annotation.NonNull Call call, @androidx.annotation.NonNull IOException e) {
-                            // TODO: 31.05.2022SdispatcherДанныеОтСервера.executorService().shutdown();
                             // TODO: 23.08.2024
+                            // TODO: 31.07.2024 close database
+                            clostingdatabase(cursorlocal);
                             // TODO: 10.09.2024  cancel
                             call.cancel();
                             // TODO: 31.05.2022
@@ -218,18 +217,26 @@ public class BinesslogicJakson {
 
                                     Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                                             " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                                            " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" + " буферОтветотJbossfinal.get() " +буферОтветотJbossfinal.get() );
+
+
+                                    // TODO: 09.09.2024 ПОлученую версию данных от серврера запоминаем
+                                    if (буферОтветотJbossfinal.get()>0  ) {
+                                        // TODO: 10.09.2024 дополнительное увеличение версии данных уже в рабочей текуще версии чтобы большене вставлять дополнительно
+                                        new BinesslogicVersions(context).recordingAfterNewVersionwealign(context,version);
+
+                                    }
+
+                                    // TODO: 31.07.2024 close database
+                                    clostingdatabase(cursorlocal);
+
+                                    Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                                            " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
                                             " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" + " буферОтветотJbossfinal " +буферОтветотJbossfinal );
-
-
-
                                 }
-
                                 // TODO: 10.09.2024  cancel
                                 call.cancel();
                                 response.close();
-
-                                // TODO: 31.05.2022
-                            /*    dispatcherДанныеОтСервера.executorService().shutdown();*/
                                 // TODO: 23.08.2024
                                 Log.d(context.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                                         " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
@@ -237,23 +244,6 @@ public class BinesslogicJakson {
                             }
                         }
                     });
-                    //TODO
-          /*          try {
-                        dispatcherДанныеОтСервера.executorService().awaitTermination(1, TimeUnit.DAYS);
-                        // TODO: 09.09.2024
-                        dispatcherДанныеОтСервера.cancelAll();
-                        okHttpClientGattServer.connectionPool().evictAll();
-                        // TODO: 10.09.2024
-                        // TODO: 09.09.2024
-                    } catch (InterruptedException e) {
-                        throw new RuntimeException(e);
-                    }*/
-                    Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
-                            " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                            " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" + "\n"
-                            + " LocalDateTime.now() " + LocalDateTime.now().toString().toUpperCase() + "\n");
-
-
         // TODO: 31.07.2024
         Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                 " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
@@ -274,7 +264,7 @@ public class BinesslogicJakson {
         valuesЗаписываемОшибки.put("whose_error", ЛокальнаяВерсияПОСравнение);
         new SubClassErrors(context).МетодЗаписиОшибок(valuesЗаписываемОшибки);
     }
-        return буферОтветотJbossfinal.get();
+
 
     }
 
@@ -459,6 +449,15 @@ public class BinesslogicJakson {
         return versionlocal;
     }
 
+    private   void clostingdatabase(Cursor cursorSingle) {
+        if (cursorSingle !=null) {
+            cursorSingle.close();
+        }
+        Log.d(context.getClass().getName(), "\n" + " class " +
+                Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n");
+    }
 
     // TODO: 04.09.2024 end Class
 }

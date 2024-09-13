@@ -74,32 +74,14 @@ public class BinesslogicDataSyncServicePOST   implements  InterfaceDataSyncServi
                         byte[] ByteJakson=    dataSyncService.genetarorJaksonJSON.genetarorJaksonJSON(context,version,     listForJakson  ,dataSyncService.getHiltJaksonObjectMapper     );
 
                         // TODO: 03.09.2024 sending  Stream to Server
-                        Long буферОтветотJbossfinal=      new BinesslogicJakson(context).sendOkhhtpServiceForJboss(context,version,dataSyncService.getJbossAdressDebug,
+                             new BinesslogicJakson(context).sendOkhhtpServiceForJboss(context,version,dataSyncService.getJbossAdressDebug,
                                 cursorSingle ,ByteJakson,dataSyncService.getOkhhtpBuilder);
 
-
-                        // TODO: 09.09.2024 ПОлученую версию данных от серврера запоминаем
-                        if (буферОтветотJbossfinal>0  ) {
-                            ///new BinesslogicVersions(context).recordinganewVersionofgatt(context,version,буферОтветотJbossfinal);
-                            // TODO: 10.09.2024 дополнительное увеличение версии данных уже в рабочей текуще версии чтобы большене вставлять дополнительно
-                            new BinesslogicVersions(context).recordingAfterNewVersionwealign(context,version);
-
-                        }
                         // TODO: 03.09.2024 get InputStream   for sending an server
                         Log.d(context.getClass().getName(), "\n" + " class " +
                                 Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                                 " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                                " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" + " буферОтветотJbossfinal " +буферОтветотJbossfinal);
-
-
-                        // TODO: 31.07.2024 close database
-                        clostingdatabase(cursorSingle);
-
-                        // TODO: 03.09.2024 get InputStream   for sending an server
-                        Log.d(context.getClass().getName(), "\n" + " class " +
-                                Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
-                                " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                                " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" + " versionoflastsentdata " +versionoflastsentdata);
+                                " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"  );
 
                     }
                     // TODO: 03.09.2024 get InputStream   for sending an server
@@ -132,7 +114,7 @@ public class BinesslogicDataSyncServicePOST   implements  InterfaceDataSyncServi
                             " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
                             " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n");
 
-                }).subscribe();
+                }).blockingSubscribe();
         Log.d(context.getClass().getName(), "\n" + " class " +
                 Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                 " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
@@ -140,15 +122,6 @@ public class BinesslogicDataSyncServicePOST   implements  InterfaceDataSyncServi
     }
 
 
-    private   void clostingdatabase(Cursor cursorSingle) {
-        if (cursorSingle !=null) {
-            cursorSingle.close();
-        }
-        Log.d(context.getClass().getName(), "\n" + " class " +
-                Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
-                " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n");
-    }
 
 
 

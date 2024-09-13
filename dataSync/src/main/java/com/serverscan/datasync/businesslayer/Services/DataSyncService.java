@@ -97,7 +97,6 @@ public class DataSyncService extends IntentService {
         try{
 
             // TODO: 12.09.2024 запуск обработки POST gatt server jboss
-            binesslogicDataSyncServicePOST.onTransact(getApplicationContext(),version,this);
 
             Log.d(getApplicationContext().getClass().getName(), "\n"
                     + " class " + Thread.currentThread().getStackTrace()[2].getClassName() +
