@@ -12,6 +12,7 @@ import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
 
 import com.google.firebase.crashlytics.buildtools.reloc.com.google.common.io.ByteSource;
+import com.google.firebase.crashlytics.buildtools.reloc.com.google.common.util.concurrent.AtomicDouble;
 import com.google.firebase.crashlytics.buildtools.reloc.org.apache.http.client.methods.HttpGet;
 import com.google.firebase.crashlytics.buildtools.reloc.org.apache.http.client.utils.URIBuilder;
 import com.scanner.datasync.businesslayer.Errors.SubClassErrors;
@@ -32,6 +33,8 @@ import java.util.LinkedHashMap;
 import java.util.Locale;
 import java.util.Optional;
 import java.util.concurrent.ExecutionException;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicReference;
 import java.util.zip.GZIPInputStream;
@@ -58,9 +61,7 @@ import okhttp3.Response;
 public class BinesslogicDataSync {
 
     Context context;
-    @Inject
-    @QualifierOkhhtp
-    OkHttpClient.Builder getOkhhtpBuilder;
+
 
     public @Inject BinesslogicDataSync(@ApplicationContext Context hiltcontext) {
         // TODO: 22.08.2024
@@ -106,7 +107,8 @@ public class BinesslogicDataSync {
     @SuppressLint("Range")
     public    InputStream    callOkhhtpDataSyncService(@NonNull long version,
                                           @NonNull LinkedHashMap<String, String> getJbossAdress,
-                                          @NonNull Cursor cursorlocal)
+                                          @NonNull Cursor cursorlocal,
+                                                       @NonNull   OkHttpClient.Builder getOkhhtpBuilder)
             throws ExecutionException, InterruptedException {
         // TODO: 22.08.2024  Коненпт провайдер для зааписив базу данных
         final String[] ANDROID_ID = {new String()};
@@ -149,7 +151,11 @@ public class BinesslogicDataSync {
                     .build();
             ///  MediaType JSON = MediaType.parse("application/json; charset=utf-16");
             Request requestGET = new Request.Builder().get().url(Adress).build();
-            Dispatcher dispatcherДанныеОтСервера = okHttpClientClientScanner.dispatcher();
+            Dispatcher dispatcherScanner = okHttpClientClientScanner.dispatcher();
+            ExecutorService executorService= dispatcherScanner.executorService();
+            executorService= Executors.newCachedThreadPool();
+
+
             // TODO: 23.08.2024
             Log.d(context.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                     " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
@@ -158,8 +164,13 @@ public class BinesslogicDataSync {
             okHttpClientClientScanner.newCall(requestGET).enqueue(new Callback() {
                 @Override
                 public void onFailure(@androidx.annotation.NonNull Call call, @androidx.annotation.NonNull IOException e) {
+
+                    // TODO: 21.09.2024
+
+                    call.cancel();
+
                     // TODO: 31.05.2022
-                    dispatcherДанныеОтСервера.executorService().shutdown();
+                    dispatcherScanner.executorService().shutdown();
                     // TODO: 23.08.2024
                     Log.d(context.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                             " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
@@ -187,8 +198,12 @@ public class BinesslogicDataSync {
                                     " РазмерПришедшегоПотока " + РазмерПришедшегоПотока + " inputStreamJaksonByte[0] " +inputStreamJaksonByte.get());
 
                         }
+
+                        // TODO: 21.09.2024
+                        call.cancel();
+                        response.close();
                         // TODO: 31.05.2022
-                        dispatcherДанныеОтСервера.executorService().shutdown();
+                        dispatcherScanner.executorService().shutdown();
                         // TODO: 23.08.2024
                         Log.d(context.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                                 " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
@@ -200,11 +215,11 @@ public class BinesslogicDataSync {
             });
             //TODO
             try {
-                dispatcherДанныеОтСервера.executorService().awaitTermination(1, TimeUnit.DAYS);
+                dispatcherScanner.executorService().awaitTermination(1, TimeUnit.DAYS);
             } catch (InterruptedException e) {
                 throw new RuntimeException(e);
             }
-            dispatcherДанныеОтСервера.cancelAll();
+                    dispatcherScanner.cancelAll();
 
             Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                     " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +

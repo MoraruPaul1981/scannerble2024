@@ -32,15 +32,20 @@ import com.scanner.datasync.businesslayer.bl_DataSyncService.BinesslogicDataSync
 import com.scanner.datasync.businesslayer.bl_Jakson.BinesslogincJakson;
 import com.scanner.datasync.businesslayer.bl_JbossAdress.QualifierJbossServer2;
 import com.scanner.datasync.businesslayer.bl_JbossAdress.QualifierJbossServer3;
+import com.scanner.datasync.businesslayer.bl_Okhhtp.QualifierOkhhtp;
 import com.scanner.datasync.datalayer.local.BinesslogicGetCursors;
 
 import java.io.InputStream;
 import java.util.LinkedHashMap;
+import java.util.concurrent.TimeUnit;
 import java.util.function.ToDoubleBiFunction;
 
 import javax.inject.Inject;
 
 import dagger.hilt.android.AndroidEntryPoint;
+import io.reactivex.rxjava3.core.Completable;
+import io.reactivex.rxjava3.core.Observable;
+import io.reactivex.rxjava3.core.Single;
 import okhttp3.OkHttpClient;
 
 /**
@@ -75,6 +80,11 @@ public class DataSyncService extends IntentService {
 
     @Inject
     BinesslogicGetCursors binesslogicGetCursors;
+
+
+    @Inject
+    @QualifierOkhhtp
+    OkHttpClient.Builder getOkhhtpBuilder;
 
     public DataSyncService() {
         super("DataSyncService");
@@ -217,24 +227,50 @@ public class DataSyncService extends IntentService {
     protected void onHandleIntent(Intent intent) {
         try{
           // TODO: 22.08.2024  повсе всего Работы Службы Синхронихации запускаем Фрагмент Сканера   , Самая последная Операция
-            // TODO: 26.08.2024  получаем данные ЛОкальыне с версией данных
-            //Cursor cursorlocal =     binesslogicGetCursors. getLocalDataSyncService(version,resolver);
-           // Cursor cursorlocal =     binesslogicGetCursors. getMAXBremyLocalDataSyncService(version,resolver);
-            Cursor cursorlocal =     binesslogicGetCursors. getMAXVersionLocalDataSyncService(version,resolver);
-            // TODO: 26.08.2024  получаем данные от Сервера
-            InputStream inputStreamJaksonByteScanner=     binesslogicDataSync.callOkhhtpDataSyncService(version,getJbossAdressDebug,cursorlocal);
+            Completable.fromAction(()->{
+                // TODO: 26.08.2024  получаем данные ЛОкальыне с версией данных
+                //Cursor cursorlocal =     binesslogicGetCursors. getLocalDataSyncService(version,resolver);
+                // Cursor cursorlocal =     binesslogicGetCursors. getMAXBremyLocalDataSyncService(version,resolver);
+                Cursor cursorlocal =     binesslogicGetCursors. getMAXVersionLocalDataSyncService(version,resolver);
+                // TODO: 26.08.2024  получаем данные от Сервера
+                InputStream inputStreamJaksonByteScanner=     binesslogicDataSync
+                        .callOkhhtpDataSyncService(version,getJbossAdressDebug,cursorlocal,getOkhhtpBuilder);
 
-        // TODO: 26.08.2024  преобразовываем данеы в модель JAKSON
-        JsonNode jsonNodeScannerBLE =binesslogincJakson.callJaksonDataSyncService(version,   getHiltJaksonObjectMapper,inputStreamJaksonByteScanner);
+                // TODO: 26.08.2024  преобразовываем данеы в модель JAKSON
+                JsonNode jsonNodeScannerBLE =binesslogincJakson.callJaksonDataSyncService(version,   getHiltJaksonObjectMapper,inputStreamJaksonByteScanner);
 
-          // TODO: 23.08.2024  записываем JAKSON в Контент ПРовайер
-            binesslogincJakson.updateOperaticallContentResolver(version,jsonNodeScannerBLE);
+                // TODO: 23.08.2024  записываем JAKSON в Контент ПРовайер
+                binesslogincJakson.updateOperaticallContentResolver(version,jsonNodeScannerBLE);
+
+                // TODO: 21.08.2024
+                Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                        " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n+ " +
+                        " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" + "cursorlocal " +cursorlocal);
+
+            }).doOnError(e->{
+                        e.printStackTrace();
+                        Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" +
+                                Thread.currentThread().getStackTrace()[2].getMethodName() + " Линия  :"
+                                + Thread.currentThread().getStackTrace()[2].getLineNumber());
+                        ContentValues valuesЗаписываемОшибки = new ContentValues();
+                        valuesЗаписываемОшибки.put("Error", e.toString().toLowerCase());
+                        valuesЗаписываемОшибки.put("Klass", this.getClass().getName());
+                        valuesЗаписываемОшибки.put("Metod", Thread.currentThread().getStackTrace()[2].getMethodName());
+                        valuesЗаписываемОшибки.put("LineError", Thread.currentThread().getStackTrace()[2].getLineNumber());
+                        final Object ТекущаяВерсияПрограммы = version;
+                        Integer ЛокальнаяВерсияПОСравнение = Integer.parseInt(ТекущаяВерсияПрограммы.toString());
+                        valuesЗаписываемОшибки.put("whose_error", ЛокальнаяВерсияПОСравнение);
+                        new SubClassErrors(getApplicationContext()).МетодЗаписиОшибок(valuesЗаписываемОшибки);
+                    })
+                    .toObservable()
+                    .take(30, TimeUnit.SECONDS)
+                    .subscribe();
+
 
             // TODO: 21.08.2024  
         Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
-                " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" + " cursorlocal " +cursorlocal +
-                " inputStreamJaksonByteScanner "+ inputStreamJaksonByteScanner  +" jsonNodeScannerBLE " +jsonNodeScannerBLE);
+                " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n+ " +
+                " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n");
             // TODO: 28.08.2024
     } catch (Exception e) {
         e.printStackTrace();

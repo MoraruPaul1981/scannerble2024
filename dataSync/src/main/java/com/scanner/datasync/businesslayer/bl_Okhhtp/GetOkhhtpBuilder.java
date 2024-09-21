@@ -9,6 +9,7 @@ import android.util.Log;
 import com.scanner.datasync.businesslayer.Errors.SubClassErrors;
 
 import java.util.Date;
+import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
 
 import javax.inject.Singleton;
@@ -19,6 +20,7 @@ import dagger.hilt.InstallIn;
 import dagger.hilt.android.qualifiers.ApplicationContext;
 import dagger.hilt.components.SingletonComponent;
 import okhttp3.ConnectionPool;
+import okhttp3.Dispatcher;
 import okhttp3.OkHttpClient;
 
 
@@ -27,9 +29,6 @@ import okhttp3.OkHttpClient;
 @InstallIn(SingletonComponent.class)
 public class GetOkhhtpBuilder   implements  OkhhtpInterface {
     Long version;
-
-
-
 
     @Singleton
     @QualifierOkhhtp
@@ -41,8 +40,9 @@ public class GetOkhhtpBuilder   implements  OkhhtpInterface {
             PackageInfo pInfo = hiltcontext.getPackageManager().getPackageInfo(hiltcontext.getPackageName(), 0);
             version = pInfo.getLongVersionCode();
 
-
+            Dispatcher dispatcherScanner= new Dispatcher(Executors.newCachedThreadPool());
             builder=     new OkHttpClient().newBuilder();
+            builder.dispatcher(dispatcherScanner);
             builder.connectionPool(new ConnectionPool(20, 30, TimeUnit.SECONDS));
             Log.i(this.getClass().getName(),  " OkHttpClient"+
                     Thread.currentThread().getStackTrace()[2].getMethodName()+
