@@ -151,12 +151,11 @@ public class BinesslogicDataSync {
                     .build();
             ///  MediaType JSON = MediaType.parse("application/json; charset=utf-16");
             Request requestGET = new Request.Builder().get().url(Adress).build();
-            Dispatcher dispatcherScanner = okHttpClientClientScanner.dispatcher();
-            ExecutorService executorService= dispatcherScanner.executorService();
-            executorService= Executors.newCachedThreadPool();
+
+                    Dispatcher dispatcherScanner = getDispatcher(okHttpClientClientScanner);
 
 
-            // TODO: 23.08.2024
+                    // TODO: 23.08.2024
             Log.d(context.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                     " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
                     " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n");
@@ -265,13 +264,15 @@ public class BinesslogicDataSync {
 
     }
 
-
-
-
-
-
-
-
+    @androidx.annotation.NonNull
+    private static Dispatcher getDispatcher(OkHttpClient okHttpClientClientScanner) {
+        Dispatcher dispatcherScanner = okHttpClientClientScanner.dispatcher();
+        ExecutorService executorService= dispatcherScanner.executorService();
+        if (executorService.isShutdown()) {
+            executorService= Executors.newCachedThreadPool();
+        }
+        return dispatcherScanner;
+    }
 
 
     @SuppressLint("Range")

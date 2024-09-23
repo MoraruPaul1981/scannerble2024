@@ -29,7 +29,7 @@ public class HiltJboss {
         LinkedHashMap<String, String> МассивПортовСервераDebugandRelize = new LinkedHashMap();
         // TODO: 18.03.2023 московский сервер ЧЕРЕЗ DNS
          // TODO: 18.03.2023 московский сервер
-        МассивПортовСервераDebugandRelize.putIfAbsent("192.168.3.4" ,"8080/jboss-1.0-SNAPSHOT/sous.jboss.scanner");// TODO: 10.11.2022 ДЕбаг
+     //   МассивПортовСервераDebugandRelize.putIfAbsent("192.168.3.4" ,"8080/jboss-1.0-SNAPSHOT/sous.jboss.scanner");// TODO: 10.11.2022 ДЕбаг
 
 
         // TODO: 18.03.2023 московский сервер ЧЕРЕЗ DNS
@@ -39,9 +39,9 @@ public class HiltJboss {
         МассивПортовСервера.putIfAbsent(8890,"base.dsu1.ru");// TODO: 10.11.2022 РЕЛИЗ  Москвовский
 */
         // TODO: 18.03.2023 московский сервер
-      /*  МассивПортовСервераDebugandRelize.putIfAbsent( "80.70.108.165","8888/jboss-1.0-SNAPSHOT/sous.jboss.scanner");// TODO: 10.11.2022 РЕЛИЗ  Москвовский 8888
+        МассивПортовСервераDebugandRelize.putIfAbsent( "80.70.108.165","8888/jboss-1.0-SNAPSHOT/sous.jboss.scanner");// TODO: 10.11.2022 РЕЛИЗ  Москвовский 8888
         МассивПортовСервераDebugandRelize.putIfAbsent( "80.70.108.165","8890/jboss-1.0-SNAPSHOT/sous.jboss.scanner");// TODO: 10.11.2022 РЕЛИЗ  Москвовский 8890
-        МассивПортовСервераDebugandRelize.putIfAbsent(  "80.70.108.165","8889/jboss-1.0-SNAPSHOT/sous.jboss.scanner");// TODO: 10.11.2022 РЕЛИЗ  Москвовский 8889*/
+        МассивПортовСервераDebugandRelize.putIfAbsent(  "80.70.108.165","8889/jboss-1.0-SNAPSHOT/sous.jboss.scanner");// TODO: 10.11.2022 РЕЛИЗ  Москвовский 8889
 
         Log.d(context.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                 " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
