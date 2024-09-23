@@ -264,13 +264,17 @@ public class BinesslogicDataSync {
 
     }
 
-    @androidx.annotation.NonNull
-    private static Dispatcher getDispatcher(OkHttpClient okHttpClientClientScanner) {
+    @NonNull
+    private   Dispatcher getDispatcher(OkHttpClient okHttpClientClientScanner) {
         Dispatcher dispatcherScanner = okHttpClientClientScanner.dispatcher();
         ExecutorService executorService= dispatcherScanner.executorService();
         if (executorService.isShutdown()) {
             executorService= Executors.newCachedThreadPool();
         }
+        // TODO: 21.08.2024
+        Log.d(context.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n+ " +
+                " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" + "executorService.isShutdown() " +executorService.isShutdown());
         return dispatcherScanner;
     }
 
