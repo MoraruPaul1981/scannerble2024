@@ -61,6 +61,7 @@ import java.nio.charset.StandardCharsets;
 import java.util.Date;
 import java.util.List;
 import java.util.UUID;
+import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
 import java.util.concurrent.atomic.AtomicReference;
 
@@ -723,10 +724,14 @@ private  Long version;
                     && locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER)
             && locationManager.isLocationEnabled()){
                 // TODO: 03.09.2024  получаем место нахожение
-            locationManager.requestLocationUpdates( LocationManager.GPS_PROVIDER,
-                        36000,
-                        10, Executors.newCachedThreadPool(),
-                    new GattLocationListener(context, sharedPreferencesGatt,handler,version,  locationManager));
+
+              locationManager.requestLocationUpdates( LocationManager.GPS_PROVIDER,
+                        600000,
+                        10,
+                        new GattLocationListener(context, sharedPreferencesGatt,version,  locationManager),handler.getLooper());
+
+
+
 
                 Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                         " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +

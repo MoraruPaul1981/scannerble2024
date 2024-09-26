@@ -117,12 +117,7 @@ public class ActivityServerScanner extends AppCompatActivity {
         try{
           /*  //TODO: ссылка на класс бизнес логики Сервер Сканирование
           *      */
-
-
-
         biMainActivityNewServerScanner.   МетодЗапускBootФрагмента(new FragmentBootServer());//todo Запускам клиента или сервер фрагмент
-
-
 
             Log.i(this.getClass().getName(), "  "
                     + Thread.currentThread().getStackTrace()[2].getMethodName() +

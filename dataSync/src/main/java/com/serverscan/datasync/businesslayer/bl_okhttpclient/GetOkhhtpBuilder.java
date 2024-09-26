@@ -44,9 +44,6 @@ public class GetOkhhtpBuilder   implements  OkhhtpInterface {
           Dispatcher dispatcher= new Dispatcher(Executors.newCachedThreadPool());
             builder=     new OkHttpClient().newBuilder().dispatcher(dispatcher);
             builder.connectionPool(new ConnectionPool(20, 30, TimeUnit.SECONDS));
-          /*  dispatcher.setMaxRequests(1);
-            dispatcher.setMaxRequestsPerHost(1);
-            dispatcher.cancelAll();*/
             Log.i(this.getClass().getName(),  " OkHttpClient"+
                     Thread.currentThread().getStackTrace()[2].getMethodName()+
                     " время " +new Date().toLocaleString() );

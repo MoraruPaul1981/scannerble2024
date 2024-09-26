@@ -141,6 +141,8 @@
         android:roundIcon="@mipmap/icon_serverscanner_round"
         android:name="com.sous.server.GetApplication"
         android:supportsRtl="true"
+        android:minSdkVersion="29"
+        android:targetSdkVersion="34"
         android:theme="@style/Theme.DSU">
 
 

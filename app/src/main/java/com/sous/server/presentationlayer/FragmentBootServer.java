@@ -219,39 +219,13 @@ public class FragmentBootServer extends Fragment {
 
 
     @Override
-    public void onStop() {
-        try{
-            EventBus.getDefault().unregister(this);
-
-            super.onStop();
-        Log.d(getContext().getClass().getName(), "\n"
-                + " время: " + new Date() + "\n+" +
-                " Класс в процессе... " + this.getClass().getName() + "\n" +
-                " метод в процессе... " + Thread.currentThread().getStackTrace()[2].getMethodName());
-    } catch (Exception e) {
-        e.printStackTrace();
-        Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() + " Линия  :"
-                + Thread.currentThread().getStackTrace()[2].getLineNumber());
-        ContentValues valuesЗаписываемОшибки = new ContentValues();
-        valuesЗаписываемОшибки.put("Error", e.toString().toLowerCase());
-        valuesЗаписываемОшибки.put("Klass", this.getClass().getName());
-        valuesЗаписываемОшибки.put("Metod", Thread.currentThread().getStackTrace()[2].getMethodName());
-        valuesЗаписываемОшибки.put("LineError", Thread.currentThread().getStackTrace()[2].getLineNumber());
-        final Object ТекущаяВерсияПрограммы = version;
-        Integer ЛокальнаяВерсияПОСравнение = Integer.parseInt(ТекущаяВерсияПрограммы.toString());
-        valuesЗаписываемОшибки.put("whose_error", ЛокальнаяВерсияПОСравнение);
-        new SubClassErrors(getContext()).МетодЗаписиОшибок(valuesЗаписываемОшибки);
-    }
-    }
-
-    @Override
     public void onDestroy() {
-  try{
-        /*    //TODO:создаем подписку MessageScannerServer */
-        EventBus.getDefault().unregister(this);
-
-        super.onDestroy();
-        Log.d(getContext().getClass().getName(), "\n"
+        try{
+            super.onDestroy();
+            if ( EventBus.getDefault().isRegistered(this)) {
+                EventBus.getDefault().unregister(this);
+            }
+            Log.d(getContext().getClass().getName(), "\n"
                 + " время: " + new Date() + "\n+" +
                 " Класс в процессе... " + this.getClass().getName() + "\n" +
                 " метод в процессе... " + Thread.currentThread().getStackTrace()[2].getMethodName());
@@ -270,6 +244,8 @@ public class FragmentBootServer extends Fragment {
         new SubClassErrors(getContext()).МетодЗаписиОшибок(valuesЗаписываемОшибки);
     }
     }
+
+
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onMessageEvent(MessageScannerServer event) {
@@ -340,16 +316,13 @@ public class FragmentBootServer extends Fragment {
                                   " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" );
 
                 //TODO: Запускаем Фрагмент Server Fragment
-
+onDestroy();
 
                 Log.d(getContext().getClass().getName(), "\n"
                         + " время: " + new Date() + "\n+" +
                         " Класс в процессе... " + this.getClass().getName() + "\n" +
                         " метод в процессе... " + Thread.currentThread().getStackTrace()[2].getMethodName()+
                         " CurrentTask " + CurrentTask);
-
-
-        } else {
 
 
         }
@@ -422,68 +395,6 @@ public class FragmentBootServer extends Fragment {
 
     
     
-
-
-
-    @SuppressLint("ResourceType")
-    private ConcurrentHashMap forwardSuccessDiveceUIEventAnd(@NonNull  ContentValues     getListSuccessDerviceOtServerGatt) {
-        ConcurrentHashMap<String,ContentValues> concurrentHashMapSucceesDataOtClient=new ConcurrentHashMap<>();
-        try{
-            //TODO: Запускаем Фрагмент
-           String   getListOtAndroidGattClernt =   getListSuccessDerviceOtServerGatt.getAsString("namedevice").trim()+"\n"+
-                   getListSuccessDerviceOtServerGatt.getAsString("macdevice").trim()+"\n"+
-                   getListSuccessDerviceOtServerGatt.getAsString("iemi").trim().trim()+"\n"+
-                   getListSuccessDerviceOtServerGatt.getAsString("completedwork").trim()+"\n"+
-                   getListSuccessDerviceOtServerGatt.getAsString("date_update").trim()+"\n"+
-                   getListSuccessDerviceOtServerGatt.getAsString("city").trim()+"\n"+
-                   getListSuccessDerviceOtServerGatt.getAsString("gps1").trim()+"\n"+
-                   getListSuccessDerviceOtServerGatt.getAsString("gps2").trim()+"\n";
-
-            Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
-                    " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                    " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" +
-                    "  getListOtAndroidGattClernt " +getListOtAndroidGattClernt);
-            // TODO: 17.07.2024 add
-
-            concurrentHashMapSucceesDataOtClient.put(getListOtAndroidGattClernt,getListSuccessDerviceOtServerGatt);
-
-            // Inflate the custom view from XML
-            Toast toast = Toast.makeText(getContext(),getListOtAndroidGattClernt.trim(), Toast.LENGTH_LONG);
-            toast.setGravity(Gravity.CENTER, toast.getXOffset() / 2, toast.getYOffset() / 2);
-
-            TextView textView = new TextView(getContext());
-            textView.setBackgroundColor(Color.DKGRAY);
-            textView.setTextColor(Color.WHITE);
-            textView.setTextSize(30);
-            Typeface typeface = Typeface.create("serif", Typeface.BOLD);
-            textView.setTypeface(typeface);
-            textView.setPadding(10, 10, 10, 10);
-            textView.setText(getListOtAndroidGattClernt.trim());
-
-            toast.setView(textView);
-            toast.show();
-
-            Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
-                    " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                    " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" +
-                    "  getListSuccessDerviceOtServerGatt " +getListSuccessDerviceOtServerGatt);
-
-        } catch (Exception e) {
-            e.printStackTrace();
-            Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() + " Линия  :"
-                    + Thread.currentThread().getStackTrace()[2].getLineNumber());
-            ContentValues valuesЗаписываемОшибки = new ContentValues();
-            valuesЗаписываемОшибки.put("Error", e.toString().toLowerCase());
-            valuesЗаписываемОшибки.put("Klass", this.getClass().getName());
-            valuesЗаписываемОшибки.put("Metod", Thread.currentThread().getStackTrace()[2].getMethodName());
-            valuesЗаписываемОшибки.put("LineError", Thread.currentThread().getStackTrace()[2].getLineNumber());
-            final Object ТекущаяВерсияПрограммы = version;
-            Integer ЛокальнаяВерсияПОСравнение = Integer.parseInt(ТекущаяВерсияПрограммы.toString());
-            valuesЗаписываемОшибки.put("whose_error", ЛокальнаяВерсияПОСравнение);
-            new SubClassErrors(getContext()).МетодЗаписиОшибок(valuesЗаписываемОшибки);
-        }
-        return  concurrentHashMapSucceesDataOtClient;
-    }
 
 
 

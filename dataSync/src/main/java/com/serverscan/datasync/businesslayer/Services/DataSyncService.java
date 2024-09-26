@@ -23,10 +23,12 @@ import com.serverscan.datasync.datalayer.local.BusinesslogicDatabase;
 
 import java.util.Date;
 import java.util.LinkedHashMap;
+import java.util.concurrent.TimeUnit;
 
 import javax.inject.Inject;
 
 import dagger.hilt.android.AndroidEntryPoint;
+import io.reactivex.rxjava3.core.Completable;
 import okhttp3.OkHttpClient;
 
 
@@ -98,13 +100,44 @@ public class DataSyncService extends IntentService {
     @Override
     public int onStartCommand(@Nullable Intent intent, int flags, int startId) {
         try{
+            // TODO: 26.09.2024
+            Completable.fromAction(()->{
 
-            // TODO: 12.09.2024 запуск обработки POST gatt server jboss
-            binesslogicDataSyncServicePOST.onTransact(getApplicationContext(),version,this);
+
+                        // TODO: 12.09.2024 запуск обработки POST gatt server jboss
+                        binesslogicDataSyncServicePOST.onTransact(getApplicationContext(),version,this);
 
 
-            // TODO: 12.09.2024 запуск обработки GET gatt server jboss
-            binesslogicDataSyncServiceGET.onTransact(getApplicationContext(),version,this);
+                        // TODO: 12.09.2024 запуск обработки GET gatt server jboss
+                        binesslogicDataSyncServiceGET.onTransact(getApplicationContext(),version,this);
+
+                        Log.d(getApplicationContext().getClass().getName(), "\n"
+                                + " class " + Thread.currentThread().getStackTrace()[2].getClassName() +
+                                "\n" +
+                                " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                                " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n");
+            }).doOnError(e->{
+
+                        e.printStackTrace();
+                        Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" +
+                                Thread.currentThread().getStackTrace()[2].getMethodName() + " Линия  :"
+                                + Thread.currentThread().getStackTrace()[2].getLineNumber());
+                        ContentValues valuesЗаписываемОшибки = new ContentValues();
+                        valuesЗаписываемОшибки.put("Error", e.toString().toLowerCase());
+                        valuesЗаписываемОшибки.put("Klass", this.getClass().getName());
+                        valuesЗаписываемОшибки.put("Metod", Thread.currentThread().getStackTrace()[2].getMethodName());
+                        valuesЗаписываемОшибки.put("LineError", Thread.currentThread().getStackTrace()[2].getLineNumber());
+                        final Object ТекущаяВерсияПрограммы = version;
+                        Integer ЛокальнаяВерсияПОСравнение = Integer.parseInt(ТекущаяВерсияПрограммы.toString());
+                        valuesЗаписываемОшибки.put("whose_error", ЛокальнаяВерсияПОСравнение);
+                        new SubClassErrors(getApplicationContext()).МетодЗаписиОшибок(valuesЗаписываемОшибки);
+
+
+            })
+                    .toObservable()
+                    .take(5, TimeUnit.MINUTES).subscribe();
+
+
 
             Log.d(getApplicationContext().getClass().getName(), "\n"
                     + " class " + Thread.currentThread().getStackTrace()[2].getClassName() +

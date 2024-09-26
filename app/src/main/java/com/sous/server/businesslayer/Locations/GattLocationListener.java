@@ -45,17 +45,14 @@ public class GattLocationListener implements LocationListener {
     private String TAG;
   private  SharedPreferences sharedPreferencesGatt;
 
-    private   Handler handler;
     private  Long version;
     private  LocationManager locationManager;
   private AtomicReference<Location> atomicReferenceLocal=new AtomicReference<>();
     public GattLocationListener(Context context, SharedPreferences sharedPreferencesGatt ,
-                                @NonNull Handler handler,
                                 @NotNull Long version,
                                 @NonNull LocationManager locationManager) {
         this.context = context;
         this.sharedPreferencesGatt = sharedPreferencesGatt;
-        this.handler = handler;
         this.version = version;
         this.locationManager = locationManager;
         TAG = getClass().getName().toString();
