@@ -26,7 +26,7 @@ import androidx.core.app.NotificationManagerCompat;
 
 import com.sous.scanner.R;
 import com.sous.scanner.businesslayer.Errors.SubClassErrors;
-import com.sous.scanner.businesslayer.bl_Tests.GetBleAdvertising;
+import com.sous.scanner.businesslayer.bl_Advertising.GetBleAdvertising;
 
 import java.util.Date;
 

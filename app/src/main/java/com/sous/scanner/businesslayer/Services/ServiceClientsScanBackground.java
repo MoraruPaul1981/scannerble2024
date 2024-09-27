@@ -29,13 +29,10 @@ import androidx.preference.PreferenceManager;
 
 import com.sous.scanner.R;
 import com.sous.scanner.businesslayer.Errors.SubClassErrors;
-import com.sous.scanner.businesslayer.bl_Tests.GetBleAdvertising;
 import com.sous.scanner.businesslayer.bl_forServices.Businesslogic_ScaningClientWorker;
 import com.sous.scanner.businesslayer.bl_forServices.BusinessoginEnableBluetoothAdapter;
 
 import java.util.Date;
-
-import javax.inject.Inject;
 
 import dagger.hilt.android.AndroidEntryPoint;
 

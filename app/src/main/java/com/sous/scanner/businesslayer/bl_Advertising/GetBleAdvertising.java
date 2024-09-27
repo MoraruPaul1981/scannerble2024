@@ -1,10 +1,9 @@
-package com.sous.scanner.businesslayer.bl_Tests;
+package com.sous.scanner.businesslayer.bl_Advertising;
 
 
 import android.Manifest;
 import android.annotation.SuppressLint;
 import android.bluetooth.BluetoothAdapter;
-import android.bluetooth.BluetoothDevice;
 import android.bluetooth.le.AdvertiseCallback;
 import android.bluetooth.le.AdvertiseData;
 import android.bluetooth.le.AdvertiseSettings;
@@ -23,6 +22,7 @@ import androidx.core.app.ActivityCompat;
 
 
 import com.sous.scanner.businesslayer.Errors.SubClassErrors;
+import com.sous.scanner.businesslayer.bl_NameDevices.SetNameDevices;
 
 import java.util.UUID;
 
@@ -58,16 +58,15 @@ public class GetBleAdvertising {
     }
 
 
+    @SuppressLint("MissingPermission")
     public void staringAdvertisingSet(@NonNull BluetoothAdapter bluetoothAdapter) {
         try {
-            String ANDROID_ID = Settings.Secure.getString(context.getContentResolver(), Settings.Secure.ANDROID_ID);
-            String ANDROID_NAME = Settings.Global.getString(context.getContentResolver(), Settings.Global.DEVICE_NAME);
-            String btMac = android.provider.Settings.Secure.getString(context.getContentResolver(), "bluetooth_address");
-            // TODO: 01.09.2024
+            String setingNameDevice =  new SetNameDevices(context,version).setingNameDevice();
+
 
             Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                     " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                    " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n");
+                    " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"+ " setingNameDevice " +setingNameDevice);
 
 
             AdvertiseSettings settings = new AdvertiseSettings.Builder()
@@ -110,17 +109,7 @@ public class GetBleAdvertising {
             };
 
             if (bluetoothAdapter != null) {
-                if (ActivityCompat.checkSelfPermission(context, Manifest.permission.BLUETOOTH_CONNECT) != PackageManager.PERMISSION_GRANTED) {
-                    // TODO: Consider calling
-                    //    ActivityCompat#requestPermissions
-                    // here to request the missing permissions, and then overriding
-                    //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
-                    //                                          int[] grantResults)
-                    // to handle the case where the user grants the permission. See the documentation
-                    // for ActivityCompat#requestPermissions for more details.
-                    return;
-                }
-                bluetoothAdapter.setName(ANDROID_NAME);
+                bluetoothAdapter.setName(setingNameDevice);
                 bluetoothAdapter.getBluetoothLeAdvertiser().startAdvertising(settings, advertiseData, mAdvertiseCallback);
             }
 
