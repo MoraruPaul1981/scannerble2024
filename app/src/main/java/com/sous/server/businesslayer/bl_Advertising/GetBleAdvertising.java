@@ -1,6 +1,5 @@
-package com.sous.server.businesslayer.bl_Tests;
+package com.sous.server.businesslayer.bl_Advertising;
 
-import android.Manifest;
 import android.annotation.SuppressLint;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.le.AdvertiseCallback;
@@ -11,14 +10,12 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
-import android.os.Build;
 import android.os.Parcel;
 import android.os.ParcelUuid;
 import android.provider.Settings;
 import android.util.Log;
 
 import androidx.annotation.NonNull;
-import androidx.core.app.ActivityCompat;
 
 
 import com.serverscan.datasync.businesslayer.Errors.SubClassErrors;
