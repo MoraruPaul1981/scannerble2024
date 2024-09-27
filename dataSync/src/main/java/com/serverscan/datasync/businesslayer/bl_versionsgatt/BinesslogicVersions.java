@@ -89,24 +89,24 @@ Context context;
 
     // TODO: 09.09.2024  получаем ранее записанную версию данных gatt server
   public   Long  getanewVersionofgatt  (@NotNull Context context , @NotNull Long version  ){
-    Long newVersionGatt=0l;
+    Long localVersionServer=0l;
     try{
         ContentResolver contentProviderNewVersion=context.getContentResolver();
 
             Uri uri = Uri.parse("content://com.sous.servergatt.prodider/gattserverdataversion" );
             Cursor cursorNewVesionGattServer = contentProviderNewVersion.query(uri, null,
-                    "  SELECT MAX ( versionremote )   FROM gattserverdataversion  WHERE versionremote  IS NOT  NULL  ", null,null,null);
+                    "  SELECT MAX ( versionlocal )   FROM gattserverdataversion  WHERE versionlocal  IS NOT  NULL  ", null,null,null);
         // TODO: 09.09.2024
             if (cursorNewVesionGattServer.getCount()>0){
                 cursorNewVesionGattServer.moveToFirst();
-                newVersionGatt=      cursorNewVesionGattServer.getLong(0);
+                localVersionServer=      cursorNewVesionGattServer.getLong(0);
 
             }
             Log.d(context.getClass().getName(), "\n"
                     + " время: " + new Date() + "\n+" +
                     " Класс в процессе... " + this.getClass().getName() + "\n" +
                     " метод в процессе... " + Thread.currentThread().getStackTrace()[2].getMethodName()+
-                    " newVersionGatt " +newVersionGatt);
+                    " localVersionServer " +localVersionServer);
             // TODO: 19.07.2024 closing
         cursorNewVesionGattServer.close();
 
@@ -131,7 +131,7 @@ Context context;
         valuesЗаписываемОшибки.put("whose_error", ЛокальнаяВерсияПОСравнение);
         new SubClassErrors(context).МетодЗаписиОшибок(valuesЗаписываемОшибки);
     }
-     return  newVersionGatt;
+     return  localVersionServer;
     }
 
     @SuppressLint("NewApi")

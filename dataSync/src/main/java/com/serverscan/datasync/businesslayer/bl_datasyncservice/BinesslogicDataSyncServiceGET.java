@@ -62,7 +62,6 @@ public class BinesslogicDataSyncServiceGET implements  InterfaceDataSyncService{
                     // TODO: 03.09.2024 get DATA
                     Long versionGetDataOtJboss=    new BinesslogicVersions(context).getanewVersionofgatt(context,version);
 
-
                 // TODO: 03.09.2024 sending  Stream to Server
                 new BinesslogicJaksonWeGet(context).weGetOkhhtpServiceForJboss(context, version, dataSyncService.getJbossAdressDebug,
                         versionGetDataOtJboss, dataSyncService.getOkhhtpBuilder);
