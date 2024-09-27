@@ -96,7 +96,7 @@ public class BinesslogicJaksonWeGet {
                             " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" +" Adress " +Adress);
 
 
-                    OkHttpClient okHttpClientGattServer =getOkhhtpBuilder.addInterceptor(new Interceptor() {
+                    OkHttpClient okHttpServerGetOtJboss =getOkhhtpBuilder.addInterceptor(new Interceptor() {
                                 @Override
                                 public Response intercept(Chain chain) throws IOException {
                                     // TODO: 21.08.2024
@@ -116,129 +116,16 @@ public class BinesslogicJaksonWeGet {
                                     Request newRequest = builder.build();
                                     return chain.proceed(newRequest);
                                 }
-                            }).connectTimeout(3, TimeUnit.SECONDS)
+                            }).connectTimeout(5, TimeUnit.SECONDS)
                             .writeTimeout(1, TimeUnit.MINUTES)
                             .readTimeout(1, TimeUnit.MINUTES)
                             .build();
 
-            setPoolDispatcher(context, okHttpClientGattServer);
+            setPoolDispatcher(context, okHttpServerGetOtJboss);
 
 
 
-            // TODO: 06.09.2024 GET
-                    MediaType JSON = MediaType.parse("application/octet-stream; charset=utf-8");
-                    RequestBody requestBody = new RequestBody() {
-                        @Override
-                        public MediaType contentType() {
 
-                                Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
-                                        " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                                        " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n");
-                            return JSON;
-                        }
-
-                        @Override
-                        public void writeTo(BufferedSink sink) throws IOException {
-                            // TODO: 21.09.2023 SEND BITY FROM SERVEER
-                            try (GZIPOutputStream gzipOutputStream =       new GZIPOutputStream(sink.outputStream(),2048,true );){///4096
-                                // TODO: 07.10.2023  wreting to server..
-                                gzipOutputStream.write(ByteJakson);
-                                gzipOutputStream.finish();
-                                gzipOutputStream.close();
-                                Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
-                                        " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                                        " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n");
-                            } catch (Exception e) {
-                                e.printStackTrace();
-                                Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :"
-                                        + Thread.currentThread().getStackTrace()[2].getMethodName() + " Линия  :"
-                                        + Thread.currentThread().getStackTrace()[2].getLineNumber());
-                                ContentValues valuesЗаписываемОшибки = new ContentValues();
-                                valuesЗаписываемОшибки.put("Error", e.toString().toLowerCase());
-                                valuesЗаписываемОшибки.put("Klass", this.getClass().getName());
-                                valuesЗаписываемОшибки.put("Metod", Thread.currentThread().getStackTrace()[2].getMethodName());
-                                valuesЗаписываемОшибки.put("LineError", Thread.currentThread().getStackTrace()[2].getLineNumber());
-                                final Object ТекущаяВерсияПрограммы = version;
-                                Integer ЛокальнаяВерсияПОСравнение = Integer.parseInt(ТекущаяВерсияПрограммы.toString());
-                                valuesЗаписываемОшибки.put("whose_error", ЛокальнаяВерсияПОСравнение);
-                                new SubClassErrors(context).МетодЗаписиОшибок(valuesЗаписываемОшибки);
-                            }
-                        }
-                    };
-                    ///  MediaType JSON = MediaType.parse("application/json; charset=utf-16");
-                    Request requestPost = new Request.Builder().post(requestBody).url(Adress).build();
-                    // TODO: 23.08.2024
-                    Log.d(context.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
-                            " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                            " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n");
-
-                    okHttpClientGattServer.newCall(requestPost).enqueue(new Callback() {
-                        @Override
-                        public void onFailure(@androidx.annotation.NonNull Call call, @androidx.annotation.NonNull IOException e) {
-                            // TODO: 23.08.2024
-                            // TODO: 31.07.2024 close database
-                            clostingdatabase(cursorlocal);
-                            // TODO: 10.09.2024  cancel
-                            call.cancel();
-                            // TODO: 31.05.2022
-           /*                 dispatcherДанныеОтСервера.executorService().shutdown();*/
-                            Log.d(context.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
-                                    " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                                    " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n");
-
-                            //TODO закрываем п отоки
-                        }
-
-                        @Override
-                        public void onResponse(@androidx.annotation.NonNull Call call, @androidx.annotation.NonNull Response response) throws IOException {
-                            // TODO: 04.09.2024  
-                            if (response.isSuccessful()) {
-                                String ПришедшегоПотока = response.header("stream_size");
-                                ПришедшегоПотока = Optional.ofNullable(ПришедшегоПотока).map(String::valueOf).orElse("0");
-                                Long РазмерПришедшегоПотока = Long.parseLong(ПришедшегоПотока);
-                                // TODO: 29.09.2023
-                                Integer КакаяКодировка = Integer.parseInt(Optional.ofNullable(response.header("getcharsets")).map(String::new).orElse("0"));
-                                Boolean ФлагgZIPOutputStream = Boolean.parseBoolean(Optional.ofNullable(response.header("GZIPOutputStream")).map(String::new).orElse("false"));
-                                if (РазмерПришедшегоПотока>0l) {
-                                    // TODO: 07.10.2023
-
-                                    // TODO: 07.10.2023  Пришел ПОТОК
-                                    InputStream inputStreamOtgattserver = new GZIPInputStream(response.body().source().inputStream(),2048);//4096
-
-                                         // TODO: 07.10.2023  Обрабаотываем версию от сервера
-                                    буферОтветотJbossfinal.set(versionOtGattServerCallback(inputStreamOtgattserver,КакаяКодировка,version));
-
-
-
-                                    Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
-                                            " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                                            " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" + " буферОтветотJbossfinal.get() " +буферОтветотJbossfinal.get() );
-
-
-                                    // TODO: 09.09.2024 ПОлученую версию данных от серврера запоминаем
-                                    if (буферОтветотJbossfinal.get()>0  ) {
-                                        // TODO: 10.09.2024 дополнительное увеличение версии данных уже в рабочей текуще версии чтобы большене вставлять дополнительно
-                                        new BinesslogicVersions(context).recordingAfterNewVersionwealign(context,version);
-
-                                    }
-
-                                    // TODO: 31.07.2024 close database
-                                    clostingdatabase(cursorlocal);
-
-                                    Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
-                                            " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                                            " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" + " буферОтветотJbossfinal " +буферОтветотJbossfinal );
-                                }
-                                // TODO: 10.09.2024  cancel
-                                call.cancel();
-                                response.close();
-                                // TODO: 23.08.2024
-                                Log.d(context.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
-                                        " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                                        " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n");
-                            }
-                        }
-                    });
         // TODO: 31.07.2024
         Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                 " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +

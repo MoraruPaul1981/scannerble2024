@@ -116,7 +116,7 @@ public class BinesslogicJaksonSend {
                                     Request newRequest = builder.build();
                                     return chain.proceed(newRequest);
                                 }
-                            }).connectTimeout(3, TimeUnit.SECONDS)
+                            }).connectTimeout(5, TimeUnit.SECONDS)
                             .writeTimeout(1, TimeUnit.MINUTES)
                             .readTimeout(1, TimeUnit.MINUTES)
                             .build();
