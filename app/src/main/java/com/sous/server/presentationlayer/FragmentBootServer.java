@@ -316,7 +316,7 @@ public class FragmentBootServer extends Fragment {
                                   " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" );
 
                 //TODO: Запускаем Фрагмент Server Fragment
-onDestroy();
+                     onDestroy();
 
                 Log.d(getContext().getClass().getName(), "\n"
                         + " время: " + new Date() + "\n+" +

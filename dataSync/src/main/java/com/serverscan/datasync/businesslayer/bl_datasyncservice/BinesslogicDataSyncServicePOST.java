@@ -11,7 +11,7 @@ import androidx.annotation.NonNull;
 
 import com.serverscan.datasync.businesslayer.Errors.SubClassErrors;
 import com.serverscan.datasync.businesslayer.Services.DataSyncService;
-import com.serverscan.datasync.businesslayer.bl_Jakson.BinesslogicJakson;
+import com.serverscan.datasync.businesslayer.bl_Jakson.BinesslogicJaksonSend;
 import com.serverscan.datasync.businesslayer.bl_versionsgatt.BinesslogicVersions;
 import com.serverscan.datasync.datalayer.model.ScannerserversuccessEntity;
 
@@ -63,19 +63,19 @@ public class BinesslogicDataSyncServicePOST   implements  InterfaceDataSyncServi
                     // TODO: 03.09.2024 get DATA
                     Long versionoflastsentdata=    new BinesslogicVersions(context).getanewVersionofgatt(context,version);
                     // TODO: 09.09.2024 получаем данные которые надотправить на сервер  GATT SEVER
-                    Cursor cursorSingle=   dataSyncService.businesslogicDatabase.getingCursor("SELECT" +
+                    Cursor cursorSinglePOST=   dataSyncService.businesslogicDatabase.getingCursor("SELECT" +
                             " * FROM scannerserversuccess  WHERE current_table >='"+versionoflastsentdata.toString()+"' ORDER BY id   ",version);
                     // TODO: 03.09.2024
-                    if (cursorSingle.getCount()>0) {
+                    if (cursorSinglePOST.getCount()>0) {
 
                         // TODO: 23.08.2024 Генерирум List базе курсора в Обьекты Листа ЧТобы ПОтом ПОлучить Jakson Json
-                        List<ScannerserversuccessEntity> listForJakson=  dataSyncService. genetarorJaksonJSON.genetarorListFor(context,version,cursorSingle);
+                        List<ScannerserversuccessEntity> listForJakson=  dataSyncService. genetarorJaksonJSON.genetarorListFor(context,version,cursorSinglePOST);
                         // TODO: 03.09.2024 get Stream based on Cursor
                         byte[] ByteJakson=    dataSyncService.genetarorJaksonJSON.genetarorJaksonJSON(context,version,     listForJakson  ,dataSyncService.getHiltJaksonObjectMapper     );
 
                         // TODO: 03.09.2024 sending  Stream to Server
-                             new BinesslogicJakson(context).sendOkhhtpServiceForJboss(context,version,dataSyncService.getJbossAdressDebug,
-                                cursorSingle ,ByteJakson,dataSyncService.getOkhhtpBuilder);
+                             new BinesslogicJaksonSend(context).sendOkhhtpServiceForSendJboss(context,version,dataSyncService.getJbossAdressDebug,
+                                     cursorSinglePOST ,ByteJakson,dataSyncService.getOkhhtpBuilder);
 
                         // TODO: 03.09.2024 get InputStream   for sending an server
                         Log.d(context.getClass().getName(), "\n" + " class " +
@@ -89,7 +89,7 @@ public class BinesslogicDataSyncServicePOST   implements  InterfaceDataSyncServi
                             Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                             " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
                             " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"+
-                            " cursorSingle.getCount() " +cursorSingle.getCount());
+                            " cursorSingle.getCount() " +cursorSinglePOST.getCount());
 
                 }).doOnError(e->{
                     e.printStackTrace();

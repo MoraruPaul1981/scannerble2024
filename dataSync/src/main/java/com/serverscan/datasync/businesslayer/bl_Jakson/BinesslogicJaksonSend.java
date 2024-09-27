@@ -6,17 +6,12 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.database.Cursor;
-import android.preference.PreferenceManager;
 import android.provider.Settings;
 import android.util.Log;
 
-import com.google.firebase.crashlytics.buildtools.reloc.com.google.common.io.ByteSource;
 import com.google.firebase.crashlytics.buildtools.reloc.org.apache.http.client.methods.HttpGet;
 import com.google.firebase.crashlytics.buildtools.reloc.org.apache.http.client.utils.URIBuilder;
 import com.serverscan.datasync.businesslayer.Errors.SubClassErrors;
-import com.serverscan.datasync.businesslayer.bl_okhttpclient.GetOkhhtpBuilder;
-import com.serverscan.datasync.businesslayer.bl_okhttpclient.QualifierOkhhtp;
-import com.serverscan.datasync.businesslayer.bl_preferences.BussenloginSaredPreferense;
 import com.serverscan.datasync.businesslayer.bl_versionsgatt.BinesslogicVersions;
 
 import java.io.BufferedReader;
@@ -37,18 +32,13 @@ import java.util.LinkedHashMap;
 import java.util.Locale;
 import java.util.Optional;
 import java.util.concurrent.ExecutionException;
+import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicReference;
 import java.util.zip.GZIPInputStream;
 import java.util.zip.GZIPOutputStream;
 
-import javax.inject.Inject;
-
-import dagger.Module;
-import dagger.hilt.InstallIn;
-import dagger.hilt.android.qualifiers.ApplicationContext;
-import dagger.hilt.components.SingletonComponent;
 import io.reactivex.rxjava3.annotations.NonNull;
 import io.reactivex.rxjava3.core.Completable;
 import okhttp3.Call;
@@ -63,7 +53,7 @@ import okhttp3.Response;
 import okio.BufferedSink;
 
 
-public class BinesslogicJakson {
+public class BinesslogicJaksonSend {
     private SharedPreferences preferences;
 
     private Context context;
@@ -72,7 +62,7 @@ public class BinesslogicJakson {
 
 
 
-    public  BinesslogicJakson(@NonNull  Context hiltcontext) {
+    public BinesslogicJaksonSend(@NonNull  Context hiltcontext) {
         // TODO: 22.08.2024
         // TODO: 21.08.2024
         context = hiltcontext;
@@ -86,10 +76,10 @@ public class BinesslogicJakson {
 
 
     @SuppressLint("NewApi")
-    public  void    sendOkhhtpServiceForJboss(@NonNull Context context, @NonNull long version,
-                                             @NonNull LinkedHashMap<String, String> getJbossAdress, @NonNull Cursor cursorlocal,
-                                             @NonNull  byte[] ByteJakson,
-                                             @NonNull OkHttpClient.Builder getOkhhtpBuilder)
+    public  void sendOkhhtpServiceForSendJboss(@NonNull Context context, @NonNull long version,
+                                               @NonNull LinkedHashMap<String, String> getJbossAdress, @NonNull Cursor cursorlocal,
+                                               @NonNull  byte[] ByteJakson,
+                                               @NonNull OkHttpClient.Builder getOkhhtpBuilder)
             throws ExecutionException, InterruptedException {
         // TODO: 22.08.2024  Коненпт провайдер для зааписив базу данных
         AtomicReference<Long> буферОтветотJbossfinal= new AtomicReference(0l);
@@ -131,7 +121,11 @@ public class BinesslogicJakson {
                             .readTimeout(1, TimeUnit.MINUTES)
                             .build();
                     // TODO: 06.09.2024 POST
-                    MediaType JSON = MediaType.parse("application/octet-stream; charset=utf-8");
+
+            setPoolDispatcher(context, okHttpClientGattServer);
+
+
+            MediaType JSON = MediaType.parse("application/octet-stream; charset=utf-8");
                     RequestBody requestBody = new RequestBody() {
                         @Override
                         public MediaType contentType() {
@@ -268,6 +262,18 @@ public class BinesslogicJakson {
 
     }
 
+    private     Dispatcher   setPoolDispatcher(Context context, OkHttpClient okHttpClientGattServer) {
+        Dispatcher dispatcherPost= okHttpClientGattServer.dispatcher();
+        ExecutorService executorServicePost= dispatcherPost.executorService();
+        if (executorServicePost.isShutdown()) {
+            executorServicePost= Executors.newCachedThreadPool();
+        }
+        Log.d(context.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"
+                +" executorServicePost.isShutdown() " +executorServicePost.isShutdown());
+        return        dispatcherPost;
+    }
 
 
     @SuppressLint("NewApi")

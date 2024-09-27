@@ -11,11 +11,9 @@ import androidx.annotation.NonNull;
 
 import com.serverscan.datasync.businesslayer.Errors.SubClassErrors;
 import com.serverscan.datasync.businesslayer.Services.DataSyncService;
-import com.serverscan.datasync.businesslayer.bl_Jakson.BinesslogicJakson;
+import com.serverscan.datasync.businesslayer.bl_Jakson.BinesslogicJaksonSend;
+import com.serverscan.datasync.businesslayer.bl_Jakson.BinesslogicJaksonWeGet;
 import com.serverscan.datasync.businesslayer.bl_versionsgatt.BinesslogicVersions;
-import com.serverscan.datasync.datalayer.model.ScannerserversuccessEntity;
-
-import java.util.List;
 
 import javax.inject.Inject;
 
@@ -56,40 +54,32 @@ public class BinesslogicDataSyncServiceGET implements  InterfaceDataSyncService{
 @Override
     public void onTransact(@NonNull Context context , @NonNull Long version
         ,@NonNull DataSyncService dataSyncService)    {
-        // TODO: 03.09.2024
-        // TODO: 04.09.2024 POST
+
+    //TODO GET
         Completable.fromAction(()->{
                     // TODO: 12.09.2024
+            // TODO: 09.09.2024 получаем данные которые надотправить на сервер  GATT SEVER
                     // TODO: 03.09.2024 get DATA
-                    Long versionoflastsentdata=    new BinesslogicVersions(context).getanewVersionofgatt(context,version);
-                    // TODO: 09.09.2024 получаем данные которые надотправить на сервер  GATT SEVER
-                    Cursor cursorSingle=   dataSyncService.businesslogicDatabase.getingCursor("SELECT" +
-                            " * FROM scannerserversuccess  WHERE current_table >='"+versionoflastsentdata.toString()+"' ORDER BY id   ",version);
-                    // TODO: 03.09.2024
-                    if (cursorSingle.getCount()>0) {
+                    Long versionGetDataOtJboss=    new BinesslogicVersions(context).getanewVersionofgatt(context,version);
 
-                        // TODO: 23.08.2024 Генерирум List базе курсора в Обьекты Листа ЧТобы ПОтом ПОлучить Jakson Json
-                        List<ScannerserversuccessEntity> listForJakson=  dataSyncService. genetarorJaksonJSON.genetarorListFor(context,version,cursorSingle);
-                        // TODO: 03.09.2024 get Stream based on Cursor
-                        byte[] ByteJakson=    dataSyncService.genetarorJaksonJSON.genetarorJaksonJSON(context,version,     listForJakson  ,dataSyncService.getHiltJaksonObjectMapper     );
 
-                        // TODO: 03.09.2024 sending  Stream to Server
-                             new BinesslogicJakson(context).sendOkhhtpServiceForJboss(context,version,dataSyncService.getJbossAdressDebug,
-                                cursorSingle ,ByteJakson,dataSyncService.getOkhhtpBuilder);
+                // TODO: 03.09.2024 sending  Stream to Server
+                new BinesslogicJaksonWeGet(context).weGetOkhhtpServiceForJboss(context, version, dataSyncService.getJbossAdressDebug,
+                        versionGetDataOtJboss, dataSyncService.getOkhhtpBuilder);
 
-                        // TODO: 03.09.2024 get InputStream   for sending an server
-                        Log.d(context.getClass().getName(), "\n" + " class " +
-                                Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
-                                " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                                " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"  );
 
-                    }
+                // TODO: 03.09.2024 get InputStream   for sending an server
+                Log.d(context.getClass().getName(), "\n" + " class " +
+                        Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                        " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                        " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n");
+
+
                     // TODO: 03.09.2024 get InputStream   for sending an server
                     Log.d(context.getClass().getName(), "\n" + " class " +
                             Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                             " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                            " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"+
-                            " cursorSingle.getCount() " +cursorSingle.getCount());
+                            " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n");
 
                 }).doOnError(e->{
                     e.printStackTrace();
