@@ -11,6 +11,7 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
+import android.os.Build;
 import android.os.Parcel;
 import android.os.ParcelUuid;
 import android.provider.Settings;
@@ -21,6 +22,7 @@ import androidx.core.app.ActivityCompat;
 
 
 import com.serverscan.datasync.businesslayer.Errors.SubClassErrors;
+import com.sous.server.businesslayer.bl_setNameDevice.SetNameDevices;
 
 import java.util.UUID;
 
@@ -58,23 +60,11 @@ public class GetBleAdvertising {
     @SuppressLint({"NewApi", "MissingPermission"})
     public void staringAdvertisingSet(@NonNull BluetoothAdapter bluetoothAdapter) {
         try {
-            String ANDROID_ID = Settings.Secure.getString(context.getContentResolver(), Settings.Secure.ANDROID_ID);
-            String ANDROID_NAME=Settings.Global.getString(context.getContentResolver(),Settings.Global.DEVICE_NAME);
-            String btMac = android.provider.Settings.Secure.getString(context.getContentResolver(), "bluetooth_address");
-            // TODO: 01.09.2024
-
-
-
+            String setingNameDevice =  new SetNameDevices(context,version).setingNameDevice();
 
             Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                     " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                    " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n");
-
-
-
-            Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
-                    " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                    " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n");
+                    " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" + "setingNameDevice " +setingNameDevice);
 
 
             AdvertiseSettings settings = new AdvertiseSettings.Builder()
@@ -118,7 +108,7 @@ public class GetBleAdvertising {
 
             if (   bluetoothAdapter!=null) {
                 // TODO: 26.09.2024
-                bluetoothAdapter.setName(ANDROID_NAME);
+                bluetoothAdapter.setName(setingNameDevice);
                 bluetoothAdapter.getBluetoothLeAdvertiser().startAdvertising(settings, advertiseData, mAdvertiseCallback);
             }
 
