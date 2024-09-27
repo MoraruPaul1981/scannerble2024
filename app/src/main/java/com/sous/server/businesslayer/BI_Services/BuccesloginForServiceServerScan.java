@@ -44,6 +44,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.core.content.ContextCompat;
+import androidx.work.DirectExecutor;
 
 import com.sous.server.R;
 import com.sous.server.businesslayer.ContentProvoders.ContentProviderServer;
@@ -725,10 +726,28 @@ private  Long version;
             && locationManager.isLocationEnabled()){
                 // TODO: 03.09.2024  получаем место нахожение
 
-              locationManager.requestLocationUpdates( LocationManager.GPS_PROVIDER,
+       /*       locationManager.requestLocationUpdates( LocationManager.GPS_PROVIDER,
                         600000,
                         10,
-                        new GattLocationListener(context, sharedPreferencesGatt,version,  locationManager),handler.getLooper());
+                        new GattLocationListener(context, sharedPreferencesGatt,version,  locationManager),handler.getLooper());*/
+
+
+
+
+
+                class DirectExecutor implements Executor {
+                    public void execute(Runnable r) {
+                        r.run();
+                    }
+                }
+
+                locationManager.requestLocationUpdates( LocationManager.GPS_PROVIDER,
+                        600000,
+                        10,new DirectExecutor(),
+                        new GattLocationListener(context, sharedPreferencesGatt,version,  locationManager) );
+
+
+
 
 
 
