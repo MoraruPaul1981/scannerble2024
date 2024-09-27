@@ -32,6 +32,7 @@ import dagger.hilt.android.qualifiers.ApplicationContext;
 import dagger.hilt.components.SingletonComponent;
 import io.reactivex.rxjava3.annotations.NonNull;
 import io.reactivex.rxjava3.core.Completable;
+import io.reactivex.rxjava3.core.Flowable;
 import io.reactivex.rxjava3.schedulers.Schedulers;
 
 @Module
@@ -140,19 +141,26 @@ public List<ScannerserversuccessEntity> genetarorListFor(@NonNull Context  conte
         // TODO: 28.08.2024
         Completable.fromAction(()->{
                     // TODO: 06.09.2024
-                   do {
-                        // TODO: 06.09.2024  заполяем данными на базе Курсора
-                        if (cursorlocal.getPosition()<cursorlocal.getCount()) {
-                            ScannerserversuccessEntity    scannerserversuccessEntity = processtheCursorandfillinmodel(cursorlocal ,version);
-                            // TODO: 06.09.2024 далее заполяем Лист
-                            copyOnWriteArrayListSendJboss.add(scannerserversuccessEntity);
-                        }
+                    Flowable.range(0,cursorlocal.getCount()).onBackpressureBuffer().blockingForEach(row->{
+
+                        ScannerserversuccessEntity    scannerserversuccessEntity = processtheCursorandfillinmodel(cursorlocal ,version);
+                        // TODO: 06.09.2024 далее заполяем Лист
+                        copyOnWriteArrayListSendJboss.add(scannerserversuccessEntity);
+
+                        Log.d(this.getClass().getName(), "\n" + " class " +
+                                Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                                " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                                " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" + "\n"
+                                + " LocalDateTime.now() " + LocalDateTime.now().toString().toUpperCase() + "\n"+
+                                " copyOnWriteArrayListSendJboss " +copyOnWriteArrayListSendJboss.size());
+                    },1);
+
                         Log.d(this.getClass().getName(), "\n" + " class " +
                                 Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                                 " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
                                 " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" + "\n"
                                 + " LocalDateTime.now() " + LocalDateTime.now().toString().toUpperCase() + "\n");
-                    } while (  cursorlocal.moveToNext());
+
                     // TODO: 06.09.2024 ЗАполяем данными Класс Для Отправки НА сервер
                     // TODO: 06.09.2024 end
                 }).doOnComplete(()->{
@@ -213,10 +221,17 @@ public List<ScannerserversuccessEntity> genetarorListFor(@NonNull Context  conte
 
             // TODO: 06.09.2024 Получаем данные курсора 
             Integer id= Optional.ofNullable( cursorlocal.getInt(cursorlocal.getColumnIndex("id"))).map(Integer::new).orElse(0);
+
             String operations=    Optional.ofNullable( cursorlocal.getString(cursorlocal.getColumnIndex("operations"))).map(String::new).orElse("");
+
             String completedwork=      Optional.ofNullable( cursorlocal.getString(cursorlocal.getColumnIndex("completedwork"))).map(String::new).orElse("");
             String namedevice=    Optional.ofNullable(  cursorlocal.getString(cursorlocal.getColumnIndex("namedevice"))).map(String::new).orElse("");
             String macdevice=   Optional.ofNullable(   cursorlocal.getString(cursorlocal.getColumnIndex("macdevice"))).map(String::new).orElse("");
+
+
+
+
+
             String gps1=   Optional.ofNullable(    cursorlocal.getString(cursorlocal.getColumnIndex("gps1"))).map(String::new).orElse("");
             String gps2=  Optional.ofNullable(     cursorlocal.getString(cursorlocal.getColumnIndex("gps2"))).map(String::new).orElse("");
             String fio=   Optional.ofNullable(     cursorlocal.getString(cursorlocal.getColumnIndex("fio"))).map(String::new).orElse("");
@@ -225,9 +240,13 @@ public List<ScannerserversuccessEntity> genetarorListFor(@NonNull Context  conte
             String date_update=  Optional.ofNullable(    cursorlocal.getString(cursorlocal.getColumnIndex("date_update"))).map(String::new).orElse("");
             Long uuid=  Optional.ofNullable(    cursorlocal.getLong(cursorlocal.getColumnIndex("uuid"))).map(Long::new).orElse(0l);
             Long Version=     Optional.ofNullable(  cursorlocal.getLong(cursorlocal.getColumnIndex("version"))).map(Long::new).orElse(0l);
+
+
             Integer sim=    Optional.ofNullable(  cursorlocal.getInt(cursorlocal.getColumnIndex("sim"))).map(Integer::new).orElse(0);
             String iemi=    Optional.ofNullable(  cursorlocal.getString(cursorlocal.getColumnIndex("iemi"))).map(String::new).orElse("");
             Long current_table=    Optional.ofNullable(  cursorlocal.getLong(cursorlocal.getColumnIndex("current_table"))).map(Long::new).orElse(0l);
+
+            Integer getstatusrow=    Optional.ofNullable(  cursorlocal.getInt(cursorlocal.getColumnIndex("getstatusrow"))).map(Integer::new).orElse(0);
 
             Log.d(this.getClass().getName(), "\n" + " class " +
                     Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
@@ -247,6 +266,7 @@ public List<ScannerserversuccessEntity> genetarorListFor(@NonNull Context  conte
             scannerserversuccessEntity.setFio(fio);
             scannerserversuccessEntity.setAdress(adress);
             scannerserversuccessEntity.setCity(city);
+            scannerserversuccessEntity.setGetstatusrow(getstatusrow);
 
 
             // TODO: 06.09.2024 get DATETIME

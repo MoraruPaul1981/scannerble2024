@@ -13,7 +13,6 @@ import com.google.firebase.crashlytics.buildtools.reloc.com.google.common.io.Byt
 import com.google.firebase.crashlytics.buildtools.reloc.org.apache.http.client.methods.HttpGet;
 import com.google.firebase.crashlytics.buildtools.reloc.org.apache.http.client.utils.URIBuilder;
 import com.serverscan.datasync.businesslayer.Errors.SubClassErrors;
-import com.serverscan.datasync.businesslayer.bl_versionsgatt.BinesslogicVersions;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -38,7 +37,6 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicReference;
 import java.util.zip.GZIPInputStream;
-import java.util.zip.GZIPOutputStream;
 
 import io.reactivex.rxjava3.annotations.NonNull;
 import io.reactivex.rxjava3.core.Completable;
@@ -46,12 +44,9 @@ import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.Dispatcher;
 import okhttp3.Interceptor;
-import okhttp3.MediaType;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
-import okhttp3.RequestBody;
 import okhttp3.Response;
-import okio.BufferedSink;
 
 
 public class BinesslogicJaksonWeGet {
@@ -90,7 +85,7 @@ public class BinesslogicJaksonWeGet {
         String ANDROID_ID= Settings.Secure.getString(context.getContentResolver(), Settings.Secure.ANDROID_ID);
                     // TODO: 26.08.2024
                     // TODO: 27.08.2024 получаем данные и вставляем их в  URL для отправки
-                    URL Adress = getUrlndParametrs(   versionGetDataOtJboss,getJbossAdress,version);
+                    URL Adress = getGETUrlndParametrs(   versionGetDataOtJboss,getJbossAdress,version);
 
                     Log.d(context.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                             " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
@@ -272,9 +267,9 @@ public class BinesslogicJaksonWeGet {
 
 
     @SuppressLint("Range")
-    private URL getUrlndParametrs(@NonNull  Long versionGetDataOtJboss,
-                                  @NonNull LinkedHashMap<String,
-            String> getJbossAdress,@NonNull Long version) {
+    private URL getGETUrlndParametrs(@NonNull  Long versionGetDataOtJboss,
+                                     @NonNull LinkedHashMap<String,
+            String> getJbossAdress, @NonNull Long version) {
         // TODO: 27.08.2024
         AtomicReference <URL> Adress = new AtomicReference<>();
 

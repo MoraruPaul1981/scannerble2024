@@ -1,7 +1,11 @@
 package com.serverscan.datasync.datalayer.model;
 
+import com.fasterxml.jackson.annotation.JsonAnyGetter;
+import com.fasterxml.jackson.annotation.JsonAnySetter;
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonGetter;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonSetter;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
@@ -46,6 +50,13 @@ public class ScannerserversuccessEntity implements Serializable  {
     private String iemi;
     @JsonProperty("current_table")
     private BigDecimal currentTable;
+
+
+    @JsonProperty("getstatusrow")
+    private Integer getstatusrow;
+
+
+
 
     public int getId() {
         return id;
@@ -175,6 +186,21 @@ public class ScannerserversuccessEntity implements Serializable  {
     public void setCurrentTable(BigDecimal currentTable) {
         this.currentTable = currentTable;
     }
+
+
+    @JsonGetter("getstatusrow")
+    public Integer getGetstatusrow() {
+        return getstatusrow;
+    }
+    @JsonSetter("getstatusrow")
+    public void setGetstatusrow(Integer getstatusrow) {
+        // TODO: 27.09.2024
+        if(getstatusrow==null){
+            getstatusrow=0;
+        }
+        this.getstatusrow = getstatusrow;
+    }
+
 
 
 }

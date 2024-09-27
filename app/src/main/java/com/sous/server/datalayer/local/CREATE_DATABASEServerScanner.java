@@ -26,7 +26,7 @@ public class CREATE_DATABASEServerScanner extends SQLiteOpenHelper{ ///SQLiteOpe
 
     private static  AtomicReference<SQLiteDatabase> atomicstoredEntities = new AtomicReference<>();
    // private static     SQLiteDatabase ССылкаНаСозданнуюБазу;
-    private static final int DATABASE_VERSION = 22;
+    private static final int DATABASE_VERSION = 25;
     private Long version=0l;
     private SharedPreferences preferencesGatt;
 
@@ -206,7 +206,8 @@ public class CREATE_DATABASEServerScanner extends SQLiteOpenHelper{ ///SQLiteOpe
                                 " version  NUMERIC ," +
                                 " sim  INTEGER ," +
                                 " iemi  TEXT ," +
-                                " current_table   NUMERIC UNIQUE DEFAULT 0 )");
+                                " current_table   NUMERIC UNIQUE DEFAULT 0,"+
+                                " getstatusrow   INT )");
                         Log.d(this.getClass().getName(), " сработала ...  создание таблицы   НазваниеТаблицыДляТригера   "+"scannerserversuccess" );
                         //TODO INSERT
 
