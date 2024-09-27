@@ -70,6 +70,12 @@ public class CREATE_DATABASEServerScanner extends SQLiteOpenHelper{ ///SQLiteOpe
             preferencesGatt =context. getSharedPreferences("MyPrefs", MODE_PRIVATE);
             // TODO: 13.08.2024
             new BussenloginSaredPreferense(preferencesGatt,context,version).sharedPreferencesClear();
+
+
+            // TODO: 27.09.2024  Удаление
+            // TODO: 06.12.2022 удаление старых таблиц
+            deletingunnecessarytables(ССылкаНаСозданнуюБазу);
+
             // TODO: 03.06.2022  таблиц
             МетодСозданиеТаблицError(ССылкаНаСозданнуюБазу);
 
@@ -99,6 +105,16 @@ public class CREATE_DATABASEServerScanner extends SQLiteOpenHelper{ ///SQLiteOpe
             new SubClassErrors(context).МетодЗаписиОшибок(valuesЗаписываемОшибки);
         }
     }
+
+    private   void deletingunnecessarytables(SQLiteDatabase ССылкаНаСозданнуюБазу) {
+        // TODO: 27.09.2024
+        ССылкаНаСозданнуюБазу.execSQL("drop table  if exists connectionmaсwithfullname ");//ТАБЛИЦА ГЕНЕРАЦИИ ОШИБОК
+        // TODO: 03.06.2022
+        Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" );
+    }
+
     @Override
     public void onUpgrade(SQLiteDatabase ССылкаНаСозданнуюБазу, int oldVersion, int newVersion) {
         try{
