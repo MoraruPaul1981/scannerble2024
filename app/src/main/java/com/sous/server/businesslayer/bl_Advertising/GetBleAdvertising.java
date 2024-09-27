@@ -68,7 +68,7 @@ public class GetBleAdvertising {
                     .setAdvertiseMode(AdvertiseSettings.ADVERTISE_MODE_LOW_LATENCY)
                     .setTxPowerLevel(AdvertiseSettings.ADVERTISE_TX_POWER_HIGH)
                     .setConnectable(true)
-                    .setTimeout(0)
+                    .setTimeout(1000)
                     .setTxPowerLevel(AdvertisingSetParameters.TX_POWER_HIGH)
                     .build();
 
@@ -108,10 +108,6 @@ public class GetBleAdvertising {
                 bluetoothAdapter.setName(setingNameDevice);
                 bluetoothAdapter.getBluetoothLeAdvertiser().startAdvertising(settings, advertiseData, mAdvertiseCallback);
             }
-
-            Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
-                    " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                    " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n");
 
             Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                     " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
