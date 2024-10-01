@@ -29,6 +29,7 @@ import androidx.preference.PreferenceManager;
 
 import com.sous.scanner.R;
 import com.sous.scanner.businesslayer.Errors.SubClassErrors;
+import com.sous.scanner.businesslayer.bl_NameDevices.SetNameDevices;
 import com.sous.scanner.businesslayer.bl_forServices.Businesslogic_ScaningClientWorker;
 import com.sous.scanner.businesslayer.bl_forServices.BusinessoginEnableBluetoothAdapter;
 
@@ -52,7 +53,7 @@ private      SharedPreferences preferences;
         super(ServiceClientsScanBackground.class.toString());
     }
 
-    @SuppressLint("NotificationId0")
+    @SuppressLint({"NotificationId0", "MissingPermission"})
     @Override
     public void onCreate() {
         super.onCreate();
@@ -70,6 +71,12 @@ private      SharedPreferences preferences;
             bluetoothAdapter.staringBluetootAdapter(bluetoothAdapterPhoneClient);
             PackageInfo pInfo = getApplicationContext().getPackageManager().getPackageInfo(getApplicationContext().getPackageName(), 0);
             version = pInfo.getLongVersionCode();
+
+
+            // TODO: 01.10.2024  Завание Устро1ство 
+            String setingNameDeviceClientScanner =  new SetNameDevices(getApplicationContext(),version).setingNameDevice();
+            bluetoothAdapterPhoneClient.setName(setingNameDeviceClientScanner);
+            
             // TODO: 24.07.2024 starting   settings
 // TODO: 24.07.2024 Reference an class Buncess logica Servir Scan
              blForServiceScan=       new Businesslogic_ScaningClientWorker(bluetoothManagerServer,
