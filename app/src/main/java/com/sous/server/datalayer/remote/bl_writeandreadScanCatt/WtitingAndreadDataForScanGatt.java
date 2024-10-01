@@ -85,7 +85,7 @@ public class WtitingAndreadDataForScanGatt {
 
 
 // TODO: 30.07.2024 САМА ЗАПИСЬ В БАЗУ
-                        if (analiysMinuteAndSecund>0) {
+                        if (analiysMinuteAndSecund>=dateLimitAnrecord) {
                             // TODO: 30.07.2024
                             Integer resultAddDeviceToGattaDtabse = entryitselfintothedatabase( contentValuesВставкаДанных);
 
