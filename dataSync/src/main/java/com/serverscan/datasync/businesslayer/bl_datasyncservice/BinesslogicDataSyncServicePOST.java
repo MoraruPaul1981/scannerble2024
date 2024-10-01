@@ -16,6 +16,7 @@ import com.serverscan.datasync.businesslayer.bl_versionsgatt.BinesslogicVersions
 import com.serverscan.datasync.datalayer.model.ScannerserversuccessEntity;
 
 import java.util.List;
+import java.util.concurrent.ConcurrentSkipListSet;
 
 import javax.inject.Inject;
 
@@ -69,7 +70,7 @@ public class BinesslogicDataSyncServicePOST   implements  InterfaceDataSyncServi
                     if (cursorSinglePOST.getCount()>0) {
 
                         // TODO: 23.08.2024 Генерирум List базе курсора в Обьекты Листа ЧТобы ПОтом ПОлучить Jakson Json
-                        List<ScannerserversuccessEntity> listForJakson=  dataSyncService. genetarorJaksonJSON.genetarorListFor(context,version,cursorSinglePOST);
+                        ConcurrentSkipListSet<ScannerserversuccessEntity> listForJakson=  dataSyncService. genetarorJaksonJSON.genetarorListFor(context,version,cursorSinglePOST);
                         // TODO: 03.09.2024 get Stream based on Cursor
                         byte[] ByteJakson=    dataSyncService.genetarorJaksonJSON.genetarorJaksonJSON(context,version,     listForJakson  ,dataSyncService.getHiltJaksonObjectMapper     );
 

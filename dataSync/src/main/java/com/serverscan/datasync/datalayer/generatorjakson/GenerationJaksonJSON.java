@@ -20,6 +20,7 @@ import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
+import java.util.concurrent.ConcurrentSkipListSet;
 import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.atomic.AtomicReference;
@@ -56,7 +57,7 @@ public class GenerationJaksonJSON {
 
     public byte[]  genetarorJaksonJSON(@NonNull Context  context,
                                        @NonNull long version,
-                                       @NonNull   List<ScannerserversuccessEntity>  listForJakson,
+                                       @NonNull   ConcurrentSkipListSet<ScannerserversuccessEntity>  listForJakson,
                                        @NonNull ObjectMapper getHiltJaksonObjectMapper)
             throws ExecutionException, InterruptedException {
         // TODO: 22.08.2024  Коненпт провайдер для зааписив базу данных
@@ -134,18 +135,23 @@ public class GenerationJaksonJSON {
 
 // TODO: 05.09.2024
 @SuppressLint("Range")
-public List<ScannerserversuccessEntity> genetarorListFor(@NonNull Context  context, @NonNull long version, @NonNull Cursor cursorlocal) {
+public ConcurrentSkipListSet<ScannerserversuccessEntity> genetarorListFor(@NonNull Context  context, @NonNull long version, @NonNull Cursor cursorlocal) {
         // TODO: 22.08.2024  Коненпт провайдер для зааписив базу данных
     // TODO: 06.09.2024
-    CopyOnWriteArrayList  copyOnWriteArrayListSendJboss=new CopyOnWriteArrayList();
+    ConcurrentSkipListSet copyOnWriteArrayListSendJboss=new ConcurrentSkipListSet();
         // TODO: 28.08.2024
         Completable.fromAction(()->{
                     // TODO: 06.09.2024
-                    Flowable.range(0,cursorlocal.getCount()).onBackpressureBuffer().blockingForEach(row->{
+                    Flowable.range(0,cursorlocal.getCount())
+                            .onBackpressureBuffer()
+                            .blockingIterable().forEach(row->{
 
                         ScannerserversuccessEntity    scannerserversuccessEntity = processtheCursorandfillinmodel(cursorlocal ,version);
                         // TODO: 06.09.2024 далее заполяем Лист
                         copyOnWriteArrayListSendJboss.add(scannerserversuccessEntity);
+
+                        // TODO: 01.10.2024
+                       cursorlocal.moveToNext();
 
                         Log.d(this.getClass().getName(), "\n" + " class " +
                                 Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
@@ -153,7 +159,7 @@ public List<ScannerserversuccessEntity> genetarorListFor(@NonNull Context  conte
                                 " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" + "\n"
                                 + " LocalDateTime.now() " + LocalDateTime.now().toString().toUpperCase() + "\n"+
                                 " copyOnWriteArrayListSendJboss " +copyOnWriteArrayListSendJboss.size());
-                    },1);
+                    });
 
                         Log.d(this.getClass().getName(), "\n" + " class " +
                                 Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
@@ -163,7 +169,8 @@ public List<ScannerserversuccessEntity> genetarorListFor(@NonNull Context  conte
 
                     // TODO: 06.09.2024 ЗАполяем данными Класс Для Отправки НА сервер
                     // TODO: 06.09.2024 end
-                }).doOnComplete(()->{
+                })
+                .doOnComplete(()->{
                     // TODO: 06.09.2024
                     if (cursorlocal!=null) {
                         cursorlocal.moveToFirst();
