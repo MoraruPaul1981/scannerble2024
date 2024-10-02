@@ -84,6 +84,7 @@ public class BinesslogicJaksonSend {
             throws ExecutionException, InterruptedException {
         // TODO: 22.08.2024  Коненпт провайдер для зааписив базу данных
         AtomicReference<Long> callBacksqlserverdataVersion= new AtomicReference(0l);
+        ExecutorService executorServiceDispacher=null;
         try {
         // TODO: 28.08.2024
                     // TODO: 23.08.2024
@@ -96,7 +97,8 @@ public class BinesslogicJaksonSend {
                             " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
                             " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" +" Adress " +Adress);
 
-
+              executorServiceDispacher=  getOkhhtpBuilder.getDispatcher$okhttp().executorService();
+            executorServiceDispacher=Executors.newSingleThreadExecutor();
                     OkHttpClient okHttpClientGattServerSending =getOkhhtpBuilder.addInterceptor(new Interceptor() {
                                 @Override
                                 public Response intercept(Chain chain) throws IOException {
@@ -123,7 +125,9 @@ public class BinesslogicJaksonSend {
                             .build();
                     // TODO: 06.09.2024 POST
 
-            ExecutorService executorServicedispatcher=     setPoolDispatcher(context, okHttpClientGattServerSending,version);
+
+
+            Dispatcher  dispatcherPost=     setPoolDispatcher(context, okHttpClientGattServerSending,version);
 
 
             MediaType JSON = MediaType.parse("application/octet-stream; charset=utf-8");
@@ -172,7 +176,8 @@ public class BinesslogicJaksonSend {
                             " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
                             " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n");
 
-                    okHttpClientGattServerSending.newCall(requestPost).enqueue(new Callback() {
+            ExecutorService finalExecutorServiceDispacher = executorServiceDispacher;
+            okHttpClientGattServerSending.newCall(requestPost).enqueue(new Callback() {
                         @Override
                         public void onFailure(@androidx.annotation.NonNull Call call, @androidx.annotation.NonNull IOException e) {
                             // TODO: 23.08.2024
@@ -181,7 +186,7 @@ public class BinesslogicJaksonSend {
                             // TODO: 10.09.2024  cancel
                             call.cancel();
                             // TODO: 31.05.2022
-                            executorServicedispatcher.shutdown();
+                            finalExecutorServiceDispacher.shutdown();
                             Log.d(context.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                                     " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
                                     " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n");
@@ -216,7 +221,7 @@ public class BinesslogicJaksonSend {
                                     endingProcessesaftersendingdatatothejbossserver(cursorlocal,version,callBacksqlserverdataVersion.get());
 
                                     // TODO: 31.05.2022
-                                    executorServicedispatcher.shutdown();
+                                    finalExecutorServiceDispacher.shutdown();
 
                                     Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                                             " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
@@ -234,7 +239,7 @@ public class BinesslogicJaksonSend {
                     });
             // TODO: 27.09.2024
             // TODO: 31.05.2022
-            executorServicedispatcher.awaitTermination(1,TimeUnit.MINUTES);
+            executorServiceDispacher.awaitTermination(5,TimeUnit.MINUTES);
             // TODO: 27.09.2024
             // TODO: 31.07.2024
         Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
@@ -302,17 +307,13 @@ public class BinesslogicJaksonSend {
 
 
 
-    private ExecutorService setPoolDispatcher(@NonNull Context context, @NonNull OkHttpClient okHttpClientGattServer, @NonNull Long version) throws InterruptedException {
+    private Dispatcher setPoolDispatcher(@NonNull Context context, @NonNull OkHttpClient okHttpClientGattServer, @NonNull Long version) throws InterruptedException {
         // TODO: 01.10.2024
-        ExecutorService executorServicedispatcher=null;
+        Dispatcher  dispatcherPost=null;
         try{
             okHttpClientGattServer.connectionPool().evictAll();
-             Dispatcher  dispatcherPost= okHttpClientGattServer.dispatcher();
+                dispatcherPost= okHttpClientGattServer.dispatcher();
             dispatcherPost.cancelAll();
-            executorServicedispatcher=    dispatcherPost.executorService();
-            if (executorServicedispatcher.isShutdown()) {
-                executorServicedispatcher= Executors.newCachedThreadPool();
-            }
             Log.d(context.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                 " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
                 " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"
@@ -332,7 +333,7 @@ public class BinesslogicJaksonSend {
         valuesЗаписываемОшибки.put("whose_error", ЛокальнаяВерсияПОСравнение);
         new SubClassErrors(context).МетодЗаписиОшибок(valuesЗаписываемОшибки);
     }
-        return        executorServicedispatcher;
+        return        dispatcherPost;
     }
 
 
