@@ -4,14 +4,12 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
-import android.database.Cursor;
 import android.util.Log;
 
 import androidx.annotation.NonNull;
 
 import com.serverscan.datasync.businesslayer.Errors.SubClassErrors;
 import com.serverscan.datasync.businesslayer.Services.DataSyncService;
-import com.serverscan.datasync.businesslayer.bl_Jakson.BinesslogicJaksonSend;
 import com.serverscan.datasync.businesslayer.bl_Jakson.BinesslogicJaksonWeGet;
 import com.serverscan.datasync.businesslayer.bl_versionsgatt.BinesslogicVersions;
 
@@ -60,7 +58,7 @@ public class BinesslogicDataSyncServiceGET implements  InterfaceDataSyncService{
                     // TODO: 12.09.2024
             // TODO: 09.09.2024 получаем данные которые надотправить на сервер  GATT SEVER
                     // TODO: 03.09.2024 get DATA
-                    Long versionGetDataOtJboss=    new BinesslogicVersions(context).getanewVersionofgatt(context,version);
+                    Long versionGetDataOtJboss=    new BinesslogicVersions(context).getVesionDataGattServerRemote(context,version);
 
                 // TODO: 03.09.2024 sending  Stream to Server
                 new BinesslogicJaksonWeGet(context).weGetOkhhtpServiceForJboss(context, version, dataSyncService.getJbossAdressDebug,

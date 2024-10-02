@@ -19,6 +19,10 @@ public class FindingDataForGatServer {
 
             Long version;
 
+    public FindingDataForGatServer(Context context, Long version) {
+        this.context = context;
+        this.version = version;
+    }
 
 
     // TODO: 10.02.2023 МЕТОД ВЫБОР ДАННЫХ

@@ -88,30 +88,27 @@ Context context;
 
 
     // TODO: 09.09.2024  получаем ранее записанную версию данных gatt server
-  public   Long  getanewVersionofgatt  (@NotNull Context context , @NotNull Long version  ){
-    Long localVersionServer=0l;
+  public   Long getVesionDataGattServerRemote(@NotNull Context context , @NotNull Long version  ){
+    Long localVersionServerRemote=0l;
     try{
         ContentResolver contentProviderNewVersion=context.getContentResolver();
 
             Uri uri = Uri.parse("content://com.sous.servergatt.prodider/gattserverdataversion" );
             Cursor cursorNewVesionGattServer = contentProviderNewVersion.query(uri, null,
-                    "  SELECT MAX ( versionlocal )   FROM gattserverdataversion  WHERE versionlocal  IS NOT  NULL  ", null,null,null);
+                    "  SELECT MAX ( versionremote  )   FROM gattserverdataversion  WHERE versionremote   IS NOT  NULL  ", null,null,null);// versionremote   //versionlocal
         // TODO: 09.09.2024
             if (cursorNewVesionGattServer.getCount()>0){
                 cursorNewVesionGattServer.moveToFirst();
-                localVersionServer=      cursorNewVesionGattServer.getLong(0);
+                localVersionServerRemote=      cursorNewVesionGattServer.getLong(0);
 
             }
             Log.d(context.getClass().getName(), "\n"
                     + " время: " + new Date() + "\n+" +
                     " Класс в процессе... " + this.getClass().getName() + "\n" +
                     " метод в процессе... " + Thread.currentThread().getStackTrace()[2].getMethodName()+
-                    " localVersionServer " +localVersionServer);
+                    " localVersionServerRemote " +localVersionServerRemote);
             // TODO: 19.07.2024 closing
         cursorNewVesionGattServer.close();
-
-
-
 
         Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                 " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
@@ -131,14 +128,68 @@ Context context;
         valuesЗаписываемОшибки.put("whose_error", ЛокальнаяВерсияПОСравнение);
         new SubClassErrors(context).МетодЗаписиОшибок(valuesЗаписываемОшибки);
     }
-     return  localVersionServer;
+     return  localVersionServerRemote;
     }
+
+
+    // TODO: 02.10.2024
+
+    public   Long getVesionDataGattServerLocal(@NotNull Context context , @NotNull Long version  ){
+        Long localVersionServerLocal=0l;
+        try{
+            ContentResolver contentProviderNewVersion=context.getContentResolver();
+
+            Uri uri = Uri.parse("content://com.sous.servergatt.prodider/gattserverdataversion" );
+            Cursor cursorNewVesionGattServer = contentProviderNewVersion.query(uri, null,
+                    "  SELECT MAX ( versionlocal   )   FROM gattserverdataversion  WHERE versionlocal    IS NOT  NULL  ", null,null,null);// versionremote   //versionlocal
+            // TODO: 09.09.2024
+            if (cursorNewVesionGattServer.getCount()>0){
+                cursorNewVesionGattServer.moveToFirst();
+                localVersionServerLocal=      cursorNewVesionGattServer.getLong(0);
+
+            }
+            Log.d(context.getClass().getName(), "\n"
+                    + " время: " + new Date() + "\n+" +
+                    " Класс в процессе... " + this.getClass().getName() + "\n" +
+                    " метод в процессе... " + Thread.currentThread().getStackTrace()[2].getMethodName()+
+                    " localVersionServerLocal " +localVersionServerLocal);
+            // TODO: 19.07.2024 closing
+            cursorNewVesionGattServer.close();
+
+            Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                    " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                    " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" );
+        } catch (Exception e) {
+            e.printStackTrace();
+            Log.e(this.getClass().getName(), "Ошибка " + e +
+                    " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() + " Линия  :"
+                    + Thread.currentThread().getStackTrace()[2].getLineNumber());
+            ContentValues valuesЗаписываемОшибки = new ContentValues();
+            valuesЗаписываемОшибки.put("Error", e.toString().toLowerCase());
+            valuesЗаписываемОшибки.put("Klass", this.getClass().getName());
+            valuesЗаписываемОшибки.put("Metod", Thread.currentThread().getStackTrace()[2].getMethodName());
+            valuesЗаписываемОшибки.put("LineError", Thread.currentThread().getStackTrace()[2].getLineNumber());
+            final Object ТекущаяВерсияПрограммы = version;
+            Integer ЛокальнаяВерсияПОСравнение = Integer.parseInt(ТекущаяВерсияПрограммы.toString());
+            valuesЗаписываемОшибки.put("whose_error", ЛокальнаяВерсияПОСравнение);
+            new SubClassErrors(context).МетодЗаписиОшибок(valuesЗаписываемОшибки);
+        }
+        return  localVersionServerLocal;
+    }
+
+
+
+
+
+
+
+
 
     @SuppressLint("NewApi")
     public void recordingAfterNewVersionwealign(@NotNull Context context , @NotNull Long version){
         try{
 
-            FindingDataForGatServer findingDataForGatServer=new FindingDataForGatServer();
+            FindingDataForGatServer findingDataForGatServer=new FindingDataForGatServer(context,version);
             // Long current_table = findVersonGattServer("SELECT MAX ( versionremote  ) AS MAX_R  FROM gattserverdataversion","gattserverdataversion");
             Long буферОтветотJbossfinal =findingDataForGatServer.findVersonGattServer("SELECT MAX ( current_table  ) AS MAX_R  FROM scannerserversuccess","scannerserversuccess");
 
