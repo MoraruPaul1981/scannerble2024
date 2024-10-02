@@ -57,7 +57,7 @@ public class GenerationJaksonJSON {
 
     public byte[]  genetarorJaksonJSON(@NonNull Context  context,
                                        @NonNull long version,
-                                       @NonNull   ConcurrentSkipListSet<ScannerserversuccessEntity>  listForJakson,
+                                       @NonNull   CopyOnWriteArrayList<ScannerserversuccessEntity>  listForJakson,
                                        @NonNull ObjectMapper getHiltJaksonObjectMapper)
             throws ExecutionException, InterruptedException {
         // TODO: 22.08.2024  Коненпт провайдер для зааписив базу данных
@@ -135,10 +135,10 @@ public class GenerationJaksonJSON {
 
 // TODO: 05.09.2024
 @SuppressLint("Range")
-public ConcurrentSkipListSet<ScannerserversuccessEntity> genetarorListFor(@NonNull Context  context, @NonNull long version, @NonNull Cursor cursorlocal) {
+public CopyOnWriteArrayList<ScannerserversuccessEntity> genetarorListFor(@NonNull Context  context, @NonNull long version, @NonNull Cursor cursorlocal) {
         // TODO: 22.08.2024  Коненпт провайдер для зааписив базу данных
     // TODO: 06.09.2024
-    ConcurrentSkipListSet copyOnWriteArrayListSendJboss=new ConcurrentSkipListSet();
+    CopyOnWriteArrayList<ScannerserversuccessEntity> copyOnWriteArrayListSendJboss=new CopyOnWriteArrayList();
         // TODO: 28.08.2024
         Completable.fromAction(()->{
                     // TODO: 06.09.2024
@@ -197,9 +197,7 @@ public ConcurrentSkipListSet<ScannerserversuccessEntity> genetarorListFor(@NonNu
                     valuesЗаписываемОшибки.put("whose_error", ЛокальнаяВерсияПОСравнение);
                     new SubClassErrors(context).МетодЗаписиОшибок(valuesЗаписываемОшибки);
 
-                })
-                .subscribeOn(Schedulers.single())
-                .blockingSubscribe();
+                }).blockingSubscribe();
         // TODO: 31.07.2024
         Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                 " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +

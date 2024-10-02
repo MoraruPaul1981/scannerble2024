@@ -29,6 +29,7 @@ import javax.inject.Inject;
 
 import dagger.hilt.android.AndroidEntryPoint;
 import io.reactivex.rxjava3.core.Completable;
+import io.reactivex.rxjava3.schedulers.Schedulers;
 import okhttp3.OkHttpClient;
 
 
@@ -139,7 +140,7 @@ public class DataSyncService extends IntentService {
                         new SubClassErrors(getApplicationContext()).МетодЗаписиОшибок(valuesЗаписываемОшибки);
 
 
-            })
+            }).subscribeOn(Schedulers.single())
                     .toObservable()
                     .take(5, TimeUnit.MINUTES).subscribe();
 

@@ -275,12 +275,10 @@ public class BinesslogicJaksonSend {
         Dispatcher dispatcherPost=null;
         try{
           dispatcherPost= okHttpClientGattServer.dispatcher();
+            dispatcherPost.cancelAll();
         ExecutorService executorServicePost= dispatcherPost.executorService();
         if (executorServicePost.isShutdown()) {
-            executorServicePost.shutdownNow();
-            executorServicePost.awaitTermination(1,TimeUnit.SECONDS);
-            dispatcherPost.cancelAll();
-           // executorServicePost= Executors.newCachedThreadPool();
+            executorServicePost= Executors.newCachedThreadPool();
         }
         Log.d(context.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                 " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
