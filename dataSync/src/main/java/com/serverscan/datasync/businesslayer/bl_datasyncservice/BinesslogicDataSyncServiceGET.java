@@ -58,18 +58,18 @@ public class BinesslogicDataSyncServiceGET implements  InterfaceDataSyncService{
                     // TODO: 12.09.2024
             // TODO: 09.09.2024 получаем данные которые надотправить на сервер  GATT SEVER
                     // TODO: 03.09.2024 get DATA
-                    Long versionGetDataOtJboss=    new BinesslogicVersions(context).getVesionDataGattServerRemote(context,version);
+                    Long versionGattServerRemote=    new BinesslogicVersions(context).getVesionDataGattServerRemote(context,version);
 
                 // TODO: 03.09.2024 sending  Stream to Server
                 new BinesslogicJaksonWeGet(context).weGetOkhhtpServiceForJboss(context, version, dataSyncService.getJbossAdressDebug,
-                        versionGetDataOtJboss, dataSyncService.getOkhhtpBuilder);
+                        versionGattServerRemote, dataSyncService.getOkhhtpBuilder);
 
 
                 // TODO: 03.09.2024 get InputStream   for sending an server
                 Log.d(context.getClass().getName(), "\n" + " class " +
                         Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                         " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                        " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n");
+                        " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"  + " versionGattServerRemote  " +versionGattServerRemote);
 
 
                     // TODO: 03.09.2024 get InputStream   for sending an server

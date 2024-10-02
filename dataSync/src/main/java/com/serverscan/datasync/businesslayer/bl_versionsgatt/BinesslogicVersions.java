@@ -206,7 +206,7 @@ Context context;
             contentValuesdvensedScannerserversuccess.put("date_update",date_updatefinal);
             contentValuesdvensedScannerserversuccess.put("id",1);
 
-
+// TODO: 02.10.2024 Непостредствено оводяем версию Которая Пришла ссерврва 
          Bundle bUpdate=  new Bundle();
             String  SQlOperUpdate=  " UPDATE  gattserverdataversion  SET     versionremote=?  ,date_update=?  WHERE id =?    ;";
         //    String  SQlOperInsert=  " REPLACE INTO gattserverdataversion VALUES(?,?,?,? );";

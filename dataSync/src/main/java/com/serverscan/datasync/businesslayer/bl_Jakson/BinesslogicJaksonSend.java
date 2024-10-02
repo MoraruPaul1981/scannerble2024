@@ -32,6 +32,7 @@ import java.util.LinkedHashMap;
 import java.util.Locale;
 import java.util.Optional;
 import java.util.concurrent.ExecutionException;
+import java.util.concurrent.Executor;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
@@ -82,7 +83,7 @@ public class BinesslogicJaksonSend {
                                                @NonNull OkHttpClient.Builder getOkhhtpBuilder)
             throws ExecutionException, InterruptedException {
         // TODO: 22.08.2024  Коненпт провайдер для зааписив базу данных
-        AtomicReference<Long> буферОтветотJbossfinal= new AtomicReference(0l);
+        AtomicReference<Long> callBacksqlserverdataVersion= new AtomicReference(0l);
         try {
         // TODO: 28.08.2024
                     // TODO: 23.08.2024
@@ -122,7 +123,7 @@ public class BinesslogicJaksonSend {
                             .build();
                     // TODO: 06.09.2024 POST
 
-            Dispatcher dispatcherPost=     setPoolDispatcher(context, okHttpClientGattServerSending,version);
+            ExecutorService executorServicedispatcher=     setPoolDispatcher(context, okHttpClientGattServerSending,version);
 
 
             MediaType JSON = MediaType.parse("application/octet-stream; charset=utf-8");
@@ -180,7 +181,7 @@ public class BinesslogicJaksonSend {
                             // TODO: 10.09.2024  cancel
                             call.cancel();
                             // TODO: 31.05.2022
-                         //   dispatcherPost.executorService().shutdown();
+                            executorServicedispatcher.shutdown();
                             Log.d(context.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                                     " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
                                     " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n");
@@ -205,31 +206,21 @@ public class BinesslogicJaksonSend {
                                     InputStream inputStreamOtgattserver = new GZIPInputStream(response.body().source().inputStream(),2048);//4096
 
                                          // TODO: 07.10.2023  Обрабаотываем версию от сервера
-                                    буферОтветотJbossfinal.set(versionOtGattServerCallback(inputStreamOtgattserver,КакаяКодировка,version));
-
-
+                                    callBacksqlserverdataVersion.set(versionOtGattServerCallback(inputStreamOtgattserver,КакаяКодировка,version));
 
                                     Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                                             " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                                            " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" + " буферОтветотJbossfinal.get() " +буферОтветотJbossfinal.get() );
+                                            " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" + " callBacksqlserverdataVersion.get() " +callBacksqlserverdataVersion.get() );
 
-
-                                    // TODO: 09.09.2024 ПОлученую версию данных от серврера запоминаем
-                                    if (буферОтветотJbossfinal.get()>0  ) {
-                                        // TODO: 10.09.2024 дополнительное увеличение версии данных уже в рабочей текуще версии чтобы большене вставлять дополнительно
-                                        new BinesslogicVersions(context).recordingAfterNewVersionwealign(context,version);
-
-                                    }
-
-                                    // TODO: 31.07.2024 close database
-                                    clostingdatabase(cursorlocal);
+                                    // TODO: 02.10.2024 код заыершающие после успешной отпарвки даных
+                                    endingProcessesaftersendingdatatothejbossserver(cursorlocal,version,callBacksqlserverdataVersion.get());
 
                                     // TODO: 31.05.2022
-                                 //   dispatcherPost.executorService().shutdown();
+                                    executorServicedispatcher.shutdown();
 
                                     Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                                             " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                                            " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" + " буферОтветотJbossfinal " +буферОтветотJbossfinal );
+                                            " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" + " callBacksqlserverdataVersion " +callBacksqlserverdataVersion );
                                 }
                                 // TODO: 10.09.2024  cancel
                                 call.cancel();
@@ -243,7 +234,7 @@ public class BinesslogicJaksonSend {
                     });
             // TODO: 27.09.2024
             // TODO: 31.05.2022
-            dispatcherPost.executorService().awaitTermination(1,TimeUnit.MINUTES);
+            executorServicedispatcher.awaitTermination(1,TimeUnit.MINUTES);
             // TODO: 27.09.2024
             // TODO: 31.07.2024
         Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
@@ -269,14 +260,60 @@ public class BinesslogicJaksonSend {
 
     }
 
-    private     Dispatcher   setPoolDispatcher(@NonNull Context context, @NonNull OkHttpClient okHttpClientGattServer,@NonNull Long version) throws InterruptedException {
+    private   void endingProcessesaftersendingdatatothejbossserver(@NonNull Cursor cursorlocal,@NonNull Long version, @NonNull Long буферОтветотJbossfinal) {
+      try{
+        if (буферОтветотJbossfinal>0  ) {
+            // TODO: 10.09.2024 дополнительное увеличение версии данных уже в рабочей текуще версии чтобы большене вставлять дополнительно
+            new BinesslogicVersions(context).recordingAfterNewVersionwealign(context,version);
+
+            Log.d(context.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                    " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                    " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"+" буферОтветотJbossfinal " +буферОтветотJbossfinal);
+        }
+
+        // TODO: 31.07.2024 close database
+        clostingdatabase(cursorlocal);
+
+        Log.d(context.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n");
+    } catch (Exception e) {
+        e.printStackTrace();
+        Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :"
+                + Thread.currentThread().getStackTrace()[2].getMethodName() + " Линия  :"
+                + Thread.currentThread().getStackTrace()[2].getLineNumber());
+        ContentValues valuesЗаписываемОшибки = new ContentValues();
+        valuesЗаписываемОшибки.put("Error", e.toString().toLowerCase());
+        valuesЗаписываемОшибки.put("Klass", this.getClass().getName());
+        valuesЗаписываемОшибки.put("Metod", Thread.currentThread().getStackTrace()[2].getMethodName());
+        valuesЗаписываемОшибки.put("LineError", Thread.currentThread().getStackTrace()[2].getLineNumber());
+        final Object ТекущаяВерсияПрограммы = version;
+        Integer ЛокальнаяВерсияПОСравнение = Integer.parseInt(ТекущаяВерсияПрограммы.toString());
+        valuesЗаписываемОшибки.put("whose_error", ЛокальнаяВерсияПОСравнение);
+        new SubClassErrors(context).МетодЗаписиОшибок(valuesЗаписываемОшибки);
+    }
+    }
+
+
+
+
+
+
+
+
+
+    private ExecutorService setPoolDispatcher(@NonNull Context context, @NonNull OkHttpClient okHttpClientGattServer, @NonNull Long version) throws InterruptedException {
         // TODO: 01.10.2024
-        Dispatcher dispatcherPost=null;
+        ExecutorService executorServicedispatcher=null;
         try{
             okHttpClientGattServer.connectionPool().evictAll();
-          dispatcherPost= okHttpClientGattServer.dispatcher();
+             Dispatcher  dispatcherPost= okHttpClientGattServer.dispatcher();
             dispatcherPost.cancelAll();
-        Log.d(context.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+            executorServicedispatcher=    dispatcherPost.executorService();
+            if (executorServicedispatcher.isShutdown()) {
+                executorServicedispatcher= Executors.newCachedThreadPool();
+            }
+            Log.d(context.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                 " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
                 " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"
                 +"  okHttpClientGattServer.connectionPool() " + okHttpClientGattServer.connectionPool().connectionCount());
@@ -295,7 +332,7 @@ public class BinesslogicJaksonSend {
         valuesЗаписываемОшибки.put("whose_error", ЛокальнаяВерсияПОСравнение);
         new SubClassErrors(context).МетодЗаписиОшибок(valuesЗаписываемОшибки);
     }
-        return        dispatcherPost;
+        return        executorServicedispatcher;
     }
 
 

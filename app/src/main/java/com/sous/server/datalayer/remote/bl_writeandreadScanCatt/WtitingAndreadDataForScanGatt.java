@@ -9,6 +9,7 @@ import android.database.Cursor;
 import android.net.Uri;
 import android.util.Log;
 
+import com.serverscan.datasync.businesslayer.bl_versionsgatt.BinesslogicVersions;
 import com.sous.server.businesslayer.ContentProvoders.ContentProviderServer;
 import com.sous.server.businesslayer.Errors.SubClassErrors;
 import com.sous.server.businesslayer.Eventbus.MessageScannerServer;
@@ -308,8 +309,10 @@ try{
             // TODO: 10.02.2023 версия данных
             // TODO: 10.02.2023 версия данных
            // Long current_table = upVesrionScannerGatt("SELECT MAX ( versionremote  ) AS MAX_R  FROM gattserverdataversion","gattserverdataversion");
-            final   Long current_table = upVesrionScannerGatt("SELECT MAX ( current_table  ) AS MAX_R  FROM scannerserversuccess","scannerserversuccess");
-            contentValuesВставкаДанных.put("current_table", current_table.toString() );
+            // TODO: 03.09.2024 get DATA
+            Long versionGattServerRemote=    new BinesslogicVersions(context).getVesionDataGattServerRemote(context,version);
+            versionGattServerRemote=versionGattServerRemote+1;
+            contentValuesВставкаДанных.put("current_table", versionGattServerRemote.toString() );
 
 
           //  Long version = upVesrionScannerGatt("SELECT MAX ( versionlocal  ) AS MAX_R  FROM gattserverdataversion","gattserverdataversion");
@@ -439,20 +442,20 @@ try{
     // TODO: 14.02.2023 Второй Метод БЕз GPS
     @SuppressLint("MissingPermission")
     private Integer wtireNewSucceesDeviceOtGattServer(@androidx.annotation.NonNull ContentValues   contentValuesВставкаДанныхGattServer) {
-        Uri    resultAddDeviceToGattaDtabse = null;
+  Integer insertingNewDeviceGattServer=0;
         try {
             Uri uri = Uri.parse("content://com.sous.servergatt.prodider/scannerserversuccess" );
             // TODO: 04.09.2024  вставка данных на сервере 
-            resultAddDeviceToGattaDtabse=   contentProviderServer.insert(uri, contentValuesВставкаДанныхGattServer);
-
-            Log.d(context.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
-                    " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                    " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"+ " resultAddDeviceToGattaDtabse " +resultAddDeviceToGattaDtabse);
+            Uri  resultAddDeviceToGattaDtabse=        resultAddDeviceToGattaDtabse = contentProviderServer.insert(uri, contentValuesВставкаДанныхGattServer);
+            if (resultAddDeviceToGattaDtabse!=null) {
+                // TODO: 02.10.2024
+                insertingNewDeviceGattServer=Integer.parseInt(resultAddDeviceToGattaDtabse.toString());
+            }
 
             Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                     " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
                     " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" +
-                    " resultAddDeviceToGattaDtabse " +resultAddDeviceToGattaDtabse+ " contentValuesВставкаДанныхGattServer " +contentValuesВставкаДанныхGattServer );
+                    " resultAddDeviceToGattaDtabse " +resultAddDeviceToGattaDtabse+ " insertingNewDeviceGattServer " +insertingNewDeviceGattServer );
 
 
         } catch (Exception e) {
@@ -469,7 +472,7 @@ try{
             valuesЗаписываемОшибки.put("whose_error", ЛокальнаяВерсияПОСравнение);
            new SubClassErrors(context).МетодЗаписиОшибок(valuesЗаписываемОшибки);
         }
-        return Integer.parseInt(resultAddDeviceToGattaDtabse.toString() );
+        return insertingNewDeviceGattServer;
     }
 
 // TODO: 25.07.2024
