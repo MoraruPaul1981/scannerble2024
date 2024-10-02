@@ -245,8 +245,6 @@ public class BinesslogicJaksonSend {
             // TODO: 31.05.2022
             dispatcherPost.executorService().awaitTermination(1,TimeUnit.MINUTES);
             // TODO: 27.09.2024
-            dispatcherPost.cancelAll();
-            okHttpClientGattServerSending.connectionPool().evictAll();
             // TODO: 31.07.2024
         Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                 " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
@@ -275,20 +273,13 @@ public class BinesslogicJaksonSend {
         // TODO: 01.10.2024
         Dispatcher dispatcherPost=null;
         try{
+            okHttpClientGattServer.connectionPool().evictAll();
           dispatcherPost= okHttpClientGattServer.dispatcher();
             dispatcherPost.cancelAll();
-            okHttpClientGattServer.connectionPool().evictAll();
-        ExecutorService executorServicePost= dispatcherPost.executorService();
-        if (executorServicePost.isShutdown()) {
-            executorServicePost= Executors.newCachedThreadPool();
-            okHttpClientGattServer.newBuilder().dispatcher(dispatcherPost);
-        }
-
-
         Log.d(context.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                 " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
                 " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"
-                +" executorServicePost.isShutdown() " +executorServicePost.isShutdown());
+                +"  okHttpClientGattServer.connectionPool() " + okHttpClientGattServer.connectionPool().connectionCount());
     } catch (Exception e) {
         e.printStackTrace();
         Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :"
