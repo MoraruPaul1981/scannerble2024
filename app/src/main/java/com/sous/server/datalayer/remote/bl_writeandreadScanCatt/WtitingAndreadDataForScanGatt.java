@@ -9,7 +9,6 @@ import android.database.Cursor;
 import android.net.Uri;
 import android.util.Log;
 
-import com.serverscan.datasync.businesslayer.bl_versionsgatt.BinesslogicVersions;
 import com.sous.server.businesslayer.ContentProvoders.ContentProviderServer;
 import com.sous.server.businesslayer.Errors.SubClassErrors;
 import com.sous.server.businesslayer.Eventbus.MessageScannerServer;
@@ -35,7 +34,7 @@ public class WtitingAndreadDataForScanGatt {
     private  SharedPreferences sharedPreferencesGatt;
     private  Cursor successfuldevices;
     protected ConcurrentHashMap<String,ContentValues>       contentValuesConcurrentHashMap=new ConcurrentHashMap<>();
-    private  Integer dateLimitAnrecord=1;
+    private  Integer dateLimitAnrecord=65;
 
     public WtitingAndreadDataForScanGatt(Context context, Long version,
                                          ContentProviderServer contentProviderServer,
@@ -76,7 +75,7 @@ public class WtitingAndreadDataForScanGatt {
 
 
 // TODO: 25.07.2024  результат дата старше полу часа или нет АНАЛИЗ ДАТ
-                      Integer   analiysMinuteAndSecund =
+                        ConcurrentHashMap<Integer,Integer>   analiysMinuteAndSecund =
                                 findoutthedateDifference(dateLocaleBase, contentValuesВставкаДанных.getAsString("date_update").trim());
 
                         Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
@@ -86,9 +85,10 @@ public class WtitingAndreadDataForScanGatt {
 
 
 // TODO: 30.07.2024 САМА ЗАПИСЬ В БАЗУ
-                        if (analiysMinuteAndSecund>=dateLimitAnrecord) {
+                        if (analiysMinuteAndSecund.size()>0) {
                             // TODO: 30.07.2024
-                            Integer resultAddDeviceToGattaDtabse = entryitselfintothedatabase( contentValuesВставкаДанных);
+                            Integer resultAddDeviceToGattaDtabse = entryitselfintothedatabase(analiysMinuteAndSecund, contentValuesВставкаДанных,
+                                    dateLimitAnrecord);
 
                             Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                                     " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
@@ -96,6 +96,7 @@ public class WtitingAndreadDataForScanGatt {
                                     "  dateLimitAnrecord " +dateLimitAnrecord+"\n" + "analiysMinuteAndSecund  " +analiysMinuteAndSecund);
 
                             // TODO: 31.07.2024 main add data for before send
+
                             writeDatabaseScanGatt.putIfAbsent(resultAddDeviceToGattaDtabse,contentValuesВставкаДанных);
                         }
 
@@ -215,10 +216,15 @@ try{
 
 
     // TODO: 30.07.2024 САМА ЗАПИСЬ В БАЗУ
-    private Integer entryitselfintothedatabase(@NonNull  ContentValues contentValuesВставкаДанных) {
+    private Integer entryitselfintothedatabase(ConcurrentHashMap<Integer, Integer> analiysMinuteAndSecund,
+                                               ContentValues contentValuesВставкаДанных,
+                                               Integer dateLimitAnrecord) {
         Integer       resultAddDeviceToGattaDtabse=0;
 // TODO: 30.07.2024
         try{
+
+                    // TODO: 30.07.2024  get Seconds
+                    if (analiysMinuteAndSecund.values().stream().findAny().get()>=dateLimitAnrecord) {
 
                         // TODO: 09.02.2023  запись в базу дивайса Отметка сотрдунка
                         resultAddDeviceToGattaDtabse = wtireNewSucceesDeviceOtGattServer(contentValuesВставкаДанных);
@@ -226,9 +232,12 @@ try{
                         Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                                 " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
                                 " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" +
-                                "  dateLimitAnrecord " + dateLimitAnrecord +"\n" + "resultAddDeviceToGattaDtabse  " + resultAddDeviceToGattaDtabse);
+                                "  dateLimitAnrecord " + dateLimitAnrecord +"\n" + "analiysMinuteAndSecund  " + analiysMinuteAndSecund);
+                    }
 
                 // TODO: 30.07.2024
+            
+       
         Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                 " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
                 " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" +
@@ -309,18 +318,16 @@ try{
             // TODO: 10.02.2023 версия данных
             // TODO: 10.02.2023 версия данных
            // Long current_table = upVesrionScannerGatt("SELECT MAX ( versionremote  ) AS MAX_R  FROM gattserverdataversion","gattserverdataversion");
-            // TODO: 03.09.2024 get DATA
-            Long versionGattServerRemote=    new BinesslogicVersions(context).getVesionDataGattServerRemote(context,version);
-            versionGattServerRemote=versionGattServerRemote+1;
-            contentValuesВставкаДанных.put("current_table", versionGattServerRemote.toString() );
+            Long current_table = upVesrionScannerGatt("SELECT MAX ( current_table  ) AS MAX_R  FROM scannerserversuccess","scannerserversuccess");
+            contentValuesВставкаДанных.put("current_table", current_table.toString() );
 
 
           //  Long version = upVesrionScannerGatt("SELECT MAX ( versionlocal  ) AS MAX_R  FROM gattserverdataversion","gattserverdataversion");
-            final   Long version = upVesrionScannerGatt("SELECT MAX ( version  ) AS MAX_R  FROM scannerserversuccess","scannerserversuccess");
+            Long version = upVesrionScannerGatt("SELECT MAX ( version  ) AS MAX_R  FROM scannerserversuccess","scannerserversuccess");
             contentValuesВставкаДанных.put("version", version.toString());
 
 
-           final Long getuuid =new GeneratorUUIDs(). МетодГенерацииUUID();
+            Long getuuid =new GeneratorUUIDs(). МетодГенерацииUUID();
             contentValuesВставкаДанных.put("uuid", getuuid.toString());
 
 
@@ -442,20 +449,20 @@ try{
     // TODO: 14.02.2023 Второй Метод БЕз GPS
     @SuppressLint("MissingPermission")
     private Integer wtireNewSucceesDeviceOtGattServer(@androidx.annotation.NonNull ContentValues   contentValuesВставкаДанныхGattServer) {
-  Integer insertingNewDeviceGattServer=0;
+        Uri    resultAddDeviceToGattaDtabse = null;
         try {
             Uri uri = Uri.parse("content://com.sous.servergatt.prodider/scannerserversuccess" );
             // TODO: 04.09.2024  вставка данных на сервере 
-            Uri  resultAddDeviceToGattaDtabse=        resultAddDeviceToGattaDtabse = contentProviderServer.insert(uri, contentValuesВставкаДанныхGattServer);
-            if (resultAddDeviceToGattaDtabse!=null) {
-                // TODO: 02.10.2024
-                insertingNewDeviceGattServer=Integer.parseInt(resultAddDeviceToGattaDtabse.toString());
-            }
+            resultAddDeviceToGattaDtabse=   contentProviderServer.insert(uri, contentValuesВставкаДанныхGattServer);
+
+            Log.d(context.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                    " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                    " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"+ " resultAddDeviceToGattaDtabse " +resultAddDeviceToGattaDtabse);
 
             Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                     " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
                     " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" +
-                    " resultAddDeviceToGattaDtabse " +resultAddDeviceToGattaDtabse+ " insertingNewDeviceGattServer " +insertingNewDeviceGattServer );
+                    " resultAddDeviceToGattaDtabse " +resultAddDeviceToGattaDtabse+ " contentValuesВставкаДанныхGattServer " +contentValuesВставкаДанныхGattServer );
 
 
         } catch (Exception e) {
@@ -472,7 +479,7 @@ try{
             valuesЗаписываемОшибки.put("whose_error", ЛокальнаяВерсияПОСравнение);
            new SubClassErrors(context).МетодЗаписиОшибок(valuesЗаписываемОшибки);
         }
-        return insertingNewDeviceGattServer;
+        return Integer.parseInt(resultAddDeviceToGattaDtabse.toString() );
     }
 
 // TODO: 25.07.2024
@@ -683,9 +690,9 @@ try{
 
 
 
-    Integer   findoutthedateDifference(@NonNull String dateLocaleBase,@NonNull String dateLocaleNew) {
+   ConcurrentHashMap<Integer,Integer>   findoutthedateDifference(@NonNull String dateLocaleBase,@NonNull String dateLocaleNew) {
        // TODO: 30.07.2024 анализ
-       Integer getMituteFinal  =0;
+       ConcurrentHashMap<Integer,Integer>   analiysMinuteAndSecund=new ConcurrentHashMap<>();
        try {
            Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                    " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
@@ -693,40 +700,51 @@ try{
                    + "\n"+ " dateLocaleBase " +dateLocaleBase);
 
            // TODO: 25.07.2024 обрабоатываем даты
-           DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.SSS");
+           DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy.MM.dd HH.mm.ss.SSS");
 
-           LocalDateTime   dataPublic = null;
+           LocalDateTime   LiveDate = null;
            if (dateLocaleNew!=null) {
                try {
-                   dataPublic = LocalDateTime.parse(dateLocaleNew, formatter);
+                   LiveDate = LocalDateTime.parse(dateLocaleNew, formatter);
                } catch (Exception e) {
                    //throw new RuntimeException(e);
                }
            }
-           LocalDateTime   dateLocal = null;
+           LocalDateTime   databaseDate = null;
            if (dateLocaleBase!=null) {
                try {
-                   dateLocal = LocalDateTime.parse(dateLocaleBase, formatter);
+                   databaseDate = LocalDateTime.parse(dateLocaleBase, formatter);
                } catch (Exception e) {
                  //  throw new RuntimeException(e);
                }
-           }else{
-               dateLocal = LocalDateTime.parse("2010-01-01 01:01:01.111", formatter);
            }
            Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                    " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                   " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"+ " dataPublic " +dataPublic+"\n" + "dateLocal " +dateLocal);
+                   " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"+ " LiveDate " +LiveDate+"\n" + "databaseDate " +databaseDate);
 
+           int getSecond = 0;
+           Long getSecund = null;
 
-
-           if (dateLocal !=null  && dataPublic!=null ) {
+           if (databaseDate !=null  && LiveDate!=null ) {
                // TODO: 30.07.2024 если дата в базе есть Есть с чем сравнивать ,
-               getMituteFinal = Math.abs(dataPublic.getMinute() - dateLocal.getMinute());
+               getSecond = Math.abs(LiveDate.getSecond() - databaseDate.getSecond());
+               // getMinute = TimeUnit.MINUTES.convert(diff, TimeUnit.MILLISECONDS);
+               //int getSecund = Math.abs(LiveDate.getSecond() - databaseDate.getSecond());
+               Duration duration = Duration.between(databaseDate, LiveDate);
+               getSecund = duration.getSeconds();
+
+               // TODO: 30.07.2024 add dat analys
+               analiysMinuteAndSecund.putIfAbsent(getSecond, getSecund.intValue());
+           }else {
+
+               // TODO: 30.07.2024 add dat analys  ,А это первйц заппруске
+               analiysMinuteAndSecund.putIfAbsent(dateLimitAnrecord, dateLimitAnrecord);
            }
 
            Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                    " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                   " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"+ " getMituteFinal " +getMituteFinal );
+                   " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"+ " getSecund " +getSecund+
+                   " getSecund " +getSecund + "analiysMinuteAndSecund " +analiysMinuteAndSecund );
 
        } catch (Exception e) {
            e.printStackTrace();
@@ -743,7 +761,7 @@ try{
            new SubClassErrors(context).МетодЗаписиОшибок(valuesЗаписываемОшибки);
 
        }
-       return getMituteFinal;
+       return analiysMinuteAndSecund;
 
    }
 

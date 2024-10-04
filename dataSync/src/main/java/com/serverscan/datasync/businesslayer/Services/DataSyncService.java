@@ -29,7 +29,6 @@ import javax.inject.Inject;
 
 import dagger.hilt.android.AndroidEntryPoint;
 import io.reactivex.rxjava3.core.Completable;
-import io.reactivex.rxjava3.schedulers.Schedulers;
 import okhttp3.OkHttpClient;
 
 
@@ -108,16 +107,10 @@ public class DataSyncService extends IntentService {
                         // TODO: 12.09.2024 запуск обработки POST gatt server jboss
                         binesslogicDataSyncServicePOST.onTransact(getApplicationContext(),version,this);
 
-                        Log.d(getApplicationContext().getClass().getName(), "\n"
-                                + " class " + Thread.currentThread().getStackTrace()[2].getClassName() +
-                                "\n" +
-                                " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                                " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n");
-
 
                /*         // TODO: 12.09.2024 запуск обработки GET gatt server jboss
-                        binesslogicDataSyncServiceGET.onTransact(getApplicationContext(),version,this);*/
-
+                        binesslogicDataSyncServiceGET.onTransact(getApplicationContext(),version,this);
+*/
                         Log.d(getApplicationContext().getClass().getName(), "\n"
                                 + " class " + Thread.currentThread().getStackTrace()[2].getClassName() +
                                 "\n" +
@@ -140,7 +133,7 @@ public class DataSyncService extends IntentService {
                         new SubClassErrors(getApplicationContext()).МетодЗаписиОшибок(valuesЗаписываемОшибки);
 
 
-            }).subscribeOn(Schedulers.single())
+            })
                     .toObservable()
                     .take(5, TimeUnit.MINUTES).subscribe();
 

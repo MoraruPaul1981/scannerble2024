@@ -4,12 +4,14 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
+import android.database.Cursor;
 import android.util.Log;
 
 import androidx.annotation.NonNull;
 
 import com.serverscan.datasync.businesslayer.Errors.SubClassErrors;
 import com.serverscan.datasync.businesslayer.Services.DataSyncService;
+import com.serverscan.datasync.businesslayer.bl_Jakson.BinesslogicJaksonSend;
 import com.serverscan.datasync.businesslayer.bl_Jakson.BinesslogicJaksonWeGet;
 import com.serverscan.datasync.businesslayer.bl_versionsgatt.BinesslogicVersions;
 
@@ -58,18 +60,18 @@ public class BinesslogicDataSyncServiceGET implements  InterfaceDataSyncService{
                     // TODO: 12.09.2024
             // TODO: 09.09.2024 получаем данные которые надотправить на сервер  GATT SEVER
                     // TODO: 03.09.2024 get DATA
-                    Long versionGattServerRemote=    new BinesslogicVersions(context).getVesionDataGattServerRemote(context,version);
+                    Long versionGetDataOtJboss=    new BinesslogicVersions(context).getanewVersionofgatt(context,version);
 
                 // TODO: 03.09.2024 sending  Stream to Server
                 new BinesslogicJaksonWeGet(context).weGetOkhhtpServiceForJboss(context, version, dataSyncService.getJbossAdressDebug,
-                        versionGattServerRemote, dataSyncService.getOkhhtpBuilder);
+                        versionGetDataOtJboss, dataSyncService.getOkhhtpBuilder);
 
 
                 // TODO: 03.09.2024 get InputStream   for sending an server
                 Log.d(context.getClass().getName(), "\n" + " class " +
                         Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                         " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                        " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"  + " versionGattServerRemote  " +versionGattServerRemote);
+                        " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n");
 
 
                     // TODO: 03.09.2024 get InputStream   for sending an server

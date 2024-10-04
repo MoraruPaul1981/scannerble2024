@@ -40,11 +40,6 @@ dependencies {
     androidTestImplementation 'androidx.test.ext:junit:1.1.5'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.1'
 
-    /////TODO биботека для службы WOrk Manager
-    implementation 'androidx.work:work-runtime:2.9.1'
-    implementation 'androidx.work:work-runtime-ktx:2.9.1'
-    testImplementation 'androidx.work:work-testing:2.9.1'
-    implementation "androidx.work:work-multiprocess:2.9.1"
 
     //TODO  запуск всего
     implementation "androidx.startup:startup-runtime:1.1.1"
@@ -68,14 +63,11 @@ dependencies {
 
 
 
-    //TODO RXJAVA
-    def rxjava_version = "3.0.2"
-    implementation "io.reactivex.rxjava3:rxandroid:$rxjava_version"
-    implementation "io.reactivex.rxjava3:rxjava:$rxjava_version"
-
+    ///TODO RXJAVA BLE
+    implementation 'io.reactivex.rxjava3:rxandroid:3.0.2'
+    implementation group: 'io.reactivex', name: 'rxandroid', version: '1.2.1'
     ///TODO RXJAVA BLE
     implementation "com.polidea.rxandroidble3:rxandroidble:1.17.2"
-
     //TODO binding
     implementation 'com.jakewharton.rxbinding4:rxbinding:4.0.0'
 

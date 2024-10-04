@@ -51,7 +51,6 @@ import com.sous.server.businesslayer.Eventbus.ParamentsScannerServer;
 import com.sous.server.businesslayer.Locations.GattLocationListener;
 import com.sous.server.businesslayer.Services.ServiceServerScan;
 import com.sous.server.businesslayer.bl_Advertising.GetBleAdvertising;
-import com.sous.server.businesslayer.bl_setNameDevice.SetNameDevices;
 
 import org.greenrobot.eventbus.EventBus;
 import org.jetbrains.annotations.NotNull;
@@ -120,8 +119,7 @@ private  Long version;
 
 
 
-    @SuppressLint("MissingPermission")
-    public void launchBuccesloginForServiceServerScan(@NotNull  ServiceServerScan getserviceServerScan , @NotNull  SharedPreferences preferencesGatt) {
+    public void launchBuccesloginForServiceServerScan(@NotNull  ServiceServerScan getserviceServerScan ,@NotNull  SharedPreferences preferencesGatt) {
         try {
             // TODO: 23.07.2024 starting  core motods BLE Gatt Server
             initAdapterBluetoothManager();
@@ -135,11 +133,6 @@ private  Long version;
                 getContentProvider();
                 // TODO: 03.09.2024
                 langingGPSLocations( preferencesGatt);
-
-                // TODO: 01.10.2024
-                // TODO: 01.10.2024  Завание Устро1ство
-                String setingNameDeviceGattServer =  new SetNameDevices(context,version).setingNameDevice();
-                bluetoothAdapter.setName(setingNameDeviceGattServer);
                 // TODO: 25.08.2024 TEST
                 getBleAdvertising.staringAdvertisingSet(bluetoothAdapter);
 // TODO: 28.07.2024 LIster

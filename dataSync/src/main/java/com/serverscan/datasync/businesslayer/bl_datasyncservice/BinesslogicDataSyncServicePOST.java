@@ -15,7 +15,7 @@ import com.serverscan.datasync.businesslayer.bl_Jakson.BinesslogicJaksonSend;
 import com.serverscan.datasync.businesslayer.bl_versionsgatt.BinesslogicVersions;
 import com.serverscan.datasync.datalayer.model.ScannerserversuccessEntity;
 
-import java.util.concurrent.CopyOnWriteArrayList;
+import java.util.List;
 
 import javax.inject.Inject;
 
@@ -61,15 +61,15 @@ public class BinesslogicDataSyncServicePOST   implements  InterfaceDataSyncServi
         Completable.fromAction(()->{
                     // TODO: 12.09.2024
                     // TODO: 03.09.2024 get DATA
-                    Long versionGattServerRemote=    new BinesslogicVersions(context).getVesionDataGattServerRemote(context,version);
+                    Long versionoflastsentdata=    new BinesslogicVersions(context).getanewVersionofgatt(context,version);
                     // TODO: 09.09.2024 получаем данные которые надотправить на сервер  GATT SEVER
                     Cursor cursorSinglePOST=   dataSyncService.businesslogicDatabase.getingCursor("SELECT" +
-                            " * FROM scannerserversuccess  WHERE current_table >'"+versionGattServerRemote.toString()+"' ORDER BY id   ",version);
+                            " * FROM scannerserversuccess  WHERE current_table >='"+versionoflastsentdata.toString()+"' ORDER BY id   ",version);
                     // TODO: 03.09.2024
                     if (cursorSinglePOST.getCount()>0) {
 
                         // TODO: 23.08.2024 Генерирум List базе курсора в Обьекты Листа ЧТобы ПОтом ПОлучить Jakson Json
-                        CopyOnWriteArrayList<ScannerserversuccessEntity> listForJakson=  dataSyncService. genetarorJaksonJSON.genetarorListFor(context,version,cursorSinglePOST);
+                        List<ScannerserversuccessEntity> listForJakson=  dataSyncService. genetarorJaksonJSON.genetarorListFor(context,version,cursorSinglePOST);
                         // TODO: 03.09.2024 get Stream based on Cursor
                         byte[] ByteJakson=    dataSyncService.genetarorJaksonJSON.genetarorJaksonJSON(context,version,     listForJakson  ,dataSyncService.getHiltJaksonObjectMapper     );
 
