@@ -14,7 +14,7 @@ import okhttp3.OkHttpClient;
 public abstract class Dispatchers {
     public  Context context;
     public Long version;
-    public abstract Dispatcher setPoolDispatcher(Context context, OkHttpClient.Builder getOkhhtpBuilder);
+    public abstract OkHttpClient.Builder  setPoolDispatcher(Context context, OkHttpClient.Builder getOkhhtpBuilder);
 
 
     // TODO: 04.10.2024 end class

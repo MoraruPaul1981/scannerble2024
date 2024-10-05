@@ -56,7 +56,7 @@ public class GenerationJaksonJSON {
 
     public byte[]  genetarorJaksonJSON(@NonNull Context  context,
                                        @NonNull long version,
-                                       @NonNull   List<ScannerserversuccessEntity>  listForJakson,
+                                       @NonNull   CopyOnWriteArrayList<ScannerserversuccessEntity>  listForJakson,
                                        @NonNull ObjectMapper getHiltJaksonObjectMapper)
             throws ExecutionException, InterruptedException {
         // TODO: 22.08.2024  Коненпт провайдер для зааписив базу данных
@@ -134,7 +134,7 @@ public class GenerationJaksonJSON {
 
 // TODO: 05.09.2024
 @SuppressLint("Range")
-public List<ScannerserversuccessEntity> genetarorListFor(@NonNull Context  context, @NonNull long version, @NonNull Cursor cursorlocal) {
+public CopyOnWriteArrayList<ScannerserversuccessEntity> genetarorListFor(@NonNull Context  context, @NonNull long version, @NonNull Cursor cursorlocal) {
         // TODO: 22.08.2024  Коненпт провайдер для зааписив базу данных
     // TODO: 06.09.2024
     CopyOnWriteArrayList  copyOnWriteArrayListSendJboss=new CopyOnWriteArrayList();
@@ -146,6 +146,8 @@ public List<ScannerserversuccessEntity> genetarorListFor(@NonNull Context  conte
                         ScannerserversuccessEntity    scannerserversuccessEntity = processtheCursorandfillinmodel(cursorlocal ,version);
                         // TODO: 06.09.2024 далее заполяем Лист
                         copyOnWriteArrayListSendJboss.add(scannerserversuccessEntity);
+                        // TODO: 04.10.2024
+                        cursorlocal.moveToNext();
 
                         Log.d(this.getClass().getName(), "\n" + " class " +
                                 Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
@@ -153,7 +155,7 @@ public List<ScannerserversuccessEntity> genetarorListFor(@NonNull Context  conte
                                 " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" + "\n"
                                 + " LocalDateTime.now() " + LocalDateTime.now().toString().toUpperCase() + "\n"+
                                 " copyOnWriteArrayListSendJboss " +copyOnWriteArrayListSendJboss.size());
-                    },1);
+                    });
 
                         Log.d(this.getClass().getName(), "\n" + " class " +
                                 Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +

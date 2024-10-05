@@ -33,8 +33,6 @@ import java.util.LinkedHashMap;
 import java.util.Locale;
 import java.util.Optional;
 import java.util.concurrent.ExecutionException;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicReference;
 import java.util.zip.GZIPInputStream;
@@ -98,9 +96,9 @@ public class BinesslogicJaksonSend {
 
 
 // TODO: 04.10.2024 Диспесера
-            Dispatcher dispatcherPost=     new DispatchersGatt().setPoolDispatcher(context, getOkhhtpBuilder);
+            OkHttpClient.Builder getOkhhtpBuilderGattPost=     new DispatchersGatt().setPoolDispatcher(context, getOkhhtpBuilder);
 
-                    OkHttpClient okHttpClientGattServerSending =getOkhhtpBuilder.addInterceptor(new Interceptor() {
+                    OkHttpClient okHttpClientGattServerSending =getOkhhtpBuilderGattPost.addInterceptor(new Interceptor() {
                                 @Override
                                 public Response intercept(Chain chain) throws IOException {
                                     // TODO: 21.08.2024
@@ -125,6 +123,7 @@ public class BinesslogicJaksonSend {
                             .readTimeout(1, TimeUnit.MINUTES)
                             .build();
                     // TODO: 06.09.2024 POST
+         Dispatcher dispatcherGatt=   okHttpClientGattServerSending.dispatcher();
 
             MediaType JSON = MediaType.parse("application/octet-stream; charset=utf-8");
                     RequestBody requestBody = new RequestBody() {
@@ -181,7 +180,7 @@ public class BinesslogicJaksonSend {
                             // TODO: 10.09.2024  cancel
                             call.cancel();
                             // TODO: 31.05.2022
-                            dispatcherPost.executorService().shutdown();
+                            dispatcherGatt.executorService().shutdown();
                             Log.d(context.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                                     " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
                                     " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n");
@@ -218,15 +217,14 @@ public class BinesslogicJaksonSend {
                                     // TODO: 09.09.2024 ПОлученую версию данных от серврера запоминаем
                                     if (буферОтветотJbossfinal.get()>0  ) {
                                         // TODO: 10.09.2024 дополнительное увеличение версии данных уже в рабочей текуще версии чтобы большене вставлять дополнительно
-                                        new BinesslogicVersions(context).recordingAfterNewVersionwealign(context,version);
+                                        new BinesslogicVersions(context).recordingVersionRemote(context,version);
 
                                     }
 
                                     // TODO: 31.07.2024 close database
                                     clostingdatabase(cursorlocal);
 
-                                    // TODO: 31.05.2022
-                                    dispatcherPost.executorService().shutdown();
+
 
                                     Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                                             " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
@@ -235,6 +233,8 @@ public class BinesslogicJaksonSend {
                                 // TODO: 10.09.2024  cancel
                                 call.cancel();
                                 response.close();
+                                // TODO: 31.05.2022
+                                dispatcherGatt.executorService().shutdown();
                                 // TODO: 23.08.2024
                                 Log.d(context.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                                         " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
@@ -244,8 +244,7 @@ public class BinesslogicJaksonSend {
                     });
             // TODO: 27.09.2024
             // TODO: 31.05.2022
-            dispatcherPost.executorService().awaitTermination(1,TimeUnit.DAYS);
-            // TODO: 27.09.2024
+            dispatcherGatt.executorService().awaitTermination(1,TimeUnit.DAYS);
             // TODO: 31.07.2024
         Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                 " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +

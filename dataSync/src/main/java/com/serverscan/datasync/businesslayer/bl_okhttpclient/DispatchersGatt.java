@@ -10,13 +10,14 @@ import okhttp3.OkHttpClient;
 
 public class DispatchersGatt extends  Dispatchers {
     @Override
-    public Dispatcher setPoolDispatcher(Context context, OkHttpClient.Builder getOkhhtpBuilder) {
+    public OkHttpClient.Builder setPoolDispatcher(Context context, OkHttpClient.Builder getOkhhtpBuilder) {
         Dispatcher dispatcher = new Dispatcher(Executors.newCachedThreadPool());
+        getOkhhtpBuilder.getDispatcher$okhttp().cancelAll();
         getOkhhtpBuilder.dispatcher(dispatcher);
         Log.d(context.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                 " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
                 " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"
                 + " dispatcher.executorService().isShutdown() " + dispatcher.executorService().isShutdown());
-        return dispatcher;
+        return getOkhhtpBuilder;
     }
 }
