@@ -81,7 +81,7 @@ public class BinesslogicJaksonSend {
                                                @NonNull OkHttpClient.Builder getOkhhtpBuilder)
             throws ExecutionException, InterruptedException {
         // TODO: 22.08.2024  Коненпт провайдер для зааписив базу данных
-        AtomicReference<Long> буферОтветотJbossfinal= new AtomicReference(0l);
+        AtomicReference<Long> versionGETDataJbossGattOtServer= new AtomicReference(0l);
         try {
         // TODO: 28.08.2024
                     // TODO: 23.08.2024
@@ -200,35 +200,27 @@ public class BinesslogicJaksonSend {
                                 Boolean ФлагgZIPOutputStream = Boolean.parseBoolean(Optional.ofNullable(response.header("GZIPOutputStream")).map(String::new).orElse("false"));
                                 if (РазмерПришедшегоПотока>0l) {
                                     // TODO: 07.10.2023
-
                                     // TODO: 07.10.2023  Пришел ПОТОК
                                     InputStream inputStreamOtgattserver = new GZIPInputStream(response.body().source().inputStream(),2048);//4096
-
                                          // TODO: 07.10.2023  Обрабаотываем версию от сервера
-                                    буферОтветотJbossfinal.set(versionOtGattServerCallback(inputStreamOtgattserver,КакаяКодировка,version));
-
-
+                                    versionGETDataJbossGattOtServer.set(versionOtGattServerCallback(inputStreamOtgattserver,КакаяКодировка,version));
 
                                     Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                                             " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                                            " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" + " буферОтветотJbossfinal.get() " +буферОтветотJbossfinal.get() );
-
+                                            " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" + " versionGETDataJbossGattOtServer.get() " +versionGETDataJbossGattOtServer.get() );
 
                                     // TODO: 09.09.2024 ПОлученую версию данных от серврера запоминаем
-                                    if (буферОтветотJbossfinal.get()>0  ) {
+                                    if (versionGETDataJbossGattOtServer.get()>0  ) {
                                         // TODO: 10.09.2024 дополнительное увеличение версии данных уже в рабочей текуще версии чтобы большене вставлять дополнительно
-                                        new BinesslogicVersions(context).recordingVersionRemote(context,version);
-
+                                        new BinesslogicVersions(context).recordingVersionRemote(context,version,versionGETDataJbossGattOtServer.get());
                                     }
 
                                     // TODO: 31.07.2024 close database
                                     clostingdatabase(cursorlocal);
 
-
-
                                     Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                                             " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                                            " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" + " буферОтветотJbossfinal " +буферОтветотJbossfinal );
+                                            " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" + " versionGETDataJbossGattOtServer " +versionGETDataJbossGattOtServer );
                                 }
                                 // TODO: 10.09.2024  cancel
                                 call.cancel();

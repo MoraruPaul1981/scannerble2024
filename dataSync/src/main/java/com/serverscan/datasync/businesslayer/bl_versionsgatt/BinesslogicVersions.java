@@ -162,18 +162,13 @@ Context context;
 
     // TODO: 05.10.2024  Методы Записи версии в сисменую таблицу
     @SuppressLint("NewApi")
-    public void recordingVersionRemote(@NotNull Context context , @NotNull Long version){
+    public void recordingVersionRemote(@NotNull Context context , @NotNull Long version,@NotNull Long versionPostDataJbossGattOtServer){
         try{
-
-            FindingDataForGatServer findingDataForGatServer=new FindingDataForGatServer();
-            // Long current_table = findVersonGattServer("SELECT MAX ( versionremote  ) AS MAX_R  FROM gattserverdataversion","gattserverdataversion");
-            Long буферОтветотJbossfinal =findingDataForGatServer.findVersonGattServer("SELECT MAX ( current_table  ) AS MAX_R  FROM scannerserversuccess","scannerserversuccess");
-
             ContentResolver contentProviderNewVersion=context.getContentResolver();
             Uri uri = Uri.parse("content://com.sous.servergatt.prodider/gattserverdataversion" );
             // TODO: 09.09.2024
             ContentValues contentValuesdvensedScannerserversuccessRemote =new ContentValues();
-            contentValuesdvensedScannerserversuccessRemote.put("versionremote",буферОтветотJbossfinal);
+            contentValuesdvensedScannerserversuccessRemote.put("versionremote",versionPostDataJbossGattOtServer);
 
             // TODO: 25.07.2024  Создаем Новую Даты
             WorkerDates workerDates=new WorkerDates(context,version);
@@ -196,7 +191,8 @@ Context context;
 
             Log.d(context.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                     " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                    " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"+ " resultNewVersionGattServer " +resultNewVersionGattServer);
+                    " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"+ " resultNewVersionGattServer " +resultNewVersionGattServer+
+                    " versionPostDataJbossGattOtServer " +versionPostDataJbossGattOtServer);
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -220,18 +216,14 @@ Context context;
 
 
     @SuppressLint("NewApi")
-    public void  recordingVersionLocal(@NotNull Context context , @NotNull Long version  ){
+    public void  recordingVersionLocal(@NotNull Context context , @NotNull Long version,@NotNull Long versionGETDataJbossGattOtServer  ){
         try{
             // TODO: 05.10.2024
-            FindingDataForGatServer findingDataForGatServer=new FindingDataForGatServer();
-            // Long current_table = findVersonGattServer("SELECT MAX ( versionremote  ) AS MAX_R  FROM gattserverdataversion","gattserverdataversion");
-            Long буферОтветотJbossfinal =findingDataForGatServer.findVersonGattServer("SELECT MAX ( current_table  ) AS MAX_R  FROM completeallmacadressusers","completeallmacadressusers");
-
             ContentResolver contentProviderNewVersion=context.getContentResolver();
             Uri uri = Uri.parse("content://com.sous.servergatt.prodider/gattserverdataversion" );
             // TODO: 09.09.2024
             ContentValues contentValuesNewGattVersionLocal=new ContentValues();
-            contentValuesNewGattVersionLocal.put("versionlocal",буферОтветотJbossfinal);
+            contentValuesNewGattVersionLocal.put("versionlocal",versionGETDataJbossGattOtServer);
 
             // TODO: 25.07.2024  Создаем Новую Даты
             WorkerDates workerDates=new WorkerDates(context,version);
@@ -254,7 +246,8 @@ Context context;
 
             Log.d(context.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                     " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                    " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"+ " resultNewVersionGattServer " +resultNewVersionGattServer);
+                    " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"+ " resultNewVersionGattServer " +resultNewVersionGattServer
+                    +" versionGETDataJbossGattOtServer " +versionGETDataJbossGattOtServer);
 
         } catch (Exception e) {
             e.printStackTrace();
