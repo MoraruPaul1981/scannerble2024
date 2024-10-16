@@ -1,44 +1,39 @@
-package com.sous.server.businesslayer.bl_setNameDevice;
+package com.serverscan.datasync.datasync_businesslayer.bl_network;
+
 
 
 import android.content.ContentValues;
 import android.content.Context;
-import android.os.Build;
-import android.provider.Settings;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.util.Log;
 
 import com.serverscan.datasync.datasync_businesslayer.Errors.SubClassErrors;
 
-public class SetNameDevices {
+public class WorkerStatusNewtorks {
 
-    // TODO: 26.09.2024
-  private Context context;
-  private  Long version;
+    private Context context;
 
-    public SetNameDevices(Context context, Long version) {
+    private  Long version;
+
+    public WorkerStatusNewtorks(Context context, Long version) {
         this.context = context;
         this.version = version;
     }
 
 
-    public String setingNameDevice( ) {
-        String setingNameDevice = new String();
-        try {
-            String ANDROID_ID = Settings.Secure.getString(context.getContentResolver(), Settings.Secure.ANDROID_ID);
-            String ANDROID_NAME=Settings.Global.getString(context.getContentResolver(),Settings.Global.DEVICE_NAME);
-            String btMac = android.provider.Settings.Secure.getString(context.getContentResolver(), "bluetooth_address");
-            // TODO: 01.09.2024
-            String model=  android.os.Build.MODEL;
-            String company=     android.os.Build.MANUFACTURER;
-            String product=  Build.BRAND;
-
-            setingNameDevice=company+" "+product+" "+model;
-
-
+  public   Boolean getStatusNewtwork(){
+        Boolean StatusNewtwork=false;
+        try{
+            ConnectivityManager  connectivityManager = (ConnectivityManager)context.getSystemService(Context.CONNECTIVITY_SERVICE);
+            NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
+            // TODO: 22.08.2024 Парименимае Решение Запускаем Сихронизацию
+            if (activeNetworkInfo!=null) {
+                StatusNewtwork=true;
+            }
             Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                     " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                    " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" +
-                     " setingNameDevice " +setingNameDevice);
+                    " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"+  " StatusNewtwork " +StatusNewtwork );
         } catch (Exception e) {
             e.printStackTrace();
             Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() + " Линия  :"
@@ -53,9 +48,7 @@ public class SetNameDevices {
             valuesЗаписываемОшибки.put("whose_error", ЛокальнаяВерсияПОСравнение);
             new SubClassErrors(context).МетодЗаписиОшибок(valuesЗаписываемОшибки);
         }
-
-        return  setingNameDevice;
+        return  StatusNewtwork;
     }
-
 
 }

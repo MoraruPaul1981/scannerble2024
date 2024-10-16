@@ -147,7 +147,7 @@
     <application>
   <!--      //TODO  start application library-->
         <service
-            android:name="com.serverscan.datasync.businesslayer.Services.DataSyncService"
+            android:name="com.serverscan.datasync.datasync_businesslayer.Services.DataSyncService"
             android:directBootAware="true"
             android:enabled="true"
             android:exported="true"
@@ -210,7 +210,7 @@
 
 
         <!-- This entry makes ExampleLoggerInitializer discoverable. -->
-        <meta-data  android:name="com.serverscan.datasync.businesslayer.bl_workmangers.RemoteMessaging"
+        <meta-data  android:name="com.serverscan.datasync.datasync_businesslayer.bl_workmangers.RemoteMessaging"
             android:value="androidx.startup" />
      <!--   //TODO  end appication library-->
     </application>

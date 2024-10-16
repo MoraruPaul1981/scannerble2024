@@ -18,7 +18,7 @@ import android.util.Log;
 import androidx.annotation.NonNull;
 
 
-import com.serverscan.datasync.businesslayer.Errors.SubClassErrors;
+import com.serverscan.datasync.datasync_businesslayer.Errors.SubClassErrors;
 import com.sous.server.businesslayer.bl_setNameDevice.SetNameDevices;
 
 import java.util.UUID;

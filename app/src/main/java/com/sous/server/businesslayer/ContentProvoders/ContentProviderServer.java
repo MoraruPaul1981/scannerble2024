@@ -10,23 +10,18 @@ import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.CancellationSignal;
-import android.os.Handler;
 import android.util.Log;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.loader.content.AsyncTaskLoader;
 
 
-import com.serverscan.datasync.businesslayer.bl_contentproviders.BinesslogicContentProvider;
+import com.serverscan.datasync.datasync_businesslayer.bl_contentproviders.BinesslogicContentProvider;
 import com.sous.server.businesslayer.Errors.SubClassErrors;
 import com.sous.server.datalayer.local.CREATE_DATABASEServerScanner;
 
 import java.util.Date;
 import java.util.List;
-import java.util.concurrent.CopyOnWriteArrayList;
-import java.util.concurrent.atomic.AtomicInteger;
-import java.util.function.Consumer;
 
 import javax.inject.Inject;
 
