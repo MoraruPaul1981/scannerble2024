@@ -142,7 +142,7 @@ public class DataSyncService extends IntentService {
             }).doOnSuccess(s->{
                 // TODO: 29.08.2024
                        // TODO: 16.10.2024  GET  getting
-                     ///  binesslogicDataSyncServiceGetGet.proseccingDataSyncGet(getApplicationContext(),version,dataSyncService.get());
+                     binesslogicDataSyncServiceGetGet.proseccingDataSyncGet(getApplicationContext(),version,dataSyncService.get());
 
                        Log.d(getApplicationContext().getClass().getName(), "\n"
                                + " class " + Thread.currentThread().getStackTrace()[2].getClassName() +

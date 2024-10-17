@@ -12,6 +12,7 @@ import android.util.Log;
 import com.google.firebase.crashlytics.buildtools.reloc.org.apache.http.client.methods.HttpGet;
 import com.google.firebase.crashlytics.buildtools.reloc.org.apache.http.client.utils.URIBuilder;
 import com.serverscan.datasync.datasync_businesslayer.Errors.SubClassErrors;
+import com.serverscan.datasync.datasync_businesslayer.bl_dates.WorkerDates;
 import com.serverscan.datasync.datasync_businesslayer.bl_okhttpclient.DispatchersGatt;
 import com.serverscan.datasync.datasync_businesslayer.bl_versionsgatt.BinesslogicVersions;
 
@@ -330,7 +331,7 @@ public class BinesslogicJaksonSendtoJboss {
         Completable.fromAction(()->{
 
                     // TODO: 29.08.2024 время
-                    String  bremylocal=prossecingBremy(cursorlocal);
+                    String  bremylocal=new WorkerDates(context,version).prossecingBremy(cursorlocal);
                     // TODO: 29.08.2024 версия
                     Long  versionlocal=   prossecingVersion(cursorlocal);
 
@@ -401,34 +402,7 @@ public class BinesslogicJaksonSendtoJboss {
 
 
 
-    @SuppressLint("Range")
-    private  String prossecingBremy(@NonNull Cursor cursorlocal){
-        String bremylocal=new String();
-        if (cursorlocal.getCount() >0) {
-            DateFormat dateFormat =new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS", new Locale("ru", "RU"));
-            // TODO: 27.08.2024 bremy
-            try {
-                Date datelocal = dateFormat.parse(cursorlocal.getString(cursorlocal.getColumnIndex("date_update")));
-                bremylocal = dateFormat.format(datelocal);
-            } catch (ParseException e) {
-                throw new RuntimeException(e);
-            }
-        }else {
-            DateFormat	dateFormat =   new SimpleDateFormat("yyyy-MM-dd",new Locale("ru", "RU"));
-            try {
-                Date datelocal  = dateFormat.parse("2010-01-01");
-                bremylocal = dateFormat.format(datelocal);
-            } catch (ParseException e) {
-                throw new RuntimeException(e);
-            }
-        }
-        // TODO: 31.07.2024
-        Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
-                " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" + "\n"
-                + " LocalDateTime.now() " + LocalDateTime.now().toString().toUpperCase() + "\n" + "bremylocal " + bremylocal);
-        return  bremylocal;
-    }
+
 
 
     @SuppressLint("Range")
