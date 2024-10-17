@@ -16,10 +16,14 @@ import java.util.Date;
 public class BinesslogicGetDates {
 
 
+    Context context;
+
+    public BinesslogicGetDates(Context context) {
+        this.context = context;
+    }
 
 
-
-    public   String getDates(@NotNull Context context , @NotNull Long version  ){
+    public   String getDates(  @NotNull Long version  ){
         String getDateupdate=null;
         try{
             ContentResolver contentProviderNewVersion=context.getContentResolver();

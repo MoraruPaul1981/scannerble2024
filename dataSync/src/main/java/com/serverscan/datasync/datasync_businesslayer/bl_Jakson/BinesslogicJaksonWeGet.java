@@ -13,6 +13,7 @@ import com.google.firebase.crashlytics.buildtools.reloc.com.google.common.io.Byt
 import com.google.firebase.crashlytics.buildtools.reloc.org.apache.http.client.methods.HttpGet;
 import com.google.firebase.crashlytics.buildtools.reloc.org.apache.http.client.utils.URIBuilder;
 import com.serverscan.datasync.datasync_businesslayer.Errors.SubClassErrors;
+import com.serverscan.datasync.datasync_businesslayer.bl_dates.BinesslogicGetDates;
 import com.serverscan.datasync.datasync_businesslayer.bl_okhttpclient.DispatchersGatt;
 import com.serverscan.datasync.datasync_businesslayer.bl_versionsgatt.BinesslogicVersions;
 
@@ -76,7 +77,7 @@ public class BinesslogicJaksonWeGet {
     @SuppressLint("NewApi")
     public  void getAllMacAdress(@NonNull Context context, @NonNull long version,
                                  @NonNull LinkedHashMap<String, String> getJbossAdress,
-                                 @NonNull   Long versionGetDataOtJboss,
+                                 @NonNull   Long gettingVersionLocal,
                                  @NonNull OkHttpClient.Builder getOkhhtpBuilder)
             throws ExecutionException, InterruptedException {
         // TODO: 22.08.2024  Коненпт провайдер для зааписив базу данных
@@ -87,7 +88,7 @@ public class BinesslogicJaksonWeGet {
         String ANDROID_ID= Settings.Secure.getString(context.getContentResolver(), Settings.Secure.ANDROID_ID);
                     // TODO: 26.08.2024
                     // TODO: 27.08.2024 получаем данные и вставляем их в  URL для отправки
-                    URL Adress = getGETUrlndParametrs(   versionGetDataOtJboss,getJbossAdress,version);
+                    URL Adress = getGETUrlndParametrs(   gettingVersionLocal,getJbossAdress,version);
 
                     Log.d(context.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                             " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
@@ -270,7 +271,7 @@ public class BinesslogicJaksonWeGet {
 
 
     @SuppressLint("Range")
-    private URL getGETUrlndParametrs(@NonNull  Long versionGetDataOtJboss,
+    private URL getGETUrlndParametrs(@NonNull  Long gettingVersionLocal,
                                      @NonNull LinkedHashMap<String,
             String> getJbossAdress, @NonNull Long version) {
         // TODO: 27.08.2024
@@ -282,7 +283,7 @@ public class BinesslogicJaksonWeGet {
                             Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                             " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
                             " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"
-                            + " versionGetDataOtJboss " + versionGetDataOtJboss);
+                            + " gettingVersionLocal " + gettingVersionLocal);
 
                     // TODO: 02.04.2024  Адресс и Порт Сервера Jboss
                     String getPortServer = getJbossAdress.values().stream().findFirst().orElseGet(()->"");
@@ -291,7 +292,7 @@ public class BinesslogicJaksonWeGet {
 
                     // TODO: 29.08.2024 время
                     // TODO: 03.09.2024 get DATA
-                    Long gettingVersionLocal=    new BinesslogicVersions(context).gettingVersionLocal(context,version);
+                    String getDateupdate=    new BinesslogicGetDates(context).getDates( version);
 
 
                     try {
@@ -299,8 +300,8 @@ public class BinesslogicJaksonWeGet {
                         URIBuilder builder = new URIBuilder(someHttpGet.getURI());
                         builder.setParameter("NameTable", "completeallmacadressusers")
                                 .setParameter("JobForServer", "wegetgattserver")
-                                .setParameter("bremylocal", gettingVersionLocal.toString())
-                                .setParameter("versionlocal", versionGetDataOtJboss.toString());
+                                .setParameter("bremylocal", getDateupdate)
+                                .setParameter("versionlocal", gettingVersionLocal.toString());
                         URI adresssuri  = builder.build();
                         Adress.set(adresssuri.toURL());
                         // TODO: 31.07.2024
