@@ -204,8 +204,7 @@ try {
                Intent intentjboss=      new Intent();
             localBinderСерверBLE.getService().onStartCommand(intentjboss,new Random().nextInt(),new Random().nextInt());
 
-            // TODO: 12.09.2024 closing 
-            context.unbindService(serviceConnection);
+
             Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                     " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
                     " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n");

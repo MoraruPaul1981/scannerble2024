@@ -191,9 +191,7 @@ public CopyOnWriteArrayList<ScannerserversuccessEntity> genetarorListFor(@NonNul
                     valuesЗаписываемОшибки.put("whose_error", ЛокальнаяВерсияПОСравнение);
                     new SubClassErrors(context).МетодЗаписиОшибок(valuesЗаписываемОшибки);
 
-                })
-                .subscribeOn(Schedulers.single())
-                .blockingSubscribe();
+                }).blockingSubscribe();
         // TODO: 31.07.2024
         Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                 " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +

@@ -32,6 +32,7 @@ import javax.inject.Inject;
 import dagger.hilt.android.AndroidEntryPoint;
 import io.reactivex.rxjava3.core.Completable;
 import io.reactivex.rxjava3.core.Single;
+import io.reactivex.rxjava3.internal.jdk8.CompletionStageConsumer;
 import io.reactivex.rxjava3.schedulers.Schedulers;
 import okhttp3.OkHttpClient;
 
@@ -121,7 +122,7 @@ public class DataSyncService extends IntentService {
                             "\n" +
                             " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
                             " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n");
-                    return null;
+                    return dataSyncService.get();
                 }
             }).doOnError(e->{
                 // TODO: 29.08.2024
@@ -141,7 +142,7 @@ public class DataSyncService extends IntentService {
             }).doOnSuccess(s->{
                 // TODO: 29.08.2024
                        // TODO: 16.10.2024  GET  getting
-                       binesslogicDataSyncServiceGetGet.proseccingDataSyncGet(getApplicationContext(),version,dataSyncService.get());
+                     ///  binesslogicDataSyncServiceGetGet.proseccingDataSyncGet(getApplicationContext(),version,dataSyncService.get());
 
                        Log.d(getApplicationContext().getClass().getName(), "\n"
                                + " class " + Thread.currentThread().getStackTrace()[2].getClassName() +
@@ -158,7 +159,8 @@ public class DataSyncService extends IntentService {
                     " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n");
 
 
-        return super.onStartCommand(intent, flags, startId);
+       /// return super.onStartCommand(intent, flags, startId);
+        return START_STICKY;
     }
 
 

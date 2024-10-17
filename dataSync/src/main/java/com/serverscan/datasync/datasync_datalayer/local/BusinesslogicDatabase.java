@@ -17,6 +17,7 @@ import com.serverscan.datasync.datasync_businesslayer.Errors.SubClassErrors;
 import java.io.ByteArrayOutputStream;
 import java.time.LocalDateTime;
 import java.util.concurrent.Callable;
+import java.util.concurrent.atomic.AtomicReference;
 
 import javax.inject.Inject;
 
@@ -48,7 +49,7 @@ public class BusinesslogicDatabase {
     }
 
     public  Cursor getingCursor(@NonNull String СамЗапрос,@NonNull  Long version) {
-        Cursor getingCursor=null;
+        AtomicReference<Cursor> getingCursor=new AtomicReference<>();
 
         Completable.fromAction(()->{
                     // TODO: 05.09.2024
@@ -56,9 +57,9 @@ public class BusinesslogicDatabase {
                     // TODO: 29.08.2024 создаем новы экзепляр класс
                     Uri uri = Uri.parse("content://com.sous.servergatt.prodider/" +"scannerserversuccess" + "");
                     ContentResolver resolver = context. getContentResolver();
-                    Cursor    cursor = resolver.query(uri, null, СамЗапрос, null,null,null);
-                    if (cursor.getCount()>0) {
-                        cursor.moveToFirst();
+                    getingCursor.set(resolver.query(uri, null, СамЗапрос, null,null,null));
+                    if (getingCursor.get().getCount()>0) {
+                        getingCursor.get().moveToFirst();
                     }
 
                     Log.d(this.getClass().getName(), "\n" + " class " +
@@ -93,14 +94,14 @@ public class BusinesslogicDatabase {
                     new SubClassErrors(context).МетодЗаписиОшибок(valuesЗаписываемОшибки);
 
                 }).blockingSubscribe();
-        // TODO: 17.10.2024  
+        // TODO: 17.10.2024
         Log.d(context.getClass().getName(), "\n" + " class " +
                 Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                 " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
                 " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" );
 
 
-        return getingCursor;
+        return getingCursor.get();
     }
 
 }
