@@ -6,6 +6,7 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.os.Message;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.View;
 import android.widget.Toast;
 
@@ -276,7 +277,10 @@ public class GetNavigationViews {
     private void stopingScanServer() {
         try {
                 // TODO: 19.07.2024 Запуск Остановка службвы
-                Toast.makeText(context, "Перезапуск Сканирование !!!", Toast.LENGTH_LONG).show();
+            Toast  toast=    Toast.makeText(context, "Скан. !!!", Toast.LENGTH_LONG);
+            toast.setGravity(Gravity.CENTER, toast.getXOffset() / 2, toast.getYOffset() / 2);
+            toast.show();
+
               BuccesloginForServiceServerScan rebootServiceGattServer=   new BuccesloginForServiceServerScan(context);
             rebootServiceGattServer.stopingServiceGattServer();
 
@@ -356,7 +360,9 @@ public class GetNavigationViews {
     private void rebootAsyncServer() {
         try {
             // TODO: 19.07.2024 Запуск Службы
-            Toast.makeText(context, "Перезапуск Обмена !!!", Toast.LENGTH_LONG).show();
+            Toast toast=     Toast.makeText(context, "Обмен данных !!!", Toast.LENGTH_LONG);
+            toast.setGravity(Gravity.CENTER, toast.getXOffset() / 2, toast.getYOffset() / 2);
+            toast.show();
             // TODO: 03.09.2024 запускаем синхрониазцию с ссервром Server GATT
             BunissecclogicWorkmanager bunissecclogicWorkmanager=new BunissecclogicWorkmanager(context);
             bunissecclogicWorkmanager.startingAsync(context,version);

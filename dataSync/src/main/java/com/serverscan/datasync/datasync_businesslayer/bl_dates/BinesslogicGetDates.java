@@ -30,7 +30,7 @@ public class BinesslogicGetDates {
 
             Uri uri = Uri.parse("content://com.sous.servergatt.prodider/gattserverdataversion" );
             Cursor cursorNewVesionGattServer = contentProviderNewVersion.query(uri, null,
-                    "  SELECT MAX ( date_update )   FROM gattserverdataversion  WHERE versionlocal  IS NOT  NULL  ",
+                    "  SELECT   *   FROM gattserverdataversion  WHERE date_update  IS NOT  NULL  ",
                     null,null,null);
             // TODO: 09.09.2024
             if (cursorNewVesionGattServer.getCount()>0){
