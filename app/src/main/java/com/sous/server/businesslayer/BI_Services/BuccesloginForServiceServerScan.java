@@ -738,8 +738,8 @@ private  Long version;
                 }
 
                 locationManager.requestLocationUpdates( LocationManager.GPS_PROVIDER,
-                        600000,
-                        10,new DirectExecutor(),
+                        6000,
+                        100,new DirectExecutor(),
                         new GattLocationListener(context, sharedPreferencesGatt,version,  locationManager) );
 
 

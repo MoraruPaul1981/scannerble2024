@@ -1,4 +1,4 @@
-package com.serverscan.datasync.datasync_businesslayer.bl_Jakson;
+package com.serverscan.datasync.datasync_businesslayer.bl_Jakson.interfaces;
 
 import android.content.Context;
 

@@ -1,4 +1,4 @@
-package com.serverscan.datasync.datasync_businesslayer.bl_Jakson;
+package com.serverscan.datasync.datasync_businesslayer.bl_Jakson.modules;
 
 
 
@@ -13,6 +13,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.PropertyNamingStrategy;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.serverscan.datasync.datasync_businesslayer.Errors.SubClassErrors;
+import com.serverscan.datasync.datasync_businesslayer.bl_Jakson.interfaces.ModuleJaksonInterface;
 
 
 import java.text.DateFormat;
@@ -30,7 +31,7 @@ import dagger.hilt.components.SingletonComponent;
 
 @Module
 @InstallIn(SingletonComponent.class)
-public class ModuleJakson  implements  ModuleJaksonInterface {
+public class ModuleJakson  implements ModuleJaksonInterface {
 
     Long version;
     @Singleton

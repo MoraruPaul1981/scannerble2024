@@ -62,7 +62,7 @@ public class BinesslogicDataSyncServiceGetGet implements InterfaceDataSyncServic
                     Long gettingVersionLocal=    new BinesslogicVersions(context).gettingVersionLocal(context,version);
 
                 // TODO: 03.09.2024 sending  Stream to Server
-                new BinesslogicJaksonWeGet(context).weGetOkhhtpServiceForJboss(context, version, dataSyncService.getJbossAdressDebug,
+                new BinesslogicJaksonWeGet(context).getAllMacAdress(context, version, dataSyncService.getJbossAdressDebug,
                         gettingVersionLocal, dataSyncService.getOkhhtpBuilder);
 
 
@@ -102,7 +102,7 @@ public class BinesslogicDataSyncServiceGetGet implements InterfaceDataSyncServic
                             " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
                             " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n");
 
-                }).subscribe();
+                }).blockingSubscribe();
         Log.d(context.getClass().getName(), "\n" + " class " +
                 Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                 " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +

@@ -13,6 +13,8 @@ import com.google.firebase.crashlytics.buildtools.reloc.com.google.common.io.Byt
 import com.google.firebase.crashlytics.buildtools.reloc.org.apache.http.client.methods.HttpGet;
 import com.google.firebase.crashlytics.buildtools.reloc.org.apache.http.client.utils.URIBuilder;
 import com.serverscan.datasync.datasync_businesslayer.Errors.SubClassErrors;
+import com.serverscan.datasync.datasync_businesslayer.bl_okhttpclient.DispatchersGatt;
+import com.serverscan.datasync.datasync_businesslayer.bl_versionsgatt.BinesslogicVersions;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -72,10 +74,10 @@ public class BinesslogicJaksonWeGet {
 
 
     @SuppressLint("NewApi")
-    public  void weGetOkhhtpServiceForJboss(@NonNull Context context, @NonNull long version,
-                                               @NonNull LinkedHashMap<String, String> getJbossAdress,
-                                            @NonNull   Long versionGetDataOtJboss,
-                                               @NonNull OkHttpClient.Builder getOkhhtpBuilder)
+    public  void getAllMacAdress(@NonNull Context context, @NonNull long version,
+                                 @NonNull LinkedHashMap<String, String> getJbossAdress,
+                                 @NonNull   Long versionGetDataOtJboss,
+                                 @NonNull OkHttpClient.Builder getOkhhtpBuilder)
             throws ExecutionException, InterruptedException {
         // TODO: 22.08.2024  Коненпт провайдер для зааписив базу данных
         AtomicReference<InputStream> inputStreamJaksonByte = new AtomicReference();
@@ -91,8 +93,9 @@ public class BinesslogicJaksonWeGet {
                             " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
                             " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" +" Adress " +Adress);
 
-
-                    OkHttpClient okHttpServerGetOtJboss =getOkhhtpBuilder.addInterceptor(new Interceptor() {
+// TODO: 04.10.2024 Диспесера
+            OkHttpClient.Builder getOkhhtpBuilderGattGet=     new DispatchersGatt().setPoolDispatcher(context, getOkhhtpBuilder);
+                    OkHttpClient okHttpServerGetOtJboss =getOkhhtpBuilderGattGet.addInterceptor(new Interceptor() {
                                 @Override
                                 public Response intercept(Chain chain) throws IOException {
                                     // TODO: 21.08.2024
@@ -286,12 +289,17 @@ public class BinesslogicJaksonWeGet {
                     String getNameServer = getJbossAdress.keySet().stream().findFirst().orElseGet(()->"");
                     String СтрокаСвязиСсервером = "http://" + getNameServer + ":" + getPortServer;
 
+                    // TODO: 29.08.2024 время
+                    // TODO: 03.09.2024 get DATA
+                    Long gettingVersionLocal=    new BinesslogicVersions(context).gettingVersionLocal(context,version);
+
 
                     try {
                         HttpGet someHttpGet = new HttpGet(СтрокаСвязиСсервером);
                         URIBuilder builder = new URIBuilder(someHttpGet.getURI());
                         builder.setParameter("NameTable", "completeallmacadressusers")
                                 .setParameter("JobForServer", "wegetgattserver")
+                                .setParameter("bremylocal", gettingVersionLocal.toString())
                                 .setParameter("versionlocal", versionGetDataOtJboss.toString());
                         URI adresssuri  = builder.build();
                         Adress.set(adresssuri.toURL());

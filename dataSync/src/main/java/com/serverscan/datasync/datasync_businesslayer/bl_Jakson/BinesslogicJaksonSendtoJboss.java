@@ -52,7 +52,7 @@ import okhttp3.Response;
 import okio.BufferedSink;
 
 
-public class BinesslogicJaksonSend {
+public class BinesslogicJaksonSendtoJboss {
     private SharedPreferences preferences;
 
     private Context context;
@@ -61,7 +61,7 @@ public class BinesslogicJaksonSend {
 
 
 
-    public BinesslogicJaksonSend(@NonNull  Context hiltcontext) {
+    public BinesslogicJaksonSendtoJboss(@NonNull  Context hiltcontext) {
         // TODO: 22.08.2024
         // TODO: 21.08.2024
         context = hiltcontext;

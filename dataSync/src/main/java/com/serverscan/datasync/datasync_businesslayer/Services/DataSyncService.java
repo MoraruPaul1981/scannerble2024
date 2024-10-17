@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.pm.PackageInfo;
+import android.location.Location;
 import android.os.Binder;
 import android.os.IBinder;
 import android.util.Log;
@@ -23,12 +24,15 @@ import com.serverscan.datasync.datasync_datalayer.local.BusinesslogicDatabase;
 
 import java.util.Date;
 import java.util.LinkedHashMap;
+import java.util.concurrent.Callable;
 import java.util.concurrent.atomic.AtomicReference;
 
 import javax.inject.Inject;
 
 import dagger.hilt.android.AndroidEntryPoint;
 import io.reactivex.rxjava3.core.Completable;
+import io.reactivex.rxjava3.core.Single;
+import io.reactivex.rxjava3.schedulers.Schedulers;
 import okhttp3.OkHttpClient;
 
 
@@ -104,72 +108,56 @@ public class DataSyncService extends IntentService {
 
     @Override
     public int onStartCommand(@Nullable Intent intent, int flags, int startId) {
-        try{
-// TODO: 16.10.2024 Две операции идут последовательно сначало отпрвляем а потом  получаем
-            Completable.fromAction(()->{
 
-                // TODO: 16.10.2024  POST  send
-               binesslogicDataSyncServiceGetPost.proseccingDataSyncPost(getApplicationContext(),version,dataSyncService.get());
+            // TODO: 29.08.2024  Сразу Две обработки и Get и POST к серверу и от сервера
+           Single.fromCallable(new Callable<Object>() {
+                @Override
+                public Object call() throws Exception {
+                    // TODO: 16.10.2024  POST  send
+                    binesslogicDataSyncServiceGetPost.proseccingDataSyncPost(getApplicationContext(),version,dataSyncService.get());
 
-                Log.d(getApplicationContext().getClass().getName(), "\n"
-                        + " class " + Thread.currentThread().getStackTrace()[2].getClassName() +
-                        "\n" +
-                        " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                        " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n");
-
-
-            }).doOnComplete(()->{
-
-                // TODO: 16.10.2024  GET  getting
-                binesslogicDataSyncServiceGetGet.proseccingDataSyncGet(getApplicationContext(),version,dataSyncService.get());
-
-                Log.d(getApplicationContext().getClass().getName(), "\n"
-                        + " class " + Thread.currentThread().getStackTrace()[2].getClassName() +
-                        "\n" +
-                        " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                        " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n");
-
+                    Log.d(getApplicationContext().getClass().getName(), "\n"
+                            + " class " + Thread.currentThread().getStackTrace()[2].getClassName() +
+                            "\n" +
+                            " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                            " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n");
+                    return null;
+                }
             }).doOnError(e->{
-                e.printStackTrace();
-                Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" +
-                        Thread.currentThread().getStackTrace()[2].getMethodName() + " Линия  :"
-                        + Thread.currentThread().getStackTrace()[2].getLineNumber());
-                ContentValues valuesЗаписываемОшибки = new ContentValues();
-                valuesЗаписываемОшибки.put("Error", e.toString().toLowerCase());
-                valuesЗаписываемОшибки.put("Klass", this.getClass().getName());
-                valuesЗаписываемОшибки.put("Metod", Thread.currentThread().getStackTrace()[2].getMethodName());
-                valuesЗаписываемОшибки.put("LineError", Thread.currentThread().getStackTrace()[2].getLineNumber());
-                final Object ТекущаяВерсияПрограммы = version;
-                Integer ЛокальнаяВерсияПОСравнение = Integer.parseInt(ТекущаяВерсияПрограммы.toString());
-                valuesЗаписываемОшибки.put("whose_error", ЛокальнаяВерсияПОСравнение);
-                new SubClassErrors(getApplicationContext()).МетодЗаписиОшибок(valuesЗаписываемОшибки);
-            }).blockingSubscribe();
-            // TODO: 26.09.2024
+                // TODO: 29.08.2024
+                       e.printStackTrace();
+                       Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" +
+                               Thread.currentThread().getStackTrace()[2].getMethodName() + " Линия  :"
+                               + Thread.currentThread().getStackTrace()[2].getLineNumber());
+                       ContentValues valuesЗаписываемОшибки = new ContentValues();
+                       valuesЗаписываемОшибки.put("Error", e.toString().toLowerCase());
+                       valuesЗаписываемОшибки.put("Klass", this.getClass().getName());
+                       valuesЗаписываемОшибки.put("Metod", Thread.currentThread().getStackTrace()[2].getMethodName());
+                       valuesЗаписываемОшибки.put("LineError", Thread.currentThread().getStackTrace()[2].getLineNumber());
+                       final Object ТекущаяВерсияПрограммы = version;
+                       Integer ЛокальнаяВерсияПОСравнение = Integer.parseInt(ТекущаяВерсияПрограммы.toString());
+                       valuesЗаписываемОшибки.put("whose_error", ЛокальнаяВерсияПОСравнение);
+                       new SubClassErrors(getApplicationContext()).МетодЗаписиОшибок(valuesЗаписываемОшибки);
+            }).doOnSuccess(s->{
+                // TODO: 29.08.2024
+                       // TODO: 16.10.2024  GET  getting
+                       binesslogicDataSyncServiceGetGet.proseccingDataSyncGet(getApplicationContext(),version,dataSyncService.get());
+
+                       Log.d(getApplicationContext().getClass().getName(), "\n"
+                               + " class " + Thread.currentThread().getStackTrace()[2].getClassName() +
+                               "\n" +
+                               " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                               " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n");
+            }).subscribeOn(Schedulers.single())
+                   .subscribe();
             // TODO: 12.09.2024 запуск обработки POST gatt server jboss
-
-
-
             Log.d(getApplicationContext().getClass().getName(), "\n"
                     + " class " + Thread.currentThread().getStackTrace()[2].getClassName() +
                     "\n" +
                     " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
                     " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n");
 
-        } catch (Exception e) {
-            e.printStackTrace();
-            Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" +
-                    Thread.currentThread().getStackTrace()[2].getMethodName() + " Линия  :"
-                    + Thread.currentThread().getStackTrace()[2].getLineNumber());
-            ContentValues valuesЗаписываемОшибки = new ContentValues();
-            valuesЗаписываемОшибки.put("Error", e.toString().toLowerCase());
-            valuesЗаписываемОшибки.put("Klass", this.getClass().getName());
-            valuesЗаписываемОшибки.put("Metod", Thread.currentThread().getStackTrace()[2].getMethodName());
-            valuesЗаписываемОшибки.put("LineError", Thread.currentThread().getStackTrace()[2].getLineNumber());
-            final Object ТекущаяВерсияПрограммы = version;
-            Integer ЛокальнаяВерсияПОСравнение = Integer.parseInt(ТекущаяВерсияПрограммы.toString());
-            valuesЗаписываемОшибки.put("whose_error", ЛокальнаяВерсияПОСравнение);
-            new SubClassErrors(getApplicationContext()).МетодЗаписиОшибок(valuesЗаписываемОшибки);
-        }
+
         return super.onStartCommand(intent, flags, startId);
     }
 

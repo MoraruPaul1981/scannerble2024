@@ -11,7 +11,7 @@ import androidx.annotation.NonNull;
 
 import com.serverscan.datasync.datasync_businesslayer.Errors.SubClassErrors;
 import com.serverscan.datasync.datasync_businesslayer.Services.DataSyncService;
-import com.serverscan.datasync.datasync_businesslayer.bl_Jakson.BinesslogicJaksonSend;
+import com.serverscan.datasync.datasync_businesslayer.bl_Jakson.BinesslogicJaksonSendtoJboss;
 import com.serverscan.datasync.datasync_businesslayer.bl_datasyncservice.interfaces.InterfaceDataSyncServicePost;
 import com.serverscan.datasync.datasync_businesslayer.bl_versionsgatt.BinesslogicVersions;
 import com.serverscan.datasync.datasync_datalayer.model.ScannerserversuccessEntity;
@@ -57,7 +57,6 @@ public class BinesslogicDataSyncServiceGetPost implements InterfaceDataSyncServi
 @Override
     public void proseccingDataSyncPost(@NonNull Context context , @NonNull Long version
         , @NonNull DataSyncService dataSyncService)    {
-        // TODO: 03.09.2024
         // TODO: 04.09.2024 POST
         Completable.fromAction(()->{
                     // TODO: 12.09.2024
@@ -75,7 +74,7 @@ public class BinesslogicDataSyncServiceGetPost implements InterfaceDataSyncServi
                         byte[] ByteJakson=    dataSyncService.genetarorJaksonJSON.genetarorJaksonJSON(context,version,     listForJakson  ,dataSyncService.getHiltJaksonObjectMapper     );
 
                         // TODO: 03.09.2024 sending  Stream to Server
-                             new BinesslogicJaksonSend(context).sendOkhhtpServiceForSendJboss(context,version,dataSyncService.getJbossAdressDebug,
+                             new BinesslogicJaksonSendtoJboss(context).sendOkhhtpServiceForSendJboss(context,version,dataSyncService.getJbossAdressDebug,
                                      cursorSinglePOST ,ByteJakson,dataSyncService.getOkhhtpBuilder);
 
                         // TODO: 03.09.2024 get InputStream   for sending an server
@@ -115,7 +114,7 @@ public class BinesslogicDataSyncServiceGetPost implements InterfaceDataSyncServi
                             " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
                             " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n");
 
-                }).subscribe();
+                }).blockingSubscribe();
         Log.d(context.getClass().getName(), "\n" + " class " +
                 Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                 " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
