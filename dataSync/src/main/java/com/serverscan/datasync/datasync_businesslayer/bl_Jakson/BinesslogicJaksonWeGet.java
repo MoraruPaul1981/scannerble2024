@@ -10,12 +10,13 @@ import android.provider.Settings;
 import android.util.Log;
 
 import com.google.firebase.crashlytics.buildtools.reloc.com.google.common.io.ByteSource;
+import com.google.firebase.crashlytics.buildtools.reloc.org.apache.commons.io.IOUtils;
 import com.google.firebase.crashlytics.buildtools.reloc.org.apache.http.client.methods.HttpGet;
 import com.google.firebase.crashlytics.buildtools.reloc.org.apache.http.client.utils.URIBuilder;
 import com.serverscan.datasync.datasync_businesslayer.Errors.SubClassErrors;
-import com.serverscan.datasync.datasync_businesslayer.bl_dates.BinesslogicGetDates;
+import com.serverscan.datasync.datasync_businesslayer.bl_dates.BinesslogicFindDatesRemote;
+import com.serverscan.datasync.datasync_businesslayer.bl_dates.DateForJboss;
 import com.serverscan.datasync.datasync_businesslayer.bl_okhttpclient.DispatchersGatt;
-import com.serverscan.datasync.datasync_businesslayer.bl_versionsgatt.BinesslogicVersions;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -41,6 +42,8 @@ import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicReference;
 import java.util.zip.GZIPInputStream;
 
+import javax.inject.Inject;
+
 import io.reactivex.rxjava3.annotations.NonNull;
 import io.reactivex.rxjava3.core.Completable;
 import okhttp3.Call;
@@ -60,7 +63,6 @@ public class BinesslogicJaksonWeGet {
 
 
 
-
     public BinesslogicJaksonWeGet(@NonNull  Context hiltcontext) {
         // TODO: 22.08.2024
         // TODO: 21.08.2024
@@ -74,14 +76,16 @@ public class BinesslogicJaksonWeGet {
     }
 
 
+
+
     @SuppressLint("NewApi")
-    public  void getAllMacAdress(@NonNull Context context, @NonNull long version,
-                                 @NonNull LinkedHashMap<String, String> getJbossAdress,
-                                 @NonNull   Long gettingVersionLocal,
-                                 @NonNull OkHttpClient.Builder getOkhhtpBuilder)
+    public   byte[] callBackOtJbossGattServerGet(@NonNull Context context, @NonNull long version,
+                                                 @NonNull LinkedHashMap<String, String> getJbossAdress,
+                                                 @NonNull   Long gettingVersionLocal,
+                                                 @NonNull OkHttpClient.Builder getOkhhtpBuilder)
             throws ExecutionException, InterruptedException {
         // TODO: 22.08.2024  Коненпт провайдер для зааписив базу данных
-        AtomicReference<InputStream> inputStreamJaksonByte = new AtomicReference();
+     AtomicReference<byte[]>    bytesGetOtJBoss =new AtomicReference<>(new byte[0]);
         try {
         // TODO: 28.08.2024
                     // TODO: 23.08.2024
@@ -161,13 +165,26 @@ public class BinesslogicJaksonWeGet {
                         if (РазмерПришедшегоПотока > 0l) {
                             // TODO: 07.10.2023  gzip
                             byte[] asByteBuffer = response.body().source().readByteArray();
-                            inputStreamJaksonByte.set(new GZIPInputStream(ByteSource.wrap(asByteBuffer).openBufferedStream(), 2048));//4096
-                            // TODO: 30.08.2024
-                            Log.d(this.getClass().getName(), "inputStreamJaksonByte[0] " + inputStreamJaksonByte.get().available() +
-                                    " РазмерПришедшегоПотока " + РазмерПришедшегоПотока + " inputStreamJaksonByte[0] " +inputStreamJaksonByte.get());
+
+                           InputStream inputStreamJaksonByte=new GZIPInputStream(ByteSource.wrap(asByteBuffer).openBufferedStream(), 2048);//4096
+
+
+                            Log.d(context.getClass().getName(), "\n"
+                                    + " class " + Thread.currentThread().getStackTrace()[2].getClassName() +
+                                    "\n" +
+                                    " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                                    " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"+" inputStreamJaksonByte " +inputStreamJaksonByte.available());
+                            // TODO: 18.10.2024
+                            if (inputStreamJaksonByte.available()>0) {
+                                bytesGetOtJBoss.set( IOUtils.toByteArray(inputStreamJaksonByte));
+                            }
+                            Log.d(context.getClass().getName(), "\n"
+                                    + " class " + Thread.currentThread().getStackTrace()[2].getClassName() +
+                                    "\n" +
+                                    " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                                    " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"+" bytesGetOtJBoss " +bytesGetOtJBoss);
 
                         }
-
                         // TODO: 21.09.2024
                         call.cancel();
                         response.close();
@@ -211,7 +228,7 @@ public class BinesslogicJaksonWeGet {
         new SubClassErrors(context).МетодЗаписиОшибок(valuesЗаписываемОшибки);
     }
 
-
+    return  bytesGetOtJBoss.get();
     }
 
 
@@ -288,11 +305,12 @@ public class BinesslogicJaksonWeGet {
                     // TODO: 02.04.2024  Адресс и Порт Сервера Jboss
                     String getPortServer = getJbossAdress.values().stream().findFirst().orElseGet(()->"");
                     String getNameServer = getJbossAdress.keySet().stream().findFirst().orElseGet(()->"");
-                    String СтрокаСвязиСсервером = "http://" + getNameServer + ":" + getPortServer;
+                    String СтрокаСвязиСсервером = "https://" + getNameServer + ":" + getPortServer;
 
                     // TODO: 29.08.2024 время
                     // TODO: 03.09.2024 get DATA
-                    String getDateupdate=    new BinesslogicGetDates(context).getDates( version);
+
+                    String getDateLocal=  new DateForJboss(context).getDateLocal(version);
 
 
                     try {
@@ -300,7 +318,7 @@ public class BinesslogicJaksonWeGet {
                         URIBuilder builder = new URIBuilder(someHttpGet.getURI());
                         builder.setParameter("NameTable", "completeallmacadressusers")
                                 .setParameter("JobForServer", "wegetgattserver")
-                                .setParameter("bremylocal", getDateupdate)
+                                .setParameter("bremylocal", getDateLocal)
                                 .setParameter("versionlocal", gettingVersionLocal.toString());
                         URI adresssuri  = builder.build();
                         Adress.set(adresssuri.toURL());

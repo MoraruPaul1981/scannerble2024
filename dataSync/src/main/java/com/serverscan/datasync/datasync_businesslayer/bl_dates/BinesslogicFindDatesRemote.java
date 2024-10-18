@@ -8,35 +8,41 @@ import android.net.Uri;
 import android.util.Log;
 
 import com.serverscan.datasync.datasync_businesslayer.Errors.SubClassErrors;
+import com.serverscan.datasync.datasync_businesslayer.bl_dates.interfaces.GetDateIn;
 
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Date;
 
-public class BinesslogicGetDates {
+public class BinesslogicFindDatesRemote implements GetDateIn {
 
 
     Context context;
 
-    public BinesslogicGetDates(Context context) {
+    String getNameTabkeGet;
+
+    public BinesslogicFindDatesRemote(Context context) {
         this.context = context;
     }
 
 
+    @Override
     public   String getDates(  @NotNull Long version  ){
         String getDateupdate=null;
         try{
+            getNameTabkeGet="date_update";
+
             ContentResolver contentProviderNewVersion=context.getContentResolver();
 
             Uri uri = Uri.parse("content://com.sous.servergatt.prodider/gattserverdataversion" );
             Cursor cursorNewVesionGattServer = contentProviderNewVersion.query(uri, null,
-                    "  SELECT   *   FROM gattserverdataversion  WHERE date_update  IS NOT  NULL  ",
+                    "  SELECT   *   FROM gattserverdataversion  WHERE "+getNameTabkeGet+"  IS NOT  NULL  ",
                     null,null,null);
             // TODO: 09.09.2024
             if (cursorNewVesionGattServer.getCount()>0){
                 cursorNewVesionGattServer.moveToFirst();
                 // TODO: 29.08.2024 время
-                getDateupdate=new WorkerDates(context,version).prossecingBremy(cursorNewVesionGattServer);
+                getDateupdate=new BinesslogicParserDates(context,version).prossecingBremy(cursorNewVesionGattServer);
 
             }
 

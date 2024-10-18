@@ -11,7 +11,7 @@ import android.os.Bundle;
 import android.util.Log;
 
 import com.serverscan.datasync.datasync_businesslayer.Errors.SubClassErrors;
-import com.serverscan.datasync.datasync_businesslayer.bl_dates.WorkerDates;
+import com.serverscan.datasync.datasync_businesslayer.bl_dates.BinesslogicParserDates;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -170,9 +170,9 @@ Context context;
             contentValuesdvensedScannerserversuccessRemote.put("versionremote",versionPostDataJbossGattOtServer);
 
             // TODO: 25.07.2024  Создаем Новую Даты
-            WorkerDates workerDates=new WorkerDates(context,version);
-            Date date_update = workerDates.dateCreation();
-            String date_updatefinal=  workerDates.datesasaString(date_update);
+            BinesslogicParserDates binesslogicParserDates =new BinesslogicParserDates(context,version);
+            Date date_update = binesslogicParserDates.dateCreation();
+            String date_updatefinal=  binesslogicParserDates.datesasaString(date_update);
             contentValuesdvensedScannerserversuccessRemote.put("date_update",date_updatefinal);
             contentValuesdvensedScannerserversuccessRemote.put("id",1);
 
@@ -225,9 +225,9 @@ Context context;
             contentValuesNewGattVersionLocal.put("versionlocal",versionGETDataJbossGattOtServer);
 
             // TODO: 25.07.2024  Создаем Новую Даты
-            WorkerDates workerDates=new WorkerDates(context,version);
-            Date date_update = workerDates.dateCreation();
-            String date_updatefinal=  workerDates.datesasaString(date_update);
+            BinesslogicParserDates binesslogicParserDates =new BinesslogicParserDates(context,version);
+            Date date_update = binesslogicParserDates.dateCreation();
+            String date_updatefinal=  binesslogicParserDates.datesasaString(date_update);
             contentValuesNewGattVersionLocal.put("date_update",date_updatefinal);
             contentValuesNewGattVersionLocal.put("id",1);
 

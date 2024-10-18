@@ -21,6 +21,7 @@ import dagger.hilt.InstallIn;
 import dagger.hilt.android.qualifiers.ApplicationContext;
 import dagger.hilt.components.SingletonComponent;
 import io.reactivex.rxjava3.core.Completable;
+import io.reactivex.rxjava3.core.Single;
 
 
 @Module
@@ -53,33 +54,29 @@ public class BinesslogicDataSyncServiceGetGet implements InterfaceDataSyncServic
 @Override
     public void proseccingDataSyncGet(@NonNull Context context , @NonNull Long version
         , @NonNull DataSyncService dataSyncService)    {
-
-    //TODO GET
-        Completable.fromAction(()->{
+    // TODO: 18.10.2024 Получаем данные от сервера gatt GET данные о всех mac adress
+        Single.fromCallable(()->{
                     // TODO: 12.09.2024
-            // TODO: 09.09.2024 получаем данные которые надотправить на сервер  GATT SEVER
+                    // TODO: 09.09.2024 получаем данные которые надотправить на сервер  GATT SEVER
                     // TODO: 03.09.2024 get DATA
                     Long gettingVersionLocal=    new BinesslogicVersions(context).gettingVersionLocal(context,version);
 
-                // TODO: 03.09.2024 sending  Stream to Server
-                new BinesslogicJaksonWeGet(context).getAllMacAdress(context, version, dataSyncService.getJbossAdressDebug,
-                        gettingVersionLocal, dataSyncService.getOkhhtpBuilder);
-
-
-                // TODO: 03.09.2024 get InputStream   for sending an server
-                Log.d(context.getClass().getName(), "\n" + " class " +
-                        Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
-                        " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                        " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n");
+                    // TODO: 03.09.2024 sending  Stream to Server
+                    byte[] bytesGetOtJBoss =        new BinesslogicJaksonWeGet(context).callBackOtJbossGattServerGet(context, version, dataSyncService.getJbossAdressDebug,
+                            gettingVersionLocal, dataSyncService.getOkhhtpBuilder);
 
 
                     // TODO: 03.09.2024 get InputStream   for sending an server
                     Log.d(context.getClass().getName(), "\n" + " class " +
                             Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                             " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                            " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n");
+                            " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"+" bytesGetOtJBoss " +bytesGetOtJBoss);
 
-                }).doOnError(e->{
+
+               
+            return  bytesGetOtJBoss;
+
+        }).doOnError(e->{
                     e.printStackTrace();
                     Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" +
                             Thread.currentThread().getStackTrace()[2].getMethodName() + " Линия  :"
@@ -95,14 +92,17 @@ public class BinesslogicDataSyncServiceGetGet implements InterfaceDataSyncServic
                     new SubClassErrors(context).МетодЗаписиОшибок(valuesЗаписываемОшибки);
 
                 })
-                .doOnComplete(()->{
-                    // TODO: 04.09.2024
+                .doOnSuccess(bytesGetOtJBoss->{
+                    // TODO: 04.09.2024 Полученые байты потов преобразуем в JAKSON JSON
                     Log.d(context.getClass().getName(), "\n" + " class " +
                             Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                             " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
                             " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n");
 
                 }).blockingSubscribe();
+
+    //TODO GET
+
         Log.d(context.getClass().getName(), "\n" + " class " +
                 Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                 " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +

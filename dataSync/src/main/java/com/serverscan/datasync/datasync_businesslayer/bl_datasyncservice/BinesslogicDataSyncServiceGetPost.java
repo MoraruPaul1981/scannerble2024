@@ -61,7 +61,7 @@ public class BinesslogicDataSyncServiceGetPost implements InterfaceDataSyncServi
         Completable.fromAction(()->{
                     // TODO: 12.09.2024
                     // TODO: 03.09.2024 get DATA
-                    Long gettingVersionRemote=    new BinesslogicVersions(context).gettingVersionRemote(context,version);
+                 Long gettingVersionRemote=    new BinesslogicVersions(context).gettingVersionRemote(context,version);
                     // TODO: 09.09.2024 получаем данные которые надотправить на сервер  GATT SEVER
                     Cursor cursorSinglePOST=   dataSyncService.businesslogicDatabase.getingCursor("SELECT" +
                             " * FROM scannerserversuccess  WHERE current_table >'"+gettingVersionRemote.toString()+"' ORDER BY id   ",version);

@@ -11,7 +11,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectWriter;
 import com.fasterxml.jackson.databind.SequenceWriter;
 import com.serverscan.datasync.datasync_businesslayer.Errors.SubClassErrors;
-import com.serverscan.datasync.datasync_businesslayer.bl_dates.WorkerDates;
+import com.serverscan.datasync.datasync_businesslayer.bl_dates.BinesslogicParserDates;
 import com.serverscan.datasync.datasync_datalayer.model.ScannerserversuccessEntity;
 
 import java.io.ByteArrayOutputStream;
@@ -32,7 +32,6 @@ import dagger.hilt.components.SingletonComponent;
 import io.reactivex.rxjava3.annotations.NonNull;
 import io.reactivex.rxjava3.core.Completable;
 import io.reactivex.rxjava3.core.Flowable;
-import io.reactivex.rxjava3.schedulers.Schedulers;
 
 @Module
 @InstallIn(SingletonComponent.class)
@@ -269,8 +268,8 @@ public CopyOnWriteArrayList<ScannerserversuccessEntity> genetarorListFor(@NonNul
 
 
             // TODO: 06.09.2024 get DATETIME
-            WorkerDates workerDates=new WorkerDates(context,version);
-            Date   Date_update = workerDates.datesasDates(date_update);
+            BinesslogicParserDates binesslogicParserDates =new BinesslogicParserDates(context,version);
+            Date   Date_update = binesslogicParserDates.datesasDates(date_update);
             scannerserversuccessEntity.setDateUpdate(Date_update);
 
             // TODO: 06.09.2024 UUID

@@ -12,7 +12,8 @@ import android.util.Log;
 import com.google.firebase.crashlytics.buildtools.reloc.org.apache.http.client.methods.HttpGet;
 import com.google.firebase.crashlytics.buildtools.reloc.org.apache.http.client.utils.URIBuilder;
 import com.serverscan.datasync.datasync_businesslayer.Errors.SubClassErrors;
-import com.serverscan.datasync.datasync_businesslayer.bl_dates.WorkerDates;
+import com.serverscan.datasync.datasync_businesslayer.bl_dates.BinesslogicParserDates;
+import com.serverscan.datasync.datasync_businesslayer.bl_dates.DateForJboss;
 import com.serverscan.datasync.datasync_businesslayer.bl_okhttpclient.DispatchersGatt;
 import com.serverscan.datasync.datasync_businesslayer.bl_versionsgatt.BinesslogicVersions;
 
@@ -25,13 +26,8 @@ import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
-import java.text.DateFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
-import java.util.Date;
 import java.util.LinkedHashMap;
-import java.util.Locale;
 import java.util.Optional;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.TimeUnit;
@@ -120,8 +116,8 @@ public class BinesslogicJaksonSendtoJboss {
                                     return chain.proceed(newRequest);
                                 }
                             }).connectTimeout(5, TimeUnit.SECONDS)
-                            .writeTimeout(1, TimeUnit.MINUTES)
-                            .readTimeout(1, TimeUnit.MINUTES)
+                            .writeTimeout(2, TimeUnit.MINUTES)
+                            .readTimeout(2, TimeUnit.MINUTES)
                             .build();
                     // TODO: 06.09.2024 POST
          Dispatcher dispatcherGatt=   okHttpClientGattServerSending.dispatcher();
@@ -331,7 +327,7 @@ public class BinesslogicJaksonSendtoJboss {
         Completable.fromAction(()->{
 
                     // TODO: 29.08.2024 время
-                    String  bremylocal=new WorkerDates(context,version).prossecingBremy(cursorlocal);
+                   // String  bremylocal=new BinesslogicParserDates(context,version).prossecingBremy(cursorlocal);
                     // TODO: 29.08.2024 версия
                     Long  versionlocal=   prossecingVersion(cursorlocal);
 
@@ -339,13 +335,18 @@ public class BinesslogicJaksonSendtoJboss {
                     Log.d(context.getClass().getName(), "\n" + " class " +
                             Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                             " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                            " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" + " bremylocal " + bremylocal
-                            + " versionlocal " + versionlocal+ " bremylocal " + bremylocal);
+                            " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"  + " versionlocal " + versionlocal);
 
                     // TODO: 02.04.2024  Адресс и Порт Сервера Jboss
                     String getPortServer = getJbossAdress.values().stream().findFirst().orElseGet(()->"");
                     String getNameServer = getJbossAdress.keySet().stream().findFirst().orElseGet(()->"");
-                    String СтрокаСвязиСсервером = "http://" + getNameServer + ":" + getPortServer;
+                    String СтрокаСвязиСсервером = "https://" + getNameServer + ":" + getPortServer;
+
+
+
+                    // TODO: 29.08.2024 время
+                    // TODO: 03.09.2024 get DATA
+                    String getDateRemote=  new DateForJboss(context).getDateRemote(version);
 
 
                     try {
@@ -353,7 +354,7 @@ public class BinesslogicJaksonSendtoJboss {
                         URIBuilder builder = new URIBuilder(someHttpPost.getURI());
                         builder.setParameter("NameTable", "scannerserversuccess")
                                 .setParameter("JobForServer", "sendgattserver")
-                                .setParameter("bremylocal", bremylocal)
+                                .setParameter("bremylocal", getDateRemote)
                                 .setParameter("versionlocal", versionlocal.toString());
                         URI adresssuri  = builder.build();
                         Adress.set(adresssuri.toURL());

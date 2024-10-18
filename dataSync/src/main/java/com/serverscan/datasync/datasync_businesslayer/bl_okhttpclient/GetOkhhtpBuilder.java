@@ -9,11 +9,20 @@ import android.util.Log;
 
 import com.serverscan.datasync.datasync_businesslayer.Errors.SubClassErrors;
 
+import java.security.SecureRandom;
+import java.security.cert.CertificateException;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
 
 import javax.inject.Singleton;
+import javax.net.ssl.HostnameVerifier;
+import javax.net.ssl.SSLContext;
+import javax.net.ssl.SSLSession;
+import javax.net.ssl.SSLSocketFactory;
+import javax.net.ssl.TrustManager;
+import javax.net.ssl.X509TrustManager;
 
 import dagger.Module;
 import dagger.Provides;
@@ -21,6 +30,7 @@ import dagger.hilt.InstallIn;
 import dagger.hilt.android.qualifiers.ApplicationContext;
 import dagger.hilt.components.SingletonComponent;
 import okhttp3.ConnectionPool;
+import okhttp3.ConnectionSpec;
 import okhttp3.Dispatcher;
 import okhttp3.OkHttpClient;
 
@@ -44,6 +54,50 @@ public class GetOkhhtpBuilder   implements  OkhhtpInterface {
           Dispatcher dispatcher= new Dispatcher(Executors.newCachedThreadPool());
             builder=     new OkHttpClient().newBuilder().dispatcher(dispatcher);
             builder.connectionPool(new ConnectionPool(20, 30, TimeUnit.SECONDS));
+
+            // TODO: 06.10.2024 3 вариат
+            // Create a trust manager that does not validate certificate chains
+            final TrustManager[] trustAllCerts = new TrustManager[] {
+                    new X509TrustManager() {
+                        @Override
+                        public void checkClientTrusted(java.security.cert.X509Certificate[] chain, String authType) throws CertificateException {
+                        }
+
+                        @Override
+                        public void checkServerTrusted(java.security.cert.X509Certificate[] chain, String authType) throws CertificateException {
+                        }
+
+                        @Override
+                        public java.security.cert.X509Certificate[] getAcceptedIssuers() {
+                            return new java.security.cert.X509Certificate[]{};
+                        }
+                    }
+            };
+// Install the all-trusting trust manager
+            final SSLContext sslContext3 = SSLContext.getInstance("TLSv1.3");//TLSv1.3
+            sslContext3.init(null, trustAllCerts, new SecureRandom());
+            final SSLSocketFactory sslSocketFactory2 = sslContext3.getSocketFactory();
+            // TODO: 09.10.2024
+            ConnectionSpec spec = new ConnectionSpec.Builder( ConnectionSpec.MODERN_TLS)
+                    .allEnabledTlsVersions()
+                    .allEnabledCipherSuites()
+                    .build();
+            builder.connectionSpecs(  ( Arrays.asList(spec,ConnectionSpec.CLEARTEXT)));
+            builder.retryOnConnectionFailure(false);
+            builder.hostnameVerifier(new HostnameVerifier() {
+                @Override
+                public boolean verify(String hostname, SSLSession session) {
+
+                    return true;
+                }
+
+            });
+
+            builder.sslSocketFactory(sslSocketFactory2, (X509TrustManager)trustAllCerts[0]);
+
+
+
+
             Log.i(this.getClass().getName(),  " OkHttpClient"+
                     Thread.currentThread().getStackTrace()[2].getMethodName()+
                     " время " +new Date().toLocaleString() );

@@ -24,14 +24,14 @@ import java.util.TimeZone;
 
 import io.reactivex.rxjava3.annotations.NonNull;
 
-public class WorkerDates {
+public class BinesslogicParserDates {
     private  DateFormat dateFormat;
 
     private Context context;
     private  Long version;
 
 
-    public WorkerDates(Context context, Long version) {
+    public BinesslogicParserDates(Context context, Long version) {
         this.context = context;
         this.version = version;
         // TODO: 06.09.2024
