@@ -62,6 +62,7 @@ public class GetOkhhtpBuilderTLS implements OkhhtpInterface {
 
             // TODO: 06.10.2024 3 вариат
             // Create a trust manager that does not validate certificate chains
+           // KeyStore keyStore = KeyStore.getInstance("BKS");
             KeyStore keyStore = KeyStore.getInstance("BKS");
             InputStream instream = hiltcontext.getResources().openRawResource(R.raw.androidsous);
             keyStore.load(instream, "mypassword".toCharArray());

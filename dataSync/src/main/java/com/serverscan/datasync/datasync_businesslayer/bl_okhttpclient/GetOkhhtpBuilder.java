@@ -7,12 +7,19 @@ import android.content.pm.PackageInfo;
 import android.util.Log;
 
 
+import com.serverscan.datasync.R;
 import com.serverscan.datasync.datasync_businesslayer.Errors.SubClassErrors;
 import com.serverscan.datasync.datasync_businesslayer.bl_okhttpclient.interfaces.OkhhtpInterface;
 import com.serverscan.datasync.datasync_businesslayer.bl_okhttpclient.interfaces.QualifierOkhhtp;
 
+import java.io.IOException;
+import java.io.InputStream;
+import java.security.KeyStore;
+import java.security.KeyStoreException;
+import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
 import java.security.cert.CertificateException;
+import java.security.cert.X509Certificate;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.concurrent.Executors;
@@ -63,15 +70,50 @@ public class GetOkhhtpBuilder   implements OkhhtpInterface {
                     new X509TrustManager() {
                         @Override
                         public void checkClientTrusted(java.security.cert.X509Certificate[] chain, String authType) throws CertificateException {
+                            Log.i(this.getClass().getName(),  " OkHttpClient"+
+                                    Thread.currentThread().getStackTrace()[2].getMethodName()+
+                                    " время " +new Date().toLocaleString() );
                         }
 
                         @Override
                         public void checkServerTrusted(java.security.cert.X509Certificate[] chain, String authType) throws CertificateException {
+                            Log.i(this.getClass().getName(),  " OkHttpClient"+
+                                    Thread.currentThread().getStackTrace()[2].getMethodName()+
+                                    " время " +new Date().toLocaleString() );
                         }
 
                         @Override
                         public java.security.cert.X509Certificate[] getAcceptedIssuers() {
-                            return new java.security.cert.X509Certificate[]{};
+// TODO: 18.10.2024
+                            X509Certificate cert;
+                            Log.i(this.getClass().getName(),  " OkHttpClient"+
+                                    Thread.currentThread().getStackTrace()[2].getMethodName()+
+                                    " время " +new Date().toLocaleString() );
+
+                            KeyStore keyStore = null;
+                            try {
+                                keyStore = KeyStore.getInstance("BKS");
+                            } catch (KeyStoreException e) {
+                                throw new RuntimeException(e);
+                            }
+                            InputStream instream = hiltcontext.getResources().openRawResource(R.raw.androidsous);
+                            try {
+                                keyStore.load(instream, "mypassword".toCharArray());
+                            } catch (CertificateException e) {
+                                throw new RuntimeException(e);
+                            } catch (IOException e) {
+                                throw new RuntimeException(e);
+                            } catch (NoSuchAlgorithmException e) {
+                                throw new RuntimeException(e);
+                            }
+                            try {
+                                  cert = (X509Certificate) keyStore.getCertificate("base.dsu1.ru");
+                            } catch (KeyStoreException e) {
+                                throw new RuntimeException(e);
+                            }
+
+                            //return new java.security.cert.X509Certificate[]{};
+                            return new java.security.cert.X509Certificate[]{cert};
                         }
                     }
             };

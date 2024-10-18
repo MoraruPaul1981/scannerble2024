@@ -52,14 +52,13 @@ public class DataSyncService extends IntentService {
     @QualifierJbossServer3
     public LinkedHashMap<String,String> getJbossAdressDebug;
 
-   /* @QualifierOkhhtp
-    @Inject
-    public OkHttpClient.Builder getOkhhtpBuilder;*/
-
-
-    @QualifierOkhhtpTls
+  @QualifierOkhhtp
+ // @QualifierOkhhtpTls
     @Inject
     public OkHttpClient.Builder getOkhhtpBuilder;
+
+
+
 
 
 
