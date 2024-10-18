@@ -9,7 +9,7 @@ import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Date;
 
-public class ScannerserversuccessEntity implements Serializable  {
+public class ScannerserversuccessEntitySerial implements Serializable  {
     private static final long serialVersionUID = 1L;
 
     @JsonProperty("id")

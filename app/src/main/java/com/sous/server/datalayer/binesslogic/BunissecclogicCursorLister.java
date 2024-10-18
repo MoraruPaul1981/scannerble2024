@@ -1,4 +1,4 @@
-package com.sous.server.datalayer.remote.bl_writeandreadScanCatt;
+package com.sous.server.datalayer.binesslogic.bl_writeandreadScanCatt;
 
 
 import android.content.ContentValues;
@@ -6,16 +6,12 @@ import android.content.Context;
 import android.database.ContentObserver;
 import android.database.Cursor;
 import android.database.DataSetObserver;
-import android.net.Uri;
 import android.os.Message;
 import android.util.Log;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 
 import com.sous.server.businesslayer.Errors.SubClassErrors;
-
-import java.util.Collection;
 
 import javax.inject.Inject;
 

@@ -8,16 +8,13 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.ProviderInfo;
-import android.preference.PreferenceManager;
 import android.util.Log;
 
 import androidx.annotation.NonNull;
-import androidx.core.content.ContextCompat;
 
 import com.sous.server.businesslayer.ContentProvoders.ContentProviderServer;
 import com.sous.server.businesslayer.Errors.SubClassErrors;
-import com.sous.server.businesslayer.Services.ServiceServerScan;
-import com.sous.server.datalayer.remote.bl_writeandreadScanCatt.WtitingAndreadDataForScanGatt;
+import com.sous.server.datalayer.binesslogic.bl_writeandreadScanCatt.WtitingAndreadDataForScanGatt;
 
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicReference;

@@ -30,14 +30,13 @@ import com.google.android.material.badge.BadgeDrawable;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.card.MaterialCardView;
-import com.google.android.material.tabs.TabItem;
 import com.google.android.material.tabs.TabLayout;
 import com.google.android.material.textfield.TextInputEditText;
 import com.sous.server.R;
 import com.sous.server.businesslayer.ContentProvoders.ContentProviderServer;
 import com.sous.server.businesslayer.Errors.SubClassErrors;
-import com.sous.server.datalayer.remote.bl_writeandreadScanCatt.BunissecclogicCursorLister;
-import com.sous.server.datalayer.remote.bl_writeandreadScanCatt.WtitingAndreadDataForScanGatt;
+import com.sous.server.datalayer.binesslogic.bl_writeandreadScanCatt.BunissecclogicCursorLister;
+import com.sous.server.datalayer.binesslogic.bl_writeandreadScanCatt.WtitingAndreadDataForScanGatt;
 
 import java.util.Date;
 import java.util.List;

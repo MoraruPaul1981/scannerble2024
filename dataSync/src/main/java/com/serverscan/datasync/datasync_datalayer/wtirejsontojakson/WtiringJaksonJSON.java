@@ -1,4 +1,4 @@
-package com.serverscan.datasync.datasync_datalayer.generatorjakson;
+package com.serverscan.datasync.datasync_datalayer.wtirejsontojakson;
 
 
 import android.annotation.SuppressLint;
@@ -35,11 +35,11 @@ import io.reactivex.rxjava3.core.Flowable;
 
 @Module
 @InstallIn(SingletonComponent.class)
-public class GenerationJaksonJSON {
+public class WtiringJaksonJSON {
 
  private  Context context;
 
-    public @Inject GenerationJaksonJSON(@ApplicationContext Context hitcontext ) {
+    public @Inject WtiringJaksonJSON(@ApplicationContext Context hitcontext ) {
         // TODO: 25.08.2024
         context = hitcontext;
         // TODO: 25.08.2024

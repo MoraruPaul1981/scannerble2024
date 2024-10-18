@@ -1,4 +1,4 @@
-package com.serverscan.datasync.datasync_datalayer.local;
+package com.serverscan.datasync.datasync_datalayer.getcursor;
 
 
 import android.content.ContentResolver;
@@ -10,13 +10,9 @@ import android.util.Log;
 
 import androidx.annotation.NonNull;
 
-import com.fasterxml.jackson.databind.ObjectWriter;
-import com.fasterxml.jackson.databind.SequenceWriter;
 import com.serverscan.datasync.datasync_businesslayer.Errors.SubClassErrors;
 
-import java.io.ByteArrayOutputStream;
 import java.time.LocalDateTime;
-import java.util.concurrent.Callable;
 import java.util.concurrent.atomic.AtomicReference;
 
 import javax.inject.Inject;
@@ -26,19 +22,17 @@ import dagger.hilt.InstallIn;
 import dagger.hilt.android.qualifiers.ApplicationContext;
 import dagger.hilt.components.SingletonComponent;
 import io.reactivex.rxjava3.core.Completable;
-import io.reactivex.rxjava3.core.Single;
-import io.reactivex.rxjava3.schedulers.Schedulers;
 
 
 @Module
 @InstallIn(SingletonComponent.class)
-public class BusinesslogicDatabase {
+public class BusinesslogicGetCursor {
 
     // TODO: 19.08.2024
     private Context context;
 
 
-    public @Inject BusinesslogicDatabase(@ApplicationContext Context hitcontext ) {
+    public @Inject BusinesslogicGetCursor(@ApplicationContext Context hitcontext ) {
         // TODO: 25.08.2024
         this.context = hitcontext;
         // TODO: 25.08.2024

@@ -1,4 +1,4 @@
-package com.sous.server.datalayer.remote.bl_writeandreadScanCatt;
+package com.sous.server.datalayer.binesslogic.bl_writeandreadScanCatt;
 
 import android.annotation.SuppressLint;
 import android.bluetooth.BluetoothDevice;

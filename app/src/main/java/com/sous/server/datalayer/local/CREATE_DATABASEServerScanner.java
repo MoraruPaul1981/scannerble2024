@@ -17,6 +17,8 @@ import org.jetbrains.annotations.NotNull;
 import java.util.Date;
 import java.util.concurrent.atomic.AtomicReference;
 
+import javax.inject.Inject;
+
 
 //этот класс создает базу данных SQLite
 public class CREATE_DATABASEServerScanner extends SQLiteOpenHelper{ ///SQLiteOpenHelper

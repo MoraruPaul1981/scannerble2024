@@ -6,7 +6,6 @@ import android.content.Intent;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.pm.PackageInfo;
-import android.location.Location;
 import android.os.Binder;
 import android.os.IBinder;
 import android.util.Log;
@@ -20,7 +19,7 @@ import com.serverscan.datasync.datasync_businesslayer.bl_datasyncservice.Binessl
 import com.serverscan.datasync.datasync_businesslayer.bl_jbossadress.QualifierJbossServer3;
 import com.serverscan.datasync.datasync_businesslayer.bl_okhttpclient.QualifierOkhhtp;
 import com.serverscan.datasync.datasync_datalayer.generatorjakson.GenerationJaksonJSON;
-import com.serverscan.datasync.datasync_datalayer.local.BusinesslogicDatabase;
+import com.serverscan.datasync.datasync_datalayer.getcursor.BusinesslogicGetCursor;
 
 import java.util.Date;
 import java.util.LinkedHashMap;
@@ -30,9 +29,7 @@ import java.util.concurrent.atomic.AtomicReference;
 import javax.inject.Inject;
 
 import dagger.hilt.android.AndroidEntryPoint;
-import io.reactivex.rxjava3.core.Completable;
 import io.reactivex.rxjava3.core.Single;
-import io.reactivex.rxjava3.internal.jdk8.CompletionStageConsumer;
 import io.reactivex.rxjava3.schedulers.Schedulers;
 import okhttp3.OkHttpClient;
 
@@ -45,7 +42,7 @@ public class DataSyncService extends IntentService {
     public  Long version;
 
     @Inject
-    public  BusinesslogicDatabase businesslogicDatabase;
+    public BusinesslogicGetCursor businesslogicGetCursor;
 
     @Inject
     public  GenerationJaksonJSON genetarorJaksonJSON;

@@ -1,4 +1,4 @@
-package com.sous.server.datalayer.local;
+package com.sous.server.datalayer.binesslogic;
 
 import android.content.ContentValues;
 import android.content.Context;
@@ -6,6 +6,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 
 import com.sous.server.businesslayer.Errors.SubClassErrors;
+import com.sous.server.datalayer.local.CREATE_DATABASEServerScanner;
 
 public class GetCurrentDatabase {
 

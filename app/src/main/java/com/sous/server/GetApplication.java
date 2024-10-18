@@ -14,7 +14,7 @@ import com.serverscan.datasync.datasync_businesslayer.bl_workmangers.Bunissecclo
 import com.serverscan.datasync.datasync_businesslayer.bl_workmangers.RemoteMessaging;
 import com.sous.server.businesslayer.Errors.SubClassErrors;
 import com.sous.server.businesslayer.bl_OneSingal.BussenslogicOneSignal;
-import com.sous.server.datalayer.local.GetCurrentDatabase;
+import com.sous.server.datalayer.binesslogic.GetCurrentDatabase;
 
 
 import java.util.Date;
