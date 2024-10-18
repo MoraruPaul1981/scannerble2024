@@ -12,6 +12,7 @@ import android.util.Log;
 
 import com.sous.server.businesslayer.Errors.SubClassErrors;
 import com.sous.server.businesslayer.bl_preferences.BussenloginSaredPreferense;
+import com.sous.server.datalayer.tirgers.TriggersGatt;
 
 import org.jetbrains.annotations.NotNull;
 import java.util.Date;
@@ -28,7 +29,7 @@ public class CREATE_DATABASEServerScanner extends SQLiteOpenHelper{ ///SQLiteOpe
 
     private static  AtomicReference<SQLiteDatabase> atomicstoredEntities = new AtomicReference<>();
    // private static     SQLiteDatabase ССылкаНаСозданнуюБазу;
-    private static final int DATABASE_VERSION = 26;
+    private static final int DATABASE_VERSION = 27;
     private Long version=0l;
     private SharedPreferences preferencesGatt;
 
@@ -88,6 +89,9 @@ public class CREATE_DATABASEServerScanner extends SQLiteOpenHelper{ ///SQLiteOpe
 
             МетодСозданиеТаблицДляВерсияДанных(ССылкаНаСозданнуюБазу);
 
+
+            МетодСозданиеТригеров(ССылкаНаСозданнуюБазу);
+
             // TODO: 03.06.2022
             Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                     " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
@@ -124,25 +128,40 @@ public class CREATE_DATABASEServerScanner extends SQLiteOpenHelper{ ///SQLiteOpe
             if (newVersion > oldVersion) {
                    // TODO: 08.06.2021 создание Базы Данных
 
-                if(newVersion==26){
-                    // TODO: 18.10.2024
-                    МетодСозданиеТаблицДляСостыковкиФИОсостовная(ССылкаНаСозданнуюБазу);
+                switch (newVersion){
+                    case 26 :
+                        // TODO: 18.10.2024
+                        МетодСозданиеТаблицДляСостыковкиФИОсостовная(ССылкаНаСозданнуюБазу);
+                        Log.d(context.getClass().getName(), "\n" + " class " +
+                                Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                                " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                                " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"  + " newVersion " + newVersion);
+                        break;
 
-                    Log.d(context.getClass().getName(), "\n" + " class " +
-                            Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
-                            " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                            " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"  + " newVersion " + newVersion);
+                    case 27 :
+                        // TODO: 18.10.2024
+                        МетодСозданиеТаблицДляСостыковкиФИОсостовная(ССылкаНаСозданнуюБазу);
+                        // TODO: 18.10.2024
+                        МетодСозданиеТригеров(ССылкаНаСозданнуюБазу);
+                        Log.d(context.getClass().getName(), "\n" + " class " +
+                                Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                                " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                                " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"  + " newVersion " + newVersion);
+                        break;
 
-                }else {
+                    default:
+                        onCreate(ССылкаНаСозданнуюБазу);
+                        // TODO: 18.10.2024
 
-                    onCreate(ССылкаНаСозданнуюБазу);
-                    // TODO: 18.10.2024
+                        Log.d(context.getClass().getName(), "\n" + " class " +
+                                Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                                " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                                " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"  + " newVersion " + newVersion);
+                        break;
 
-                    Log.d(context.getClass().getName(), "\n" + " class " +
-                            Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
-                            " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                            " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"  + " newVersion " + newVersion);
                 }
+
+
 
 
                 Log.d(context.getClass().getName(), "\n" + " class " +
@@ -317,6 +336,35 @@ public class CREATE_DATABASEServerScanner extends SQLiteOpenHelper{ ///SQLiteOpe
                     " uuid  NUMERIC UNIQUE DEFAULT 0 ) ");
             Log.d(this.getClass().getName(), " сработала ...  создание таблицы   НазваниеТаблицыДляТригера   "+"scannerserversuccess" );
             //TODO INSERT
+
+            // TODO: 03.06.2022
+            Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                    " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                    " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" );
+            // TODO: 30.11.2022 Тригеры для Сканироваение
+        } catch (Exception e) {
+            e.printStackTrace();
+            Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() + " Линия  :"
+                    + Thread.currentThread().getStackTrace()[2].getLineNumber());
+            ContentValues valuesЗаписываемОшибки=new ContentValues();
+            valuesЗаписываемОшибки.put("Error",e.toString().toLowerCase());
+            valuesЗаписываемОшибки.put("Klass",this.getClass().getName());
+            valuesЗаписываемОшибки.put("Metod",Thread.currentThread().getStackTrace()[2].getMethodName());
+            valuesЗаписываемОшибки.put("LineError",   Thread.currentThread().getStackTrace()[2].getLineNumber());
+            final Object ТекущаяВерсияПрограммы = version;
+            Integer   ЛокальнаяВерсияПОСравнение = Integer.parseInt(ТекущаяВерсияПрограммы.toString());
+            valuesЗаписываемОшибки.put("whose_error",ЛокальнаяВерсияПОСравнение);
+            new SubClassErrors(context).МетодЗаписиОшибок(valuesЗаписываемОшибки);
+        }
+    }
+
+
+    private void МетодСозданиеТригеров(@NotNull SQLiteDatabase ССылкаНаСозданнуюБазу) {//BEFORE   INSERT , UPDATE , DELETE
+        try{
+
+
+            // TODO: 18.10.2024  запускаем создание тригеров для gatt server
+          new TriggersGatt(context).triggersGatt(version,   ССылкаНаСозданнуюБазу);
 
             // TODO: 03.06.2022
             Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +

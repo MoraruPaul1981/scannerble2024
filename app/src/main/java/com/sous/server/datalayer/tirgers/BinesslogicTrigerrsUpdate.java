@@ -13,9 +13,9 @@ import java.util.concurrent.atomic.AtomicReference;
 
 public class BinesslogicTrigerrsUpdate implements  TrigersCreateIn  {
 
-
-    public BinesslogicTrigerrsUpdate(@NotNull   SQLiteDatabase  atomicstore) {
-        atomicstoredEntities.set(atomicstore);
+   private SQLiteDatabase ССылкаНаСозданнуюБазу=null;
+    public BinesslogicTrigerrsUpdate(@NotNull   SQLiteDatabase  ССылкаНаСозданнуюБазу) {
+        this.ССылкаНаСозданнуюБазу=ССылкаНаСозданнуюБазу;
     }
 
     @Override
