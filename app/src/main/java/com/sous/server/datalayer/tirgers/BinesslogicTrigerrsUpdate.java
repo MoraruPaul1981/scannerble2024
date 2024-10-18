@@ -22,11 +22,25 @@ public class BinesslogicTrigerrsUpdate implements  TrigersCreateIn  {
     public void triggergeneration(@NotNull Context context,@NotNull  Long  version) {
      try{
 
-    // TODO: 25.08.2024
+         // TODO: 29.08.2023 UPDATE TRIGGER
+         ССылкаНаСозданнуюБазу.execSQL(" drop TRIGGER  if exists   trigger_updatedate_update_gattserverdataversion ");
+         ССылкаНаСозданнуюБазу.execSQL("    CREATE TRIGGER  IF NOT EXISTS  trigger_updatedate_update_gattserverdataversion AFTER UPDATE  \n" +
+                 "ON completeallmacadressusers \n" +
+                 "BEGIN\n" +
+                 "  UPDATE  gattserverdataversion  SET  date_updatelocal=(SELECT MAX(date_update)  FROM completeallmacadressusers )  WHERE id=1 ;"+
+                 "END; ");
+
+         ССылкаНаСозданнуюБазу.execSQL(" drop TRIGGER  if exists   trigger_updatecurrent_table_gattserverdataversion ");
+         ССылкаНаСозданнуюБазу.execSQL("    CREATE TRIGGER  IF NOT EXISTS  trigger_updatecurrent_table_gattserverdataversion  AFTER UPDATE  \n" +
+                 "ON completeallmacadressusers \n" +
+                 "BEGIN\n" +
+                 "  UPDATE  gattserverdataversion  SET  versionlocal=(SELECT MAX(current_table)  FROM completeallmacadressusers ) WHERE id=1 ;"+
+                 "END; ");
+
+         // TODO: 25.08.2024
     Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
             " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
             " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n");
-
 
     } catch (Exception e) {
         e.printStackTrace();

@@ -7,6 +7,7 @@ import android.content.pm.PackageInfo;
 import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 
+import com.google.common.util.concurrent.AtomicDouble;
 import com.sous.server.businesslayer.Errors.SubClassErrors;
 
 import org.jetbrains.annotations.NotNull;
@@ -20,6 +21,7 @@ import dagger.hilt.InstallIn;
 import dagger.hilt.android.qualifiers.ApplicationContext;
 import dagger.hilt.components.SingletonComponent;
 import io.reactivex.rxjava3.core.Completable;
+import kotlin.reflect.KClass;
 
 @Module
 @InstallIn(SingletonComponent.class)
@@ -38,9 +40,16 @@ public class TriggersGatt {
     }
 
  public void  triggersGatt( @NotNull  Long  version,@NotNull SQLiteDatabase ССылкаНаСозданнуюБазу){
-     // TODO: 18.10.2024  create triger
+     // TODO: 18.10.2024  create triger   запуск Бизнес логики 
      Completable.fromAction(()->{
                  // TODO: 12.09.2024
+
+// TODO: 18.10.2024 Создание Тригера Вставки
+                  new BinesslogicTrigerrsInrest(ССылкаНаСозданнуюБазу).triggergeneration(context,version);
+
+                 // TODO: 18.10.2024 Создание Тригера Обновления
+                 new BinesslogicTrigerrsUpdate(ССылкаНаСозданнуюБазу).triggergeneration(context,version);
+
 
                  // TODO: 03.09.2024 get InputStream   for sending an server
                  Log.d(context.getClass().getName(), "\n" + " class " +
@@ -76,9 +85,6 @@ public class TriggersGatt {
   }
 
 
-
-
-
-
+    // TODO: 18.10.2024  class end
 
 }

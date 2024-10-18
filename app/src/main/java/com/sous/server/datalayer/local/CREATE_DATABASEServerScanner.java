@@ -29,7 +29,7 @@ public class CREATE_DATABASEServerScanner extends SQLiteOpenHelper{ ///SQLiteOpe
 
     private static  AtomicReference<SQLiteDatabase> atomicstoredEntities = new AtomicReference<>();
    // private static     SQLiteDatabase ССылкаНаСозданнуюБазу;
-    private static final int DATABASE_VERSION = 27;
+    private static final int DATABASE_VERSION = 29;
     private Long version=0l;
     private SharedPreferences preferencesGatt;
 
@@ -90,7 +90,6 @@ public class CREATE_DATABASEServerScanner extends SQLiteOpenHelper{ ///SQLiteOpe
             МетодСозданиеТаблицДляВерсияДанных(ССылкаНаСозданнуюБазу);
 
 
-            МетодСозданиеТригеров(ССылкаНаСозданнуюБазу);
 
             // TODO: 03.06.2022
             Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
@@ -138,11 +137,16 @@ public class CREATE_DATABASEServerScanner extends SQLiteOpenHelper{ ///SQLiteOpe
                                 " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"  + " newVersion " + newVersion);
                         break;
 
-                    case 27 :
+                    case 29 :
                         // TODO: 18.10.2024
                         МетодСозданиеТаблицДляСостыковкиФИОсостовная(ССылкаНаСозданнуюБазу);
                         // TODO: 18.10.2024
+                        МетодСозданиеТаблицДляВерсияДанных(ССылкаНаСозданнуюБазу);
+
+                        // TODO: 18.10.2024 создание тригеров
                         МетодСозданиеТригеров(ССылкаНаСозданнуюБазу);
+
+
                         Log.d(context.getClass().getName(), "\n" + " class " +
                                 Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                                 " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
@@ -284,7 +288,8 @@ public class CREATE_DATABASEServerScanner extends SQLiteOpenHelper{ ///SQLiteOpe
                             "id INTEGER    ," +
                             "versionlocal NUMERIC ," +
                             "versionremote NUMERIC  ," +
-                            "date_update NUMERIC  )");
+                            "date_update TEXT ," +
+                            "date_updatelocal TEXT  )");
                     Log.d(this.getClass().getName(), " сработала ...  создание таблицы   НазваниеТаблицыДляТригера   "+"scannerserversuccess" );
                     //TODO INSERT
             ССылкаНаСозданнуюБазу.execSQL("INSERT INTO gattserverdataversion  (id,versionlocal,versionremote) VALUES('1','0','0');");//test
@@ -331,7 +336,6 @@ public class CREATE_DATABASEServerScanner extends SQLiteOpenHelper{ ///SQLiteOpe
                     " fio  TEXT ," +
                     " mac TEXT  ," +
                     " date_update NUMERIC   ," +
-                    " date_updatelocal NUMERIC   ," +
                     " current_table   NUMERIC UNIQUE DEFAULT 0 ,"+
                     " uuid  NUMERIC UNIQUE DEFAULT 0 ) ");
             Log.d(this.getClass().getName(), " сработала ...  создание таблицы   НазваниеТаблицыДляТригера   "+"scannerserversuccess" );
