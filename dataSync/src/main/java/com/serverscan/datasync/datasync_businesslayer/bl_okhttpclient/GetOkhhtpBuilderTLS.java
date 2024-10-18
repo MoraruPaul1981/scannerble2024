@@ -70,8 +70,6 @@ public class GetOkhhtpBuilderTLS implements OkhhtpInterface {
             SSLContext sslContext = SSLContext.getInstance("TLSv1.3");//TLSv1.3
             sslContext.init(null, tmf.getTrustManagers(),  new SecureRandom());
             builder.setSocketFactory$okhttp(sslContext.getSocketFactory());
-
-
             Log.i(this.getClass().getName(),  " OkHttpClient"+
                     Thread.currentThread().getStackTrace()[2].getMethodName()+
                     " время " +new Date().toLocaleString() );
