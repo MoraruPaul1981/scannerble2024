@@ -6,11 +6,14 @@ import android.content.Context;
 import android.content.pm.PackageInfo;
 import android.util.Log;
 
-
+import com.serverscan.datasync.R;
 import com.serverscan.datasync.datasync_businesslayer.Errors.SubClassErrors;
 import com.serverscan.datasync.datasync_businesslayer.bl_okhttpclient.interfaces.OkhhtpInterface;
 import com.serverscan.datasync.datasync_businesslayer.bl_okhttpclient.interfaces.QualifierOkhhtp;
+import com.serverscan.datasync.datasync_businesslayer.bl_okhttpclient.interfaces.QualifierOkhhtpTls;
 
+import java.io.InputStream;
+import java.security.KeyStore;
 import java.security.SecureRandom;
 import java.security.cert.CertificateException;
 import java.util.Arrays;
@@ -24,6 +27,7 @@ import javax.net.ssl.SSLContext;
 import javax.net.ssl.SSLSession;
 import javax.net.ssl.SSLSocketFactory;
 import javax.net.ssl.TrustManager;
+import javax.net.ssl.TrustManagerFactory;
 import javax.net.ssl.X509TrustManager;
 
 import dagger.Module;
@@ -37,13 +41,12 @@ import okhttp3.Dispatcher;
 import okhttp3.OkHttpClient;
 
 
-
 @Module
 @InstallIn(SingletonComponent.class)
-public class GetOkhhtpBuilder   implements OkhhtpInterface {
+public class GetOkhhtpBuilderTLS implements OkhhtpInterface {
     Long version;
 
-    @QualifierOkhhtp
+    @QualifierOkhhtpTls
     @Singleton
     @Provides
     @Override
@@ -59,45 +62,14 @@ public class GetOkhhtpBuilder   implements OkhhtpInterface {
 
             // TODO: 06.10.2024 3 вариат
             // Create a trust manager that does not validate certificate chains
-            final TrustManager[] trustAllCerts = new TrustManager[] {
-                    new X509TrustManager() {
-                        @Override
-                        public void checkClientTrusted(java.security.cert.X509Certificate[] chain, String authType) throws CertificateException {
-                        }
-
-                        @Override
-                        public void checkServerTrusted(java.security.cert.X509Certificate[] chain, String authType) throws CertificateException {
-                        }
-
-                        @Override
-                        public java.security.cert.X509Certificate[] getAcceptedIssuers() {
-                            return new java.security.cert.X509Certificate[]{};
-                        }
-                    }
-            };
-// Install the all-trusting trust manager
-            final SSLContext sslContext3 = SSLContext.getInstance("TLSv1.3");//TLSv1.3
-            sslContext3.init(null, trustAllCerts, new SecureRandom());
-            final SSLSocketFactory sslSocketFactory2 = sslContext3.getSocketFactory();
-            // TODO: 09.10.2024
-            ConnectionSpec spec = new ConnectionSpec.Builder( ConnectionSpec.MODERN_TLS)
-                    .allEnabledTlsVersions()
-                    .allEnabledCipherSuites()
-                    .build();
-            builder.connectionSpecs(  ( Arrays.asList(spec,ConnectionSpec.CLEARTEXT)));
-            builder.retryOnConnectionFailure(false);
-            builder.hostnameVerifier(new HostnameVerifier() {
-                @Override
-                public boolean verify(String hostname, SSLSession session) {
-
-                    return true;
-                }
-
-            });
-
-            builder.sslSocketFactory(sslSocketFactory2, (X509TrustManager)trustAllCerts[0]);
-
-
+            KeyStore keyStore = KeyStore.getInstance("BKS");
+            InputStream instream = hiltcontext.getResources().openRawResource(R.raw.androidsous);
+            keyStore.load(instream, "mypassword".toCharArray());
+            TrustManagerFactory tmf = TrustManagerFactory.getInstance("X509");
+            tmf.init(keyStore);
+            SSLContext sslContext = SSLContext.getInstance("TLSv1.3");//TLSv1.3
+            sslContext.init(null, tmf.getTrustManagers(),  new SecureRandom());
+            builder.setSocketFactory$okhttp(sslContext.getSocketFactory());
 
 
             Log.i(this.getClass().getName(),  " OkHttpClient"+

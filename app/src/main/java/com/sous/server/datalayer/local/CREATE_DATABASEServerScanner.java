@@ -29,7 +29,7 @@ public class CREATE_DATABASEServerScanner extends SQLiteOpenHelper{ ///SQLiteOpe
 
     private static  AtomicReference<SQLiteDatabase> atomicstoredEntities = new AtomicReference<>();
    // private static     SQLiteDatabase ССылкаНаСозданнуюБазу;
-    private static final int DATABASE_VERSION = 30;
+    private static final int DATABASE_VERSION = 31;
     private Long version=0l;
     private SharedPreferences preferencesGatt;
 
@@ -286,7 +286,7 @@ public class CREATE_DATABASEServerScanner extends SQLiteOpenHelper{ ///SQLiteOpe
         try{
                     ССылкаНаСозданнуюБазу.execSQL("drop table  if exists   "+"gattserverdataversion"+"");//test
                     ССылкаНаСозданнуюБазу.execSQL("Create table if not exists   "+"gattserverdataversion"+" (" +
-                            "id INTEGER    ," +
+                            " id  INTEGER  PRIMARY KEY AUTOINCREMENT    ," +
                             "versionlocal NUMERIC ," +
                             "versionremote NUMERIC  ," +
                             "date_update TEXT ," +
@@ -333,7 +333,7 @@ public class CREATE_DATABASEServerScanner extends SQLiteOpenHelper{ ///SQLiteOpe
         try{
             ССылкаНаСозданнуюБазу.execSQL("drop table  if exists   "+"completeallmacadressusers"+"");//test
             ССылкаНаСозданнуюБазу.execSQL("Create table if not exists   "+"completeallmacadressusers"+" (" +
-                    " id  INTEGER      ," +
+                    " id  INTEGER  PRIMARY KEY AUTOINCREMENT      ," +
                     " fio  TEXT ," +
                     " mac TEXT  ," +
                     " date_update NUMERIC   ," +

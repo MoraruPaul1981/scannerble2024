@@ -12,9 +12,8 @@ import android.util.Log;
 import com.google.firebase.crashlytics.buildtools.reloc.org.apache.http.client.methods.HttpGet;
 import com.google.firebase.crashlytics.buildtools.reloc.org.apache.http.client.utils.URIBuilder;
 import com.serverscan.datasync.datasync_businesslayer.Errors.SubClassErrors;
-import com.serverscan.datasync.datasync_businesslayer.bl_dates.BinesslogicParserDates;
 import com.serverscan.datasync.datasync_businesslayer.bl_dates.DateForJboss;
-import com.serverscan.datasync.datasync_businesslayer.bl_okhttpclient.DispatchersGatt;
+import com.serverscan.datasync.datasync_businesslayer.bl_okhttpclient.binesslogic.DispatchersGatt;
 import com.serverscan.datasync.datasync_businesslayer.bl_versionsgatt.BinesslogicVersions;
 
 import java.io.BufferedReader;

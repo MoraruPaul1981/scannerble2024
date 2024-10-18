@@ -14,9 +14,8 @@ import com.google.firebase.crashlytics.buildtools.reloc.org.apache.commons.io.IO
 import com.google.firebase.crashlytics.buildtools.reloc.org.apache.http.client.methods.HttpGet;
 import com.google.firebase.crashlytics.buildtools.reloc.org.apache.http.client.utils.URIBuilder;
 import com.serverscan.datasync.datasync_businesslayer.Errors.SubClassErrors;
-import com.serverscan.datasync.datasync_businesslayer.bl_dates.BinesslogicFindDatesRemote;
 import com.serverscan.datasync.datasync_businesslayer.bl_dates.DateForJboss;
-import com.serverscan.datasync.datasync_businesslayer.bl_okhttpclient.DispatchersGatt;
+import com.serverscan.datasync.datasync_businesslayer.bl_okhttpclient.binesslogic.DispatchersGatt;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -41,8 +40,6 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicReference;
 import java.util.zip.GZIPInputStream;
-
-import javax.inject.Inject;
 
 import io.reactivex.rxjava3.annotations.NonNull;
 import io.reactivex.rxjava3.core.Completable;

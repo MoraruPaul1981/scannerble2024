@@ -1,4 +1,4 @@
-package com.serverscan.datasync.datasync_businesslayer.bl_okhttpclient;
+package com.serverscan.datasync.datasync_businesslayer.bl_okhttpclient.binesslogic;
 
 import android.content.Context;
 import android.util.Log;
