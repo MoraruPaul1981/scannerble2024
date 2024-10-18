@@ -29,7 +29,7 @@ public class CREATE_DATABASEServerScanner extends SQLiteOpenHelper{ ///SQLiteOpe
 
     private static  AtomicReference<SQLiteDatabase> atomicstoredEntities = new AtomicReference<>();
    // private static     SQLiteDatabase ССылкаНаСозданнуюБазу;
-    private static final int DATABASE_VERSION = 29;
+    private static final int DATABASE_VERSION = 30;
     private Long version=0l;
     private SharedPreferences preferencesGatt;
 
@@ -89,7 +89,8 @@ public class CREATE_DATABASEServerScanner extends SQLiteOpenHelper{ ///SQLiteOpe
 
             МетодСозданиеТаблицДляВерсияДанных(ССылкаНаСозданнуюБазу);
 
-
+// TODO: 18.10.2024 создание тригеров
+            МетодСозданиеТригеров(ССылкаНаСозданнуюБазу);
 
             // TODO: 03.06.2022
             Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
