@@ -26,7 +26,7 @@ public class CREATE_DATABASEServerScanner extends SQLiteOpenHelper{ ///SQLiteOpe
 
     private static  AtomicReference<SQLiteDatabase> atomicstoredEntities = new AtomicReference<>();
    // private static     SQLiteDatabase ССылкаНаСозданнуюБазу;
-    private static final int DATABASE_VERSION = 25;
+    private static final int DATABASE_VERSION = 26;
     private Long version=0l;
     private SharedPreferences preferencesGatt;
 
@@ -121,8 +121,32 @@ public class CREATE_DATABASEServerScanner extends SQLiteOpenHelper{ ///SQLiteOpe
             Log.d(this.getClass().getName(), " после СЛУЖБА  содание базы newVersion==  652   (например)   " + new Date() + " newVersion " + newVersion);
             if (newVersion > oldVersion) {
                    // TODO: 08.06.2021 создание Базы Данных
-                   onCreate(ССылкаНаСозданнуюБазу);
-                   Log.d(this.getClass().getName(), " СЛУЖБА  содание базы newVersion > oldVersion   " + new Date());
+
+                if(newVersion==26){
+                    // TODO: 18.10.2024
+                    МетодСозданиеТаблицДляСостыковкиФИОсостовная(ССылкаНаСозданнуюБазу);
+
+                    Log.d(context.getClass().getName(), "\n" + " class " +
+                            Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                            " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                            " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"  + " newVersion " + newVersion);
+
+                }else {
+
+                    onCreate(ССылкаНаСозданнуюБазу);
+                    // TODO: 18.10.2024
+
+                    Log.d(context.getClass().getName(), "\n" + " class " +
+                            Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                            " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                            " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"  + " newVersion " + newVersion);
+                }
+
+
+                Log.d(context.getClass().getName(), "\n" + " class " +
+                        Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                        " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                        " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"  + " newVersion " + newVersion);
                }
             Log.i(this.getClass().getName(), "  Создана/Изменена База Данных !!! "+new Date());
         } catch (Exception e) {
@@ -286,6 +310,7 @@ public class CREATE_DATABASEServerScanner extends SQLiteOpenHelper{ ///SQLiteOpe
                     " fio  TEXT ," +
                     " mac TEXT  ," +
                     " date_update NUMERIC   ," +
+                    " date_updatelocal NUMERIC   ," +
                     " current_table   NUMERIC UNIQUE DEFAULT 0 ,"+
                     " uuid  NUMERIC UNIQUE DEFAULT 0 ) ");
             Log.d(this.getClass().getName(), " сработала ...  создание таблицы   НазваниеТаблицыДляТригера   "+"scannerserversuccess" );
