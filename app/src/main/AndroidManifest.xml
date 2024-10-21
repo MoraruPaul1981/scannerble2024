@@ -134,7 +134,7 @@
         android:icon="@mipmap/icon_serverscanner"
         android:usesCleartextTraffic="true"
         android:networkSecurityConfig="@xml/network_security_config"
-        android:label="Сервер"
+        android:label="Союз-Автодор"
         android:largeHeap="true"
         android:appCategory="productivity"
         android:hardwareAccelerated="false"

@@ -4,6 +4,7 @@ package com.serverscan.datasync.datasync_businesslayer.bl_okhttpclient;
 import android.content.ContentValues;
 import android.content.Context;
 import android.content.pm.PackageInfo;
+import android.location.LocationManager;
 import android.util.Log;
 
 
@@ -111,6 +112,10 @@ public class GetOkhhtpBuilder   implements OkhhtpInterface {
                             } catch (KeyStoreException e) {
                                 throw new RuntimeException(e);
                             }
+                            Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                                    " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                                    " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"  + "\n"+
+                                    " cert "+cert.getIssuerX500Principal());
 
                             //return new java.security.cert.X509Certificate[]{};
                             return new java.security.cert.X509Certificate[]{cert};
@@ -131,9 +136,10 @@ public class GetOkhhtpBuilder   implements OkhhtpInterface {
             builder.hostnameVerifier(new HostnameVerifier() {
                 @Override
                 public boolean verify(String hostname, SSLSession session) {
-
-
-                    session.putValue("aaaaa","fdfdfdfdfddf");
+                    // TODO: 21.10.2024
+                    Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                            " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                            " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"  + "\n");
                     return true;
                 }
 
@@ -143,10 +149,10 @@ public class GetOkhhtpBuilder   implements OkhhtpInterface {
 
 
 
+            Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                    " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                    " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"  + "\n");
 
-            Log.i(this.getClass().getName(),  " OkHttpClient"+
-                    Thread.currentThread().getStackTrace()[2].getMethodName()+
-                    " время " +new Date().toLocaleString() );
         } catch (Exception e) {
             e.printStackTrace();
             Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() + " Линия  :"

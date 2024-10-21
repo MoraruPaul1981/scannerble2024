@@ -410,7 +410,10 @@ public class BinesslogicJaksonSendtoJboss {
         Long versionlocal=0l;
         if (cursorlocal.getCount() >0) {
             // TODO: 27.08.2024 version data
-            versionlocal = cursorlocal.getLong(cursorlocal.getColumnIndex("current_table"));
+            if (cursorlocal.moveToLast()) {
+                versionlocal = cursorlocal.getLong(cursorlocal.getColumnIndex("current_table"));
+            }
+            cursorlocal.moveToFirst();
         }
         Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                 " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
