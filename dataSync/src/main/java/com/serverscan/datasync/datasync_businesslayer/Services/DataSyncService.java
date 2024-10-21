@@ -54,14 +54,9 @@ public class DataSyncService extends IntentService {
     @QualifierJbossServer3
     public LinkedHashMap<String,String> getJbossAdressDebug;
 
-   @QualifierOkhhtp
-  //@QualifierOkhhtpTls
+  @QualifierOkhhtp
     @Inject
     public OkHttpClient.Builder getOkhhtpBuilder;
-
-
-
-
 
 
     @Inject

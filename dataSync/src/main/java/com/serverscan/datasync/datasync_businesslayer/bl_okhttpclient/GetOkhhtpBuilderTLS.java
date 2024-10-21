@@ -63,19 +63,23 @@ public class GetOkhhtpBuilderTLS implements OkhhtpInterface {
             builder.connectionPool(new ConnectionPool(20, 30, TimeUnit.SECONDS));
 
             // TODO: 06.10.2024 3 вариат
-            // Create a trust manager that does not validate certificate chains
-           // KeyStore keyStore = KeyStore.getInstance("BKS");
             KeyStore keyStore = KeyStore.getInstance("BKS");
             InputStream instream = hiltcontext.getResources().openRawResource(R.raw.bksbasedsu1ru1712024);
             keyStore.load(instream, "mypassword".toCharArray());
 
 
-
-
-
             TrustManagerFactory tmf = TrustManagerFactory.getInstance("X509");
             tmf.init(keyStore);
-            SSLContext sslContext = SSLContext.getInstance("TLSv1.3");//TLSv1.3
+            SSLContext sslContext = SSLContext.getInstance("SSL");//TLSv1.3
+
+            // TODO: 09.10.2024
+            ConnectionSpec spec = new ConnectionSpec.Builder( ConnectionSpec.MODERN_TLS)
+                    .allEnabledTlsVersions()
+                    .allEnabledCipherSuites()
+                    .build();
+            builder.connectionSpecs(  ( Arrays.asList(spec)));
+            builder.retryOnConnectionFailure(false);
+
 
             sslContext.init(null, tmf.getTrustManagers(),  new SecureRandom());
 

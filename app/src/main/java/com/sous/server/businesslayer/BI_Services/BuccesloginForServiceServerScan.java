@@ -243,13 +243,6 @@ private  Long version;
             // TODO: 23.07.2024 starting
             Intent ServiceGattServerScan = new Intent(context, ServiceServerScan.class);
             // TODO: 15.08.2024
-            ServiceGattServerScan=  startPowerManager(ServiceGattServerScan);
-            ServiceGattServerScan.addFlags(Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
-            ServiceGattServerScan.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
-            ServiceGattServerScan.addFlags(Intent.FLAG_GRANT_PERSISTABLE_URI_PERMISSION);
-            ServiceGattServerScan.addFlags(Intent.FLAG_FROM_BACKGROUND);
-            ServiceGattServerScan.addFlags(Intent.FLAG_ACTIVITY_BROUGHT_TO_FRONT);
-            // TODO: 08.08.2024
             context.stopService(ServiceGattServerScan);
 
             Log.d(context.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +

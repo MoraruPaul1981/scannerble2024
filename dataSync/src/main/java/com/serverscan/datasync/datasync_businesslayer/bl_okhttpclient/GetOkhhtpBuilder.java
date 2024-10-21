@@ -10,6 +10,8 @@ import android.util.Log;
 
 import com.serverscan.datasync.R;
 import com.serverscan.datasync.datasync_businesslayer.Errors.SubClassErrors;
+import com.serverscan.datasync.datasync_businesslayer.bl_SSL.QualifierX509Certificate;
+import com.serverscan.datasync.datasync_businesslayer.bl_SSL.X509GetInt;
 import com.serverscan.datasync.datasync_businesslayer.bl_okhttpclient.interfaces.OkhhtpInterface;
 import com.serverscan.datasync.datasync_businesslayer.bl_okhttpclient.interfaces.QualifierOkhhtp;
 
@@ -41,14 +43,17 @@ import javax.net.ssl.X509TrustManager;
 
 import dagger.Module;
 import dagger.Provides;
+import dagger.hilt.EntryPoint;
+import dagger.hilt.EntryPoints;
 import dagger.hilt.InstallIn;
 import dagger.hilt.android.qualifiers.ApplicationContext;
 import dagger.hilt.components.SingletonComponent;
+import okhttp3.CipherSuite;
 import okhttp3.ConnectionPool;
 import okhttp3.ConnectionSpec;
 import okhttp3.Dispatcher;
 import okhttp3.OkHttpClient;
-
+import okhttp3.TlsVersion;
 
 
 @Module
@@ -76,6 +81,12 @@ public class GetOkhhtpBuilder   implements OkhhtpInterface {
                     new X509TrustManager() {
                         @Override
                         public void checkClientTrusted(java.security.cert.X509Certificate[] chain, String authType) throws CertificateException {
+                            X509Certificate x509CertificateCA=(X509Certificate)     chain[0];
+                            X509Certificate x509Certificateuser=(X509Certificate)     chain[1];
+                            PublicKey publicKeyCa=  x509CertificateCA.getPublicKey();
+                            Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                                    " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                                    " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"  + "\n");
                             Log.i(this.getClass().getName(),  " OkHttpClient"+
                                     Thread.currentThread().getStackTrace()[2].getMethodName()+
                                     " время " +new Date().toLocaleString() );
@@ -113,26 +124,12 @@ public class GetOkhhtpBuilder   implements OkhhtpInterface {
                         @Override
                         public java.security.cert.X509Certificate[] getAcceptedIssuers() {
                       // TODO: 18.10.2024
-                            X509Certificate cert = null;
+                            X509Certificate x509Certificate=null;
                             try{
+                                 x509Certificate=      EntryPoints.get(hiltcontext, X509GetInt.class).gettrustAllCerts();
                             Log.i(this.getClass().getName(),  " OkHttpClient"+
                                     Thread.currentThread().getStackTrace()[2].getMethodName()+
-                                    " время " +new Date().toLocaleString() );
-
-
-
-                                KeyStore    keyStore = KeyStore.getInstance("BKS");
-                                InputStream instream = hiltcontext.getResources().openRawResource(R.raw.bksbasedsu1ru1712024);
-                                keyStore.load(instream, "mypassword".toCharArray());
-                                  cert = (X509Certificate) keyStore.getCertificate("base.dsu1.ru");
-
-                                KeyManagerFactory keyManagerFactory = KeyManagerFactory.getInstance("X509");
-                                keyManagerFactory.init(keyStore, "mypassword".toCharArray());
-
-
-                                Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
-                                        " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                                        " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"  + "\n");
+                                    " время " +new Date().toLocaleString()+ " x509Certificate " +x509Certificate );
 
                             } catch (Exception e) {
                                 e.printStackTrace();
@@ -148,20 +145,12 @@ public class GetOkhhtpBuilder   implements OkhhtpInterface {
                                 valuesЗаписываемОшибки.put("whose_error", ЛокальнаяВерсияПОСравнение);
                                 new SubClassErrors(hiltcontext).МетодЗаписиОшибок(valuesЗаписываемОшибки);
                             }
-                            Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
-                                    " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                                    " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"  + "\n");
-
-                            //return new java.security.cert.X509Certificate[]{};
-                            return new java.security.cert.X509Certificate[]{cert};
+                            return new java.security.cert.X509Certificate[]{x509Certificate};
                         }
                     }
             };
 
-
-
-
-// Install the all-trusting trust manager
+           // Install the all-trusting trust manager
              SSLContext sslContext3 = SSLContext.getInstance("TLSv1.3");//TLSv1.3
             sslContext3.init(null, trustAllCerts, new SecureRandom());
               SSLSocketFactory sslSocketFactory2 = sslContext3.getSocketFactory();
@@ -169,8 +158,13 @@ public class GetOkhhtpBuilder   implements OkhhtpInterface {
             ConnectionSpec spec = new ConnectionSpec.Builder( ConnectionSpec.MODERN_TLS)
                     .allEnabledTlsVersions()
                     .allEnabledCipherSuites()
+                    .tlsVersions(TlsVersion.TLS_1_3)
+                    .cipherSuites(
+                            CipherSuite.TLS_ECDHE_ECDSA_WITH_AES_128_GCM_SHA256,
+                            CipherSuite.TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256,
+                            CipherSuite.TLS_DHE_RSA_WITH_AES_128_GCM_SHA256)
                     .build();
-            builder.connectionSpecs(  ( Arrays.asList(spec,ConnectionSpec.CLEARTEXT)));
+            builder.connectionSpecs(  ( Arrays.asList(spec, ConnectionSpec.COMPATIBLE_TLS)));
             builder.retryOnConnectionFailure(false);
             builder.hostnameVerifier(new HostnameVerifier() {
                 @Override
