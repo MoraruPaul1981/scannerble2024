@@ -139,8 +139,6 @@ public CopyOnWriteArrayList<CompleteallmacadressusersEntityDeserial>
         // TODO: 28.08.2024
         Single.fromCallable(()->{
                     // TODO: 06.09.2024
-
-
                         Log.d(this.getClass().getName(), "\n" + " class " +
                                 Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                                 " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
@@ -193,8 +191,7 @@ public CopyOnWriteArrayList<CompleteallmacadressusersEntityDeserial>
 
 
       public Integer
-      processtheCursorandfillinmodel(@NonNull CopyOnWriteArrayList<CompleteallmacadressusersEntityDeserial>
-                                             copyOnWriteArrayGetDataOtJbossGet) {
+      processtheCursorandfillinmodel(@NonNull  CompleteallmacadressusersEntityDeserial copyOnWriteArrayGetDataOtJbossGet) {
         // TODO: 06.09.2024  получаем данные из курсора
           Integer completeallmacadressusersEntityDeserial=0;
         try {

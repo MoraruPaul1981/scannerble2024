@@ -18,7 +18,7 @@ public interface WtiringJaksonJSONInterface {
     CopyOnWriteArrayList<CompleteallmacadressusersEntityDeserial> readListJacksonObject(@NonNull long version,
                                                                                         @NotNull JsonNode jsonNodeAtomicReferenceGattGet);
 
-    Integer processtheCursorandfillinmodel(@NonNull CopyOnWriteArrayList<CompleteallmacadressusersEntityDeserial> copyOnWriteArrayGetDataOtJbossGet);
+    Integer processtheCursorandfillinmodel(@NonNull  CompleteallmacadressusersEntityDeserial  copyOnWriteArrayGetDataOtJbossGet);
 
 
 }
