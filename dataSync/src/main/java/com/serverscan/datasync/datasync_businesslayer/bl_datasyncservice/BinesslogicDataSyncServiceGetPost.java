@@ -11,7 +11,7 @@ import androidx.annotation.NonNull;
 
 import com.serverscan.datasync.datasync_businesslayer.Errors.SubClassErrors;
 import com.serverscan.datasync.datasync_businesslayer.Services.DataSyncService;
-import com.serverscan.datasync.datasync_businesslayer.bl_Jakson.generatorjakson.BinesslogicDataWorkerPost;
+import com.serverscan.datasync.datasync_businesslayer.bl_network.BinesslogicNetworkWorkerPost;
 import com.serverscan.datasync.datasync_businesslayer.bl_datasyncservice.interfaces.InterfaceDataSyncServicePost;
 import com.serverscan.datasync.datasync_businesslayer.bl_versionsgatt.BinesslogicVersions;
 import com.serverscan.datasync.datasync_businesslayer.bl_Jakson.model.ScannerserversuccessEntitySerial;
@@ -74,7 +74,7 @@ public class BinesslogicDataSyncServiceGetPost implements InterfaceDataSyncServi
                         byte[] ByteJakson=    dataSyncService.genetarorJaksonJSON.genetarorJaksonJSON(context,version,     listForJakson  ,dataSyncService.getHiltJaksonObjectMapper     );
 
                         // TODO: 03.09.2024 sending  Stream to Server
-                             new BinesslogicDataWorkerPost(context).sendOkhhtpServiceForSendJboss(context,version,dataSyncService.getJbossAdressDebug,
+                             new BinesslogicNetworkWorkerPost(context).sendOkhhtpServiceForSendJboss(context,version,dataSyncService.getJbossAdressDebug,
                                      cursorSinglePOST ,ByteJakson,dataSyncService.getOkhhtpBuilder);
 
                         // TODO: 03.09.2024 get InputStream   for sending an server

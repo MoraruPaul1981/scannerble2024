@@ -10,7 +10,7 @@ import androidx.annotation.NonNull;
 
 import com.serverscan.datasync.datasync_businesslayer.Errors.SubClassErrors;
 import com.serverscan.datasync.datasync_businesslayer.Services.DataSyncService;
-import com.serverscan.datasync.datasync_businesslayer.bl_Jakson.parsejsonfromserver.BinesslogicDataWorkerGet;
+import com.serverscan.datasync.datasync_businesslayer.bl_network.BinesslogicNetworkWorkerGet;
 import com.serverscan.datasync.datasync_businesslayer.bl_Jakson.parsejsonfromserver.WtiringJaksonJSON;
 import com.serverscan.datasync.datasync_businesslayer.bl_datasyncservice.interfaces.InterfaceDataSyncServiceGet;
 import com.serverscan.datasync.datasync_businesslayer.bl_versionsgatt.BinesslogicVersions;
@@ -62,7 +62,7 @@ public class BinesslogicDataSyncServiceGetGet implements InterfaceDataSyncServic
                     Long gettingVersionLocal=    new BinesslogicVersions(context).gettingVersionLocal(context,version);
 
                     // TODO: 03.09.2024 sending  Stream to Server
-                    byte[] bytesGetOtJBoss =        new BinesslogicDataWorkerGet(context)
+                    byte[] bytesGetOtJBoss =        new BinesslogicNetworkWorkerGet(context)
                             .callBackOtJbossGattServerGet(context, version, dataSyncService.getJbossAdressDebug,
                             gettingVersionLocal, dataSyncService.getOkhhtpBuilder);
 
