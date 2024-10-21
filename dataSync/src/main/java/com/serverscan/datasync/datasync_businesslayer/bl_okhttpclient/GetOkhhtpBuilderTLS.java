@@ -23,6 +23,8 @@ import java.util.concurrent.TimeUnit;
 
 import javax.inject.Singleton;
 import javax.net.ssl.HostnameVerifier;
+import javax.net.ssl.KeyManager;
+import javax.net.ssl.KeyManagerFactory;
 import javax.net.ssl.SSLContext;
 import javax.net.ssl.SSLSession;
 import javax.net.ssl.SSLSocketFactory;
@@ -66,11 +68,19 @@ public class GetOkhhtpBuilderTLS implements OkhhtpInterface {
             KeyStore keyStore = KeyStore.getInstance("BKS");
             InputStream instream = hiltcontext.getResources().openRawResource(R.raw.bksbasedsu1ru1712024);
             keyStore.load(instream, "mypassword".toCharArray());
+
+
+
+
+
             TrustManagerFactory tmf = TrustManagerFactory.getInstance("X509");
             tmf.init(keyStore);
             SSLContext sslContext = SSLContext.getInstance("TLSv1.3");//TLSv1.3
+
             sslContext.init(null, tmf.getTrustManagers(),  new SecureRandom());
+
             builder.setSocketFactory$okhttp(sslContext.getSocketFactory());
+
             Log.i(this.getClass().getName(),  " OkHttpClient"+
                     Thread.currentThread().getStackTrace()[2].getMethodName()+
                     " время " +new Date().toLocaleString() );

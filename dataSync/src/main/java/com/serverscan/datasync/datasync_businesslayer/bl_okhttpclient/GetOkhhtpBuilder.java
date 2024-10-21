@@ -32,6 +32,7 @@ import java.util.concurrent.TimeUnit;
 
 import javax.inject.Singleton;
 import javax.net.ssl.HostnameVerifier;
+import javax.net.ssl.KeyManagerFactory;
 import javax.net.ssl.SSLContext;
 import javax.net.ssl.SSLSession;
 import javax.net.ssl.SSLSocketFactory;
@@ -125,6 +126,10 @@ public class GetOkhhtpBuilder   implements OkhhtpInterface {
                                 keyStore.load(instream, "mypassword".toCharArray());
                                   cert = (X509Certificate) keyStore.getCertificate("base.dsu1.ru");
 
+                                KeyManagerFactory keyManagerFactory = KeyManagerFactory.getInstance("X509");
+                                keyManagerFactory.init(keyStore, "mypassword".toCharArray());
+
+
                                 Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                                         " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
                                         " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"  + "\n");
@@ -152,10 +157,14 @@ public class GetOkhhtpBuilder   implements OkhhtpInterface {
                         }
                     }
             };
+
+
+
+
 // Install the all-trusting trust manager
-            final SSLContext sslContext3 = SSLContext.getInstance("TLSv1.3");//TLSv1.3
+             SSLContext sslContext3 = SSLContext.getInstance("TLSv1.3");//TLSv1.3
             sslContext3.init(null, trustAllCerts, new SecureRandom());
-            final SSLSocketFactory sslSocketFactory2 = sslContext3.getSocketFactory();
+              SSLSocketFactory sslSocketFactory2 = sslContext3.getSocketFactory();
             // TODO: 09.10.2024
             ConnectionSpec spec = new ConnectionSpec.Builder( ConnectionSpec.MODERN_TLS)
                     .allEnabledTlsVersions()

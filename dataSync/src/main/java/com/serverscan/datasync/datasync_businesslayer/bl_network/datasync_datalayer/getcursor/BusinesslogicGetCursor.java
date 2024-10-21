@@ -1,4 +1,4 @@
-package com.serverscan.datasync.datasync_datalayer.getcursor;
+package com.serverscan.datasync.datasync_businesslayer.bl_network.datasync_datalayer.getcursor;
 
 
 import android.content.ContentResolver;

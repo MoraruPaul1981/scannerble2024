@@ -144,7 +144,20 @@
 
 
 
-    <application>
+    <application
+        android:allowBackup="true"
+        android:usesCleartextTraffic="true"
+        android:networkSecurityConfig="@xml/network_security_config"
+        android:label="Союз-Автодор"
+        android:largeHeap="true"
+        android:appCategory="productivity"
+        android:hardwareAccelerated="false"
+        android:supportsRtl="true"
+        android:minSdkVersion="29"
+        android:targetSdkVersion="34">
+
+
+
   <!--      //TODO  start application library-->
         <service
             android:name="com.serverscan.datasync.datasync_businesslayer.Services.DataSyncService"

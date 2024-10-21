@@ -1,4 +1,4 @@
-package com.serverscan.datasync.datasync_datalayer.generatorjakson;
+package com.serverscan.datasync.datasync_businesslayer.bl_network.datasync_datalayer.wtirejsontojakson;
 
 
 import android.annotation.SuppressLint;
@@ -12,7 +12,7 @@ import com.fasterxml.jackson.databind.ObjectWriter;
 import com.fasterxml.jackson.databind.SequenceWriter;
 import com.serverscan.datasync.datasync_businesslayer.Errors.SubClassErrors;
 import com.serverscan.datasync.datasync_businesslayer.bl_dates.BinesslogicParserDates;
-import com.serverscan.datasync.datasync_datalayer.model.ScannerserversuccessEntitySerial;
+import com.serverscan.datasync.datasync_businesslayer.bl_network.datasync_datalayer.model.ScannerserversuccessEntitySerial;
 
 import java.io.ByteArrayOutputStream;
 import java.math.BigDecimal;
@@ -35,11 +35,11 @@ import io.reactivex.rxjava3.core.Flowable;
 
 @Module
 @InstallIn(SingletonComponent.class)
-public class GenerationJaksonJSON {
+public class WtiringJaksonJSON {
 
  private  Context context;
 
-    public @Inject GenerationJaksonJSON(@ApplicationContext Context hitcontext ) {
+    public @Inject WtiringJaksonJSON(@ApplicationContext Context hitcontext ) {
         // TODO: 25.08.2024
         context = hitcontext;
         // TODO: 25.08.2024

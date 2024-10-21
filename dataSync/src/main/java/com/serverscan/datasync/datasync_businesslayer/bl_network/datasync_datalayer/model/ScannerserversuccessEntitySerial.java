@@ -1,4 +1,4 @@
-package com.serverscan.datasync.datasync_datalayer.model;
+package com.serverscan.datasync.datasync_businesslayer.bl_network.datasync_datalayer.model;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonGetter;

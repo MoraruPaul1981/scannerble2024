@@ -14,7 +14,7 @@ import com.serverscan.datasync.datasync_businesslayer.Services.DataSyncService;
 import com.serverscan.datasync.datasync_businesslayer.bl_Jakson.BinesslogicJaksonSendtoJboss;
 import com.serverscan.datasync.datasync_businesslayer.bl_datasyncservice.interfaces.InterfaceDataSyncServicePost;
 import com.serverscan.datasync.datasync_businesslayer.bl_versionsgatt.BinesslogicVersions;
-import com.serverscan.datasync.datasync_datalayer.model.ScannerserversuccessEntitySerial;
+import com.serverscan.datasync.datasync_businesslayer.bl_network.datasync_datalayer.model.ScannerserversuccessEntitySerial;
 
 import java.util.concurrent.CopyOnWriteArrayList;
 
