@@ -132,6 +132,8 @@ public class GetOkhhtpBuilder   implements OkhhtpInterface {
                 @Override
                 public boolean verify(String hostname, SSLSession session) {
 
+
+                    session.putValue("aaaaa","fdfdfdfdfddf");
                     return true;
                 }
 

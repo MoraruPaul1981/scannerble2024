@@ -41,12 +41,10 @@ public class BinesslogicFindDatesRemote implements GetDateIn {
             // TODO: 09.09.2024
             if (cursorNewVesionGattServer.getCount()>0){
                 cursorNewVesionGattServer.moveToFirst();
-                // TODO: 29.08.2024 время
-                getDateupdate=new BinesslogicParserDates(context,version).prossecingBremy(cursorNewVesionGattServer);
-
             }
 
-
+            // TODO: 29.08.2024 время
+            getDateupdate=new BinesslogicParserDates(context,version).prossecingBremy(cursorNewVesionGattServer);
 
             Log.d(context.getClass().getName(), "\n"
                     + " время: " + new Date() + "\n+" +

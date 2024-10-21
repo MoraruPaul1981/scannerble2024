@@ -101,6 +101,8 @@ private  Long version;
     @Inject
     GetBleAdvertising getBleAdvertising;
 
+    private  SharedPreferences sharedPreferencesGatt;
+
 
     public @Inject BuccesloginForServiceServerScan(@ApplicationContext Context hitcontext) {
         this.context = hitcontext;
@@ -731,19 +733,16 @@ private  Long version;
 
 
 
-                class DirectExecutor implements Executor {
+                class DirectExecutorForLocation implements Executor {
                     public void execute(Runnable r) {
                         r.run();
                     }
                 }
 
                 locationManager.requestLocationUpdates( LocationManager.GPS_PROVIDER,
-                        6000,
-                        100,new DirectExecutor(),
+                        60000,
+                        100,new DirectExecutorForLocation(),
                         new GattLocationListener(context, sharedPreferencesGatt,version,  locationManager) );
-
-
-
 
 
 
@@ -757,9 +756,12 @@ private  Long version;
                                 locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER)));
             }else {
 
-                Toast toast = Toast.makeText(context, "Нет сети и локации !!! ", Toast.LENGTH_LONG);
-                toast.setGravity(Gravity.CENTER, toast.getXOffset() / 2, toast.getYOffset() / 2);
-                toast.show();
+// TODO: 21.10.2024 когда нет свяязи 
+                getNonetwork();
+                // TODO: 21.10.2024  
+
+                // TODO: 21.10.2024 очищаем адрес когда его нету
+                clearthePreviousLyreceivedAddress(sharedPreferencesGatt);
 
                 Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                         " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
@@ -788,7 +790,59 @@ private  Long version;
 
 
 
+    private   void clearthePreviousLyreceivedAddress(@NonNull SharedPreferences sharedPreferencesGatt) {
 
+        try {
+        SharedPreferences.Editor editor = sharedPreferencesGatt.edit();
+        editor.clear();
+
+    } catch (Exception e) {
+        e.printStackTrace();
+        Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() + " Линия  :"
+                + Thread.currentThread().getStackTrace()[2].getLineNumber());
+        ContentValues valuesЗаписываемОшибки = new ContentValues();
+        valuesЗаписываемОшибки.put("Error", e.toString().toLowerCase());
+        valuesЗаписываемОшибки.put("Klass", this.getClass().getName());
+        valuesЗаписываемОшибки.put("Metod", Thread.currentThread().getStackTrace()[2].getMethodName());
+        valuesЗаписываемОшибки.put("LineError", Thread.currentThread().getStackTrace()[2].getLineNumber());
+        final Object ТекущаяВерсияПрограммы = version;
+        Integer ЛокальнаяВерсияПОСравнение = Integer.parseInt(ТекущаяВерсияПрограммы.toString());
+        valuesЗаписываемОшибки.put("whose_error", ЛокальнаяВерсияПОСравнение);
+        new SubClassErrors(context).МетодЗаписиОшибок(valuesЗаписываемОшибки);
+    }
+
+    }
+
+    private void getNonetwork() {
+        try {
+        Toast toast = Toast.makeText(context, "Нет   локации !!! ", Toast.LENGTH_LONG);
+        toast.setGravity(Gravity.CENTER, toast.getXOffset() / 2, toast.getYOffset() / 2);
+        toast.show();
+        
+            Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                    " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                    " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"  + "\n" +
+                    "locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER  " +
+                    locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER +"\n"+
+                            " locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER "+
+                            locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER)));
+        
+    } catch (Exception e) {
+        e.printStackTrace();
+        Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() + " Линия  :"
+                + Thread.currentThread().getStackTrace()[2].getLineNumber());
+        ContentValues valuesЗаписываемОшибки = new ContentValues();
+        valuesЗаписываемОшибки.put("Error", e.toString().toLowerCase());
+        valuesЗаписываемОшибки.put("Klass", this.getClass().getName());
+        valuesЗаписываемОшибки.put("Metod", Thread.currentThread().getStackTrace()[2].getMethodName());
+        valuesЗаписываемОшибки.put("LineError", Thread.currentThread().getStackTrace()[2].getLineNumber());
+        final Object ТекущаяВерсияПрограммы = version;
+        Integer ЛокальнаяВерсияПОСравнение = Integer.parseInt(ТекущаяВерсияПрограммы.toString());
+        valuesЗаписываемОшибки.put("whose_error", ЛокальнаяВерсияПОСравнение);
+        new SubClassErrors(context).МетодЗаписиОшибок(valuesЗаписываемОшибки);
+    }
+        
+    }
 
 
     //TODO:  метод после Запуска Сервер добавдяем к ниму  BluetoothGattService
