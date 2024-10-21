@@ -1,4 +1,4 @@
-package com.serverscan.datasync.datasync_businesslayer.bl_network.datasync_datalayer.generatorjakson;
+package com.serverscan.datasync.datasync_businesslayer.bl_Jakson.generatorjakson;
 
 
 import android.annotation.SuppressLint;
@@ -12,7 +12,7 @@ import com.fasterxml.jackson.databind.ObjectWriter;
 import com.fasterxml.jackson.databind.SequenceWriter;
 import com.serverscan.datasync.datasync_businesslayer.Errors.SubClassErrors;
 import com.serverscan.datasync.datasync_businesslayer.bl_dates.BinesslogicParserDates;
-import com.serverscan.datasync.datasync_businesslayer.bl_network.datasync_datalayer.model.ScannerserversuccessEntitySerial;
+import com.serverscan.datasync.datasync_businesslayer.bl_Jakson.model.ScannerserversuccessEntitySerial;
 
 import java.io.ByteArrayOutputStream;
 import java.math.BigDecimal;

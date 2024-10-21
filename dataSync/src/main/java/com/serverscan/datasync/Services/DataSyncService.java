@@ -18,9 +18,8 @@ import com.serverscan.datasync.datasync_businesslayer.bl_datasyncservice.Binessl
 import com.serverscan.datasync.datasync_businesslayer.bl_datasyncservice.BinesslogicDataSyncServiceGetPost;
 import com.serverscan.datasync.datasync_businesslayer.bl_jbossadress.QualifierJbossServer3;
 import com.serverscan.datasync.datasync_businesslayer.bl_okhttpclient.interfaces.QualifierOkhhtp;
-import com.serverscan.datasync.datasync_businesslayer.bl_network.datasync_datalayer.generatorjakson.GenerationJaksonJSON;
-import com.serverscan.datasync.datasync_businesslayer.bl_network.datasync_datalayer.getcursor.BusinesslogicGetCursor;
-import com.serverscan.datasync.datasync_businesslayer.bl_okhttpclient.interfaces.QualifierOkhhtpTls;
+import com.serverscan.datasync.datasync_businesslayer.bl_Jakson.generatorjakson.GenerationJaksonJSON;
+import com.serverscan.datasync.datasync_businesslayer.bl_databases.BusinesslogicGetCursor;
 
 import org.jetbrains.annotations.NotNull;
 

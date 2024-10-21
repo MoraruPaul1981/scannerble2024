@@ -10,7 +10,7 @@ import androidx.annotation.NonNull;
 
 import com.serverscan.datasync.datasync_businesslayer.Errors.SubClassErrors;
 import com.serverscan.datasync.datasync_businesslayer.Services.DataSyncService;
-import com.serverscan.datasync.datasync_businesslayer.bl_Jakson.BinesslogicJaksonWeGet;
+import com.serverscan.datasync.datasync_businesslayer.bl_Jakson.parsejsonfromserver.BinesslogicDataWorkerGet;
 import com.serverscan.datasync.datasync_businesslayer.bl_datasyncservice.interfaces.InterfaceDataSyncServiceGet;
 import com.serverscan.datasync.datasync_businesslayer.bl_versionsgatt.BinesslogicVersions;
 
@@ -20,7 +20,6 @@ import dagger.Module;
 import dagger.hilt.InstallIn;
 import dagger.hilt.android.qualifiers.ApplicationContext;
 import dagger.hilt.components.SingletonComponent;
-import io.reactivex.rxjava3.core.Completable;
 import io.reactivex.rxjava3.core.Single;
 
 
@@ -62,7 +61,8 @@ public class BinesslogicDataSyncServiceGetGet implements InterfaceDataSyncServic
                     Long gettingVersionLocal=    new BinesslogicVersions(context).gettingVersionLocal(context,version);
 
                     // TODO: 03.09.2024 sending  Stream to Server
-                    byte[] bytesGetOtJBoss =        new BinesslogicJaksonWeGet(context).callBackOtJbossGattServerGet(context, version, dataSyncService.getJbossAdressDebug,
+                    byte[] bytesGetOtJBoss =        new BinesslogicDataWorkerGet(context)
+                            .callBackOtJbossGattServerGet(context, version, dataSyncService.getJbossAdressDebug,
                             gettingVersionLocal, dataSyncService.getOkhhtpBuilder);
 
 
