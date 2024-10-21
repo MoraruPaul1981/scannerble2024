@@ -2,7 +2,7 @@
 <network-security-config>
     <base-config cleartextTrafficPermitted="true">
         <trust-anchors>
-            <certificates src="@raw/androidsous"/>
+            <certificates src="@raw/bksbasedsu1ru1712024"/>
         </trust-anchors>
     </base-config>
 </network-security-config>

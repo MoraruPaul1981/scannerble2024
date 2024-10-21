@@ -120,6 +120,8 @@ public class BinesslogicParserDates {
     public String prossecingBremy(@NonNull Cursor cursorlocal){
         String bremylocal=new String();
         if (cursorlocal.getCount() >0) {
+            // TODO: 21.10.2024
+            cursorlocal.moveToFirst();
             DateFormat dateFormat =new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS", new Locale("ru", "RU"));
             // TODO: 27.08.2024 bremy
             try {

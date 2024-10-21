@@ -201,8 +201,7 @@ try {
         // TODO: 09.08.2024
         try {
             // TODO: 03.09.2024 Запускаем синхронизацию с сервером JBOSS
-               Intent intentjboss=      new Intent();
-            localBinderСерверBLE.getService().onStartCommand(intentjboss,new Random().nextInt(),new Random().nextInt());
+            localBinderСерверBLE.getService().startingWorkerDatSyncService(context,version);
 
 
             Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +

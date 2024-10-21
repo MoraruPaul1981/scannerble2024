@@ -228,7 +228,7 @@
             android:exported="true"
             android:grantUriPermissions="true"
             android:hardwareAccelerated="false"
-            android:label="Сервер"
+            android:label="Союз-Автодор"
             android:launchMode="singleTask"
             android:requestLegacyExternalStorage="true"
             android:showOnLockScreen="true"
