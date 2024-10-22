@@ -149,13 +149,12 @@ public class WtiringJaksonJSON  implements WtiringJaksonJSONInterface {
 public Integer readListJacksonObject(  @NotNull CopyOnWriteArrayList<CompleteallmacadressusersEntityDeserial> completeallmacadressusersEntityDeserials) {
         // TODO: 22.08.2024  Коненпт провайдер для зааписив базу данных
     // TODO: 06.09.2024
-    Integer completeallmacadressusersEntityDeserial=0;
         // TODO: 28.08.2024
-        Single.fromCallable(()->{
+    Single<Integer> integerSingleNewMacAdress=    Single.fromCallable(()->{
                     // TODO: 22.10.2024
        String NameTableMac="completeallmacadressusers";
                     // TODO: 06.09.2024
-            String  SQloperations=  " REPLACE INTO  (  fio,mac,clock, date_update,date_update , current_table , uuid  ) "+NameTableMac+" VALUES  (?,?,? ,?,? );";
+            String  SQloperations=  " REPLACE INTO "+NameTableMac+"  (  fio,mac,date_update, current_table , uuid  )  VALUES  (?,?,? ,?,? )";
          // TODO: 28.08.2024
           Uri uri = Uri.parse("content://com.sous.servergatt.prodider/"+NameTableMac+"" );
             ContentResolver resolver = context.getContentResolver();
@@ -164,7 +163,7 @@ public Integer readListJacksonObject(  @NotNull CopyOnWriteArrayList<Completeall
                     bundleCompleteallmacadress.putSerializable("sql", SQloperations);
             // TODO: 28.08.2024  Само выполение операции
             Bundle insertAndupdateData=   resolver.call(uri,SQloperations, SQloperations,bundleCompleteallmacadress);
-            Integer   resultUpdate = (Integer) insertAndupdateData.getSerializable("resultUpdateOrInsert");
+               Integer resultInsert  = (Integer) insertAndupdateData.getSerializable("resultUpdateOrInsert");
 
 
 
@@ -172,8 +171,8 @@ public Integer readListJacksonObject(  @NotNull CopyOnWriteArrayList<Completeall
                                 Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                                 " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
                                 " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" + "\n"
-                                + " LocalDateTime.now() " + LocalDateTime.now().toString().toUpperCase() + "\n");
-                        return new Object();
+                                + " LocalDateTime.now() " + LocalDateTime.now().toString().toUpperCase() + "\n"+ "resultInsert " +resultInsert);
+                        return resultInsert;
                 }).doOnSuccess(getsuccess->{
                     // TODO: 06.09.2024
 
@@ -200,14 +199,14 @@ public Integer readListJacksonObject(  @NotNull CopyOnWriteArrayList<Completeall
                     valuesЗаписываемОшибки.put("whose_error", ЛокальнаяВерсияПОСравнение);
                     new SubClassErrors(context).МетодЗаписиОшибок(valuesЗаписываемОшибки);
 
-                }).blockingGet();
+                }) ;
         // TODO: 31.07.2024
         Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                 " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
                 " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" + "\n"
                 + " LocalDateTime.now() " + LocalDateTime.now().toString().toUpperCase() + "\n");
 
-        return completeallmacadressusersEntityDeserial;
+        return integerSingleNewMacAdress.blockingGet();
 
     }
 

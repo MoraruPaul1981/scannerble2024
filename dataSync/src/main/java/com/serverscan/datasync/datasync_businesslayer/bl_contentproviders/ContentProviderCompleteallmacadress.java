@@ -11,12 +11,14 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import com.serverscan.datasync.datasync_businesslayer.bl_Jakson.model.CompleteallmacadressusersEntityDeserial;
+import com.serverscan.datasync.datasync_businesslayer.bl_dates.BinesslogicParserDates;
 
 import org.jetbrains.annotations.NotNull;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.concurrent.CopyOnWriteArrayList;
+import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.atomic.AtomicReference;
 
 import io.reactivex.rxjava3.core.Completable;
@@ -41,7 +43,7 @@ public class ContentProviderCompleteallmacadress {
 
 
         // TODO: 28.08.2024
-        AtomicReference<Long> resultInsert=new AtomicReference<>(0l);
+        AtomicInteger longAtomicReferenceInsertNewMac=new AtomicInteger();
         // TODO: 28.08.2024
         Completable.fromAction(()->{
                     // TODO: 28.08.2024
@@ -81,7 +83,10 @@ public class ContentProviderCompleteallmacadress {
                                         sqLiteStatementInsert.bindNull(2);//"id"
                                     }
                                     if (row.getDateUpdate()!=null) {
-                                        sqLiteStatementInsert.bindString(3,row.getDateUpdate().toString());//"uuid уже для UUID"
+                                        // TODO: 22.10.2024
+
+                                String getDateUpdate=  new BinesslogicParserDates(context,version).prossecingDateToString(row.getDateUpdate());
+                                        sqLiteStatementInsert.bindString(3,getDateUpdate);//"uuid уже для UUID"
                                     } else {
                                         sqLiteStatementInsert.bindNull(3);//"id"
                                     }
@@ -97,7 +102,16 @@ public class ContentProviderCompleteallmacadress {
                                     }
 
                                     // TODO: 28.08.2024
-                            resultInsert.set(sqLiteStatementInsert.executeInsert());
+                                  long insertNewMacAdress=   sqLiteStatementInsert.executeInsert() ;
+                                    if(insertNewMacAdress>0){
+                                        // TODO: 22.10.2024
+                                        longAtomicReferenceInsertNewMac.incrementAndGet();
+                                    }
+                                    Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                                            " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                                            " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" + "\n"
+                                            + " LocalDateTime.now() " + LocalDateTime.now().toString().toUpperCase() + "\n" +
+                                             " longAtomicReferenceInsertNewMac.get() " +longAtomicReferenceInsertNewMac.get());
 
                         });
                         // TODO: 28.08.2024
@@ -105,7 +119,7 @@ public class ContentProviderCompleteallmacadress {
                                 Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                                 " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
                                 " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"
-                                + " resultInsert.get() " +resultInsert.get());
+                                + " longAtomicReferenceInsertNewMac.get() " +longAtomicReferenceInsertNewMac.get());
                     }
                 }).doOnError(e->{
                     e.printStackTrace();
@@ -126,11 +140,9 @@ public class ContentProviderCompleteallmacadress {
                 })
                 .doOnComplete(()->{
 // TODO: 28.08.2024
-                    if (resultInsert.get()> 0) {
-                        if (Create_Database_СамаБАзаSQLite.inTransaction()) {
+                    if (longAtomicReferenceInsertNewMac.get()> 0) {
                             Create_Database_СамаБАзаSQLite.setTransactionSuccessful();
                             // TODO: 22.09.2022 увеличивает версию данных
-                        }
                     }
                     if (Create_Database_СамаБАзаSQLite.inTransaction()) {
                         Create_Database_СамаБАзаSQLite.endTransaction();
@@ -148,7 +160,7 @@ public class ContentProviderCompleteallmacadress {
                 " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
                 " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" + "\n"
                 + " LocalDateTime.now() " + LocalDateTime.now().toString().toUpperCase() + "\n");
-        return  resultInsert.get().intValue();
+        return  longAtomicReferenceInsertNewMac.get() ;
     }
 
 
