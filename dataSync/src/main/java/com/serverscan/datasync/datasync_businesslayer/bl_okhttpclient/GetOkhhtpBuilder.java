@@ -158,11 +158,13 @@ public class GetOkhhtpBuilder   implements OkhhtpInterface {
             ConnectionSpec spec = new ConnectionSpec.Builder( ConnectionSpec.MODERN_TLS)
                     .allEnabledTlsVersions()
                     .allEnabledCipherSuites()
-                    .tlsVersions(TlsVersion.TLS_1_3)
                     .cipherSuites(
                             CipherSuite.TLS_ECDHE_ECDSA_WITH_AES_128_GCM_SHA256,
                             CipherSuite.TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256,
-                            CipherSuite.TLS_DHE_RSA_WITH_AES_128_GCM_SHA256)
+                            CipherSuite.TLS_DHE_RSA_WITH_AES_128_GCM_SHA256,
+                            CipherSuite.TLS_RSA_WITH_AES_256_CBC_SHA,
+                            CipherSuite.TLS_RSA_WITH_AES_256_CBC_SHA256,
+                            CipherSuite.TLS_RSA_WITH_AES_256_GCM_SHA384 )
                     .build();
             builder.connectionSpecs(  ( Arrays.asList(spec, ConnectionSpec.COMPATIBLE_TLS)));
             builder.retryOnConnectionFailure(false);

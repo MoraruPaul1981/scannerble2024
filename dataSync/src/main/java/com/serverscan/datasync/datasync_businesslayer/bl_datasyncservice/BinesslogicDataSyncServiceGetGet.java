@@ -95,7 +95,7 @@ public class BinesslogicDataSyncServiceGetGet implements InterfaceDataSyncServic
                 })
                 .doOnSuccess(bytesGetOtJBoss->{
                     // TODO: 04.09.2024 Полученые байты потов преобразуем в JAKSON JSON
-                    WtiringJaksonJSON wtiringJaksonJSON=new WtiringJaksonJSON(context,version);
+                    WtiringJaksonJSON wtiringJaksonJSON=new WtiringJaksonJSON(context,version,dataSyncService.getHiltJaksonObjectMapper);
 
                     Log.d(context.getClass().getName(), "\n" + " class " +
                             Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +

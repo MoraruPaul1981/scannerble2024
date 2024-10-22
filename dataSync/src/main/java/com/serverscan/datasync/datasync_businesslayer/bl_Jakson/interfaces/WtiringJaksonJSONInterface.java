@@ -13,7 +13,7 @@ import io.reactivex.rxjava3.annotations.NonNull;
 public interface WtiringJaksonJSONInterface {
 
 
-        JsonNode converttoJacksonObject(  @NonNull ObjectMapper objectMapperGet, @NotNull byte[] bytesGetOtJBoss);
+        JsonNode converttoJacksonObject(  @NotNull byte[] bytesGetOtJBoss);
 
     CopyOnWriteArrayList<CompleteallmacadressusersEntityDeserial> readListJacksonObject(@NonNull long version,
                                                                                         @NotNull JsonNode jsonNodeAtomicReferenceGattGet);

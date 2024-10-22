@@ -44,26 +44,27 @@ import io.reactivex.rxjava3.core.Single;
 @InstallIn(SingletonComponent.class)
 public class WtiringJaksonJSON  implements WtiringJaksonJSONInterface {
 
- private  Context context;
+   private  Context context;
     private  long version;
+    private ObjectMapper objectMapperGet;
 
 
-    public @Inject WtiringJaksonJSON(@ApplicationContext Context hitcontext,long version) {
+    public @Inject WtiringJaksonJSON(@NotNull  @ApplicationContext Context hitcontext, @NotNull  long version,@NotNull ObjectMapper objectMapperGet) {
         // TODO: 25.08.2024
         this.context = hitcontext;
         this.version = version;
+        this.objectMapperGet = objectMapperGet;
         // TODO: 25.08.2024
         Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                 " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n");
+                " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" + " objectMapperGet  " +objectMapperGet);
 
     }
 
     // TODO: 04.09.2024
 
 
-    public JsonNode converttoJacksonObject(  @NonNull ObjectMapper objectMapperGet,
-                                           @NotNull byte[] bytesGetOtJBoss) {
+    public JsonNode converttoJacksonObject(@NotNull byte[] bytesGetOtJBoss) {
         // TODO: 22.08.2024  Коненпт провайдер для зааписив базу данных
         AtomicReference<JsonNode> jsonNodeAtomicReferenceGattGet = new AtomicReference();
         // TODO: 28.08.2024
