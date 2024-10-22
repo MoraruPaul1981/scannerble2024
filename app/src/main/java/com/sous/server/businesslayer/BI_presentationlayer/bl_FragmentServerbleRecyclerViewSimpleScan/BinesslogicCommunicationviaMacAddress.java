@@ -7,13 +7,21 @@ import android.util.Log;
 
 import androidx.annotation.NonNull;
 
+import com.serverscan.datasync.datasync_businesslayer.bl_databases.BusinesslogicGetCursor;
 import com.sous.server.businesslayer.BI_presentationlayer.bl_FragmentServerRecyreView.CommunicationviaMacAddress;
 import com.sous.server.businesslayer.Errors.SubClassErrors;
+
+import javax.inject.Inject;
 
 public class BinesslogicCommunicationviaMacAddress implements CommunicationviaMacAddress {
 
 private  Context context;
 private  Long version;
+
+
+    @Inject
+    public BusinesslogicGetCursor businesslogicGetCursor;
+
     BinesslogicCommunicationviaMacAddress(@NonNull Context context, @NonNull Long version){
         this.context=context;
         this.version=version;
@@ -23,6 +31,9 @@ private  Long version;
     public String   communicationviamacaddress(@NonNull String macdevice) {
         String fiodevice=new String();
         try{
+            BusinesslogicGetCursor businesslogicGetCursor=new BusinesslogicGetCursor(context);
+
+            businesslogicGetCursor.getClass();
 
             Log.d(context.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                     " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +

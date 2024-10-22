@@ -575,7 +575,7 @@ public class BinesslogicFragmentGattServerRecyclerView {
 
                         gettextinputtext_id_currentrow(holder,getconcurrentHashMapCursor);
 
-
+                        gettextinputtext_fio(holder,getconcurrentHashMapCursor);
 
                         gettextinputtext_namedevice(holder,getconcurrentHashMapCursor);
 
@@ -1185,23 +1185,38 @@ public class BinesslogicFragmentGattServerRecyclerView {
             String macdevice=
                     Optional.ofNullable(getconcurrentHashMapCursor.getString(getconcurrentHashMapCursor.getColumnIndex("macdevice"))).orElse("нет данных");
 
-            BinesslogicCommunicationviaMacAddress binesslogicCommunicationviaMacAddress=new BinesslogicCommunicationviaMacAddress(context,version);
+            if (!macdevice.equalsIgnoreCase("нет данных")) {
+                // TODO: 22.10.2024
+                messageGattServer.getTarget().postDelayed(()->{
+                    // TODO: 22.10.2024
+                    BinesslogicCommunicationviaMacAddress binesslogicCommunicationviaMacAddress=new BinesslogicCommunicationviaMacAddress(context,version);
+                    String fiodevice=         Optional.ofNullable(binesslogicCommunicationviaMacAddress.communicationviamacaddress(macdevice)).orElse("нет фио");
 
-            String fiodevice=    binesslogicCommunicationviaMacAddress.communicationviamacaddress(macdevice);
+                    // TODO: 22.10.2024
+                    if (!fiodevice.equalsIgnoreCase("нет фио")) {
+                        Animation animationscroll  = AnimationUtils.loadAnimation(context, R.anim.fadein);
+                        holder.  textinputtext_fio.startAnimation(animationscroll);
+                    }
+
+                    holder. textinputtext_fio.setText(fiodevice);//todo "fiodevice"
+                    holder.  textinputtext_fio.refreshDrawableState();
+                    holder.  textinputtext_fio.requestLayout();
 
 
-            Log.d(context.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
-                    " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                    " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"
-                    +"  macdevice" + macdevice);
+                },500);
 
 
+            } else {
+                holder. textinputtext_fio.setText(macdevice);//todo "namedevice"
+                // TODO: 22.10.2024
+                holder.  textinputtext_fio.refreshDrawableState();
+                holder.  textinputtext_fio.requestLayout();
+            }
 
-          //  holder. textinputtext_fio.setText(namedevice);//todo "namedevice"
+
             holder. textinputtext_fio.setClickable(false);
             holder.  textinputtext_fio.setFocusable(false);
-            holder.  textinputtext_fio.refreshDrawableState();
-            holder.  textinputtext_fio.requestLayout();
+
 
             Log.d(context.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                     " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
