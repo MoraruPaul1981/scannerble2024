@@ -12,12 +12,9 @@ import com.sous.server.datalayer.local.CREATE_DATABASEServerScanner;
 
 import org.jetbrains.annotations.NotNull;
 
-import java.util.Date;
-
-import javax.inject.Singleton;
+import javax.inject.Inject;
 
 import dagger.Module;
-import dagger.Provides;
 import dagger.hilt.InstallIn;
 import dagger.hilt.android.qualifiers.ApplicationContext;
 import dagger.hilt.components.SingletonComponent;
@@ -27,20 +24,24 @@ import dagger.hilt.components.SingletonComponent;
 
 @Module
 @InstallIn(SingletonComponent.class)
-public class getDataBaceHilt {
+public class GetDataBaceHilt {
 
  Long version;
-    @Provides
+ Context context;
+
+    public  @Inject GetDataBaceHilt(@ApplicationContext Context hitcontext) {
+        this.context = hitcontext;
+    }
+
     @NotNull
-    @Singleton
-    public   SQLiteDatabase getHiltDataBase(@ApplicationContext Context hitcontext) {
+    public   SQLiteDatabase getHiltDataBase(Long version) {
         SQLiteDatabase  Create_Database_СамаБАзаSQLite=null;
         try{
-            PackageInfo pInfo = hitcontext.getPackageManager().getPackageInfo(hitcontext.getPackageName(), 0);
+            PackageInfo pInfo = context.getPackageManager().getPackageInfo(context.getPackageName(), 0);
             version = pInfo.getLongVersionCode();
 
             // TODO: 22.10.2024
-           Create_Database_СамаБАзаSQLite= new CREATE_DATABASEServerScanner(hitcontext).getССылкаНаСозданнуюБазу();
+           Create_Database_СамаБАзаSQLite= new CREATE_DATABASEServerScanner(context).getССылкаНаСозданнуюБазу();
 
 
         Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
@@ -59,7 +60,7 @@ public class getDataBaceHilt {
         final Object ТекущаяВерсияПрограммы =version;
         Integer   ЛокальнаяВерсияПОСравнение = Integer.parseInt(ТекущаяВерсияПрограммы.toString());
         valuesЗаписываемОшибки.put("whose_error",ЛокальнаяВерсияПОСравнение);
-        new SubClassErrors(hitcontext).МетодЗаписиОшибок(valuesЗаписываемОшибки);
+        new SubClassErrors(context).МетодЗаписиОшибок(valuesЗаписываемОшибки);
     }
         return Create_Database_СамаБАзаSQLite;
     }

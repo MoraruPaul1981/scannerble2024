@@ -11,7 +11,7 @@ import dagger.hilt.components.SingletonComponent;
 @EntryPoint
 @InstallIn(SingletonComponent.class)
 public interface DatabaseIntreface {
-    SQLiteDatabase getHiltDataBase();
+    //SQLiteDatabase getHiltDataBase();
 }
 
 
