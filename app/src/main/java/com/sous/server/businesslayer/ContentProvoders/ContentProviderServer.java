@@ -58,16 +58,14 @@ public class ContentProviderServer extends android.content.ContentProvider {
         try{
             PackageInfo pInfo = getContext().getPackageManager().getPackageInfo(getContext().getPackageName(), 0);
             version = pInfo.getLongVersionCode();
-
-            Create_Database_СамаБАзаSQLite=      EntryPoints.get(getContext(), DatabaseIntreface.class).getССылкаНаСозданнуюБазу();
-
             //Create_Database_СамаБАзаSQLite= new CREATE_DATABASEServerScanner(getContext()).getССылкаНаСозданнуюБазу();
+
+            Create_Database_СамаБАзаSQLite=      EntryPoints.get(getContext(), DatabaseIntreface.class).getHiltDataBase();
 
             contentProviderCompleteallmacadress=new ContentProviderCompleteallmacadress(getContext(), version);
 
             binesslogicContentProvider=new BinesslogicContentProvider(getContext(), version);
 
-            if (Create_Database_СамаБАзаSQLite!=null) {
                 // TODO: 22.08.2024
                 uriMatcherGattServer =new UriMatcher(2);
                 // TODO: 04.09.2024
@@ -75,13 +73,6 @@ public class ContentProviderServer extends android.content.ContentProvider {
                 uriMatcherGattServer.addURI("com.sous.servergatt.prodider","scannerserversuccess",1);
                 uriMatcherGattServer.addURI("com.sous.servergatt.prodider","gattserverdataversion",2);
                 uriMatcherGattServer.addURI("com.sous.servergatt.prodider","completeallmacadressusers",3);
-
-                Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
-                        " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                        " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"   +"    Flowable.fromAction(new Action() { "
-                        +   new Date().toLocaleString());
-            }
-
 
             Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                     " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
@@ -101,12 +92,12 @@ public class ContentProviderServer extends android.content.ContentProvider {
             valuesЗаписываемОшибки.put("whose_error",ЛокальнаяВерсияПОСравнение);
             new SubClassErrors(getContext()).МетодЗаписиОшибок(valuesЗаписываемОшибки);
         }
+
         if (Create_Database_СамаБАзаSQLite!=null) {
             return true;
         } else {
             return false;
         }
-
     }
 
     @Nullable
@@ -160,6 +151,7 @@ public class ContentProviderServer extends android.content.ContentProvider {
 
         Uri geturiInsert = null;
         try {
+            Create_Database_СамаБАзаSQLite=      EntryPoints.get(getContext(), DatabaseIntreface.class).getHiltDataBase();
             if (!Create_Database_СамаБАзаSQLite.inTransaction()) {
                 Create_Database_СамаБАзаSQLite.beginTransaction();
             }
@@ -299,6 +291,9 @@ public class ContentProviderServer extends android.content.ContentProvider {
         // TODO: Implement this to handle requests to insert a new row.
         final Integer[] ОтветВставкиДанных = {0};
         try {
+
+            Create_Database_СамаБАзаSQLite=      EntryPoints.get(getContext(), DatabaseIntreface.class).getHiltDataBase();
+
             if (!Create_Database_СамаБАзаSQLite.inTransaction()) {
                 Create_Database_СамаБАзаSQLite.beginTransaction();
             }
