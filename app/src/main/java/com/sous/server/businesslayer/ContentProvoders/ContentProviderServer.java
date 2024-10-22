@@ -217,7 +217,7 @@ public class ContentProviderServer extends android.content.ContentProvider {
             // TODO: 28.08.2024  Запись UPDATE
                 // TODO: 28.08.2024  Запись INSERT
               Integer  resultInsertGattAllMac=   contentProviderCompleteallmacadress.
-                      workerForInsertCompleteallmacadress( extras,Create_Database_СамаБАзаSQLite,version);
+                      workerForInsertCompleteallmacadress( extras,Create_Database_СамаБАзаSQLite,version,  method);
 
             // TODO: 30.10.2021
             insertAndupdateData.putSerializable("resultUpdateOrInsert",resultInsertGattAllMac);

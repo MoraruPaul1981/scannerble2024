@@ -12,6 +12,8 @@ import androidx.annotation.Nullable;
 
 import com.serverscan.datasync.datasync_businesslayer.bl_Jakson.model.CompleteallmacadressusersEntityDeserial;
 
+import org.jetbrains.annotations.NotNull;
+
 import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.concurrent.CopyOnWriteArrayList;
@@ -33,8 +35,9 @@ public class ContentProviderCompleteallmacadress {
 
 
     public Integer workerForInsertCompleteallmacadress(@NonNull Bundle extras,
-                                                  @Nullable SQLiteDatabase Create_Database_СамаБАзаSQLite,
-                                                  @Nullable Long version) {
+                                                       @NotNull SQLiteDatabase Create_Database_СамаБАзаSQLite,
+                                                       @NotNull Long version,
+                                                       @NotNull String Sqloperations) {
 
 
         // TODO: 28.08.2024
@@ -51,7 +54,6 @@ public class ContentProviderCompleteallmacadress {
                         CopyOnWriteArrayList<CompleteallmacadressusersEntityDeserial> completeallmacadressusersEntityDeserials
                                 = (CopyOnWriteArrayList<CompleteallmacadressusersEntityDeserial>) extras.getSerializable("completeallmac" );
 
-                     String sQloperations=  (String)  extras.getSerializable("sql");
 
                         Flowable.fromIterable(completeallmacadressusersEntityDeserials)
                                 .onBackpressureBuffer()
@@ -65,7 +67,7 @@ public class ContentProviderCompleteallmacadress {
                                     + " LocalDateTime.now() " + LocalDateTime.now().toString().toUpperCase() + "\n");
 
                             // TODO: 28.08.2024
-                            SQLiteStatement sqLiteStatementInsert= Create_Database_СамаБАзаSQLite.compileStatement(sQloperations);
+                            SQLiteStatement sqLiteStatementInsert= Create_Database_СамаБАзаSQLite.compileStatement(Sqloperations);
                             sqLiteStatementInsert.clearBindings();
                             // TODO: 04.07.2023 цикл данных
                             sqLiteStatementInsert.bindNull(1 );//"id"
