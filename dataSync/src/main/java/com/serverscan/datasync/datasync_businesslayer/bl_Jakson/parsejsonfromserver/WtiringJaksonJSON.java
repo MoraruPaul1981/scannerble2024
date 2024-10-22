@@ -152,11 +152,12 @@ public Integer readListJacksonObject(  @NotNull CopyOnWriteArrayList<Completeall
     Integer completeallmacadressusersEntityDeserial=0;
         // TODO: 28.08.2024
         Single.fromCallable(()->{
-
+                    // TODO: 22.10.2024
+       String NameTableMac="completeallmacadressusers";
                     // TODO: 06.09.2024
-            String  SQloperations=  " REPLACE INTO completeallmacadressusers VALUES(?,?,? ,?,? );";
+            String  SQloperations=  " REPLACE INTO  (  fio,mac,clock, date_update,date_update , current_table , uuid  ) "+NameTableMac+" VALUES  (?,?,? ,?,? );";
          // TODO: 28.08.2024
-          Uri uri = Uri.parse("content://com.sous.servergatt.prodider/gattserverdataversion" );
+          Uri uri = Uri.parse("content://com.sous.servergatt.prodider/"+NameTableMac+"" );
             ContentResolver resolver = context.getContentResolver();
             Bundle bundleCompleteallmacadress=new Bundle();
                     bundleCompleteallmacadress.putSerializable("completeallmac", (Serializable) completeallmacadressusersEntityDeserials);

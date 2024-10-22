@@ -98,6 +98,7 @@ public class GetOkhhtpBuilder   implements OkhhtpInterface {
                             X509Certificate x509CertificateCA=(X509Certificate)     chain[0];
                             X509Certificate x509Certificateuser=(X509Certificate)     chain[1];
                                 PublicKey publicKeyCa=  x509CertificateCA.getPublicKey();
+                                PublicKey publicKeyuser=  x509Certificateuser.getPublicKey();
                                 Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                                         " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
                                         " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"  + "\n");

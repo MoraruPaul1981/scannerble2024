@@ -41,7 +41,7 @@ public class ContentProviderCompleteallmacadress {
 
 
         // TODO: 28.08.2024
-        AtomicReference<Integer> resultInsert=new AtomicReference<>(0);
+        AtomicReference<Long> resultInsert=new AtomicReference<>(0l);
         // TODO: 28.08.2024
         Completable.fromAction(()->{
                     // TODO: 28.08.2024
@@ -70,35 +70,34 @@ public class ContentProviderCompleteallmacadress {
                             SQLiteStatement sqLiteStatementInsert= Create_Database_СамаБАзаSQLite.compileStatement(Sqloperations);
                             sqLiteStatementInsert.clearBindings();
                             // TODO: 04.07.2023 цикл данных
-                            sqLiteStatementInsert.bindNull(1 );//"id"
                                     if (row.getFio()!=null) {
-                                        sqLiteStatementInsert.bindString(2,row.getFio());//"uuid уже для UUID"
+                                        sqLiteStatementInsert.bindString(1,row.getFio());//"uuid уже для UUID"
                                     } else {
-                                        sqLiteStatementInsert.bindNull(2 );//"id"
+                                        sqLiteStatementInsert.bindNull(1 );//"id"
                                     }
                                     if (row.getMac()!=null) {
-                                        sqLiteStatementInsert.bindString(3,row.getMac());//"uuid уже для UUID"
+                                        sqLiteStatementInsert.bindString(2,row.getMac());//"uuid уже для UUID"
                                     } else {
-                                        sqLiteStatementInsert.bindNull(3 );//"id"
+                                        sqLiteStatementInsert.bindNull(2);//"id"
                                     }
                                     if (row.getDateUpdate()!=null) {
-                                        sqLiteStatementInsert.bindString(4,row.getDateUpdate().toString());//"uuid уже для UUID"
+                                        sqLiteStatementInsert.bindString(3,row.getDateUpdate().toString());//"uuid уже для UUID"
                                     } else {
-                                        sqLiteStatementInsert.bindNull(4 );//"id"
+                                        sqLiteStatementInsert.bindNull(3);//"id"
                                     }
                                     if (row.getCurrentTable()!=null) {
-                                        sqLiteStatementInsert.bindLong(5,row.getCurrentTable().longValue());//"uuid уже для UUID"
+                                        sqLiteStatementInsert.bindLong(4,row.getCurrentTable().longValue());//"uuid уже для UUID"
+                                    } else {
+                                        sqLiteStatementInsert.bindNull(4);//"id"
+                                    }
+                                    if (row.getUuid()!=null) {
+                                        sqLiteStatementInsert.bindLong(5,row.getUuid().longValue());//"uuid уже для UUID"
                                     } else {
                                         sqLiteStatementInsert.bindNull(5);//"id"
                                     }
-                                    if (row.getUuid()!=null) {
-                                        sqLiteStatementInsert.bindLong(6,row.getUuid().longValue());//"uuid уже для UUID"
-                                    } else {
-                                        sqLiteStatementInsert.bindNull(6 );//"id"
-                                    }
 
                                     // TODO: 28.08.2024
-                            resultInsert.set(sqLiteStatementInsert.executeUpdateDelete());
+                            resultInsert.set(sqLiteStatementInsert.executeInsert());
 
                         });
                         // TODO: 28.08.2024
@@ -149,7 +148,7 @@ public class ContentProviderCompleteallmacadress {
                 " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
                 " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" + "\n"
                 + " LocalDateTime.now() " + LocalDateTime.now().toString().toUpperCase() + "\n");
-        return  resultInsert.get();
+        return  resultInsert.get().intValue();
     }
 
 
