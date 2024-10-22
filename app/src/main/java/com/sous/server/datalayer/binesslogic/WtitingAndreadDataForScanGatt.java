@@ -1,4 +1,4 @@
-package com.sous.server.datalayer.binesslogic.bl_writeandreadScanCatt;
+package com.sous.server.datalayer.binesslogic;
 
 import android.annotation.SuppressLint;
 import android.bluetooth.BluetoothDevice;
@@ -179,7 +179,7 @@ try{
     // TODO: 31.07.2024
     // TODO: 18.07.2024 ЕСЛИ Успещно прошла Операция передаем данные на Фрагмент Scanner
 
-    if (writeDatabaseScanGatt.keySet().stream().findAny().get()>0) {
+
         // TODO: 25.07.2024 closeing Before
         getcloseCursorAndHashMap();
         //todo ДОполнительный механизм данные упокаываем в Канкаренте СЕТ с Курсором
@@ -188,7 +188,7 @@ try{
 
         // TODO: 19.07.2024 Посылаем Пользователю сообщение что данные изменились
         forwardUIAfterSuccessAddDiveceDatBAseScan(concurrentHashMapCursor, writeDatabaseScanGatt.values().stream().findAny().get());
-    }
+
 
     Log.d(context.getClass().getName(), "\n"
             + " время: " + new Date() + "\n+" +
@@ -300,19 +300,25 @@ try{
 
 
 
+
             contentValuesВставкаДанных.put("city",    sharedPreferencesGatt.getString("getLocality","нет данных"));
             contentValuesВставкаДанных.put("gps1", sharedPreferencesGatt.getString("getLongitude","нет данных"));
             contentValuesВставкаДанных.put("gps2", sharedPreferencesGatt.getString("getLatitude","нет данных"));
-            contentValuesВставкаДанных.put("adress",  sharedPreferencesGatt.getString("getCountryName","нет данных")+" "+
-                    sharedPreferencesGatt.getString("getLocality","нет данных")+" "+
-                    sharedPreferencesGatt.getString("getSubAdminArea","нет данных")+" "+
-                    sharedPreferencesGatt.getString("getLatitude","нет данных")+" "+
-                    sharedPreferencesGatt.getString("getLongitude","нет данных")+" "+
-                    sharedPreferencesGatt.getString("getLocale","нет данных")+" "+
-                    sharedPreferencesGatt.getString("getThoroughfare","нет данных")+" "+
-                    sharedPreferencesGatt.getString("getSubThoroughfare","нет данных")+" " );
 
+            if ( sharedPreferencesGatt.getString("getLocality","нет данных").isEmpty()) {
 
+                contentValuesВставкаДанных.put("adress",  sharedPreferencesGatt.getString("getCountryName","нет данных")+" "+
+                        sharedPreferencesGatt.getString("getLocality","нет данных")+" "+
+                        sharedPreferencesGatt.getString("getSubAdminArea","нет данных")+" "+
+                        sharedPreferencesGatt.getString("getLatitude","нет данных")+" "+
+                        sharedPreferencesGatt.getString("getLongitude","нет данных")+" "+
+                        sharedPreferencesGatt.getString("getLocale","нет данных")+" "+
+                        sharedPreferencesGatt.getString("getThoroughfare","нет данных")+" "+
+                        sharedPreferencesGatt.getString("getSubThoroughfare","нет данных")+" " );
+            }else {
+                contentValuesВставкаДанных.put("adress",  "нет данных" );
+
+            }
 
 
             // TODO: 10.02.2023 версия данных

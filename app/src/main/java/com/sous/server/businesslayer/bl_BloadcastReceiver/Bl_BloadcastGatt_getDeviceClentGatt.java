@@ -12,9 +12,11 @@ import android.util.Log;
 
 import androidx.annotation.NonNull;
 
+import com.google.common.util.concurrent.AtomicDouble;
 import com.sous.server.businesslayer.ContentProvoders.ContentProviderServer;
 import com.sous.server.businesslayer.Errors.SubClassErrors;
-import com.sous.server.datalayer.binesslogic.bl_writeandreadScanCatt.WtitingAndreadDataForScanGatt;
+import com.sous.server.datalayer.binesslogic.WtitingAndreadDataForScanGatt;
+
 
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicReference;
@@ -69,26 +71,40 @@ public class Bl_BloadcastGatt_getDeviceClentGatt {
                                 version,
                                 contentProviderServer,
                                 preferencesGatt);
-                        ConcurrentHashMap<Integer,ContentValues> writeDatabaseScanGatt  =    wtitingAndreadDataForScanGatt
+
+                        // TODO: 22.10.2024  Запись Новый Девайс
+                        ConcurrentHashMap<Integer,ContentValues> writeDatabaseScanGattSuccessWriteNewDevice  =    wtitingAndreadDataForScanGatt
                                 .writeDatabaseScanGatt(bluetoothDevice,  intent.getAction());
-
-                        // TODO: 31.07.2024  посылаем данные на Франгмент
-                        wtitingAndreadDataForScanGatt. afteruccessfuldataformationweSend(writeDatabaseScanGatt);
-
-                        // TODO: 07.08.2024
-                        // TODO: 30.07.2024
-                  pendingResultAtomicReference.get().finish();
-
 
 
                         Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                                 " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
                                 " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" +
-                                "Bintent.getAction() "+intent.getAction() + " bluetoothDevice " +bluetoothDevice);
+                                "Bintent.getAction() "+intent.getAction() + " bluetoothDevice " +bluetoothDevice+
+                                " writeDatabaseScanGattSuccessWriteNewDevice " +writeDatabaseScanGattSuccessWriteNewDevice);
+
+
+                        // TODO: 22.10.2024 Если успешная запись то  этотоОбьект не ПУСТОЙ
+                        if (writeDatabaseScanGattSuccessWriteNewDevice.keySet().stream().findAny().get()>0) {
+                            // TODO: 31.07.2024  посылаем данные на Франгмент перегражаем внешний вид
+                            wtitingAndreadDataForScanGatt.afteruccessfuldataformationweSend(writeDatabaseScanGattSuccessWriteNewDevice);
+                        }
+                        // TODO: 07.08.2024
+                        Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                                " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                                " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" +
+                                "Bintent.getAction() "+intent.getAction() + " bluetoothDevice " +bluetoothDevice+
+                                " writeDatabaseScanGattSuccessWriteNewDevice " +writeDatabaseScanGattSuccessWriteNewDevice);
+
+                  
                     }
                 }).doOnComplete(new Action() {
                     @Override
                     public void run() throws Throwable {
+                        // TODO: 22.10.2024
+                        // TODO: 30.07.2024
+                        pendingResultAtomicReference.get().finish();
+
                         Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                                 " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
                                 " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" +

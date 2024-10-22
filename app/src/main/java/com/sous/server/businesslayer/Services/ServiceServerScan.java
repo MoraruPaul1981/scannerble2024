@@ -106,8 +106,6 @@ public class ServiceServerScan extends Service {
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
         try {
-            stopForeground(true);
-
             // TODO: 03.09.2024 Запускаем КОд Служббы Сервера Ble GATT
             buccesloginForServiceServerScan.launchBuccesloginForServiceServerScan(this,preferencesGatt);
 
@@ -141,8 +139,6 @@ public class ServiceServerScan extends Service {
     public void onDestroy() {
         super.onDestroy();
   try{
-      // TODO: 09.09.2024
-      stopForeground(true);
       //TODO:получаем Статус Адаптера Bluetooth true, false  и оптравляем статус в активти
       Log.d(getApplicationContext().getClass().getName(), "\n"
                 + " время: " + new Date() + "\n+" +

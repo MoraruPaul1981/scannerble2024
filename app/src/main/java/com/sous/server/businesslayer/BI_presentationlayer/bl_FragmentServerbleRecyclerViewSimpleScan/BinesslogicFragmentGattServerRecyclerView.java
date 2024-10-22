@@ -35,8 +35,9 @@ import com.google.android.material.textfield.TextInputEditText;
 import com.sous.server.R;
 import com.sous.server.businesslayer.ContentProvoders.ContentProviderServer;
 import com.sous.server.businesslayer.Errors.SubClassErrors;
+import com.sous.server.datalayer.binesslogic.WtitingAndreadDataForScanGatt;
 import com.sous.server.datalayer.binesslogic.bl_writeandreadScanCatt.BunissecclogicCursorLister;
-import com.sous.server.datalayer.binesslogic.bl_writeandreadScanCatt.WtitingAndreadDataForScanGatt;
+
 
 import org.jetbrains.annotations.NotNull;
 
