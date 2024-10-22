@@ -106,7 +106,7 @@ public class ServiceServerScan extends Service {
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
         try {
-
+            stopForeground(true);
 
             // TODO: 03.09.2024 Запускаем КОд Служббы Сервера Ble GATT
             buccesloginForServiceServerScan.launchBuccesloginForServiceServerScan(this,preferencesGatt);

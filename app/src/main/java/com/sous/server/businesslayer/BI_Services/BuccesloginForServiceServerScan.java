@@ -788,7 +788,12 @@ private  Long version;
         try {
         SharedPreferences.Editor editor = sharedPreferencesGatt.edit();
         editor.clear();
+            sharedPreferencesGatt.getAll().clear();
+            editor.apply();
 
+            Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                    " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                    " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n");
     } catch (Exception e) {
         e.printStackTrace();
         Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() + " Линия  :"
