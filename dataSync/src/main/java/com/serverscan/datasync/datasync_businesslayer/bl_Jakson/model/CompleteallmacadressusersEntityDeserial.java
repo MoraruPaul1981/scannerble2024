@@ -23,7 +23,7 @@ public class CompleteallmacadressusersEntityDeserial implements Serializable  {
     @JsonProperty("date_update")
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern ="yyyy-MM-dd HH:mm:ss.SSS" )
     private Date dateUpdate;
-    @JsonProperty("currentTable")
+    @JsonProperty("current_table")
     private BigDecimal currentTable;
     @JsonProperty("uuid")
     private BigDecimal uuid;

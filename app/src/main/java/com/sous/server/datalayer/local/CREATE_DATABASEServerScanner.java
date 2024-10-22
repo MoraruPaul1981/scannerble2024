@@ -19,8 +19,15 @@ import java.util.Date;
 import java.util.concurrent.atomic.AtomicReference;
 
 import javax.inject.Inject;
+import javax.inject.Singleton;
 
+import dagger.Module;
+import dagger.Provides;
+import dagger.hilt.InstallIn;
+import dagger.hilt.components.SingletonComponent;
 
+@Module
+@InstallIn(SingletonComponent.class)
 //этот класс создает базу данных SQLite
 public class CREATE_DATABASEServerScanner extends SQLiteOpenHelper{ ///SQLiteOpenHelper
 
@@ -33,7 +40,8 @@ public class CREATE_DATABASEServerScanner extends SQLiteOpenHelper{ ///SQLiteOpe
     private Long version=0l;
     private SharedPreferences preferencesGatt;
 
-
+    @Singleton
+    @Provides
     public static SQLiteDatabase getССылкаНаСозданнуюБазу() {
         System.out.println( "atomicstoredEntities "+atomicstoredEntities.toString());
         return atomicstoredEntities.get();

@@ -2,12 +2,16 @@ package com.serverscan.datasync.datasync_businesslayer.bl_Jakson.parsejsonfromse
 
 
 import android.annotation.SuppressLint;
+import android.content.ContentResolver;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
+import android.net.Uri;
+import android.os.Bundle;
 import android.util.Log;
 
 import com.fasterxml.jackson.core.JsonParser;
+import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectWriter;
@@ -21,9 +25,12 @@ import com.serverscan.datasync.datasync_businesslayer.bl_Jakson.model.Scannerser
 import org.jetbrains.annotations.NotNull;
 
 import java.io.ByteArrayOutputStream;
+import java.io.Serializable;
+import java.lang.reflect.Type;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.Date;
+import java.util.List;
 import java.util.Optional;
 import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.concurrent.ExecutionException;
@@ -63,23 +70,32 @@ public class WtiringJaksonJSON  implements WtiringJaksonJSONInterface {
 
     // TODO: 04.09.2024
 
-
-    public JsonNode converttoJacksonObject(@NotNull byte[] bytesGetOtJBoss) {
+  @Override
+    public  CopyOnWriteArrayList<CompleteallmacadressusersEntityDeserial> converttoJacksonObject(@NotNull byte[] bytesGetOtJBoss) {
         // TODO: 22.08.2024  Коненпт провайдер для зааписив базу данных
-        AtomicReference<JsonNode> jsonNodeAtomicReferenceGattGet = new AtomicReference();
+        AtomicReference<CopyOnWriteArrayList<CompleteallmacadressusersEntityDeserial> > completeallmacadressusersEntityDeserials = new AtomicReference();
         // TODO: 28.08.2024
-        Completable completableConvertToJson= Completable.fromAction(()->{
+       Completable.fromAction(()->{
                     // TODO: 05.09.2024
-                    final JsonParser jsonParserServerGattGet= objectMapperGet.createParser(bytesGetOtJBoss);
+                /*    final JsonParser jsonParserServerGattGet= objectMapperGet.createParser(bytesGetOtJBoss);
 
-                    jsonNodeAtomicReferenceGattGet.set(jsonParserServerGattGet.readValueAsTree());
+                    jsonNodeAtomicReferenceGattGet.set(jsonParserServerGattGet.readValueAsTree());*/
+
+
+            completeallmacadressusersEntityDeserials.set(objectMapperGet.readValue(bytesGetOtJBoss,
+                    new TypeReference<CopyOnWriteArrayList<CompleteallmacadressusersEntityDeserial>>() {
+                          @Override
+                          public Type getType() {
+                              return super.getType();
+                          }
+                      }));
 
                     Log.d(this.getClass().getName(), "\n" + " class " +
                             Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                             " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
                             " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" + "\n"
-                            + " LocalDateTime.now() " + LocalDateTime.now().toString().toUpperCase() + "\n"  +
-                             " jsonParserServerGattGet " +jsonParserServerGattGet + "jsonNodeAtomicReferenceGattGet " +jsonNodeAtomicReferenceGattGet);
+                            + " LocalDateTime.now() " + LocalDateTime.now().toString().toUpperCase() + "\n"
+                            + "completeallmacadressusersEntityDeserials " +completeallmacadressusersEntityDeserials);
 
                 }).doOnComplete(()->{
 
@@ -106,18 +122,14 @@ public class WtiringJaksonJSON  implements WtiringJaksonJSONInterface {
                     valuesЗаписываемОшибки.put("whose_error", ЛокальнаяВерсияПОСравнение);
                     new SubClassErrors(context).МетодЗаписиОшибок(valuesЗаписываемОшибки);
 
-                });
-
-                if(bytesGetOtJBoss.length>0){
-                    completableConvertToJson.blockingSubscribe();
-                }
+                }).blockingSubscribe();
         // TODO: 31.07.2024
         Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                 " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
                 " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" + "\n"
                 + " LocalDateTime.now() " + LocalDateTime.now().toString().toUpperCase() + "\n");
 
-        return jsonNodeAtomicReferenceGattGet.get();
+        return completeallmacadressusersEntityDeserials.get();
 
     }
 
@@ -133,15 +145,28 @@ public class WtiringJaksonJSON  implements WtiringJaksonJSONInterface {
 
 
 // TODO: 05.09.2024
-@SuppressLint("Range")
-public CopyOnWriteArrayList<CompleteallmacadressusersEntityDeserial>
-          readListJacksonObject(@NonNull long version, @NotNull JsonNode jsonNodeAtomicReferenceGattGet) {
+@Override
+public Integer readListJacksonObject(  @NotNull CopyOnWriteArrayList<CompleteallmacadressusersEntityDeserial> completeallmacadressusersEntityDeserials) {
         // TODO: 22.08.2024  Коненпт провайдер для зааписив базу данных
     // TODO: 06.09.2024
-    CopyOnWriteArrayList  copyOnWriteArrayGetDataOtJbossGet=new CopyOnWriteArrayList();
+    Integer completeallmacadressusersEntityDeserial=0;
         // TODO: 28.08.2024
         Single.fromCallable(()->{
+
                     // TODO: 06.09.2024
+            String  SQloperations=  " REPLACE INTO completeallmacadressusers VALUES(?,?,? ,?,? );";
+         // TODO: 28.08.2024
+          Uri uri = Uri.parse("content://com.sous.servergatt.prodider/gattserverdataversion" );
+            ContentResolver resolver = context.getContentResolver();
+            Bundle bundleCompleteallmacadress=new Bundle();
+                    bundleCompleteallmacadress.putSerializable("completeallmac", (Serializable) completeallmacadressusersEntityDeserials);
+                    bundleCompleteallmacadress.putSerializable("sql", SQloperations);
+            // TODO: 28.08.2024  Само выполение операции
+            Bundle insertAndupdateData=   resolver.call(uri,SQloperations, SQloperations,bundleCompleteallmacadress);
+            Integer   resultUpdate = (Integer) insertAndupdateData.getSerializable("resultUpdateOrInsert");
+
+
+
                         Log.d(this.getClass().getName(), "\n" + " class " +
                                 Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                                 " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
@@ -174,56 +199,15 @@ public CopyOnWriteArrayList<CompleteallmacadressusersEntityDeserial>
                     valuesЗаписываемОшибки.put("whose_error", ЛокальнаяВерсияПОСравнение);
                     new SubClassErrors(context).МетодЗаписиОшибок(valuesЗаписываемОшибки);
 
-                }).blockingSubscribe();
+                }).blockingGet();
         // TODO: 31.07.2024
         Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                 " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
                 " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" + "\n"
                 + " LocalDateTime.now() " + LocalDateTime.now().toString().toUpperCase() + "\n");
 
-        return copyOnWriteArrayGetDataOtJbossGet;
-
-    }
-
-
-
-
-
-
-
-
-
-      public Integer
-      processtheCursorandfillinmodel(@NonNull  CompleteallmacadressusersEntityDeserial copyOnWriteArrayGetDataOtJbossGet) {
-        // TODO: 06.09.2024  получаем данные из курсора
-          Integer completeallmacadressusersEntityDeserial=0;
-        try {
-
-
-            Log.d(this.getClass().getName(), "\n" + " class " +
-                    Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
-                    " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                    " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" + "\n"
-                    + " LocalDateTime.now() " + LocalDateTime.now().toString().toUpperCase()
-                    + "\n"+ " copyOnWriteArrayGetDataOtJbossGet"+ copyOnWriteArrayGetDataOtJbossGet);
-
-
-        } catch (Exception e) {
-            e.printStackTrace();
-            Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :"
-                    + Thread.currentThread().getStackTrace()[2].getMethodName() + " Линия  :"
-                    + Thread.currentThread().getStackTrace()[2].getLineNumber());
-            ContentValues valuesЗаписываемОшибки = new ContentValues();
-            valuesЗаписываемОшибки.put("Error", e.toString().toLowerCase());
-            valuesЗаписываемОшибки.put("Klass", this.getClass().getName());
-            valuesЗаписываемОшибки.put("Metod", Thread.currentThread().getStackTrace()[2].getMethodName());
-            valuesЗаписываемОшибки.put("LineError", Thread.currentThread().getStackTrace()[2].getLineNumber());
-            final Object ТекущаяВерсияПрограммы = version;
-            Integer ЛокальнаяВерсияПОСравнение = Integer.parseInt(ТекущаяВерсияПрограммы.toString());
-            valuesЗаписываемОшибки.put("whose_error", ЛокальнаяВерсияПОСравнение);
-            new SubClassErrors(context).МетодЗаписиОшибок(valuesЗаписываемОшибки);
-        }
         return completeallmacadressusersEntityDeserial;
+
     }
 
 
@@ -236,11 +220,5 @@ public CopyOnWriteArrayList<CompleteallmacadressusersEntityDeserial>
 
 
 
-
-
-
-
-
-
-
+// TODO: 22.10.2024 end class 
 }

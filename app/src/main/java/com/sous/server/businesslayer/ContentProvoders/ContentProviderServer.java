@@ -17,7 +17,9 @@ import androidx.annotation.Nullable;
 
 
 import com.serverscan.datasync.datasync_businesslayer.bl_contentproviders.BinesslogicContentProvider;
+import com.serverscan.datasync.datasync_businesslayer.bl_contentproviders.ContentProviderCompleteallmacadress;
 import com.sous.server.businesslayer.Errors.SubClassErrors;
+import com.sous.server.datalayer.intrefaces.DatabaseIntreface;
 import com.sous.server.datalayer.local.CREATE_DATABASEServerScanner;
 
 import java.util.Date;
@@ -25,6 +27,8 @@ import java.util.List;
 
 import javax.inject.Inject;
 
+import dagger.hilt.EntryPoint;
+import dagger.hilt.EntryPoints;
 import io.reactivex.rxjava3.core.Flowable;
 import io.reactivex.rxjava3.functions.Action;
 
@@ -34,7 +38,9 @@ public class ContentProviderServer extends android.content.ContentProvider {
     private SQLiteDatabase Create_Database_СамаБАзаSQLite;
 
     private Long version=0l;
-    private BinesslogicContentProvider binesslogicContentProvider;
+    private ContentProviderCompleteallmacadress contentProviderCompleteallmacadress;
+
+    private  BinesslogicContentProvider binesslogicContentProvider;
     public @Inject  ContentProviderServer() {
         Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                 " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
@@ -53,7 +59,12 @@ public class ContentProviderServer extends android.content.ContentProvider {
             PackageInfo pInfo = getContext().getPackageManager().getPackageInfo(getContext().getPackageName(), 0);
             version = pInfo.getLongVersionCode();
 
-            Create_Database_СамаБАзаSQLite= new CREATE_DATABASEServerScanner(getContext()).getССылкаНаСозданнуюБазу();
+            Create_Database_СамаБАзаSQLite=      EntryPoints.get(getContext(), DatabaseIntreface.class).getССылкаНаСозданнуюБазу();
+
+            //Create_Database_СамаБАзаSQLite= new CREATE_DATABASEServerScanner(getContext()).getССылкаНаСозданнуюБазу();
+
+            contentProviderCompleteallmacadress=new ContentProviderCompleteallmacadress(getContext(), version);
+
             binesslogicContentProvider=new BinesslogicContentProvider(getContext(), version);
 
             if (Create_Database_СамаБАзаSQLite!=null) {
@@ -63,6 +74,7 @@ public class ContentProviderServer extends android.content.ContentProvider {
                 uriMatcherGattServer.addURI("com.sous.servergatt.prodider","errordsu1",0);
                 uriMatcherGattServer.addURI("com.sous.servergatt.prodider","scannerserversuccess",1);
                 uriMatcherGattServer.addURI("com.sous.servergatt.prodider","gattserverdataversion",2);
+                uriMatcherGattServer.addURI("com.sous.servergatt.prodider","completeallmacadressusers",3);
 
                 Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                         " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
@@ -202,6 +214,44 @@ public class ContentProviderServer extends android.content.ContentProvider {
                 +   new Date().toLocaleString());
     }
 
+    @Nullable
+    @Override
+    public Bundle call(@NonNull String method, @Nullable String arg, @Nullable Bundle extras) {
+        Bundle insertAndupdateData=new Bundle();
+        try {
+            // TODO: 28.08.2024  Запись UPDATE
+                // TODO: 28.08.2024  Запись INSERT
+              Integer  resultInsertGattAllMac=   contentProviderCompleteallmacadress.
+                      workerForInsertCompleteallmacadress( extras,Create_Database_СамаБАзаSQLite,version);
+
+            // TODO: 30.10.2021
+            insertAndupdateData.putSerializable("resultUpdateOrInsert",resultInsertGattAllMac);
+
+            Log.d(this.getClass().getName(), "\n" + " class " +
+                    Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                    " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                    " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"
+                    + "insertAndupdateData"  +insertAndupdateData);
+
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() + " Линия  :"
+                    + Thread.currentThread().getStackTrace()[2].getLineNumber());
+            ContentValues valuesЗаписываемОшибки=new ContentValues();
+            valuesЗаписываемОшибки.put("Error",e.toString().toLowerCase());
+            valuesЗаписываемОшибки.put("Klass",this.getClass().getName());
+            valuesЗаписываемОшибки.put("Metod",Thread.currentThread().getStackTrace()[2].getMethodName());
+            valuesЗаписываемОшибки.put("LineError",   Thread.currentThread().getStackTrace()[2].getLineNumber());
+            final Object ТекущаяВерсияПрограммы = version;
+            Integer   ЛокальнаяВерсияПОСравнение = Integer.parseInt(ТекущаяВерсияПрограммы.toString());
+            valuesЗаписываемОшибки.put("whose_error",ЛокальнаяВерсияПОСравнение);
+            new SubClassErrors(getContext()).МетодЗаписиОшибок(valuesЗаписываемОшибки);
+        }
+        return insertAndupdateData;
+
+        //return super.call(method, arg, extras);
+    }
 
 
     @NonNull

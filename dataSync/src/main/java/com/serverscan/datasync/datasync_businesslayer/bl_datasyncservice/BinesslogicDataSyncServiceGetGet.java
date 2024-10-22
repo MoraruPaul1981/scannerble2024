@@ -11,10 +11,13 @@ import androidx.annotation.NonNull;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.serverscan.datasync.datasync_businesslayer.Errors.SubClassErrors;
 import com.serverscan.datasync.datasync_businesslayer.Services.DataSyncService;
+import com.serverscan.datasync.datasync_businesslayer.bl_Jakson.model.CompleteallmacadressusersEntityDeserial;
 import com.serverscan.datasync.datasync_businesslayer.bl_network.BinesslogicNetworkWorkerGet;
 import com.serverscan.datasync.datasync_businesslayer.bl_Jakson.parsejsonfromserver.WtiringJaksonJSON;
 import com.serverscan.datasync.datasync_businesslayer.bl_datasyncservice.interfaces.InterfaceDataSyncServiceGet;
 import com.serverscan.datasync.datasync_businesslayer.bl_versionsgatt.BinesslogicVersions;
+
+import java.util.concurrent.CopyOnWriteArrayList;
 
 import javax.inject.Inject;
 
@@ -95,17 +98,26 @@ public class BinesslogicDataSyncServiceGetGet implements InterfaceDataSyncServic
 
                 })
                 .doOnSuccess(bytesGetOtJBoss->{
-                    // TODO: 04.09.2024 Полученые байты потов преобразуем в JAKSON JSON
-                    WtiringJaksonJSON wtiringJaksonJSON=new WtiringJaksonJSON(context,version,dataSyncService.getHiltJaksonObjectMapper);
-                    // TODO: 22.10.2024
-                    JsonNode  jsonNodeAtomicReferenceGattGet     =    wtiringJaksonJSON.converttoJacksonObject(bytesGetOtJBoss);
+                    if(bytesGetOtJBoss.length>0) {
+                        // TODO: 04.09.2024 Полученые байты потов преобразуем в JAKSON JSON
+                        WtiringJaksonJSON wtiringJaksonJSON = new WtiringJaksonJSON(context, version, dataSyncService.getHiltJaksonObjectMapper);
+                        // TODO: 22.10.2024
+                        CopyOnWriteArrayList<CompleteallmacadressusersEntityDeserial> completeallmacadressusersEntityDeserials = wtiringJaksonJSON.converttoJacksonObject(bytesGetOtJBoss);
+                        // TODO: 22.10.2024
+                        Integer completeallmacadressusersEntityDeserial = wtiringJaksonJSON.readListJacksonObject(completeallmacadressusersEntityDeserials);
+                        // TODO: 22.10.2024
+                        Log.d(context.getClass().getName(), "\n" + " class " +
+                                Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                                " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                                " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"+
+                                " bytesGetOtJBoss " +bytesGetOtJBoss
+                                +" completeallmacadressusersEntityDeserials " +completeallmacadressusersEntityDeserials);
+                    }
 
                     Log.d(context.getClass().getName(), "\n" + " class " +
                             Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                             " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                            " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"+
-                            " bytesGetOtJBoss " +bytesGetOtJBoss
-                            +" jsonNodeAtomicReferenceGattGet " +jsonNodeAtomicReferenceGattGet);
+                            " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n");
 
                 }).blockingSubscribe();
 
