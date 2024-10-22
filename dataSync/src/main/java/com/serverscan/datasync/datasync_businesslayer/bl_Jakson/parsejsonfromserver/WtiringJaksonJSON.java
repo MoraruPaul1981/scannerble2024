@@ -68,13 +68,11 @@ public class WtiringJaksonJSON  implements WtiringJaksonJSONInterface {
         // TODO: 22.08.2024  Коненпт провайдер для зааписив базу данных
         AtomicReference<JsonNode> jsonNodeAtomicReferenceGattGet = new AtomicReference();
         // TODO: 28.08.2024
-        Completable.fromAction(()->{
+        Completable completableConvertToJson= Completable.fromAction(()->{
                     // TODO: 05.09.2024
                     final JsonParser jsonParserServerGattGet= objectMapperGet.createParser(bytesGetOtJBoss);
 
-                    if (jsonParserServerGattGet.getTextLength()>0){
-                        jsonNodeAtomicReferenceGattGet.set(jsonParserServerGattGet.readValueAsTree());
-                    }
+                    jsonNodeAtomicReferenceGattGet.set(jsonParserServerGattGet.readValueAsTree());
 
                     Log.d(this.getClass().getName(), "\n" + " class " +
                             Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
@@ -108,7 +106,11 @@ public class WtiringJaksonJSON  implements WtiringJaksonJSONInterface {
                     valuesЗаписываемОшибки.put("whose_error", ЛокальнаяВерсияПОСравнение);
                     new SubClassErrors(context).МетодЗаписиОшибок(valuesЗаписываемОшибки);
 
-                }).blockingSubscribe();
+                });
+
+                if(bytesGetOtJBoss.length>0){
+                    completableConvertToJson.blockingSubscribe();
+                }
         // TODO: 31.07.2024
         Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                 " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
