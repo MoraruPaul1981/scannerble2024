@@ -1187,8 +1187,6 @@ public class BinesslogicFragmentGattServerRecyclerView {
 
             if (!macdevice.equalsIgnoreCase("нет данных")) {
                 // TODO: 22.10.2024
-                messageGattServer.getTarget().postDelayed(()->{
-                    // TODO: 22.10.2024
                     BinesslogicCommunicationviaMacAddress binesslogicCommunicationviaMacAddress=new BinesslogicCommunicationviaMacAddress(context,version);
                     String fiodevice=         Optional.ofNullable(binesslogicCommunicationviaMacAddress.communicationviamacaddress(macdevice)).orElse("нет фио");
 
@@ -1201,9 +1199,6 @@ public class BinesslogicFragmentGattServerRecyclerView {
                     holder. textinputtext_fio.setText(fiodevice);//todo "fiodevice"
                     holder.  textinputtext_fio.refreshDrawableState();
                     holder.  textinputtext_fio.requestLayout();
-
-
-                },500);
 
 
             } else {

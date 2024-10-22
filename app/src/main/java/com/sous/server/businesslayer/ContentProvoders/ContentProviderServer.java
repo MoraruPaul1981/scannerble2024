@@ -25,6 +25,8 @@ import com.sous.server.datalayer.local.module.GetDataBaceHilt;
 
 import java.util.Date;
 import java.util.List;
+import java.util.concurrent.CopyOnWriteArrayList;
+import java.util.concurrent.atomic.AtomicInteger;
 
 import javax.inject.Inject;
 
@@ -43,9 +45,6 @@ public class ContentProviderServer extends android.content.ContentProvider {
 
     private  BinesslogicContentProvider binesslogicContentProvider;
 
-
-
-    GetDataBaceHilt getDataBaceHilt;
     public    ContentProviderServer() {
         Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                 " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
@@ -70,13 +69,33 @@ public class ContentProviderServer extends android.content.ContentProvider {
             contentProviderCompleteallmacadress=new ContentProviderCompleteallmacadress(getContext(), version);
             binesslogicContentProvider=new BinesslogicContentProvider(getContext(), version);
 
+
+
+            CopyOnWriteArrayList<String> copyOnWriteArrayListgattservice=new CopyOnWriteArrayList<>();
+
+            copyOnWriteArrayListgattservice.add("errordsu1");
+            copyOnWriteArrayListgattservice.add("scannerserversuccess");
+            copyOnWriteArrayListgattservice.add("gattserverdataversion");
+            copyOnWriteArrayListgattservice.add("completeallmacadressusers");
                 // TODO: 22.08.2024
-                uriMatcherGattServer =new UriMatcher(2);
-                // TODO: 04.09.2024
-                uriMatcherGattServer.addURI("com.sous.servergatt.prodider","errordsu1",0);
-                uriMatcherGattServer.addURI("com.sous.servergatt.prodider","scannerserversuccess",1);
-                uriMatcherGattServer.addURI("com.sous.servergatt.prodider","gattserverdataversion",2);
-                uriMatcherGattServer.addURI("com.sous.servergatt.prodider","completeallmacadressusers",3);
+                uriMatcherGattServer =new UriMatcher(copyOnWriteArrayListgattservice.size());
+
+            AtomicInteger atomicInteger=new AtomicInteger(0);
+
+                Flowable.fromIterable(copyOnWriteArrayListgattservice)
+                        .onBackpressureBuffer()
+                        .blockingForEach(table->{
+
+                    uriMatcherGattServer.addURI("com.sous.servergatt.prodider",table,atomicInteger.get());
+
+                            atomicInteger.incrementAndGet();
+
+                    Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                            " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                            " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"   +"    Flowable.fromAction(new Action() { "
+                            +   new Date().toLocaleString() + " table " +table);
+
+                });
 
             Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                     " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
@@ -265,6 +284,10 @@ public class ContentProviderServer extends android.content.ContentProvider {
                     break;
                 case 2:
                     table = "gattserverdataversion";
+                    break;
+
+                case 3:
+                    table = "completeallmacadressusers";
                     break;
             }
             Log.i(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +

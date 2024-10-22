@@ -19,9 +19,6 @@ private  Context context;
 private  Long version;
 
 
-    @Inject
-    public BusinesslogicGetCursor businesslogicGetCursor;
-
     BinesslogicCommunicationviaMacAddress(@NonNull Context context, @NonNull Long version){
         this.context=context;
         this.version=version;
@@ -29,16 +26,24 @@ private  Long version;
 
     @Override
     public String   communicationviamacaddress(@NonNull String macdevice) {
-        String fiodevice=new String();
+        String fiodevice=null;
         try{
-            BusinesslogicGetCursor businesslogicGetCursor=new BusinesslogicGetCursor(context);
-
-            businesslogicGetCursor.getClass();
+        BusinesslogicGetCursor businesslogicGetCursor=new BusinesslogicGetCursor(context);
+            /////macdevice=   " 74:15:75:D8:F5:FA";
+            Cursor cursormacadress=    businesslogicGetCursor.getingCursor("SELECT *   " +
+                    " FROM completeallmacadressusers   WHERE  mac = '"+macdevice.trim()+"'",version,
+                    "completeallmacadressusers");
+            if(cursormacadress.getCount()>0){
+                // TODO: 22.10.2024
+              int LocationFio=cursormacadress.getColumnIndex("fio");
+                fiodevice=      cursormacadress.getString(LocationFio);
+            }
 
             Log.d(context.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                     " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
                     " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" +
-                     " macdevice " +macdevice);
+                     " macdevice " +macdevice  + " fiodevice " +fiodevice+
+                    " cursormacadress.getCount() " +cursormacadress.getCount());
         } catch (Exception e) {
             e.printStackTrace();
             Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() + " Линия  :"
