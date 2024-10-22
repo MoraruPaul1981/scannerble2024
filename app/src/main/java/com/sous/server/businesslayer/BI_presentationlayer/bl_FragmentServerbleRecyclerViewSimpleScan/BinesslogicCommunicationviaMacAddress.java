@@ -1,34 +1,33 @@
-package com.sous.server.businesslayer.BI_presentationlayer.bl_FragmentServerRecyreView;
+package com.sous.server.businesslayer.BI_presentationlayer.bl_FragmentServerbleRecyclerViewSimpleScan;
 
 import android.content.ContentValues;
 import android.content.Context;
+import android.database.Cursor;
 import android.util.Log;
-import android.widget.ProgressBar;
 
 import androidx.annotation.NonNull;
 
+import com.sous.server.businesslayer.BI_presentationlayer.bl_FragmentServerRecyreView.CommunicationviaMacAddress;
 import com.sous.server.businesslayer.Errors.SubClassErrors;
 
-public class BlgeneralServer  implements  InterfaceServerRecyreView {
+public class BinesslogicCommunicationviaMacAddress implements CommunicationviaMacAddress {
 
 private  Context context;
 private  Long version;
-    BlgeneralServer(@NonNull Context context,@NonNull Long version){
+    BinesslogicCommunicationviaMacAddress(@NonNull Context context, @NonNull Long version){
         this.context=context;
         this.version=version;
     }
 
     @Override
-    public void changethevisibilityoftheProgressbar(@NonNull ProgressBar progressbar_server_ble) {
+    public String   communicationviamacaddress(@NonNull String macdevice) {
+        String fiodevice=new String();
         try{
-
-            if (!progressbar_server_ble.isIndeterminate()) {
-                progressbar_server_ble.setIndeterminate(true);
-            }
 
             Log.d(context.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                     " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                    " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n");
+                    " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" +
+                     " macdevice " +macdevice);
         } catch (Exception e) {
             e.printStackTrace();
             Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() + " Линия  :"
@@ -43,7 +42,7 @@ private  Long version;
             valuesЗаписываемОшибки.put("whose_error", ЛокальнаяВерсияПОСравнение);
             new SubClassErrors(context).МетодЗаписиОшибок(valuesЗаписываемОшибки);
         }
-
+    return  fiodevice;
 
     }
 }

@@ -12,6 +12,8 @@ import androidx.annotation.NonNull;
 
 import com.serverscan.datasync.datasync_businesslayer.Errors.SubClassErrors;
 
+import org.jetbrains.annotations.NotNull;
+
 import java.time.LocalDateTime;
 import java.util.concurrent.atomic.AtomicReference;
 
@@ -42,14 +44,14 @@ public class BusinesslogicGetCursor {
 
     }
 
-    public  Cursor getingCursor(@NonNull String СамЗапрос,@NonNull  Long version) {
+    public  Cursor getingCursor(@NonNull String СамЗапрос, @NonNull  Long version, @NotNull String nameTableProcceting) {
         AtomicReference<Cursor> getingCursor=new AtomicReference<>();
 
         Completable.fromAction(()->{
                     // TODO: 05.09.2024
                     // TODO: 29.08.2024
                     // TODO: 29.08.2024 создаем новы экзепляр класс
-                    Uri uri = Uri.parse("content://com.sous.servergatt.prodider/" +"scannerserversuccess" + "");
+                    Uri uri = Uri.parse("content://com.sous.servergatt.prodider/" +nameTableProcceting+ "");///scannerserversuccess
                     ContentResolver resolver = context. getContentResolver();
                     getingCursor.set(resolver.query(uri, null, СамЗапрос, null,null,null));
                     if (getingCursor.get().getCount()>0) {

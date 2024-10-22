@@ -38,6 +38,8 @@ import com.sous.server.businesslayer.Errors.SubClassErrors;
 import com.sous.server.datalayer.binesslogic.bl_writeandreadScanCatt.BunissecclogicCursorLister;
 import com.sous.server.datalayer.binesslogic.bl_writeandreadScanCatt.WtitingAndreadDataForScanGatt;
 
+import org.jetbrains.annotations.NotNull;
+
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
@@ -45,7 +47,7 @@ import java.util.concurrent.ConcurrentHashMap;
 
 import javax.inject.Inject;
 
-public class Bl_FragmentRecyreViewServerSimpleScan {
+public class BinesslogicFragmentGattServerRecyclerView {
 
     private FragmentManager fragmentManager;
     private  MyRecycleViewAdapterServer myRecycleViewAdapterServer;
@@ -64,7 +66,7 @@ public class Bl_FragmentRecyreViewServerSimpleScan {
     private Context context;
 
     private Activity activity;
-    private BlgeneralServerSimpleScan blgeneralServer;
+    private BinesslogicCommunicationviaMacAddress blgeneralServer;
     private Message messageGattServer;
     private    BottomNavigationView bottomnavigationview_server_scan;
 
@@ -73,19 +75,19 @@ public class Bl_FragmentRecyreViewServerSimpleScan {
     protected SharedPreferences sharedPreferencesGatt;
 
 
-    public Bl_FragmentRecyreViewServerSimpleScan(FragmentManager fragmentManager,
-                                                 RecyclerView recyclerViewServer,
-                                                 Long version,
-                                                 MaterialCardView maincardView_server_ble_fragment,
-                                                 RelativeLayout relativeLayout_server_ble,
-                                                 TabLayout tabLayout_server_ble,
-                                                 MaterialCardView card_server_ble_inner,
-                                                 ProgressBar progressbar_server_ble,
-                                                 Animation animation,
-                                                 Context context,
-                                                 Activity activity,
-                                                 Message messageGattServer,
-                                                 BottomNavigationView bottomnavigationview_server_scan) {
+    public BinesslogicFragmentGattServerRecyclerView(@NonNull  FragmentManager fragmentManager,
+                                                     @NotNull RecyclerView recyclerViewServer,
+                                                     @NotNull    Long version,
+                                                     @NotNull   MaterialCardView maincardView_server_ble_fragment,
+                                                     @NotNull    RelativeLayout relativeLayout_server_ble,
+                                                     @NotNull     TabLayout tabLayout_server_ble,
+                                                     @NotNull    MaterialCardView card_server_ble_inner,
+                                                     @NotNull     ProgressBar progressbar_server_ble,
+                                                     @NotNull     Animation animation,
+                                                     @NotNull    Context context,
+                                                     @NotNull    Activity activity,
+                                                     @NotNull    Message messageGattServer,
+                                                     @NotNull    BottomNavigationView bottomnavigationview_server_scan) {
         // TODO: 15.08.2024
         try{
         // TODO: 17.07.2024
@@ -103,7 +105,7 @@ public class Bl_FragmentRecyreViewServerSimpleScan {
         this.messageGattServer = messageGattServer;
         this.bottomnavigationview_server_scan = bottomnavigationview_server_scan;
         // TODO: 18.07.2024
-        blgeneralServer=new BlgeneralServerSimpleScan(context,version);
+        blgeneralServer=new BinesslogicCommunicationviaMacAddress(context,version);
 
         getContentProvider();
 
@@ -572,6 +574,8 @@ public class Bl_FragmentRecyreViewServerSimpleScan {
                         // TODO: 18.07.2024  Главные Методы ЗАполения
 
                         gettextinputtext_id_currentrow(holder,getconcurrentHashMapCursor);
+
+
 
                         gettextinputtext_namedevice(holder,getconcurrentHashMapCursor);
 
@@ -1136,6 +1140,9 @@ public class Bl_FragmentRecyreViewServerSimpleScan {
             new SubClassErrors(context).МетодЗаписиОшибок(valuesЗаписываемОшибки);
         }
     }
+
+
+
     @SuppressLint("Range")
     private void gettextinputtext_namedevice(@NonNull MyViewHolder holder, @NonNull Cursor getconcurrentHashMapCursor) {
         try{
@@ -1146,6 +1153,55 @@ public class Bl_FragmentRecyreViewServerSimpleScan {
             holder.  textinputtext_namedevice.setFocusable(false);
             holder.  textinputtext_namedevice.refreshDrawableState();
             holder.  textinputtext_namedevice.requestLayout();
+
+            Log.d(context.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                    " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                    " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"
+                    +"   getconcurrentHashMapCursor.getColumnIndex(\"namedevice\")" + getconcurrentHashMapCursor.getColumnIndex("namedevice"));
+        } catch (Exception e) {
+            e.printStackTrace();
+            Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() + " Линия  :"
+                    + Thread.currentThread().getStackTrace()[2].getLineNumber());
+            ContentValues valuesЗаписываемОшибки = new ContentValues();
+            valuesЗаписываемОшибки.put("Error", e.toString().toLowerCase());
+            valuesЗаписываемОшибки.put("Klass", this.getClass().getName());
+            valuesЗаписываемОшибки.put("Metod", Thread.currentThread().getStackTrace()[2].getMethodName());
+            valuesЗаписываемОшибки.put("LineError", Thread.currentThread().getStackTrace()[2].getLineNumber());
+            final Object ТекущаяВерсияПрограммы = version;
+            Integer ЛокальнаяВерсияПОСравнение = Integer.parseInt(ТекущаяВерсияПрограммы.toString());
+            valuesЗаписываемОшибки.put("whose_error", ЛокальнаяВерсияПОСравнение);
+            new SubClassErrors(context).МетодЗаписиОшибок(valuesЗаписываемОшибки);
+        }
+    }
+
+
+
+
+
+    @SuppressLint("Range")
+    private void gettextinputtext_fio(@NonNull MyViewHolder holder, @NonNull Cursor getconcurrentHashMapCursor) {
+        try{
+            // TODO: 22.10.2024  заполянем данными ФИО если они есть , через MAC адрес
+            String macdevice=
+                    Optional.ofNullable(getconcurrentHashMapCursor.getString(getconcurrentHashMapCursor.getColumnIndex("macdevice"))).orElse("нет данных");
+
+            BinesslogicCommunicationviaMacAddress binesslogicCommunicationviaMacAddress=new BinesslogicCommunicationviaMacAddress(context,version);
+
+            String fiodevice=    binesslogicCommunicationviaMacAddress.communicationviamacaddress(macdevice);
+
+
+            Log.d(context.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                    " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                    " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"
+                    +"  macdevice" + macdevice);
+
+
+
+          //  holder. textinputtext_fio.setText(namedevice);//todo "namedevice"
+            holder. textinputtext_fio.setClickable(false);
+            holder.  textinputtext_fio.setFocusable(false);
+            holder.  textinputtext_fio.refreshDrawableState();
+            holder.  textinputtext_fio.requestLayout();
 
             Log.d(context.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                     " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +

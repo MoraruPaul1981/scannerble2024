@@ -27,7 +27,7 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.card.MaterialCardView;
 import com.google.android.material.tabs.TabLayout;
 import com.sous.server.R;
-import com.sous.server.businesslayer.BI_presentationlayer.bl_FragmentServerbleRecyclerViewSimpleScan.Bl_FragmentRecyreViewServerSimpleScan;
+import com.sous.server.businesslayer.BI_presentationlayer.bl_FragmentServerbleRecyclerViewSimpleScan.BinesslogicFragmentGattServerRecyclerView;
 import com.sous.server.businesslayer.BI_presentationlayer.bl_navigationView.GetNavigationViews;
 import com.sous.server.businesslayer.Errors.SubClassErrors;
 import com.sous.server.businesslayer.Eventbus.MessageScannerServer;
@@ -57,7 +57,7 @@ public class FragmentGattServerRecyclerView extends Fragment {
     private RecyclerView     recyclerview_server_ble;
     private ProgressBar     progressbar_server_ble;
     private  Animation animation;
-    private Bl_FragmentRecyreViewServerSimpleScan getblFragmentRecyreViewServerScan;
+    private BinesslogicFragmentGattServerRecyclerView getblFragmentRecyreViewServerScan;
 
     private Message messageGattServer;
     private BottomNavigationView bottomnavigationview_server_scan ;
@@ -236,7 +236,9 @@ public class FragmentGattServerRecyclerView extends Fragment {
         super.onStop();
         try {
             /*    //TODO:создаем подписку MessageScannerServer */
-            EventBus.getDefault().unregister(this);
+            if (  EventBus.getDefault().isRegistered(this)) {
+                EventBus.getDefault().unregister(this);
+            }
             super.onStop();
 
             Log.d(getContext().getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
@@ -263,8 +265,10 @@ public class FragmentGattServerRecyclerView extends Fragment {
     public void onDestroy() {
         try {
         /*    //TODO:создаем подписку MessageScannerServer */
-        EventBus.getDefault().unregister(this);
-        super.onDestroy();
+            if (  EventBus.getDefault().isRegistered(this)) {
+                EventBus.getDefault().unregister(this);
+            }
+            super.onDestroy();
 
             Log.d(getContext().getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                     " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
@@ -425,7 +429,7 @@ public class FragmentGattServerRecyclerView extends Fragment {
     @SuppressLint("SuspiciousIndentation")
     private void initRecureViewServer() {
         try{
-        getblFragmentRecyreViewServerScan=new Bl_FragmentRecyreViewServerSimpleScan( fragmentManager,recyclerview_server_ble,
+        getblFragmentRecyreViewServerScan=new BinesslogicFragmentGattServerRecyclerView( fragmentManager,recyclerview_server_ble,
                 version,maincardView_server_ble_fragment,relativeLayout_server_ble,tabLayout_server_ble,card_server_ble_inner,
                 progressbar_server_ble,animation,getContext(),getActivity(),messageGattServer,bottomnavigationview_server_scan);
 
