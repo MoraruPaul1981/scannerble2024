@@ -9,7 +9,7 @@ android:background="@color/black"
 xmlns:android="http://schemas.android.com/apk/res/android"
 xmlns:app="http://schemas.android.com/apk/res-auto"
 xmlns:tools="http://schemas.android.com/tools"
-tools:context=".presentationlayer.ActivityServerScanner">
+tools:context=".presentationlayer.boot.ActivityServerScanner">
 
 
     <FrameLayout

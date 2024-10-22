@@ -1,19 +1,15 @@
-package com.sous.server.presentationlayer;
+package com.sous.server.presentationlayer.boot;
 
 import android.annotation.SuppressLint;
 import android.content.ContentValues;
 import android.graphics.Color;
-import android.graphics.Typeface;
 import android.os.Bundle;
 import android.os.Message;
 import android.util.Log;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -27,13 +23,13 @@ import com.sous.server.businesslayer.BI_presentationlayer.bl_FragmentBootScanner
 import com.sous.server.businesslayer.Errors.SubClassErrors;
 import com.sous.server.businesslayer.Eventbus.MessageScannerServer;
 import com.sous.server.businesslayer.Eventbus.ParamentsScannerServer;
+import com.sous.server.presentationlayer.ui.FragmentGattServerRecyclerView;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.Date;
-import java.util.concurrent.ConcurrentHashMap;
 
 import javax.inject.Inject;
 
@@ -309,7 +305,7 @@ public class FragmentBootServer extends Fragment {
 
                 // TODO: 17.07.2024  переходим после успещглй коннекта Обмена между Клиентмо и Сервером BLE  данными
 
-                          biFragmentBootScannerServer.МетодЗапускаФрагментаServer(  new FragmentScanRecyclerView())   ; /// Scan
+                          biFragmentBootScannerServer.МетодЗапускаФрагментаServer(  new FragmentGattServerRecyclerView())   ; /// Scan
 
                           Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                                   " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +

@@ -1,4 +1,4 @@
-package com.sous.server.presentationlayer;
+package com.sous.server.presentationlayer.ui;
 
 import android.annotation.SuppressLint;
 import android.content.ContentValues;
@@ -32,6 +32,7 @@ import com.sous.server.businesslayer.BI_presentationlayer.bl_navigationView.GetN
 import com.sous.server.businesslayer.Errors.SubClassErrors;
 import com.sous.server.businesslayer.Eventbus.MessageScannerServer;
 import com.sous.server.businesslayer.Eventbus.ParamentsScannerServer;
+import com.sous.server.presentationlayer.boot.ActivityServerScanner;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -43,7 +44,7 @@ import java.util.concurrent.ConcurrentHashMap;
 import dagger.hilt.android.AndroidEntryPoint;
 
 @AndroidEntryPoint
-public class FragmentScanRecyclerView extends Fragment {
+public class FragmentGattServerRecyclerView extends Fragment {
 
     private FragmentManager fragmentManager;
 

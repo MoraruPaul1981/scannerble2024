@@ -224,7 +224,7 @@
 
 
         <activity
-            android:name=".presentationlayer.ActivityServerScanner"
+            android:name=".presentationlayer.boot.ActivityServerScanner"
             android:exported="true"
             android:grantUriPermissions="true"
             android:hardwareAccelerated="false"

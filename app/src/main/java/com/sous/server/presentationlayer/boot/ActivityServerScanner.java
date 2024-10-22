@@ -1,4 +1,4 @@
-package com.sous.server.presentationlayer;
+package com.sous.server.presentationlayer.boot;
 
 import static android.content.IntentFilter.SYSTEM_HIGH_PRIORITY;
 
@@ -37,7 +37,7 @@ public class ActivityServerScanner extends AppCompatActivity {
     protected FragmentManager fragmentManager;
 
     protected Long version;
-    protected Message messageGattServer;
+    public Message messageGattServer;
     protected AsyncTaskLoader asyncTaskLoaderGatt  ;
 
 
