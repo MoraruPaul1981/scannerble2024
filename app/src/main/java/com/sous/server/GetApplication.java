@@ -32,6 +32,9 @@ public class GetApplication  extends Application {
     @Inject
     BunissecclogicStartigDataSyncService bunissecclogicStartigDataSyncService;
 
+    @Inject
+    BunissecclogicBindDataSyncService bunissecclogicBindDataSyncService;
+
     public GetApplication() throws PackageManager.NameNotFoundException {
         super();
 // TODO: 12.08.2024
@@ -64,7 +67,6 @@ public class GetApplication  extends Application {
               remoteMessaging.initWorkmanager();
 
 
-            new BunissecclogicBindDataSyncService(getApplicationContext()).bindServiceDataSyncJboss(getApplicationContext());
 
             // TODO: 03.09.2024 запускаем синхрониазцию с ссервром Server GATT
            //// bunissecclogicStartigDataSyncService.startingAsync(getApplicationContext(),version);

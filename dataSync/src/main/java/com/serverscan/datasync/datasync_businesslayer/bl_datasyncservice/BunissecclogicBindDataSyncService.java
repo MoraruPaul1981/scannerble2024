@@ -29,13 +29,17 @@ import dagger.hilt.components.SingletonComponent;
 
 
 
+@Module
+@InstallIn(SingletonComponent.class)
 public class BunissecclogicBindDataSyncService {
     private Context context;
     private  long version;
-    private  DataSyncService.LocalBinderСерверBLE localBinderСерверBLE;
-    public  BunissecclogicBindDataSyncService(@ApplicationContext Context hitcontext ) {
+    public   DataSyncService.LocalBinderСерверBLE localBinderСерверBLE;
+    public   @Inject BunissecclogicBindDataSyncService(@ApplicationContext Context hitcontext ) {
         // TODO: 25.08.2024
         context = hitcontext;
+        // TODO: 23.10.2024 starting
+        bindServiceDataSyncJboss(context );
         // TODO: 25.08.2024
         Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                 " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
@@ -56,19 +60,19 @@ public class BunissecclogicBindDataSyncService {
 
 
 
-          Intent ServiceGattServerScan = new Intent(context, DataSyncService.class);
+          Intent intentDataSyncService = new Intent(context, DataSyncService.class);
           // TODO: 15.08.2024
-          ServiceGattServerScan.addFlags(Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
-          ServiceGattServerScan.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
-          ServiceGattServerScan.addFlags(Intent.FLAG_GRANT_PERSISTABLE_URI_PERMISSION);
-          ServiceGattServerScan.addFlags(Intent.FLAG_FROM_BACKGROUND);
-          ServiceGattServerScan.addFlags(Intent.FLAG_ACTIVITY_BROUGHT_TO_FRONT);
-          // TODO: 08.08.2024
-          ContextCompat.startForegroundService(context,ServiceGattServerScan);
+          intentDataSyncService.addFlags(Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
+          intentDataSyncService.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+          intentDataSyncService.addFlags(Intent.FLAG_GRANT_PERSISTABLE_URI_PERMISSION);
+          intentDataSyncService.addFlags(Intent.FLAG_FROM_BACKGROUND);
+          intentDataSyncService.addFlags(Intent.FLAG_ACTIVITY_BROUGHT_TO_FRONT);
+      /*    // TODO: 08.08.2024
+          ContextCompat.startForegroundService(context,ServiceGattServerScan);*/
 
 
 
-/*          ServiceConnection serviceConnectionDatStnc=    new ServiceConnection() {
+          ServiceConnection serviceConnectionDatStnc=    new ServiceConnection() {
               @Override
               public void onServiceConnected(ComponentName componentName, IBinder iBinder) {
                   // TODO: 26.07.2024
@@ -98,15 +102,8 @@ public class BunissecclogicBindDataSyncService {
               }
           };
           // TODO: 19.08.2024
-          // TODO: 19.08.2024
-       Intent   intentDataSyncService = new Intent(context, DataSyncService.class);
-     *//*     intentDataSyncService.addFlags(Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
-          intentDataSyncService.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
-          intentDataSyncService.addFlags(Intent.FLAG_FROM_BACKGROUND);
-          intentDataSyncService.addFlags(Intent.FLAG_ACTIVITY_BROUGHT_TO_FRONT);
-          intentDataSyncService.addFlags(Intent.FLAG_GRANT_PERSISTABLE_URI_PERMISSION);*//*
           // TODO: 23.10.2024 starting
-          context.bindService(intentDataSyncService,serviceConnectionDatStnc , Context.BIND_AUTO_CREATE);*/
+          context.bindService(intentDataSyncService,serviceConnectionDatStnc , Context.BIND_AUTO_CREATE);
 
           Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                 " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
