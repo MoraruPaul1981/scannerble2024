@@ -37,6 +37,9 @@ public class BroadcastReceiverGattServerName_Changed extends BroadcastReceiver {
             pendingResultAtomicReferenceServer.set(goAsync());
 
 
+
+
+
             preferencesGatt =context. getSharedPreferences("MyPrefs", MODE_PRIVATE);
 
 
