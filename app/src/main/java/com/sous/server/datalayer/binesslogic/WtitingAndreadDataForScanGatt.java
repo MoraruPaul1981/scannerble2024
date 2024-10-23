@@ -94,10 +94,9 @@ public class WtitingAndreadDataForScanGatt {
 
 
 // TODO: 30.07.2024 САМА ЗАПИСЬ В БАЗУ
-                        if (getserchDateDifference> limitForInsertNewDevice) {
+                        if (getserchDateDifference>= limitForInsertNewDevice) {
                             // TODO: 30.07.2024
-                            Integer resultAddDeviceToGattaDtabse = entryitselfintothedatabase( contentValuesВставкаДанных,
-                                    limitForInsertNewDevice);
+                            Integer resultAddDeviceToGattaDtabse = entryitselfintothedatabase( contentValuesВставкаДанных);
 
                             Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                                     " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
@@ -225,8 +224,7 @@ try{
 
 
     // TODO: 30.07.2024 САМА ЗАПИСЬ В БАЗУ
-    private Integer entryitselfintothedatabase(@NonNull  ContentValues contentValuesВставкаДанных,
-                                              @NotNull Integer dateLimitForNewDevices) {
+    private Integer entryitselfintothedatabase(@NonNull  ContentValues contentValuesВставкаДанных) {
         Integer       resultAddDeviceToGattaDtabse=0;
 // TODO: 30.07.2024
         try{
@@ -236,8 +234,8 @@ try{
 
             Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                     " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                    " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" +
-                    "  dateLimitAnrecord " + dateLimitForNewDevices +"\n" + "resultAddDeviceToGattaDtabse  " + resultAddDeviceToGattaDtabse);
+                    " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"
+                    +"\n" + "resultAddDeviceToGattaDtabse  " + resultAddDeviceToGattaDtabse);
 
     } catch (Exception e) {
         e.printStackTrace();
@@ -710,7 +708,7 @@ try{
                    + "\n"+ " dateLocaleBase " +dateLocaleBase);
 
            // TODO: 25.07.2024 обрабоатываем даты
-           DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy.MM.dd HH.mm.ss.SSS");
+           DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.SSS");
 
            LocalDateTime   LiveDate = null;
            if (dateLocaleNew!=null) {
