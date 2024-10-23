@@ -20,13 +20,15 @@ import com.serverscan.datasync.Errors.SubClassErrors;
 import com.serverscan.datasync.Services.DataSyncService;
 import com.serverscan.datasync.datasync_businesslayer.bl_network.WorkerStatusNewtorks;
 
+import java.util.concurrent.Executors;
+
 import javax.inject.Inject;
 
 import dagger.Module;
 import dagger.hilt.InstallIn;
 import dagger.hilt.android.qualifiers.ApplicationContext;
 import dagger.hilt.components.SingletonComponent;
-
+import rx.exceptions.Exceptions;
 
 
 @Module
@@ -92,8 +94,7 @@ public class BunissecclogicBindDataSyncService {
           };
           // TODO: 19.08.2024
           // TODO: 23.10.2024 starting
-          context.bindService(intentDataSyncService,serviceConnectionDatStnc , Context.BIND_AUTO_CREATE);
-
+          context.bindService(intentDataSyncService,Context.BIND_AUTO_CREATE, Executors.newCachedThreadPool(),serviceConnectionDatStnc  );
           Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                 " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
                 " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" );
