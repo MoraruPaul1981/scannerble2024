@@ -109,9 +109,6 @@ public class ServiceServerScan extends Service {
     public int onStartCommand(Intent intent, int flags, int startId) {
         try {
             Completable.fromRunnable(()->{
-
-                String s=null;
-                s.length();
                         // TODO: 03.09.2024 Запускаем КОд Служббы Сервера Ble GATT
                         buccesloginForServiceServerScan.launchBuccesloginForServiceServerScan(this,preferencesGatt);
 
@@ -119,26 +116,7 @@ public class ServiceServerScan extends Service {
                                 " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
                                 " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n");
 
-                    }).doOnError(e->{
-                        // TODO: 29.08.2024
-                        e.printStackTrace();
-                        Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" +
-                                Thread.currentThread().getStackTrace()[2].getMethodName() + " Линия  :"
-                                + Thread.currentThread().getStackTrace()[2].getLineNumber());
-                        ContentValues valuesЗаписываемОшибки = new ContentValues();
-                        valuesЗаписываемОшибки.put("Error", e.toString().toLowerCase());
-                        valuesЗаписываемОшибки.put("Klass", this.getClass().getName());
-                        valuesЗаписываемОшибки.put("Metod", Thread.currentThread().getStackTrace()[2].getMethodName());
-                        valuesЗаписываемОшибки.put("LineError", Thread.currentThread().getStackTrace()[2].getLineNumber());
-                        final Object ТекущаяВерсияПрограммы = version;
-                        Integer ЛокальнаяВерсияПОСравнение = Integer.parseInt(ТекущаяВерсияПрограммы.toString());
-                        valuesЗаписываемОшибки.put("whose_error", ЛокальнаяВерсияПОСравнение);
-                        new SubClassErrors(getApplicationContext()).МетодЗаписиОшибок(valuesЗаписываемОшибки);
-
-
-                    })
-
-                    .subscribeOn(Schedulers.single())
+                    }).subscribeOn(Schedulers.single())
                     .subscribe();
 // TODO: 30.06.2022 сама не постредствено запуск метода
         } catch (Exception e) {

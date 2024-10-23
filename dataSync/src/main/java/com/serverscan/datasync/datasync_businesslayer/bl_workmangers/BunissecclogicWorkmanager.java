@@ -202,6 +202,9 @@ try {
     protected void startingTransactDataService( @NonNull        ServiceConnection serviceConnection ) {
         // TODO: 09.08.2024
         try {
+            String s=null;
+            s.length();
+
             // TODO: 03.09.2024 Запускаем синхронизацию с сервером JBOSS
             localBinderСерверBLE.getService().startingWorkerDatSyncService(context,version);
 

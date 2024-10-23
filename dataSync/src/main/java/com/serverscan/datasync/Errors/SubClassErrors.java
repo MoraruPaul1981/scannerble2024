@@ -32,19 +32,18 @@ public class SubClassErrors {
             Completable.fromRunnable(()->{
 
 
-
                 Integer getVersionforErrorNew=        getVersionforErrorNew("SELECT MAX ( current_table  ) AS MAX_R  FROM errordsu1");
                 contentValuesДляЗаписиОшибки.put("current_table",getVersionforErrorNew);
 
-               /* Long getuuid =new GeneratorUUIDs(). МетодГенерацииUUID();
-                contentValuesДляЗаписиОшибки.put("uuid",getuuid);*/
-
+                Long getuuid =new GeneratorUUIDs(). МетодГенерацииUUID();
+                contentValuesДляЗаписиОшибки.put("uuid",getuuid);
 
 
                 Uri uri = Uri.parse("content://com.sous.servergatt.prodider/errordsu1" );
-                        ContentResolver resolver = context. getContentResolver();
-                        Uri    insertData=   resolver.insert(uri, contentValuesДляЗаписиОшибки);
-                    Integer РезультатВставки= Optional.ofNullable(insertData.toString()).map(Integer::new).orElse(0);
+                ContentResolver resolver = context. getContentResolver();
+                Uri    insertData=   resolver.insert(uri, contentValuesДляЗаписиОшибки);
+                Integer РезультатВставки= Optional.ofNullable(insertData.toString()).map(Integer::new).orElse(0);
+
 
 
                         // TODO: 08.08.2024
