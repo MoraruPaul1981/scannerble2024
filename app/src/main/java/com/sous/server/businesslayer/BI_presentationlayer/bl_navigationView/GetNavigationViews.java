@@ -15,7 +15,7 @@ import androidx.fragment.app.FragmentManager;
 import com.google.android.material.bottomnavigation.BottomNavigationItemView;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.jakewharton.rxbinding4.view.RxView;
-import com.serverscan.datasync.datasync_businesslayer.bl_workmangers.BunissecclogicWorkmanager;
+import com.serverscan.datasync.datasync_businesslayer.bl_datasyncservice.BunissecclogicStartigDataSyncService;
 import com.sous.server.R;
 import com.sous.server.businesslayer.BI_Services.BuccesloginForServiceServerScan;
 import com.sous.server.businesslayer.Errors.SubClassErrors;
@@ -364,8 +364,8 @@ public class GetNavigationViews {
             toast.setGravity(Gravity.CENTER, toast.getXOffset() / 2, toast.getYOffset() / 2);
             toast.show();
             // TODO: 03.09.2024 запускаем синхрониазцию с ссервром Server GATT
-            BunissecclogicWorkmanager bunissecclogicWorkmanager=new BunissecclogicWorkmanager(context);
-            bunissecclogicWorkmanager.startingAsync(context,version);
+            BunissecclogicStartigDataSyncService bunissecclogicStartigDataSyncService =new BunissecclogicStartigDataSyncService(context);
+            bunissecclogicStartigDataSyncService.startingAsync(context,version);
 
 
             Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +

@@ -160,7 +160,7 @@
 
   <!--      //TODO  start application library-->
         <service
-            android:name="com.serverscan.datasync.datasync_businesslayer.Services.DataSyncService"
+            android:name="com.serverscan.datasync.Services.DataSyncService"
             android:directBootAware="true"
             android:enabled="true"
             android:exported="true"

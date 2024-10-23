@@ -16,7 +16,8 @@ import androidx.work.multiprocess.RemoteWorkManager;
 
 
 import com.serverscan.datasync.Errors.SubClassErrors;
-import com.serverscan.datasync.datasync_businesslayer.WorkManager.MyWorkAsyncScannerServer;
+import com.serverscan.datasync.WorkManager.MyWorkAsyncScannerServer;
+
 
 import java.util.Date;
 import java.util.List;
@@ -87,24 +88,12 @@ public class InitWorkManager {
                 }
 
                 // TODO: 14.08.2024
-                WorkManager.getInstance(context).getWorkInfosByTag(ИмяСлужбыСинхронизации).addListener(()->{
-                    // TODO: 26.07.2024
-                    Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
-                            " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                            " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"+"  doWork "
-                            +workInfo.get(0).getState()+"'\n" +
-                            " Bremy " + new Date().toLocaleString());
-
-                }, Executors.newSingleThreadExecutor());
-
-
-                // TODO: 14.08.2024
 
 
             }else {
 // TODO: 14.08.2024  
                 RemoteWorkManager.getInstance(context.getApplicationContext()).enqueueUniquePeriodicWork(ИмяСлужбыСинхронизации,
-                        ExistingPeriodicWorkPolicy.KEEP, periodicWorkRequestСинхронизация);
+                        ExistingPeriodicWorkPolicy.UPDATE, periodicWorkRequestСинхронизация);
                 // TODO: 26.07.2024
                 Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                         " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +

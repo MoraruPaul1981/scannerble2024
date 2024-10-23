@@ -36,10 +36,6 @@ public class BroadcastReceiverGattServerName_Changed extends BroadcastReceiver {
             // TODO: 30.07.2024
             pendingResultAtomicReferenceServer.set(goAsync());
 
-
-
-
-
             preferencesGatt =context. getSharedPreferences("MyPrefs", MODE_PRIVATE);
 
 

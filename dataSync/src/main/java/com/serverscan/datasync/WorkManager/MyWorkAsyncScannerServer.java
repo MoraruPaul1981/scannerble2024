@@ -1,4 +1,4 @@
-package com.serverscan.datasync.datasync_businesslayer.WorkManager;
+package com.serverscan.datasync.WorkManager;
 
 import android.content.ContentValues;
 import android.content.Context;
@@ -15,7 +15,7 @@ import androidx.work.WorkerParameters;
 
 
 import com.serverscan.datasync.Errors.SubClassErrors;
-import com.serverscan.datasync.datasync_businesslayer.bl_workmangers.BunissecclogicWorkmanager;
+import com.serverscan.datasync.datasync_businesslayer.bl_datasyncservice.BunissecclogicStartigDataSyncService;
 
 import java.util.Date;
 import java.util.List;
@@ -30,7 +30,7 @@ public class MyWorkAsyncScannerServer extends Worker {
     private  String ИмяСлужбыСинхронизации;
 
     @Inject
-     BunissecclogicWorkmanager bunissecclogicWorkmanager;
+    BunissecclogicStartigDataSyncService bunissecclogicStartigDataSyncService;
 
 
     // TODO: 28.09.2022
@@ -45,7 +45,7 @@ public class MyWorkAsyncScannerServer extends Worker {
             Data data=     workerParams.getInputData();
             ИмяСлужбыСинхронизации=     data.getString("getname");
             // TODO: 03.09.2024
-            bunissecclogicWorkmanager=new BunissecclogicWorkmanager(context);
+            bunissecclogicStartigDataSyncService =new BunissecclogicStartigDataSyncService(context);
             
             // TODO: 26.07.2024
             Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
@@ -78,8 +78,8 @@ public class MyWorkAsyncScannerServer extends Worker {
 
             // TODO: 03.09.2024 запускаем синхрониазцию с ссервром Server GATT
             // TODO: 03.09.2024 запускаем синхрониазцию с ссервром Server GATT
-            BunissecclogicWorkmanager bunissecclogicWorkmanager=new BunissecclogicWorkmanager(context);
-            bunissecclogicWorkmanager.startingAsync(context,version);
+            BunissecclogicStartigDataSyncService bunissecclogicStartigDataSyncService =new BunissecclogicStartigDataSyncService(context);
+            bunissecclogicStartigDataSyncService.startingAsync(context,version);
 
 
 

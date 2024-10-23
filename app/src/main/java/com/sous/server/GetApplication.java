@@ -10,7 +10,8 @@ import android.util.Log;
 
 
 import com.serverscan.datasync.Services.DataSyncService;
-import com.serverscan.datasync.datasync_businesslayer.bl_workmangers.BunissecclogicWorkmanager;
+import com.serverscan.datasync.datasync_businesslayer.bl_datasyncservice.BunissecclogicBindDataSyncService;
+import com.serverscan.datasync.datasync_businesslayer.bl_datasyncservice.BunissecclogicStartigDataSyncService;
 import com.serverscan.datasync.datasync_businesslayer.bl_workmangers.RemoteMessaging;
 import com.sous.server.businesslayer.Errors.SubClassErrors;
 import com.sous.server.businesslayer.bl_OneSingal.BussenslogicOneSignal;
@@ -29,11 +30,8 @@ public class GetApplication  extends Application {
     private   long   version;
     protected SQLiteDatabase Create_Database_СамаБАзаSQLite;
     @Inject
-    BunissecclogicWorkmanager bunissecclogicWorkmanager;
+    BunissecclogicStartigDataSyncService bunissecclogicStartigDataSyncService;
 
-
-
-    private  DataSyncService.LocalBinderСерверBLE localBinderСерверBLE;
     public GetApplication() throws PackageManager.NameNotFoundException {
         super();
 // TODO: 12.08.2024
@@ -66,8 +64,10 @@ public class GetApplication  extends Application {
               remoteMessaging.initWorkmanager();
 
 
+            new BunissecclogicBindDataSyncService(getApplicationContext()).bindServiceDataSyncJboss(getApplicationContext());
+
             // TODO: 03.09.2024 запускаем синхрониазцию с ссервром Server GATT
-           //// bunissecclogicWorkmanager.startingAsync(getApplicationContext(),version);
+           //// bunissecclogicStartigDataSyncService.startingAsync(getApplicationContext(),version);
 
             // TODO: 26.07.2024
             Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +

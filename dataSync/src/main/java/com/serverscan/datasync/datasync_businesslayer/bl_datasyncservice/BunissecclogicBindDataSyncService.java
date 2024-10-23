@@ -1,10 +1,11 @@
-package com.serverscan.datasync.datasync_businesslayer.bl_workmangers;
+package com.serverscan.datasync.datasync_businesslayer.bl_datasyncservice;
 
 import android.content.ComponentName;
 import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
 import android.content.ServiceConnection;
+import android.content.pm.PackageInfo;
 import android.os.Handler;
 import android.os.IBinder;
 import android.os.Looper;
@@ -13,15 +14,11 @@ import android.view.Gravity;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.core.content.ContextCompat;
 
 import com.serverscan.datasync.Errors.SubClassErrors;
 import com.serverscan.datasync.Services.DataSyncService;
-
-
-
 import com.serverscan.datasync.datasync_businesslayer.bl_network.WorkerStatusNewtorks;
-
-import java.util.Random;
 
 import javax.inject.Inject;
 
@@ -31,19 +28,12 @@ import dagger.hilt.android.qualifiers.ApplicationContext;
 import dagger.hilt.components.SingletonComponent;
 
 
-@Module
-@InstallIn(SingletonComponent.class)
-public class BunissecclogicWorkmanager {
 
+public class BunissecclogicBindDataSyncService {
     private Context context;
-
     private  long version;
-
     private  DataSyncService.LocalBinderСерверBLE localBinderСерверBLE;
-    final private Handler handler=new Handler(Looper.getMainLooper());
-
-
-    public @Inject BunissecclogicWorkmanager(@ApplicationContext Context hitcontext ) {
+    public  BunissecclogicBindDataSyncService(@ApplicationContext Context hitcontext ) {
         // TODO: 25.08.2024
         context = hitcontext;
         // TODO: 25.08.2024
@@ -55,55 +45,30 @@ public class BunissecclogicWorkmanager {
 
     // TODO: 14.08.2024
 
-public  void  startingAsync(@NonNull Context context,@NonNull Long version){
-try {
-    // TODO: 26.07.2024
 
-// TODO: 03.09.2024  запуск службы синхронизвции work mamanger
-    WorkerStatusNewtorks workerStatusNewtorks=new WorkerStatusNewtorks(context,version);
-    Boolean StatusNewtwork= workerStatusNewtorks.getStatusNewtwork();
-    if (StatusNewtwork==true) {
-        // TODO: 06.09.2024
-        bindServiceDataSyncJboss(context, version);
-
-
-    }else{
-
-
-        context.getMainExecutor().execute(()->{
-            Toast toast = Toast.makeText(context, "Нет  сети !!! ", Toast.LENGTH_LONG);
-            toast.setGravity(Gravity.CENTER, toast.getXOffset() / 2, toast.getYOffset() / 2);
-            toast.show();
-        });
-    }
-
-    Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
-            " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-            " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" );
-
-
-} catch (Exception e) {
-        e.printStackTrace();
-        Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName()
-                + " Линия  :"
-                + Thread.currentThread().getStackTrace()[2].getLineNumber());
-        ContentValues valuesЗаписываемОшибки = new ContentValues();
-        valuesЗаписываемОшибки.put("Error", e.toString().toLowerCase());
-        valuesЗаписываемОшибки.put("Klass", this.getClass().getName());
-        valuesЗаписываемОшибки.put("Metod", Thread.currentThread().getStackTrace()[2].getMethodName());
-        valuesЗаписываемОшибки.put("LineError", Thread.currentThread().getStackTrace()[2].getLineNumber());
-        final Object ТекущаяВерсияПрограммы = version;
-        Integer ЛокальнаяВерсияПОСравнение = Integer.parseInt(ТекущаяВерсияПрограммы.toString());
-        valuesЗаписываемОшибки.put("whose_error", ЛокальнаяВерсияПОСравнение);
-        new SubClassErrors(context).МетодЗаписиОшибок(valuesЗаписываемОшибки);
-    }
-
-}
-
-    private void bindServiceDataSyncJboss(@NonNull Context context, @NonNull Long version) {
+    public void bindServiceDataSyncJboss(@NonNull Context context ) {
       try{
+          Long version;
 
-          ServiceConnection serviceConnectionDatStnc=    new ServiceConnection() {
+          // TODO: 08.08.2024
+          PackageInfo pInfo = context.getPackageManager().getPackageInfo(context.getPackageName(), 0);
+          version = pInfo.getLongVersionCode();
+
+
+
+          Intent ServiceGattServerScan = new Intent(context, DataSyncService.class);
+          // TODO: 15.08.2024
+          ServiceGattServerScan.addFlags(Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
+          ServiceGattServerScan.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+          ServiceGattServerScan.addFlags(Intent.FLAG_GRANT_PERSISTABLE_URI_PERMISSION);
+          ServiceGattServerScan.addFlags(Intent.FLAG_FROM_BACKGROUND);
+          ServiceGattServerScan.addFlags(Intent.FLAG_ACTIVITY_BROUGHT_TO_FRONT);
+          // TODO: 08.08.2024
+          ContextCompat.startForegroundService(context,ServiceGattServerScan);
+
+
+
+/*          ServiceConnection serviceConnectionDatStnc=    new ServiceConnection() {
               @Override
               public void onServiceConnected(ComponentName componentName, IBinder iBinder) {
                   // TODO: 26.07.2024
@@ -135,13 +100,13 @@ try {
           // TODO: 19.08.2024
           // TODO: 19.08.2024
        Intent   intentDataSyncService = new Intent(context, DataSyncService.class);
-          intentDataSyncService.addFlags(Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
+     *//*     intentDataSyncService.addFlags(Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
           intentDataSyncService.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
           intentDataSyncService.addFlags(Intent.FLAG_FROM_BACKGROUND);
           intentDataSyncService.addFlags(Intent.FLAG_ACTIVITY_BROUGHT_TO_FRONT);
-          intentDataSyncService.addFlags(Intent.FLAG_GRANT_PERSISTABLE_URI_PERMISSION);
+          intentDataSyncService.addFlags(Intent.FLAG_GRANT_PERSISTABLE_URI_PERMISSION);*//*
           // TODO: 23.10.2024 starting
-          context.bindService(intentDataSyncService,serviceConnectionDatStnc , Context.BIND_AUTO_CREATE);
+          context.bindService(intentDataSyncService,serviceConnectionDatStnc , Context.BIND_AUTO_CREATE);*/
 
           Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                 " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
