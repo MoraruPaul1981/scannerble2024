@@ -1,39 +1,25 @@
 package com.serverscan.datasync.datasync_businesslayer.bl_Jakson.parsejsonfromserver;
 
 
-import android.annotation.SuppressLint;
 import android.content.ContentResolver;
 import android.content.ContentValues;
 import android.content.Context;
-import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 
-import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.core.type.TypeReference;
-import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.ObjectWriter;
-import com.fasterxml.jackson.databind.SequenceWriter;
-import com.serverscan.datasync.datasync_businesslayer.Errors.SubClassErrors;
+import com.serverscan.datasync.Errors.SubClassErrors;
 import com.serverscan.datasync.datasync_businesslayer.bl_Jakson.interfaces.WtiringJaksonJSONInterface;
 import com.serverscan.datasync.datasync_businesslayer.bl_Jakson.model.CompleteallmacadressusersEntityDeserial;
-import com.serverscan.datasync.datasync_businesslayer.bl_dates.BinesslogicParserDates;
-import com.serverscan.datasync.datasync_businesslayer.bl_Jakson.model.ScannerserversuccessEntitySerial;
 
 import org.jetbrains.annotations.NotNull;
 
-import java.io.ByteArrayOutputStream;
 import java.io.Serializable;
 import java.lang.reflect.Type;
-import java.math.BigDecimal;
 import java.time.LocalDateTime;
-import java.util.Date;
-import java.util.List;
-import java.util.Optional;
 import java.util.concurrent.CopyOnWriteArrayList;
-import java.util.concurrent.ExecutionException;
 import java.util.concurrent.atomic.AtomicReference;
 
 import javax.inject.Inject;
@@ -42,9 +28,7 @@ import dagger.Module;
 import dagger.hilt.InstallIn;
 import dagger.hilt.android.qualifiers.ApplicationContext;
 import dagger.hilt.components.SingletonComponent;
-import io.reactivex.rxjava3.annotations.NonNull;
 import io.reactivex.rxjava3.core.Completable;
-import io.reactivex.rxjava3.core.Flowable;
 import io.reactivex.rxjava3.core.Single;
 
 @Module

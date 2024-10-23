@@ -10,6 +10,7 @@ import android.util.Log;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
+import com.serverscan.datasync.Errors.SubClassErrors;
 import com.serverscan.datasync.datasync_businesslayer.bl_Jakson.model.CompleteallmacadressusersEntityDeserial;
 import com.serverscan.datasync.datasync_businesslayer.bl_dates.BinesslogicParserDates;
 
@@ -134,7 +135,7 @@ public class ContentProviderCompleteallmacadress {
                     final Object ТекущаяВерсияПрограммы = version;
                     Integer ЛокальнаяВерсияПОСравнение = Integer.parseInt(ТекущаяВерсияПрограммы.toString());
                     valuesЗаписываемОшибки.put("whose_error", ЛокальнаяВерсияПОСравнение);
-                    new com.serverscan.datasync.datasync_businesslayer.Errors.SubClassErrors(context).МетодЗаписиОшибок(valuesЗаписываемОшибки);
+                    new SubClassErrors(context).МетодЗаписиОшибок(valuesЗаписываемОшибки);
 
 
                 })

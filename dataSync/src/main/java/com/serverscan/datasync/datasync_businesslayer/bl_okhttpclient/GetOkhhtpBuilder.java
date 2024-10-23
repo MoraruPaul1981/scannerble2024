@@ -8,8 +8,9 @@ import android.location.LocationManager;
 import android.util.Log;
 
 
+import com.serverscan.datasync.Errors.SubClassErrors;
 import com.serverscan.datasync.R;
-import com.serverscan.datasync.datasync_businesslayer.Errors.SubClassErrors;
+
 import com.serverscan.datasync.datasync_businesslayer.bl_SSL.QualifierX509Certificate;
 import com.serverscan.datasync.datasync_businesslayer.bl_SSL.X509GetInt;
 import com.serverscan.datasync.datasync_businesslayer.bl_okhttpclient.interfaces.OkhhtpInterface;

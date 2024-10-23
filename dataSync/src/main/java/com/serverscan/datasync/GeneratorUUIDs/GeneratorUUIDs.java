@@ -1,40 +1,43 @@
-package com.serverscan.datasync.datasync_businesslayer.bl_network;
-
-
+package com.serverscan.datasync.GeneratorUUIDs;
 
 import android.content.ContentValues;
 import android.content.Context;
-import android.net.ConnectivityManager;
-import android.net.NetworkInfo;
 import android.util.Log;
 
 import com.serverscan.datasync.Errors.SubClassErrors;
 
+import java.math.BigInteger;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
-public class WorkerStatusNewtorks {
+public class GeneratorUUIDs {
+
 
     private Context context;
 
-    private  Long version;
-
-    public WorkerStatusNewtorks(Context context, Long version) {
-        this.context = context;
-        this.version = version;
-    }
+    private long version;
 
 
-  public   Boolean getStatusNewtwork(){
-        Boolean StatusNewtwork=false;
+
+
+    @androidx.annotation.NonNull
+    public Long МетодГенерацииUUID( ) {
+        Long getUUID = 0l;
         try{
-            ConnectivityManager  connectivityManager = (ConnectivityManager)context.getSystemService(Context.CONNECTIVITY_SERVICE);
-            NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
-            // TODO: 22.08.2024 Парименимае Решение Запускаем Сихронизацию
-            if (activeNetworkInfo!=null) {
-                StatusNewtwork=true;
-            }
+
+            LocalDateTime futureDate = LocalDateTime.now();
+            DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy.MM.dd HH.mm.ss.SSS");
+            String uuid=   dtf.format(futureDate) ;
+            String finaluuid=   uuid.replaceAll("[^0-9]","");
+            // uuid = uuid.replaceAll("^[a-zA-Z]", "");
+            //uuid= CharMatcher.any().replaceFrom("[A-Za-z0-9]", "");
+            BigInteger result = new BigInteger(finaluuid);
+            getUUID = result.longValue();
             Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                     " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                    " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"+  " StatusNewtwork " +StatusNewtwork );
+                    " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" +
+                    " uuid " + uuid);
+
         } catch (Exception e) {
             e.printStackTrace();
             Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() + " Линия  :"
@@ -49,7 +52,11 @@ public class WorkerStatusNewtorks {
             valuesЗаписываемОшибки.put("whose_error", ЛокальнаяВерсияПОСравнение);
             new SubClassErrors(context).МетодЗаписиОшибок(valuesЗаписываемОшибки);
         }
-        return  StatusNewtwork;
+        return getUUID;
     }
+
+
+
+
 
 }

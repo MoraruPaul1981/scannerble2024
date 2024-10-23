@@ -4,7 +4,8 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.util.Log;
 
-import com.serverscan.datasync.datasync_businesslayer.Errors.SubClassErrors;
+
+import com.serverscan.datasync.Errors.SubClassErrors;
 
 import org.jetbrains.annotations.NotNull;
 

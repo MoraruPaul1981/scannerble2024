@@ -7,7 +7,8 @@ import android.database.Cursor;
 import android.net.Uri;
 import android.util.Log;
 
-import com.serverscan.datasync.datasync_businesslayer.Errors.SubClassErrors;
+
+import com.serverscan.datasync.Errors.SubClassErrors;
 import com.serverscan.datasync.datasync_businesslayer.bl_dates.interfaces.GetDateIn;
 
 import org.jetbrains.annotations.NotNull;

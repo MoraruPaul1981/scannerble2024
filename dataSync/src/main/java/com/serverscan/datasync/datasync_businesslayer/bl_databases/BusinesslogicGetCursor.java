@@ -10,7 +10,8 @@ import android.util.Log;
 
 import androidx.annotation.NonNull;
 
-import com.serverscan.datasync.datasync_businesslayer.Errors.SubClassErrors;
+
+import com.serverscan.datasync.Errors.SubClassErrors;
 
 import org.jetbrains.annotations.NotNull;
 

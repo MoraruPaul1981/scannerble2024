@@ -5,7 +5,8 @@ import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 
-import com.serverscan.datasync.datasync_businesslayer.Errors.SubClassErrors;
+import com.serverscan.datasync.Errors.SubClassErrors;
+
 
 public class RemoteMessaging {
 

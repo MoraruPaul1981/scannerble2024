@@ -239,7 +239,7 @@ public class FragmentGattServerRecyclerView extends Fragment {
             if (  EventBus.getDefault().isRegistered(this)) {
                 EventBus.getDefault().unregister(this);
             }
-            super.onStop();
+
 
             Log.d(getContext().getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                     " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
@@ -264,11 +264,12 @@ public class FragmentGattServerRecyclerView extends Fragment {
     @Override
     public void onDestroy() {
         try {
+            super.onDestroy();
         /*    //TODO:создаем подписку MessageScannerServer */
             if (  EventBus.getDefault().isRegistered(this)) {
                 EventBus.getDefault().unregister(this);
             }
-            super.onDestroy();
+
 
             Log.d(getContext().getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                     " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +

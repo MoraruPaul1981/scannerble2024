@@ -13,7 +13,8 @@ import androidx.work.WorkManager;
 import androidx.work.Worker;
 import androidx.work.WorkerParameters;
 
-import com.serverscan.datasync.datasync_businesslayer.Errors.SubClassErrors;
+
+import com.serverscan.datasync.Errors.SubClassErrors;
 import com.serverscan.datasync.datasync_businesslayer.bl_workmangers.BunissecclogicWorkmanager;
 
 import java.util.Date;

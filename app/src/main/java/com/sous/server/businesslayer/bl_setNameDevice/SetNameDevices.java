@@ -7,7 +7,8 @@ import android.os.Build;
 import android.provider.Settings;
 import android.util.Log;
 
-import com.serverscan.datasync.datasync_businesslayer.Errors.SubClassErrors;
+import com.serverscan.datasync.Errors.SubClassErrors;
+
 
 public class SetNameDevices {
 

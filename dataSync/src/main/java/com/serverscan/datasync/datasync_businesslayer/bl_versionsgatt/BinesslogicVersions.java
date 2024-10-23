@@ -10,7 +10,8 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 
-import com.serverscan.datasync.datasync_businesslayer.Errors.SubClassErrors;
+
+import com.serverscan.datasync.Errors.SubClassErrors;
 import com.serverscan.datasync.datasync_businesslayer.bl_dates.BinesslogicParserDates;
 
 import org.jetbrains.annotations.NotNull;

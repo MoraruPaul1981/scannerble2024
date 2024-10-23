@@ -13,7 +13,8 @@ import com.google.firebase.crashlytics.buildtools.reloc.com.google.common.io.Byt
 import com.google.firebase.crashlytics.buildtools.reloc.org.apache.commons.io.IOUtils;
 import com.google.firebase.crashlytics.buildtools.reloc.org.apache.http.client.methods.HttpGet;
 import com.google.firebase.crashlytics.buildtools.reloc.org.apache.http.client.utils.URIBuilder;
-import com.serverscan.datasync.datasync_businesslayer.Errors.SubClassErrors;
+
+import com.serverscan.datasync.Errors.SubClassErrors;
 import com.serverscan.datasync.datasync_businesslayer.bl_dates.DateForJboss;
 import com.serverscan.datasync.datasync_businesslayer.bl_okhttpclient.binesslogic.DispatchersGatt;
 

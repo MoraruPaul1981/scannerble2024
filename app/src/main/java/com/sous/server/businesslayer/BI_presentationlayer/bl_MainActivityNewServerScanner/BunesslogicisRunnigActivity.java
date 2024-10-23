@@ -1,5 +1,6 @@
 package com.sous.server.businesslayer.BI_presentationlayer.bl_MainActivityNewServerScanner;
 
+import android.annotation.SuppressLint;
 import android.app.ActivityManager;
 import android.content.Context;
 import android.util.Log;
@@ -21,6 +22,7 @@ public class BunesslogicisRunnigActivity  implements BunesslogicisRunnigActivity
     }
 
 
+    @SuppressLint("SuspiciousIndentation")
     @Override
     public boolean isRunning( ) {
         ActivityManager activityManager = (ActivityManager) context.getSystemService(Context.ACTIVITY_SERVICE);

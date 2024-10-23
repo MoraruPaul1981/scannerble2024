@@ -13,7 +13,8 @@ import android.util.Log;
 import androidx.annotation.Nullable;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.serverscan.datasync.datasync_businesslayer.Errors.SubClassErrors;
+
+import com.serverscan.datasync.Errors.SubClassErrors;
 import com.serverscan.datasync.datasync_businesslayer.bl_datasyncservice.BinesslogicDataSyncServiceGetGet;
 import com.serverscan.datasync.datasync_businesslayer.bl_datasyncservice.BinesslogicDataSyncServiceGetPost;
 import com.serverscan.datasync.datasync_businesslayer.bl_jbossadress.QualifierJbossServer3;

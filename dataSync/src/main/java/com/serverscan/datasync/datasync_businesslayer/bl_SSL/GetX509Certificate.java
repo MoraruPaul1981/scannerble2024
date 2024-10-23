@@ -6,8 +6,9 @@ import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.util.Log;
 
+import com.serverscan.datasync.Errors.SubClassErrors;
 import com.serverscan.datasync.R;
-import com.serverscan.datasync.datasync_businesslayer.Errors.SubClassErrors;
+
 import com.serverscan.datasync.datasync_businesslayer.bl_okhttpclient.interfaces.QualifierOkhhtp;
 
 import org.jetbrains.annotations.NotNull;

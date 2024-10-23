@@ -68,6 +68,8 @@ import dagger.Module;
 import dagger.hilt.InstallIn;
 import dagger.hilt.android.qualifiers.ApplicationContext;
 import dagger.hilt.components.SingletonComponent;
+import io.reactivex.rxjava3.core.Completable;
+import io.reactivex.rxjava3.schedulers.Schedulers;
 
 
 @Module
@@ -179,17 +181,17 @@ private  Long version;
 
     public void startingServiceGattServer( ) {
         try {
-                        // TODO: 23.07.2024 starting
-                        Intent ServiceGattServerScan = new Intent(context, ServiceServerScan.class);
-                        // TODO: 15.08.2024
-                        ServiceGattServerScan=  startPowerManager(ServiceGattServerScan);
-                        ServiceGattServerScan.addFlags(Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
-                        ServiceGattServerScan.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
-                        ServiceGattServerScan.addFlags(Intent.FLAG_GRANT_PERSISTABLE_URI_PERMISSION);
-                        ServiceGattServerScan.addFlags(Intent.FLAG_FROM_BACKGROUND);
-                        ServiceGattServerScan.addFlags(Intent.FLAG_ACTIVITY_BROUGHT_TO_FRONT);
-                        // TODO: 08.08.2024
-                        ContextCompat.startForegroundService(context,ServiceGattServerScan);
+                // TODO: 23.07.2024 starting
+                Intent ServiceGattServerScan = new Intent(context, ServiceServerScan.class);
+                // TODO: 15.08.2024
+                ServiceGattServerScan=  startPowerManager(ServiceGattServerScan);
+                ServiceGattServerScan.addFlags(Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
+                ServiceGattServerScan.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+                ServiceGattServerScan.addFlags(Intent.FLAG_GRANT_PERSISTABLE_URI_PERMISSION);
+                ServiceGattServerScan.addFlags(Intent.FLAG_FROM_BACKGROUND);
+                ServiceGattServerScan.addFlags(Intent.FLAG_ACTIVITY_BROUGHT_TO_FRONT);
+                // TODO: 08.08.2024
+                ContextCompat.startForegroundService(context,ServiceGattServerScan);
 
                         Log.d(context.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                                 " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
@@ -790,10 +792,11 @@ private  Long version;
 
     private void getNonetwork() {
         try {
-        Toast toast = Toast.makeText(context, "Нет   локации !!! ", Toast.LENGTH_LONG);
-        toast.setGravity(Gravity.CENTER, toast.getXOffset() / 2, toast.getYOffset() / 2);
-        toast.show();
-        
+            context.getMainExecutor().execute(()->{
+                Toast toast = Toast.makeText(context, "Нет   локации !!! ", Toast.LENGTH_LONG);
+                toast.setGravity(Gravity.CENTER, toast.getXOffset() / 2, toast.getYOffset() / 2);
+                toast.show();
+            });
             Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                     " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
                     " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"  + "\n" +

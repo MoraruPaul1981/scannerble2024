@@ -14,7 +14,8 @@ import androidx.work.WorkInfo;
 import androidx.work.WorkManager;
 import androidx.work.multiprocess.RemoteWorkManager;
 
-import com.serverscan.datasync.datasync_businesslayer.Errors.SubClassErrors;
+
+import com.serverscan.datasync.Errors.SubClassErrors;
 import com.serverscan.datasync.datasync_businesslayer.WorkManager.MyWorkAsyncScannerServer;
 
 import java.util.Date;
