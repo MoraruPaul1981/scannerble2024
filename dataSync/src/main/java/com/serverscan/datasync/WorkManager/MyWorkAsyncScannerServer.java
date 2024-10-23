@@ -5,6 +5,8 @@ import android.content.Context;
 import android.content.pm.PackageInfo;
 import android.os.Message;
 import android.util.Log;
+import android.view.Gravity;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.work.Data;
@@ -15,7 +17,9 @@ import androidx.work.WorkerParameters;
 
 
 import com.serverscan.datasync.Errors.SubClassErrors;
-import com.serverscan.datasync.datasync_businesslayer.bl_datasyncservice.BunissecclogicStartigDataSyncService;
+import com.serverscan.datasync.datasync_businesslayer.bl_datasyncservice.BunissecclogicBindDataSyncService;
+import com.serverscan.datasync.datasync_businesslayer.bl_network.WorkerStatusNewtorks;
+
 
 import java.util.Date;
 import java.util.List;
@@ -24,13 +28,12 @@ import javax.inject.Inject;
 
 
 public class MyWorkAsyncScannerServer extends Worker {
-    private Context context;
+
     private Long version=0l;
     private Message messageWoekManager;
     private  String ИмяСлужбыСинхронизации;
 
-    @Inject
-    BunissecclogicStartigDataSyncService bunissecclogicStartigDataSyncService;
+
 
 
     // TODO: 28.09.2022
@@ -38,14 +41,13 @@ public class MyWorkAsyncScannerServer extends Worker {
         super(context, workerParams);
         try{
             // TODO: 14.08.2024
-            this.context = context;
             PackageInfo pInfo = context.getPackageManager().getPackageInfo(context.getPackageName(), 0);
             version = pInfo.getLongVersionCode();
 
             Data data=     workerParams.getInputData();
             ИмяСлужбыСинхронизации=     data.getString("getname");
             // TODO: 03.09.2024
-            bunissecclogicStartigDataSyncService =new BunissecclogicStartigDataSyncService(context);
+
             
             // TODO: 26.07.2024
             Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
@@ -74,20 +76,34 @@ public class MyWorkAsyncScannerServer extends Worker {
     public Result doWork() {
         try {
             // TODO: 14.08.2024
-            List<WorkInfo> workInfo = WorkManager.getInstance(context).getWorkInfosByTag(ИмяСлужбыСинхронизации).get();
+            List<WorkInfo> workInfo = WorkManager.getInstance(getApplicationContext()).getWorkInfosByTag(ИмяСлужбыСинхронизации).get();
+
 
             // TODO: 03.09.2024 запускаем синхрониазцию с ссервром Server GATT
-            // TODO: 03.09.2024 запускаем синхрониазцию с ссервром Server GATT
-            BunissecclogicStartigDataSyncService bunissecclogicStartigDataSyncService =new BunissecclogicStartigDataSyncService(context);
-            bunissecclogicStartigDataSyncService.startingAsync(context,version);
+            // TODO: 03.09.2024  запуск службы синхронизвции work mamanger
+            WorkerStatusNewtorks workerStatusNewtorks=new WorkerStatusNewtorks(getApplicationContext(),version);
+            Boolean StatusNewtwork= workerStatusNewtorks.getStatusNewtwork();
+            if (StatusNewtwork==true) {
+                // TODO: 06.09.2024
+                //todo зпуск синхрониазции
+                new BunissecclogicBindDataSyncService(getApplicationContext()).bindServiceDataSyncJboss(getApplicationContext(),version);
+
+            }else{
 
 
+                getApplicationContext().getMainExecutor().execute(()->{
+                    Toast toast = Toast.makeText(getApplicationContext(), "Нет  сети !!! ", Toast.LENGTH_LONG);
+                    toast.setGravity(Gravity.CENTER, toast.getXOffset() / 2, toast.getYOffset() / 2);
+                    toast.show();
+                });
+            }
 
             // TODO: 26.07.2024
             Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                     " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
                     " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"+"  doWork " +workInfo.get(0).getState()+"'\n" +
-                    " Bremy " + new Date().toLocaleString()+" workInfo.size() "+workInfo.size());
+                    " Bremy " + new Date().toLocaleString()+" workInfo.size() "+workInfo.size() +
+                    StatusNewtwork +" StatusNewtwork ");
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -101,7 +117,7 @@ public class MyWorkAsyncScannerServer extends Worker {
             final Object ТекущаяВерсияПрограммы = version;
             Integer ЛокальнаяВерсияПОСравнение = Integer.parseInt(ТекущаяВерсияПрограммы.toString());
             valuesЗаписываемОшибки.put("whose_error", ЛокальнаяВерсияПОСравнение);
-            new SubClassErrors(context).МетодЗаписиОшибок(valuesЗаписываемОшибки);
+            new SubClassErrors(getApplicationContext()).МетодЗаписиОшибок(valuesЗаписываемОшибки);
         }
         return Result.success();
     }
@@ -130,7 +146,7 @@ public class MyWorkAsyncScannerServer extends Worker {
             final Object ТекущаяВерсияПрограммы = version;
             Integer ЛокальнаяВерсияПОСравнение = Integer.parseInt(ТекущаяВерсияПрограммы.toString());
             valuesЗаписываемОшибки.put("whose_error", ЛокальнаяВерсияПОСравнение);
-            new SubClassErrors(context).МетодЗаписиОшибок(valuesЗаписываемОшибки);
+            new SubClassErrors(getApplicationContext()).МетодЗаписиОшибок(valuesЗаписываемОшибки);
         }
     }
 

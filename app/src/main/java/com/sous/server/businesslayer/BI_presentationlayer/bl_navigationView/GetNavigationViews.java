@@ -15,7 +15,9 @@ import androidx.fragment.app.FragmentManager;
 import com.google.android.material.bottomnavigation.BottomNavigationItemView;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.jakewharton.rxbinding4.view.RxView;
-import com.serverscan.datasync.datasync_businesslayer.bl_datasyncservice.BunissecclogicStartigDataSyncService;
+import com.serverscan.datasync.datasync_businesslayer.bl_datasyncservice.BunissecclogicBindDataSyncService;
+
+import com.serverscan.datasync.datasync_businesslayer.bl_network.WorkerStatusNewtorks;
 import com.sous.server.R;
 import com.sous.server.businesslayer.BI_Services.BuccesloginForServiceServerScan;
 import com.sous.server.businesslayer.Errors.SubClassErrors;
@@ -359,13 +361,32 @@ public class GetNavigationViews {
 
     private void rebootAsyncServer() {
         try {
-            // TODO: 19.07.2024 Запуск Службы
-            Toast toast=     Toast.makeText(context, "Обмен данных !!!", Toast.LENGTH_LONG);
-            toast.setGravity(Gravity.CENTER, toast.getXOffset() / 2, toast.getYOffset() / 2);
-            toast.show();
             // TODO: 03.09.2024 запускаем синхрониазцию с ссервром Server GATT
-            BunissecclogicStartigDataSyncService bunissecclogicStartigDataSyncService =new BunissecclogicStartigDataSyncService(context);
-            bunissecclogicStartigDataSyncService.startingAsync(context,version);
+            context.getMainExecutor().execute(()->{
+                Toast toast=     Toast.makeText(context, "Обмен данных !!!", Toast.LENGTH_LONG);
+                toast.setGravity(Gravity.CENTER, toast.getXOffset() / 2, toast.getYOffset() / 2);
+                toast.show();
+            });
+
+
+// TODO: 03.09.2024  запуск службы синхронизвции work mamanger
+            WorkerStatusNewtorks workerStatusNewtorks=new WorkerStatusNewtorks(context,version);
+            Boolean StatusNewtwork= workerStatusNewtorks.getStatusNewtwork();
+            if (StatusNewtwork==true) {
+                // TODO: 06.09.2024
+          //todo зпуск синхрониазции
+               new BunissecclogicBindDataSyncService(context).bindServiceDataSyncJboss(context,version);
+
+            }else{
+
+
+                context.getMainExecutor().execute(()->{
+                    Toast toast = Toast.makeText(context, "Нет  сети !!! ", Toast.LENGTH_LONG);
+                    toast.setGravity(Gravity.CENTER, toast.getXOffset() / 2, toast.getYOffset() / 2);
+                    toast.show();
+                });
+            }
+
 
 
             Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +

@@ -34,12 +34,11 @@ import dagger.hilt.components.SingletonComponent;
 public class BunissecclogicBindDataSyncService {
     private Context context;
     private  long version;
-    public   DataSyncService.LocalBinderСерверBLE localBinderСерверBLE;
+
     public   @Inject BunissecclogicBindDataSyncService(@ApplicationContext Context hitcontext ) {
         // TODO: 25.08.2024
         context = hitcontext;
         // TODO: 23.10.2024 starting
-        bindServiceDataSyncJboss(context );
         // TODO: 25.08.2024
         Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                 " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
@@ -50,15 +49,8 @@ public class BunissecclogicBindDataSyncService {
     // TODO: 14.08.2024
 
 
-    public void bindServiceDataSyncJboss(@NonNull Context context ) {
+    public void bindServiceDataSyncJboss(@NonNull Context context ,@NonNull Long version ) {
       try{
-          Long version;
-
-          // TODO: 08.08.2024
-          PackageInfo pInfo = context.getPackageManager().getPackageInfo(context.getPackageName(), 0);
-          version = pInfo.getLongVersionCode();
-
-
 
           Intent intentDataSyncService = new Intent(context, DataSyncService.class);
           // TODO: 15.08.2024
@@ -69,19 +61,16 @@ public class BunissecclogicBindDataSyncService {
           intentDataSyncService.addFlags(Intent.FLAG_ACTIVITY_BROUGHT_TO_FRONT);
       /*    // TODO: 08.08.2024
           ContextCompat.startForegroundService(context,ServiceGattServerScan);*/
-
-
-
           ServiceConnection serviceConnectionDatStnc=    new ServiceConnection() {
               @Override
               public void onServiceConnected(ComponentName componentName, IBinder iBinder) {
                   // TODO: 26.07.2024
                   if (iBinder.isBinderAlive()) {
                       // TODO: 28.07.2023  Update
-                      localBinderСерверBLE = (DataSyncService.LocalBinderСерверBLE) iBinder;
+                      DataSyncService.LocalBinderСерверBLE     localBinderСерверBLE = (DataSyncService.LocalBinderСерверBLE) iBinder;
                       // TODO: 03.09.2024
-                      // TODO: 03.09.2024 Запускаем синхронизацию с сервером JBOSS
-                      localBinderСерверBLE.getService().startingWorkerDatSyncService(context, version);
+                      //TODO: 03.09.2024 Запускаем синхронизацию с сервером JBOSS
+                    localBinderСерверBLE.getService().startingWorkerDatSyncService(context, version);
 
                       Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                               " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +

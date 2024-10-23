@@ -11,7 +11,7 @@ import android.util.Log;
 
 import com.serverscan.datasync.Services.DataSyncService;
 import com.serverscan.datasync.datasync_businesslayer.bl_datasyncservice.BunissecclogicBindDataSyncService;
-import com.serverscan.datasync.datasync_businesslayer.bl_datasyncservice.BunissecclogicStartigDataSyncService;
+
 import com.serverscan.datasync.datasync_businesslayer.bl_workmangers.RemoteMessaging;
 import com.sous.server.businesslayer.Errors.SubClassErrors;
 import com.sous.server.businesslayer.bl_OneSingal.BussenslogicOneSignal;
@@ -29,9 +29,6 @@ import dagger.hilt.android.HiltAndroidApp;
 public class GetApplication  extends Application {
     private   long   version;
     protected SQLiteDatabase Create_Database_СамаБАзаSQLite;
-    @Inject
-    BunissecclogicStartigDataSyncService bunissecclogicStartigDataSyncService;
-
     @Inject
     BunissecclogicBindDataSyncService bunissecclogicBindDataSyncService;
 

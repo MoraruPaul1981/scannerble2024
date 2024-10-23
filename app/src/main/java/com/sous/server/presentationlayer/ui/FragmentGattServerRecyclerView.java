@@ -26,6 +26,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.card.MaterialCardView;
 import com.google.android.material.tabs.TabLayout;
+import com.serverscan.datasync.datasync_businesslayer.bl_datasyncservice.BunissecclogicBindDataSyncService;
 import com.sous.server.R;
 import com.sous.server.businesslayer.BI_presentationlayer.bl_FragmentServerbleRecyclerViewSimpleScan.BinesslogicFragmentGattServerRecyclerView;
 import com.sous.server.businesslayer.BI_presentationlayer.bl_navigationView.GetNavigationViews;
@@ -40,6 +41,8 @@ import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.Date;
 import java.util.concurrent.ConcurrentHashMap;
+
+import javax.inject.Inject;
 
 import dagger.hilt.android.AndroidEntryPoint;
 
