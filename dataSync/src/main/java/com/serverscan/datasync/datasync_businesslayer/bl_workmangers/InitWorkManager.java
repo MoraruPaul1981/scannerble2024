@@ -69,7 +69,7 @@ public class InitWorkManager {
                 // TODO: 14.08.2024
                 switch ( workInfo.get(0).getState())   {
           
-                    case RUNNING,BLOCKED,ENQUEUED ,CANCELLED,SUCCEEDED,FAILED -> {
+                    case RUNNING ,ENQUEUED -> {
                         // TODO: 26.07.2024
                         Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                                 " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
@@ -78,8 +78,8 @@ public class InitWorkManager {
           
                     default -> {
                         // TODO: 14.08.2024  
-                        RemoteWorkManager.getInstance(context.getApplicationContext()).enqueueUniquePeriodicWork(ИмяСлужбыСинхронизации,
-                                ExistingPeriodicWorkPolicy.UPDATE, periodicWorkRequestСинхронизация);
+                        WorkManager.getInstance(context ).enqueueUniquePeriodicWork(ИмяСлужбыСинхронизации,
+                                ExistingPeriodicWorkPolicy.KEEP, periodicWorkRequestСинхронизация);
                         // TODO: 26.07.2024
                         Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                                 " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
@@ -92,8 +92,8 @@ public class InitWorkManager {
 
             }else {
 // TODO: 14.08.2024  
-                RemoteWorkManager.getInstance(context.getApplicationContext()).enqueueUniquePeriodicWork(ИмяСлужбыСинхронизации,
-                        ExistingPeriodicWorkPolicy.UPDATE, periodicWorkRequestСинхронизация);
+                WorkManager.getInstance(context ).enqueueUniquePeriodicWork(ИмяСлужбыСинхронизации,
+                        ExistingPeriodicWorkPolicy.KEEP, periodicWorkRequestСинхронизация);
                 // TODO: 26.07.2024
                 Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                         " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +

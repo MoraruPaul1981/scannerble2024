@@ -30,7 +30,7 @@ import javax.inject.Inject;
 public class MyWorkAsyncScannerServer extends Worker {
 
     private Long version=0l;
-    private Message messageWoekManager;
+   
     private  String ИмяСлужбыСинхронизации;
 
 

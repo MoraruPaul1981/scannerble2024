@@ -114,7 +114,7 @@ public class BinesslogicDataSyncServiceGetPost implements InterfaceDataSyncServi
                     new SubClassErrors(context).МетодЗаписиОшибок(valuesЗаписываемОшибки);
 
                 }).doOnSuccess(SuccessByteJaksonPost->{
-            // TODO: 23.10.2024  
+            // TODO: 23.10.2024
             // TODO: 03.09.2024 sending  Stream to Server
             new BinesslogicNetworkWorkerPost(context).sendOkhhtpServiceForSendJboss(context,version,dataSyncService.getJbossAdressDebug,
                     cursorAtomicReference.get() ,SuccessByteJaksonPost,dataSyncService.getOkhhtpBuilder);

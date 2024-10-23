@@ -11,6 +11,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageInfo;
+import android.provider.Settings;
 import android.util.Log;
 
 import com.sous.server.businesslayer.BI_Services.BuccesloginForServiceServerScan;
@@ -38,13 +39,14 @@ public class BroadcastReceiverGattServerName_Changed extends BroadcastReceiver {
 
             preferencesGatt =context. getSharedPreferences("MyPrefs", MODE_PRIVATE);
 
-
+            String ANDROID_ID= Settings.Secure.getString(context.getContentResolver(), Settings.Secure.ANDROID_ID);
             // TODO: 31.07.2024 Получаем сам девайс
          final   BluetoothDevice     bluetoothDevice = intent.getParcelableExtra(BluetoothDevice.EXTRA_DEVICE);
             final   int       rssi = intent.getShortExtra(BluetoothDevice.EXTRA_RSSI,Short.MIN_VALUE);
             final   String     name = intent.getStringExtra(BluetoothDevice.EXTRA_NAME);
             final   String     transport = intent.getStringExtra(BluetoothDevice.EXTRA_TRANSPORT);
-            intent.putExtra(BluetoothDevice.EXTRA_PAIRING_KEY,new Random().nextInt());
+            intent.putExtra(BluetoothDevice.EXTRA_PAIRING_KEY,555);
+
 
             final    PackageInfo pInfo = context.getPackageManager().getPackageInfo(context.getPackageName(), 0);
             version = pInfo.getLongVersionCode();
