@@ -118,7 +118,11 @@ public class DataSyncService extends IntentService {
      try{
     // TODO: 29.08.2024  Сразу Две обработки и Get и POST к серверу и от сервера
 
+         //TODO POST -> Jboss
     binesslogicDataSyncServiceGetPost.proseccingDataSyncPost(getApplicationContext(),version,dataSyncService.get());
+
+         //TODO GET <-Jboss
+         binesslogicDataSyncServiceGetGet.proseccingDataSyncGet(getApplicationContext(),version,dataSyncService.get());
 
     Log.d(getApplicationContext().getClass().getName(), "\n"
             + " class " + Thread.currentThread().getStackTrace()[2].getClassName() +

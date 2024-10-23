@@ -9,6 +9,7 @@ import android.util.Log;
 
 import androidx.annotation.NonNull;
 
+import com.google.firebase.crashlytics.buildtools.reloc.com.google.common.util.concurrent.AtomicDouble;
 import com.serverscan.datasync.Errors.SubClassErrors;
 import com.serverscan.datasync.Services.DataSyncService;
 
@@ -18,6 +19,7 @@ import com.serverscan.datasync.datasync_businesslayer.bl_network.BinesslogicNetw
 import com.serverscan.datasync.datasync_businesslayer.bl_versionsgatt.BinesslogicVersions;
 
 import java.util.concurrent.CopyOnWriteArrayList;
+import java.util.concurrent.atomic.AtomicReference;
 
 import javax.inject.Inject;
 
@@ -26,6 +28,7 @@ import dagger.hilt.InstallIn;
 import dagger.hilt.android.qualifiers.ApplicationContext;
 import dagger.hilt.components.SingletonComponent;
 import io.reactivex.rxjava3.core.Completable;
+import io.reactivex.rxjava3.core.Single;
 
 
 @Module
@@ -58,26 +61,26 @@ public class BinesslogicDataSyncServiceGetPost implements InterfaceDataSyncServi
 @Override
     public void proseccingDataSyncPost(@NonNull Context context , @NonNull Long version
         , @NonNull DataSyncService dataSyncService)    {
+    // TODO: 23.10.2024  
+    AtomicReference<Cursor> cursorAtomicReference=new AtomicReference<>();
         // TODO: 04.09.2024 POST
-        Completable.fromAction(()->{
+        Single.fromCallable(()->{
                     // TODO: 12.09.2024
                     // TODO: 03.09.2024 get DATA
                  Long gettingVersionRemote=    new BinesslogicVersions(context).gettingVersionRemote(context,version);
                     // TODO: 09.09.2024 получаем данные которые надотправить на сервер  GATT SEVER
-                    Cursor cursorSinglePOST=   dataSyncService.businesslogicGetCursor.getingCursor("SELECT" +
-                            " * FROM scannerserversuccess  WHERE current_table >'"+gettingVersionRemote.toString()+"' ORDER BY id   ",version,"scannerserversuccess");
+            cursorAtomicReference.set(  dataSyncService.businesslogicGetCursor.getingCursor("SELECT" +
+                            " * FROM scannerserversuccess  WHERE current_table >'"+gettingVersionRemote.toString()+"' ORDER BY id   ",version,"scannerserversuccess"));
                     // TODO: 03.09.2024
-                    if (cursorSinglePOST.getCount()>0) {
+                    byte[] ByteJakson = new byte[0];
+                    
+                    if (cursorAtomicReference.get().getCount()>0) {
 
                         // TODO: 23.08.2024 Генерирум List базе курсора в Обьекты Листа ЧТобы ПОтом ПОлучить Jakson Json
-                        CopyOnWriteArrayList<ScannerserversuccessEntitySerial> listForJakson=  dataSyncService. genetarorJaksonJSON.genetarorListFor(context,version,cursorSinglePOST);
+                        CopyOnWriteArrayList<ScannerserversuccessEntitySerial> listForJakson=  dataSyncService. genetarorJaksonJSON.genetarorListFor(context,version,cursorAtomicReference.get());
                         // TODO: 03.09.2024 get Stream based on Cursor
-                        byte[] ByteJakson=    dataSyncService.genetarorJaksonJSON.genetarorJaksonJSON(context,version,     listForJakson  ,dataSyncService.getHiltJaksonObjectMapper     );
-
-                        // TODO: 03.09.2024 sending  Stream to Server
-                             new BinesslogicNetworkWorkerPost(context).sendOkhhtpServiceForSendJboss(context,version,dataSyncService.getJbossAdressDebug,
-                                     cursorSinglePOST ,ByteJakson,dataSyncService.getOkhhtpBuilder);
-
+                        ByteJakson=    dataSyncService.genetarorJaksonJSON.genetarorJaksonJSON(context,version,     listForJakson  ,dataSyncService.getHiltJaksonObjectMapper     );
+                        
                         // TODO: 03.09.2024 get InputStream   for sending an server
                         Log.d(context.getClass().getName(), "\n" + " class " +
                                 Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
@@ -90,7 +93,10 @@ public class BinesslogicDataSyncServiceGetPost implements InterfaceDataSyncServi
                             Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                             " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
                             " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"+
-                            " cursorSingle.getCount() " +cursorSinglePOST.getCount());
+                            " ByteJakson " +ByteJakson);
+                    
+                    return  ByteJakson;
+               
 
                 }).doOnError(e->{
                     e.printStackTrace();
@@ -107,15 +113,20 @@ public class BinesslogicDataSyncServiceGetPost implements InterfaceDataSyncServi
                     valuesЗаписываемОшибки.put("whose_error", ЛокальнаяВерсияПОСравнение);
                     new SubClassErrors(context).МетодЗаписиОшибок(valuesЗаписываемОшибки);
 
-                })
-                .doOnComplete(()->{
+                }).doOnSuccess(SuccessByteJaksonPost->{
+            // TODO: 23.10.2024  
+            // TODO: 03.09.2024 sending  Stream to Server
+            new BinesslogicNetworkWorkerPost(context).sendOkhhtpServiceForSendJboss(context,version,dataSyncService.getJbossAdressDebug,
+                    cursorAtomicReference.get() ,SuccessByteJaksonPost,dataSyncService.getOkhhtpBuilder);
+            
                     // TODO: 04.09.2024
                     Log.d(context.getClass().getName(), "\n" + " class " +
                             Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                             " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                            " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n");
+                            " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" + 
+                            " cursorAtomicReference.get() " +cursorAtomicReference.get() +  "  SuccessByteJaksonPost " +SuccessByteJaksonPost);
 
-                }).subscribe();
+                }).blockingSubscribe();
         Log.d(context.getClass().getName(), "\n" + " class " +
                 Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                 " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
