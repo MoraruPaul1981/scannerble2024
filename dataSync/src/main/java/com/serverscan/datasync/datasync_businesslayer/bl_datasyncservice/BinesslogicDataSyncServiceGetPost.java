@@ -115,11 +115,13 @@ public class BinesslogicDataSyncServiceGetPost implements InterfaceDataSyncServi
 
                 }).doOnSuccess(SuccessByteJaksonPost->{
             // TODO: 23.10.2024
-            // TODO: 03.09.2024 sending  Stream to Server
-            new BinesslogicNetworkWorkerPost(context).sendOkhhtpServiceForSendJboss(context,version,dataSyncService.getJbossAdressDebug,
-                    cursorAtomicReference.get() ,SuccessByteJaksonPost,dataSyncService.getOkhhtpBuilder);
-            
-                    // TODO: 04.09.2024
+            if (SuccessByteJaksonPost.length>0) {
+                // TODO: 03.09.2024 sending  Stream to Server
+                new BinesslogicNetworkWorkerPost(context).sendOkhhtpServiceForSendJboss(context,version,dataSyncService.getJbossAdressDebug,
+                        cursorAtomicReference.get() ,SuccessByteJaksonPost,dataSyncService.getOkhhtpBuilder);
+            }
+
+            // TODO: 04.09.2024
                     Log.d(context.getClass().getName(), "\n" + " class " +
                             Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                             " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +

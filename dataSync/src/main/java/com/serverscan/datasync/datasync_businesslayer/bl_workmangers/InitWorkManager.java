@@ -57,47 +57,43 @@ public class InitWorkManager {
                     .setInputData(myDataДляОбщейСинхрониазации)
                     .setConstraints(constraintsСинхронизация)
                     .setBackoffCriteria(
-                            BackoffPolicy.LINEAR,
-                            PeriodicWorkRequest.MIN_BACKOFF_MILLIS,
-                            TimeUnit.MILLISECONDS)
-                    .build();
-
+                    BackoffPolicy.LINEAR,
+                    PeriodicWorkRequest.MIN_BACKOFF_MILLIS,
+                    TimeUnit.MILLISECONDS).build();
 
            List<WorkInfo> workInfo = WorkManager.getInstance(context).getWorkInfosByTag(ИмяСлужбыСинхронизации).get();
 
-            if (workInfo.size()>0) {
+            if (workInfo.size()==0) {
                 // TODO: 14.08.2024
-                switch ( workInfo.get(0).getState())   {
-          
-                    case RUNNING ,ENQUEUED -> {
-                        // TODO: 26.07.2024
-                        Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
-                                " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                                " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n");
-                    }
-          
-                    default -> {
-                        // TODO: 14.08.2024  
-                        WorkManager.getInstance(context ).enqueueUniquePeriodicWork(ИмяСлужбыСинхронизации,
-                                ExistingPeriodicWorkPolicy.KEEP, periodicWorkRequestСинхронизация);
-                        // TODO: 26.07.2024
-                        Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
-                                " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                                " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n");
-                    }
-                }
-
                 // TODO: 14.08.2024
-
-
-            }else {
-// TODO: 14.08.2024  
                 WorkManager.getInstance(context ).enqueueUniquePeriodicWork(ИмяСлужбыСинхронизации,
-                        ExistingPeriodicWorkPolicy.KEEP, periodicWorkRequestСинхронизация);
+                        ExistingPeriodicWorkPolicy.UPDATE, periodicWorkRequestСинхронизация);
                 // TODO: 26.07.2024
                 Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                         " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                        " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n");  
+                        " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n");
+                // TODO: 14.08.2024
+            } else {
+                switch ( workInfo.get(0).getState())   {
+                    case BLOCKED ,  CANCELLED -> {
+                        // TODO: 23.10.2024
+
+                        // TODO: 14.08.2024
+                        WorkManager.getInstance(context ).enqueueUniquePeriodicWork(ИмяСлужбыСинхронизации,
+                                ExistingPeriodicWorkPolicy.UPDATE, periodicWorkRequestСинхронизация);
+                        // TODO: 26.07.2024
+                        Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                                " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                                " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n");
+                        // TODO: 26.07.2024
+                        Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                                " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                                " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n");
+                    }
+
+
+                }
+
             }
 
 

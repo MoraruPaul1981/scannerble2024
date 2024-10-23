@@ -18,6 +18,7 @@ import androidx.work.WorkerParameters;
 
 import com.serverscan.datasync.Errors.SubClassErrors;
 import com.serverscan.datasync.datasync_businesslayer.bl_datasyncservice.BunissecclogicBindDataSyncService;
+import com.serverscan.datasync.datasync_businesslayer.bl_isrunnig.BunesslogicisRunnigActivityWorkManager;
 import com.serverscan.datasync.datasync_businesslayer.bl_network.WorkerStatusNewtorks;
 
 
@@ -30,7 +31,7 @@ import javax.inject.Inject;
 public class MyWorkAsyncScannerServer extends Worker {
 
     private Long version=0l;
-   
+
     private  String ИмяСлужбыСинхронизации;
 
 
@@ -82,28 +83,27 @@ public class MyWorkAsyncScannerServer extends Worker {
             // TODO: 03.09.2024 запускаем синхрониазцию с ссервром Server GATT
             // TODO: 03.09.2024  запуск службы синхронизвции work mamanger
             WorkerStatusNewtorks workerStatusNewtorks=new WorkerStatusNewtorks(getApplicationContext(),version);
-            Boolean StatusNewtwork= workerStatusNewtorks.getStatusNewtwork();
-            if (StatusNewtwork==true) {
+            Boolean StatusNewtworkWorkManager= workerStatusNewtorks.getStatusNewtwork();
+
+// TODO: 23.10.2024  проверяем если запцщено актвити
+            BunesslogicisRunnigActivityWorkManager bunesslogicisRunnigActivity=new BunesslogicisRunnigActivityWorkManager(getApplicationContext(),version);
+            Boolean isRunningActivityWorkmanager=   bunesslogicisRunnigActivity.isRunning();
+
+            if (StatusNewtworkWorkManager==true && isRunningActivityWorkmanager==false) {
                 // TODO: 06.09.2024
                 //todo зпуск синхрониазции
                 new BunissecclogicBindDataSyncService(getApplicationContext()).bindServiceDataSyncJboss(getApplicationContext(),version);
-
-            }else{
-
-
-                getApplicationContext().getMainExecutor().execute(()->{
-                    Toast toast = Toast.makeText(getApplicationContext(), "Нет  сети !!! ", Toast.LENGTH_LONG);
-                    toast.setGravity(Gravity.CENTER, toast.getXOffset() / 2, toast.getYOffset() / 2);
-                    toast.show();
-                });
             }
-
+          /*      getApplicationContext().getMainExecutor().execute(()->{
+                Toast toast = Toast.makeText(getApplicationContext(), "Нет  сети !!! ", Toast.LENGTH_LONG);
+                toast.setGravity(Gravity.CENTER, toast.getXOffset() / 2, toast.getYOffset() / 2);
+                toast.show();*/
             // TODO: 26.07.2024
             Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                     " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
                     " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"+"  doWork " +workInfo.get(0).getState()+"'\n" +
                     " Bremy " + new Date().toLocaleString()+" workInfo.size() "+workInfo.size() +
-                    StatusNewtwork +" StatusNewtwork ");
+                    StatusNewtworkWorkManager +" StatusNewtworkWorkManager "+ " isRunningActivityWorkmanager " +isRunningActivityWorkmanager);
 
         } catch (Exception e) {
             e.printStackTrace();

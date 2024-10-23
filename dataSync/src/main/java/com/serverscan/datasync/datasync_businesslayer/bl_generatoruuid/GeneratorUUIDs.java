@@ -1,4 +1,4 @@
-package com.serverscan.datasync.GeneratorUUIDs;
+package com.serverscan.datasync.datasync_businesslayer.bl_generatoruuid;
 
 import android.content.ContentValues;
 import android.content.Context;

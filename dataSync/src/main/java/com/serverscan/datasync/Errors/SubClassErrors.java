@@ -9,15 +9,12 @@ import android.util.Log;
 
 import androidx.annotation.NonNull;
 
-import com.serverscan.datasync.GeneratorUUIDs.GeneratorUUIDs;
+import com.serverscan.datasync.datasync_businesslayer.bl_generatoruuid.GeneratorUUIDs;
 
 import java.util.Date;
 import java.util.Optional;
 
 import io.reactivex.rxjava3.core.Completable;
-import io.reactivex.rxjava3.core.CompletableObserver;
-import io.reactivex.rxjava3.disposables.Disposable;
-import io.reactivex.rxjava3.schedulers.Schedulers;
 
 public class SubClassErrors {
     Context context;
