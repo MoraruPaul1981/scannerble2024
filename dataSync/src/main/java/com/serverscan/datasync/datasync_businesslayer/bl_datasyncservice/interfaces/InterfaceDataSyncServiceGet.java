@@ -4,7 +4,8 @@ import android.content.Context;
 
 import androidx.annotation.NonNull;
 
-import com.serverscan.datasync.datasync_businesslayer.Services.DataSyncService;
+import com.serverscan.datasync.Services.DataSyncService;
+
 
 public interface InterfaceDataSyncServiceGet {
 

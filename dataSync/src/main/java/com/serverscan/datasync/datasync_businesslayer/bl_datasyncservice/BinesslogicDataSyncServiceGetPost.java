@@ -9,12 +9,12 @@ import android.util.Log;
 
 import androidx.annotation.NonNull;
 
+import com.serverscan.datasync.Services.DataSyncService;
 import com.serverscan.datasync.datasync_businesslayer.Errors.SubClassErrors;
-import com.serverscan.datasync.datasync_businesslayer.Services.DataSyncService;
-import com.serverscan.datasync.datasync_businesslayer.bl_network.BinesslogicNetworkWorkerPost;
-import com.serverscan.datasync.datasync_businesslayer.bl_datasyncservice.interfaces.InterfaceDataSyncServicePost;
-import com.serverscan.datasync.datasync_businesslayer.bl_versionsgatt.BinesslogicVersions;
 import com.serverscan.datasync.datasync_businesslayer.bl_Jakson.model.ScannerserversuccessEntitySerial;
+import com.serverscan.datasync.datasync_businesslayer.bl_datasyncservice.interfaces.InterfaceDataSyncServicePost;
+import com.serverscan.datasync.datasync_businesslayer.bl_network.BinesslogicNetworkWorkerPost;
+import com.serverscan.datasync.datasync_businesslayer.bl_versionsgatt.BinesslogicVersions;
 
 import java.util.concurrent.CopyOnWriteArrayList;
 

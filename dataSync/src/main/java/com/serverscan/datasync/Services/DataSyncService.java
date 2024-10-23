@@ -1,4 +1,4 @@
-package com.serverscan.datasync.datasync_businesslayer.Services;
+package com.serverscan.datasync.Services;
 
 import android.app.IntentService;
 import android.content.ContentValues;
@@ -31,7 +31,12 @@ import java.util.concurrent.atomic.AtomicReference;
 import javax.inject.Inject;
 
 import dagger.hilt.android.AndroidEntryPoint;
+import io.reactivex.rxjava3.annotations.NonNull;
+import io.reactivex.rxjava3.core.CompletableObserver;
+import io.reactivex.rxjava3.core.CompletableSource;
 import io.reactivex.rxjava3.core.Single;
+import io.reactivex.rxjava3.core.SingleObserver;
+import io.reactivex.rxjava3.disposables.Disposable;
 import io.reactivex.rxjava3.schedulers.Schedulers;
 import okhttp3.OkHttpClient;
 
@@ -111,12 +116,11 @@ public class DataSyncService extends IntentService {
     public  void startingWorkerDatSyncService(@NotNull Context context,@NotNull Long version){
 
         // TODO: 29.08.2024  Сразу Две обработки и Get и POST к серверу и от сервера
-        Single.fromCallable(new Callable<Object>() {
+    Disposable disposableDataService= Single.fromCallable(new Callable<Object>() {
             @Override
             public Object call() throws Exception {
                 // TODO: 16.10.2024  POST  send
                 binesslogicDataSyncServiceGetPost.proseccingDataSyncPost(getApplicationContext(),version,dataSyncService.get());
-
                 Log.d(getApplicationContext().getClass().getName(), "\n"
                         + " class " + Thread.currentThread().getStackTrace()[2].getClassName() +
                         "\n" +

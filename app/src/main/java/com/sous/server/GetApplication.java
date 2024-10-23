@@ -9,7 +9,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 
 
-import com.serverscan.datasync.datasync_businesslayer.Services.DataSyncService;
+import com.serverscan.datasync.Services.DataSyncService;
 import com.serverscan.datasync.datasync_businesslayer.bl_workmangers.BunissecclogicWorkmanager;
 import com.serverscan.datasync.datasync_businesslayer.bl_workmangers.RemoteMessaging;
 import com.sous.server.businesslayer.Errors.SubClassErrors;

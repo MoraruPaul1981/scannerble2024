@@ -129,7 +129,7 @@ public class Bl_BloadcastGatt_getDeviceClentGatt {
                         new SubClassErrors(context).МетодЗаписиОшибок(valuesЗаписываемОшибки);
                     }
                 })
-                .subscribeOn(Schedulers.computation())
+                .subscribeOn(Schedulers.single())
                 .subscribe();
         Log.d(context.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                 " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +

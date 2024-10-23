@@ -9,6 +9,8 @@ import android.database.Cursor;
 import android.net.Uri;
 import android.util.Log;
 
+import com.sous.server.R;
+import com.sous.server.businesslayer.BI_presentationlayer.bl_MainActivityNewServerScanner.BunesslogicisRunnigActivity;
 import com.sous.server.businesslayer.ContentProvoders.ContentProviderServer;
 import com.sous.server.businesslayer.Errors.SubClassErrors;
 import com.sous.server.businesslayer.Eventbus.MessageScannerServer;
@@ -623,17 +625,25 @@ try{
             // TODO: 18.07.2024 sending Cursor
             sendFragmentparamentsScannerServer.setConcurrentHashMapCursor( concurrentHashMapCursor);
 
-            //TODO: послымаем Из Службы Значение на Фрагмент
-            MessageScannerServer sendmessageScannerStartRecyreViewFragment= new MessageScannerServer( sendFragmentparamentsScannerServer);
 
-            //TODO: ответ на экран работает ообрубование или нет
-            EventBus.getDefault().post(sendmessageScannerStartRecyreViewFragment);
+// TODO: 23.10.2024  проверяем если запцщено актвити
+            BunesslogicisRunnigActivity bunesslogicisRunnigActivity=new BunesslogicisRunnigActivity(context,version);
+         Boolean isRunningActivity=   bunesslogicisRunnigActivity.isRunning();
+
+
+            if (isRunningActivity) {
+                //TODO: послымаем Из Службы Значение на Фрагмент
+                MessageScannerServer sendmessageScannerStartRecyreViewFragment= new MessageScannerServer( sendFragmentparamentsScannerServer);
+
+                //TODO: ответ на экран работает ообрубование или нет
+                EventBus.getDefault().post(sendmessageScannerStartRecyreViewFragment);
+            }
 
             Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                     " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
                     " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"+
                     " contentValuesConcurrentHashMap " +contentValuesConcurrentHashMap +
-                    " concurrentHashMapCursor " +concurrentHashMapCursor+" contentValuesВставкаДанныхGaTT.getAsString(\"macdevice\") ");
+                    " concurrentHashMapCursor " +concurrentHashMapCursor+"isRunningActivity"+isRunningActivity);
 
         } catch (Exception e) {
             e.printStackTrace();

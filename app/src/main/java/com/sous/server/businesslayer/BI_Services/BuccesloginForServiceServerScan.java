@@ -125,8 +125,6 @@ private  Long version;
         try {
             // TODO: 23.07.2024 starting  core motods BLE Gatt Server
             initAdapterBluetoothManager();
-            // TODO: 03.09.2024 запоминим данные в глобальн я память 
-            getPreferenceManager();
             //TODO:получаем Статус Адаптера Bluetooth true, false  и оптравляем статус в активти
             getStatusEnableBlueadapter = enableBluetoothAdapter(bluetoothAdapter,version,contentProviderServer);
 
@@ -177,27 +175,6 @@ private  Long version;
 
     }
 
-    private void getPreferenceManager() {
-        try{
-
-        Log.d(context.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
-                " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n");
-    } catch (Exception e) {
-        e.printStackTrace();
-        Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() + " Линия  :"
-                + Thread.currentThread().getStackTrace()[2].getLineNumber());
-        ContentValues valuesЗаписываемОшибки = new ContentValues();
-        valuesЗаписываемОшибки.put("Error", e.toString().toLowerCase());
-        valuesЗаписываемОшибки.put("Klass", this.getClass().getName());
-        valuesЗаписываемОшибки.put("Metod", Thread.currentThread().getStackTrace()[2].getMethodName());
-        valuesЗаписываемОшибки.put("LineError", Thread.currentThread().getStackTrace()[2].getLineNumber());
-        final Object ТекущаяВерсияПрограммы = version;
-        Integer ЛокальнаяВерсияПОСравнение = Integer.parseInt(ТекущаяВерсияПрограммы.toString());
-        valuesЗаписываемОшибки.put("whose_error", ЛокальнаяВерсияПОСравнение);
-        new SubClassErrors(context).МетодЗаписиОшибок(valuesЗаписываемОшибки);
-    }
-    }
 
 
     public void startingServiceGattServer( ) {
@@ -734,7 +711,7 @@ private  Long version;
 
                 locationManager.requestLocationUpdates( LocationManager.GPS_PROVIDER,
                         60000,
-                        100,new DirectExecutorForLocation(),
+                        10,new DirectExecutorForLocation(),
                         new GattLocationListener(context, sharedPreferencesGatt,version,  locationManager) );
 
 

@@ -54,7 +54,7 @@ public class SubClassErrors {
                         // TODO: 08.08.2024
                         Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                                 " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                                " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" +"ERROR ERROR ERROR CLETNT SERVER  !!!!!!"+"\n"+ " РезультатВставки " +РезультатВставки+
+                                " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" +"ERROR ERROR ERROR GATT SERVER   !!!!!!"+"\n"+ " РезультатВставки " +РезультатВставки+
                                 " contentValuesДляЗаписиОшибки " +contentValuesДляЗаписиОшибки);
 
 
