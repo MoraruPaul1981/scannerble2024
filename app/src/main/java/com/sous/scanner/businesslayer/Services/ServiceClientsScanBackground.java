@@ -48,7 +48,7 @@ public class ServiceClientsScanBackground extends IntentService {
    private     NotificationManager notificationManager;
 private      SharedPreferences preferences;
 
-
+private Businesslogic_ScaningClientWorker businesslogicScaningClientWorker;
     public ServiceClientsScanBackground( ) {
         super(ServiceClientsScanBackground.class.toString());
     }
@@ -63,7 +63,8 @@ private      SharedPreferences preferences;
                     + " время: " + new Date() + "\n+" +
                     " Класс в процессе... " + this.getClass().getName() + "\n" +
                     " метод в процессе... " + Thread.currentThread().getStackTrace()[2].getMethodName());
-
+            // TODO: 24.10.2024
+            Notification();
             preferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
             BusinessoginEnableBluetoothAdapter bluetoothAdapter=       new BusinessoginEnableBluetoothAdapter(getApplicationContext(),version);
             bluetoothAdapterPhoneClient   = bluetoothAdapter.initBluetootAdapter();
@@ -74,19 +75,23 @@ private      SharedPreferences preferences;
 
 
             // TODO: 01.10.2024  Завание Устро1ство
-            String setingNameDeviceClientScanner =  new SetNameDevices(getApplicationContext(),version).setingNameDevice();
-            bluetoothAdapterPhoneClient.setName(setingNameDeviceClientScanner);
-            
-            // TODO: 24.07.2024 starting   settings
+            if (bluetoothAdapterPhoneClient!=null) {
+                // TODO: 24.10.2024  
+                String setingNameDeviceClientScanner =  new SetNameDevices(getApplicationContext(),version).setingNameDevice();
+                // TODO: 24.10.2024
+                bluetoothAdapterPhoneClient.setName(setingNameDeviceClientScanner);
+            }
+                // TODO: 24.07.2024 starting   settings
 // TODO: 24.07.2024 Reference an class Buncess logica Servir Scan
-             blForServiceScan=       new Businesslogic_ScaningClientWorker(bluetoothManagerServer,
-                    bluetoothAdapterPhoneClient,
-                    version,
-                    getApplicationContext(),this,  preferences);
+                blForServiceScan=       new Businesslogic_ScaningClientWorker(bluetoothManagerServer,
+                       bluetoothAdapterPhoneClient,
+                       version,
+                       getApplicationContext(),this,  preferences);
 
-            blForServiceScan.    getLocalBroadcastManager ();
+                blForServiceScan.    getLocalBroadcastManager ();
 
-            Notification();
+
+
 
             // TODO: 25.08.2024
             if (ActivityCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.BLUETOOTH_SCAN) != PackageManager.PERMISSION_GRANTED) {
@@ -146,6 +151,8 @@ private      SharedPreferences preferences;
         try{
 // TODO: 24.07.2024 Scan
                 // TODO: 09.08.2024
+
+                // TODO: 24.10.2024  
                 switch (intent.getAction()) {
                     // TODO: 06.08.2024
                     case "robotlaunchingfrombackground":
@@ -188,8 +195,8 @@ private      SharedPreferences preferences;
                                 " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" + " intent " +intent.getAction());
                     }
 
-                }
 
+            }
 
 
             Log.d(getApplicationContext().getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +

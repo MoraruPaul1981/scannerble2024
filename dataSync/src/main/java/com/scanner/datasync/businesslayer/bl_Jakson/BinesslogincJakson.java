@@ -58,7 +58,7 @@ public class BinesslogincJakson {
                                           @NonNull ObjectMapper getHiltJaksonObjectMapper,
                                           @NonNull byte[] bytesGetOtJBossGetScanner) {
         // TODO: 24.10.2024
-        AtomicReference<JsonNode>  jsonNodeScannerBLE=new AtomicReference<>();
+        AtomicReference<JsonNode>  jsonNodeScannerBLE=new AtomicReference<>( );
         try{
         // TODO: 28.08.2024
         Completable completable=   Completable.fromAction(()->{

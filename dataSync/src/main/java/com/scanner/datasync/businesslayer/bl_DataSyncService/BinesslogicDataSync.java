@@ -305,8 +305,7 @@ public class BinesslogicDataSync {
     private URL getUrlndParametrs(@NonNull Cursor cursorlocal , @NonNull LinkedHashMap<String, String> getJbossAdress,@NonNull Long version) {
         // TODO: 27.08.2024
         AtomicReference <URL> Adress = new AtomicReference<>();
-
-        Completable.fromAction(()->{
+        try{
 
             // TODO: 29.08.2024 время
             String  bremylocal=prossecingBremy(cursorlocal);
@@ -325,54 +324,50 @@ public class BinesslogicDataSync {
             String СтрокаСвязиСсервером = "https://" + getNameServer + ":" + getPortServer;
 
 
-            try {
-                HttpGet someHttpGet = new HttpGet(СтрокаСвязиСсервером);
-                URIBuilder builder = new URIBuilder(someHttpGet.getURI());
-                builder.setParameter("NameTable", "listMacMastersSous")
-                        .setParameter("JobForServer", "getscanner")
-                        .setParameter("bremylocal", bremylocal)
-                        .setParameter("versionlocal", versionlocal.toString());
-                URI   adresssuri  = builder.build();
-                Adress.set(adresssuri.toURL());
-                // TODO: 31.07.2024
-                Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
-                        " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                        " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" + "\n"
-                        + " LocalDateTime.now() " + LocalDateTime.now().toString().toUpperCase() + "\n" + "Adress.get() " +Adress.get());
-            } catch (URISyntaxException | MalformedURLException e) {
-                throw new RuntimeException(e);
-            }
 
+            HttpGet someHttpGet = new HttpGet(СтрокаСвязиСсервером);
+            URIBuilder builder = new URIBuilder(someHttpGet.getURI());
+            builder.setParameter("NameTable", "listMacMastersSous")
+                    .setParameter("JobForServer", "getscanner")
+                    .setParameter("bremylocal", bremylocal)
+                    .setParameter("versionlocal", versionlocal.toString());
+            URI   adresssuri  = builder.build();
+            Adress.set(adresssuri.toURL());
+            // TODO: 31.07.2024
+            Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                    " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                    " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" + "\n"
+                    + " LocalDateTime.now() " + LocalDateTime.now().toString().toUpperCase() + "\n" + "Adress.get() " +Adress.get());
 
-        }).doOnError(e->{
-                    e.printStackTrace();
-                    Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() + " Линия  :"
-                            + Thread.currentThread().getStackTrace()[2].getLineNumber());
-                    ContentValues valuesЗаписываемОшибки = new ContentValues();
-                    valuesЗаписываемОшибки.put("Error", e.toString().toLowerCase());
-                    valuesЗаписываемОшибки.put("Klass", this.getClass().getName());
-                    valuesЗаписываемОшибки.put("Metod", Thread.currentThread().getStackTrace()[2].getMethodName());
-                    valuesЗаписываемОшибки.put("LineError", Thread.currentThread().getStackTrace()[2].getLineNumber());
-                    final Object ТекущаяВерсияПрограммы = version;
-                    Integer ЛокальнаяВерсияПОСравнение = Integer.parseInt(ТекущаяВерсияПрограммы.toString());
-                    valuesЗаписываемОшибки.put("whose_error", ЛокальнаяВерсияПОСравнение);
-                    new SubClassErrors(context).МетодЗаписиОшибок(valuesЗаписываемОшибки);
-                })
-                .doOnComplete(()->{
-                    Log.d(context.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
-                            " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                            " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n");
-
-                })
-                .blockingSubscribe( );
-        // TODO: 31.07.2024
+            // TODO: 31.07.2024
         Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                 " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
                 " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" + "\n"
                 + " LocalDateTime.now() " + LocalDateTime.now().toString().toUpperCase() + "\n" + "Adress " + Adress.get());
+    } catch (Exception e) {
+        e.printStackTrace();
+        Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() + " Линия  :"
+                + Thread.currentThread().getStackTrace()[2].getLineNumber());
+        ContentValues valuesЗаписываемОшибки = new ContentValues();
+        valuesЗаписываемОшибки.put("Error", e.toString().toLowerCase());
+        valuesЗаписываемОшибки.put("Klass", this.getClass().getName());
+        valuesЗаписываемОшибки.put("Metod", Thread.currentThread().getStackTrace()[2].getMethodName());
+        valuesЗаписываемОшибки.put("LineError", Thread.currentThread().getStackTrace()[2].getLineNumber());
+        final Object ТекущаяВерсияПрограммы = version;
+        Integer ЛокальнаяВерсияПОСравнение = Integer.parseInt(ТекущаяВерсияПрограммы.toString());
+        valuesЗаписываемОшибки.put("whose_error", ЛокальнаяВерсияПОСравнение);
+        new SubClassErrors(context).МетодЗаписиОшибок(valuesЗаписываемОшибки);
+    }
 
         return Adress.get();
     }
+
+
+
+
+
+
+
 
 
     @SuppressLint("Range")
@@ -390,7 +385,7 @@ public class BinesslogicDataSync {
         }else {
              DateFormat	dateFormat =   new SimpleDateFormat("yyyy-MM-dd",new Locale("ru", "RU"));
             try {
-                Date datelocal  = dateFormat.parse("1900-01-01");
+                Date datelocal  = dateFormat.parse("2010-01-01");
                 bremylocal = dateFormat.format(datelocal);
             } catch (ParseException e) {
                 throw new RuntimeException(e);

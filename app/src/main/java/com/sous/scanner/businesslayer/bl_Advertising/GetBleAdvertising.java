@@ -136,10 +136,6 @@ public class GetBleAdvertising {
     @SuppressLint({"NewApi", "MissingPermission"})
     public void staringAdverting(@NonNull BluetoothAdapter bluetoothAdapter) {
         try {
-            String ANDROID_ID = Settings.Secure.getString(context.getContentResolver(), Settings.Secure.ANDROID_ID);
-            String ANDROID_NAME=Settings.Global.getString(context.getContentResolver(),Settings.Global.DEVICE_NAME);
-            String btMac = android.provider.Settings.Secure.getString(context.getContentResolver(), "bluetooth_address");
-
             // TODO: 01.09.2024
             Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                     " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
@@ -168,7 +164,6 @@ public class GetBleAdvertising {
                     .addServiceUuid(parcelUuid)
                     .build();
             if (bluetoothAdapter!=null) {
-                bluetoothAdapter.setName(ANDROID_NAME);
                 bluetoothAdapter.getBluetoothLeAdvertiser().startAdvertising(advertiseSettings, advertiseData,
                         new AdvertiseCallback() {
                             @Override

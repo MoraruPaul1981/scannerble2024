@@ -222,18 +222,24 @@ public class DataSyncService extends IntentService {
     protected void onHandleIntent(Intent intent) {
         try{
           // TODO: 22.08.2024  повсе всего Работы Службы Синхронихации запускаем Фрагмент Сканера   , Самая последная Операция
-            Single.fromCallable(()->{
-
                 // TODO: 26.08.2024  получаем данные ЛОкальыне с версией данных
                 //Cursor cursorlocal =     binesslogicGetCursors. getLocalDataSyncService(version,resolver);
                 // Cursor cursorlocal =     binesslogicGetCursors. getMAXBremyLocalDataSyncService(version,resolver);
                 Cursor cursorlocal =     binesslogicGetCursors. getMAXVersionLocalDataSyncService(version,resolver);
                 // TODO: 26.08.2024  получаем данные от Сервера
                 byte[] bytesGetOtJBossGetScanner=     binesslogicDataSync.callOkhhtpDataSyncService(version,getJbossAdressDebug,cursorlocal,getOkhhtpBuilder);
+                JsonNode      jsonNodeScannerBLE = null;
 
+                if (bytesGetOtJBossGetScanner.length>0) {
                     // TODO: 26.08.2024  преобразовываем данеы в модель JAKSON
-                    JsonNode      jsonNodeScannerBLE = binesslogincJakson.callJaksonDataSyncService(version,   getHiltJaksonObjectMapper,bytesGetOtJBossGetScanner);
-
+                    jsonNodeScannerBLE = binesslogincJakson.callJaksonDataSyncService(version,   getHiltJaksonObjectMapper,bytesGetOtJBossGetScanner);
+                }
+                if (jsonNodeScannerBLE!=null) {
+                    // TODO: 23.08.2024  записываем JAKSON в Контент ПРовайер
+                    if (jsonNodeScannerBLE.size()>0) {
+                        binesslogincJakson.updateOperaticallContentResolver(version,jsonNodeScannerBLE);
+                                        }
+                }
 
                 // TODO: 21.08.2024
                 Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
@@ -241,24 +247,7 @@ public class DataSyncService extends IntentService {
                         " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"  +
                         " jsonNodeScannerBLE " +jsonNodeScannerBLE + " bytesGetOtJBossGetScanner " +bytesGetOtJBossGetScanner);
 
-                return jsonNodeScannerBLE;
-                // TODO: 24.10.2024
-            }).doOnSuccess(jsonNodeScannerBLESuccess->{
 
-                if (jsonNodeScannerBLESuccess!=null) {
-                    // TODO: 23.08.2024  записываем JAKSON в Контент ПРовайер
-                    if (jsonNodeScannerBLESuccess.size()>0) {
-                        binesslogincJakson.updateOperaticallContentResolver(version,jsonNodeScannerBLESuccess);
-                    }
-                }
-
-                // TODO: 21.08.2024
-                Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
-                        " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n+ " +
-                        " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"  +
-                        " jsonNodeScannerBLESuccess " +jsonNodeScannerBLESuccess);
-
-            }).blockingGet();
             // TODO: 21.08.2024  
         Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                 " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n+ " +
