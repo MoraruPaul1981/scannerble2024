@@ -190,7 +190,7 @@ public class GattLocationListener implements LocationListener {
                     editor.clear();
                     // TODO: 24.10.2024 заполяем адрес плоченный 
                     Flowable.fromIterable(addresses).onBackpressureBuffer().blockingForEach(address->{
-                        // TODO: 24.10.2024  
+                        // TODO: 24.10.2024
                         editor.putString("getAdminArea",address.getAdminArea());
                         editor.putString("getCountryName",address.getCountryName());
                         editor.putString("getLocality",address.getLocality());

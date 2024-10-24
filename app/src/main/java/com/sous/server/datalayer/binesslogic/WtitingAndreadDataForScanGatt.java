@@ -90,17 +90,18 @@ public class WtitingAndreadDataForScanGatt {
 
 // TODO: 30.07.2024 САМА ЗАПИСЬ В БАЗУ
                         if (getserchDateDifference>= limitForInsertNewDevice) {
-                            // TODO: 30.07.2024
+                            // TODO: 30.07.2024 сама вставка в базу нового устройства
                             Integer resultAddDeviceToGattaDtabse = entryitselfintothedatabase( contentValuesВставкаДанных);
+
+                            // TODO: 31.07.2024 main add data for before send
+                            writeDatabaseScanGatt.putIfAbsent(resultAddDeviceToGattaDtabse,contentValuesВставкаДанных);
 
                             Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                                     " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
                                     " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" +
                                     "  dateLimitAnrecord " + limitForInsertNewDevice +"\n" );
 
-                            // TODO: 31.07.2024 main add data for before send
 
-                            writeDatabaseScanGatt.putIfAbsent(resultAddDeviceToGattaDtabse,contentValuesВставкаДанных);
                         }
 
 
@@ -758,7 +759,7 @@ try{
                }
            }else {
                try {
-                   getDatabaseDate = LocalDateTime.parse("2010-01-01", formatter);
+                   getDatabaseDate = LocalDateTime.parse("2010-10-24 07:20:17.523", formatter);
                } catch (Exception e) {
                    //  throw new RuntimeException(e);
                }
@@ -806,8 +807,6 @@ try{
 
             if (databaseDate !=null  && LiveDate!=null ) {
                 getindoutthedateDifference = Math.abs(LiveDate.getMinute() - databaseDate.getMinute());
-            }else {
-                getindoutthedateDifference= limitForInsertNewDevice;
             }
             Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                     " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
