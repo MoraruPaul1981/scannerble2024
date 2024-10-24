@@ -229,17 +229,17 @@ public class DataSyncService extends IntentService {
                 // Cursor cursorlocal =     binesslogicGetCursors. getMAXBremyLocalDataSyncService(version,resolver);
                 Cursor cursorlocal =     binesslogicGetCursors. getMAXVersionLocalDataSyncService(version,resolver);
                 // TODO: 26.08.2024  получаем данные от Сервера
-                InputStream inputStreamJaksonByteScanner=     binesslogicDataSync
-                        .callOkhhtpDataSyncService(version,getJbossAdressDebug,cursorlocal,getOkhhtpBuilder);
+                byte[] bytesGetOtJBossGetScanner=     binesslogicDataSync.callOkhhtpDataSyncService(version,getJbossAdressDebug,cursorlocal,getOkhhtpBuilder);
 
-                // TODO: 26.08.2024  преобразовываем данеы в модель JAKSON
-                JsonNode jsonNodeScannerBLE =binesslogincJakson.callJaksonDataSyncService(version,   getHiltJaksonObjectMapper,inputStreamJaksonByteScanner);
+                    // TODO: 26.08.2024  преобразовываем данеы в модель JAKSON
+                    JsonNode      jsonNodeScannerBLE = binesslogincJakson.callJaksonDataSyncService(version,   getHiltJaksonObjectMapper,bytesGetOtJBossGetScanner);
+
 
                 // TODO: 21.08.2024
                 Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                         " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n+ " +
                         " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"  +
-                        " jsonNodeScannerBLE " +jsonNodeScannerBLE);
+                        " jsonNodeScannerBLE " +jsonNodeScannerBLE + " bytesGetOtJBossGetScanner " +bytesGetOtJBossGetScanner);
 
                 return jsonNodeScannerBLE;
                 // TODO: 24.10.2024

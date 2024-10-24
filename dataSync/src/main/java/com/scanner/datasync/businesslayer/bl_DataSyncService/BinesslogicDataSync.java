@@ -12,6 +12,7 @@ import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
 
 import com.google.firebase.crashlytics.buildtools.reloc.com.google.common.io.ByteSource;
+import com.google.firebase.crashlytics.buildtools.reloc.org.apache.commons.io.IOUtils;
 import com.google.firebase.crashlytics.buildtools.reloc.org.apache.http.client.methods.HttpGet;
 import com.google.firebase.crashlytics.buildtools.reloc.org.apache.http.client.utils.URIBuilder;
 import com.scanner.datasync.businesslayer.Errors.SubClassErrors;
@@ -103,14 +104,14 @@ public class BinesslogicDataSync {
 
 
     @SuppressLint("Range")
-    public    InputStream    callOkhhtpDataSyncService(@NonNull long version,
+    public    byte[]    callOkhhtpDataSyncService(@NonNull long version,
                                           @NonNull LinkedHashMap<String, String> getJbossAdress,
                                           @NonNull Cursor cursorlocal,
                                                        @NonNull   OkHttpClient.Builder getOkhhtpBuilder)
             throws ExecutionException, InterruptedException {
         // TODO: 22.08.2024  Коненпт провайдер для зааписив базу данных
         final String[] ANDROID_ID = {new String()};
-        AtomicReference<InputStream> inputStreamJaksonByte = new AtomicReference();
+        AtomicReference<byte[]>    bytesGetOtJBossGetScanner =new AtomicReference<>(new byte[0]);
         try {
         // TODO: 28.08.2024
         Completable.fromAction(()->{
@@ -190,10 +191,19 @@ public class BinesslogicDataSync {
                         if (РазмерПришедшегоПотока > 0l) {
                             // TODO: 07.10.2023  gzip
                             byte[] asByteBuffer = response.body().source().readByteArray();
-                            inputStreamJaksonByte.set(new GZIPInputStream(ByteSource.wrap(asByteBuffer).openBufferedStream(), 2048));//4096
+
+                            InputStream inputStreamJaksonByte=new GZIPInputStream(ByteSource.wrap(asByteBuffer).openBufferedStream(), 2048);//4096
+                            // TODO: 24.10.2024
+                            if (inputStreamJaksonByte.available()>0) {
+                                bytesGetOtJBossGetScanner.set( IOUtils.toByteArray(inputStreamJaksonByte));
+                            }
                             // TODO: 30.08.2024
-                            Log.d(this.getClass().getName(), "inputStreamJaksonByte[0] " + inputStreamJaksonByte.get().available() +
-                                    " РазмерПришедшегоПотока " + РазмерПришедшегоПотока + " inputStreamJaksonByte[0] " +inputStreamJaksonByte.get());
+                            Log.d(context.getClass().getName(), "\n"
+                                    + " class " + Thread.currentThread().getStackTrace()[2].getClassName() +
+                                    "\n" +
+                                    " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                                    " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"
+                                    +" inputStreamJaksonByte " +inputStreamJaksonByte.available());
 
                         }
 
@@ -274,7 +284,7 @@ public class BinesslogicDataSync {
         valuesЗаписываемОшибки.put("whose_error", ЛокальнаяВерсияПОСравнение);
         new SubClassErrors(context).МетодЗаписиОшибок(valuesЗаписываемОшибки);
     }
-        return inputStreamJaksonByte.get();
+        return bytesGetOtJBossGetScanner.get();
 
     }
 

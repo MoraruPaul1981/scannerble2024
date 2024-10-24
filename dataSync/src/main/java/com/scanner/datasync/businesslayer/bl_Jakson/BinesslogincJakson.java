@@ -56,13 +56,15 @@ public class BinesslogincJakson {
 
     public JsonNode   callJaksonDataSyncService(@NonNull long version,
                                           @NonNull ObjectMapper getHiltJaksonObjectMapper,
-                                          @NonNull InputStream inputStreamJaksonByteScanner) {
+                                          @NonNull byte[] bytesGetOtJBossGetScanner) {
+        // TODO: 24.10.2024
+        AtomicReference<JsonNode>  jsonNodeScannerBLE=new AtomicReference<>();
+        try{
         // TODO: 28.08.2024
-      AtomicReference<JsonNode>  jsonNodeScannerBLE=new AtomicReference<>();
         Completable completable=   Completable.fromAction(()->{
 // TODO: 28.08.2024
-            final JsonParser jsonParserScanner= getHiltJaksonObjectMapper.createParser(inputStreamJaksonByteScanner);
-            if (  !jsonParserScanner.isClosed()) {
+            final JsonParser jsonParserScanner= getHiltJaksonObjectMapper.createParser(bytesGetOtJBossGetScanner);
+            if (  jsonParserScanner!=null) {
                 // TODO: 29.08.2024
                 jsonNodeScannerBLE.set(jsonParserScanner.readValueAsTree());
                 // TODO: 31.07.2024
@@ -70,7 +72,7 @@ public class BinesslogincJakson {
                         " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
                         " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" + "\n"
                         + " LocalDateTime.now() " + LocalDateTime.now().toString().toUpperCase() + "\n"+
-                         " jsonNodeScannerBLE " +jsonNodeScannerBLE.get());
+                         " jsonNodeScannerBLE " +jsonNodeScannerBLE.get() + " bytesGetOtJBossGetScanner " +bytesGetOtJBossGetScanner);
             }
 
         }).doOnError(e->{
@@ -98,17 +100,30 @@ public class BinesslogincJakson {
 
         });
         // TODO: 28.08.2024
-
-        if (inputStreamJaksonByteScanner!=null) {
             completable.blockingSubscribe();
-        }
-
         // TODO: 31.07.2024
         Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                 " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
                 " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" + "\n"
                 + " LocalDateTime.now() " + LocalDateTime.now().toString().toUpperCase() + "\n");
-        // TODO: 28.08.2024
+
+    } catch (Exception e) {
+        e.printStackTrace();
+        Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :"
+                + Thread.currentThread().getStackTrace()[2].getMethodName() + " Линия  :"
+                + Thread.currentThread().getStackTrace()[2].getLineNumber());
+        ContentValues valuesЗаписываемОшибки = new ContentValues();
+        valuesЗаписываемОшибки.put("Error", e.toString().toLowerCase());
+        valuesЗаписываемОшибки.put("Klass", this.getClass().getName());
+        valuesЗаписываемОшибки.put("Metod", Thread.currentThread().getStackTrace()[2].getMethodName());
+        valuesЗаписываемОшибки.put("LineError", Thread.currentThread().getStackTrace()[2].getLineNumber());
+        final Object ТекущаяВерсияПрограммы = version;
+        Integer ЛокальнаяВерсияПОСравнение = Integer.parseInt(ТекущаяВерсияПрограммы.toString());
+        valuesЗаписываемОшибки.put("whose_error", ЛокальнаяВерсияПОСравнение);
+        new SubClassErrors(context).МетодЗаписиОшибок(valuesЗаписываемОшибки);
+    }
+
+    // TODO: 28.08.2024
         return  jsonNodeScannerBLE.get();
     }
 
