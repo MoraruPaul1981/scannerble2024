@@ -39,6 +39,7 @@ import javax.inject.Inject;
 
 import dagger.hilt.android.AndroidEntryPoint;
 import io.reactivex.rxjava3.core.Completable;
+import io.reactivex.rxjava3.core.Single;
 import okhttp3.OkHttpClient;
 
 /**
@@ -221,6 +222,7 @@ public class DataSyncService extends IntentService {
     protected void onHandleIntent(Intent intent) {
         try{
           // TODO: 22.08.2024  повсе всего Работы Службы Синхронихации запускаем Фрагмент Сканера   , Самая последная Операция
+            Single.fromCallable(()->{
 
                 // TODO: 26.08.2024  получаем данные ЛОкальыне с версией данных
                 //Cursor cursorlocal =     binesslogicGetCursors. getLocalDataSyncService(version,resolver);
@@ -233,14 +235,30 @@ public class DataSyncService extends IntentService {
                 // TODO: 26.08.2024  преобразовываем данеы в модель JAKSON
                 JsonNode jsonNodeScannerBLE =binesslogincJakson.callJaksonDataSyncService(version,   getHiltJaksonObjectMapper,inputStreamJaksonByteScanner);
 
-                // TODO: 23.08.2024  записываем JAKSON в Контент ПРовайер
-                binesslogincJakson.updateOperaticallContentResolver(version,jsonNodeScannerBLE);
+                // TODO: 21.08.2024
+                Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                        " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n+ " +
+                        " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"  +
+                        " jsonNodeScannerBLE " +jsonNodeScannerBLE);
+
+                return jsonNodeScannerBLE;
+                // TODO: 24.10.2024
+            }).doOnSuccess(jsonNodeScannerBLESuccess->{
+
+                if (jsonNodeScannerBLESuccess!=null) {
+                    // TODO: 23.08.2024  записываем JAKSON в Контент ПРовайер
+                    if (jsonNodeScannerBLESuccess.size()>0) {
+                        binesslogincJakson.updateOperaticallContentResolver(version,jsonNodeScannerBLESuccess);
+                    }
+                }
 
                 // TODO: 21.08.2024
                 Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                         " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n+ " +
-                        " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" + "cursorlocal " +cursorlocal);
+                        " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"  +
+                        " jsonNodeScannerBLESuccess " +jsonNodeScannerBLESuccess);
 
+            }).blockingGet();
             // TODO: 21.08.2024  
         Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                 " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n+ " +
