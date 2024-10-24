@@ -15,6 +15,7 @@ import androidx.annotation.NonNull;
 import com.google.common.util.concurrent.AtomicDouble;
 import com.sous.server.businesslayer.ContentProvoders.ContentProviderServer;
 import com.sous.server.businesslayer.Errors.SubClassErrors;
+import com.sous.server.businesslayer.bl_reversescallback.GetReversesCallBack;
 import com.sous.server.datalayer.binesslogic.WtitingAndreadDataForScanGatt;
 
 
@@ -94,6 +95,10 @@ public class Bl_BloadcastGatt_getDeviceClentGatt {
                     if (writeDatabaseScanGattSuccessWriteNewDevice.keySet().stream().findAny().get()>0) {
                         // TODO: 31.07.2024  посылаем данные на Франгмент перегражаем внешний вид
                         wtitingAndreadDataForScanGatt.afteruccessfuldataformationweSend(writeDatabaseScanGattSuccessWriteNewDevice);
+
+                        // TODO: 24.10.2024 Обраьный ответ клиенту от сервера что произошел состыковка
+                        GetReversesCallBack reversesCallBack=new GetReversesCallBack(context,version);
+
                     }
                     // TODO: 07.08.2024
                     Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +

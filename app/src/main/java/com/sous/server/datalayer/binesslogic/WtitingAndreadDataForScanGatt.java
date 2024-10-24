@@ -331,7 +331,10 @@ try{
             contentValuesВставкаДанных.put("gps1", sharedPreferencesGatt.getString("getLongitude","нет данных"));
             contentValuesВставкаДанных.put("gps2", sharedPreferencesGatt.getString("getLatitude","нет данных"));
 
-            if ( !sharedPreferencesGatt.getString("getLocality","нет данных").isEmpty()) {
+
+       String enableLocationCity=     sharedPreferencesGatt.getString("getLocality","нет данных");
+
+            if (! enableLocationCity.equalsIgnoreCase("нет данных")) {
 
                 contentValuesВставкаДанных.put("adress",  sharedPreferencesGatt.getString("getCountryName","нет данных")+" "+
                         sharedPreferencesGatt.getString("getLocality","нет данных")+" "+

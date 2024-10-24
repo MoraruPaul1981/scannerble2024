@@ -6,9 +6,13 @@ import android.annotation.SuppressLint;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
 import android.content.ContentValues;
+import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.pm.ActivityInfo;
 import android.content.pm.PackageInfo;
+import android.location.Location;
+import android.location.LocationManager;
+import android.location.LocationRequest;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -22,6 +26,7 @@ import androidx.loader.content.AsyncTaskLoader;
 
 import com.sous.server.R;
 import com.sous.server.businesslayer.BI_presentationlayer.bl_MainActivityNewServerScanner.Bi_MainActivityNewServerScanner;
+import com.sous.server.businesslayer.BroadcastreceiverServer.BroadcastReceiverChangedGPSLocation;
 import com.sous.server.businesslayer.BroadcastreceiverServer.BroadcastReceiverGattServerAlcConn;
 import com.sous.server.businesslayer.BroadcastreceiverServer.BroadcastReceiverGattServerName_Changed;
 import com.sous.server.businesslayer.BroadcastreceiverServer.BroadcastReceiverGattServerOthers;
@@ -212,6 +217,15 @@ public class ActivityServerScanner extends AppCompatActivity {
             filterScanServerOthers.addAction(BluetoothDevice.ACTION_ACL_DISCONNECT_REQUESTED);
             filterScanServerOthers.setPriority(SYSTEM_HIGH_PRIORITY);
             registerReceiver(new BroadcastReceiverGattServerOthers(), filterScanServerOthers,null,messageGattServer.getTarget());
+
+
+
+            // TODO: 02.08.2024
+            IntentFilter filterLocationGPSChanged = new IntentFilter();
+            filterLocationGPSChanged.addAction(LocationManager.PROVIDERS_CHANGED_ACTION);
+            filterLocationGPSChanged.setPriority(SYSTEM_HIGH_PRIORITY);
+            registerReceiver(new BroadcastReceiverChangedGPSLocation(), filterLocationGPSChanged,null,messageGattServer.getTarget());
+
 
             Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                     " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +

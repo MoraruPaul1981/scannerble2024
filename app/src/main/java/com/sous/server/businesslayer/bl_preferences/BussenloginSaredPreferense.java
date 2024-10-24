@@ -127,6 +127,7 @@ public class BussenloginSaredPreferense {
         try{
             SharedPreferences.Editor editor = preferences.edit();
             editor.clear();
+            preferences.getAll().clear();
             editor.apply();
 
             Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +

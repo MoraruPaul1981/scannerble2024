@@ -127,6 +127,8 @@ private  Long version;
         try {
             // TODO: 23.07.2024 starting  core motods BLE Gatt Server
             initAdapterBluetoothManager();
+            // TODO: 24.10.2024
+            initlocationManagerManager();
             //TODO:получаем Статус Адаптера Bluetooth true, false  и оптравляем статус в активти
             getStatusEnableBlueadapter = enableBluetoothAdapter(bluetoothAdapter,version,contentProviderServer);
 
@@ -134,7 +136,7 @@ private  Long version;
                 // TODO: 03.09.2024  
                 getContentProvider();
                 // TODO: 03.09.2024
-                langingGPSLocations( preferencesGatt);
+                langingGPSLocations( preferencesGatt,version);
                 // TODO: 25.08.2024 TEST
                 getBleAdvertising.staringAdvertisingSet(bluetoothAdapter);
 // TODO: 28.07.2024 LIster
@@ -392,7 +394,6 @@ private  Long version;
     @SuppressLint("MissingPermission")
     private void initAdapterBluetoothManager() {
         try {
-            locationManager = (LocationManager) context.getSystemService(Context.LOCATION_SERVICE);
             bluetoothManagerServer = (BluetoothManager) context.getSystemService(Context.BLUETOOTH_SERVICE);
             bluetoothAdapter = (BluetoothAdapter) bluetoothManagerServer.getAdapter();
 
@@ -416,6 +417,29 @@ private  Long version;
         }
     }
 
+    @SuppressLint("MissingPermission")
+    public void initlocationManagerManager() {
+        try {
+            locationManager = (LocationManager) context.getSystemService(Context.LOCATION_SERVICE);
+
+            Log.d(context.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                    " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                    " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" );
+        } catch (Exception e) {
+            e.printStackTrace();
+            Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() + " Линия  :"
+                    + Thread.currentThread().getStackTrace()[2].getLineNumber());
+            ContentValues valuesЗаписываемОшибки = new ContentValues();
+            valuesЗаписываемОшибки.put("Error", e.toString().toLowerCase());
+            valuesЗаписываемОшибки.put("Klass", this.getClass().getName());
+            valuesЗаписываемОшибки.put("Metod", Thread.currentThread().getStackTrace()[2].getMethodName());
+            valuesЗаписываемОшибки.put("LineError", Thread.currentThread().getStackTrace()[2].getLineNumber());
+            final Object ТекущаяВерсияПрограммы = version;
+            Integer ЛокальнаяВерсияПОСравнение = Integer.parseInt(ТекущаяВерсияПрограммы.toString());
+            valuesЗаписываемОшибки.put("whose_error", ЛокальнаяВерсияПОСравнение);
+            new SubClassErrors(context).МетодЗаписиОшибок(valuesЗаписываемОшибки);
+        }
+    }
 
 
     //TODO: отвечам оюратно на фрагмент что включен Адаптер Blutooth
@@ -688,7 +712,7 @@ private  Long version;
 
 
     @SuppressLint({"MissingPermission", "NewApi"})
-    private void langingGPSLocations( @NotNull SharedPreferences sharedPreferencesGatt) {
+    public void langingGPSLocations( @NotNull SharedPreferences sharedPreferencesGatt,@NotNull Long version) {
         try{
 
             if (locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)
