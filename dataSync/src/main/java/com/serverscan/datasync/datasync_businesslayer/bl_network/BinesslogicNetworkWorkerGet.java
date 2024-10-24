@@ -171,7 +171,8 @@ public class BinesslogicNetworkWorkerGet {
                                     + " class " + Thread.currentThread().getStackTrace()[2].getClassName() +
                                     "\n" +
                                     " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                                    " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"+" inputStreamJaksonByte " +inputStreamJaksonByte.available());
+                                    " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"
+                                    +" inputStreamJaksonByte " +inputStreamJaksonByte.available());
                             // TODO: 18.10.2024
                             if (inputStreamJaksonByte.available()>0) {
                                 bytesGetOtJBoss.set( IOUtils.toByteArray(inputStreamJaksonByte));
