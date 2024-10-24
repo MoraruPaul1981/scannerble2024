@@ -97,6 +97,8 @@ public class Bl_BloadcastGatt_getDeviceClentGatt {
 
                         // TODO: 24.10.2024 Обраьный ответ клиенту от сервера что произошел состыковка
                         GetReversesCallBackToAndroid reversesCallBack=new GetReversesCallBackToAndroid(context,version);
+                        // TODO: 24.10.2024
+                        reversesCallBack.getReversesCallBackToAndroid(bluetoothDevice);
 
                     }
                     // TODO: 07.08.2024
