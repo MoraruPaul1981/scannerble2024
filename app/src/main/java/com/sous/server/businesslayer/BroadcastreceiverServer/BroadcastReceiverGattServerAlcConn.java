@@ -48,6 +48,7 @@ public class BroadcastReceiverGattServerAlcConn extends BroadcastReceiver {
 
          final   int       rssi = intent.getShortExtra(BluetoothDevice.EXTRA_RSSI,Short.MIN_VALUE);
          final   String     name = intent.getStringExtra(BluetoothDevice.EXTRA_NAME);
+            final   int       key = intent.getShortExtra(BluetoothDevice.EXTRA_PAIRING_KEY,Short.MIN_VALUE);
          final   String     transport = intent.getStringExtra(BluetoothDevice.EXTRA_TRANSPORT);
          intent.putExtra(BluetoothDevice.EXTRA_PAIRING_KEY,555);
 
