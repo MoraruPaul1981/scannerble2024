@@ -92,7 +92,10 @@ public class Bl_BloadcastGatt_getDeviceClentGatt {
 
 
                     // TODO: 22.10.2024 Если успешная запись то  этотоОбьект не ПУСТОЙ
-                    if (writeDatabaseScanGattSuccessWriteNewDevice.keySet().stream().findAny().get()>0) {
+
+              Integer getWriteNewDevice=      writeDatabaseScanGattSuccessWriteNewDevice.keySet().stream().mapToInt(m->m).findAny().orElse(0);
+
+                    if (getWriteNewDevice>0) {
                         // TODO: 31.07.2024  посылаем данные на Франгмент перегражаем внешний вид
                         wtitingAndreadDataForScanGatt.afteruccessfuldataformationweSend(writeDatabaseScanGattSuccessWriteNewDevice);
 
@@ -105,7 +108,7 @@ public class Bl_BloadcastGatt_getDeviceClentGatt {
                             " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
                             " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" +
                             "Bintent.getAction() "+intent.getAction() + " bluetoothDevice " +bluetoothDevice+
-                            " writeDatabaseScanGattSuccessWriteNewDevice " +writeDatabaseScanGattSuccessWriteNewDevice);
+                            " getWriteNewDevice " +getWriteNewDevice);
             
             return writeDatabaseScanGattSuccessWriteNewDevice;
             
