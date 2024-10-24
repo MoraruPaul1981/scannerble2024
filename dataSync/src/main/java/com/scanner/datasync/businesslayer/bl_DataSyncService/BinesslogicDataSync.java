@@ -111,6 +111,7 @@ public class BinesslogicDataSync {
         // TODO: 22.08.2024  Коненпт провайдер для зааписив базу данных
         final String[] ANDROID_ID = {new String()};
         AtomicReference<InputStream> inputStreamJaksonByte = new AtomicReference();
+        try {
         // TODO: 28.08.2024
         Completable.fromAction(()->{
 
@@ -150,7 +151,7 @@ public class BinesslogicDataSync {
             ///  MediaType JSON = MediaType.parse("application/json; charset=utf-16");
             Request requestGET = new Request.Builder().get().url(Adress).build();
 
-                    Dispatcher dispatcherScanner = getDispatcher(okHttpClientClientScanner);
+                    Dispatcher dispatcherScanner = getDispatcher(  getOkhhtpBuilder);
 
 
                     // TODO: 23.08.2024
@@ -257,23 +258,36 @@ public class BinesslogicDataSync {
                 " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
                 " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" + "\n"
                 + " LocalDateTime.now() " + LocalDateTime.now().toString().toUpperCase() + "\n");
-
+        // TODO: 28.08.2024
+    } catch (Exception e) {
+        e.printStackTrace();
+        Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" +
+                Thread.currentThread().getStackTrace()[2].getMethodName() + " Линия  :"
+                + Thread.currentThread().getStackTrace()[2].getLineNumber());
+        ContentValues valuesЗаписываемОшибки = new ContentValues();
+        valuesЗаписываемОшибки.put("Error", e.toString().toLowerCase());
+        valuesЗаписываемОшибки.put("Klass", this.getClass().getName());
+        valuesЗаписываемОшибки.put("Metod", Thread.currentThread().getStackTrace()[2].getMethodName());
+        valuesЗаписываемОшибки.put("LineError", Thread.currentThread().getStackTrace()[2].getLineNumber());
+        final Object ТекущаяВерсияПрограммы = version;
+        Integer ЛокальнаяВерсияПОСравнение = Integer.parseInt(ТекущаяВерсияПрограммы.toString());
+        valuesЗаписываемОшибки.put("whose_error", ЛокальнаяВерсияПОСравнение);
+        new SubClassErrors(context).МетодЗаписиОшибок(valuesЗаписываемОшибки);
+    }
         return inputStreamJaksonByte.get();
 
     }
 
     @NonNull
-    private   Dispatcher getDispatcher(OkHttpClient okHttpClientClientScanner) {
-        Dispatcher dispatcherScanner = okHttpClientClientScanner.dispatcher();
-        ExecutorService executorService= dispatcherScanner.executorService();
-        if (executorService.isShutdown()) {
-            executorService= Executors.newCachedThreadPool();
-        }
+    private   Dispatcher getDispatcher(OkHttpClient.Builder getOkhhtpBuilder) {
+        Dispatcher dispatcher = new Dispatcher(Executors.newCachedThreadPool());
+        getOkhhtpBuilder.getDispatcher$okhttp().cancelAll();
+        getOkhhtpBuilder.dispatcher(dispatcher);
         // TODO: 21.08.2024
         Log.d(context.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                 " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n+ " +
-                " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" + "executorService.isShutdown() " +executorService.isShutdown());
-        return dispatcherScanner;
+                " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" + "dispatcher " +dispatcher);
+        return dispatcher;
     }
 
 
