@@ -51,9 +51,10 @@ public class BroadcastReceiverACL extends BroadcastReceiver {
             // TODO: 31.07.2024 Получаем сам девайс
             final   BluetoothDevice     bluetoothDevice = intent.getParcelableExtra(BluetoothDevice.EXTRA_DEVICE);
             final   int       rssi = intent.getShortExtra(BluetoothDevice.EXTRA_RSSI,Short.MIN_VALUE);
+            final   int       key = intent.getShortExtra(BluetoothDevice.EXTRA_PAIRING_KEY,Short.MIN_VALUE);
             final   String     name = intent.getStringExtra(BluetoothDevice.EXTRA_NAME);
             final   String     transport = intent.getStringExtra(BluetoothDevice.EXTRA_TRANSPORT);
-            intent.putExtra(BluetoothDevice.EXTRA_PAIRING_KEY,new Random().nextInt());
+            intent.putExtra(BluetoothDevice.EXTRA_PAIRING_KEY,9977);
 
 
 

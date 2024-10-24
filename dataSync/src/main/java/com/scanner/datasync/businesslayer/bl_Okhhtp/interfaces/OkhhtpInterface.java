@@ -1,4 +1,4 @@
-package com.scanner.datasync.businesslayer.bl_Okhhtp;
+package com.scanner.datasync.businesslayer.bl_Okhhtp.interfaces;
 
 import android.content.Context;
 

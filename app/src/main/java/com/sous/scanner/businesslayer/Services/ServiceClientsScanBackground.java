@@ -73,7 +73,7 @@ private      SharedPreferences preferences;
             version = pInfo.getLongVersionCode();
 
 
-            // TODO: 01.10.2024  Завание Устро1ство 
+            // TODO: 01.10.2024  Завание Устро1ство
             String setingNameDeviceClientScanner =  new SetNameDevices(getApplicationContext(),version).setingNameDevice();
             bluetoothAdapterPhoneClient.setName(setingNameDeviceClientScanner);
             

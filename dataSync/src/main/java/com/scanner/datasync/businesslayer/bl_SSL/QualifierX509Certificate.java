@@ -1,4 +1,5 @@
-package com.scanner.datasync.businesslayer.bl_Okhhtp;
+package com.scanner.datasync.businesslayer.bl_SSL;
+
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
@@ -9,4 +10,4 @@ import javax.inject.Qualifier;
 @Qualifier
 @Retention(RetentionPolicy.RUNTIME)
 @Target({ElementType.FIELD, ElementType.METHOD, ElementType.TYPE, ElementType.PARAMETER})
-public @interface QualifierOkhhtp {}
+public @interface QualifierX509Certificate  {}

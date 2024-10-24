@@ -12,11 +12,9 @@ import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
 
 import com.google.firebase.crashlytics.buildtools.reloc.com.google.common.io.ByteSource;
-import com.google.firebase.crashlytics.buildtools.reloc.com.google.common.util.concurrent.AtomicDouble;
 import com.google.firebase.crashlytics.buildtools.reloc.org.apache.http.client.methods.HttpGet;
 import com.google.firebase.crashlytics.buildtools.reloc.org.apache.http.client.utils.URIBuilder;
 import com.scanner.datasync.businesslayer.Errors.SubClassErrors;
-import com.scanner.datasync.businesslayer.bl_Okhhtp.QualifierOkhhtp;
 
 import java.io.IOException;
 import java.io.InputStream;

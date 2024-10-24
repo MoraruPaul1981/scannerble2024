@@ -1,18 +1,20 @@
-package com.scanner.datasync.businesslayer.bl_Okhhtp;
+package com.scanner.datasync.businesslayer.bl_SSL;
 
 import android.content.ContentValues;
 import android.content.Context;
 import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
 import android.util.Log;
 
-
+import com.scanner.datasync.R;
 import com.scanner.datasync.businesslayer.Errors.SubClassErrors;
-import com.scanner.datasync.businesslayer.bl_Okhhtp.interfaces.OkhhtpInterface;
-import com.scanner.datasync.businesslayer.bl_Okhhtp.interfaces.QualifierOkhhtp;
 
+import org.jetbrains.annotations.NotNull;
+
+import java.io.InputStream;
+import java.security.KeyStore;
+import java.security.cert.X509Certificate;
 import java.util.Date;
-import java.util.concurrent.Executors;
-import java.util.concurrent.TimeUnit;
 
 import javax.inject.Singleton;
 
@@ -21,34 +23,45 @@ import dagger.Provides;
 import dagger.hilt.InstallIn;
 import dagger.hilt.android.qualifiers.ApplicationContext;
 import dagger.hilt.components.SingletonComponent;
-import okhttp3.ConnectionPool;
-import okhttp3.Dispatcher;
-import okhttp3.OkHttpClient;
-
-
 
 @Module
 @InstallIn(SingletonComponent.class)
-public class GetOkhhtpBuilder   implements OkhhtpInterface {
+public class GetX509Certificate {
+
     Long version;
 
+
     @Singleton
-    @QualifierOkhhtp
     @Provides
-    @Override
-    public  OkHttpClient.Builder getOkhhtpBuilder(@ApplicationContext Context hiltcontext ) {
-        OkHttpClient.Builder builder=null;
+    @NotNull
+    public X509Certificate gettrustAllCerts  (@ApplicationContext Context hitcontext){
+        // TODO: 18.10.2024
+        X509Certificate cert = null;
         try{
-            PackageInfo pInfo = hiltcontext.getPackageManager().getPackageInfo(hiltcontext.getPackageName(), 0);
+
+            PackageInfo pInfo = null;
+            try {
+                pInfo = hitcontext.getPackageManager().getPackageInfo(hitcontext.getPackageName(), 0);
+            } catch (PackageManager.NameNotFoundException e) {
+                throw new RuntimeException(e);
+            }
             version = pInfo.getLongVersionCode();
 
-            Dispatcher dispatcherScanner= new Dispatcher(Executors.newCachedThreadPool());
-            builder=     new OkHttpClient().newBuilder();
-            builder.dispatcher(dispatcherScanner);
-            builder.connectionPool(new ConnectionPool(20, 30, TimeUnit.SECONDS));
+
             Log.i(this.getClass().getName(),  " OkHttpClient"+
                     Thread.currentThread().getStackTrace()[2].getMethodName()+
                     " время " +new Date().toLocaleString() );
+
+            KeyStore keyStore = KeyStore.getInstance("BKS");
+            InputStream instream = hitcontext.getResources().openRawResource(R.raw.bksbasedsu1ru1712024);
+            keyStore.load(instream, "mypassword".toCharArray());
+            cert = (X509Certificate) keyStore.getCertificate("base.dsu1.ru");
+
+            Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                    " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                    " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"  + "\n"+
+                    "   cert[0] " +  cert.getPublicKey());
+
         } catch (Exception e) {
             e.printStackTrace();
             Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() + " Линия  :"
@@ -61,11 +74,14 @@ public class GetOkhhtpBuilder   implements OkhhtpInterface {
             final Object ТекущаяВерсияПрограммы = version;
             Integer ЛокальнаяВерсияПОСравнение = Integer.parseInt(ТекущаяВерсияПрограммы.toString());
             valuesЗаписываемОшибки.put("whose_error", ЛокальнаяВерсияПОСравнение);
-            new SubClassErrors(hiltcontext).МетодЗаписиОшибок(valuesЗаписываемОшибки);
+            new SubClassErrors(hitcontext).МетодЗаписиОшибок(valuesЗаписываемОшибки);
         }
-        return builder;
+        Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"  + "\n");
+
+
+        return cert;
     }
+
 }
-
-
-

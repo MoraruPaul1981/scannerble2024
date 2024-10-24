@@ -2,7 +2,6 @@ package com.scanner.datasync.businesslayer.Services;
 
 import static android.app.job.JobInfo.PRIORITY_MIN;
 
-import android.Manifest;
 import android.app.IntentService;
 import android.app.Notification;
 import android.app.NotificationChannel;
@@ -12,16 +11,13 @@ import android.content.ContentValues;
 import android.content.Intent;
 import android.content.Context;
 import android.content.pm.PackageInfo;
-import android.content.pm.PackageManager;
 import android.database.Cursor;
-import android.database.sqlite.SQLiteCursor;
 import android.os.Build;
 import android.os.IBinder;
 import android.util.Log;
 
 import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
-import androidx.core.app.ActivityCompat;
 import androidx.core.app.NotificationCompat;
 
 import com.fasterxml.jackson.databind.JsonNode;
@@ -30,22 +26,19 @@ import com.scanner.datasync.businesslayer.Errors.SubClassErrors;
 
 import com.scanner.datasync.businesslayer.bl_DataSyncService.BinesslogicDataSync;
 import com.scanner.datasync.businesslayer.bl_Jakson.BinesslogincJakson;
-import com.scanner.datasync.businesslayer.bl_JbossAdress.QualifierJbossServer2;
 import com.scanner.datasync.businesslayer.bl_JbossAdress.QualifierJbossServer3;
-import com.scanner.datasync.businesslayer.bl_Okhhtp.QualifierOkhhtp;
+import com.scanner.datasync.businesslayer.bl_Okhhtp.interfaces.QualifierOkhhtp;
+import com.scanner.datasync.businesslayer.bl_Okhhtp.interfaces.QualifierOkhhtpTLS;
 import com.scanner.datasync.datalayer.local.BinesslogicGetCursors;
 
 import java.io.InputStream;
 import java.util.LinkedHashMap;
 import java.util.concurrent.TimeUnit;
-import java.util.function.ToDoubleBiFunction;
 
 import javax.inject.Inject;
 
 import dagger.hilt.android.AndroidEntryPoint;
 import io.reactivex.rxjava3.core.Completable;
-import io.reactivex.rxjava3.core.Observable;
-import io.reactivex.rxjava3.core.Single;
 import okhttp3.OkHttpClient;
 
 /**
@@ -83,7 +76,8 @@ public class DataSyncService extends IntentService {
 
 
     @Inject
-    @QualifierOkhhtp
+   // @QualifierOkhhtp
+    @QualifierOkhhtpTLS
     OkHttpClient.Builder getOkhhtpBuilder;
 
     public DataSyncService() {

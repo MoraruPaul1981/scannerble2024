@@ -29,8 +29,8 @@ public class HiltJboss {
         LinkedHashMap<String, String> МассивПортовСервераDebugandRelize = new LinkedHashMap();
         // TODO: 18.03.2023 московский сервер ЧЕРЕЗ DNS
          // TODO: 18.03.2023 московский сервер
-       МассивПортовСервераDebugandRelize.putIfAbsent("192.168.3.4" ,"8080/jboss-1.0-SNAPSHOT/sous.jboss.scanner");// TODO: 10.11.2022 ДЕбаг
-
+      // МассивПортовСервераDebugandRelize.putIfAbsent("192.168.3.4" ,"8080/jboss-1.0-SNAPSHOT/sous.jboss.scanner");// TODO: 10.11.2022 ДЕбаг
+        МассивПортовСервераDebugandRelize.putIfAbsent("192.168.3.4" ,"8443/jbossgatt-2.0-SNAPSHOT/sous.jboss.gattserver");// TODO: SSL 10.11.2022 ДЕбаг*/
 
         // TODO: 18.03.2023 московский сервер ЧЕРЕЗ DNS
 /*
