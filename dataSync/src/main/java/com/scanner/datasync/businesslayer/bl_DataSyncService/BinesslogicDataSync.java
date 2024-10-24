@@ -110,14 +110,14 @@ public class BinesslogicDataSync {
                                                        @NonNull   OkHttpClient.Builder getOkhhtpBuilder)
             throws ExecutionException, InterruptedException {
         // TODO: 22.08.2024  Коненпт провайдер для зааписив базу данных
-        final String[] ANDROID_ID = {new String()};
+
         AtomicReference<byte[]>    bytesGetOtJBossGetScanner =new AtomicReference<>(new byte[0]);
         try {
         // TODO: 28.08.2024
         Completable.fromAction(()->{
 
             // TODO: 23.08.2024
-            ANDROID_ID[0] = Settings.Secure.getString(context.getContentResolver(), Settings.Secure.ANDROID_ID);
+           String ANDROID_ID  = Settings.Secure.getString(context.getContentResolver(), Settings.Secure.ANDROID_ID);
             // TODO: 26.08.2024
             // TODO: 27.08.2024 получаем данные и вставляем их в  URL для отправки
             URL Adress = getUrlndParametrs(cursorlocal,getJbossAdress,version);
@@ -139,13 +139,13 @@ public class BinesslogicDataSync {
                                     .header("Accept-Encoding", "gzip,deflate,sdch")
                                     .header("Connection", "Keep-Alive")
                                     .header("Accept-Language", "ru-RU")
-                                    .header("identifier", ANDROID_ID[0])
-                                    .header("p_identifier", ANDROID_ID[0])
-                                    .header("id_device_androis", ANDROID_ID[0]);
+                                    .header("identifier", ANDROID_ID)
+                                    .header("p_identifier", ANDROID_ID)
+                                    .header("id_device_androis", ANDROID_ID);
                             Request newRequest = builder.build();
                             return chain.proceed(newRequest);
                         }
-                    }).connectTimeout(3, TimeUnit.SECONDS)
+                    }).connectTimeout(5, TimeUnit.SECONDS)
                     .writeTimeout(1, TimeUnit.MINUTES)
                     .readTimeout(1, TimeUnit.MINUTES)
                     .build();
@@ -166,7 +166,7 @@ public class BinesslogicDataSync {
 
                     // TODO: 21.09.2024
 
-                    call.cancel();
+                   call.cancel();
 
                     // TODO: 31.05.2022
                     dispatcherScanner.executorService().shutdown();
@@ -328,7 +328,7 @@ public class BinesslogicDataSync {
             HttpGet someHttpGet = new HttpGet(СтрокаСвязиСсервером);
             URIBuilder builder = new URIBuilder(someHttpGet.getURI());
             builder.setParameter("NameTable", "listMacMastersSous")
-                    .setParameter("JobForServer", "getscanner")
+                    .setParameter("JobForServer", "wegetgattserver")
                     .setParameter("bremylocal", bremylocal)
                     .setParameter("versionlocal", versionlocal.toString());
             URI   adresssuri  = builder.build();
