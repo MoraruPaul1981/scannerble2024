@@ -312,7 +312,7 @@ public class BinesslogicDataSync {
             // TODO: 02.04.2024  Адресс и Порт Сервера Jboss
             String getPortServer = getJbossAdress.values().stream().findFirst().orElseGet(()->"");
             String getNameServer = getJbossAdress.keySet().stream().findFirst().orElseGet(()->"");
-            String СтрокаСвязиСсервером = "http://" + getNameServer + ":" + getPortServer;
+            String СтрокаСвязиСсервером = "https://" + getNameServer + ":" + getPortServer;
 
 
             try {
