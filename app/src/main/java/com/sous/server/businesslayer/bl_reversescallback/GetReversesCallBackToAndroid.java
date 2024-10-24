@@ -10,12 +10,12 @@ import com.sous.server.businesslayer.bl_reversescallback.interfaces.GetReversesC
 
 import org.jetbrains.annotations.NotNull;
 
-public class GetReversesCallBack  implements GetReversesCallBackINt {
+public class GetReversesCallBackToAndroid implements GetReversesCallBackINt {
 
     private    Context context;
     private  Long version;
 
-    public GetReversesCallBack(Context context, Long version) {
+    public GetReversesCallBackToAndroid(Context context, Long version) {
         this.context = context;
         this.version = version;
     }

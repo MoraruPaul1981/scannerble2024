@@ -12,20 +12,16 @@ import android.util.Log;
 
 import androidx.annotation.NonNull;
 
-import com.google.common.util.concurrent.AtomicDouble;
 import com.sous.server.businesslayer.ContentProvoders.ContentProviderServer;
 import com.sous.server.businesslayer.Errors.SubClassErrors;
-import com.sous.server.businesslayer.bl_reversescallback.GetReversesCallBack;
+import com.sous.server.businesslayer.bl_reversescallback.GetReversesCallBackToAndroid;
 import com.sous.server.datalayer.binesslogic.WtitingAndreadDataForScanGatt;
 
 
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicReference;
 
-import io.reactivex.rxjava3.core.Completable;
 import io.reactivex.rxjava3.core.Single;
-import io.reactivex.rxjava3.functions.Action;
-import io.reactivex.rxjava3.functions.Consumer;
 import io.reactivex.rxjava3.schedulers.Schedulers;
 
 public class Bl_BloadcastGatt_getDeviceClentGatt {
@@ -100,7 +96,7 @@ public class Bl_BloadcastGatt_getDeviceClentGatt {
                         wtitingAndreadDataForScanGatt.afteruccessfuldataformationweSend(writeDatabaseScanGattSuccessWriteNewDevice);
 
                         // TODO: 24.10.2024 Обраьный ответ клиенту от сервера что произошел состыковка
-                        GetReversesCallBack reversesCallBack=new GetReversesCallBack(context,version);
+                        GetReversesCallBackToAndroid reversesCallBack=new GetReversesCallBackToAndroid(context,version);
 
                     }
                     // TODO: 07.08.2024
