@@ -7,6 +7,7 @@ import android.app.IntentService;
 import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.Service;
+import android.content.ComponentName;
 import android.content.ContentValues;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -144,6 +145,7 @@ public class ServiceServerScan extends Service {
     public void onDestroy() {
         super.onDestroy();
   try{
+      stopForeground(true);
       //TODO:получаем Статус Адаптера Bluetooth true, false  и оптравляем статус в активти
       Log.d(getApplicationContext().getClass().getName(), "\n"
                 + " время: " + new Date() + "\n+" +
@@ -165,6 +167,11 @@ public class ServiceServerScan extends Service {
     }
     }
 
+    @Nullable
+    @Override
+    public ComponentName startForegroundService(Intent service) {
+        return super.startForegroundService(service);
+    }
 
     public void onTaskRemoved(Intent rootIntent) {
         super.onTaskRemoved(rootIntent);

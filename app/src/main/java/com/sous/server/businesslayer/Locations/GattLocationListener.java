@@ -34,6 +34,7 @@ import java.util.concurrent.atomic.AtomicReference;
 import java.util.function.Consumer;
 
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
+import io.reactivex.rxjava3.core.Flowable;
 import io.reactivex.rxjava3.core.Observable;
 import io.reactivex.rxjava3.core.Scheduler;
 import io.reactivex.rxjava3.disposables.Disposable;
@@ -187,26 +188,28 @@ public class GattLocationListener implements LocationListener {
 
                     SharedPreferences.Editor editor = sharedPreferencesGatt.edit();
                     editor.clear();
-                    addresses.forEach(new Consumer<Address>() {
-                        @Override
-                        public void accept(Address address) {
-                            editor.putString("getAdminArea",address.getAdminArea());
-                            editor.putString("getCountryName",address.getCountryName());
-                            editor.putString("getLocality",address.getLocality());
-                            editor.putString("getSubAdminArea",address.getSubAdminArea());
-                            editor.putString("getLatitude", String.valueOf(address.getLatitude()));
-                            editor.putString("getLongitude", String.valueOf(address.getLongitude()));
-                            editor.putString("getLocale", String.valueOf(address.getLocale()));
-                            editor.putString("getThoroughfare", address.getThoroughfare());
-                            editor.putString("getSubThoroughfare", address.getSubThoroughfare());
+                    // TODO: 24.10.2024 заполяем адрес плоченный 
+                    Flowable.fromIterable(addresses).onBackpressureBuffer().blockingForEach(address->{
+                        // TODO: 24.10.2024  
+                        editor.putString("getAdminArea",address.getAdminArea());
+                        editor.putString("getCountryName",address.getCountryName());
+                        editor.putString("getLocality",address.getLocality());
+                        editor.putString("getSubAdminArea",address.getSubAdminArea());
+                        editor.putString("getLatitude", String.valueOf(address.getLatitude()));
+                        editor.putString("getLongitude", String.valueOf(address.getLongitude()));
+                        editor.putString("getLocale", String.valueOf(address.getLocale()));
+                        editor.putString("getThoroughfare", address.getThoroughfare());
+                        editor.putString("getSubThoroughfare", address.getSubThoroughfare());
 
-                            Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
-                                    " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                                    " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" +
-                                    "  address" +address);
-
-                        }
+                        Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                                " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                                " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" +
+                                "  address" +address);
+                        
+                        
+                        
                     });
+                 
 
                     editor.apply();
 

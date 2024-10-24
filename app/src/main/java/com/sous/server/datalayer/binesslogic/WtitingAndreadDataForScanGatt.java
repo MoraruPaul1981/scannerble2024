@@ -79,18 +79,13 @@ public class WtitingAndreadDataForScanGatt {
                       // TODO: 25.07.2024  GET DATE
                        Bundle getDateForNewInsertDivice = getDateForNewInsertDivice(dateLocaleBase, contentValuesВставкаДанных.getAsString("date_update").trim());
 
-
-
-            // TODO: 25.07.2024  Search РАзница
-                 LocalDateTime    databaseDate= (LocalDateTime) getDateForNewInsertDivice.getSerializable("storedate");
-                  LocalDateTime     LiveDate= (LocalDateTime)    getDateForNewInsertDivice.getSerializable("livedate");
-                 Integer  getserchDateDifference= serchDateDifference(  databaseDate,  LiveDate ) ;
-
+                        // TODO: 25.07.2024  Search РАзница
+                        Integer getserchDateDifference=   differencebetweendates(getDateForNewInsertDivice);
 
                         Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                                 " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
                                 " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" +
-                                "getDateForNewInsertDivice  " +getDateForNewInsertDivice+ " databaseDate " +databaseDate  +" LiveDate " +LiveDate);
+                                "getDateForNewInsertDivice  " +getDateForNewInsertDivice);
 
 
 // TODO: 30.07.2024 САМА ЗАПИСЬ В БАЗУ
@@ -132,6 +127,42 @@ public class WtitingAndreadDataForScanGatt {
         return  writeDatabaseScanGatt;
 
     }
+
+
+    // TODO: 24.10.2024 difference between dates
+    Integer differencebetweendates(@NonNull Bundle getDateForNewInsertDivice){
+        Integer getserchDateDifference=0;
+        try{
+        // TODO: 24.10.2024
+
+        LocalDateTime    databaseDate= (LocalDateTime) getDateForNewInsertDivice.getSerializable("storedate");
+        LocalDateTime     LiveDate= (LocalDateTime)    getDateForNewInsertDivice.getSerializable("livedate");
+           getserchDateDifference= serchDateDifference(  databaseDate,  LiveDate ) ;
+        Log.d(context.getClass().getName(), "\n"
+                + " время: " + new Date() + "\n+" +
+                " Класс в процессе... " + this.getClass().getName() + "\n" +
+                " метод в процессе... " + Thread.currentThread().getStackTrace()[2].getMethodName()
+                + " getserchDateDifference " +getserchDateDifference);
+    } catch (Exception e) {
+        e.printStackTrace();
+        Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() + " Линия  :"
+                + Thread.currentThread().getStackTrace()[2].getLineNumber());
+        ContentValues valuesЗаписываемОшибки = new ContentValues();
+        valuesЗаписываемОшибки.put("Error", e.toString().toLowerCase());
+        valuesЗаписываемОшибки.put("Klass", this.getClass().getName());
+        valuesЗаписываемОшибки.put("Metod", Thread.currentThread().getStackTrace()[2].getMethodName());
+        valuesЗаписываемОшибки.put("LineError", Thread.currentThread().getStackTrace()[2].getLineNumber());
+        final Object ТекущаяВерсияПрограммы = version;
+        Integer ЛокальнаяВерсияПОСравнение = Integer.parseInt(ТекущаяВерсияПрограммы.toString());
+        valuesЗаписываемОшибки.put("whose_error", ЛокальнаяВерсияПОСравнение);
+        new SubClassErrors(context).МетодЗаписиОшибок(valuesЗаписываемОшибки);
+    }
+        return  getserchDateDifference;
+    }
+
+
+
+
 
 
     // TODO: 31.07.2024 DONT DEVICE
@@ -299,7 +330,7 @@ try{
             contentValuesВставкаДанных.put("gps1", sharedPreferencesGatt.getString("getLongitude","нет данных"));
             contentValuesВставкаДанных.put("gps2", sharedPreferencesGatt.getString("getLatitude","нет данных"));
 
-            if ( sharedPreferencesGatt.getString("getLocality","нет данных").isEmpty()) {
+            if ( !sharedPreferencesGatt.getString("getLocality","нет данных").isEmpty()) {
 
                 contentValuesВставкаДанных.put("adress",  sharedPreferencesGatt.getString("getCountryName","нет данных")+" "+
                         sharedPreferencesGatt.getString("getLocality","нет данных")+" "+
@@ -710,30 +741,38 @@ try{
            // TODO: 25.07.2024 обрабоатываем даты
            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.SSS");
 
-           LocalDateTime   LiveDate = null;
+           LocalDateTime   getLiveDate = null;
            if (dateLocaleNew!=null) {
                try {
-                   LiveDate = LocalDateTime.parse(dateLocaleNew, formatter);
+                   getLiveDate = LocalDateTime.parse(dateLocaleNew, formatter);
                } catch (Exception e) {
                    //throw new RuntimeException(e);
                }
            }
-           LocalDateTime   databaseDate = null;
+           LocalDateTime   getDatabaseDate = null;
            if (dateLocaleBase!=null) {
                try {
-                   databaseDate = LocalDateTime.parse(dateLocaleBase, formatter);
+                   getDatabaseDate = LocalDateTime.parse(dateLocaleBase, formatter);
                } catch (Exception e) {
                  //  throw new RuntimeException(e);
                }
+           }else {
+               try {
+                   getDatabaseDate = LocalDateTime.parse("2010-01-01", formatter);
+               } catch (Exception e) {
+                   //  throw new RuntimeException(e);
+               }
+
            }
            // TODO: 23.10.2024
-           getDateForNewInsertDivice.putSerializable("storedate",databaseDate);
-           getDateForNewInsertDivice.putSerializable("livedate",LiveDate);
+           getDateForNewInsertDivice.putSerializable("storedate",getDatabaseDate);
+           getDateForNewInsertDivice.putSerializable("livedate",getLiveDate);
 
 
            Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                    " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                   " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"+ " LiveDate " +LiveDate+"\n" + "databaseDate " +databaseDate);
+                   " line " + Thread.currentThread().getStackTrace()[2].getLineNumber()
+                   + "\n"+ " getDatabaseDate " +getDatabaseDate+"\n" + "getLiveDate " +getLiveDate);
 
        } catch (Exception e) {
            e.printStackTrace();
