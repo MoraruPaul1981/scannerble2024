@@ -270,19 +270,23 @@ public class BinesslogicNetworkWorkerPost {
         try{
 
         BufferedReader РидерОтСервераМетодаGET;//
-        if (КакаяКодировка==8) {
-            РидерОтСервераМетодаGET = new BufferedReader(new InputStreamReader(inputStreamOtgattserver, StandardCharsets.UTF_8));
-        } else {
-            РидерОтСервераМетодаGET = new BufferedReader(new InputStreamReader(inputStreamOtgattserver, StandardCharsets.UTF_16));
-        }
-        StringBuffer stringBufferGattSVersion=РидерОтСервераМетодаGET.lines().collect(StringBuffer::new, (sb, i) -> sb.append(i), StringBuffer::append);
 
-        // TODO: 06.09.2024
-         String буферОтветотJboss=Optional.ofNullable(stringBufferGattSVersion).stream().map(String::new).findAny().orElseGet(()->"");
-        // TODO: 06.09.2024
-          буферОтветотJbossfinal=Optional.ofNullable(буферОтветотJboss).stream().mapToLong(Long::new).findAny().orElseGet(()->0l);
+            if (inputStreamOtgattserver.available()>0) {
 
-        Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                if (КакаяКодировка==8) {
+                    РидерОтСервераМетодаGET = new BufferedReader(new InputStreamReader(inputStreamOtgattserver, StandardCharsets.UTF_8));
+                } else {
+                    РидерОтСервераМетодаGET = new BufferedReader(new InputStreamReader(inputStreamOtgattserver, StandardCharsets.UTF_16));
+                }
+                StringBuffer stringBufferGattSVersion=РидерОтСервераМетодаGET.lines().collect(StringBuffer::new, (sb, i) -> sb.append(i), StringBuffer::append);
+
+                // TODO: 06.09.2024
+                String буферОтветотJboss=Optional.ofNullable(stringBufferGattSVersion).stream().map(String::new).findAny().orElseGet(()->"");
+                // TODO: 06.09.2024
+                буферОтветотJbossfinal=Optional.ofNullable(буферОтветотJboss).stream().mapToLong(Long::new).findAny().orElseGet(()->0l);
+            }
+
+            Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                 " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
                 " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" + " буферОтветотJbossfinal " +буферОтветотJbossfinal );
     } catch (Exception e) {

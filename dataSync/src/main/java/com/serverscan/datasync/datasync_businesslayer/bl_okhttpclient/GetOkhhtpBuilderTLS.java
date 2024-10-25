@@ -71,7 +71,7 @@ public class GetOkhhtpBuilderTLS implements OkhhtpInterface {
 
             TrustManagerFactory tmf = TrustManagerFactory.getInstance("X509");
             tmf.init(keyStore);
-            SSLContext sslContext = SSLContext.getInstance("SSL");//TLSv1.3
+            SSLContext sslContext = SSLContext.getInstance("TLSv1.3");//TLSv1.3
 
             // TODO: 09.10.2024
             ConnectionSpec spec = new ConnectionSpec.Builder( ConnectionSpec.MODERN_TLS)

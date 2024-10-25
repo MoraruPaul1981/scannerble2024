@@ -54,13 +54,6 @@ public class GetReversesCallBackToAndroid implements GetReversesCallBackINt {
                 return;
             }
 
-            Parcel parcel=Parcel.obtain();
-            parcel.writeString("89158111806");
-            parcel.writeString(new Date().toGMTString().toString());
-            parcel.writeDouble(89158111806d);
-
-            bluetoothDeviceAndroidReverses.writeToParcel(parcel,0);
-
             BluetoothGattCallback getbluetoothGattCallback = new GetBluetoothGattCallback(context, version, message,getPublicUUIDScan).getBluetoothGattCallback();
 
 
@@ -85,6 +78,10 @@ public class GetReversesCallBackToAndroid implements GetReversesCallBackINt {
                 case BluetoothDevice.DEVICE_TYPE_UNKNOWN:
                     // TODO: 19.07.2024
                     message.getTarget().post(() -> {
+                        // TODO: 25.10.2024
+                        gattScan.disconnect();
+                        gattScan.close();
+
                         ConcurrentHashMap<String, String> concurrentHashMap = new ConcurrentHashMap<String, String>();
                         concurrentHashMap.put("BluetoothDevice.DEVICE_TYPE_UNKNOWN", "9");
 
@@ -99,6 +96,11 @@ public class GetReversesCallBackToAndroid implements GetReversesCallBackINt {
                 case BluetoothDevice.BOND_NONE:
                     // TODO: 29.07.2024
                     message.getTarget().post(() -> {
+
+                        // TODO: 25.10.2024
+                        gattScan.disconnect();
+                        gattScan.close();
+
                         ConcurrentHashMap<String, String> concurrentHashMap = new ConcurrentHashMap<String, String>();
                         concurrentHashMap.put("BluetoothDevice.BOND_NONE", "10");
 
@@ -113,6 +115,10 @@ public class GetReversesCallBackToAndroid implements GetReversesCallBackINt {
                 case BluetoothDevice.BOND_BONDING:
                     // TODO: 29.07.2024
                     message.getTarget().post(() -> {
+
+                        // TODO: 25.10.2024
+                        gattScan.disconnect();
+                        gattScan.close();
                         ConcurrentHashMap<String, String> concurrentHashMap = new ConcurrentHashMap<String, String>();
                         concurrentHashMap.put("BluetoothDevice.BOND_BONDING", "12");
 
@@ -127,6 +133,9 @@ public class GetReversesCallBackToAndroid implements GetReversesCallBackINt {
 
                 case BluetoothDevice.BOND_BONDED:
                     message.getTarget().post(() -> {
+                        // TODO: 25.10.2024
+                        gattScan.disconnect();
+                        gattScan.close();
                         ConcurrentHashMap<String, String> concurrentHashMap = new ConcurrentHashMap<String, String>();
                         concurrentHashMap.put("BluetoothDevice.BOND_BONDING", "13");
 

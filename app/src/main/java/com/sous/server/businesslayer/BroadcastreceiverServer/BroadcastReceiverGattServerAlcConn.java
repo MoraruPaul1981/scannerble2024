@@ -21,6 +21,7 @@ import android.util.Log;
 import com.sous.server.businesslayer.Errors.SubClassErrors;
 import com.sous.server.businesslayer.bl_BloadcastReceiver.Bl_BloadcastGatt_getDeviceClentGatt;
 import com.sous.server.businesslayer.bl_BloadcastReceiver.Businesslogic_GattReflection;
+import com.sous.server.businesslayer.bl_reversescallback.GetReversesCallBackToAndroid;
 
 import java.util.Random;
 import java.util.concurrent.atomic.AtomicReference;
@@ -64,8 +65,16 @@ public class BroadcastReceiverGattServerAlcConn extends BroadcastReceiver {
                     // TODO: 07.08.2024
                     final Bl_BloadcastGatt_getDeviceClentGatt blBloadcastGattGetDeviceClentGatt=  new Bl_BloadcastGatt_getDeviceClentGatt(context,version);
 
-                    blBloadcastGattGetDeviceClentGatt.startingGetDeviceBLECkient(  intent ,   pendingResultAtomicReferenceServer,bluetoothDevice,preferencesGatt);
+            Integer getWriteNewDevice=          blBloadcastGattGetDeviceClentGatt.startingGetDeviceBLECkient(  intent ,   pendingResultAtomicReferenceServer,bluetoothDevice,preferencesGatt);
                     // TODO: 30.07.2024
+
+
+                    // TODO: 24.10.2024 Обраьный ответ клиенту от сервера что произошел состыковка
+                    if (getWriteNewDevice>0) {
+                        GetReversesCallBackToAndroid reversesCallBack=new GetReversesCallBackToAndroid(context,version);
+                        // TODO: 24.10.2024
+                        reversesCallBack.getReversesCallBackToAndroid(bluetoothDevice);
+                    }
 
 
                     new Businesslogic_GattReflection(context,version).unpairDevice(bluetoothDevice);
@@ -73,7 +82,8 @@ public class BroadcastReceiverGattServerAlcConn extends BroadcastReceiver {
                     Log.i(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                             " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
                             " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" +
-                            "intent.getAction() "+intent.getAction() + " intent.getAction() " +intent.getAction());
+                            "intent.getAction() "+intent.getAction() + " intent.getAction() " +intent.getAction()+
+                            " getWriteNewDevice "+getWriteNewDevice);
                     break;
 
             }

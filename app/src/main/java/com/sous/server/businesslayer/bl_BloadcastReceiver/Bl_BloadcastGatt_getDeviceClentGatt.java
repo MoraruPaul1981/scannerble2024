@@ -40,11 +40,13 @@ public class Bl_BloadcastGatt_getDeviceClentGatt {
 
     // TODO: 30.07.2024 code for BroaadCastRecever GATT SERVER
     @SuppressLint("MissingPermission")
-    public synchronized void  startingGetDeviceBLECkient(@NonNull Intent intent,
+    public synchronized Integer  startingGetDeviceBLECkient(@NonNull Intent intent,
                                                          @NonNull AtomicReference<BroadcastReceiver.PendingResult>
                                                      pendingResultAtomicReference,
                                                          @NonNull final BluetoothDevice     bluetoothDevice,
                                                          @NonNull SharedPreferences preferencesGatt) {
+        // TODO: 25.10.2024  
+        Single<Integer> singleBroadcastGattServer = Single.just(0);
         try{
             // TODO: 24.10.2024  
             // TODO: 29.07.2024
@@ -57,7 +59,7 @@ public class Bl_BloadcastGatt_getDeviceClentGatt {
                     "Bintent.getAction() "+intent.getAction() + " bluetoothDevice " +bluetoothDevice.getName()+"\n"+
                     " intent.getAction() " +intent.getAction());
             
-        Single.fromCallable(()->{
+      singleBroadcastGattServer=   Single.fromCallable(()->{
 
                     // TODO: 29.07.2024
                     // TODO: 22.07.2024  Код Брадкаста ресивера
@@ -94,12 +96,7 @@ public class Bl_BloadcastGatt_getDeviceClentGatt {
                     if (getWriteNewDevice>0) {
                         // TODO: 31.07.2024  посылаем данные на Франгмент перегражаем внешний вид
                         wtitingAndreadDataForScanGatt.afteruccessfuldataformationweSend(writeDatabaseScanGattSuccessWriteNewDevice);
-
-                        // TODO: 24.10.2024 Обраьный ответ клиенту от сервера что произошел состыковка
-                   /*     GetReversesCallBackToAndroid reversesCallBack=new GetReversesCallBackToAndroid(context,version);
-                        // TODO: 24.10.2024
-                        reversesCallBack.getReversesCallBackToAndroid(bluetoothDevice);*/
-
+                        
                     }
                     // TODO: 07.08.2024
                     Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
@@ -108,7 +105,7 @@ public class Bl_BloadcastGatt_getDeviceClentGatt {
                             "Bintent.getAction() "+intent.getAction() + " bluetoothDevice " +bluetoothDevice+
                             " getWriteNewDevice " +getWriteNewDevice);
             
-            return writeDatabaseScanGattSuccessWriteNewDevice;
+            return getWriteNewDevice;
             
                 }).doOnSuccess(su->{
 
@@ -120,9 +117,11 @@ public class Bl_BloadcastGatt_getDeviceClentGatt {
                     " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
                     " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" +
                     "Bintent.getAction() "+intent.getAction());
-        })
-                .subscribeOn(Schedulers.single())
-                .blockingSubscribe();
+            
+        }).subscribeOn(Schedulers.single());
+
+       
+     
         Log.d(context.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                 " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
                 " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n");
@@ -145,6 +144,7 @@ public class Bl_BloadcastGatt_getDeviceClentGatt {
         valuesЗаписываемОшибки.put("whose_error", ЛокальнаяВерсияПОСравнение);
         new SubClassErrors(context).МетодЗаписиОшибок(valuesЗаписываемОшибки);
     }
+        return   singleBroadcastGattServer.blockingGet();
     }
 
     
