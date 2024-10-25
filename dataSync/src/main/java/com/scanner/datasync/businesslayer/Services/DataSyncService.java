@@ -245,7 +245,7 @@ public class DataSyncService extends IntentService {
                 Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                         " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n+ " +
                         " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"  +
-                        " jsonNodeScannerBLE " +jsonNodeScannerBLE + " bytesGetOtJBossGetScanner " +bytesGetOtJBossGetScanner);
+                        " jsonNodeScannerBLE.size() " +jsonNodeScannerBLE  + " bytesGetOtJBossGetScanner " +bytesGetOtJBossGetScanner);
 
 
             // TODO: 21.08.2024  

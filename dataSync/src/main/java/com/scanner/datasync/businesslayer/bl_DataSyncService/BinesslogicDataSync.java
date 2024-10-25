@@ -195,6 +195,7 @@ public class BinesslogicDataSync {
                             InputStream inputStreamJaksonByte=new GZIPInputStream(ByteSource.wrap(asByteBuffer).openBufferedStream(), 2048);//4096
                             // TODO: 24.10.2024
                             if (inputStreamJaksonByte.available()>0) {
+                                // TODO: 25.10.2024  
                                 bytesGetOtJBossGetScanner.set( IOUtils.toByteArray(inputStreamJaksonByte));
                             }
                             // TODO: 30.08.2024
@@ -327,8 +328,8 @@ public class BinesslogicDataSync {
 
             HttpGet someHttpGet = new HttpGet(СтрокаСвязиСсервером);
             URIBuilder builder = new URIBuilder(someHttpGet.getURI());
-            builder.setParameter("NameTable", "listMacMastersSous")
-                    .setParameter("JobForServer", "wegetgattserver")
+            builder.setParameter("NameTable", "listmacmasterssous")
+                    .setParameter("JobForServer", "getscanner")
                     .setParameter("bremylocal", bremylocal)
                     .setParameter("versionlocal", versionlocal.toString());
             URI   adresssuri  = builder.build();
