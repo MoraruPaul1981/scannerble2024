@@ -33,6 +33,7 @@ import javax.inject.Inject;
 
 import dagger.hilt.android.AndroidEntryPoint;
 import io.reactivex.rxjava3.annotations.NonNull;
+import io.reactivex.rxjava3.core.Completable;
 import io.reactivex.rxjava3.core.CompletableObserver;
 import io.reactivex.rxjava3.core.CompletableSource;
 import io.reactivex.rxjava3.core.Single;
@@ -117,12 +118,27 @@ public class DataSyncService extends IntentService {
     public  void startingWorkerDatSyncService(@NotNull Context context,@NotNull Long version){
      try{
     // TODO: 29.08.2024  Сразу Две обработки и Get и POST к серверу и от сервера
+         Completable.fromAction(()->{
 
-         //TODO POST -> Jboss
-    binesslogicDataSyncServiceGetPost.proseccingDataSyncPost(getApplicationContext(),version,dataSyncService.get());
+             //TODO POST -> Jboss
+             binesslogicDataSyncServiceGetPost.proseccingDataSyncPost(getApplicationContext(),version,dataSyncService.get());
 
-         //TODO GET <-Jboss
-         binesslogicDataSyncServiceGetGet.proseccingDataSyncGet(getApplicationContext(),version,dataSyncService.get());
+             Log.d(getApplicationContext().getClass().getName(), "\n"
+                     + " class " + Thread.currentThread().getStackTrace()[2].getClassName() +
+                     "\n" +
+                     " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                     " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n");
+         }).doOnComplete(()->{
+             //TODO GET <-Jboss
+             binesslogicDataSyncServiceGetGet.proseccingDataSyncGet(getApplicationContext(),version,dataSyncService.get());
+
+
+             Log.d(getApplicationContext().getClass().getName(), "\n"
+                     + " class " + Thread.currentThread().getStackTrace()[2].getClassName() +
+                     "\n" +
+                     " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                     " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n");
+         }).subscribe();
 
     Log.d(getApplicationContext().getClass().getName(), "\n"
             + " class " + Thread.currentThread().getStackTrace()[2].getClassName() +

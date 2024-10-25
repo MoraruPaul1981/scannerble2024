@@ -11,7 +11,9 @@ import android.os.Bundle;
 import android.util.Log;
 
 
+import com.google.firebase.crashlytics.buildtools.reloc.com.google.common.util.concurrent.AtomicDouble;
 import com.serverscan.datasync.Errors.SubClassErrors;
+import com.serverscan.datasync.datasync_businesslayer.bl_databases.BusinesslogicGetCursor;
 import com.serverscan.datasync.datasync_businesslayer.bl_dates.BinesslogicParserDates;
 
 import org.jetbrains.annotations.NotNull;
@@ -162,36 +164,63 @@ Context context;
 
     // TODO: 05.10.2024  Методы Записи версии в сисменую таблицу
     @SuppressLint("NewApi")
-    public void recordingVersionRemote(@NotNull Context context , @NotNull Long version,@NotNull Long versionPostDataJbossGattOtServer){
+    public void recordingVersionRemote(@NotNull Context context , @NotNull Long version){
         try{
-            ContentResolver contentProviderNewVersion=context.getContentResolver();
-            Uri uri = Uri.parse("content://com.sous.servergatt.prodider/gattserverdataversion" );
-            // TODO: 09.09.2024
-            ContentValues contentValuesdvensedScannerserversuccessRemote =new ContentValues();
-            contentValuesdvensedScannerserversuccessRemote.put("versionremote",versionPostDataJbossGattOtServer);
+             Long versionPostDataJbossGattOtServer=0l;;
 
-            // TODO: 25.07.2024  Создаем Новую Даты
-            BinesslogicParserDates binesslogicParserDates =new BinesslogicParserDates(context,version);
-            Date date_update = binesslogicParserDates.dateCreation();
-            String date_updatefinal=  binesslogicParserDates.datesasaString(date_update);
-            contentValuesdvensedScannerserversuccessRemote.put("date_update",date_updatefinal);
-            contentValuesdvensedScannerserversuccessRemote.put("id",1);
+            BusinesslogicGetCursor businesslogicGetCursor=new BusinesslogicGetCursor(context);
+            /////macdevice=   " 74:15:75:D8:F5:FA";
+            Cursor cursormacadress=    businesslogicGetCursor.getingCursor("SELECT MAX ( current_table  ) AS MAX_R   " +
+                            " FROM scannerserversuccess    ",version,
+                    "scannerserversuccess");
+            if(cursormacadress.getCount()>0){
+                // TODO: 22.10.2024
+                int LocationFio=cursormacadress.getColumnIndex("MAX_R");
+                versionPostDataJbossGattOtServer=      cursormacadress.getLong(LocationFio);
+            }
+            // TODO: 25.10.2024  closing cursor
+            cursormacadress.close();
+
+            Log.d(context.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                    " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                    " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"+
+                    " versionPostDataJbossGattOtServer " +versionPostDataJbossGattOtServer);
+
+            // TODO: 25.10.2024 всталяем новую верисию данных
+            Integer resultNewVersionGattServer= null;
+
+            if (versionPostDataJbossGattOtServer>0) {
+                // TODO: 25.10.2024
+                ContentResolver contentProviderNewVersion=context.getContentResolver();
+                Uri uri = Uri.parse("content://com.sous.servergatt.prodider/gattserverdataversion" );
+                // TODO: 09.09.2024
+                ContentValues contentValuesdvensedScannerserversuccessRemote =new ContentValues();
+                contentValuesdvensedScannerserversuccessRemote.put("versionremote",versionPostDataJbossGattOtServer);
+
+                // TODO: 25.07.2024  Создаем Новую Даты
+                BinesslogicParserDates binesslogicParserDates =new BinesslogicParserDates(context,version);
+                Date date_update = binesslogicParserDates.dateCreation();
+                String date_updatefinal=  binesslogicParserDates.datesasaString(date_update);
+                contentValuesdvensedScannerserversuccessRemote.put("date_update",date_updatefinal);
+                contentValuesdvensedScannerserversuccessRemote.put("id",1);
 
 
-         Bundle bUpdate=  new Bundle();
-            String  SQlOperUpdate=  " UPDATE  gattserverdataversion  SET     versionremote=?  ,date_update=?  WHERE id =?    ;";
-        //    String  SQlOperInsert=  " REPLACE INTO gattserverdataversion VALUES(?,?,?,? );";
-            bUpdate.putString("sql",SQlOperUpdate );
-            // TODO: 09.09.2024 new Date
+                Bundle bUpdate=  new Bundle();
+                String  SQlOperUpdate=  " UPDATE  gattserverdataversion  SET     versionremote=?  ,date_update=?  WHERE id =?    ;";
+                //    String  SQlOperInsert=  " REPLACE INTO gattserverdataversion VALUES(?,?,?,? );";
+                bUpdate.putString("sql",SQlOperUpdate );
+                // TODO: 09.09.2024 new Date
 
-            // TODO: 09.09.2024 сама операция
-         int urlNewVersionGattServer=   contentProviderNewVersion.update(uri, contentValuesdvensedScannerserversuccessRemote,bUpdate);
-            Integer resultNewVersionGattServer= Optional.ofNullable(urlNewVersionGattServer).map(Integer::new).orElse(0);
+                // TODO: 09.09.2024 сама операция
+                int urlNewVersionGattServer=   contentProviderNewVersion.update(uri, contentValuesdvensedScannerserversuccessRemote,bUpdate);
+                resultNewVersionGattServer = Optional.ofNullable(urlNewVersionGattServer).map(Integer::new).orElse(0);
+            }
 
 
             Log.d(context.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                     " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                    " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"+ " resultNewVersionGattServer " +resultNewVersionGattServer+
+                    " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"
+                    + " resultNewVersionGattServer " +resultNewVersionGattServer+
                     " versionPostDataJbossGattOtServer " +versionPostDataJbossGattOtServer);
 
         } catch (Exception e) {

@@ -209,7 +209,7 @@ public class BinesslogicNetworkWorkerPost {
                                     // TODO: 09.09.2024 ПОлученую версию данных от серврера запоминаем
                                     if (versionGETDataJbossGattOtServer.get()>0  ) {
                                         // TODO: 10.09.2024 дополнительное увеличение версии данных уже в рабочей текуще версии чтобы большене вставлять дополнительно
-                                        new BinesslogicVersions(context).recordingVersionRemote(context,version,versionGETDataJbossGattOtServer.get());
+                                        new BinesslogicVersions(context).recordingVersionRemote(context,version);
                                     }
 
                                     // TODO: 31.07.2024 close database
