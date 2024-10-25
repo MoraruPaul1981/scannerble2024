@@ -110,6 +110,7 @@
                 android:textStyle="bold"
                 android:focusable="false"
                 android:clickable="false"
+                android:layout_margin="2dp"
                 android:hint="id"
                 android:text="id value " />
         </com.google.android.material.textfield.TextInputLayout>
@@ -161,6 +162,7 @@
                         android:textStyle="bold"
                         android:focusable="false"
                         android:clickable="false"
+                        android:layout_margin="2dp"
                         android:hint="фио"
                         android:text="fio value">
                     </com.google.android.material.textfield.TextInputEditText>
@@ -240,6 +242,7 @@
                 android:clickable="false"
                 android:textStyle="bold"
                 android:hint="мак-адрес"
+                android:layout_margin="2dp"
                 android:text="macdevice value " />
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -286,6 +289,7 @@
                     android:focusable="false"
                     android:clickable="false"
                     android:hint="девайс"
+                    android:layout_margin="2dp"
                     android:text="namedevice value " />
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -334,6 +338,7 @@
                 android:focusable="false"
                 android:clickable="false"
                 android:hint="статус"
+                android:layout_margin="2dp"
                 android:text="completedwork value " />
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -382,6 +387,7 @@
                 android:hint="дата"
                 android:focusable="false"
                 android:clickable="false"
+                android:layout_margin="2dp"
                 android:text="date_update value " />
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -433,6 +439,7 @@
                 android:hint="город"
                 android:focusable="false"
                 android:clickable="false"
+                android:layout_margin="2dp"
                 android:text="city value " />
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -484,6 +491,7 @@
                 android:hint="адрес"
                 android:focusable="false"
                 android:clickable="false"
+                android:layout_margin="2dp"
                 android:text="adress value " />
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -530,6 +538,7 @@
                 android:hint="gps1"
                 android:focusable="false"
                 android:clickable="false"
+                android:layout_margin="2dp"
                 android:text="gps1  value " />
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -579,6 +588,7 @@
                 android:hint="gps2"
                 android:focusable="false"
                 android:clickable="false"
+                android:layout_margin="2dp"
                 android:text="gps2 value " />
         </com.google.android.material.textfield.TextInputLayout>
 

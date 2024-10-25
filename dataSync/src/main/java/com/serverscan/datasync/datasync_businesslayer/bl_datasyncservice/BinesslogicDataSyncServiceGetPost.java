@@ -61,7 +61,8 @@ public class BinesslogicDataSyncServiceGetPost implements InterfaceDataSyncServi
 @Override
     public void proseccingDataSyncPost(@NonNull Context context , @NonNull Long version
         , @NonNull DataSyncService dataSyncService)    {
-    // TODO: 23.10.2024  
+    // TODO: 23.10.2024
+    try{
     AtomicReference<Cursor> cursorAtomicReference=new AtomicReference<>();
         // TODO: 04.09.2024 POST
         Single.fromCallable(()->{
@@ -129,6 +130,23 @@ public class BinesslogicDataSyncServiceGetPost implements InterfaceDataSyncServi
                             " cursorAtomicReference.get() " +cursorAtomicReference.get() +  "  SuccessByteJaksonPost " +SuccessByteJaksonPost);
 
                 }).blockingSubscribe();
+    // TODO: 25.10.2024
+
+
+} catch (Exception e) {
+        e.printStackTrace();
+        Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() + " Линия  :"
+                + Thread.currentThread().getStackTrace()[2].getLineNumber());
+        ContentValues valuesЗаписываемОшибки = new ContentValues();
+        valuesЗаписываемОшибки.put("Error", e.toString().toLowerCase());
+        valuesЗаписываемОшибки.put("Klass", this.getClass().getName());
+        valuesЗаписываемОшибки.put("Metod", Thread.currentThread().getStackTrace()[2].getMethodName());
+        valuesЗаписываемОшибки.put("LineError", Thread.currentThread().getStackTrace()[2].getLineNumber());
+        final Object ТекущаяВерсияПрограммы = version;
+        Integer ЛокальнаяВерсияПОСравнение = Integer.parseInt(ТекущаяВерсияПрограммы.toString());
+        valuesЗаписываемОшибки.put("whose_error", ЛокальнаяВерсияПОСравнение);
+        new SubClassErrors(context).МетодЗаписиОшибок(valuesЗаписываемОшибки);
+    }
         Log.d(context.getClass().getName(), "\n" + " class " +
                 Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                 " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +

@@ -279,7 +279,7 @@ public class GetNavigationViews {
     private void stopingScanServer() {
         try {
                 // TODO: 19.07.2024 Запуск Остановка службвы
-            Toast  toast=    Toast.makeText(context, "Скан. !!!", Toast.LENGTH_LONG);
+            Toast  toast=    Toast.makeText(context, "Вид !!!", Toast.LENGTH_LONG);
             toast.setGravity(Gravity.CENTER, toast.getXOffset() / 2, toast.getYOffset() / 2);
             toast.show();
 

@@ -711,7 +711,9 @@ public class BinesslogicFragmentGattServerRecyclerView {
 
                     if(getconcurrentHashMapCursor.getCount()>0){
                         // TODO: 18.07.2024 Когда Данные есть
-                        view = LayoutInflater.from(parent.getContext()).inflate(R.layout.fragment_server_success_data_oncreateviewholder, parent, false);//todo old simple_for_takst_cardview1
+                      //  view = LayoutInflater.from(parent.getContext()).inflate(R.layout.fragment_server_success_data_oncreateviewholder, parent, false);//todo old simple_for_takst_cardview1
+                        // TODO: 25.10.2024 групировка
+                        view = LayoutInflater.from(parent.getContext()).inflate(R.layout.fragment_server_success_data_oncreateviewholdergroupby, parent, false);//todo old simple_for_takst_cardview1
                       //  view = LayoutInflater.from(parent.getContext()).inflate(R.layout.fragment_server_success_mini_data_oncreateviewholder, parent, false);//todo old simple_for_takst_cardview1*/
                     }else {
                         // TODO: 18.07.2024 Когда Данные НЕТ !!!

@@ -465,12 +465,12 @@ public class FragmentGattServerRecyclerView extends Fragment {
 
 
             // TODO: 26.08.2024  ТРИ Кнопки снизу
-        getNavigationViews.clickbottomNavigationVeiwExit();
-
-        getNavigationViews.clickbottomNavigationVeiwScan();
-
-        getNavigationViews.clickbottomNavigationVeiwAsync();
-
+            // TODO: 25.10.2024 exit 
+            getNavigationViews.clickbottomNavigationVeiwExit();
+            // TODO: 25.10.2024 async data -> jboss 
+            getNavigationViews.clickbottomNavigationVeiwAsync();
+            // TODO: 25.10.2024  scan view UI
+            getNavigationViews.clickbottomNavigationVeiwScan();
 
 
 
