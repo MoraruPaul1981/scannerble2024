@@ -172,6 +172,7 @@ public class GetBleAdvertising {
                                 // TODO: 01.09.2024
                                 Parcel parcel=Parcel.obtain();
                                 parcel.writeInt(565656556);
+                                parcel.recycle();
                                 settingsInEffect.writeToParcel(parcel,0);
                                 Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                                         " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +

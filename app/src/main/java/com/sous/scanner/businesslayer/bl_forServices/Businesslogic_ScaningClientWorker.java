@@ -270,8 +270,8 @@ public class Businesslogic_ScaningClientWorker {
                 // TODO: 30.07.2024
                 if (bluetoothAdapterPhoneClient.isEnabled()) {
                     // TODO: 20.08.2024
-                    int DurectionTimeGatt=      getRandomNumberUsingMilisecond(150,800);
-                 Observable.range(      1,6)
+                    int DurectionTimeGatt=      getRandomNumberUsingMilisecond(150,500);
+                 Observable.range(      1,10)
                             .zipWith( Observable.just("")
                                     .delay(DurectionTimeGatt,TimeUnit.MILLISECONDS)
                                     .repeatWhen(repeat->repeat.delay(10,TimeUnit.SECONDS)), (item, interval) -> item)
@@ -329,7 +329,7 @@ public class Businesslogic_ScaningClientWorker {
                                             " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
                                             " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" + "\n"+
                                             " numberoftheСurrentscanningattempt " +numberoftheСurrentscanningattempt);
-                                    if (numberoftheСurrentscanningattempt>=4 ||
+                                    if (numberoftheСurrentscanningattempt>=8 ||
                                             disposablerange.isDisposed()) {
                                         // TODO: 09.08.2024
 
@@ -943,7 +943,7 @@ return  getMacGatt;
                         +"   bluetoothDevice.getAddress()" + bluetoothDevice.getAddress() + " bondstate " + bondstate );
 
                 switch (bondstate) {
-    
+
                     case BluetoothDevice.DEVICE_TYPE_UNKNOWN:
                         // TODO: 19.07.2024
                         message.getTarget().post(()->{
@@ -960,7 +960,11 @@ return  getMacGatt;
     
                     case BluetoothDevice.BOND_NONE:
                         // TODO: 29.07.2024
+                        BluetoothGatt finalGattScan = gattScan;
                         message.getTarget().post(()->{
+                            // TODO: 25.10.2024
+                            finalGattScan.disconnect();
+                            finalGattScan.close();
                             ConcurrentHashMap<String,String> concurrentHashMap=      new ConcurrentHashMap<String,String>();
                             concurrentHashMap  .put("BluetoothDevice.BOND_NONE","10");
 

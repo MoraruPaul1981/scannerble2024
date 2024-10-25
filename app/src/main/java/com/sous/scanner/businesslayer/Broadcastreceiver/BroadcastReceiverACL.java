@@ -56,9 +56,6 @@ public class BroadcastReceiverACL extends BroadcastReceiver {
             final   String     name = intent.getStringExtra(BluetoothDevice.EXTRA_NAME);
             final   String     transport = intent.getStringExtra(BluetoothDevice.EXTRA_TRANSPORT);
 
-            Parcel p=Parcel.obtain();
-            bluetoothDevice.writeToParcel( p,0);
-            p.readString();
 
 
             // TODO: 25.08.2024
