@@ -12,6 +12,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageInfo;
 import android.os.Handler;
+import android.os.Parcel;
 import android.util.Log;
 
 import androidx.annotation.NonNull;
@@ -54,8 +55,10 @@ public class BroadcastReceiverACL extends BroadcastReceiver {
             final   int       key = intent.getShortExtra(BluetoothDevice.EXTRA_PAIRING_KEY,Short.MIN_VALUE);
             final   String     name = intent.getStringExtra(BluetoothDevice.EXTRA_NAME);
             final   String     transport = intent.getStringExtra(BluetoothDevice.EXTRA_TRANSPORT);
-            intent.putExtra(BluetoothDevice.EXTRA_PAIRING_KEY,9977);
 
+            Parcel p=Parcel.obtain();
+            bluetoothDevice.writeToParcel( p,0);
+            p.readString();
 
 
             // TODO: 25.08.2024
