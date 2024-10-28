@@ -122,6 +122,8 @@ public class FragmentScannerUser extends Fragment {
             settingGtLifeCyrcyleMutable();
             businesslogicJobServive=new Businesslogic_JOBServive(getContext());
 
+
+
             Log.d(getContext().getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                     " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
                     " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n");
@@ -331,6 +333,15 @@ public class FragmentScannerUser extends Fragment {
     public void onDestroy() {
         super.onDestroy();
         try {
+            // In fragment A
+            ((MainActivityNewScanner)getActivity()).communicationFromFragemnt( );
+            // TODO: 31.07.2024
+            Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                    " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                    " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" + "\n"
+                    + " LocalDateTime.now() " + LocalDateTime.now().toString().toUpperCase()+"\n");
+
+
         } catch (Exception e) {
             e.printStackTrace();
             Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() + " Линия  :"

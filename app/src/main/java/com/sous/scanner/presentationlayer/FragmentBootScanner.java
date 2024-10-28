@@ -238,6 +238,8 @@ public class FragmentBootScanner extends Fragment {
                 FragmentScannerUser fragmentScannerUser=event.fragmentScannerUser;
                 FragmentTransaction   fragmentTransaction = fragmentManager.beginTransaction();
                 fragmentTransaction.addToBackStack(null);
+
+                fragmentManager.popBackStackImmediate(0, FragmentManager.POP_BACK_STACK_INCLUSIVE);
                 fragmentTransaction.replace(R.id.id_gattclientFrameLayout, fragmentScannerUser);
                 fragmentTransaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_CLOSE).commit();
                 fragmentTransaction.setCustomAnimations(android.R.anim.slide_in_left, android.R.anim.slide_out_right);
