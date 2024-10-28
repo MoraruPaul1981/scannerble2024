@@ -34,7 +34,7 @@ android {
         applicationId "com.sous.scanner"
         minSdk 29
         targetSdk 34
-        versionCode 18
+        versionCode 20
         versionName 'Scanner BLE 2024'
 
 

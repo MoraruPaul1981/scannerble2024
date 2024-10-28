@@ -264,13 +264,13 @@ public class Businesslogic_ScaningClientWorker {
             // TODO: 02.08.2024
             String  getMacGatt =addbundleFormSearchMacGatt(bundleFormSearchMacGatt);
             // TODO: 25.07.2024
-            if (bluetoothAdapterPhoneClient!=null) {
+            if (bluetoothAdapterPhoneClient!=null && !getMacGatt.isEmpty()) {
                 // TODO: 30.07.2024
                 if (bluetoothAdapterPhoneClient.isEnabled()) {
                     // TODO: 20.08.2024
                     int DurectionTimeGatt=      getRandomNumberUsingMilisecond(150,500);
                     // TODO: 28.10.2024 ЗАпускаем главный Цикл Пинга МАС-адресов мастеров
-                     disposableMainMacPingAddress=      Observable.range(      1,5)
+                     disposableMainMacPingAddress=      Observable.range(      1,10)
                             .zipWith( Observable.just("")
                                     .delay(DurectionTimeGatt,TimeUnit.MILLISECONDS)
                                     .repeatWhen(repeat->repeat.delay(5,TimeUnit.SECONDS)), (item, interval) -> item)
@@ -282,7 +282,7 @@ public class Businesslogic_ScaningClientWorker {
                                     // TODO: 22.11.2022  первая часть
 
                                     // TODO: 25.07.2024
-                                    if (!getMacGatt.isEmpty()) {
+
                                         // TODO: 26.07.2024
                                         final BluetoothDevice bluetoothDeviceScan = bluetoothAdapterPhoneClient.getRemoteDevice(getMacGatt);
 
@@ -297,7 +297,6 @@ public class Businesslogic_ScaningClientWorker {
 
                                         // TODO: 26.01.2023 staring  GATT
                                         getConnectionBluetoothGatt.add( МетодЗапускаGATTКлиентаScan(bluetoothDeviceScan, bluetoothGattCallback, getMessage())) ;
-                                    }
 
 
                                     // TODO: 02.08.2024
@@ -331,7 +330,7 @@ public class Businesslogic_ScaningClientWorker {
 
 
 
-                                    if (numberoftheСurrentscanningattempt>=4  ) {
+                                    if (numberoftheСurrentscanningattempt>=9  ) {
                                         // TODO: 09.08.2024
 
                                         // TODO: 08.08.2024  передаем обраьтно в службу сообщени о прекращении работы
@@ -372,8 +371,10 @@ public class Businesslogic_ScaningClientWorker {
                             }).doOnDispose(new Action() {
                                 @Override
                                 public void run() throws Throwable {
+
                                     // TODO: 08.08.2024 выключаем элементы
                                     startingDisponseCallBackAndConnectionForGatt(     getConnectionBluetoothGatt);
+
                                     Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                                             " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
                                             " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"   +"    Flowable.fromAction(new Action() { "
@@ -396,10 +397,16 @@ public class Businesslogic_ScaningClientWorker {
                                  valuesЗаписываемОшибки.put("whose_error", ЛокальнаяВерсияПОСравнение);
                                  new SubClassErrors(context).МетодЗаписиОшибок(valuesЗаписываемОшибки);
                              }
-                         }).toFlowable(BackpressureStrategy.BUFFER).onBackpressureBuffer().subscribe();
-// TODO: 07.08.2024 end test code
+                         }).doOnSubscribe(new Consumer<Disposable>() {
+                                 @Override
+                                 public void accept(Disposable disposable) throws Throwable {
+                                     // TODO: 07.08.2024 end test code
 
-                    getLocalBroadcastManagerDisposable();
+                                     getLocalBroadcastManagerDisposable();
+                                 }
+                             })
+                             .toFlowable(BackpressureStrategy.BUFFER).onBackpressureBuffer().subscribe();
+
 
                     // TODO: 07.04.2024
                     Log.d(this.getClass().getName(), "\n" + " class " +
