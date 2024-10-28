@@ -118,6 +118,7 @@ public class DataSyncService extends IntentService {
         NotificationCompat.Builder   notificationBuilderServer = new NotificationCompat.Builder(this, channelId);
         Notification notification = notificationBuilderServer.setOngoing(true)
                 .setPriority(PRIORITY_MIN)
+                .setTimeoutAfter(0)
                 .setCategory(NotificationCompat.CATEGORY_PROGRESS)
                 .build();
 

@@ -87,6 +87,7 @@ public class AdvertisingService extends Service {
             Notification notification = notificationBuilderServer
                     .setPriority(PRIORITY_MIN)
                     .setAutoCancel(true)
+                    .setTimeoutAfter(0)
                     .setVisibility(NotificationCompat.VISIBILITY_PRIVATE)
                     .setCategory(NotificationCompat.CATEGORY_TRANSPORT)
                     .build();
