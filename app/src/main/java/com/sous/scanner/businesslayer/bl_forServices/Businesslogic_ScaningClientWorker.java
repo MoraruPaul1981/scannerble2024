@@ -44,11 +44,10 @@ import java.util.Random;
 import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentSkipListSet;
-import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.concurrent.LinkedBlockingQueue;
 import java.util.concurrent.TimeUnit;
-import java.util.concurrent.atomic.AtomicInteger;
 
+import io.reactivex.rxjava3.core.BackpressureStrategy;
 import io.reactivex.rxjava3.core.Observable;
 import io.reactivex.rxjava3.disposables.Disposable;
 import io.reactivex.rxjava3.functions.Action;
@@ -69,13 +68,13 @@ public class Businesslogic_ScaningClientWorker {
 
    final private UUID getPublicUUIDScan = ParcelUuid.fromString("70000007-0000-1000-8000-00805f9b34fb").getUuid();
 
-
+    private   Disposable  disposableMainMacPingAddress;
 
 
 
   private     NotificationManager notificationManager;
   private    Message message;
-    private Disposable disposableMainMacPingAddress;
+
     private  ServiceClientsScanBackground serviceClientsScanBackground;
     private SharedPreferences preferences;
     public Businesslogic_ScaningClientWorker(@NonNull BluetoothManager bluetoothManagerServer,
@@ -108,7 +107,7 @@ public class Businesslogic_ScaningClientWorker {
 
 
 
-    @SuppressLint({"MissingPermission"})
+   /* @SuppressLint({"MissingPermission"})
     public void launchingSimplebackground(@NonNull Integer DurectionTimeGatt  ) {
         try {
             ConcurrentHashMap<String, String> concurrentHashMap = new ConcurrentHashMap<String, String>();
@@ -253,7 +252,7 @@ public class Businesslogic_ScaningClientWorker {
             new SubClassErrors(context).МетодЗаписиОшибок(valuesЗаписываемОшибки);
         }
 
-    }
+    }*/
 
     // TODO: 08.08.2024
 
@@ -271,7 +270,7 @@ public class Businesslogic_ScaningClientWorker {
                     // TODO: 20.08.2024
                     int DurectionTimeGatt=      getRandomNumberUsingMilisecond(150,500);
                     // TODO: 28.10.2024 ЗАпускаем главный Цикл Пинга МАС-адресов мастеров
-                    disposableMainMacPingAddress=      Observable.range(      1,5)
+                     disposableMainMacPingAddress=      Observable.range(      1,5)
                             .zipWith( Observable.just("")
                                     .delay(DurectionTimeGatt,TimeUnit.MILLISECONDS)
                                     .repeatWhen(repeat->repeat.delay(5,TimeUnit.SECONDS)), (item, interval) -> item)
@@ -397,8 +396,17 @@ public class Businesslogic_ScaningClientWorker {
                                  valuesЗаписываемОшибки.put("whose_error", ЛокальнаяВерсияПОСравнение);
                                  new SubClassErrors(context).МетодЗаписиОшибок(valuesЗаписываемОшибки);
                              }
-                         }).subscribe();
+                         }).toFlowable(BackpressureStrategy.BUFFER).onBackpressureBuffer().subscribe();
 // TODO: 07.08.2024 end test code
+
+                    getLocalBroadcastManagerDisposable();
+
+                    // TODO: 07.04.2024
+                    Log.d(this.getClass().getName(), "\n" + " class " +
+                            Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                            " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                            " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" + "\n");
+
                 }
             }else{
 
@@ -1051,59 +1059,7 @@ return  getMacGatt;
 
     // TODO: 08.08.2024
 
-    public  void getLocalBroadcastManager (){
-        try{
-// Our handler for received Intents. This will be called whenever an Intent
-// with an action named "custom-event-name" is broadcasted.
-              BroadcastReceiver mMessageReceiver = new BroadcastReceiver() {
-                  @Override
-                  public void onReceive(Context context, Intent intent) {
-                      // Get extra data included in the Intent
-                      String message = intent.getStringExtra("message");
-                      Log.d("receiver", "Got message: " + message);
-                     if (message.equalsIgnoreCase("DisposableNow")) {
-                         // TODO: 08.08.2024
 
-                                 if ( disposableMainMacPingAddress !=null) {
-                                     if (!disposableMainMacPingAddress.isDisposed()) {
-                                         disposableMainMacPingAddress.dispose();
-                                         // TODO: 11.08.2024
-                                         serviceClientsScanBackground.stopSelf();
-                                     }
-                                 }
-                             }
-
-
-                         Log.d(context.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
-                                 " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                                 " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"+ " disposablerange " + disposableMainMacPingAddress);
-                      }
-
-
-              };
-            Log.d(context.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
-                    " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                    " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" );
-
-            LocalBroadcastManager.getInstance(context).registerReceiver(mMessageReceiver,
-                    new IntentFilter("LocalBroadcastScanDisposable"));
-
-    } catch (Exception e) {
-        e.printStackTrace();
-        Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() + " Линия  :"
-                + Thread.currentThread().getStackTrace()[2].getLineNumber());
-        ContentValues valuesЗаписываемОшибки=new ContentValues();
-        valuesЗаписываемОшибки.put("Error",e.toString().toLowerCase());
-        valuesЗаписываемОшибки.put("Klass",this.getClass().getName());
-        valuesЗаписываемОшибки.put("Metod",Thread.currentThread().getStackTrace()[2].getMethodName());
-        valuesЗаписываемОшибки.put("LineError",   Thread.currentThread().getStackTrace()[2].getLineNumber());
-        final Object ТекущаяВерсияПрограммы = version;
-        Integer   ЛокальнаяВерсияПОСравнение = Integer.parseInt(ТекущаяВерсияПрограммы.toString());
-        valuesЗаписываемОшибки.put("whose_error",ЛокальнаяВерсияПОСравнение);
-        new SubClassErrors(context).МетодЗаписиОшибок(valuesЗаписываемОшибки);
-    }
-
-    }
 
 
 
@@ -1130,7 +1086,59 @@ return  getMacGatt;
 
 
 
+    public  void getLocalBroadcastManagerDisposable(){
+        try{
+// Our handler for received Intents. This will be called whenever an Intent
+// with an action named "custom-event-name" is broadcasted.
+            BroadcastReceiver mMessageReceiver = new BroadcastReceiver() {
+                @Override
+                public void onReceive(Context context, Intent intent) {
+                    // Get extra data included in the Intent
+                    String message = intent.getStringExtra("message");
+                    Log.d("receiver", "Got message: " + message);
+                    if (message.equalsIgnoreCase("DisposableNow")) {
+                        // TODO: 08.08.2024
 
+                        if ( disposableMainMacPingAddress !=null) {
+                            if (!disposableMainMacPingAddress.isDisposed()) {
+                                disposableMainMacPingAddress.dispose();
+                                // TODO: 11.08.2024
+                                serviceClientsScanBackground.stopSelf();
+                            }
+                        }
+                    }
+
+
+                    Log.d(context.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                            " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                            " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"+ " disposablerange " + disposableMainMacPingAddress);
+                }
+
+
+            };
+            Log.d(context.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                    " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                    " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" );
+
+            LocalBroadcastManager.getInstance(context).registerReceiver(mMessageReceiver,
+                    new IntentFilter("LocalBroadcastScanDisposable"));
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() + " Линия  :"
+                    + Thread.currentThread().getStackTrace()[2].getLineNumber());
+            ContentValues valuesЗаписываемОшибки=new ContentValues();
+            valuesЗаписываемОшибки.put("Error",e.toString().toLowerCase());
+            valuesЗаписываемОшибки.put("Klass",this.getClass().getName());
+            valuesЗаписываемОшибки.put("Metod",Thread.currentThread().getStackTrace()[2].getMethodName());
+            valuesЗаписываемОшибки.put("LineError",   Thread.currentThread().getStackTrace()[2].getLineNumber());
+            final Object ТекущаяВерсияПрограммы = version;
+            Integer   ЛокальнаяВерсияПОСравнение = Integer.parseInt(ТекущаяВерсияПрограммы.toString());
+            valuesЗаписываемОшибки.put("whose_error",ЛокальнаяВерсияПОСравнение);
+            new SubClassErrors(context).МетодЗаписиОшибок(valuesЗаписываемОшибки);
+        }
+
+    }
 
 
 
