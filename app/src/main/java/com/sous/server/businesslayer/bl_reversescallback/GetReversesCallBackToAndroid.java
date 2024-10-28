@@ -68,8 +68,6 @@ public class GetReversesCallBackToAndroid implements GetReversesCallBackINt {
             gattScan.executeReliableWrite();
 
 
-            // TODO: 28.10.2024 добавляем к ответу парсер данные
-            new GetParcelTo(context,version).getParcelTo(bluetoothDeviceAndroidReverses);
 
             Log.d(this.getClass().getName(), "Trying to write characteristic..., first bondstate " + bondstate);
             Log.d(context.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
@@ -81,16 +79,6 @@ public class GetReversesCallBackToAndroid implements GetReversesCallBackINt {
 
                 case BluetoothDevice.DEVICE_TYPE_UNKNOWN:
                     // TODO: 19.07.2024
-                    message.getTarget().post(() -> {
-                        // TODO: 25.10.2024
-                        gattScan.disconnect();
-                        gattScan.close();
-
-                        ConcurrentHashMap<String, String> concurrentHashMap = new ConcurrentHashMap<String, String>();
-                        concurrentHashMap.put("BluetoothDevice.DEVICE_TYPE_UNKNOWN", "9");
-
-                    });
-
                     Log.d(context.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                             " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
                             " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"
@@ -99,16 +87,9 @@ public class GetReversesCallBackToAndroid implements GetReversesCallBackINt {
 
                 case BluetoothDevice.BOND_NONE:
                     // TODO: 29.07.2024
-                    message.getTarget().post(() -> {
+                    // TODO: 28.10.2024 добавляем к ответу парсер данные
+                    new GetParcelTo(context,version).getParcelTo(bluetoothDeviceAndroidReverses);
 
-                        // TODO: 25.10.2024
-                        gattScan.disconnect();
-                        gattScan.close();
-
-                        ConcurrentHashMap<String, String> concurrentHashMap = new ConcurrentHashMap<String, String>();
-                        concurrentHashMap.put("BluetoothDevice.BOND_NONE", "10");
-
-                    });
                     Log.d(context.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                             " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
                             " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"
@@ -118,17 +99,6 @@ public class GetReversesCallBackToAndroid implements GetReversesCallBackINt {
 
                 case BluetoothDevice.BOND_BONDING:
                     // TODO: 29.07.2024
-                    message.getTarget().post(() -> {
-
-                        // TODO: 25.10.2024
-                        gattScan.disconnect();
-                        gattScan.close();
-                        ConcurrentHashMap<String, String> concurrentHashMap = new ConcurrentHashMap<String, String>();
-                        concurrentHashMap.put("BluetoothDevice.BOND_BONDING", "12");
-
-
-                    });
-
                     Log.d(context.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                             " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
                             " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"
@@ -136,35 +106,13 @@ public class GetReversesCallBackToAndroid implements GetReversesCallBackINt {
                     break;
 
                 case BluetoothDevice.BOND_BONDED:
-                    message.getTarget().post(() -> {
-                        // TODO: 25.10.2024
-                        gattScan.disconnect();
-                        gattScan.close();
-                        ConcurrentHashMap<String, String> concurrentHashMap = new ConcurrentHashMap<String, String>();
-                        concurrentHashMap.put("BluetoothDevice.BOND_BONDING", "13");
-
-
-                    });
                     Log.d(context.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                             " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
                             " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"
                             + "   bluetoothDeviceAndroidReverses.getAddress()" + bluetoothDeviceAndroidReverses.getAddress() + " bondstate " + bondstate);
                     break;
 
-
-                default: {
-
-
-                    Log.d(context.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
-                            " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                            " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"
-                            + "   bluetoothDeviceAndroidReverses.getAddress()" + bluetoothDeviceAndroidReverses.getAddress() + " bondstate " + bondstate);
-
-                }
-
-
             }
-
 
             Log.d(context.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                     " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +

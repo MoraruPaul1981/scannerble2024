@@ -26,15 +26,10 @@ public class GetParcelTo  implements GetParcelToInterface {
     @Override
     public void getParcelTo(@NotNull BluetoothDevice bluetoothDevicerevers) {
         try{
-
-            // Wrote orig to a parcel and then byte array
-            final Parcel p1 = Parcel.obtain();
-            p1.writeString(bluetoothDevicerevers.getAddress());
-            p1.writeString("ble server");
-            p1.setDataPosition(0);
-            bluetoothDevicerevers.writeToParcel(p1,0);
-            p1.recycle();
-
+            Parcel parcel = Parcel.obtain();
+            parcel.writeString("00:11:22:33:AA:BB");
+            bluetoothDevicerevers.writeToParcel(parcel,0);
+            parcel.recycle();
             Log.d(context.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                     " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
                     " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n");
