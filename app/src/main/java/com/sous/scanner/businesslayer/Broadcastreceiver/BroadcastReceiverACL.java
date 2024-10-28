@@ -21,6 +21,7 @@ import androidx.preference.PreferenceManager;
 import com.sous.scanner.businesslayer.Errors.SubClassErrors;
 import com.sous.scanner.businesslayer.bl_BroadcastReciver.Businesslogic_GattClinetSuccessLocalBroadcastManager;
 import com.sous.scanner.businesslayer.bl_BroadcastReciver.Businesslogic_GattReflection;
+import com.sous.scanner.businesslayer.bl_BroadcastReciver.bl_reversescallback.GetParcelTo;
 import com.sous.scanner.businesslayer.bl_LocalBroadcastManagers.BussenloginSaredPreferense;
 
 import org.jetbrains.annotations.NotNull;
@@ -81,6 +82,9 @@ public class BroadcastReceiverACL extends BroadcastReceiver {
                       new BussenloginSaredPreferense(preferences,context,version).  workerSharedPreferences(bluetoothDevice);
 
                         }
+
+                    new GetParcelTo(context,version).getParcelTo(bluetoothDevice);
+
 
                     Log.i(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                             " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
