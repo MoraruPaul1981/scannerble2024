@@ -1,4 +1,4 @@
-package com.sous.server.businesslayer.BI_presentationlayer.bl_FragmentServerbleRecyclerViewSimpleScan;
+package com.sous.server.businesslayer.BI_presentationlayer.bl_FragmentServerbleRecyclerViewSimpleScan.interfaces;
 
 import android.widget.ProgressBar;
 

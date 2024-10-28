@@ -33,6 +33,7 @@ import com.google.android.material.card.MaterialCardView;
 import com.google.android.material.tabs.TabLayout;
 import com.google.android.material.textfield.TextInputEditText;
 import com.sous.server.R;
+import com.sous.server.businesslayer.BI_presentationlayer.bl_FragmentServerbleRecyclerViewSimpleScan.interfaces.BinesslogicFragmentGattServerInterface;
 import com.sous.server.businesslayer.ContentProvoders.ContentProviderServer;
 import com.sous.server.businesslayer.Errors.SubClassErrors;
 import com.sous.server.datalayer.binesslogic.WtitingAndreadDataForScanGatt;
@@ -48,7 +49,7 @@ import java.util.concurrent.ConcurrentHashMap;
 
 import javax.inject.Inject;
 
-public class BinesslogicFragmentGattServerRecyclerView {
+public class BinesslogicFragmentGattServerInterfaceRecyclerView implements BinesslogicFragmentGattServerInterface {
 
     private FragmentManager fragmentManager;
     private  MyRecycleViewAdapterServer myRecycleViewAdapterServer;
@@ -76,19 +77,19 @@ public class BinesslogicFragmentGattServerRecyclerView {
     protected SharedPreferences sharedPreferencesGatt;
 
 
-    public BinesslogicFragmentGattServerRecyclerView(@NonNull  FragmentManager fragmentManager,
-                                                     @NotNull RecyclerView recyclerViewServer,
-                                                     @NotNull    Long version,
-                                                     @NotNull   MaterialCardView maincardView_server_ble_fragment,
-                                                     @NotNull    RelativeLayout relativeLayout_server_ble,
-                                                     @NotNull     TabLayout tabLayout_server_ble,
-                                                     @NotNull    MaterialCardView card_server_ble_inner,
-                                                     @NotNull     ProgressBar progressbar_server_ble,
-                                                     @NotNull     Animation animation,
-                                                     @NotNull    Context context,
-                                                     @NotNull    Activity activity,
-                                                     @NotNull    Message messageGattServer,
-                                                     @NotNull    BottomNavigationView bottomnavigationview_server_scan) {
+    public BinesslogicFragmentGattServerInterfaceRecyclerView(@NonNull  FragmentManager fragmentManager,
+                                                              @NotNull RecyclerView recyclerViewServer,
+                                                              @NotNull    Long version,
+                                                              @NotNull   MaterialCardView maincardView_server_ble_fragment,
+                                                              @NotNull    RelativeLayout relativeLayout_server_ble,
+                                                              @NotNull     TabLayout tabLayout_server_ble,
+                                                              @NotNull    MaterialCardView card_server_ble_inner,
+                                                              @NotNull     ProgressBar progressbar_server_ble,
+                                                              @NotNull     Animation animation,
+                                                              @NotNull    Context context,
+                                                              @NotNull    Activity activity,
+                                                              @NotNull    Message messageGattServer,
+                                                              @NotNull    BottomNavigationView bottomnavigationview_server_scan) {
         // TODO: 15.08.2024
         try{
         // TODO: 17.07.2024
@@ -711,9 +712,9 @@ public class BinesslogicFragmentGattServerRecyclerView {
 
                     if(getconcurrentHashMapCursor.getCount()>0){
                         // TODO: 18.07.2024 Когда Данные есть
-                      //  view = LayoutInflater.from(parent.getContext()).inflate(R.layout.fragment_server_success_data_oncreateviewholder, parent, false);//todo old simple_for_takst_cardview1
+                        view = LayoutInflater.from(parent.getContext()).inflate(R.layout.fragment_server_success_data_oncreateviewholder, parent, false);//todo old simple_for_takst_cardview1
                         // TODO: 25.10.2024 групировка
-                        view = LayoutInflater.from(parent.getContext()).inflate(R.layout.fragment_server_success_data_oncreateviewholdergroupby, parent, false);//todo old simple_for_takst_cardview1
+                        //view = LayoutInflater.from(parent.getContext()).inflate(R.layout.fragment_server_success_data_oncreateviewholdergroupby, parent, false);//todo old simple_for_takst_cardview1
                       //  view = LayoutInflater.from(parent.getContext()).inflate(R.layout.fragment_server_success_mini_data_oncreateviewholder, parent, false);//todo old simple_for_takst_cardview1*/
                     }else {
                         // TODO: 18.07.2024 Когда Данные НЕТ !!!

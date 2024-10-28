@@ -50,6 +50,7 @@ public class ServiceServerScan extends Service {
     public LocalBinderСерверBLE binderScan = new LocalBinderСерверBLE();
     public Long version = 0l;
     private   NotificationCompat.Builder notificationBuilderServer;
+    private     NotificationManager notificationManager;
     @Inject
     BuccesloginForServiceServerScan buccesloginForServiceServerScan;
     private SharedPreferences preferencesGatt;
@@ -62,27 +63,16 @@ public class ServiceServerScan extends Service {
                     " Класс в процессе... " + this.getClass().getName() + "\n" +
                     " метод в процессе... " + Thread.currentThread().getStackTrace()[2].getMethodName());
 
-            preferencesGatt =getApplicationContext(). getSharedPreferences("MyPrefs", MODE_PRIVATE);
-            // TODO: 24.07.2024 устанвливаем разрешения
-            //For creating the Foreground Service
-            NotificationManager notificationManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
-            String channelId = Build.VERSION.SDK_INT >= Build.VERSION_CODES.O ? buccesloginForServiceServerScan.
-                    getNotificationChannel(notificationManager) : "";
-            notificationBuilderServer = new NotificationCompat.Builder(this, channelId);
-            Notification notification = notificationBuilderServer.setOngoing(true)
-                    .setSmallIcon(R.drawable.icon_bluetooth_start)
-                    .setContentText("запуск:"+LocalDateTime.now().toString() )
-                    .setContentTitle("Сервер Bluetooth")
-                   .setPriority(PRIORITY_MAX)
-                    .setCategory(NotificationCompat.CATEGORY_PROGRESS)
-                    .build();
-// TODO: 03.09.2024 запускаем уведоденим переднего типа
-            startForeground(111, notification);//
-            
-            // TODO: 03.09.2024  получаем версия для ошибки  
+
+            // TODO: 03.09.2024  получаем версия для ошибки
             PackageInfo pInfo = getApplicationContext().getPackageManager().getPackageInfo(getApplicationContext().getPackageName(), 0);
             version = pInfo.getLongVersionCode();
 
+
+            preferencesGatt =getApplicationContext(). getSharedPreferences("MyPrefs", MODE_PRIVATE);
+            // TODO: 24.07.2024 устанвливаем разрешения
+            //For creating the Foreground Service
+            getNotificationGattServer();
 
 
             Log.d(getApplicationContext().getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
@@ -106,19 +96,53 @@ public class ServiceServerScan extends Service {
 
     }
 
+    private void getNotificationGattServer() {
+        try{
+        notificationManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
+        String channelId = Build.VERSION.SDK_INT >= Build.VERSION_CODES.O ? buccesloginForServiceServerScan.
+                getNotificationChannel(notificationManager) : "";
+        notificationBuilderServer = new NotificationCompat.Builder(this, channelId);
+        Notification notification = notificationBuilderServer.setOngoing(true)
+                .setSmallIcon(R.drawable.icon_bluetooth_start)
+                .setContentText("запуск:"+LocalDateTime.now().toString() )
+                .setContentTitle("Сервер Bluetooth")
+               .setPriority(PRIORITY_MAX)
+                .setVisibility(NotificationCompat.VISIBILITY_PUBLIC)
+                .setCategory(NotificationCompat.CATEGORY_PROGRESS)
+                .build();
+// TODO: 03.09.2024 запускаем уведоденим переднего типа
+        startForeground(111, notification);//
+
+        notificationManager.notify(111,notification);
+
+
+    } catch (Exception e) {
+        e.printStackTrace();
+        Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() + " Линия  :"
+                + Thread.currentThread().getStackTrace()[2].getLineNumber());
+        ContentValues valuesЗаписываемОшибки = new ContentValues();
+        valuesЗаписываемОшибки.put("Error", e.toString().toLowerCase());
+        valuesЗаписываемОшибки.put("Klass", this.getClass().getName());
+        valuesЗаписываемОшибки.put("Metod", Thread.currentThread().getStackTrace()[2].getMethodName());
+        valuesЗаписываемОшибки.put("LineError", Thread.currentThread().getStackTrace()[2].getLineNumber());
+        final Object ТекущаяВерсияПрограммы = version;
+        Integer ЛокальнаяВерсияПОСравнение = Integer.parseInt(ТекущаяВерсияПрограммы.toString());
+        valuesЗаписываемОшибки.put("whose_error", ЛокальнаяВерсияПОСравнение);
+        new SubClassErrors(getApplicationContext()).МетодЗаписиОшибок(valuesЗаписываемОшибки);
+    }
+
+    }
+
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
         try {
-            Completable.fromRunnable(()->{
+
                         // TODO: 03.09.2024 Запускаем КОд Служббы Сервера Ble GATT
                         buccesloginForServiceServerScan.launchBuccesloginForServiceServerScan(this,preferencesGatt);
 
                         Log.d(getApplicationContext().getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                                 " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
                                 " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n");
-
-                    }).subscribeOn(Schedulers.single())
-                    .subscribe();
 // TODO: 30.06.2022 сама не постредствено запуск метода
         } catch (Exception e) {
             e.printStackTrace();

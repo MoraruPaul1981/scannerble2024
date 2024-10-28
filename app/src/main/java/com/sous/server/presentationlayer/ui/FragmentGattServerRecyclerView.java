@@ -1,6 +1,7 @@
 package com.sous.server.presentationlayer.ui;
 
 import android.annotation.SuppressLint;
+import android.app.Notification;
 import android.content.ContentValues;
 import android.content.pm.PackageInfo;
 import android.database.Cursor;
@@ -26,9 +27,9 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.card.MaterialCardView;
 import com.google.android.material.tabs.TabLayout;
-import com.serverscan.datasync.datasync_businesslayer.bl_datasyncservice.BunissecclogicBindDataSyncService;
 import com.sous.server.R;
-import com.sous.server.businesslayer.BI_presentationlayer.bl_FragmentServerbleRecyclerViewSimpleScan.BinesslogicFragmentGattServerRecyclerView;
+import com.sous.server.businesslayer.BI_presentationlayer.bl_FragmentServerbleRecyclerViewSimpleScan.BinesslogicFragmentGattServerInterfaceRecyclerView;
+import com.sous.server.businesslayer.BI_presentationlayer.bl_FragmentServerbleRecyclerViewSimpleScan.BinesslogicFragmentGattServerInterfaceRecyclerViewGroupBy;
 import com.sous.server.businesslayer.BI_presentationlayer.bl_navigationView.GetNavigationViews;
 import com.sous.server.businesslayer.Errors.SubClassErrors;
 import com.sous.server.businesslayer.Eventbus.MessageScannerServer;
@@ -41,8 +42,6 @@ import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.Date;
 import java.util.concurrent.ConcurrentHashMap;
-
-import javax.inject.Inject;
 
 import dagger.hilt.android.AndroidEntryPoint;
 
@@ -60,7 +59,17 @@ public class FragmentGattServerRecyclerView extends Fragment {
     private RecyclerView     recyclerview_server_ble;
     private ProgressBar     progressbar_server_ble;
     private  Animation animation;
-    private BinesslogicFragmentGattServerRecyclerView getblFragmentRecyreViewServerScan;
+
+
+
+
+
+    // TODO: 25.10.2024 простой View для recyreView
+    private BinesslogicFragmentGattServerInterfaceRecyclerView getblFragmentRecyreViewServerScan;
+
+ /*   // TODO: 25.10.2024 Gruop BY View для recyreView
+    private BinesslogicFragmentGattServerInterfaceRecyclerViewGroupBy getblFragmentRecyreViewServerScan;*/
+
 
     private Message messageGattServer;
     private BottomNavigationView bottomnavigationview_server_scan ;
@@ -378,7 +387,7 @@ public class FragmentGattServerRecyclerView extends Fragment {
                         " getFladEnableApadaterBTEOtService " +getFladEnableApadaterBTEOtService+
                         " CurrentTask  "  +CurrentTask);
             }else {
-                // TODO: 18.07.2024  пришел статус что серверне рабоатет 
+                // TODO: 18.07.2024  пришел статус что серверне рабоатет
                 if (CurrentTask.contentEquals("bluetootAdapterDisabledScan")) {
                     progressbar_server_ble.setIndeterminate(false);
 
@@ -433,7 +442,7 @@ public class FragmentGattServerRecyclerView extends Fragment {
     @SuppressLint("SuspiciousIndentation")
     private void initRecureViewServer() {
         try{
-        getblFragmentRecyreViewServerScan=new BinesslogicFragmentGattServerRecyclerView( fragmentManager,recyclerview_server_ble,
+        getblFragmentRecyreViewServerScan=new BinesslogicFragmentGattServerInterfaceRecyclerView( fragmentManager,recyclerview_server_ble,
                 version,maincardView_server_ble_fragment,relativeLayout_server_ble,tabLayout_server_ble,card_server_ble_inner,
                 progressbar_server_ble,animation,getContext(),getActivity(),messageGattServer,bottomnavigationview_server_scan);
 
@@ -465,9 +474,9 @@ public class FragmentGattServerRecyclerView extends Fragment {
 
 
             // TODO: 26.08.2024  ТРИ Кнопки снизу
-            // TODO: 25.10.2024 exit 
+            // TODO: 25.10.2024 exit
             getNavigationViews.clickbottomNavigationVeiwExit();
-            // TODO: 25.10.2024 async data -> jboss 
+            // TODO: 25.10.2024 async data -> jboss
             getNavigationViews.clickbottomNavigationVeiwAsync();
             // TODO: 25.10.2024  scan view UI
             getNavigationViews.clickbottomNavigationVeiwScan();
