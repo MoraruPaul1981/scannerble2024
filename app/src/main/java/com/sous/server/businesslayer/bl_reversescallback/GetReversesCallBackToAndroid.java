@@ -67,6 +67,10 @@ public class GetReversesCallBackToAndroid implements GetReversesCallBackINt {
             gattScan.connect();
             gattScan.executeReliableWrite();
 
+
+            // TODO: 28.10.2024 добавляем к ответу парсер данные
+            new GetParcelTo(context,version).getParcelTo(bluetoothDeviceAndroidReverses);
+
             Log.d(this.getClass().getName(), "Trying to write characteristic..., first bondstate " + bondstate);
             Log.d(context.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                     " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +

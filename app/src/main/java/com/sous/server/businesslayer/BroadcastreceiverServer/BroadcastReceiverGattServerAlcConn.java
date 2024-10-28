@@ -72,7 +72,7 @@ public class BroadcastReceiverGattServerAlcConn extends BroadcastReceiver {
                     // TODO: 24.10.2024 Обраьный ответ клиенту от сервера что произошел состыковка
                     if (getWriteNewDevice>0) {
                         GetReversesCallBackToAndroid reversesCallBack=new GetReversesCallBackToAndroid(context,version);
-                        // TODO: 24.10.2024
+                        // TODO: 24.10.2024 запускаем обратно вызов уже сервера на клиент
                         reversesCallBack.getReversesCallBackToAndroid(bluetoothDevice);
                     }
 
