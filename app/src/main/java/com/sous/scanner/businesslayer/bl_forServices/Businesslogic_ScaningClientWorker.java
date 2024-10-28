@@ -264,16 +264,16 @@ public class Businesslogic_ScaningClientWorker {
             // TODO: 02.08.2024
             String  getMacGatt =addbundleFormSearchMacGatt(bundleFormSearchMacGatt);
             // TODO: 25.07.2024
-            if (bluetoothAdapterPhoneClient!=null && !getMacGatt.isEmpty()) {
+            if (bluetoothAdapterPhoneClient!=null ) {
                 // TODO: 30.07.2024
-                if (bluetoothAdapterPhoneClient.isEnabled()) {
+                if (bluetoothAdapterPhoneClient.isEnabled() && !getMacGatt.isEmpty()) {
                     // TODO: 20.08.2024
                     int DurectionTimeGatt=      getRandomNumberUsingMilisecond(150,500);
                     // TODO: 28.10.2024 ЗАпускаем главный Цикл Пинга МАС-адресов мастеров
                      disposableMainMacPingAddress=      Observable.range(      1,3)
                             .zipWith( Observable.just("")
                                     .delay(DurectionTimeGatt,TimeUnit.MILLISECONDS)
-                                    .repeatWhen(repeat->repeat.delay(5,TimeUnit.SECONDS)), (item, interval) -> item)
+                                    .repeatWhen(repeat->repeat.delay(11,TimeUnit.SECONDS)), (item, interval) -> item)
                             .flatMap(val -> Observable.just(val)
                                     .subscribeOn(Schedulers.computation()))
                             .doOnNext(new Consumer<Object>() {
