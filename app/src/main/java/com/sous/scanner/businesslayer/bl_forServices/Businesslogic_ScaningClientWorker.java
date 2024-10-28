@@ -46,7 +46,6 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentSkipListSet;
 import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.concurrent.LinkedBlockingQueue;
-import java.util.concurrent.LinkedTransferQueue;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicInteger;
 
@@ -76,7 +75,7 @@ public class Businesslogic_ScaningClientWorker {
 
   private     NotificationManager notificationManager;
   private    Message message;
-    private Disposable      disposablerange ;
+    private Disposable disposableMainMacPingAddress;
     private  ServiceClientsScanBackground serviceClientsScanBackground;
     private SharedPreferences preferences;
     public Businesslogic_ScaningClientWorker(@NonNull BluetoothManager bluetoothManagerServer,
@@ -271,10 +270,11 @@ public class Businesslogic_ScaningClientWorker {
                 if (bluetoothAdapterPhoneClient.isEnabled()) {
                     // TODO: 20.08.2024
                     int DurectionTimeGatt=      getRandomNumberUsingMilisecond(150,500);
-                 Observable.range(      1,10)
+                    // TODO: 28.10.2024 ЗАпускаем главный Цикл Пинга МАС-адресов мастеров
+                    disposableMainMacPingAddress=      Observable.range(      1,5)
                             .zipWith( Observable.just("")
                                     .delay(DurectionTimeGatt,TimeUnit.MILLISECONDS)
-                                    .repeatWhen(repeat->repeat.delay(10,TimeUnit.SECONDS)), (item, interval) -> item)
+                                    .repeatWhen(repeat->repeat.delay(5,TimeUnit.SECONDS)), (item, interval) -> item)
                             .flatMap(val -> Observable.just(val)
                                     .subscribeOn(Schedulers.computation()))
                             .doOnNext(new Consumer<Object>() {
@@ -329,19 +329,21 @@ public class Businesslogic_ScaningClientWorker {
                                             " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
                                             " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" + "\n"+
                                             " numberoftheСurrentscanningattempt " +numberoftheСurrentscanningattempt);
-                                    if (numberoftheСurrentscanningattempt>=8 ||
-                                            disposablerange.isDisposed()) {
+
+
+
+                                    if (numberoftheСurrentscanningattempt>=4  ) {
                                         // TODO: 09.08.2024
-
-
 
                                         // TODO: 08.08.2024  передаем обраьтно в службу сообщени о прекращении работы
                                         BussensloginLocalBroadcastManager bussensloginLocalBroadcastManager=
                                                 new BussensloginLocalBroadcastManager(context,version);
+                                        
+                                        
+                                        
                                         bussensloginLocalBroadcastManager  .getLocalBroadcastManagerDisposable();
                                         // TODO: 08.08.2024
-
-
+                                        
                                         // TODO: 08.08.2024 перегрузка Элемента экрана UI
                                         bussensloginLocalBroadcastManager .getLocalBroadcastManagerUI();
 
@@ -368,25 +370,11 @@ public class Businesslogic_ScaningClientWorker {
                                         return true;
                                     }
                                 }
-                            })
-                            .doOnSubscribe(new Consumer<Disposable>() {
-                                @Override
-                                public void accept(Disposable disposable) throws Throwable {
-                                    disposablerange=disposable;
-                                    // TODO: 02.08.2024
-                                    Log.d(this.getClass().getName(), "\n" + " class " +
-                                            Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
-                                            " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                                            " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" + "\n");
-                                }
-                            })
-                            .doOnDispose(new Action() {
+                            }).doOnDispose(new Action() {
                                 @Override
                                 public void run() throws Throwable {
-
                                     // TODO: 08.08.2024 выключаем элементы
                                     startingDisponseCallBackAndConnectionForGatt(     getConnectionBluetoothGatt);
-
                                     Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                                             " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
                                             " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"   +"    Flowable.fromAction(new Action() { "
@@ -1076,9 +1064,9 @@ return  getMacGatt;
                      if (message.equalsIgnoreCase("DisposableNow")) {
                          // TODO: 08.08.2024
 
-                                 if ( disposablerange!=null) {
-                                     if (!disposablerange.isDisposed()) {
-                                         disposablerange.dispose();
+                                 if ( disposableMainMacPingAddress !=null) {
+                                     if (!disposableMainMacPingAddress.isDisposed()) {
+                                         disposableMainMacPingAddress.dispose();
                                          // TODO: 11.08.2024
                                          serviceClientsScanBackground.stopSelf();
                                      }
@@ -1088,7 +1076,7 @@ return  getMacGatt;
 
                          Log.d(context.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                                  " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                                 " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"+ " disposablerange " + disposablerange );
+                                 " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"+ " disposablerange " + disposableMainMacPingAddress);
                       }
 
 

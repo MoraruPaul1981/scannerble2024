@@ -51,6 +51,16 @@ public class Businesslogic_GattClinetSuccessLocalBroadcastManager {
                     @Override
                     public void run() throws Throwable {
 
+
+
+                        // TODO: 08.08.2024  передаем обраьтно в службу сообщени о прекращении работы ПОСЛЕ УСППЕШНОГО ПИНГА СООБЩАЕМ О ЗАВРЕЩЕНИИ РАБОТЫ ЦИКЛА ПИНГА АДРЕМОВ МАСТЕРОВ
+                        BussensloginLocalBroadcastManager bussensloginLocalBroadcastManager=
+                                new BussensloginLocalBroadcastManager(context,version);
+                        // TODO: 08.08.2024 остановка скана
+                        bussensloginLocalBroadcastManager .getLocalBroadcastManagerDisposable();
+
+
+
                         // TODO: 31.07.2024
                         String getAction=    Optional.ofNullable( intent.getAction().toUpperCase()).map(m->m.toUpperCase()) .orElseGet(()->"");
                         String getAddress=     Optional.ofNullable(bluetoothDevice.getAddress().toUpperCase()) .orElseGet(()->"");
@@ -71,11 +81,7 @@ public class Businesslogic_GattClinetSuccessLocalBroadcastManager {
                         // TODO: 11.08.2024
 
 
-// TODO: 08.08.2024  передаем обраьтно в службу сообщени о прекращении работы
-                        BussensloginLocalBroadcastManager bussensloginLocalBroadcastManager=
-                                new BussensloginLocalBroadcastManager(context,version);
-                        // TODO: 08.08.2024 остановка скана
-                        bussensloginLocalBroadcastManager .getLocalBroadcastManagerDisposable();
+
 
 
 

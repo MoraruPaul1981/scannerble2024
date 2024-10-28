@@ -102,7 +102,7 @@ public class BusinessloginforfragmentScanner {
     public void updateUIFragmentScan(@NonNull  MaterialTextView materialtextview_last_state ,
                                      @NonNull SharedPreferences preferences,
                                      @NonNull Animation animation ,
-                                     @NonNull MaterialButton materialcardview_gattclientonly_bottom,
+                                     @NonNull MaterialButton materialButtonEventSameOffice,
                                      @NonNull Message message,
                                      @NonNull  MaterialTextView searchview_maclistdeviceserver,
                                      @NonNull String toProccessError,
@@ -116,9 +116,9 @@ public class BusinessloginforfragmentScanner {
             String getFirstNameButton =preferences.getString("getMatetilaButtonControl","");
             // TODO: 07.08.2024
             message.getTarget().postDelayed(()->{
-                materialcardview_gattclientonly_bottom.setText(getFirstNameButton);
+                materialButtonEventSameOffice.setText(getFirstNameButton);
                 materialtextview_last_state.setError(null);
-                materialcardview_gattclientonly_bottom.setTextColor(Color.BLACK);
+                materialButtonEventSameOffice.setTextColor(Color.BLACK);
             },1500);
 
             if (getAddress.length()>0 && getAction.length()>0) {
@@ -140,7 +140,7 @@ public class BusinessloginforfragmentScanner {
                 materialtextview_last_state.setText(completeResultContol);
                 materialtextview_last_state.startAnimation(animation);
                 // TODO: 07.08.2024
-                materialcardview_gattclientonly_bottom.setText(toProccessSuccess);
+                materialButtonEventSameOffice.setText(toProccessSuccess);
 
                 // TODO: 30.08.2024
 
@@ -152,14 +152,14 @@ public class BusinessloginforfragmentScanner {
             }else {
                 materialtextview_last_state.setError(null);
                 // TODO: 07.08.2024
-                materialcardview_gattclientonly_bottom.setText(toProccessError);
-                materialcardview_gattclientonly_bottom.setTextColor(Color.RED);
+                materialButtonEventSameOffice.setText(toProccessError);
+                materialButtonEventSameOffice.setTextColor(Color.RED);
             }
             materialtextview_last_state.refreshDrawableState();
             materialtextview_last_state.requestLayout();
             // TODO: 07.08.2024
-            materialcardview_gattclientonly_bottom.refreshDrawableState();
-            materialcardview_gattclientonly_bottom.requestLayout();
+            materialButtonEventSameOffice.refreshDrawableState();
+            materialButtonEventSameOffice.requestLayout();
 
 
 
