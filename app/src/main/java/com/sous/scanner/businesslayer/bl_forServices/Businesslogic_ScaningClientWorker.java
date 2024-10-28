@@ -32,6 +32,7 @@ import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 import com.sous.scanner.businesslayer.Errors.SubClassErrors;
 import com.sous.scanner.businesslayer.Services.ServiceClientsScanBackground;
 import com.sous.scanner.businesslayer.bl_BroadcastReciver.Businesslogic_GattReflection;
+import com.sous.scanner.businesslayer.bl_BroadcastReciver.bl_reversescallback.GetParcelTo;
 import com.sous.scanner.businesslayer.bl_EvenBus.EventB_Clent;
 import com.sous.scanner.businesslayer.bl_LocalBroadcastManagers.BussensloginLocalBroadcastManager;
 import com.sous.scanner.presentationlayer.FragmentScannerUser;
@@ -948,13 +949,7 @@ return  getMacGatt;
                 switch (bondstate) {
 
                     case BluetoothDevice.DEVICE_TYPE_UNKNOWN:
-                        // TODO: 19.07.2024
-                        message.getTarget().post(()->{
-                            ConcurrentHashMap<String,String> concurrentHashMap=      new ConcurrentHashMap<String,String>();
-                            concurrentHashMap  .put("BluetoothDevice.DEVICE_TYPE_UNKNOWN","9");
-
-                        });
-    
+                        // TODO: 19.07.202
                         Log.d(context.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                                 " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
                                 " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"
@@ -963,15 +958,8 @@ return  getMacGatt;
     
                     case BluetoothDevice.BOND_NONE:
                         // TODO: 29.07.2024
-                        BluetoothGatt finalGattScan = gattScan;
-                        message.getTarget().post(()->{
-                            // TODO: 25.10.2024
-                            finalGattScan.disconnect();
-                            finalGattScan.close();
-                            ConcurrentHashMap<String,String> concurrentHashMap=      new ConcurrentHashMap<String,String>();
-                            concurrentHashMap  .put("BluetoothDevice.BOND_NONE","10");
+                        new GetParcelTo(context,version).getParcelTo(bluetoothDevice);
 
-                        });
                         Log.d(context.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                                 " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
                                 " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"
@@ -981,13 +969,6 @@ return  getMacGatt;
     
                     case BluetoothDevice.BOND_BONDING:
                         // TODO: 29.07.2024
-                        message.getTarget().post(()->{
-                            ConcurrentHashMap<String,String> concurrentHashMap=      new ConcurrentHashMap<String,String>();
-                            concurrentHashMap  .put("BluetoothDevice.BOND_BONDING","12");
-
-    
-                        });
-    
                         Log.d(context.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                                 " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
                                 " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"
@@ -995,31 +976,12 @@ return  getMacGatt;
                         break;
     
                     case BluetoothDevice.BOND_BONDED:
-                        message.getTarget().post(()->{
-                            ConcurrentHashMap<String,String> concurrentHashMap=      new ConcurrentHashMap<String,String>();
-                            concurrentHashMap  .put("BluetoothDevice.BOND_BONDING","13");
-
-    
-                        });
                         Log.d(context.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                                 " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
                                 " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"
                                 +"   bluetoothDevice.getAddress()" + bluetoothDevice.getAddress() + " bondstate " + bondstate );
                         break;
-    
-    
-    
-                    default:{
-    
-    
-                        Log.d(context.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
-                                " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                                " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"
-                                +"   bluetoothDevice.getAddress()" + bluetoothDevice.getAddress() + " bondstate " + bondstate );
-    
-                    }
-    
-    
+
                 }
 
 
@@ -1027,8 +989,12 @@ return  getMacGatt;
                         " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
                         " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"
                         +"   bluetoothDevice.getAddress()" + bluetoothDevice.getAddress());
-            } else {
             }
+
+            Log.d(context.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                    " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                    " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"
+                    +"   bluetoothDevice.getAddress()" + bluetoothDevice.getAddress());
         } catch (Exception e) {
             e.printStackTrace();
             Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() + " Линия  :"

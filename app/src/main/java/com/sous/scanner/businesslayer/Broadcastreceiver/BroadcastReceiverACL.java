@@ -83,7 +83,7 @@ public class BroadcastReceiverACL extends BroadcastReceiver {
 
                         }
 
-                    new GetParcelTo(context,version).getParcelTo(bluetoothDevice);
+
 
 
                     Log.i(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +

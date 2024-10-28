@@ -7,7 +7,7 @@ import org.jetbrains.annotations.NotNull;
 public interface GetParcelToInterface {
 
 
-    void  getParcelTo(@NotNull BluetoothDevice bluetoothDevicerevers);
+    Integer  getParcelTo(@NotNull BluetoothDevice bluetoothDevicerevers);
 
 
 }

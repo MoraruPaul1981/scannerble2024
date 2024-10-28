@@ -22,16 +22,12 @@ public class GetParcelTo implements GetParcelToInterface {
 
 
     @Override
-    public void getParcelTo(@NotNull BluetoothDevice bluetoothDevicerevers) {
+    public Integer getParcelTo(@NotNull BluetoothDevice bluetoothDevicerevers) {
         try{
             final Parcel p2 = Parcel.obtain();
             bluetoothDevicerevers.writeToParcel(p2,0);
-            // Unmarshall a Foo from that byte array
             p2.setDataPosition(0);
-            final String result =      p2.readString( );
-
-            p2.unmarshall();
-
+            String result =      p2.readString( );
             Log.d(context.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                     " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
                     " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n");
@@ -50,5 +46,6 @@ public class GetParcelTo implements GetParcelToInterface {
             valuesЗаписываемОшибки.put("whose_error", ЛокальнаяВерсияПОСравнение);
             new SubClassErrors(context).МетодЗаписиОшибок(valuesЗаписываемОшибки);
         }
+        return  0;
     }
 }
