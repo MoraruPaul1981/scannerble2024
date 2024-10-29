@@ -329,7 +329,7 @@ public class BusinesslogicSelectMacAdressGattServer {
                                 Long getUUID =   bundlePepoles.getLong("getUUID",0l);
                                 // TODO: 19.08.2024
                                 searchview_maclistdeviceserver.setTag(bundlePepoles);
-                                searchview_maclistdeviceserver.setText(geMAc);
+                                searchview_maclistdeviceserver.setText(getName);
                                 // TODO: 15.05.2023 ЗАПОЛЕНИЕ ДАННЫМИ КЛИК
                                 searchview_maclistdeviceserver.startAnimation(animationvibr1);
                                 searchview_maclistdeviceserver.refreshDrawableState();
