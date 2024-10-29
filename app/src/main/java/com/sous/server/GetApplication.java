@@ -7,14 +7,18 @@ import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
+import android.view.Gravity;
+import android.widget.Toast;
 
 
 import com.serverscan.datasync.Services.DataSyncService;
 import com.serverscan.datasync.datasync_businesslayer.bl_datasyncservice.BunissecclogicBindDataSyncService;
 
+import com.serverscan.datasync.datasync_businesslayer.bl_network.WorkerStatusNewtorks;
 import com.serverscan.datasync.datasync_businesslayer.bl_workmangers.RemoteMessaging;
 import com.sous.server.businesslayer.Errors.SubClassErrors;
 import com.sous.server.businesslayer.bl_OneSingal.BussenslogicOneSignal;
+import com.sous.server.businesslayer.bl_bindingcsartingaync.GetBinfingStartingAsync;
 import com.sous.server.datalayer.binesslogic.GetCurrentDatabase;
 
 
@@ -66,7 +70,8 @@ public class GetApplication  extends Application {
 
 
             // TODO: 03.09.2024 запускаем синхрониазцию с ссервром Server GATT
-           //// bunissecclogicStartigDataSyncService.startingAsync(getApplicationContext(),version);
+            new GetBinfingStartingAsync(getApplicationContext(),version).binfingStartingAsync();
+
 
             // TODO: 26.07.2024
             Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
@@ -90,10 +95,6 @@ public class GetApplication  extends Application {
 
 
     }
-
-
-
-
 
 
 

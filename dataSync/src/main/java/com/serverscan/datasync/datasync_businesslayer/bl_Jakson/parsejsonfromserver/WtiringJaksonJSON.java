@@ -132,9 +132,11 @@ public class WtiringJaksonJSON  implements WtiringJaksonJSONInterface {
 @Override
 public Integer readListJacksonObject(  @NotNull CopyOnWriteArrayList<CompleteallmacadressusersEntityDeserial> completeallmacadressusersEntityDeserials) {
         // TODO: 22.08.2024  Коненпт провайдер для зааписив базу данных
+    AtomicReference<Integer> integerSingleNewMacAdress=new AtomicReference<>();
     // TODO: 06.09.2024
+    try{
         // TODO: 28.08.2024
-    Single<Integer> integerSingleNewMacAdress=    Single.fromCallable(()->{
+  Single.fromCallable(()->{
                     // TODO: 22.10.2024
        String NameTableMac="completeallmacadressusers";
                     // TODO: 06.09.2024
@@ -147,26 +149,14 @@ public Integer readListJacksonObject(  @NotNull CopyOnWriteArrayList<Completeall
                     bundleCompleteallmacadress.putSerializable("sql", SQloperations);
             // TODO: 28.08.2024  Само выполение операции
             Bundle insertAndupdateData=   resolver.call(uri,SQloperations, SQloperations,bundleCompleteallmacadress);
-               Integer resultInsert  = (Integer) insertAndupdateData.getSerializable("resultUpdateOrInsert");
-
-
+              integerSingleNewMacAdress.set((Integer) insertAndupdateData.getSerializable("resultUpdateOrInsert"));
 
                         Log.d(this.getClass().getName(), "\n" + " class " +
                                 Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                                 " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
                                 " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" + "\n"
-                                + " LocalDateTime.now() " + LocalDateTime.now().toString().toUpperCase() + "\n"+ "resultInsert " +resultInsert);
-                        return resultInsert;
-                }).doOnSuccess(getsuccess->{
-                    // TODO: 06.09.2024
-
-                    Log.d(this.getClass().getName(), "\n" + " class " +
-                            Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
-                            " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                            " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" + "\n"
-                            + " LocalDateTime.now() " + LocalDateTime.now().toString().toUpperCase() + "\n"+
-                            " getsuccess " +getsuccess);
-
+                                + " LocalDateTime.now() " + LocalDateTime.now().toString().toUpperCase() + "\n"+ "integerSingleNewMacAdress " +integerSingleNewMacAdress);
+                        return integerSingleNewMacAdress;
                 })
                 .doOnError(e->{
                     e.printStackTrace();
@@ -190,7 +180,28 @@ public Integer readListJacksonObject(  @NotNull CopyOnWriteArrayList<Completeall
                 " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" + "\n"
                 + " LocalDateTime.now() " + LocalDateTime.now().toString().toUpperCase() + "\n");
 
-        return integerSingleNewMacAdress.blockingGet();
+
+    Log.d(context.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+            " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+            " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"  );
+
+} catch (Exception e) {
+        e.printStackTrace();
+        Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() + " Линия  :"
+                + Thread.currentThread().getStackTrace()[2].getLineNumber());
+        ContentValues valuesЗаписываемОшибки = new ContentValues();
+        valuesЗаписываемОшибки.put("Error", e.toString().toLowerCase());
+        valuesЗаписываемОшибки.put("Klass", this.getClass().getName());
+        valuesЗаписываемОшибки.put("Metod", Thread.currentThread().getStackTrace()[2].getMethodName());
+        valuesЗаписываемОшибки.put("LineError", Thread.currentThread().getStackTrace()[2].getLineNumber());
+        final Object ТекущаяВерсияПрограммы = version;
+        Integer ЛокальнаяВерсияПОСравнение = Integer.parseInt(ТекущаяВерсияПрограммы.toString());
+        valuesЗаписываемОшибки.put("whose_error", ЛокальнаяВерсияПОСравнение);
+        new SubClassErrors(context).МетодЗаписиОшибок(valuesЗаписываемОшибки);
+    }
+
+
+        return integerSingleNewMacAdress.get();
 
     }
 

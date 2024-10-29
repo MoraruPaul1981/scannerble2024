@@ -21,6 +21,7 @@ import com.sous.server.datalayer.binesslogic.WtitingAndreadDataForScanGatt;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicReference;
 
+import io.reactivex.rxjava3.core.Completable;
 import io.reactivex.rxjava3.core.Single;
 import io.reactivex.rxjava3.schedulers.Schedulers;
 
@@ -39,86 +40,97 @@ public class Bl_BloadcastGatt_getDeviceClentGatt {
     }
 
     // TODO: 30.07.2024 code for BroaadCastRecever GATT SERVER
-    @SuppressLint("MissingPermission")
+    @SuppressLint({"MissingPermission", "SuspiciousIndentation"})
     public synchronized Integer  startingGetDeviceBLECkient(@NonNull Intent intent,
                                                          @NonNull AtomicReference<BroadcastReceiver.PendingResult>
                                                      pendingResultAtomicReference,
                                                          @NonNull final BluetoothDevice     bluetoothDevice,
                                                          @NonNull SharedPreferences preferencesGatt) {
         // TODO: 25.10.2024  
-        Single<Integer> singleBroadcastGattServer = Single.just(0);
+        AtomicReference<Integer> singleBroadcastGattServer = new AtomicReference<>();
         try{
             // TODO: 24.10.2024  
             // TODO: 29.07.2024
             getContentProvider();
             // TODO: 24.10.2024
 
-            Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
-                    " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                    " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" +
-                    "Bintent.getAction() "+intent.getAction() + " bluetoothDevice " +bluetoothDevice.getName()+"\n"+
-                    " intent.getAction() " +intent.getAction());
+            Completable.fromRunnable(()->{
+
+                // TODO: 29.07.2024
+                // TODO: 22.07.2024  Код Брадкаста ресивера
+                Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                        " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                        " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" +
+                        "Bintent.getAction() "+intent.getAction() + " bluetoothDevice " +bluetoothDevice.getName()+"\n"+
+                        " intent.getAction() " +intent.getAction());
+
+                // TODO: 25.07.2024  запускаем запись в базу
+                // TODO: 30.07.2024
+                // TODO: 25.07.2024  запускаем запись в базу
+                WtitingAndreadDataForScanGatt wtitingAndreadDataForScanGatt = new WtitingAndreadDataForScanGatt(context,
+                        version,
+                        contentProviderServer,
+                        preferencesGatt);
+
+                // TODO: 22.10.2024  Запись Новый Девайс
+                ConcurrentHashMap<Integer,ContentValues> writeDatabaseScanGattSuccessWriteNewDevice  =    wtitingAndreadDataForScanGatt
+                        .writeDatabaseScanGatt(bluetoothDevice,  intent.getAction());
+
+
+                Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                        " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                        " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" +
+                        "Bintent.getAction() "+intent.getAction() + " bluetoothDevice " +bluetoothDevice+
+                        " writeDatabaseScanGattSuccessWriteNewDevice " +writeDatabaseScanGattSuccessWriteNewDevice);
+
+
+                // TODO: 22.10.2024 Если успешная запись то  этотоОбьект не ПУСТОЙ
+
+                singleBroadcastGattServer.set(writeDatabaseScanGattSuccessWriteNewDevice.keySet().stream().mapToInt(m->m).findAny().orElse(0));
+
+                if (singleBroadcastGattServer.get()>0) {
+                    // TODO: 31.07.2024  посылаем данные на Франгмент перегражаем внешний вид
+                    wtitingAndreadDataForScanGatt.afteruccessfuldataformationweSend(writeDatabaseScanGattSuccessWriteNewDevice);
+
+                }
+                // TODO: 07.08.2024
+                Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                        " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                        " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" +
+                        "Bintent.getAction() "+intent.getAction() + " bluetoothDevice " +bluetoothDevice+
+                        " singleBroadcastGattServer.get()> " +singleBroadcastGattServer.get());
+
+
+            }).doOnComplete(()->{
+                // TODO: 30.07.2024
+                pendingResultAtomicReference.get().finish();
+
+                Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                        " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                        " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" +
+                        "Bintent.getAction() "+intent.getAction());
+
+
+            }).doOnError(e->{
+
+                e.printStackTrace();
+                Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() + " Линия  :"
+                        + Thread.currentThread().getStackTrace()[2].getLineNumber());
+                ContentValues valuesЗаписываемОшибки = new ContentValues();
+                valuesЗаписываемОшибки.put("Error", e.toString().toLowerCase());
+                valuesЗаписываемОшибки.put("Klass", this.getClass().getName());
+                valuesЗаписываемОшибки.put("Metod", Thread.currentThread().getStackTrace()[2].getMethodName());
+                valuesЗаписываемОшибки.put("LineError", Thread.currentThread().getStackTrace()[2].getLineNumber());
+                final Object ТекущаяВерсияПрограммы = version;
+                Integer ЛокальнаяВерсияПОСравнение = Integer.parseInt(ТекущаяВерсияПрограммы.toString());
+                valuesЗаписываемОшибки.put("whose_error", ЛокальнаяВерсияПОСравнение);
+                new SubClassErrors(context).МетодЗаписиОшибок(valuesЗаписываемОшибки);
+
+            })
+                    .subscribeOn(Schedulers.single())
+                    .blockingSubscribe();
             
-      singleBroadcastGattServer=   Single.fromCallable(()->{
 
-                    // TODO: 29.07.2024
-                    // TODO: 22.07.2024  Код Брадкаста ресивера
-                    Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
-                            " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                            " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" +
-                            "Bintent.getAction() "+intent.getAction() + " bluetoothDevice " +bluetoothDevice.getName()+"\n"+
-                            " intent.getAction() " +intent.getAction());
-
-                    // TODO: 25.07.2024  запускаем запись в базу
-                    // TODO: 30.07.2024
-                    // TODO: 25.07.2024  запускаем запись в базу
-                    WtitingAndreadDataForScanGatt wtitingAndreadDataForScanGatt = new WtitingAndreadDataForScanGatt(context,
-                            version,
-                            contentProviderServer,
-                            preferencesGatt);
-
-                    // TODO: 22.10.2024  Запись Новый Девайс
-                    ConcurrentHashMap<Integer,ContentValues> writeDatabaseScanGattSuccessWriteNewDevice  =    wtitingAndreadDataForScanGatt
-                            .writeDatabaseScanGatt(bluetoothDevice,  intent.getAction());
-
-
-                    Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
-                            " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                            " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" +
-                            "Bintent.getAction() "+intent.getAction() + " bluetoothDevice " +bluetoothDevice+
-                            " writeDatabaseScanGattSuccessWriteNewDevice " +writeDatabaseScanGattSuccessWriteNewDevice);
-
-
-                    // TODO: 22.10.2024 Если успешная запись то  этотоОбьект не ПУСТОЙ
-
-              Integer getWriteNewDevice=      writeDatabaseScanGattSuccessWriteNewDevice.keySet().stream().mapToInt(m->m).findAny().orElse(0);
-
-                    if (getWriteNewDevice>0) {
-                        // TODO: 31.07.2024  посылаем данные на Франгмент перегражаем внешний вид
-                        wtitingAndreadDataForScanGatt.afteruccessfuldataformationweSend(writeDatabaseScanGattSuccessWriteNewDevice);
-                        
-                    }
-                    // TODO: 07.08.2024
-                    Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
-                            " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                            " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" +
-                            "Bintent.getAction() "+intent.getAction() + " bluetoothDevice " +bluetoothDevice+
-                            " getWriteNewDevice " +getWriteNewDevice);
-            
-            return getWriteNewDevice;
-            
-                }).doOnSuccess(su->{
-
-
-            // TODO: 30.07.2024
-            pendingResultAtomicReference.get().finish();
-
-            Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
-                    " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                    " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" +
-                    "Bintent.getAction() "+intent.getAction());
-            
-        }).subscribeOn(Schedulers.single());
 
        
      
@@ -128,7 +140,8 @@ public class Bl_BloadcastGatt_getDeviceClentGatt {
 
         Log.d(context.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                 " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n");
+                " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"+
+                " singleBroadcastGattServer.get() " +singleBroadcastGattServer.get());
 
     } catch (Exception e) {
         e.printStackTrace();
@@ -144,7 +157,7 @@ public class Bl_BloadcastGatt_getDeviceClentGatt {
         valuesЗаписываемОшибки.put("whose_error", ЛокальнаяВерсияПОСравнение);
         new SubClassErrors(context).МетодЗаписиОшибок(valuesЗаписываемОшибки);
     }
-        return   singleBroadcastGattServer.blockingGet();
+        return   singleBroadcastGattServer.get();
     }
 
     
