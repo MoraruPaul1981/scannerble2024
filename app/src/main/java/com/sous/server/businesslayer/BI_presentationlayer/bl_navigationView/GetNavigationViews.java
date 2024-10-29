@@ -21,6 +21,7 @@ import com.serverscan.datasync.datasync_businesslayer.bl_network.WorkerStatusNew
 import com.sous.server.R;
 import com.sous.server.businesslayer.BI_Services.BuccesloginForServiceServerScan;
 import com.sous.server.businesslayer.Errors.SubClassErrors;
+import com.sous.server.businesslayer.bl_bindingcsartingaync.GetBinfingStartingAsync;
 
 import java.util.Date;
 import java.util.concurrent.TimeUnit;
@@ -368,30 +369,14 @@ public class GetNavigationViews {
                 toast.show();
             });
 
-
-// TODO: 03.09.2024  запуск службы синхронизвции work mamanger
-            WorkerStatusNewtorks workerStatusNewtorks=new WorkerStatusNewtorks(context,version);
-            Boolean StatusNewtwork= workerStatusNewtorks.getStatusNewtwork();
-            if (StatusNewtwork==true) {
-                // TODO: 06.09.2024
-          //todo зпуск синхрониазции
-               new BunissecclogicBindDataSyncService(context).bindServiceDataSyncJboss(context,version);
-
-            }else{
-
-
-                context.getMainExecutor().execute(()->{
-                    Toast toast = Toast.makeText(context, "Нет  сети !!! ", Toast.LENGTH_LONG);
-                    toast.setGravity(Gravity.CENTER, toast.getXOffset() / 2, toast.getYOffset() / 2);
-                    toast.show();
-                });
-            }
-
-
-
             Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                     " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
                     " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" );
+
+
+       // TODO: 03.09.2024  запуск службы синхронизвции work mamanger
+
+            new GetBinfingStartingAsync(context,version).binfingStartingAsync();
 
             Log.d(context.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                     " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +

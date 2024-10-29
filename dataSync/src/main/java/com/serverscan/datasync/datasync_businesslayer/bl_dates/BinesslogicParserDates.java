@@ -118,7 +118,7 @@ public class BinesslogicParserDates {
     }
 
     @SuppressLint("Range")
-    public String prossecingBremy(@NonNull Cursor cursorlocal){
+    public String prossecingBremy(@NonNull Cursor cursorlocal,@NotNull String dateColumn){
         // TODO: 29.10.2024
         String bremylocal=new String();
         try{
@@ -130,7 +130,7 @@ public class BinesslogicParserDates {
             // TODO: 27.08.2024 bremy
 
 
-            String date_updateFronDatabase=   cursorlocal.getString(cursorlocal.getColumnIndex("date_update"));
+            String date_updateFronDatabase=   cursorlocal.getString(cursorlocal.getColumnIndex(dateColumn));
                 // TODO: 29.10.2024
                 if(date_updateFronDatabase!=null){
 

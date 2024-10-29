@@ -35,7 +35,7 @@ public class CREATE_DATABASEServerScanner extends SQLiteOpenHelper{ ///SQLiteOpe
 
     private static  AtomicReference<SQLiteDatabase> atomicstoredEntities = new AtomicReference<>();
    // private static     SQLiteDatabase ССылкаНаСозданнуюБазу;
-    private static final int DATABASE_VERSION = 31;
+    private static final int DATABASE_VERSION = 32;
     private Long version=0l;
     private SharedPreferences preferencesGatt;
 
@@ -299,7 +299,7 @@ public class CREATE_DATABASEServerScanner extends SQLiteOpenHelper{ ///SQLiteOpe
                             "date_updatelocal TEXT  )");
                     Log.d(this.getClass().getName(), " сработала ...  создание таблицы   НазваниеТаблицыДляТригера   "+"scannerserversuccess" );
                     //TODO INSERT
-            ССылкаНаСозданнуюБазу.execSQL("INSERT INTO gattserverdataversion  (id,versionlocal,versionremote) VALUES('1','0','0');");//test
+            ССылкаНаСозданнуюБазу.execSQL("INSERT INTO gattserverdataversion  (versionlocal,versionremote,date_update,date_updatelocal) VALUES( '0','0','2010-01-01 01:01:00.000','2010-01-01 01:01:00.000');");//test
 
 
                     // TODO: 03.06.2022
