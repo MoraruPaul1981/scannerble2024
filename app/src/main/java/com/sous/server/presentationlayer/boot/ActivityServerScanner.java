@@ -202,12 +202,12 @@ public class ActivityServerScanner extends AppCompatActivity {
             registerReceiver(new BroadcastReceiverGattServerAlcConn(), filterScanServerAlcConn,null,messageGattServer.getTarget());
 
             // TODO: 02.08.2024
-            IntentFilter filterScanServerName_Changed = new IntentFilter();
+         /*   IntentFilter filterScanServerName_Changed = new IntentFilter();
             filterScanServerName_Changed.addAction(BluetoothDevice.ACTION_NAME_CHANGED);
             filterScanServerName_Changed.addAction(BluetoothDevice.ACTION_CLASS_CHANGED);
             filterScanServerName_Changed.addAction(BluetoothAdapter.ACTION_STATE_CHANGED);
             filterScanServerName_Changed.setPriority(SYSTEM_HIGH_PRIORITY);
-            registerReceiver(new BroadcastReceiverGattServerName_Changed(), filterScanServerName_Changed,null,messageGattServer.getTarget());
+            registerReceiver(new BroadcastReceiverGattServerName_Changed(), filterScanServerName_Changed,null,messageGattServer.getTarget());*/
 
 
 

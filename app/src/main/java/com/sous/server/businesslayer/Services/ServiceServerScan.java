@@ -136,9 +136,17 @@ public class ServiceServerScan extends Service {
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
         try {
+            Completable.fromRunnable(()->{
 
-                        // TODO: 03.09.2024 Запускаем КОд Служббы Сервера Ble GATT
-                        buccesloginForServiceServerScan.launchBuccesloginForServiceServerScan(this,preferencesGatt);
+
+                // TODO: 03.09.2024 Запускаем КОд Служббы Сервера Ble GATT
+                buccesloginForServiceServerScan.launchBuccesloginForServiceServerScan(this,preferencesGatt);
+
+                Log.d(getApplicationContext().getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                        " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                        " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n");
+// TODO: 30.06.2022 сама не постредствено запуск метода
+            }).subscribeOn(Schedulers.single()).subscribe();
 
                         Log.d(getApplicationContext().getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                                 " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +

@@ -31,9 +31,11 @@ public class HiltJboss {
         // TODO: 18.03.2023 московский сервер ЧЕРЕЗ DNS
          // TODO: 18.03.2023 московский сервер
     // МассивПортовСервераDebugandRelize.putIfAbsent("192.168.3.4" ,"8080/jbossgatt-2.0-SNAPSHOT/sous.jboss.gattserver");// TODO: 10.11.2022 ДЕбаг*/
-     МассивПортовСервераDebugandRelize.putIfAbsent("192.168.3.4" ,"8443/jbossgatt-2.0-SNAPSHOT/sous.jboss.gattserver");// TODO: SSL 10.11.2022 ДЕбаг*/
+     ///МассивПортовСервераDebugandRelize.putIfAbsent("192.168.3.4" ,"8443/jbossgatt-2.0-SNAPSHOT/sous.jboss.gattserver");// TODO: SSL 10.11.2022 ДЕбаг*/
 
 
+        МассивПортовСервераDebugandRelize.putIfAbsent("base.dsu1.ru","8889/jbossgatt-2.0-SNAPSHOT/sous.jboss.gattserver");// TODO: 10.11.2022 РЕЛИЗ  Москвовский
+/*
         // TODO: 18.03.2023 московский сервер ЧЕРЕЗ DNS
 /*
        МассивПортовСервера.putIfAbsent(8888,"base.dsu1.ru");// TODO: 10.11.2022 РЕЛИЗ  Москвовский
