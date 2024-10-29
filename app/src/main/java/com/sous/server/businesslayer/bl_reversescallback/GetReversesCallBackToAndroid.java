@@ -1,27 +1,23 @@
 package com.sous.server.businesslayer.bl_reversescallback;
 
-import android.Manifest;
+import android.annotation.SuppressLint;
 import android.bluetooth.BluetoothDevice;
 import android.bluetooth.BluetoothGatt;
 import android.bluetooth.BluetoothGattCallback;
 import android.content.ContentValues;
 import android.content.Context;
-import android.content.pm.PackageManager;
 import android.os.Message;
-import android.os.Parcel;
 import android.os.ParcelUuid;
 import android.util.Log;
 
-import androidx.core.app.ActivityCompat;
+import androidx.annotation.NonNull;
 
 import com.sous.server.businesslayer.Errors.SubClassErrors;
 import com.sous.server.businesslayer.bl_reversescallback.interfaces.GetReversesCallBackINt;
 
 import org.jetbrains.annotations.NotNull;
 
-import java.util.Date;
 import java.util.UUID;
-import java.util.concurrent.ConcurrentHashMap;
 
 public class GetReversesCallBackToAndroid implements GetReversesCallBackINt {
 
@@ -39,34 +35,23 @@ public class GetReversesCallBackToAndroid implements GetReversesCallBackINt {
     }
 
 
+    @SuppressLint("MissingPermission")
     @Override
-    public void getReversesCallBackToAndroid(@NotNull BluetoothDevice bluetoothDeviceAndroidReverses) {
+    public synchronized void  getReversesCallBackToAndroid(@NotNull BluetoothDevice bluetoothDeviceAndroidReverses ) {
         try {
             // TODO: 30.07.2024
-            if (ActivityCompat.checkSelfPermission(context, Manifest.permission.BLUETOOTH_CONNECT) != PackageManager.PERMISSION_GRANTED) {
-                // TODO: Consider calling
-                //    ActivityCompat#requestPermissions
-                // here to request the missing permissions, and then overriding
-                //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
-                //                                          int[] grantResults)
-                // to handle the case where the user grants the permission. See the documentation
-                // for ActivityCompat#requestPermissions for more details.
-                return;
-            }
-
-            BluetoothGattCallback getbluetoothGattCallback = new GetBluetoothGattCallback(context, version, message,getPublicUUIDScan).getBluetoothGattCallback();
 
 
-            BluetoothGatt gattScan = bluetoothDeviceAndroidReverses.connectGatt(context, true,
+            BluetoothGattCallback getbluetoothGattCallback = new GetBluetoothGattCallback(context, version, message, getPublicUUIDScan).getBluetoothGattCallback();
+
+
+            BluetoothGatt  gattScan = bluetoothDeviceAndroidReverses.connectGatt(context, true,
                     getbluetoothGattCallback, BluetoothDevice.TRANSPORT_AUTO, BluetoothDevice.PHY_OPTION_NO_PREFERRED, message.getTarget());
             gattScan.requestConnectionPriority(BluetoothGatt.CONNECTION_PRIORITY_HIGH);
             int bondstate = bluetoothDeviceAndroidReverses.getBondState();
 
             // TODO: 12.08.2024
-            bluetoothDeviceAndroidReverses.fetchUuidsWithSdp();
-            gattScan.connect();
-            gattScan.executeReliableWrite();
-
+            getconnect(bluetoothDeviceAndroidReverses, gattScan);
 
 
             Log.d(this.getClass().getName(), "Trying to write characteristic..., first bondstate " + bondstate);
@@ -133,6 +118,19 @@ public class GetReversesCallBackToAndroid implements GetReversesCallBackINt {
             valuesЗаписываемОшибки.put("whose_error", ЛокальнаяВерсияПОСравнение);
             new SubClassErrors(context).МетодЗаписиОшибок(valuesЗаписываемОшибки);
         }
+    }
+
+    @SuppressLint("MissingPermission")
+    private   void getconnect(@NonNull BluetoothDevice bluetoothDeviceAndroidReverses, BluetoothGatt gattScan) {
+        // TODO: 29.10.2024
+        bluetoothDeviceAndroidReverses.fetchUuidsWithSdp();
+        gattScan.connect();
+        gattScan.executeReliableWrite();
+        
+        Log.d(context.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"
+                + "   bluetoothDeviceAndroidReverses.fetchUuidsWithSdp() " + bluetoothDeviceAndroidReverses.fetchUuidsWithSdp() );
     }
 }
 

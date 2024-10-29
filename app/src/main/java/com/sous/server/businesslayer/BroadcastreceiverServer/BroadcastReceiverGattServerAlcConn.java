@@ -33,6 +33,8 @@ public class BroadcastReceiverGattServerAlcConn extends BroadcastReceiver {
     private    AtomicReference<PendingResult> pendingResultAtomicReferenceServer=new AtomicReference<>();
 
     private SharedPreferences preferencesGatt;
+    
+
     @SuppressLint({"MissingPermission", "NewApi"})
     @Override
     public void onReceive(Context context, Intent intent) {
@@ -71,6 +73,7 @@ public class BroadcastReceiverGattServerAlcConn extends BroadcastReceiver {
 
                     // TODO: 24.10.2024 Обраьный ответ клиенту от сервера что произошел состыковка
                     if (getWriteNewDevice>0) {
+                        // TODO: 29.10.2024
                         GetReversesCallBackToAndroid reversesCallBack=new GetReversesCallBackToAndroid(context,version);
                         // TODO: 24.10.2024 запускаем обратно вызов уже сервера на клиент
                         reversesCallBack.getReversesCallBackToAndroid(bluetoothDevice);

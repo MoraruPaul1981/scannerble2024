@@ -807,13 +807,20 @@ try{
         // TODO: 30.07.2024 анализ
         Integer    getindoutthedateDifference=0;
         try {
-
             if (databaseDate !=null  && LiveDate!=null ) {
-                getindoutthedateDifference = Math.abs(LiveDate.getMinute() - databaseDate.getMinute());
+                // TODO: 29.10.2024 часы оцениваем
+                    getindoutthedateDifference = Math.abs(LiveDate.getHour() - databaseDate.getHour());
+
+                // TODO: 29.10.2024 минуты оцениваем
+                if(getindoutthedateDifference==0) {
+                    getindoutthedateDifference = Math.abs(LiveDate.getMinute() - databaseDate.getMinute());
+                }
+
             }
             Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                     " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                    " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n");
+                    " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"+
+                    " getindoutthedateDifference " +getindoutthedateDifference);
 
         } catch (Exception e) {
             e.printStackTrace();
