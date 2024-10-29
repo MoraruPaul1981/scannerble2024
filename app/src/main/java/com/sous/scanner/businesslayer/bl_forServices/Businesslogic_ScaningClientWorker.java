@@ -271,7 +271,7 @@ public class Businesslogic_ScaningClientWorker {
                     // TODO: 20.08.2024
                     int DurectionTimeGatt=      getRandomNumberUsingMilisecond(150,500);
                     // TODO: 28.10.2024 ЗАпускаем главный Цикл Пинга МАС-адресов мастеров
-                     disposableMainMacPingAddress=      Observable.range(      1,3)
+                     disposableMainMacPingAddress=      Observable.range(      1,4)
                             .zipWith( Observable.just("")
                                     .delay(DurectionTimeGatt,TimeUnit.MILLISECONDS)
                                     .repeatWhen(repeat->repeat.delay(11,TimeUnit.SECONDS)), (item, interval) -> item)
@@ -331,7 +331,7 @@ public class Businesslogic_ScaningClientWorker {
 
 
 
-                                    if (numberoftheСurrentscanningattempt>=2  ) {
+                                    if (numberoftheСurrentscanningattempt>=3  ) {
                                         // TODO: 09.08.2024
 
                                         // TODO: 08.08.2024  передаем обраьтно в службу сообщени о прекращении работы
