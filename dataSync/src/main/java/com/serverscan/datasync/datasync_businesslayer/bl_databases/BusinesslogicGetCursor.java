@@ -56,6 +56,7 @@ public class BusinesslogicGetCursor {
                     // TODO: 29.08.2024 создаем новы экзепляр класс
                     Uri uri = Uri.parse("content://com.sous.servergatt.prodider/" +nameTableProcceting+ "");///scannerserversuccess
                     ContentResolver resolver = context. getContentResolver();
+                    // TODO: 29.10.2024
                     getingCursor.set(resolver.query(uri, null, СамЗапрос, null,null,null));
                     if (getingCursor.get().getCount()>0) {
                         getingCursor.get().moveToFirst();
@@ -90,7 +91,7 @@ public class BusinesslogicGetCursor {
             Integer ЛокальнаяВерсияПОСравнение = Integer.parseInt(ТекущаяВерсияПрограммы.toString());
             valuesЗаписываемОшибки.put("whose_error", ЛокальнаяВерсияПОСравнение);
             new SubClassErrors(context).МетодЗаписиОшибок(valuesЗаписываемОшибки);
-        }).subscribeOn(Schedulers.single()).blockingSubscribe();
+        }) .blockingSubscribe();
 
         // TODO: 17.10.2024
         Log.d(context.getClass().getName(), "\n" + " class " +

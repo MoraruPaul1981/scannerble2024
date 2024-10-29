@@ -71,7 +71,7 @@ public class BinesslogicDataSyncServiceGetPost implements InterfaceDataSyncServi
                  Long gettingVersionRemote=    new BinesslogicVersions(context).gettingVersionRemote(context,version);
                     // TODO: 09.09.2024 получаем данные которые надотправить на сервер  GATT SEVER
             cursorAtomicReference.set(  dataSyncService.businesslogicGetCursor.getingCursor("SELECT" +
-                            " * FROM scannerserversuccess  WHERE current_table >'"+gettingVersionRemote.toString()+"' ORDER BY id   ",version,"scannerserversuccess"));
+                            " * FROM scannerserversuccess  WHERE current_table >='"+gettingVersionRemote.toString()+"' ORDER BY id   ",version,"scannerserversuccess"));
                     // TODO: 03.09.2024
                     byte[] ByteJakson = new byte[0];
                     
