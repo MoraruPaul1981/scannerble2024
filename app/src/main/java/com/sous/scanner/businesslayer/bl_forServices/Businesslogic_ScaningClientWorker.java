@@ -277,7 +277,7 @@ public class Businesslogic_ScaningClientWorker {
                                     .delay(DurectionTimeGatt,TimeUnit.MILLISECONDS)
                                     .repeatWhen(repeat->repeat.delay(11,TimeUnit.SECONDS)), (item, interval) -> item)
                             .flatMap(val -> Observable.just(val)
-                                    .subscribeOn(Schedulers.computation()))
+                                    .subscribeOn(Schedulers.newThread()))
                             .doOnNext(new Consumer<Object>() {
                                 @Override
                                 public void accept(Object o) throws Throwable {
@@ -289,7 +289,7 @@ public class Businesslogic_ScaningClientWorker {
                                         final BluetoothDevice bluetoothDeviceScan = bluetoothAdapterPhoneClient.getRemoteDevice(getMacGatt);
 
                                         // TODO: 13.08.2024
-                                      SharedPreferencesNewMacAndNAme(getMacGatt,getgetNameGatt);
+                                      SharedPreferencesNewMacAndNAme(bundleFormSearchMacGatt);
 
 
                                         // TODO: 12.02.2023  init CallBack Gatt Client for Scan
@@ -453,22 +453,22 @@ public class Businesslogic_ScaningClientWorker {
     }
 
     @NonNull
-    private void SharedPreferencesNewMacAndNAme( @NonNull String getMacGatt ,@NonNull String getgetNameGatt) {
+    private void SharedPreferencesNewMacAndNAme( @NonNull Bundle bundleFormSearchMacGatt) {
 
         try{
-            if (!getMacGatt.isEmpty()) {
+            if (!bundleFormSearchMacGatt.isEmpty()) {
                 SharedPreferences.Editor       editor = preferences.edit();
-                editor.putString("MacAdresss", getMacGatt);
-                editor.putString("getName",  getgetNameGatt);
+                editor.putString("geMAc", bundleFormSearchMacGatt.getString("geMAc"));
+                editor.putString("getName",  bundleFormSearchMacGatt.getString("getName"));
+                editor.putLong("getUUID",  bundleFormSearchMacGatt.getLong("getUUID"));
+                editor.putInt("getId",  bundleFormSearchMacGatt.getInt("getId"));
                 editor.apply();
             }
-
-
         // TODO: 07.04.2024
         Log.d(this.getClass().getName(), "\n" + " class " +
                 Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                 " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" + "\n" + " getgetNameGatt " +getgetNameGatt);
+                " line " + Thread.currentThread().getStackTrace()[2].getLineNumber()  + "preferences " +preferences );
 
     } catch (Exception e) {
         e.printStackTrace();
@@ -989,9 +989,6 @@ return  getMacGatt;
         try{
             // TODO: 09.08.2024
 
-            if (bluetoothAdapterPhoneClient!=null && bluetoothAdapterPhoneClient.isEnabled()) {
-                // TODO: 30.07.2024
-
 
 
                 // TODO: 30.07.2024
@@ -1058,7 +1055,7 @@ return  getMacGatt;
                         " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
                         " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"
                         +"   bluetoothDevice.getAddress()" + bluetoothDevice.getAddress());
-            }
+
 
             Log.d(context.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                     " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +

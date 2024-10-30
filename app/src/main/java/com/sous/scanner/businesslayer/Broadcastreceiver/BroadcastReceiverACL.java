@@ -10,7 +10,6 @@ import android.content.SharedPreferences;
 import android.content.pm.PackageInfo;
 import android.util.Log;
 
-import androidx.annotation.NonNull;
 import androidx.preference.PreferenceManager;
 
 import com.sous.scanner.businesslayer.Errors.SubClassErrors;
@@ -68,7 +67,7 @@ public class BroadcastReceiverACL extends BroadcastReceiver {
 
                           new Businesslogic_GattReflection(context,version).unpairDevice(bluetoothDevice);
 
-                      new BussenloginSaredPreferense(preferences,context,version).  workerSharedPreferences(bluetoothDevice);
+                  //  new BussenloginSaredPreferense(preferences,context,version).workerSharedPreferencesRemove(bluetoothDevice);
 
 
                         Log.i(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +

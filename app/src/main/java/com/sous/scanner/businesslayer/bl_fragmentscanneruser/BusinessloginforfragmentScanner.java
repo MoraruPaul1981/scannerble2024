@@ -41,7 +41,7 @@ public class BusinessloginforfragmentScanner {
             SharedPreferences.Editor editor = preferences.edit();
             editor.putString("getBremy", getBremy);
             editor.putString("getAction",  getAction);
-            editor.putString("getAddress", getAddress);
+            editor.putString("geMAc", getAddress);
             editor.putString("getName",  getName);
             editor.putString("getMatetilaButtonControl",  "Контроль");
             editor.apply();
@@ -111,7 +111,7 @@ public class BusinessloginforfragmentScanner {
             // TODO: 07.08.2024  перезагружаем внешний вид экрана или точнее компонта Последний Статус
             String getBremy =preferences.getString("getBremy","");
             String getAction =preferences.getString("getAction","");
-            String getAddress =preferences.getString("getAddress","");
+            String getAddress =preferences.getString("geMAc","");
             String getName =preferences.getString("getName","");
             String getFirstNameButton =preferences.getString("getMatetilaButtonControl","");
             // TODO: 07.08.2024
@@ -254,7 +254,7 @@ public class BusinessloginforfragmentScanner {
             // TODO: 07.08.2024  перезагружаем внешний вид экрана или точнее компонта Последний Статус
             String getBremy =preferences.getString("getBremy","");
             String getAction =preferences.getString("getAction","");
-            String getAddress =preferences.getString("getAddress","");
+            String getAddress =preferences.getString("geMAc","");
             String getName =preferences.getString("getName","");
             String getFirstNameButton =preferences.getString("getMatetilaButtonControl","");
             // TODO: 07.08.2024
@@ -295,13 +295,13 @@ public class BusinessloginforfragmentScanner {
             // TODO: 07.08.2024  перезагружаем внешний вид экрана или точнее компонта Последний Статус
             String getBremy =preferences.getString("getBremy","");
             String getAction =preferences.getString("getAction","");
-            String getAddress =preferences.getString("getAddress","");
+            String getAddress =preferences.getString("geMAc","");
             String getName =preferences.getString("getName","");
             String getFirstNameButton =preferences.getString("getMatetilaButtonControl","");
             // TODO: 07.08.2024
             bundle.putString("getBremy",getBremy);
             bundle.putString("getAction",getAction);
-            bundle.putString("getAddress",getAddress);
+            bundle.putString(" geMAc",getAddress);
             bundle.putString("getName",getName);
             bundle.putString("getMatetilaButtonControl",getFirstNameButton);
             materialtextview_last_state.setTag(bundle);

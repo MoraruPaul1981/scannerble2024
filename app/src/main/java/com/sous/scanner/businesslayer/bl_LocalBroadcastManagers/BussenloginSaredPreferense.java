@@ -7,15 +7,7 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.util.Log;
 
-import androidx.annotation.NonNull;
-import androidx.preference.PreferenceManager;
-
 import com.sous.scanner.businesslayer.Errors.SubClassErrors;
-
-import java.util.Collections;
-import java.util.HashSet;
-import java.util.Optional;
-import java.util.Set;
 
 public class BussenloginSaredPreferense {
     private   SharedPreferences preferences;
@@ -31,11 +23,10 @@ public class BussenloginSaredPreferense {
 
 
     @SuppressLint("MissingPermission")
-    public void workerSharedPreferences(BluetoothDevice bluetoothDevice) {
+    public void workerSharedPreferencesRemove(BluetoothDevice bluetoothDevice) {
         try{
             SharedPreferences.Editor editor = preferences.edit();
-
-            editor.remove(bluetoothDevice.getAddress().toString());
+            editor.remove("geMAc");
             editor.apply();
             // TODO: 13.08.2024
             Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +

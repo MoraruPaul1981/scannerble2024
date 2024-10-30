@@ -39,15 +39,15 @@ public class BusinesslogicWhetherMacBluetoothisAllowed implements BusinesslogicW
         Boolean getweAreLookingforwhethermacbluetoothisallowed=false;
         try {
             // TODO: 07.08.2024  Успешное Событие в нутри BroadCasr Recuver
-            String  bluetoothDeviceScanInnersysntem=     preferences.getString("MacAdresss" ,"");
+            String  bluetoothDeviceScanInnersysntem=     preferences.getString("geMAc" ,"");
             // TODO: 30.10.2024
-            boolean EmptyDevideCall=    bluetoothDeviceScanInnersysntem.contains(externalBluetoothDevice);
+            getweAreLookingforwhethermacbluetoothisallowed=    bluetoothDeviceScanInnersysntem.contains(externalBluetoothDevice);
 
 
             Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                     " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
                     " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" +
-                    "EmptyDevideCall"+EmptyDevideCall);
+                    "getweAreLookingforwhethermacbluetoothisallowed"+getweAreLookingforwhethermacbluetoothisallowed);
 
         } catch (Exception e) {
             e.printStackTrace();
