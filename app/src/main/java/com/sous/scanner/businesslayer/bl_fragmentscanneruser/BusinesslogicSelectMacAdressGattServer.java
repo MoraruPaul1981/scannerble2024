@@ -11,6 +11,7 @@ import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.Message;
+import android.text.InputType;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -270,7 +271,7 @@ public class BusinesslogicSelectMacAdressGattServer {
 
         }
                 // TODO: 30.08.2024
-                .setTitle("Выберите адрес")
+                .setTitle("Адреса")
                 .setCancelable(false)
                 .setIcon( R.drawable.icon_newscannertwo)
                 .setView(layoutInflater.inflate( R.layout.simple_for_mac_adress_gatt_searchview, null )).show();
@@ -280,7 +281,7 @@ public class BusinesslogicSelectMacAdressGattServer {
         layoutParams.height =WindowManager.LayoutParams.MATCH_PARENT;
         layoutParams.gravity = Gravity.CENTER;
         alertDialogMacAdress.getWindow().setAttributes(layoutParams);
-        alertDialogMacAdress.  setTitle("Выберите адрес ("+countMacAdres.get()+")");
+        alertDialogMacAdress.  setTitle("Адреса ("+countMacAdres.get()+")");
 
         // TODO: 13.12.2022 ВТОРОЙ СЛУШАТЕЛЬ НА КНОПКУ
         Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
@@ -327,9 +328,14 @@ public class BusinesslogicSelectMacAdressGattServer {
                                 getName = bundlePepoles.getString("getName","").trim();
                                 geMAc = bundlePepoles.getString("geMAc","").trim();
                                 Long getUUID =   bundlePepoles.getLong("getUUID",0l);
+
+                                // TODO: 30.10.2024
+                                getName=    getcCapitalize(getName);
+
                                 // TODO: 19.08.2024
                                 searchview_maclistdeviceserver.setTag(bundlePepoles);
                                 searchview_maclistdeviceserver.setText(getName);
+                                searchview_maclistdeviceserver.setInputType(InputType.TYPE_TEXT_FLAG_CAP_SENTENCES);
                                 // TODO: 15.05.2023 ЗАПОЛЕНИЕ ДАННЫМИ КЛИК
                                 searchview_maclistdeviceserver.startAnimation(animationvibr1);
                                 searchview_maclistdeviceserver.refreshDrawableState();
@@ -368,6 +374,29 @@ public class BusinesslogicSelectMacAdressGattServer {
             });
     }
 
+    private  String   getcCapitalize(String getName) {
+        StringBuilder sb=new StringBuilder();
+        try{
+          sb = new StringBuilder(getName);
+        sb.setCharAt(0, Character.toUpperCase(sb.charAt(0)));
+    } catch (Exception e) {
+        e.printStackTrace();
+        Log.e(this.getClass().getName(), "Ошибка " + e +
+                " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() + " Линия  :"
+                + Thread.currentThread().getStackTrace()[2].getLineNumber());
+        ContentValues valuesЗаписываемОшибки = new ContentValues();
+        valuesЗаписываемОшибки.put("Error", e.toString().toLowerCase());
+        valuesЗаписываемОшибки.put("Klass", this.getClass().getName());
+        valuesЗаписываемОшибки.put("Metod", Thread.currentThread().getStackTrace()[2].getMethodName());
+        valuesЗаписываемОшибки.put("LineError", Thread.currentThread().getStackTrace()[2].getLineNumber());
+        final Object ТекущаяВерсияПрограммы = version;
+        Integer ЛокальнаяВерсияПОСравнение = Integer.parseInt(ТекущаяВерсияПрограммы.toString());
+        valuesЗаписываемОшибки.put("whose_error", ЛокальнаяВерсияПОСравнение);
+        new SubClassErrors(context).МетодЗаписиОшибок(valuesЗаписываемОшибки);
+
+    }
+        return sb.toString();
+    }
 
 
     @SuppressLint("Range")

@@ -2,36 +2,24 @@ package com.sous.scanner.businesslayer.Broadcastreceiver;
 
 import android.annotation.SuppressLint;
 import android.bluetooth.BluetoothDevice;
-import android.bluetooth.BluetoothGatt;
-import android.bluetooth.BluetoothGattCallback;
-import android.bluetooth.BluetoothGattCharacteristic;
 import android.content.BroadcastReceiver;
 import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageInfo;
-import android.os.Handler;
-import android.os.Parcel;
 import android.util.Log;
 
 import androidx.annotation.NonNull;
 import androidx.preference.PreferenceManager;
 
 import com.sous.scanner.businesslayer.Errors.SubClassErrors;
-import com.sous.scanner.businesslayer.bl_BroadcastReciver.Businesslogic_GattClinetSuccessLocalBroadcastManager;
+import com.sous.scanner.businesslayer.bl_BroadcastReciver.BusinesslogicBroadcastReceiverACL;
+import com.sous.scanner.businesslayer.bl_BroadcastReciver.BusinesslogicWhetherMacBluetoothisAllowed;
 import com.sous.scanner.businesslayer.bl_BroadcastReciver.Businesslogic_GattReflection;
-import com.sous.scanner.businesslayer.bl_BroadcastReciver.bl_reversescallback.GetParcelTo;
 import com.sous.scanner.businesslayer.bl_LocalBroadcastManagers.BussenloginSaredPreferense;
 
-import org.jetbrains.annotations.NotNull;
-
 import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
-import java.util.HashSet;
-import java.util.Optional;
-import java.util.Random;
-import java.util.Set;
 import java.util.concurrent.atomic.AtomicReference;
 
 public class BroadcastReceiverACL extends BroadcastReceiver {
@@ -40,12 +28,14 @@ public class BroadcastReceiverACL extends BroadcastReceiver {
     private AtomicReference<PendingResult> pendingResultAtomicReferenceClient=new AtomicReference<>();
 
     private   SharedPreferences preferences;
+    private  Context context;
 
     @SuppressLint({"MissingPermission", "NewApi"})
     @Override
     public void onReceive(Context context, Intent intent) {
         // TODO: This method is called when the BroadcastReceiver is receiving
         try{
+          this.  context=context;
             pendingResultAtomicReferenceClient.set(goAsync());
             // TODO: 13.08.2024
             preferences = PreferenceManager.getDefaultSharedPreferences(context);
@@ -68,23 +58,30 @@ public class BroadcastReceiverACL extends BroadcastReceiver {
                 // TODO: 31.07.2024
                 case   BluetoothDevice.ACTION_ACL_CONNECTED :
                     // TODO: 02.08.2024
-                    // TODO: 07.08.2024  Успешное Событие в нутри BroadCasr Recuver
-               Set<String> bluetoothDeviceScanInnersysntem=     preferences.getStringSet(bluetoothDevice.getAddress(), new HashSet<>());
-                boolean EmptyDevideCall=    bluetoothDeviceScanInnersysntem.contains(bluetoothDevice.getAddress().toString());
+                    Boolean getweAreLookingforwhethermacbluetoothisallowed=  new BusinesslogicWhetherMacBluetoothisAllowed(context ,version).
+                            weAreLookingforwhethermacbluetoothisallowed(bluetoothDevice.getAddress(),preferences);
 
-                    if (EmptyDevideCall==true) {
+                    if (getweAreLookingforwhethermacbluetoothisallowed==true) {
                             // TODO: 13.08.2024
-                            new Businesslogic_GattClinetSuccessLocalBroadcastManager(context,version).
+                            new BusinesslogicBroadcastReceiverACL(context,version).
                                       successLocalBroadcastManager(intent, bluetoothDevice,  pendingResultAtomicReferenceClient);
 
                           new Businesslogic_GattReflection(context,version).unpairDevice(bluetoothDevice);
 
                       new BussenloginSaredPreferense(preferences,context,version).  workerSharedPreferences(bluetoothDevice);
 
+
+                        Log.i(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                                " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                                " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" +
+                                "intent.getAction() "+intent.getAction() + "\n"
+                                + " LocalDateTime.now() " + LocalDateTime.now().toString().toUpperCase()+"\n"+
+                                " bluetoothDevice.getName() " +bluetoothDevice.getName()+"\n"+
+                                " getweAreLookingforwhethermacbluetoothisallowed " +getweAreLookingforwhethermacbluetoothisallowed
+                                +"\n"+
+                                " bluetoothDevice.getAddress().toString()) " +bluetoothDevice.getAddress().toString());
+
                         }
-
-
-
 
                     Log.i(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                             " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
@@ -92,7 +89,7 @@ public class BroadcastReceiverACL extends BroadcastReceiver {
                             "intent.getAction() "+intent.getAction() + "\n"
                             + " LocalDateTime.now() " + LocalDateTime.now().toString().toUpperCase()+"\n"+
                             " bluetoothDevice.getName() " +bluetoothDevice.getName()+"\n"+
-                            " bluetoothDeviceScanInnersysntem " +bluetoothDeviceScanInnersysntem
+                            " getweAreLookingforwhethermacbluetoothisallowed " +getweAreLookingforwhethermacbluetoothisallowed
                             +"\n"+
                             " bluetoothDevice.getAddress().toString()) " +bluetoothDevice.getAddress().toString());
                     break;
@@ -103,7 +100,7 @@ public class BroadcastReceiverACL extends BroadcastReceiver {
                     new Businesslogic_GattReflection(context,version).unpairDevice(bluetoothDevice);
 /*
                     // TODO: 07.08.2024  Успешное Событие в нутри BroadCasr Recuver
-              new Businesslogic_GattClinetSuccessLocalBroadcastManager(context,version).
+              new BusinesslogicBroadcastReceiverACL(context,version).
                       successLocalBroadcastManager(intent, bluetoothDevice,  pendingResultAtomicReferenceClient);
 
                     Log.i(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
@@ -119,7 +116,7 @@ public class BroadcastReceiverACL extends BroadcastReceiver {
                     new Businesslogic_GattReflection(context,version).unpairDevice(bluetoothDevice);
                     // TODO: 07.08.2024  Успешное Событие в нутри BroadCasr Recuver
                /*     // TODO: 07.08.2024  Успешное Событие в нутри BroadCasr Recuver
-                    new Businesslogic_GattClinetSuccessLocalBroadcastManager(context,version).
+                    new BusinesslogicBroadcastReceiverACL(context,version).
                             successLocalBroadcastManager(intent, bluetoothDevice,  pendingResultAtomicReferenceClient);
 
                     Log.i(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
@@ -160,6 +157,8 @@ public class BroadcastReceiverACL extends BroadcastReceiver {
         new SubClassErrors(context).МетодЗаписиОшибок(valuesЗаписываемОшибки);
     }
     }
+
+
 
 
 

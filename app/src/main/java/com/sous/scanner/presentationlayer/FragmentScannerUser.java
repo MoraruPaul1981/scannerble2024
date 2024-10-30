@@ -24,7 +24,6 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.lifecycle.Lifecycle;
@@ -41,14 +40,12 @@ import com.google.android.material.button.MaterialButton;
 import com.google.android.material.card.MaterialCardView;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.textview.MaterialTextView;
-import com.google.common.util.concurrent.AtomicDouble;
 import com.jakewharton.rxbinding4.view.RxView;
 import com.sous.scanner.businesslayer.Errors.SubClassErrors;
 import com.sous.scanner.R;
 import com.sous.scanner.businesslayer.bl_EvenBus.EventLocalBroadcastManager;
 import com.sous.scanner.businesslayer.bl_forServices.Businesslogic_JOBServive;
 import com.sous.scanner.businesslayer.bl_forServices.BusinessoginEnableBluetoothAdapter;
-import com.sous.scanner.businesslayer.bl_fragmentscanneruser.BusinesslogicSelectMacAdressGattServer;
 import com.sous.scanner.businesslayer.bl_fragmentscanneruser.BusinessloginOriginallogic;
 import com.sous.scanner.businesslayer.bl_fragmentscanneruser.BusinessloginVibrator;
 import com.sous.scanner.businesslayer.bl_fragmentscanneruser.BusinessloginforfragmentScanner;
@@ -981,14 +978,30 @@ public class FragmentScannerUser extends Fragment {
                                     String   MacAdresss=       businessloginforfragmentScanner.updateUIClickBottonControlgetMac(searchview_maclistdeviceserver);
                                     MacAdresss=       Optional.ofNullable(MacAdresss).map(s->s).orElse("");
                                   /// Bundle   searchview_bungle=    (Bundle)    searchview_maclistdeviceserver.getTag();
+
+                                    Log.d(this.getClass().getName(), "\n" + " class " +
+                                            Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                                            " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                                            " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" + "\n" +
+                                            " MacAdresss " + MacAdresss);
+
+
                                     if (MacAdresss.length()>0) {
+
                                         // TODO: 20.08.2024
-                                        workerClickTOService(MacAdresss);
+                                        startingWorkerPingCommectionServerGatt((Bundle) searchview_maclistdeviceserver.getTag());
                                         // TODO: 09.08.2024 Блютус Включен
 
                                         addCurrentButonClick(materialButtonClick,toProccess,"#BDC6C8");
 
                                         animationCurrentButonClick(materialButtonClick,100);
+
+                                        // TODO: 02.08.2024
+                                        Log.d(this.getClass().getName(), "\n" + " class " +
+                                                Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                                                " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                                                " line " + Thread.currentThread().getStackTrace()[2].getLineNumber()
+                                                + "\n" + "\n" + " searchview_maclistdeviceserver.getTag() "+searchview_maclistdeviceserver.getTag() );
 
                                     } else {
                                         // TODO: 20.08.2024
@@ -1074,17 +1087,17 @@ public class FragmentScannerUser extends Fragment {
 
 
 
-        private     void    workerClickTOService(@NonNull  String   MacAdresss) {
+        private     void startingWorkerPingCommectionServerGatt(@NonNull  Bundle  searchview_maclistdeviceserverbungle) {
             // TODO: 16.07.2024  startting Fragment Scannig
             try {
                     // TODO: 20.08.2024
-                    businesslogicJobServive.startingServiceSimpleScan("userUIlaunchingfrombackground",MacAdresss);
+                    businesslogicJobServive.startingServiceSimpleScan("userUIlaunchingfrombackground",searchview_maclistdeviceserverbungle);
 
 
                 Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                         " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
                         " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" +
-                         " MacAdresss  " +MacAdresss);
+                         " searchview_maclistdeviceserverbungle  " +searchview_maclistdeviceserverbungle);
             } catch (Exception e) {
                 e.printStackTrace();
                 Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() + " Линия  :"

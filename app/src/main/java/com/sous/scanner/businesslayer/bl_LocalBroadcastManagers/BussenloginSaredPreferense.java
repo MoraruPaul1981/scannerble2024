@@ -59,80 +59,21 @@ public class BussenloginSaredPreferense {
         }
     }
 
-
-
-    public Boolean afterCurrentDeviceOrNO(@NonNull BluetoothDevice bluetoothDevice){
-        // TODO: 13.08.2024
-        boolean EmptyDevideCall=false;
-      try{
-        // TODO: 07.08.2024  Успешное Событие в нутри BroadCasr Recuver
-        Set<String> bluetoothDeviceScanInnersysntem=     preferences.getStringSet(bluetoothDevice.getAddress(), new HashSet<>());
-        EmptyDevideCall=    bluetoothDeviceScanInnersysntem.contains(bluetoothDevice.getAddress().toString());
-          // TODO: 13.08.2024
-        Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
-                " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" +
-                "EmptyDevideCall "+EmptyDevideCall );
-
-    } catch (Exception e) {
-        e.printStackTrace();
-        Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() + " Линия  :"
-                + Thread.currentThread().getStackTrace()[2].getLineNumber());
-        ContentValues valuesЗаписываемОшибки = new ContentValues();
-        valuesЗаписываемОшибки.put("Error", e.toString().toLowerCase());
-        valuesЗаписываемОшибки.put("Klass", this.getClass().getName());
-        valuesЗаписываемОшибки.put("Metod", Thread.currentThread().getStackTrace()[2].getMethodName());
-        valuesЗаписываемОшибки.put("LineError", Thread.currentThread().getStackTrace()[2].getLineNumber());
-        final Object ТекущаяВерсияПрограммы = version;
-        Integer ЛокальнаяВерсияПОСравнение = Integer.parseInt(ТекущаяВерсияПрограммы.toString());
-        valuesЗаписываемОшибки.put("whose_error", ЛокальнаяВерсияПОСравнение);
-        new SubClassErrors(context).МетодЗаписиОшибок(valuesЗаписываемОшибки);
-    }
-      return  EmptyDevideCall;
-    }
-
-    public void    sharedPreferencesaddBluetootdevice(BluetoothDevice bluetoothDeviceScan) {
-        try{
-        SharedPreferences.Editor editor = preferences.edit();
-        editor.putStringSet(bluetoothDeviceScan.getAddress(), Collections.singleton(bluetoothDeviceScan.getAddress()));
-        editor.apply();
-
-        Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
-                " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" +
-                "bluetoothDeviceScan.getAddress() "+bluetoothDeviceScan.getAddress() );
-
-    } catch (Exception e) {
-        e.printStackTrace();
-        Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() + " Линия  :"
-                + Thread.currentThread().getStackTrace()[2].getLineNumber());
-        ContentValues valuesЗаписываемОшибки = new ContentValues();
-        valuesЗаписываемОшибки.put("Error", e.toString().toLowerCase());
-        valuesЗаписываемОшибки.put("Klass", this.getClass().getName());
-        valuesЗаписываемОшибки.put("Metod", Thread.currentThread().getStackTrace()[2].getMethodName());
-        valuesЗаписываемОшибки.put("LineError", Thread.currentThread().getStackTrace()[2].getLineNumber());
-        final Object ТекущаяВерсияПрограммы = version;
-        Integer ЛокальнаяВерсияПОСравнение = Integer.parseInt(ТекущаяВерсияПрограммы.toString());
-        valuesЗаписываемОшибки.put("whose_error", ЛокальнаяВерсияПОСравнение);
-        new SubClassErrors(context).МетодЗаписиОшибок(valuesЗаписываемОшибки);
-    }
-
-    }
-
-
-    public void    sharedPreferencesClear( ) {
+    public void workersharedPreferencesClear( ) {
         try{
             SharedPreferences.Editor editor = preferences.edit();
+            preferences.getAll().clear();
             editor.clear();
             editor.apply();
-
+            // TODO: 13.08.2024
             Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                     " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                    " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" );
+                    " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" +
+                    "preferences "+preferences );
+
         } catch (Exception e) {
             e.printStackTrace();
-            Log.e(this.getClass().getName(), "Ошибка " + e +
-                    " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() + " Линия  :"
+            Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() + " Линия  :"
                     + Thread.currentThread().getStackTrace()[2].getLineNumber());
             ContentValues valuesЗаписываемОшибки = new ContentValues();
             valuesЗаписываемОшибки.put("Error", e.toString().toLowerCase());
@@ -144,14 +85,13 @@ public class BussenloginSaredPreferense {
             valuesЗаписываемОшибки.put("whose_error", ЛокальнаяВерсияПОСравнение);
             new SubClassErrors(context).МетодЗаписиОшибок(valuesЗаписываемОшибки);
         }
-
     }
 
 
 
 
 
+    }
 
 
 
-}

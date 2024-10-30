@@ -331,8 +331,9 @@ public class BusinessloginforfragmentScanner {
     public String updateUIClickBottonControlgetMac(@NonNull  MaterialTextView materialtextview_last_state){
      String getMacForClick=new String();
         try{
-            // TODO: 30.08.2024
-            getMacForClick=  materialtextview_last_state.getText().toString().trim();
+            // TODO: 16.05.2023 Из Выбраного Элемента Получаеним ДАнные
+        Bundle bundleMAc=(Bundle)    materialtextview_last_state.getTag();
+            getMacForClick    = bundleMAc.getString("geMAc","").trim();
             // TODO: 07.08.2024  перезагружаем внешний вид экрана или точнее компонта Последний Статус
             Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                     " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +

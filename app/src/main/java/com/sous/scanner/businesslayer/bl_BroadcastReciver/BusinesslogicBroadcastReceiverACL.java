@@ -8,12 +8,9 @@ import android.content.Context;
 import android.content.Intent;
 import android.util.Log;
 
-import com.google.common.util.concurrent.AtomicDouble;
 import com.sous.scanner.businesslayer.Errors.SubClassErrors;
-import com.sous.scanner.businesslayer.bl_EvenBus.EventB_Clent;
 import com.sous.scanner.businesslayer.bl_EvenBus.EventLocalBroadcastManager;
 import com.sous.scanner.businesslayer.bl_LocalBroadcastManagers.BussensloginLocalBroadcastManager;
-import com.sous.scanner.presentationlayer.FragmentScannerUser;
 
 import org.greenrobot.eventbus.EventBus;
 import org.jetbrains.annotations.NotNull;
@@ -24,8 +21,6 @@ import java.util.Locale;
 import java.util.Optional;
 import java.util.concurrent.atomic.AtomicReference;
 
-import javax.inject.Inject;
-
 import io.reactivex.rxjava3.annotations.NonNull;
 import io.reactivex.rxjava3.core.Completable;
 import io.reactivex.rxjava3.core.CompletableObserver;
@@ -33,12 +28,12 @@ import io.reactivex.rxjava3.disposables.Disposable;
 import io.reactivex.rxjava3.functions.Action;
 import io.reactivex.rxjava3.schedulers.Schedulers;
 
-public class Businesslogic_GattClinetSuccessLocalBroadcastManager {
+public class BusinesslogicBroadcastReceiverACL {
 
     private Context context;
     private Long version;
 
-    public  Businesslogic_GattClinetSuccessLocalBroadcastManager(Context context, Long version) {
+    public BusinesslogicBroadcastReceiverACL(Context context, Long version) {
         this.context = context;
         this.version = version;
     }

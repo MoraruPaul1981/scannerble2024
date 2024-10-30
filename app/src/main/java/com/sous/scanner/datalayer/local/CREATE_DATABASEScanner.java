@@ -104,7 +104,8 @@ public class CREATE_DATABASEScanner extends SQLiteOpenHelper{ ///SQLiteOpenHelpe
         try {
             // TODO: 13.08.2024
             preferences = PreferenceManager.getDefaultSharedPreferences(context);
-            new BussenloginSaredPreferense(preferences,context,version).sharedPreferencesClear();
+            // TODO: 30.10.2024  
+            new BussenloginSaredPreferense(preferences,context,version).workersharedPreferencesClear();
 
             // TODO: 24.10.2022 Генерируем Список Таблиц
             createtableGetError(ССылкаНаСозданнуюБазу);

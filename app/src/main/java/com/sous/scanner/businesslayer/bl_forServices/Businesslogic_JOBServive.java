@@ -138,7 +138,7 @@ long version;
     // TODO: 29.11.2022 служба сканирования
     @SuppressLint("RestrictedApi")
     public void startingServiceSimpleScan(@NonNull String stateScartServiceScan,
-                                          @NonNull String MacAdresss) {
+                                          @NonNull Bundle searchview_maclistdeviceserverbungle) {
         try {
             // TODO: 19.08.2024
                         Intent intentClientServiceSimpleScanStart = new Intent(context, ServiceClientsScanBackground.class);
@@ -149,11 +149,10 @@ long version;
                         intentClientServiceSimpleScanStart.setAction(stateScartServiceScan);
                         intentClientServiceSimpleScanStart.addFlags(Intent.FLAG_GRANT_PERSISTABLE_URI_PERMISSION);
                             // TODO: 30.08.2024
-                            Bundle bundle=new Bundle();
-                            bundle.putString("MacAdresss",MacAdresss);
-                        intentClientServiceSimpleScanStart.putExtras(bundle);
+
+                        intentClientServiceSimpleScanStart.putExtras(searchview_maclistdeviceserverbungle);
                         // TODO: 24.07.2024
-                        context.startService( intentClientServiceSimpleScanStart);
+                      ContextCompat.startForegroundService(context,intentClientServiceSimpleScanStart);
                         // TODO: 19.08.2024
                         // TODO: 26.07.2024
                         Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +

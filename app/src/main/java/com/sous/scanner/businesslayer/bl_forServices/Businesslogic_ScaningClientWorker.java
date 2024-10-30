@@ -39,7 +39,6 @@ import com.sous.scanner.presentationlayer.FragmentScannerUser;
 
 import org.greenrobot.eventbus.EventBus;
 
-import java.util.Collections;
 import java.util.Date;
 import java.util.Random;
 import java.util.UUID;
@@ -264,6 +263,8 @@ public class Businesslogic_ScaningClientWorker {
             LinkedBlockingQueue<BluetoothGatt> getConnectionBluetoothGatt = new LinkedBlockingQueue();
             // TODO: 02.08.2024
             String  getMacGatt =addbundleFormSearchMacGatt(bundleFormSearchMacGatt);
+            // TODO: 30.10.2024
+            String  getgetNameGatt=     addbundleFormSearchNameGatt(bundleFormSearchMacGatt);
             // TODO: 25.07.2024
             if (bluetoothAdapterPhoneClient!=null ) {
                 // TODO: 30.07.2024
@@ -288,9 +289,7 @@ public class Businesslogic_ScaningClientWorker {
                                         final BluetoothDevice bluetoothDeviceScan = bluetoothAdapterPhoneClient.getRemoteDevice(getMacGatt);
 
                                         // TODO: 13.08.2024
-                                        SharedPreferences.Editor editor = preferences.edit();
-                                        editor.putStringSet(bluetoothDeviceScan.getAddress(), Collections.singleton(bluetoothDeviceScan.getAddress()));
-                                        editor.apply();
+                                      SharedPreferencesNewMacAndNAme(getMacGatt,getgetNameGatt);
 
 
                                         // TODO: 12.02.2023  init CallBack Gatt Client for Scan
@@ -453,6 +452,44 @@ public class Businesslogic_ScaningClientWorker {
 
     }
 
+    @NonNull
+    private void SharedPreferencesNewMacAndNAme( @NonNull String getMacGatt ,@NonNull String getgetNameGatt) {
+
+        try{
+            if (!getMacGatt.isEmpty()) {
+                SharedPreferences.Editor       editor = preferences.edit();
+                editor.putString("MacAdresss", getMacGatt);
+                editor.putString("getName",  getgetNameGatt);
+                editor.apply();
+            }
+
+
+        // TODO: 07.04.2024
+        Log.d(this.getClass().getName(), "\n" + " class " +
+                Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" + "\n" + " getgetNameGatt " +getgetNameGatt);
+
+    } catch (Exception e) {
+        e.printStackTrace();
+        Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() + " Линия  :"
+                + Thread.currentThread().getStackTrace()[2].getLineNumber());
+        ContentValues valuesЗаписываемОшибки = new ContentValues();
+        valuesЗаписываемОшибки.put("Error", e.toString().toLowerCase());
+        valuesЗаписываемОшибки.put("Klass", this.getClass().getName());
+        valuesЗаписываемОшибки.put("Metod", Thread.currentThread().getStackTrace()[2].getMethodName());
+        valuesЗаписываемОшибки.put("LineError", Thread.currentThread().getStackTrace()[2].getLineNumber());
+        final Object ТекущаяВерсияПрограммы = version;
+        Integer ЛокальнаяВерсияПОСравнение = Integer.parseInt(ТекущаяВерсияПрограммы.toString());
+        valuesЗаписываемОшибки.put("whose_error", ЛокальнаяВерсияПОСравнение);
+        new SubClassErrors(context).МетодЗаписиОшибок(valuesЗаписываемОшибки);
+    }
+    }
+
+
+
+
+
     void startingDisponseCallBackAndConnectionForGatt(@NonNull     LinkedBlockingQueue<BluetoothGatt>  getConnectionBluetoothGatt) {
 try{
        getConnectionBluetoothGatt.forEach(new java.util.function.Consumer<BluetoothGatt>() {
@@ -500,7 +537,7 @@ try{
             getListMAC.add( "FC:19:99:79:D6:D4");*/
           ///  getListMAC.add( "70:5F:A3:C4:D2:6C");//TODO Служба безрпасности
 
-            getMacGatt=  bundleFormSearchMacGatt.getString("MacAdresss","");
+            getMacGatt=  bundleFormSearchMacGatt.getString("geMAc","");
 
             Log.d(context.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                     " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
@@ -529,7 +566,39 @@ return  getMacGatt;
 
     }
 
+    private  String addbundleFormSearchNameGatt(Bundle bundleFormSearchMacGatt) {
+        // TODO: 20.08.2024
+        String  getgetNameGatt=null;
+        try{
+            if (bundleFormSearchMacGatt.size()>0) {
+                getgetNameGatt=  bundleFormSearchMacGatt.getString("getName","");
 
+                Log.d(context.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                        " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                        " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" + " bundleFormSearchMacGatt " +bundleFormSearchMacGatt+
+                        " getgetNameGatt " +getgetNameGatt);
+            }
+            Log.d(context.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                    " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                    " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" + " bundleFormSearchMacGatt " +bundleFormSearchMacGatt+
+                    " getMacGatt " +getgetNameGatt );
+        } catch (Exception e) {
+            e.printStackTrace();
+            Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() + " Линия  :"
+                    + Thread.currentThread().getStackTrace()[2].getLineNumber());
+            ContentValues valuesЗаписываемОшибки = new ContentValues();
+            valuesЗаписываемОшибки.put("Error", e.toString().toLowerCase());
+            valuesЗаписываемОшибки.put("Klass", this.getClass().getName());
+            valuesЗаписываемОшибки.put("Metod", Thread.currentThread().getStackTrace()[2].getMethodName());
+            valuesЗаписываемОшибки.put("LineError", Thread.currentThread().getStackTrace()[2].getLineNumber());
+            final Object ТекущаяВерсияПрограммы = version;
+            Integer ЛокальнаяВерсияПОСравнение = Integer.parseInt(ТекущаяВерсияПрограммы.toString());
+            valuesЗаписываемОшибки.put("whose_error", ЛокальнаяВерсияПОСравнение);
+            new SubClassErrors(context).МетодЗаписиОшибок(valuesЗаписываемОшибки);
+        }
+        return  getgetNameGatt;
+
+    }
 
 
     public void statyingCallBAckFragmentScaner() {

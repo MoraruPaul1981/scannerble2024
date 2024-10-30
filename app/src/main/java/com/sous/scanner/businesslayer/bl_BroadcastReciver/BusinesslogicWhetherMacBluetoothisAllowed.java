@@ -1,0 +1,70 @@
+package com.sous.scanner.businesslayer.bl_BroadcastReciver;
+
+import android.annotation.SuppressLint;
+import android.bluetooth.BluetoothDevice;
+import android.bluetooth.BluetoothGatt;
+import android.content.ContentValues;
+import android.content.Context;
+import android.content.SharedPreferences;
+import android.util.Log;
+
+import androidx.annotation.NonNull;
+
+import com.sous.scanner.businesslayer.Errors.SubClassErrors;
+import com.sous.scanner.businesslayer.bl_BroadcastReciver.interfaces.BusinesslogicWhetherMacBluetoothisAllowedInterface;
+
+import java.lang.reflect.Method;
+import java.time.LocalDateTime;
+
+public class BusinesslogicWhetherMacBluetoothisAllowed implements BusinesslogicWhetherMacBluetoothisAllowedInterface {
+
+    private  Context context;
+    private  Long version;
+
+    public BusinesslogicWhetherMacBluetoothisAllowed(Context context, Long version) {
+        this.context = context;
+
+        this.version = version;
+    }
+
+
+    /**
+     * @param externalBluetoothDevice
+     * @param preferences
+     * @return
+     */
+    @Override
+    public Boolean weAreLookingforwhethermacbluetoothisallowed(@NonNull String externalBluetoothDevice, @NonNull SharedPreferences preferences) {
+        // TODO: 30.10.2024
+        Boolean getweAreLookingforwhethermacbluetoothisallowed=false;
+        try {
+            // TODO: 07.08.2024  Успешное Событие в нутри BroadCasr Recuver
+            String  bluetoothDeviceScanInnersysntem=     preferences.getString("MacAdresss" ,"");
+            // TODO: 30.10.2024
+            boolean EmptyDevideCall=    bluetoothDeviceScanInnersysntem.contains(externalBluetoothDevice);
+
+
+            Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                    " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                    " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" +
+                    "EmptyDevideCall"+EmptyDevideCall);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() + " Линия  :"
+                    + Thread.currentThread().getStackTrace()[2].getLineNumber());
+            ContentValues valuesЗаписываемОшибки = new ContentValues();
+            valuesЗаписываемОшибки.put("Error", e.toString().toLowerCase());
+            valuesЗаписываемОшибки.put("Klass", this.getClass().getName());
+            valuesЗаписываемОшибки.put("Metod", Thread.currentThread().getStackTrace()[2].getMethodName());
+            valuesЗаписываемОшибки.put("LineError", Thread.currentThread().getStackTrace()[2].getLineNumber());
+            final Object ТекущаяВерсияПрограммы = version;
+            Integer ЛокальнаяВерсияПОСравнение = Integer.parseInt(ТекущаяВерсияПрограммы.toString());
+            valuesЗаписываемОшибки.put("whose_error", ЛокальнаяВерсияПОСравнение);
+            new SubClassErrors(context).МетодЗаписиОшибок(valuesЗаписываемОшибки);
+        }
+        return  getweAreLookingforwhethermacbluetoothisallowed;
+    }
+}
+
+
