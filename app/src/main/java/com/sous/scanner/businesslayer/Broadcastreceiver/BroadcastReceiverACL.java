@@ -46,8 +46,6 @@ public class BroadcastReceiverACL extends BroadcastReceiver {
             final   String     name = intent.getStringExtra(BluetoothDevice.EXTRA_NAME);
             final   String     transport = intent.getStringExtra(BluetoothDevice.EXTRA_TRANSPORT);
 
-
-
             // TODO: 25.08.2024
             final    PackageInfo pInfo = context.getPackageManager().getPackageInfo(context.getPackageName(), 0);
             version = pInfo.getLongVersionCode();
@@ -68,7 +66,7 @@ public class BroadcastReceiverACL extends BroadcastReceiver {
                           new Businesslogic_GattReflection(context,version).unpairDevice(bluetoothDevice);
 
                   //  new BussenloginSaredPreferense(preferences,context,version).workerSharedPreferencesRemove(bluetoothDevice);
-
+                        String    writeToParcel= intent.getParcelableExtra( "writeToParcel");
 
                         Log.i(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                                 " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
@@ -78,7 +76,7 @@ public class BroadcastReceiverACL extends BroadcastReceiver {
                                 " bluetoothDevice.getName() " +bluetoothDevice.getName()+"\n"+
                                 " getweAreLookingforwhethermacbluetoothisallowed " +getweAreLookingforwhethermacbluetoothisallowed
                                 +"\n"+
-                                " bluetoothDevice.getAddress().toString()) " +bluetoothDevice.getAddress().toString());
+                                " bluetoothDevice.getAddress().toString()) " +bluetoothDevice.getAddress().toString() + " writeToParcel " +writeToParcel);
 
                         }
 
@@ -97,6 +95,14 @@ public class BroadcastReceiverACL extends BroadcastReceiver {
                 case   BluetoothDevice.ACTION_ACL_DISCONNECTED :
                     // TODO: 31.07.2024
                     new Businesslogic_GattReflection(context,version).unpairDevice(bluetoothDevice);
+
+                    String    writeToParcel= intent.getParcelableExtra( "writeToParcel");
+
+                    Log.i(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                            " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                            " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" +
+                            "intent.getAction() "+intent.getAction() + "\n"
+                            + " LocalDateTime.now() " + LocalDateTime.now().toString().toUpperCase()+"\n"+ " writeToParcel " +writeToParcel);
 /*
                     // TODO: 07.08.2024  Успешное Событие в нутри BroadCasr Recuver
               new BusinesslogicBroadcastReceiverACL(context,version).
@@ -113,6 +119,12 @@ public class BroadcastReceiverACL extends BroadcastReceiver {
                 case  BluetoothDevice.ACTION_ACL_DISCONNECT_REQUESTED :
                     // TODO: 31.07.2024
                     new Businesslogic_GattReflection(context,version).unpairDevice(bluetoothDevice);
+
+                    Log.i(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                            " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                            " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" +
+                            "intent.getAction() "+intent.getAction() + "\n"
+                            + " LocalDateTime.now() " + LocalDateTime.now().toString().toUpperCase()+"\n");
                     // TODO: 07.08.2024  Успешное Событие в нутри BroadCasr Recuver
                /*     // TODO: 07.08.2024  Успешное Событие в нутри BroadCasr Recuver
                     new BusinesslogicBroadcastReceiverACL(context,version).

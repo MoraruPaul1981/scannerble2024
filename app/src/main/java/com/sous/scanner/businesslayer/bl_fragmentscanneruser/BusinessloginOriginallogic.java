@@ -59,14 +59,14 @@ public class BusinessloginOriginallogic {
                                              @NonNull MaterialTextView materialtextview_last_state,
                                              @NonNull Message messageClient) {
         try{
-            String completeResultContol=    preferences.getString("completeResultContol","");
-            if (completeResultContol.length()>0) {
+            String getName=    preferences.getString("getName","");
+            if (getName.length()>0) {
 
                 materialtextview_last_state.animate().rotationX(+20l);
                 messageClient.getTarget() .postDelayed(()-> {
                     materialtextview_last_state.animate().rotationX(0);
 
-                    materialtextview_last_state.setText(completeResultContol);
+                    materialtextview_last_state.setText(getName);
                     materialtextview_last_state.requestLayout();
                     materialtextview_last_state.refreshDrawableState();
                 },200);

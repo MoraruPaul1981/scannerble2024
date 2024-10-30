@@ -190,6 +190,7 @@ public class FragmentScannerUser extends Fragment {
 
             // TODO: 07.08.2024 Востанавливаем статус последниуспешый статус
            businessloginOriginallogic. materialtextViewGetLastState(preferences,materialtextview_last_state,messageClient);
+
             // TODO: 19.08.2024 выбор текущаег о МАК адреса через лик
             businessloginOriginallogic.    selectMacaddressviaclick(searchview_maclistdeviceserver,getLayoutInflater()
             ,messageClient,animation,preferences,getActivity());

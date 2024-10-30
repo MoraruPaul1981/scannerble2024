@@ -111,8 +111,8 @@ public class BusinessloginforfragmentScanner {
             // TODO: 07.08.2024  перезагружаем внешний вид экрана или точнее компонта Последний Статус
             String getBremy =preferences.getString("getBremy","");
             String getAction =preferences.getString("getAction","");
-            String getAddress =preferences.getString("geMAc","");
-            String getName =preferences.getString("getName","");
+            String getName =preferences.getString("geMAc","");
+            String geMAc =preferences.getString("getName","");
             String getFirstNameButton =preferences.getString("getMatetilaButtonControl","");
             // TODO: 07.08.2024
             message.getTarget().postDelayed(()->{
@@ -121,33 +121,23 @@ public class BusinessloginforfragmentScanner {
                 materialButtonEventSameOffice.setTextColor(Color.BLACK);
             },1500);
 
-            if (getAddress.length()>0 && getAction.length()>0) {
-                String completeResultContol;
-                if (getName.length()>0) {
-                    completeResultContol =
-                            "Девайс: "+getName +"\n"+
-                                    "Сервер: "+getAddress+"\n"
-                                    +"Время: " +getBremy;
-                } else {
-                    completeResultContol = "Сервер: "+getAddress
-                            +"\n"+"Время: " +getBremy;
-                }
-
-                // TODO: 07.08.2024 save Last Secces Status
-                setingSharedPreferencesEditor(preferences, completeResultContol);
-
+            if (getName.length()>0) {
                 // TODO: 07.08.2024
-                materialtextview_last_state.setText(completeResultContol);
+                materialtextview_last_state.setText(getName);
                 materialtextview_last_state.startAnimation(animation);
-                // TODO: 07.08.2024
-                materialButtonEventSameOffice.setText(toProccessSuccess);
 
-                // TODO: 30.08.2024
+                // TODO: 07.08.2024 Отбражем на Конпке
+                materialButtonEventSameOffice.setText(toProccessSuccess);
 
 
                 // TODO: 29.08.2024  сохраняем preferences
-                 afterSuccessfulscanningsavepreferences(  getName,searchview_maclistdeviceserver);
+                 afterSuccessfulscanningsavepreferences(      getBremy, getAction,   geMAc,   getName);
 
+
+                Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                        " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                        " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" +
+                        " getBremy " +getBremy + " getName " +getName);
 
             }else {
                 materialtextview_last_state.setError(null);
@@ -184,22 +174,18 @@ public class BusinessloginforfragmentScanner {
         }
     }
 
-    private void afterSuccessfulscanningsavepreferences(@NonNull String getName, @NonNull MaterialTextView searchview_maclistdeviceserver) {
+    private void afterSuccessfulscanningsavepreferences(@NonNull String getBremy, @NonNull String getAction,  String geMAc,   String getName) {
         // TODO: 30.08.2024
         try{
 
-         String geMAc=   searchview_maclistdeviceserver.getText().toString().toString();
-
-            if (geMAc.length()>0) {
                 BusinessloginforfragmentScanner businessloginforfragmentScanner=
                         new BusinessloginforfragmentScanner(context,version, preferences);
-                businessloginforfragmentScanner.preferencesSaveEvent("","",geMAc, getName);
-            }
+                businessloginforfragmentScanner.preferencesSaveEvent(getBremy,getAction,geMAc, getName);
 
             Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                 " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
                 " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" +
-                " preferences " +preferences);
+                " geMAc " +geMAc);
 
     } catch (Exception e) {
         e.printStackTrace();
@@ -218,32 +204,7 @@ public class BusinessloginforfragmentScanner {
     }
 
 
-    private  void setingSharedPreferencesEditor(@NonNull SharedPreferences preferences, String completeResultContol) {
-        try{
-        SharedPreferences.Editor editor = preferences.edit();
-        editor.putString("completeResultContol", completeResultContol);
-        editor.apply();
 
-        Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
-                " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" +
-                " preferences " +preferences);
-
-    } catch (Exception e) {
-        e.printStackTrace();
-        Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() + " Линия  :"
-                + Thread.currentThread().getStackTrace()[2].getLineNumber());
-        ContentValues valuesЗаписываемОшибки = new ContentValues();
-        valuesЗаписываемОшибки.put("Error", e.toString().toLowerCase());
-        valuesЗаписываемОшибки.put("Klass", this.getClass().getName());
-        valuesЗаписываемОшибки.put("Metod", Thread.currentThread().getStackTrace()[2].getMethodName());
-        valuesЗаписываемОшибки.put("LineError", Thread.currentThread().getStackTrace()[2].getLineNumber());
-        final Object ТекущаяВерсияПрограммы = version;
-        Integer ЛокальнаяВерсияПОСравнение = Integer.parseInt(ТекущаяВерсияПрограммы.toString());
-        valuesЗаписываемОшибки.put("whose_error", ЛокальнаяВерсияПОСравнение);
-        new SubClassErrors(context).МетодЗаписиОшибок(valuesЗаписываемОшибки);
-    }
-    }
 
 
     // TODO: 29.08.2024
