@@ -1354,7 +1354,11 @@ public class FragmentScannerUser extends Fragment {
                     messageClient, toProccessError, toProccessSuccess);
 
 
-
+            // TODO: 31.10.2024 RESET UI forSearchView
+            businessloginforfragmentScanner.updateUIFragmentScanGetSearchView(searchview_maclistdeviceserver ,
+                    preferences,animation,
+                    materialButtonEventSameOffice,
+                    messageClient, toProccessError, toProccessSuccess);
 
             // TODO: 07.08.2024
 // TODO: 07.08.2024 бирация при успешном пинг с сервром

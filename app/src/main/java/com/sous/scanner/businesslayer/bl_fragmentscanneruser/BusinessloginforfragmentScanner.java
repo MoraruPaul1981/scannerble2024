@@ -15,6 +15,7 @@ import com.google.android.material.button.MaterialButton;
 import com.google.android.material.textview.MaterialTextView;
 import com.sous.scanner.businesslayer.Errors.SubClassErrors;
 import com.sous.scanner.businesslayer.bl_EvenBus.EventLocalBroadcastManager;
+import com.sous.scanner.businesslayer.bl_LocalBroadcastManagers.BussenloginSaredPreferense;
 
 import java.time.LocalDateTime;
 
@@ -113,15 +114,18 @@ public class BusinessloginforfragmentScanner {
                 materialButtonEventSameOffice.setText(toProccessSuccess);
                 materialtextview_last_stateName.setError(null);
                 materialButtonEventSameOffice.setTextColor(Color.BLACK);
+                materialButtonEventSameOffice.requestLayout();
             },1500);
 
-            if (getName.length()>0) {
+            if (getAction.length()>0) {
                 // TODO: 07.08.2024
-                materialtextview_last_stateName.setText(getName);
+                materialtextview_last_stateName.setText(geMAc);
                 materialtextview_last_stateName.startAnimation(animation);
+                materialtextview_last_stateName.requestLayout();
 
                 // TODO: 07.08.2024 Отбражем на Конпке
                 materialButtonEventSameOffice.setText(toProccessSuccess);
+                materialButtonEventSameOffice.requestLayout();
                 // TODO: 29.08.2024  сохраняем preferences
                  afterSuccessfulscanningsavepreferences(      getBremy, getAction,   geMAc,   getName);
 
@@ -178,22 +182,25 @@ public class BusinessloginforfragmentScanner {
             // TODO: 07.08.2024  перезагружаем внешний вид экрана или точнее компонта Последний Статус
             String getBremy =preferences.getString("getBremy","");
             String getAction =preferences.getString("getAction","");
-            String geMAc =preferences.getString("getName","");
-            String getName =preferences.getString("geMAc","");
+            String getName =preferences.getString("getName","");
+            String  geMAc =preferences.getString("geMAc","");
             // TODO: 07.08.2024
             message.getTarget().postDelayed(()->{
                 materialButtonEventSameOffice.setText(toProccessSuccess);
                 materialtextview_last_bremy.setError(null);
                 materialButtonEventSameOffice.setTextColor(Color.BLACK);
+                materialButtonEventSameOffice.requestLayout();
             },1500);
 
-            if (getBremy.length()>0) {
+            if (getAction.length()>0) {
                 // TODO: 07.08.2024
                 materialtextview_last_bremy.setText(getBremy);
                 materialtextview_last_bremy.startAnimation(animation);
+                materialtextview_last_bremy.requestLayout();
 
                 // TODO: 07.08.2024 Отбражем на Конпке
                 materialButtonEventSameOffice.setText(toProccessSuccess);
+                materialButtonEventSameOffice.requestLayout();
                 // TODO: 29.08.2024  сохраняем preferences
                 afterSuccessfulscanningsavepreferences(      getBremy, getAction,   geMAc,   getName);
 
@@ -220,6 +227,94 @@ public class BusinessloginforfragmentScanner {
                     " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
                     " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" +
                     " preferences " +preferences);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() + " Линия  :"
+                    + Thread.currentThread().getStackTrace()[2].getLineNumber());
+            ContentValues valuesЗаписываемОшибки = new ContentValues();
+            valuesЗаписываемОшибки.put("Error", e.toString().toLowerCase());
+            valuesЗаписываемОшибки.put("Klass", this.getClass().getName());
+            valuesЗаписываемОшибки.put("Metod", Thread.currentThread().getStackTrace()[2].getMethodName());
+            valuesЗаписываемОшибки.put("LineError", Thread.currentThread().getStackTrace()[2].getLineNumber());
+            final Object ТекущаяВерсияПрограммы = version;
+            Integer ЛокальнаяВерсияПОСравнение = Integer.parseInt(ТекущаяВерсияПрограммы.toString());
+            valuesЗаписываемОшибки.put("whose_error", ЛокальнаяВерсияПОСравнение);
+            new SubClassErrors(context).МетодЗаписиОшибок(valuesЗаписываемОшибки);
+        }
+    }
+
+
+
+
+
+    // TODO: 31.10.2024 SearchView
+
+    public void updateUIFragmentScanGetSearchView(@NonNull  MaterialTextView searchview_maclistdeviceserver ,
+                                             @NonNull SharedPreferences preferences,
+                                             @NonNull Animation animation ,
+                                             @NonNull MaterialButton materialButtonEventSameOffice,
+                                             @NonNull Message message,
+                                             @NonNull String toProccessError,
+                                             @NonNull String toProccessSuccess ) {
+        try{
+            // TODO: 07.08.2024  перезагружаем внешний вид экрана или точнее компонта Последний Статус
+
+            String   getNameFromMAc=  searchview_maclistdeviceserver.getText().toString();
+
+            if (getNameFromMAc.length()>0) {
+              //TODO
+
+                new BussenloginSaredPreferense(preferences,context,version).workerSharedPreferenSerchView(getNameFromMAc);
+
+                String getBremy =preferences.getString("getBremy","");
+                String getAction =preferences.getString("getAction","");
+                String getName  =preferences.getString("getName","");
+                String geMAc =preferences.getString("geMAc","");
+
+                // TODO: 07.08.2024
+                message.getTarget().postDelayed(()->{
+                    materialButtonEventSameOffice.setText(toProccessSuccess);
+                    searchview_maclistdeviceserver.setError(null);
+                    materialButtonEventSameOffice.setTextColor(Color.BLACK);
+                    materialButtonEventSameOffice.requestLayout();
+                },1500);
+
+
+                    // TODO: 07.08.2024
+                    searchview_maclistdeviceserver.setText(getNameFromMAc);
+                    searchview_maclistdeviceserver.startAnimation(animation);
+                     searchview_maclistdeviceserver.requestLayout();
+
+                    // TODO: 07.08.2024 Отбражем на Конпке
+                    materialButtonEventSameOffice.setText(toProccessSuccess);
+                    materialButtonEventSameOffice.requestLayout();
+                    // TODO: 29.08.2024  сохраняем preferences
+                    afterSuccessfulscanningsavepreferences(      getBremy, getAction,   geMAc,   getName);
+
+                    Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                            " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                            " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" +
+                            " getBremy " +getBremy + " getName " +getBremy);
+
+                }else {
+                    searchview_maclistdeviceserver.setError(null);
+                    // TODO: 07.08.2024
+                    materialButtonEventSameOffice.setText(toProccessError);
+                    materialButtonEventSameOffice.setTextColor(Color.RED);
+                }
+                searchview_maclistdeviceserver.refreshDrawableState();
+                searchview_maclistdeviceserver.requestLayout();
+                // TODO: 07.08.2024
+                materialButtonEventSameOffice.refreshDrawableState();
+                materialButtonEventSameOffice.requestLayout();
+
+
+
+            Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                    " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                    " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" +
+                    " getNameFromMAc " +getNameFromMAc);
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -358,7 +453,7 @@ public class BusinessloginforfragmentScanner {
             // TODO: 16.05.2023 Из Выбраного Элемента Получаеним ДАнные
           Bundle bundleMAc=(Bundle)    searchview_maclistdeviceserver.getTag();
 
-            getMacForClick    = bundleMAc.getString("getNameFromMAc","").trim();
+            getMacForClick    = bundleMAc.getString("geMAc","").trim();
 
             // TODO: 07.08.2024  перезагружаем внешний вид экрана или точнее компонта Последний Статус
             Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +

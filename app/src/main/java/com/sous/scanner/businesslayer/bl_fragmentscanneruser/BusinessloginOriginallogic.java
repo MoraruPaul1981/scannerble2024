@@ -14,6 +14,7 @@ import android.view.animation.Animation;
 import com.google.android.material.textview.MaterialTextView;
 import com.jakewharton.rxbinding4.view.RxView;
 import com.sous.scanner.businesslayer.Errors.SubClassErrors;
+import com.sous.scanner.businesslayer.bl_LocalBroadcastManagers.BussenloginSaredPreferense;
 
 import java.util.Date;
 import java.util.concurrent.TimeUnit;
@@ -136,21 +137,23 @@ public class BusinessloginOriginallogic {
                                                   @NonNull MaterialTextView searchview_maclistdeviceserver,
                                                   @NonNull Message messageClient) {
         try{
-            String FioFromgeMAc=    preferences.getString("FioFromgeMAc","");
-            if (FioFromgeMAc.length()>0) {
 
+
+            String getNameFromMAc =preferences.getString("getNameFromMAc","");
+
+            if (getNameFromMAc.length()>0) {
                 searchview_maclistdeviceserver.animate().rotationX(+20l);
                 messageClient.getTarget() .postDelayed(()-> {
                     searchview_maclistdeviceserver.animate().rotationX(0);
 
-                    searchview_maclistdeviceserver.setText(FioFromgeMAc);
+                    searchview_maclistdeviceserver.setText(getNameFromMAc);
                     searchview_maclistdeviceserver.requestLayout();
                     searchview_maclistdeviceserver.refreshDrawableState();
                 },200);
 
                 Log.d(context.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                         " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                        " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" +  " FioFromgeMAc " +FioFromgeMAc);
+                        " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" +  " getNameFromMAc " +getNameFromMAc);
             }
         } catch (Exception e) {
             e.printStackTrace();
