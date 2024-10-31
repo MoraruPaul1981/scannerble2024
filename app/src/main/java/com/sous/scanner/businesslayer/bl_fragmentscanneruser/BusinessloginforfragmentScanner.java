@@ -13,13 +13,10 @@ import androidx.annotation.NonNull;
 
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.textview.MaterialTextView;
-import com.google.common.util.concurrent.AtomicDouble;
 import com.sous.scanner.businesslayer.Errors.SubClassErrors;
 import com.sous.scanner.businesslayer.bl_EvenBus.EventLocalBroadcastManager;
 
 import java.time.LocalDateTime;
-
-import kotlinx.coroutines.internal.AtomicOp;
 
 public class BusinessloginforfragmentScanner {
 
@@ -43,7 +40,6 @@ public class BusinessloginforfragmentScanner {
             editor.putString("getAction",  getAction);
             editor.putString("geMAc", getAddress);
             editor.putString("getName",  getName);
-            editor.putString("getMatetilaButtonControl",  "Контроль");
             editor.apply();
             Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                     " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
@@ -99,40 +95,35 @@ public class BusinessloginforfragmentScanner {
     }
     }
 
-    public void updateUIFragmentScan(@NonNull  MaterialTextView materialtextview_last_state ,
-                                     @NonNull SharedPreferences preferences,
-                                     @NonNull Animation animation ,
-                                     @NonNull MaterialButton materialButtonEventSameOffice,
-                                     @NonNull Message message,
-                                     @NonNull  MaterialTextView searchview_maclistdeviceserver,
-                                     @NonNull String toProccessError,
-                                     @NonNull String toProccessSuccess ) {
+    public void updateUIFragmentScanGetName(@NonNull  MaterialTextView materialtextview_last_stateName ,
+                                            @NonNull SharedPreferences preferences,
+                                            @NonNull Animation animation ,
+                                            @NonNull MaterialButton materialButtonEventSameOffice,
+                                            @NonNull Message message,
+                                            @NonNull String toProccessError,
+                                            @NonNull String toProccessSuccess ) {
         try{
             // TODO: 07.08.2024  перезагружаем внешний вид экрана или точнее компонта Последний Статус
             String getBremy =preferences.getString("getBremy","");
             String getAction =preferences.getString("getAction","");
             String getName =preferences.getString("geMAc","");
             String geMAc =preferences.getString("getName","");
-            String getFirstNameButton =preferences.getString("getMatetilaButtonControl","");
             // TODO: 07.08.2024
             message.getTarget().postDelayed(()->{
-                materialButtonEventSameOffice.setText(getFirstNameButton);
-                materialtextview_last_state.setError(null);
+                materialButtonEventSameOffice.setText(toProccessSuccess);
+                materialtextview_last_stateName.setError(null);
                 materialButtonEventSameOffice.setTextColor(Color.BLACK);
             },1500);
 
             if (getName.length()>0) {
                 // TODO: 07.08.2024
-                materialtextview_last_state.setText(getName);
-                materialtextview_last_state.startAnimation(animation);
+                materialtextview_last_stateName.setText(getName);
+                materialtextview_last_stateName.startAnimation(animation);
 
                 // TODO: 07.08.2024 Отбражем на Конпке
                 materialButtonEventSameOffice.setText(toProccessSuccess);
-
-
                 // TODO: 29.08.2024  сохраняем preferences
                  afterSuccessfulscanningsavepreferences(      getBremy, getAction,   geMAc,   getName);
-
 
                 Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                         " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
@@ -140,13 +131,13 @@ public class BusinessloginforfragmentScanner {
                         " getBremy " +getBremy + " getName " +getName);
 
             }else {
-                materialtextview_last_state.setError(null);
+                materialtextview_last_stateName.setError(null);
                 // TODO: 07.08.2024
                 materialButtonEventSameOffice.setText(toProccessError);
                 materialButtonEventSameOffice.setTextColor(Color.RED);
             }
-            materialtextview_last_state.refreshDrawableState();
-            materialtextview_last_state.requestLayout();
+            materialtextview_last_stateName.refreshDrawableState();
+            materialtextview_last_stateName.requestLayout();
             // TODO: 07.08.2024
             materialButtonEventSameOffice.refreshDrawableState();
             materialButtonEventSameOffice.requestLayout();
@@ -173,6 +164,81 @@ public class BusinessloginforfragmentScanner {
             new SubClassErrors(context).МетодЗаписиОшибок(valuesЗаписываемОшибки);
         }
     }
+
+    // TODO: 31.10.2024 BREMY
+
+    public void updateUIFragmentScanGetBremy(@NonNull  MaterialTextView materialtextview_last_bremy ,
+                                            @NonNull SharedPreferences preferences,
+                                            @NonNull Animation animation ,
+                                            @NonNull MaterialButton materialButtonEventSameOffice,
+                                            @NonNull Message message,
+                                            @NonNull String toProccessError,
+                                            @NonNull String toProccessSuccess ) {
+        try{
+            // TODO: 07.08.2024  перезагружаем внешний вид экрана или точнее компонта Последний Статус
+            String getBremy =preferences.getString("getBremy","");
+            String getAction =preferences.getString("getAction","");
+            String geMAc =preferences.getString("getName","");
+            String getName =preferences.getString("geMAc","");
+            // TODO: 07.08.2024
+            message.getTarget().postDelayed(()->{
+                materialButtonEventSameOffice.setText(toProccessSuccess);
+                materialtextview_last_bremy.setError(null);
+                materialButtonEventSameOffice.setTextColor(Color.BLACK);
+            },1500);
+
+            if (getBremy.length()>0) {
+                // TODO: 07.08.2024
+                materialtextview_last_bremy.setText(getBremy);
+                materialtextview_last_bremy.startAnimation(animation);
+
+                // TODO: 07.08.2024 Отбражем на Конпке
+                materialButtonEventSameOffice.setText(toProccessSuccess);
+                // TODO: 29.08.2024  сохраняем preferences
+                afterSuccessfulscanningsavepreferences(      getBremy, getAction,   geMAc,   getName);
+
+                Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                        " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                        " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" +
+                        " getBremy " +getBremy + " getName " +getBremy);
+
+            }else {
+                materialtextview_last_bremy.setError(null);
+                // TODO: 07.08.2024
+                materialButtonEventSameOffice.setText(toProccessError);
+                materialButtonEventSameOffice.setTextColor(Color.RED);
+            }
+            materialtextview_last_bremy.refreshDrawableState();
+            materialtextview_last_bremy.requestLayout();
+            // TODO: 07.08.2024
+            materialButtonEventSameOffice.refreshDrawableState();
+            materialButtonEventSameOffice.requestLayout();
+
+
+
+            Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                    " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                    " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" +
+                    " preferences " +preferences);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() + " Линия  :"
+                    + Thread.currentThread().getStackTrace()[2].getLineNumber());
+            ContentValues valuesЗаписываемОшибки = new ContentValues();
+            valuesЗаписываемОшибки.put("Error", e.toString().toLowerCase());
+            valuesЗаписываемОшибки.put("Klass", this.getClass().getName());
+            valuesЗаписываемОшибки.put("Metod", Thread.currentThread().getStackTrace()[2].getMethodName());
+            valuesЗаписываемОшибки.put("LineError", Thread.currentThread().getStackTrace()[2].getLineNumber());
+            final Object ТекущаяВерсияПрограммы = version;
+            Integer ЛокальнаяВерсияПОСравнение = Integer.parseInt(ТекущаяВерсияПрограммы.toString());
+            valuesЗаписываемОшибки.put("whose_error", ЛокальнаяВерсияПОСравнение);
+            new SubClassErrors(context).МетодЗаписиОшибок(valuesЗаписываемОшибки);
+        }
+    }
+
+
+
 
     private void afterSuccessfulscanningsavepreferences(@NonNull String getBremy, @NonNull String getAction,  String geMAc,   String getName) {
         // TODO: 30.08.2024
@@ -217,7 +283,6 @@ public class BusinessloginforfragmentScanner {
             String getAction =preferences.getString("getAction","");
             String getAddress =preferences.getString("geMAc","");
             String getName =preferences.getString("getName","");
-            String getFirstNameButton =preferences.getString("getMatetilaButtonControl","");
             // TODO: 07.08.2024
             materialtextview_last_state.setText(getAddress);
             materialtextview_last_state.startAnimation(animation);
@@ -258,13 +323,11 @@ public class BusinessloginforfragmentScanner {
             String getAction =preferences.getString("getAction","");
             String getAddress =preferences.getString("geMAc","");
             String getName =preferences.getString("getName","");
-            String getFirstNameButton =preferences.getString("getMatetilaButtonControl","");
             // TODO: 07.08.2024
             bundle.putString("getBremy",getBremy);
             bundle.putString("getAction",getAction);
             bundle.putString(" geMAc",getAddress);
             bundle.putString("getName",getName);
-            bundle.putString("getMatetilaButtonControl",getFirstNameButton);
             materialtextview_last_state.setTag(bundle);
 
             Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +

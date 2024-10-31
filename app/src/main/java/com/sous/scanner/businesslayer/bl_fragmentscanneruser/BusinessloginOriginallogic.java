@@ -55,9 +55,9 @@ public class BusinessloginOriginallogic {
     }
 
 
-    public void materialtextViewGetLastState(@NonNull SharedPreferences preferences,
-                                             @NonNull MaterialTextView materialtextview_last_state,
-                                             @NonNull Message messageClient) {
+    public void materialtextViewGetLastStateName(@NonNull SharedPreferences preferences,
+                                                 @NonNull MaterialTextView materialtextview_last_state,
+                                                 @NonNull Message messageClient) {
         try{
             String getName=    preferences.getString("getName","");
             if (getName.length()>0) {
@@ -69,6 +69,44 @@ public class BusinessloginOriginallogic {
                     materialtextview_last_state.setText(getName);
                     materialtextview_last_state.requestLayout();
                     materialtextview_last_state.refreshDrawableState();
+                },200);
+
+                Log.d(context.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                        " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                        " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n");
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() + " Линия  :"
+                    + Thread.currentThread().getStackTrace()[2].getLineNumber());
+            ContentValues valuesЗаписываемОшибки = new ContentValues();
+            valuesЗаписываемОшибки.put("Error", e.toString().toLowerCase());
+            valuesЗаписываемОшибки.put("Klass", this.getClass().getName());
+            valuesЗаписываемОшибки.put("Metod", Thread.currentThread().getStackTrace()[2].getMethodName());
+            valuesЗаписываемОшибки.put("LineError", Thread.currentThread().getStackTrace()[2].getLineNumber());
+            final Object ТекущаяВерсияПрограммы = version;
+            Integer ЛокальнаяВерсияПОСравнение = Integer.parseInt(ТекущаяВерсияПрограммы.toString());
+            valuesЗаписываемОшибки.put("whose_error", ЛокальнаяВерсияПОСравнение);
+            new SubClassErrors(context).МетодЗаписиОшибок(valuesЗаписываемОшибки);
+
+        }
+    }
+
+
+    public void materialtextViewGetLastStateBremy(@NonNull SharedPreferences preferences,
+                                                 @NonNull MaterialTextView materialtextview_last_bremy,
+                                                 @NonNull Message messageClient) {
+        try{
+            String getBremy=    preferences.getString("getBremy","");
+            if (getBremy.length()>0) {
+
+                materialtextview_last_bremy.animate().rotationX(+20l);
+                messageClient.getTarget() .postDelayed(()-> {
+                    materialtextview_last_bremy.animate().rotationX(0);
+
+                    materialtextview_last_bremy.setText(getBremy);
+                    materialtextview_last_bremy.requestLayout();
+                    materialtextview_last_bremy.refreshDrawableState();
                 },200);
 
                 Log.d(context.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +

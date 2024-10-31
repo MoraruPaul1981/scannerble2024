@@ -82,7 +82,7 @@ public class FragmentScannerUser extends Fragment {
     private FragmentManager fragmentManager;
     private Message messageClient;
 
-    private  MaterialTextView materialtextview_last_state;
+    private  MaterialTextView materialtextview_last_state,materialtextview_last_bremy;
     private  MaterialTextView  searchview_maclistdeviceserver;
     private Long version = 0l;
     private SharedPreferences preferences;
@@ -185,11 +185,19 @@ public class FragmentScannerUser extends Fragment {
 
             materialtextview_last_state = (MaterialTextView) materialcardview_gattclientonly_bottom.findViewById(R.id.id_materialtextview_last_state);
 
+            materialtextview_last_bremy = (MaterialTextView) materialcardview_gattclientonly_bottom.findViewById(R.id.id_materialtextview_last_bremy);
+
             searchview_maclistdeviceserver = (MaterialTextView) materialcardview_gattclientonly_bottom.findViewById(R.id.id_searchview_maclistdeviceserver);
 
 
-            // TODO: 07.08.2024 Востанавливаем статус последниуспешый статус
-           businessloginOriginallogic. materialtextViewGetLastState(preferences,materialtextview_last_state,messageClient);
+            // TODO: 07.08.2024 Востанавливаем статус последниуспешый статус ИМЯ ДЕВАЙС
+           businessloginOriginallogic.materialtextViewGetLastStateName(preferences,materialtextview_last_state,messageClient);
+
+            // TODO: 07.08.2024 Востанавливаем статус последниуспешый статус ИМЯ Время
+           businessloginOriginallogic.materialtextViewGetLastStateBremy(preferences,materialtextview_last_bremy,messageClient);
+
+
+
 
             // TODO: 19.08.2024 выбор текущаег о МАК адреса через лик
             businessloginOriginallogic.    selectMacaddressviaclick(searchview_maclistdeviceserver,getLayoutInflater()
@@ -1277,17 +1285,28 @@ public class FragmentScannerUser extends Fragment {
 
             businessloginforfragmentScanner .eventprocessingOtEventBus(event);
 
-           businessloginforfragmentScanner.  updateUIFragmentScan(materialtextview_last_state,
+            // TODO: 31.10.2024 RESET UI for NAME
+
+           businessloginforfragmentScanner.updateUIFragmentScanGetName(materialtextview_last_state ,
                     preferences,animation,
                     materialButtonEventSameOffice,
-                    messageClient,
-                    searchview_maclistdeviceserver, toProccessError, toProccessSuccess);
+                    messageClient, toProccessError, toProccessSuccess);
             // TODO: 07.08.2024
 
 
+
+            // TODO: 31.10.2024 RESET UI for Bremy
+            businessloginforfragmentScanner.updateUIFragmentScanGetBremy(materialtextview_last_state ,
+                    preferences,animation,
+                    materialButtonEventSameOffice,
+                    messageClient, toProccessError, toProccessSuccess);
+
+
+
+
+            // TODO: 07.08.2024
 // TODO: 07.08.2024 бирация при успешном пинг с сервром
           new BusinessloginVibrator(getContext()).alarmVibrator();
-
 
 
 
