@@ -57,8 +57,8 @@ public class BusinesslogicSelectMacAdressGattServer {
     private LayoutInflater layoutInflater;
     private  MaterialTextView searchview_maclistdeviceserver;
     private  Cursor cursor;
-    private  String MacTable="listMacMastersSous";
 
+    private   Integer countMacAdress=0;
     private    BusinesslogicDatabase  businesslogicDatabase;
     private   SharedPreferences preferences;
     private  Activity activity;
@@ -89,7 +89,7 @@ public class BusinesslogicSelectMacAdressGattServer {
         try {
         alertDialogMacAdress = new MaterialAlertDialogBuilder(activity){
             private     MaterialButton ButtonFilterЗакрытьДиалог =null;
-            private  Integer countMacAdress=0;
+
             @NonNull
             @Override
             public MaterialAlertDialogBuilder setView(View view) {
@@ -355,7 +355,7 @@ public class BusinesslogicSelectMacAdressGattServer {
         layoutParams.height =WindowManager.LayoutParams.MATCH_PARENT;
         layoutParams.gravity = Gravity.CENTER;
         alertDialogMacAdress.getWindow().setAttributes(layoutParams);
-        alertDialogMacAdress.  setTitle("Девайсы ("+context+")");
+        alertDialogMacAdress.  setTitle("Девайсы ("+countMacAdress+")");
 
         // TODO: 13.12.2022 ВТОРОЙ СЛУШАТЕЛЬ НА КНОПКУ
         Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
@@ -600,10 +600,9 @@ public class BusinesslogicSelectMacAdressGattServer {
             };
              simpleCursorForSearchView.setViewBinder(БиндингДляПоиск);
             simpleCursorForSearchView.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+            simpleCursorForSearchView.notifyDataSetChanged();
             ListViewForSearchViewGattMacList.setAdapter(simpleCursorForSearchView);
             ListViewForSearchViewGattMacList.requestLayout();
-
-            simpleCursorForSearchView.notifyDataSetChanged();
         } catch (Exception e) {
             e.printStackTrace();
             Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() + " Линия  :"

@@ -187,7 +187,7 @@ public class FragmentScannerUser extends Fragment {
 
             searchview_maclistdeviceserver = (MaterialTextView) materialcardview_gattclientonly_bottom.findViewById(R.id.id_searchview_maclistdeviceserver);
             // TODO: 31.10.2024
-          materialtextview_last_bremy = (MaterialTextView) materialcardview_gattclientonly_bottom.findViewById(R.id.id_materialtextview_last_state);
+          materialtextview_last_bremy = (MaterialTextView) materialcardview_gattclientonly_bottom.findViewById(R.id.id_materialtextview_last_bremy);
 
 
             // TODO: 07.08.2024 Востанавливаем статус последниуспешый статус ИМЯ ДЕВАЙС
@@ -518,6 +518,7 @@ public class FragmentScannerUser extends Fragment {
             new SubClassErrors(getContext()).МетодЗаписиОшибок(valuesЗаписываемОшибки);
         }
     }
+
 
     // TODO: 02.03.2022 выход
 
