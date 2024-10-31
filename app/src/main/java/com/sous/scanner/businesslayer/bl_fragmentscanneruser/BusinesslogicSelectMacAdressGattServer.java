@@ -36,6 +36,7 @@ import com.google.android.material.button.MaterialButton;
 import com.google.android.material.card.MaterialCardView;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.android.material.textview.MaterialTextView;
+import com.google.common.util.concurrent.AtomicDouble;
 import com.sous.scanner.R;
 import com.sous.scanner.businesslayer.Errors.SubClassErrors;
 import com.sous.scanner.datalayer.bl_DataBase.BusinesslogicDatabase;
@@ -84,11 +85,11 @@ public class BusinesslogicSelectMacAdressGattServer {
 
     @SuppressLint("Range")
   public   void AlertDialogSelectionMacAdress( ){
-        AtomicReference<String> countMacAdres=new AtomicReference<>("0");
         // TODO: 19.08.2024
         try {
         alertDialogMacAdress = new MaterialAlertDialogBuilder(activity){
             private     MaterialButton ButtonFilterЗакрытьДиалог =null;
+            private  Integer countMacAdress=0;
             @NonNull
             @Override
             public MaterialAlertDialogBuilder setView(View view) {
@@ -99,11 +100,6 @@ public class BusinesslogicSelectMacAdressGattServer {
                     searchViewMacAdress.setQueryHint("Поиск..");
                     ListViewForSearchViewGattMacList.setTextFilterEnabled(true);
 
-                    Drawable drawable = context.getResources().getDrawable(R.drawable.style_for_newstypespinners_ietm6);
-
-                    searchViewMacAdress.setDividerDrawable(drawable);
-                    searchViewMacAdress.setDrawingCacheEnabled(true);
-                    searchViewMacAdress.setSubmitButtonEnabled(true);
 
 
                     Log.d(getContext().getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
@@ -132,7 +128,19 @@ public class BusinesslogicSelectMacAdressGattServer {
                     // TODO: 20.08.2024  создание адапрета, Если Есть ДАнные
 
 
-                    currentpopulationofListViewMacdata();
+                    if (cursor.getCount()>0) {
+
+                        countMacAdress=    getCountMacRow();
+                        // TODO: 31.10.2024 когда данные
+                        currentpopulationofListViewMacdata();
+                    }else {
+                        // TODO: 31.10.2024  когда нет данных
+                        fillingwhenthereisNodata();
+
+                    }
+
+
+
 
 
                     Log.d(this.getContext().getClass().getName(), "\n"
@@ -170,12 +178,6 @@ public class BusinesslogicSelectMacAdressGattServer {
                             " метод в процессе... " + Thread.currentThread().getStackTrace()[2].getMethodName()  + " cursor.getCount() " +cursor.getCount());
 
 
-                if (cursor.getCount()==0) {
-                    fillingwhenthereisNodata();
-                }
-
-                    countMacAdres.set(getCountMacRow());
-
 
                     // TODO: 21.08.2024 когда данные есть
                     SimpleCursorAdapter     simpleCursorForSearchView = fillingwhenDataisavailable();
@@ -183,10 +185,11 @@ public class BusinesslogicSelectMacAdressGattServer {
                     МетодПоискаФильтр(             simpleCursorForSearchView );
 
                     // TODO: 16.05.2023  КЛИК СЛУШАТЕЛЬ ПО ЕЛЕМЕНТУ
-                    clickGattMacList(  );
+                      clickGattMacList(  );
 
                     // TODO: 21.08.2024
                     finaloperationforListView();
+
                     // TODO: 21.08.2024 Кнопка ЗАкрыть
                     методКликДейсвиеКнопкиСохранить(ButtonFilterЗакрытьДиалог);
 
@@ -216,22 +219,45 @@ public class BusinesslogicSelectMacAdressGattServer {
 
             }
 
-            private String   getCountMacRow() {
-                String countMacAdres = new String();
-                if (cursor.getCount()>0) {
-                    Integer  countMac =cursor.getCount();
-                    countMacAdres=String.valueOf(countMac.toString());
-                }
+            private Integer   getCountMacRow() {
+                Integer countMac = 0;
+                try{
+                    countMac =cursor.getCount();
+
                 Log.d(this.getContext().getClass().getName(), "\n"
                         + " время: " + new Date()+"\n+" +
                         " Класс в процессе... " +
                         this.getContext().getClass().getName()+"\n"+
                         " метод в процессе... " + Thread.currentThread().getStackTrace()[2].getMethodName());
-                return  countMacAdres;
+
+                Log.d(this.getContext().getClass().getName(), "\n"
+                        + " время: " + new Date()+"\n+" +
+                        " Класс в процессе... " +
+                        this.getContext().getClass().getName()+"\n"+
+                        " метод в процессе... " + Thread.currentThread().getStackTrace()[2].getMethodName());
+
+            } catch (Exception e) {
+                e.printStackTrace();
+                Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() + " Линия  :"
+                        + Thread.currentThread().getStackTrace()[2].getLineNumber());
+                ContentValues valuesЗаписываемОшибки = new ContentValues();
+                valuesЗаписываемОшибки.put("Error", e.toString().toLowerCase());
+                valuesЗаписываемОшибки.put("Klass", this.getClass().getName());
+                valuesЗаписываемОшибки.put("Metod", Thread.currentThread().getStackTrace()[2].getMethodName());
+                valuesЗаписываемОшибки.put("LineError", Thread.currentThread().getStackTrace()[2].getLineNumber());
+                final Object ТекущаяВерсияПрограммы = version;
+                Integer ЛокальнаяВерсияПОСравнение = Integer.parseInt(ТекущаяВерсияПрограммы.toString());
+                valuesЗаписываемОшибки.put("whose_error", ЛокальнаяВерсияПОСравнение);
+                new SubClassErrors(getContext()).МетодЗаписиОшибок(valuesЗаписываемОшибки);
+
+            }
+
+                return  countMac;
             }
 
 
             private void finaloperationforListView() {
+                try{
                 ListViewForSearchViewGattMacList.setForegroundGravity(Gravity.CENTER);
                 ListViewForSearchViewGattMacList.setSelection(0);
                 ListViewForSearchViewGattMacList.startAnimation(animation);
@@ -241,9 +267,34 @@ public class BusinesslogicSelectMacAdressGattServer {
                         + " время: " + new Date() + "\n+" +
                         " Класс в процессе... " + this.getClass().getName() + "\n" +
                         " метод в процессе... " + Thread.currentThread().getStackTrace()[2].getMethodName() );
+
+
+                Log.d(this.getContext().getClass().getName(), "\n"
+                        + " время: " + new Date()+"\n+" +
+                        " Класс в процессе... " +
+                        this.getContext().getClass().getName()+"\n"+
+                        " метод в процессе... " + Thread.currentThread().getStackTrace()[2].getMethodName());
+
+            } catch (Exception e) {
+                e.printStackTrace();
+                Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() + " Линия  :"
+                        + Thread.currentThread().getStackTrace()[2].getLineNumber());
+                ContentValues valuesЗаписываемОшибки = new ContentValues();
+                valuesЗаписываемОшибки.put("Error", e.toString().toLowerCase());
+                valuesЗаписываемОшибки.put("Klass", this.getClass().getName());
+                valuesЗаписываемОшибки.put("Metod", Thread.currentThread().getStackTrace()[2].getMethodName());
+                valuesЗаписываемОшибки.put("LineError", Thread.currentThread().getStackTrace()[2].getLineNumber());
+                final Object ТекущаяВерсияПрограммы = version;
+                Integer ЛокальнаяВерсияПОСравнение = Integer.parseInt(ТекущаяВерсияПрограммы.toString());
+                valuesЗаписываемОшибки.put("whose_error", ЛокальнаяВерсияПОСравнение);
+                new SubClassErrors(getContext()).МетодЗаписиОшибок(valuesЗаписываемОшибки);
+
             }
 
+        }
+
             private void fillingwhenthereisNodata() {
+                try{
                 View footerView = layoutInflater.inflate(R.layout.fragment_server_dont_data_oncreateviewholder,
                         ListViewForSearchViewGattMacList, false);
 
@@ -266,12 +317,35 @@ public class BusinesslogicSelectMacAdressGattServer {
                         + " время: " + new Date() + "\n+" +
                         " Класс в процессе... " + this.getClass().getName() + "\n" +
                         " метод в процессе... " + Thread.currentThread().getStackTrace()[2].getMethodName() );
+
+                Log.d(this.getContext().getClass().getName(), "\n"
+                        + " время: " + new Date()+"\n+" +
+                        " Класс в процессе... " +
+                        this.getContext().getClass().getName()+"\n"+
+                        " метод в процессе... " + Thread.currentThread().getStackTrace()[2].getMethodName());
+
+            } catch (Exception e) {
+                e.printStackTrace();
+                Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() + " Линия  :"
+                        + Thread.currentThread().getStackTrace()[2].getLineNumber());
+                ContentValues valuesЗаписываемОшибки = new ContentValues();
+                valuesЗаписываемОшибки.put("Error", e.toString().toLowerCase());
+                valuesЗаписываемОшибки.put("Klass", this.getClass().getName());
+                valuesЗаписываемОшибки.put("Metod", Thread.currentThread().getStackTrace()[2].getMethodName());
+                valuesЗаписываемОшибки.put("LineError", Thread.currentThread().getStackTrace()[2].getLineNumber());
+                final Object ТекущаяВерсияПрограммы = version;
+                Integer ЛокальнаяВерсияПОСравнение = Integer.parseInt(ТекущаяВерсияПрограммы.toString());
+                valuesЗаписываемОшибки.put("whose_error", ЛокальнаяВерсияПОСравнение);
+                new SubClassErrors(getContext()).МетодЗаписиОшибок(valuesЗаписываемОшибки);
+
             }
+
+        }
 
 
         }
                 // TODO: 30.08.2024
-                .setTitle("Адреса")
+                .setTitle("Девайсы")
                 .setCancelable(false)
                 .setIcon( R.drawable.icon_newscannertwo)
                 .setView(layoutInflater.inflate( R.layout.simple_for_mac_adress_gatt_searchview, null )).show();
@@ -281,7 +355,7 @@ public class BusinesslogicSelectMacAdressGattServer {
         layoutParams.height =WindowManager.LayoutParams.MATCH_PARENT;
         layoutParams.gravity = Gravity.CENTER;
         alertDialogMacAdress.getWindow().setAttributes(layoutParams);
-        alertDialogMacAdress.  setTitle("Адреса ("+countMacAdres.get()+")");
+        alertDialogMacAdress.  setTitle("Девайсы ("+context+")");
 
         // TODO: 13.12.2022 ВТОРОЙ СЛУШАТЕЛЬ НА КНОПКУ
         Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
@@ -413,14 +487,18 @@ public class BusinesslogicSelectMacAdressGattServer {
 
                 @Override
                 public boolean setViewValue(View view, Cursor cursor, int columnIndex) {
+                    // TODO: 31.10.2024
+                    try{
+                        // TODO: 31.10.2024
                     switch (view.getId()) {
                         case android.R.id.text1:
                             Log.d(this.getClass().getName()," position");
                             if (cursor.getCount()>0) {
                                 try{
-                                    MaterialCardView cardViewMAcs=(MaterialCardView) view.findViewById(android.R.id.text1);
-                                    MaterialTextView materialTextVieMac=(MaterialTextView) cardViewMAcs.findViewById( R.id.id_mac);
-                                    MaterialTextView materialTextVieMacsub=(MaterialTextView) cardViewMAcs.findViewById(R.id.id_macsub);
+                                    MaterialCardView childCardViewMAcAndAdresss=(MaterialCardView) view.findViewById(android.R.id.text1);
+                                    // TODO: 31.10.2024
+                                    MaterialTextView getFioForDevice=(MaterialTextView) childCardViewMAcAndAdresss.findViewById( R.id.id_mac);
+                                    MaterialTextView getMacForDevice=(MaterialTextView) childCardViewMAcAndAdresss.findViewById(R.id.id_macsub);
                                     // TODO: 13.12.2022  производим состыковку
                                    Integer   getId = cursor.getInt(cursor.getColumnIndex("_id"));
                                     if (getId>0) {
@@ -433,7 +511,9 @@ public class BusinesslogicSelectMacAdressGattServer {
                                         bundle.putString("geMAc",geMAc);
                                         bundle.putLong("getUUID",UUIDGetFilter);
                                         // TODO: 16.05.2023 Элемент Заполяем данными  TAG
-                                        materialTextVieMac.setTag(bundle);
+                                        getFioForDevice.setTag(bundle);
+                                        // TODO: 31.10.2024
+                                        getMacForDevice.setTag(bundle);
                                         // TODO: 20.01.2022
                                         Log.d(this.getClass().getName()," getName "+getName + " getId " +getId  + " UUIDGetFilter " +UUIDGetFilter+ " bundle "+bundle);
                                         boolean ДлинаСтрокивСпиноре = getName.length() >40;
@@ -443,12 +523,23 @@ public class BusinesslogicSelectMacAdressGattServer {
                                             getName = sb.toString();
                                             Log.d(context.getClass().getName(), " getName " + "--" + getName);/////
                                         }
-                                        // TODO: 16.05.2023 Элемент Заполяем данными
-                                        materialTextVieMac.setText(getName);
-                                        materialTextVieMacsub.setText(geMAc);
-                                        materialTextVieMac.startAnimation(animationvibr1);
-                                        materialTextVieMac.requestLayout();
+                                        // TODO: 02.08.2024
+                                        Log.d(this.getClass().getName(), "\n" + " class " +
+                                                Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                                                " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                                                " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" + "\n"+" bundle "+bundle);
 
+                                        // TODO: 16.05.2023 Элемент Заполяем данными
+                                     // TODO: 31.10.2024  set Name
+                                        getFioForDevice.setText(getName);
+                                        getFioForDevice.startAnimation(animationvibr1);
+                                        getFioForDevice.requestLayout();
+
+                                        // TODO: 31.10.2024  set Mac
+                                        getMacForDevice.setText(geMAc);
+
+                                        getFioForDevice.requestLayout();
+                                        getMacForDevice.requestLayout();
 
                                         Log.d(context.getClass().getName(), "\n"
                                                 + " время: " + new Date() + "\n+" +
@@ -482,13 +573,37 @@ public class BusinesslogicSelectMacAdressGattServer {
                                 return false;
                             }
                     }
+                        Log.d(context.getClass().getName(), "\n"
+                                + " время: " + new Date() + "\n+" +
+                                " Класс в процессе... " + this.getClass().getName() + "\n" +
+                                " метод в процессе... " + Thread.currentThread().getStackTrace()[2].getMethodName() );
+                    // TODO: 13.12.2022 филь
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() + " Линия  :"
+                            + Thread.currentThread().getStackTrace()[2].getLineNumber());
+                    ContentValues valuesЗаписываемОшибки = new ContentValues();
+                    valuesЗаписываемОшибки.put("Error", e.toString().toLowerCase());
+                    valuesЗаписываемОшибки.put("Klass", this.getClass().getName());
+                    valuesЗаписываемОшибки.put("Metod", Thread.currentThread().getStackTrace()[2].getMethodName());
+                    valuesЗаписываемОшибки.put("LineError", Thread.currentThread().getStackTrace()[2].getLineNumber());
+                    final Object ТекущаяВерсияПрограммы = version;
+                    Integer ЛокальнаяВерсияПОСравнение = Integer.parseInt(ТекущаяВерсияПрограммы.toString());
+                    valuesЗаписываемОшибки.put("whose_error", ЛокальнаяВерсияПОСравнение);
+                    new SubClassErrors(context).МетодЗаписиОшибок(valuesЗаписываемОшибки);
+
+                }
+
+
                     return false;
                 }
             };
              simpleCursorForSearchView.setViewBinder(БиндингДляПоиск);
             simpleCursorForSearchView.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-            simpleCursorForSearchView.notifyDataSetChanged();
             ListViewForSearchViewGattMacList.setAdapter(simpleCursorForSearchView);
+            ListViewForSearchViewGattMacList.requestLayout();
+
+            simpleCursorForSearchView.notifyDataSetChanged();
         } catch (Exception e) {
             e.printStackTrace();
             Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() + " Линия  :"

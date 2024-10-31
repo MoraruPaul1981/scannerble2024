@@ -185,16 +185,16 @@ public class FragmentScannerUser extends Fragment {
 
             materialtextview_last_state = (MaterialTextView) materialcardview_gattclientonly_bottom.findViewById(R.id.id_materialtextview_last_state);
 
-            materialtextview_last_bremy = (MaterialTextView) materialcardview_gattclientonly_bottom.findViewById(R.id.id_materialtextview_last_bremy);
-
             searchview_maclistdeviceserver = (MaterialTextView) materialcardview_gattclientonly_bottom.findViewById(R.id.id_searchview_maclistdeviceserver);
+            // TODO: 31.10.2024
+          materialtextview_last_bremy = (MaterialTextView) materialcardview_gattclientonly_bottom.findViewById(R.id.id_materialtextview_last_state);
 
 
             // TODO: 07.08.2024 Востанавливаем статус последниуспешый статус ИМЯ ДЕВАЙС
            businessloginOriginallogic.materialtextViewGetLastStateName(preferences,materialtextview_last_state,messageClient);
 
             // TODO: 07.08.2024 Востанавливаем статус последниуспешый статус ИМЯ Время
-           businessloginOriginallogic.materialtextViewGetLastStateBremy(preferences,materialtextview_last_bremy,messageClient);
+         businessloginOriginallogic.materialtextViewGetLastStateBremy(preferences,materialtextview_last_bremy,messageClient);
 
 
 
@@ -769,7 +769,7 @@ public class FragmentScannerUser extends Fragment {
                       // TODO: 06.08.2024
                     addCurrentButonClick(materialButtonEventSameOffice,toWork,"#BDC6C8");
 
-                    animationCurrentButonClick(materialButtonEventSameOffice,100);
+                    animationCycleButonClick(materialButtonEventSameOffice,100);
                     // TODO: 06.08.2024  
                     eventButtonemployeeArrived(materialButtonEventSameOffice);
 
@@ -860,7 +860,7 @@ public class FragmentScannerUser extends Fragment {
 
 
 
-        private void animationCurrentButonClick(@NonNull MaterialButton materialButtonClick,@NonNull int Duration) {
+        private void animationCycleButonClick(@NonNull MaterialButton materialButtonClick, @NonNull int Duration) {
             try {
                 Animation   animation = AnimationUtils.loadAnimation(getContext(), R.anim.slide_in_row_vibrator2);
                 animation.setDuration(Duration);
@@ -1038,7 +1038,7 @@ public class FragmentScannerUser extends Fragment {
 
                         addCurrentButonClick(materialButtonClick,toProccess,"#BDC6C8");
 
-                        animationCurrentButonClick(materialButtonClick,100);
+                        animationCycleButonClick(materialButtonClick,100);
 
                         // TODO: 02.08.2024
                         Log.d(this.getClass().getName(), "\n" + " class " +
@@ -1192,7 +1192,7 @@ public class FragmentScannerUser extends Fragment {
 
                             messageClient.getTarget().post(()->{
                                 addCurrentButonChangetextClick(materialButtonEventSameOffice,toProccessError,"#A10B0B");
-                                animationCurrentButonClick(materialButtonEventSameOffice,500);
+                                animationCycleButonClick(materialButtonEventSameOffice,500);
 
                             });
 
