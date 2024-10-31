@@ -96,13 +96,13 @@ public class BusinessloginforfragmentScanner {
     }
     }
 
-    public void updateUIFragmentScanGetName(@NonNull  MaterialTextView materialtextview_last_stateName ,
-                                            @NonNull SharedPreferences preferences,
-                                            @NonNull Animation animation ,
-                                            @NonNull MaterialButton materialButtonEventSameOffice,
-                                            @NonNull Message message,
-                                            @NonNull String toProccessError,
-                                            @NonNull String toProccessSuccess ) {
+    public void updateUIFragmentScangeMAc(@NonNull  MaterialTextView materialtextview_last_stateName ,
+                                          @NonNull SharedPreferences preferences,
+                                          @NonNull Animation animation ,
+                                          @NonNull MaterialButton materialButtonEventSameOffice,
+                                          @NonNull Message message,
+                                          @NonNull String toProccessError,
+                                          @NonNull String toProccessSuccess ) {
         try{
             // TODO: 07.08.2024  перезагружаем внешний вид экрана или точнее компонта Последний Статус
             String getBremy =preferences.getString("getBremy","");
@@ -117,7 +117,7 @@ public class BusinessloginforfragmentScanner {
                 materialButtonEventSameOffice.requestLayout();
             },1500);
 
-            if (getAction.length()>0) {
+            if (geMAc.length()>0) {
                 // TODO: 07.08.2024
                 materialtextview_last_stateName.setText(geMAc);
                 materialtextview_last_stateName.startAnimation(animation);
@@ -192,7 +192,7 @@ public class BusinessloginforfragmentScanner {
                 materialButtonEventSameOffice.requestLayout();
             },1500);
 
-            if (getAction.length()>0) {
+            if (getBremy.length()>0) {
                 // TODO: 07.08.2024
                 materialtextview_last_bremy.setText(getBremy);
                 materialtextview_last_bremy.startAnimation(animation);
@@ -447,7 +447,7 @@ public class BusinessloginforfragmentScanner {
         return  bundle;
     }
 
-    public String updateUIClickBottonControlgetMac( @NonNull  MaterialTextView searchview_maclistdeviceserver ){
+    public String updateUIClickBottonControlgetMac( @NonNull  MaterialTextView searchview_maclistdeviceserver ,@NonNull MaterialTextView materialtextview_last_state){
      String getMacForClick=new String();
         try{
             if(searchview_maclistdeviceserver.getText().toString().length()>3){
@@ -456,6 +456,9 @@ public class BusinessloginforfragmentScanner {
                 // TODO: 16.05.2023 Из Выбраного Элемента Получаеним ДАнные
                 if (bundlesearchview!=null) {
                     getMacForClick  =  bundlesearchview.getString("geMAc");
+                }else{
+
+                    getMacForClick  =    materialtextview_last_state.getText().toString();
                 }
 
             }

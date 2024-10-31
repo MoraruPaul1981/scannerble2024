@@ -1026,7 +1026,7 @@ public class FragmentScannerUser extends Fragment {
                             new BusinessloginforfragmentScanner(getContext(),version,preferences);
                     // TODO: 30.08.2024
 
-                    String   MacAdresss=       businessloginforfragmentScanner.updateUIClickBottonControlgetMac( searchview_maclistdeviceserver);
+                    String   MacAdresss=       businessloginforfragmentScanner.updateUIClickBottonControlgetMac( searchview_maclistdeviceserver,materialtextview_last_state);
                     MacAdresss=       Optional.ofNullable(MacAdresss).map(s->s).orElse("");
                     /// Bundle   searchview_bungle=    (Bundle)    searchview_maclistdeviceserver.getTag();
 
@@ -1339,7 +1339,7 @@ public class FragmentScannerUser extends Fragment {
 
             // TODO: 31.10.2024 RESET UI for NAME
 
-           businessloginforfragmentScanner.updateUIFragmentScanGetName(materialtextview_last_state ,
+           businessloginforfragmentScanner.updateUIFragmentScangeMAc(materialtextview_last_state ,
                     preferences,animation,
                     materialButtonEventSameOffice,
                     messageClient, toProccessError, toProccessSuccess);
@@ -1348,7 +1348,7 @@ public class FragmentScannerUser extends Fragment {
 
 
             // TODO: 31.10.2024 RESET UI for Bremy
-            businessloginforfragmentScanner.updateUIFragmentScanGetBremy(materialtextview_last_state ,
+            businessloginforfragmentScanner.updateUIFragmentScanGetBremy(materialtextview_last_bremy ,
                     preferences,animation,
                     materialButtonEventSameOffice,
                     messageClient, toProccessError, toProccessSuccess);

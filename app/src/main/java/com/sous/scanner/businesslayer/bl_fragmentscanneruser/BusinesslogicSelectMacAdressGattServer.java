@@ -8,7 +8,6 @@ import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.graphics.Color;
 import android.graphics.Typeface;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.Message;
 import android.text.InputType;
@@ -36,15 +35,13 @@ import com.google.android.material.button.MaterialButton;
 import com.google.android.material.card.MaterialCardView;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.android.material.textview.MaterialTextView;
-import com.google.common.util.concurrent.AtomicDouble;
 import com.sous.scanner.R;
 import com.sous.scanner.businesslayer.Errors.SubClassErrors;
+import com.sous.scanner.businesslayer.bl_LocalBroadcastManagers.BussenloginSaredPreferense;
 import com.sous.scanner.datalayer.bl_DataBase.BusinesslogicDatabase;
 
 import java.util.Date;
-import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.atomic.AtomicLong;
-import java.util.concurrent.atomic.AtomicReference;
 
 public class BusinesslogicSelectMacAdressGattServer {
 
@@ -516,13 +513,13 @@ public class BusinesslogicSelectMacAdressGattServer {
                                         bundle.putString("getNameFromMAc",getNameFromMAc);
                                         bundle.putString("geMAc",geMAc);
                                         bundle.putLong("getUUID",UUIDGetFilter);
+
+
                                         // TODO: 16.05.2023 Элемент Заполяем данными  TAG
-                                        getFioForDevice.setTag(bundle);
-                                        // TODO: 31.10.2024
-                                        getMacForDevice.setTag(bundle);
-                                        childCardViewMAcAndAdresss.setTag(bundle);
-                                        searchview_maclistdeviceserver.setTag(bundle);
-                                        // TODO: 20.01.2022
+                                    fillintheBungleData(getFioForDevice, bundle, getMacForDevice, childCardViewMAcAndAdresss);
+
+
+                                    // TODO: 20.01.2022
                                         Log.d(this.getClass().getName()," getNameFromMAc "+getNameFromMAc + " getId " +getId  + " UUIDGetFilter " +UUIDGetFilter+ " bundle "+bundle);
                                         boolean ДлинаСтрокивСпиноре = getNameFromMAc.length() >40;
                                         if (ДлинаСтрокивСпиноре==true) {
@@ -610,6 +607,11 @@ public class BusinesslogicSelectMacAdressGattServer {
              simpleCursorForSearchView.setViewBinder(БиндингДляПоиск);
             simpleCursorForSearchView.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
             ListViewForSearchViewGattMacList.setAdapter(simpleCursorForSearchView);
+
+            Log.d(this.getClass().getName(), "\n" + " class " +
+                    Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                    " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                    " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" + "\n");
         } catch (Exception e) {
             e.printStackTrace();
             Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() + " Линия  :"
@@ -631,18 +633,47 @@ public class BusinesslogicSelectMacAdressGattServer {
 
 
 
+    ///TODO заполяем данными
+    private void fillintheBungleData( @NonNull  MaterialTextView getFioForDevice,
+                                      @NonNull   Bundle bundle,
+                                      @NonNull    MaterialTextView getMacForDevice,
+                                      @NonNull     MaterialCardView childCardViewMAcAndAdresss) {
+        try{
+
+        getFioForDevice.setTag(bundle);
+        // TODO: 31.10.2024
+        getMacForDevice.setTag(bundle);
+
+        childCardViewMAcAndAdresss.setTag(bundle);
+
+        searchview_maclistdeviceserver.setTag(bundle);
+            // TODO: 31.10.2024
+         String geMAc=   bundle.getString("geMAc","");
+
+            new BussenloginSaredPreferense(preferences,context,version).workerSharedPreferenGetMac(geMAc);
 
 
+        Log.d(this.getClass().getName(), "\n" + " class " +
+                Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" + "\n"+" bundle "+bundle);
+    } catch (Exception e) {
+        e.printStackTrace();
+        Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() + " Линия  :"
+                + Thread.currentThread().getStackTrace()[2].getLineNumber());
+        ContentValues valuesЗаписываемОшибки = new ContentValues();
+        valuesЗаписываемОшибки.put("Error", e.toString().toLowerCase());
+        valuesЗаписываемОшибки.put("Klass", this.getClass().getName());
+        valuesЗаписываемОшибки.put("Metod", Thread.currentThread().getStackTrace()[2].getMethodName());
+        valuesЗаписываемОшибки.put("LineError", Thread.currentThread().getStackTrace()[2].getLineNumber());
+        final Object ТекущаяВерсияПрограммы = version;
+        Integer ЛокальнаяВерсияПОСравнение = Integer.parseInt(ТекущаяВерсияПрограммы.toString());
+        valuesЗаписываемОшибки.put("whose_error", ЛокальнаяВерсияПОСравнение);
+        new SubClassErrors(context).МетодЗаписиОшибок(valuesЗаписываемОшибки);
 
+    }
 
-
-
-
-
-
-
-
-
+    }
 
 
     private void МетодПоискаФильтр( @NonNull     SimpleCursorAdapter          simpleCursorForSearchViewGattMacList ) {
