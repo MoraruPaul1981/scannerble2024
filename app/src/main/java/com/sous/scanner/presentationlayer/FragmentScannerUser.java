@@ -1026,7 +1026,7 @@ public class FragmentScannerUser extends Fragment {
                             new BusinessloginforfragmentScanner(getContext(),version,preferences);
                     // TODO: 30.08.2024
 
-                    String   MacAdresss=       businessloginforfragmentScanner.updateUIClickBottonControlgetMac(searchview_maclistdeviceserver);
+                    String   MacAdresss=       businessloginforfragmentScanner.updateUIClickBottonControlgetMac(materialtextview_last_state,searchview_maclistdeviceserver);
                     MacAdresss=       Optional.ofNullable(MacAdresss).map(s->s).orElse("");
                     /// Bundle   searchview_bungle=    (Bundle)    searchview_maclistdeviceserver.getTag();
 
@@ -1040,7 +1040,7 @@ public class FragmentScannerUser extends Fragment {
                     if (MacAdresss.length()>0) {
 
                         // TODO: 20.08.2024
-                        startingWorkerPingCommectionServerGatt((Bundle) searchview_maclistdeviceserver.getTag());
+                        startingWorkerPingCommectionServerGatt(MacAdresss);
                         // TODO: 09.08.2024 Блютус Включен
 
                         addCurrentButonClick(materialButtonClick,toProccess,"#BDC6C8");
@@ -1148,17 +1148,17 @@ public class FragmentScannerUser extends Fragment {
         }
 
 
-        private     void startingWorkerPingCommectionServerGatt(@NonNull  Bundle  searchview_maclistdeviceserverbungle) {
+        private     void startingWorkerPingCommectionServerGatt(@NonNull  String  MacAdresss) {
             // TODO: 16.07.2024  startting Fragment Scannig
             try {
                     // TODO: 20.08.2024
-                    businesslogicJobServive.startingServiceSimpleScan("userUIlaunchingfrombackground",searchview_maclistdeviceserverbungle);
+                    businesslogicJobServive.startingServiceSimpleScan("userUIlaunchingfrombackground",MacAdresss);
 
 
                 Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                         " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
                         " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" +
-                         " searchview_maclistdeviceserverbungle  " +searchview_maclistdeviceserverbungle);
+                         " MacAdresss  " +MacAdresss);
             } catch (Exception e) {
                 e.printStackTrace();
                 Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() + " Линия  :"

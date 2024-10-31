@@ -264,7 +264,6 @@ public class Businesslogic_ScaningClientWorker {
             // TODO: 02.08.2024
             String  getMacGatt =addbundleFormSearchMacGatt(bundleFormSearchMacGatt);
             // TODO: 30.10.2024
-            String  getgetNameGatt=     addbundleFormSearchNameGatt(bundleFormSearchMacGatt);
             // TODO: 25.07.2024
             if (bluetoothAdapterPhoneClient!=null ) {
                 // TODO: 30.07.2024
@@ -273,6 +272,24 @@ public class Businesslogic_ScaningClientWorker {
                     int DurectionTimeGatt=      getRandomNumberUsingMilisecond(150,500);
                     // TODO: 28.10.2024 ЗАпускаем главный Цикл Пинга МАС-адресов мастеров
                      disposableMainMacPingAddress=      Observable.range(      1,4)
+                             .filter(new Predicate<Integer>() {
+                                 @Override
+                                 public boolean test(Integer integer) throws Throwable {
+                                     if(getMacGatt.length()>0){
+                                         // TODO: 02.08.2024
+                                         Log.d(this.getClass().getName(), "\n" + " class " +
+                                                 Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                                                 " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                                                 " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" + "\n"
+                                                 +  " getMacGatt "+ getMacGatt+" getMacGatt.length()" +getMacGatt.length());
+                                         return true;
+
+                                     }else{
+                                         return false;
+                                     }
+
+                                 }
+                             })
                             .zipWith( Observable.just("")
                                     .delay(DurectionTimeGatt,TimeUnit.MILLISECONDS)
                                     .repeatWhen(repeat->repeat.delay(11,TimeUnit.SECONDS)), (item, interval) -> item)
@@ -540,7 +557,7 @@ try{
             getListMAC.add( "FC:19:99:79:D6:D4");*/
           ///  getListMAC.add( "70:5F:A3:C4:D2:6C");//TODO Служба безрпасности
 
-            getMacGatt=  bundleFormSearchMacGatt.getString("geMAc","");
+            getMacGatt= bundleFormSearchMacGatt.getString("MacAdresss");
 
             Log.d(context.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                     " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +

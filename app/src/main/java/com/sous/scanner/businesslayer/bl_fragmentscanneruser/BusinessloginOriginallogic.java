@@ -69,7 +69,6 @@ public class BusinessloginOriginallogic {
 
                     materialtextview_last_state.setText(geMAc);
                     materialtextview_last_state.requestLayout();
-                    materialtextview_last_state.refreshDrawableState();
                 },200);
 
                 Log.d(context.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
@@ -107,7 +106,6 @@ public class BusinessloginOriginallogic {
 
                     materialtextview_last_bremy.setText(getBremy);
                     materialtextview_last_bremy.requestLayout();
-                    materialtextview_last_bremy.refreshDrawableState();
                 },200);
 
                 Log.d(context.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
@@ -148,7 +146,7 @@ public class BusinessloginOriginallogic {
 
                     searchview_maclistdeviceserver.setText(getNameFromMAc);
                     searchview_maclistdeviceserver.requestLayout();
-                    searchview_maclistdeviceserver.refreshDrawableState();
+
                 },200);
 
                 Log.d(context.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
