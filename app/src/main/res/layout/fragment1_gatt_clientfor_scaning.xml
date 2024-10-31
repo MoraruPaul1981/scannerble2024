@@ -138,12 +138,15 @@
                 <com.google.android.material.textview.MaterialTextView
                     android:id="@+id/id_materialtextview_last_state_icon"
                     android:layout_width="50dp"
-                    android:layout_height="wrap_content"
-                    android:minHeight="30dp"
+                    android:layout_height="25dp"
                     android:layout_alignParentLeft ="true"
-                    android:ellipsize="end"
-                    android:drawablePadding="10dp"
+
+
                     android:drawableLeft="@drawable/icon_bluttoh_client_pingdevice"
+                    android:paddingLeft="30dip"
+                    android:paddingRight="26dip"
+
+
                     android:gravity="center"
                     android:layout_margin="5dp"
                     android:padding="3dp"
@@ -157,8 +160,7 @@
                 <com.google.android.material.textview.MaterialTextView
                     android:id="@+id/id_materialtextview_last_state"
                     android:layout_width="250dp"
-                    android:layout_height="wrap_content"
-                    android:minHeight="30dp"
+                    android:layout_height="25dp"
                     android:gravity="center"
                     android:layout_centerHorizontal="true"
                     android:ellipsize="end"
@@ -168,7 +170,7 @@
                     android:padding="1dp"
                     android:textColor="#7F8080"
                     android:textColorHint="#7F8080"
-                    android:textSize="17sp"
+                    android:textSize="15sp"
                     android:textStyle="bold"
                     android:tooltipText="Последний статус"
                     android:translationZ="50dp" />
@@ -184,6 +186,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="10dp"
+            android:background="@drawable/disayn_line_tablerow19"
             android:layout_gravity="center_horizontal">
 
             <LinearLayout
@@ -201,12 +206,15 @@
                 <com.google.android.material.textview.MaterialTextView
                     android:id="@+id/id_materialtextview_last_bremy_icon"
                     android:layout_width="52dp"
-                    android:layout_height="wrap_content"
-                    android:minHeight="30dp"
+                    android:layout_height="25dp"
                     android:layout_alignParentLeft ="true"
                     android:ellipsize="end"
-                    android:drawablePadding="10dp"
+
                     android:drawableLeft="@drawable/icon_bluettoh_client_bremy"
+                    android:paddingLeft="30dip"
+                    android:paddingRight="26dip"
+
+
                     android:gravity="center"
                     android:layout_margin="5dp"
                     android:padding="3dp"
@@ -220,8 +228,7 @@
                 <com.google.android.material.textview.MaterialTextView
                     android:id="@+id/id_materialtextview_last_bremy"
                     android:layout_width="250dp"
-                    android:layout_height="wrap_content"
-                    android:minHeight="30dp"
+                    android:layout_height="25dp"
                     android:gravity="center"
                     android:layout_alignParentLeft ="true"
                     android:layout_centerHorizontal="true"
@@ -232,7 +239,7 @@
                     android:padding="1dp"
                     android:textColor="#7F8080"
                     android:textColorHint="#7F8080"
-                    android:textSize="17sp"
+                    android:textSize="15sp"
                     android:textStyle="bold"
                     android:tooltipText="Последний статус"
                     android:translationZ="50dp" />

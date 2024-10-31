@@ -312,6 +312,9 @@ public class Businesslogic_ScaningClientWorker {
                                 @Override
                                 public void run() throws Throwable {
                                     // TODO: 02.08.2024
+                                    // TODO: 08.08.2024 выключаем элементы
+                                    startingDisponseCallBackAndConnectionForGatt(     getConnectionBluetoothGatt);
+
                                     Log.d(this.getClass().getName(), "\n" + " class " +
                                             Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                                             " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
