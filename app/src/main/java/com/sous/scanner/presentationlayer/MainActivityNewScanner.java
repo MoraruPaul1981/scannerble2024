@@ -43,21 +43,10 @@ import dagger.hilt.android.AndroidEntryPoint;
 @AndroidEntryPoint
 public class MainActivityNewScanner extends AppCompatActivity  {
    public Message handlerScannerGattClient;
-    private NavigationBarView bottomNavigationView;
-    @SuppressLint("RestrictedApi")
-    private BottomNavigationItemView bottomNavigationItemViewВыход;
-    @SuppressLint("RestrictedApi")
-    private BottomNavigationItemView bottomNavigationItemViewИстория;
     private FragmentManager fragmentManagerScanner;
     private FragmentTransaction fragmentTransaction;
 
-    private com.google.android.material.card.MaterialCardView cardVievscanner;
-
-    protected TabLayout  tabLayout ;
-
     private     Long version=0l;
-
-
 
 
     @Override

@@ -203,8 +203,7 @@ public class FragmentScannerUser extends Fragment {
             businessloginOriginallogic.    selectMacaddressviaclick(searchview_maclistdeviceserver,getLayoutInflater()
             ,messageClient,animation,preferences,getActivity());
 
-// TODO: 30.08.2024  заполняем данными последним Успешынм сервером  с верзху в выаре MAc адресов
-            businessloginOriginallogic.    materialtextViewGetLastMac(preferences,searchview_maclistdeviceserver,animation);
+
 
             Log.d(getContext().getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                     " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
