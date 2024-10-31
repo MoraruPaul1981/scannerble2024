@@ -935,106 +935,26 @@ public class FragmentScannerUser extends Fragment {
                                     // TODO: 16.05.2023 запуск SEARCHVIEW CFO
 
                                 // TODO: 09.08.2024
-                                BusinessoginEnableBluetoothAdapter bluetoothAdapter=       new BusinessoginEnableBluetoothAdapter(getContext(),version);
-
-                                BluetoothAdapter bluetoothAdapterPhoneClient   = bluetoothAdapter.initBluetootAdapter();
+                               pingDeviceGattServer(materialButtonClick);
 
 
                                 // TODO: 02.08.2024
-                                Log.d(this.getClass().getName(), "\n" + " class " +
-                                        Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
-                                        " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                                        " line " + Thread.currentThread().getStackTrace()[2].getLineNumber()
-                                        + "\n" + "\n" + " bluetoothAdapterPhoneClient "+bluetoothAdapterPhoneClient );
-
-
-
-                                if (bluetoothAdapterPhoneClient == null) {
-                                    // TODO: 09.08.2024
-                                    onComplete();
-                                    // TODO: 02.08.2024
                                     Log.d(this.getClass().getName(), "\n" + " class " +
                                             Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                                             " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
                                             " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" + "\n" +
-                                            " bluetoothAdapterPhoneClient.isEnabled() " +bluetoothAdapterPhoneClient+
-                                            "  disposableClick " + disposableClick);
-                                }else {
-
-
-
-
-
-                                if ( bluetoothAdapterPhoneClient.isEnabled() == false) {
-                                    // TODO: 09.08.2024
-                                      onComplete();
-                                    // TODO: 02.08.2024
-                                    Log.d(this.getClass().getName(), "\n" + " class " +
-                                            Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
-                                            " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                                            " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" + "\n" +
-                                             " bluetoothAdapterPhoneClient.isEnabled() " +bluetoothAdapterPhoneClient+
                                             " disposableClick " + disposableClick);
-                                }else{
-// TODO: 30.08.2024
-
-                                    // TODO: 07.08.2024 Обработка пришедшено собтыия от BoadCastReciver
-                                    BusinessloginforfragmentScanner businessloginforfragmentScanner=
-                                            new BusinessloginforfragmentScanner(getContext(),version,preferences);
-                                    // TODO: 30.08.2024
-
-                                    String   MacAdresss=       businessloginforfragmentScanner.updateUIClickBottonControlgetMac(searchview_maclistdeviceserver);
-                                    MacAdresss=       Optional.ofNullable(MacAdresss).map(s->s).orElse("");
-                                  /// Bundle   searchview_bungle=    (Bundle)    searchview_maclistdeviceserver.getTag();
-
-                                    Log.d(this.getClass().getName(), "\n" + " class " +
-                                            Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
-                                            " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                                            " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" + "\n" +
-                                            " MacAdresss " + MacAdresss);
 
 
-                                    if (MacAdresss.length()>0) {
-
-                                        // TODO: 20.08.2024
-                                        startingWorkerPingCommectionServerGatt((Bundle) searchview_maclistdeviceserver.getTag());
-                                        // TODO: 09.08.2024 Блютус Включен
-
-                                        addCurrentButonClick(materialButtonClick,toProccess,"#BDC6C8");
-
-                                        animationCurrentButonClick(materialButtonClick,100);
-
-                                        // TODO: 02.08.2024
-                                        Log.d(this.getClass().getName(), "\n" + " class " +
-                                                Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
-                                                " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                                                " line " + Thread.currentThread().getStackTrace()[2].getLineNumber()
-                                                + "\n" + "\n" + " searchview_maclistdeviceserver.getTag() "+searchview_maclistdeviceserver.getTag() );
-
-                                    } else {
-                                        // TODO: 20.08.2024
-                                        Snackbar snackbar = Snackbar
-                                                .make(searchview_maclistdeviceserver, "Вы не выбрали Mac-aдрес !!! ", Snackbar.LENGTH_LONG);
-                                        snackbar.show();
-                                    }
-                                }
                                     // TODO: 02.08.2024
                                     Log.d(this.getClass().getName(), "\n" + " class " +
                                             Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                                             " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                                            " line " + Thread.currentThread().getStackTrace()[2].getLineNumber()
-                                            + "\n" + "\n" + " bluetoothAdapterPhoneClient "+bluetoothAdapterPhoneClient.isEnabled() );
+                                            " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() );
                                 }
 
 
 
-                                // TODO: 02.08.2024
-                                Log.d(this.getClass().getName(), "\n" + " class " +
-                                        Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
-                                        " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                                        " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" + "\n");
-
-                            }
 
                             @Override
                             public void onError(@io.reactivex.rxjava3.annotations.NonNull Throwable e) {
@@ -1054,21 +974,11 @@ public class FragmentScannerUser extends Fragment {
 
                             @Override
                             public void onComplete() {
-                                /*// TODO: 09.08.2024 у вс не вслючен Bluetooth
-                                Toast.makeText(getActivity(),"Не включен Bluetooth !!! ", Toast.LENGTH_LONG).show();*/
-
-                                Snackbar snackbar = Snackbar
-                                        .make(materialButtonClick, "Не включен Bluetooth !!! ", Snackbar.LENGTH_LONG);
-                                snackbar.show();
-                               // TODO: 03.09.2024
-                              ///  disposableClick.get().dispose();
-
-                                Log.d(this.getClass().getName(),  "  RxView.clicks " +Thread.currentThread().getStackTrace()[2].getMethodName()
-                                        + " время " +new Date().toLocaleString()  + " disposableClick" +disposableClick );
-
+                                /* TODO: 09.08.2024 у вс не вслючен Bluetooth */
                                 Log.d(this.getClass().getName(),  "  RxView.clicks " +Thread.currentThread().getStackTrace()[2].getMethodName()
                                         + " время " +new Date().toLocaleString() );
                             }
+
                         });
 
             } catch (Exception e) {
@@ -1089,10 +999,146 @@ public class FragmentScannerUser extends Fragment {
 
 
 
+        @Nullable
+        private void pingDeviceGattServer(@NonNull MaterialButton materialButtonClick) {
+            //TODO
+            try{
+            BusinessoginEnableBluetoothAdapter bluetoothAdapter=       new BusinessoginEnableBluetoothAdapter(getContext(),version);
+
+            BluetoothAdapter bluetoothAdapterPhoneClient   = bluetoothAdapter.initBluetootAdapter();
+
+
+            if (bluetoothAdapterPhoneClient != null) {
+                // TODO: 09.08.2024
+                if ( bluetoothAdapterPhoneClient.isEnabled() == true) {
+
+
+
+                    // TODO: 07.08.2024 Обработка пришедшено собтыия от BoadCastReciver
+                    BusinessloginforfragmentScanner businessloginforfragmentScanner=
+                            new BusinessloginforfragmentScanner(getContext(),version,preferences);
+                    // TODO: 30.08.2024
+
+                    String   MacAdresss=       businessloginforfragmentScanner.updateUIClickBottonControlgetMac(searchview_maclistdeviceserver);
+                    MacAdresss=       Optional.ofNullable(MacAdresss).map(s->s).orElse("");
+                    /// Bundle   searchview_bungle=    (Bundle)    searchview_maclistdeviceserver.getTag();
+
+                    Log.d(this.getClass().getName(), "\n" + " class " +
+                            Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                            " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                            " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" + "\n" +
+                            " MacAdresss " + MacAdresss);
+
+
+                    if (MacAdresss.length()>0) {
+
+                        // TODO: 20.08.2024
+                        startingWorkerPingCommectionServerGatt((Bundle) searchview_maclistdeviceserver.getTag());
+                        // TODO: 09.08.2024 Блютус Включен
+
+                        addCurrentButonClick(materialButtonClick,toProccess,"#BDC6C8");
+
+                        animationCurrentButonClick(materialButtonClick,100);
+
+                        // TODO: 02.08.2024
+                        Log.d(this.getClass().getName(), "\n" + " class " +
+                                Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                                " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                                " line " + Thread.currentThread().getStackTrace()[2].getLineNumber()
+                                + "\n" + "\n" + " searchview_maclistdeviceserver.getTag() "+searchview_maclistdeviceserver.getTag() +
+                                " bbluetoothAdapterPhoneClient.isEnabled()" +bluetoothAdapterPhoneClient.isEnabled());
+
+                    } else {
+                        // TODO: 20.08.2024
+                        Snackbar snackbar = Snackbar
+                                .make(searchview_maclistdeviceserver, "Вы не выбрали Mac-aдрес !!! ", Snackbar.LENGTH_LONG);
+                        snackbar.show();
+
+                        Log.d(this.getClass().getName(), "\n" + " class " +
+                                Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                                " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                                " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" + "\n" +
+                                " bluetoothAdapterPhoneClient.isEnabled() " +bluetoothAdapterPhoneClient+
+                                " bbluetoothAdapterPhoneClient.isEnabled()" +bluetoothAdapterPhoneClient.isEnabled());
+
+                    }
+
+
+                    // TODO: 02.08.2024
+                    Log.d(this.getClass().getName(), "\n" + " class " +
+                            Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                            " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                            " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" + "\n" +
+                            " bluetoothAdapterPhoneClient.isEnabled() " +bluetoothAdapterPhoneClient+
+                            " bbluetoothAdapterPhoneClient.isEnabled()" +bluetoothAdapterPhoneClient.isEnabled());
+                }else {
+                    dontDevice(materialButtonClick);
+                    // TODO: 02.08.2024
+                    Log.d(this.getClass().getName(), "\n" + " class " +
+                            Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                            " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                            " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" + "\n" +
+                            " bluetoothAdapterPhoneClient.isEnabled() " +bluetoothAdapterPhoneClient+
+                            " bbluetoothAdapterPhoneClient.isEnabled()" +bluetoothAdapterPhoneClient.isEnabled());
+                }
+            }else {
+                //TODO
+                dontDevice(materialButtonClick);
+                // TODO: 02.08.2024
+                Log.d(this.getClass().getName(), "\n" + " class " +
+                        Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                        " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                        " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" + "\n" +
+                        " bbluetoothAdapterPhoneClient.isEnabled()" +bluetoothAdapterPhoneClient.isEnabled() );
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() + " Линия  :"
+                    + Thread.currentThread().getStackTrace()[2].getLineNumber());
+            ContentValues valuesЗаписываемОшибки = new ContentValues();
+            valuesЗаписываемОшибки.put("Error", e.toString().toLowerCase());
+            valuesЗаписываемОшибки.put("Klass", this.getClass().getName());
+            valuesЗаписываемОшибки.put("Metod", Thread.currentThread().getStackTrace()[2].getMethodName());
+            valuesЗаписываемОшибки.put("LineError", Thread.currentThread().getStackTrace()[2].getLineNumber());
+            final Object ТекущаяВерсияПрограммы = version;
+            Integer ЛокальнаяВерсияПОСравнение = Integer.parseInt(ТекущаяВерсияПрограммы.toString());
+            valuesЗаписываемОшибки.put("whose_error", ЛокальнаяВерсияПОСравнение);
+            new SubClassErrors(getContext()).МетодЗаписиОшибок(valuesЗаписываемОшибки);
+        }
+
+
+        }
 
 
 
 
+        private void dontDevice(@NonNull MaterialButton materialButtonClick ) {
+            try{
+                Snackbar snackbar = Snackbar
+                        .make(materialButtonClick, "Не включен Bluetooth !!! ", Snackbar.LENGTH_LONG);
+                snackbar.show();
+                // TODO: 03.09.2024
+                ///  disposableClick.get().dispose();
+
+                Log.d(this.getClass().getName(),  "  RxView.clicks " +Thread.currentThread().getStackTrace()[2].getMethodName()
+                        + " время " +new Date().toLocaleString()    );
+
+            } catch (Exception e) {
+                e.printStackTrace();
+                Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() + " Линия  :"
+                        + Thread.currentThread().getStackTrace()[2].getLineNumber());
+                ContentValues valuesЗаписываемОшибки = new ContentValues();
+                valuesЗаписываемОшибки.put("Error", e.toString().toLowerCase());
+                valuesЗаписываемОшибки.put("Klass", this.getClass().getName());
+                valuesЗаписываемОшибки.put("Metod", Thread.currentThread().getStackTrace()[2].getMethodName());
+                valuesЗаписываемОшибки.put("LineError", Thread.currentThread().getStackTrace()[2].getLineNumber());
+                final Object ТекущаяВерсияПрограммы = version;
+                Integer ЛокальнаяВерсияПОСравнение = Integer.parseInt(ТекущаяВерсияПрограммы.toString());
+                valuesЗаписываемОшибки.put("whose_error", ЛокальнаяВерсияПОСравнение);
+                new SubClassErrors(getContext()).МетодЗаписиОшибок(valuesЗаписываемОшибки);
+            }
+        }
 
 
         private     void startingWorkerPingCommectionServerGatt(@NonNull  Bundle  searchview_maclistdeviceserverbungle) {
