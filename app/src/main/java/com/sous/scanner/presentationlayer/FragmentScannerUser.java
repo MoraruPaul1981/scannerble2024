@@ -196,6 +196,12 @@ public class FragmentScannerUser extends Fragment {
             // TODO: 07.08.2024 Востанавливаем статус последниуспешый статус ИМЯ Время
          businessloginOriginallogic.materialtextViewGetLastStateBremy(preferences,materialtextview_last_bremy,messageClient);
 
+            // TODO: 07.08.2024 Востанавливаем статус последниуспешый статус ФИО востановливаем во SearchVIew
+         businessloginOriginallogic.materialtextViewGetLastStateSearchView(preferences,searchview_maclistdeviceserver,messageClient);
+
+
+
+
 
 
 

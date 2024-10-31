@@ -106,8 +106,8 @@ public class BusinessloginforfragmentScanner {
             // TODO: 07.08.2024  перезагружаем внешний вид экрана или точнее компонта Последний Статус
             String getBremy =preferences.getString("getBremy","");
             String getAction =preferences.getString("getAction","");
-            String getName =preferences.getString("geMAc","");
-            String geMAc =preferences.getString("getName","");
+            String geMAc =preferences.getString("geMAc","");
+            String  getName  =preferences.getString("getName","");
             // TODO: 07.08.2024
             message.getTarget().postDelayed(()->{
                 materialButtonEventSameOffice.setText(toProccessSuccess);
@@ -352,12 +352,14 @@ public class BusinessloginforfragmentScanner {
         return  bundle;
     }
 
-    public String updateUIClickBottonControlgetMac(@NonNull  MaterialTextView materialtextview_last_state){
+    public String updateUIClickBottonControlgetMac(@NonNull  MaterialTextView searchview_maclistdeviceserver){
      String getMacForClick=new String();
         try{
             // TODO: 16.05.2023 Из Выбраного Элемента Получаеним ДАнные
-        Bundle bundleMAc=(Bundle)    materialtextview_last_state.getTag();
-            getMacForClick    = bundleMAc.getString("geMAc","").trim();
+          Bundle bundleMAc=(Bundle)    searchview_maclistdeviceserver.getTag();
+
+            getMacForClick    = bundleMAc.getString("getNameFromMAc","").trim();
+
             // TODO: 07.08.2024  перезагружаем внешний вид экрана или точнее компонта Последний Статус
             Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                     " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +

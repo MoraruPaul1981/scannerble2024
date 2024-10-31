@@ -42,6 +42,8 @@ import com.sous.scanner.businesslayer.Errors.SubClassErrors;
 import com.sous.scanner.datalayer.bl_DataBase.BusinesslogicDatabase;
 
 import java.util.Date;
+import java.util.concurrent.atomic.AtomicInteger;
+import java.util.concurrent.atomic.AtomicLong;
 import java.util.concurrent.atomic.AtomicReference;
 
 public class BusinesslogicSelectMacAdressGattServer {
@@ -118,7 +120,7 @@ public class BusinesslogicSelectMacAdressGattServer {
 
                     // TODO: 19.08.2024  поулчение жданны
                        businesslogicDatabase=new BusinesslogicDatabase(context,version);
-                     cursor=   businesslogicDatabase.getingCursor("SELECT * FROM listMacMastersSous ");
+                     cursor=   businesslogicDatabase.getingCursor("SELECT  DISTINCT * FROM   listMacMastersSous  ORDER BY uuid DESC ");//SELECT * FROM listMacMastersSous
 
                     Log.d(getContext().getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                             " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
@@ -261,6 +263,8 @@ public class BusinesslogicSelectMacAdressGattServer {
                 ListViewForSearchViewGattMacList.setForegroundGravity(Gravity.CENTER);
                 ListViewForSearchViewGattMacList.setSelection(0);
                 ListViewForSearchViewGattMacList.startAnimation(animation);
+                    ListViewForSearchViewGattMacList.areFooterDividersEnabled();
+                    ListViewForSearchViewGattMacList.areHeaderDividersEnabled();
                 ListViewForSearchViewGattMacList.refreshDrawableState();
                 ListViewForSearchViewGattMacList.requestLayout();
                 Log.d(context.getClass().getName(), "\n"
@@ -391,7 +395,7 @@ public class BusinesslogicSelectMacAdressGattServer {
                         if(cardViewMAcs!=null){
                             // TODO: 20.08.2024
                             MaterialTextView materialTextVieMac=(MaterialTextView) cardViewMAcs.findViewById( R.id.id_mac);
-                            String getName= null;
+                            String getNameFromMAc= null;
                             String geMAc= null;
                             if (materialTextVieMac!=null) {
                                 materialTextVieMac.startAnimation(animation);
@@ -399,16 +403,16 @@ public class BusinesslogicSelectMacAdressGattServer {
                                 materialTextVieMac.startAnimation(animationvibr1);
                                 // TODO: 16.05.2023 Из Выбраного Элемента Получаеним ДАнные
                                 Integer getId=      bundlePepoles.getInt("getId",0);
-                                getName = bundlePepoles.getString("getName","").trim();
+                                getNameFromMAc = bundlePepoles.getString("getNameFromMAc","").trim();
                                 geMAc = bundlePepoles.getString("geMAc","").trim();
                                 Long getUUID =   bundlePepoles.getLong("getUUID",0l);
 
                                 // TODO: 30.10.2024
-                                getName=    getcCapitalize(getName);
+                                getNameFromMAc=    getcCapitalize(getNameFromMAc);
 
                                 // TODO: 19.08.2024
                                 searchview_maclistdeviceserver.setTag(bundlePepoles);
-                                searchview_maclistdeviceserver.setText(getName);
+                                searchview_maclistdeviceserver.setText(getNameFromMAc);
                                 searchview_maclistdeviceserver.setInputType(InputType.TYPE_TEXT_FLAG_CAP_SENTENCES);
                                 // TODO: 15.05.2023 ЗАПОЛЕНИЕ ДАННЫМИ КЛИК
                                 searchview_maclistdeviceserver.startAnimation(animationvibr1);
@@ -426,7 +430,7 @@ public class BusinesslogicSelectMacAdressGattServer {
                                             " Класс в процессе... " +
                                            context.getClass().getName()+"\n"+
                                             " метод в процессе... " + Thread.currentThread().getStackTrace()[2].getMethodName()+
-                                            " geMAc " +geMAc+ " getName " +getName);
+                                            " geMAc " +geMAc+ " getNameFromMAc " +getNameFromMAc);
                         }
                     } catch (Exception e) {
                         e.printStackTrace();
@@ -478,6 +482,8 @@ public class BusinesslogicSelectMacAdressGattServer {
     private SimpleCursorAdapter fillingwhenDataisavailable() {
         ///TODO ГЛАВНЫЙ АДАПТЕР чата
         SimpleCursorAdapter simpleCursorForSearchView=null;
+
+        AtomicLong  atomicMacAdressForGattServerPing=new AtomicLong();
         try{
             simpleCursorForSearchView =
                     new SimpleCursorAdapter(context,
@@ -500,14 +506,14 @@ public class BusinesslogicSelectMacAdressGattServer {
                                     MaterialTextView getFioForDevice=(MaterialTextView) childCardViewMAcAndAdresss.findViewById( R.id.id_mac);
                                     MaterialTextView getMacForDevice=(MaterialTextView) childCardViewMAcAndAdresss.findViewById(R.id.id_macsub);
                                     // TODO: 13.12.2022  производим состыковку
-                                   Integer   getId = cursor.getInt(cursor.getColumnIndex("_id"));
-                                    if (getId>0) {
+
                                         Long UUIDGetFilter = cursor.getLong(cursor.getColumnIndex("uuid"));
-                                        String  getName = cursor.getString(cursor.getColumnIndex("name")).trim();
+                                        Integer getId = cursor.getInt(cursor.getColumnIndex("_id"));
+                                        String  getNameFromMAc = cursor.getString(cursor.getColumnIndex("name")).trim();
                                         String  geMAc = cursor.getString(cursor.getColumnIndex("macadress")).trim();
                                         Bundle bundle=new Bundle();
                                         bundle.putInt("getId",getId);
-                                        bundle.putString("getName",getName);
+                                        bundle.putString("getNameFromMAc",getNameFromMAc);
                                         bundle.putString("geMAc",geMAc);
                                         bundle.putLong("getUUID",UUIDGetFilter);
                                         // TODO: 16.05.2023 Элемент Заполяем данными  TAG
@@ -515,13 +521,13 @@ public class BusinesslogicSelectMacAdressGattServer {
                                         // TODO: 31.10.2024
                                         getMacForDevice.setTag(bundle);
                                         // TODO: 20.01.2022
-                                        Log.d(this.getClass().getName()," getName "+getName + " getId " +getId  + " UUIDGetFilter " +UUIDGetFilter+ " bundle "+bundle);
-                                        boolean ДлинаСтрокивСпиноре = getName.length() >40;
+                                        Log.d(this.getClass().getName()," getNameFromMAc "+getNameFromMAc + " getId " +getId  + " UUIDGetFilter " +UUIDGetFilter+ " bundle "+bundle);
+                                        boolean ДлинаСтрокивСпиноре = getNameFromMAc.length() >40;
                                         if (ДлинаСтрокивСпиноре==true) {
-                                            StringBuffer sb = new StringBuffer(getName);
+                                            StringBuffer sb = new StringBuffer(getNameFromMAc);
                                             sb.insert(40, System.lineSeparator());
-                                            getName = sb.toString();
-                                            Log.d(context.getClass().getName(), " getName " + "--" + getName);/////
+                                            getNameFromMAc = sb.toString();
+                                            Log.d(context.getClass().getName(), " getNameFromMAc " + "--" + getNameFromMAc);/////
                                         }
                                         // TODO: 02.08.2024
                                         Log.d(this.getClass().getName(), "\n" + " class " +
@@ -531,26 +537,30 @@ public class BusinesslogicSelectMacAdressGattServer {
 
                                         // TODO: 16.05.2023 Элемент Заполяем данными
                                      // TODO: 31.10.2024  set Name
-                                        getFioForDevice.setText(getName);
+                                        getFioForDevice.setText(getNameFromMAc);
                                         getFioForDevice.startAnimation(animationvibr1);
                                         getFioForDevice.requestLayout();
 
                                         // TODO: 31.10.2024  set Mac
                                         getMacForDevice.setText(geMAc);
-
-                                        getFioForDevice.requestLayout();
                                         getMacForDevice.requestLayout();
 
                                         Log.d(context.getClass().getName(), "\n"
                                                 + " время: " + new Date() + "\n+" +
                                                 " Класс в процессе... " + this.getClass().getName() + "\n" +
                                                 " метод в процессе... " + Thread.currentThread().getStackTrace()[2].getMethodName() +
-                                                "getName " +getName +  " geMAc " +geMAc );
-                                    }
+                                                "getNameFromMAc " +getNameFromMAc +  " geMAc " +geMAc );
+
+                                        // TODO: 31.10.2024
+
+                                        // TODO: 31.10.2024
                                     Log.d(context.getClass().getName(), "\n"
                                             + " время: " + new Date() + "\n+" +
                                             " Класс в процессе... " + this.getClass().getName() + "\n" +
                                             " метод в процессе... " + Thread.currentThread().getStackTrace()[2].getMethodName() );
+                                    return true;
+
+
                                     // TODO: 13.12.2022 филь
                                 } catch (Exception e) {
                                     e.printStackTrace();
@@ -567,10 +577,7 @@ public class BusinesslogicSelectMacAdressGattServer {
                                     new SubClassErrors(context).МетодЗаписиОшибок(valuesЗаписываемОшибки);
 
                                 }
-                                return true;
-                            } else {
-                                Log.d(this.getClass().getName()," position");
-                                return false;
+
                             }
                     }
                         Log.d(context.getClass().getName(), "\n"
@@ -600,9 +607,7 @@ public class BusinesslogicSelectMacAdressGattServer {
             };
              simpleCursorForSearchView.setViewBinder(БиндингДляПоиск);
             simpleCursorForSearchView.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-            simpleCursorForSearchView.notifyDataSetChanged();
             ListViewForSearchViewGattMacList.setAdapter(simpleCursorForSearchView);
-            ListViewForSearchViewGattMacList.requestLayout();
         } catch (Exception e) {
             e.printStackTrace();
             Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() + " Линия  :"

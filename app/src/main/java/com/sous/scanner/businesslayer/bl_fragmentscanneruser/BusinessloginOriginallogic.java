@@ -59,21 +59,21 @@ public class BusinessloginOriginallogic {
                                                  @NonNull MaterialTextView materialtextview_last_state,
                                                  @NonNull Message messageClient) {
         try{
-            String getName=    preferences.getString("getName","");
-            if (getName.length()>0) {
+            String geMAc=    preferences.getString("geMAc","");
+            if (geMAc.length()>0) {
 
                 materialtextview_last_state.animate().rotationX(+20l);
                 messageClient.getTarget() .postDelayed(()-> {
                     materialtextview_last_state.animate().rotationX(0);
 
-                    materialtextview_last_state.setText(getName);
+                    materialtextview_last_state.setText(geMAc);
                     materialtextview_last_state.requestLayout();
                     materialtextview_last_state.refreshDrawableState();
                 },200);
 
                 Log.d(context.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                         " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                        " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n");
+                        " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"+ " geMAc " +geMAc);
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -111,7 +111,7 @@ public class BusinessloginOriginallogic {
 
                 Log.d(context.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                         " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                        " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n");
+                        " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" + " getBremy  " +getBremy);
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -129,6 +129,48 @@ public class BusinessloginOriginallogic {
 
         }
     }
+
+
+
+    public void materialtextViewGetLastStateSearchView(@NonNull SharedPreferences preferences,
+                                                  @NonNull MaterialTextView searchview_maclistdeviceserver,
+                                                  @NonNull Message messageClient) {
+        try{
+            String FioFromgeMAc=    preferences.getString("FioFromgeMAc","");
+            if (FioFromgeMAc.length()>0) {
+
+                searchview_maclistdeviceserver.animate().rotationX(+20l);
+                messageClient.getTarget() .postDelayed(()-> {
+                    searchview_maclistdeviceserver.animate().rotationX(0);
+
+                    searchview_maclistdeviceserver.setText(FioFromgeMAc);
+                    searchview_maclistdeviceserver.requestLayout();
+                    searchview_maclistdeviceserver.refreshDrawableState();
+                },200);
+
+                Log.d(context.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                        " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                        " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" +  " FioFromgeMAc " +FioFromgeMAc);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() + " Линия  :"
+                    + Thread.currentThread().getStackTrace()[2].getLineNumber());
+            ContentValues valuesЗаписываемОшибки = new ContentValues();
+            valuesЗаписываемОшибки.put("Error", e.toString().toLowerCase());
+            valuesЗаписываемОшибки.put("Klass", this.getClass().getName());
+            valuesЗаписываемОшибки.put("Metod", Thread.currentThread().getStackTrace()[2].getMethodName());
+            valuesЗаписываемОшибки.put("LineError", Thread.currentThread().getStackTrace()[2].getLineNumber());
+            final Object ТекущаяВерсияПрограммы = version;
+            Integer ЛокальнаяВерсияПОСравнение = Integer.parseInt(ТекущаяВерсияПрограммы.toString());
+            valuesЗаписываемОшибки.put("whose_error", ЛокальнаяВерсияПОСравнение);
+            new SubClassErrors(context).МетодЗаписиОшибок(valuesЗаписываемОшибки);
+
+        }
+    }
+
+
+
 
 
     public void selectMacaddressviaclick(@NonNull MaterialTextView searchview_maclistdeviceserver,
