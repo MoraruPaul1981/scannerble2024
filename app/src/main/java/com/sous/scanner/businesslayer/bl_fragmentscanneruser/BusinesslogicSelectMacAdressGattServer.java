@@ -520,6 +520,8 @@ public class BusinesslogicSelectMacAdressGattServer {
                                         getFioForDevice.setTag(bundle);
                                         // TODO: 31.10.2024
                                         getMacForDevice.setTag(bundle);
+                                        childCardViewMAcAndAdresss.setTag(bundle);
+                                        searchview_maclistdeviceserver.setTag(bundle);
                                         // TODO: 20.01.2022
                                         Log.d(this.getClass().getName()," getNameFromMAc "+getNameFromMAc + " getId " +getId  + " UUIDGetFilter " +UUIDGetFilter+ " bundle "+bundle);
                                         boolean ДлинаСтрокивСпиноре = getNameFromMAc.length() >40;

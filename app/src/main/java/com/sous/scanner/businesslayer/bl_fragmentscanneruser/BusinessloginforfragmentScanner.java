@@ -447,12 +447,16 @@ public class BusinessloginforfragmentScanner {
         return  bundle;
     }
 
-    public String updateUIClickBottonControlgetMac(@NonNull  MaterialTextView materialtextview_last_state,@NonNull  MaterialTextView searchview_maclistdeviceserver ){
+    public String updateUIClickBottonControlgetMac( @NonNull  MaterialTextView searchview_maclistdeviceserver ){
      String getMacForClick=new String();
         try{
             if(searchview_maclistdeviceserver.getText().toString().length()>3){
+                // TODO: 31.10.2024
+             Bundle bundlesearchview=  (Bundle) searchview_maclistdeviceserver.getTag();
                 // TODO: 16.05.2023 Из Выбраного Элемента Получаеним ДАнные
-                getMacForClick  =  materialtextview_last_state.getText().toString();
+                if (bundlesearchview!=null) {
+                    getMacForClick  =  bundlesearchview.getString("geMAc");
+                }
 
             }
             // TODO: 07.08.2024  перезагружаем внешний вид экрана или точнее компонта Последний Статус

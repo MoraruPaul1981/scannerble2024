@@ -272,24 +272,6 @@ public class Businesslogic_ScaningClientWorker {
                     int DurectionTimeGatt=      getRandomNumberUsingMilisecond(150,500);
                     // TODO: 28.10.2024 ЗАпускаем главный Цикл Пинга МАС-адресов мастеров
                      disposableMainMacPingAddress=      Observable.range(      1,4)
-                             .filter(new Predicate<Integer>() {
-                                 @Override
-                                 public boolean test(Integer integer) throws Throwable {
-                                     if(getMacGatt.length()>0){
-                                         // TODO: 02.08.2024
-                                         Log.d(this.getClass().getName(), "\n" + " class " +
-                                                 Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
-                                                 " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                                                 " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" + "\n"
-                                                 +  " getMacGatt "+ getMacGatt+" getMacGatt.length()" +getMacGatt.length());
-                                         return true;
-
-                                     }else{
-                                         return false;
-                                     }
-
-                                 }
-                             })
                             .zipWith( Observable.just("")
                                     .delay(DurectionTimeGatt,TimeUnit.MILLISECONDS)
                                     .repeatWhen(repeat->repeat.delay(11,TimeUnit.SECONDS)), (item, interval) -> item)

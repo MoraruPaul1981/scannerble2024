@@ -1026,7 +1026,7 @@ public class FragmentScannerUser extends Fragment {
                             new BusinessloginforfragmentScanner(getContext(),version,preferences);
                     // TODO: 30.08.2024
 
-                    String   MacAdresss=       businessloginforfragmentScanner.updateUIClickBottonControlgetMac(materialtextview_last_state,searchview_maclistdeviceserver);
+                    String   MacAdresss=       businessloginforfragmentScanner.updateUIClickBottonControlgetMac( searchview_maclistdeviceserver);
                     MacAdresss=       Optional.ofNullable(MacAdresss).map(s->s).orElse("");
                     /// Bundle   searchview_bungle=    (Bundle)    searchview_maclistdeviceserver.getTag();
 
