@@ -101,7 +101,7 @@
                 android:layout_marginTop="2dp"
                 android:gravity="center"
                 android:inputType="textCapSentences"
-                android:padding="2dp"
+                android:padding="5dp"
                 android:ellipsize="end"
                 android:drawableLeft="@drawable/icon_ble_mac_list"
                 android:background="@drawable/style_for_newstypespinners_ietm6"
@@ -135,39 +135,20 @@
                 android:orientation="horizontal">
 
 
-                <com.google.android.material.textview.MaterialTextView
-                    android:id="@+id/id_materialtextview_last_state_icon"
-                    android:layout_width="50dp"
-                    android:layout_height="25dp"
-                    android:layout_alignParentLeft ="true"
 
-
-                    android:drawableLeft="@drawable/icon_bluttoh_client_pingdevice"
-                    android:paddingLeft="30dip"
-                    android:paddingRight="26dip"
-
-
-                    android:gravity="center"
-                    android:layout_margin="5dp"
-                    android:padding="3dp"
-                    android:textColor="#7F8080"
-                    android:textColorHint="#7F8080"
-                    android:textSize="17sp"
-                    android:textStyle="bold"
-                    android:tooltipText="Последний статус"
-                    android:translationZ="50dp" />
 
                 <com.google.android.material.textview.MaterialTextView
                     android:id="@+id/id_materialtextview_last_state"
                     android:layout_width="250dp"
-                    android:layout_height="25dp"
+                    android:layout_height="28dp"
                     android:gravity="center"
+                    android:drawableLeft="@drawable/icon_bluttoh_client_pingdevice"
                     android:layout_centerHorizontal="true"
                     android:ellipsize="end"
                     android:drawablePadding="10dp"
                     android:hint="девайс"
+                    android:padding="5dp"
                     android:layout_margin="5dp"
-                    android:padding="1dp"
                     android:textColor="#7F8080"
                     android:textColorHint="#7F8080"
                     android:textSize="15sp"
@@ -197,46 +178,27 @@
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="20dp"
                 android:layout_marginStart="20dp"
-                android:layout_marginBottom="2dp"
+                android:layout_marginBottom="5dp"
                 android:layout_marginTop="2dp"
                 android:layout_gravity="center_horizontal|center_vertical"
                 android:orientation="horizontal">
 
 
-                <com.google.android.material.textview.MaterialTextView
-                    android:id="@+id/id_materialtextview_last_bremy_icon"
-                    android:layout_width="52dp"
-                    android:layout_height="25dp"
-                    android:layout_alignParentLeft ="true"
-                    android:ellipsize="end"
 
-                    android:drawableLeft="@drawable/icon_bluettoh_client_bremy"
-                    android:paddingLeft="30dip"
-                    android:paddingRight="26dip"
-
-
-                    android:gravity="center"
-                    android:layout_margin="5dp"
-                    android:padding="3dp"
-                    android:textColor="#7F8080"
-                    android:textColorHint="#7F8080"
-                    android:textSize="17sp"
-                    android:textStyle="bold"
-                    android:tooltipText="Последний статус"
-                    android:translationZ="50dp" />
 
                 <com.google.android.material.textview.MaterialTextView
                     android:id="@+id/id_materialtextview_last_bremy"
                     android:layout_width="250dp"
-                    android:layout_height="25dp"
+                    android:layout_height="28dp"
                     android:gravity="center"
                     android:layout_alignParentLeft ="true"
                     android:layout_centerHorizontal="true"
                     android:ellipsize="end"
+                    android:drawableLeft="@drawable/icon_bluettoh_client_bremy"
                     android:drawablePadding="10dp"
                     android:hint="время"
+                    android:padding="5dp"
                     android:layout_margin="5dp"
-                    android:padding="1dp"
                     android:textColor="#7F8080"
                     android:textColorHint="#7F8080"
                     android:textSize="15sp"
