@@ -22,6 +22,8 @@ import androidx.core.app.NotificationCompat;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.google.firebase.crashlytics.buildtools.reloc.com.google.common.eventbus.EventBus;
+import com.google.firebase.crashlytics.buildtools.reloc.com.google.common.util.concurrent.AtomicDouble;
 import com.scanner.datasync.businesslayer.Errors.SubClassErrors;
 
 import com.scanner.datasync.businesslayer.bl_DataSyncService.BinesslogicDataSync;
@@ -156,8 +158,6 @@ public class DataSyncService extends IntentService {
         super.onDestroy();
         try {
             // Do something
-            stopForeground(true);
-
         Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                 " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
                 " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n");
@@ -273,16 +273,15 @@ public class DataSyncService extends IntentService {
 
         }).doOnComplete(()->{
             // TODO: 21.08.2024
-
-
-            // TODO: 22.08.2024  повсе всего Работы Службы Синхронихации запускаем Фрагмент Сканера   , Самая последная Операция
-            binesslogicDataSync.callBackBroadcastManagerDataSyncService(version);
-            // TODO: 22.08.2024
-
             Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                     " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n+ " +
                     " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() );
         }).blockingSubscribe();
+            // TODO: 01.11.2024
+            // TODO: 21.08.2024
+            Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                    " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n+ " +
+                    " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() );
 
     } catch (Exception e) {
         e.printStackTrace();
@@ -312,6 +311,7 @@ public class DataSyncService extends IntentService {
         notificationManager.createNotificationChannel(channel);
         return channelId;
     }
+
 
 
 

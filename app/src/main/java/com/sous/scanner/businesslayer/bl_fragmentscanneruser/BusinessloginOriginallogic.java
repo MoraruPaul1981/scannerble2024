@@ -14,7 +14,6 @@ import android.view.animation.Animation;
 import com.google.android.material.textview.MaterialTextView;
 import com.jakewharton.rxbinding4.view.RxView;
 import com.sous.scanner.businesslayer.Errors.SubClassErrors;
-import com.sous.scanner.businesslayer.bl_LocalBroadcastManagers.BussenloginSaredPreferense;
 
 import java.util.Date;
 import java.util.concurrent.TimeUnit;
@@ -56,9 +55,9 @@ public class BusinessloginOriginallogic {
     }
 
 
-    public void materialtextViewGetLastStateName(@NonNull SharedPreferences preferences,
-                                                 @NonNull MaterialTextView materialtextview_last_state,
-                                                 @NonNull Message messageClient) {
+    public void materialtextViewGetLastStateMac(@NonNull SharedPreferences preferences,
+                                                @NonNull MaterialTextView materialtextview_last_state,
+                                                @NonNull Message messageClient) {
         try{
             String geMAc=    preferences.getString("geMAc","");
             if (geMAc.length()>0) {
@@ -134,6 +133,7 @@ public class BusinessloginOriginallogic {
                                                   @NonNull Message messageClient) {
         try{
             String  getNameFromMAc=    preferences.getString("getNameFromMAc","");
+            String geMAc=    preferences.getString("geMAc","");
             if ( getNameFromMAc.length()>0) {
 
                 materialtextview_last_get_currentuser.animate().rotationX(+20l);
@@ -141,6 +141,7 @@ public class BusinessloginOriginallogic {
                     materialtextview_last_get_currentuser.animate().rotationX(0);
 
                     materialtextview_last_get_currentuser.setText( getNameFromMAc);
+                    materialtextview_last_get_currentuser.setTooltipText( geMAc);
                     materialtextview_last_get_currentuser.requestLayout();
                 },200);
 

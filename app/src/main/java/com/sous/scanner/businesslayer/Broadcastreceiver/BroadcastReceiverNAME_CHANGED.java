@@ -11,14 +11,9 @@ import android.content.pm.PackageInfo;
 import android.util.Log;
 
 import com.sous.scanner.businesslayer.Errors.SubClassErrors;
-import com.sous.scanner.businesslayer.bl_BroadcastReciver.Businesslogic_GattClinetSuccessNAMECHANGED;
 import com.sous.scanner.businesslayer.bl_BroadcastReciver.Businesslogic_GattReflection;
-import com.sous.scanner.businesslayer.bl_forServices.Businesslogic_JOBServive;
 
 import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
-import java.util.Optional;
-import java.util.Random;
 import java.util.concurrent.atomic.AtomicReference;
 
 public class BroadcastReceiverNAME_CHANGED extends BroadcastReceiver {

@@ -15,17 +15,15 @@ import androidx.preference.PreferenceManager;
 
 import com.sous.scanner.businesslayer.Errors.SubClassErrors;
 import com.sous.scanner.businesslayer.bl_LocalBroadcastManagers.BussenloginSaredPreferense;
-import com.sous.scanner.businesslayer.bl_forServices.Businesslogic_JOBServive;
+import com.sous.scanner.businesslayer.bl_forServices.BusinesslogicStartingService;
 
 import org.jetbrains.annotations.NotNull;
 import java.util.Date;
 import java.util.concurrent.atomic.AtomicReference;
 
 import javax.inject.Inject;
-import javax.inject.Singleton;
 
 import dagger.Module;
-import dagger.Provides;
 import dagger.hilt.InstallIn;
 import dagger.hilt.android.qualifiers.ApplicationContext;
 import dagger.hilt.components.SingletonComponent;
@@ -114,7 +112,7 @@ public class CREATE_DATABASEScanner extends SQLiteOpenHelper{ ///SQLiteOpenHelpe
 
 // TODO: 04.09.2024 on adversing
 
-            Businesslogic_JOBServive businesslogicJobServive=new Businesslogic_JOBServive(context);
+            BusinesslogicStartingService businesslogicJobServive=new BusinesslogicStartingService(context);
             businesslogicJobServive.startingServiceAdvertising( );
 
 

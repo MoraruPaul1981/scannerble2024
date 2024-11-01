@@ -285,6 +285,7 @@ public class BinesslogincJakson {
     // TODO: 28.08.2024
         return getStatementResult.get();
     }
+// TODO: 01.11.2024
 
 
 // TODO: 28.08.2024 END CLASS

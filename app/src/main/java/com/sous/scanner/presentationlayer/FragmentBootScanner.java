@@ -22,7 +22,7 @@ import com.google.android.material.tabs.TabLayout;
 import com.sous.scanner.businesslayer.Errors.SubClassErrors;
 import com.sous.scanner.R;
 import com.sous.scanner.businesslayer.bl_EvenBus.EventB_Clent;
-import com.sous.scanner.businesslayer.bl_forServices.Businesslogic_JOBServive;
+import com.sous.scanner.businesslayer.bl_forServices.BusinesslogicStartingService;
 import com.sous.scanner.businesslayer.bl_fragmentbootscanner.BinesslogicFragBootScanner;
 
 import org.greenrobot.eventbus.EventBus;
@@ -48,7 +48,7 @@ public class FragmentBootScanner extends Fragment {
     @Inject
     BinesslogicFragBootScanner binesslogicFragBootScanner;
 
-   private Businesslogic_JOBServive businesslogicJobServive;
+   private BusinesslogicStartingService businesslogicJobServive;
 
     @SuppressLint("RestrictedApi")
     @Override
@@ -76,6 +76,7 @@ public class FragmentBootScanner extends Fragment {
         }
     }
 
+    @SuppressLint("SuspiciousIndentation")
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -85,13 +86,12 @@ public class FragmentBootScanner extends Fragment {
             fragmentManager = getActivity().getSupportFragmentManager();
 
             // TODO: 05.08.2024
-            businesslogicJobServive=new Businesslogic_JOBServive(getContext());
+            businesslogicJobServive=new BusinesslogicStartingService(getContext());
 
             me =((MainActivityNewScanner) getActivity()).handlerScannerGattClient;
 
 
-                // TODO: 22.08.2024  заппускаем сразу вде слуюты синхрониации и скан
-                welaunchtwoservicessyncandscan();
+
 
                 Log.d(getContext().getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                         " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
@@ -156,7 +156,7 @@ public class FragmentBootScanner extends Fragment {
         }
 
             // TODO: 22.08.2024  заппускаем сразу вде слуюты синхрониации и скан
-         //   welaunchtwoservicessyncandscan();
+            getStartingServicedataSync();
 
             Log.d(getContext().getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                 " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
@@ -195,10 +195,9 @@ public class FragmentBootScanner extends Fragment {
 
 
 
-    private void welaunchtwoservicessyncandscan() {
+    private void getStartingServicedataSync() {
         try{
-                // TODO: 22.08.2024  запускаем служюбу синхрониазции которая работает до службв Сканера Bluetooth
-                binesslogicFragBootScanner.getLocalBroadcastManagerDataSyncService(    version );
+
             // TODO: 22.08.2024
                 binesslogicFragBootScanner.startingServicedataSync(     version );
             // TODO: 22.08.2024

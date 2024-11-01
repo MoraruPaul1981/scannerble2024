@@ -44,12 +44,11 @@ import com.jakewharton.rxbinding4.view.RxView;
 import com.sous.scanner.businesslayer.Errors.SubClassErrors;
 import com.sous.scanner.R;
 import com.sous.scanner.businesslayer.bl_EvenBus.EventLocalBroadcastManager;
-import com.sous.scanner.businesslayer.bl_forServices.Businesslogic_JOBServive;
+import com.sous.scanner.businesslayer.bl_forServices.BusinesslogicStartingService;
 import com.sous.scanner.businesslayer.bl_forServices.BusinessoginEnableBluetoothAdapter;
 import com.sous.scanner.businesslayer.bl_fragmentscanneruser.BusinessloginOriginallogic;
 import com.sous.scanner.businesslayer.bl_fragmentscanneruser.BusinessloginVibrator;
 import com.sous.scanner.businesslayer.bl_fragmentscanneruser.BusinessloginforfragmentScanner;
-import com.sous.scanner.presentationlayer.interfaces.FragmentScannerUserIntarface;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -89,7 +88,7 @@ public class FragmentScannerUser extends Fragment   {
     private SharedPreferences preferences;
 
     private  LifecycleOwner lifecycleOwner ;
-    private  Businesslogic_JOBServive businesslogicJobServive;
+    private BusinesslogicStartingService businesslogicJobServive;
     private Animation   animation;
     private       RecyclerView     recyclerview_gatt_main;
 
@@ -118,7 +117,7 @@ public class FragmentScannerUser extends Fragment   {
             // TODO: 05.08.2024
             МетодHandler();
             settingGtLifeCyrcyleMutable();
-            businesslogicJobServive=new Businesslogic_JOBServive(getContext());
+            businesslogicJobServive=new BusinesslogicStartingService(getContext());
 
 
 
@@ -221,7 +220,7 @@ public class FragmentScannerUser extends Fragment   {
 
 
             // TODO: 07.08.2024 Востанавливаем статус последниуспешый статус ИМЯ ДЕВАЙС
-           businessloginOriginallogic.materialtextViewGetLastStateName(preferences,materialtextview_last_state,messageClient);
+           businessloginOriginallogic.materialtextViewGetLastStateMac(preferences,materialtextview_last_state,messageClient);
 
             // TODO: 07.08.2024 Востанавливаем статус последниуспешый статус ИМЯ Время
          businessloginOriginallogic.materialtextViewGetLastStateBremy(preferences,materialtextview_last_bremy,messageClient);
@@ -1189,7 +1188,7 @@ public class FragmentScannerUser extends Fragment   {
             // TODO: 16.07.2024  startting Fragment Scannig
             try {
                     // TODO: 20.08.2024
-                    businesslogicJobServive.startingServiceSimpleScan("userUIlaunchingfrombackground",MacAdresss);
+                    businesslogicJobServive.startingServiceSimpleScan( MacAdresss);
 
 
                 Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +

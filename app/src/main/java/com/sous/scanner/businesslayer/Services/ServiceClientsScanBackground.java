@@ -154,51 +154,12 @@ private Businesslogic_ScaningClientWorker businesslogicScaningClientWorker;
 // TODO: 24.07.2024 Scan
                 // TODO: 09.08.2024
 
-                // TODO: 24.10.2024  
-                switch (intent.getAction()) {
-                    // TODO: 06.08.2024
-                    case "robotlaunchingfrombackground":
-                        // TODO: 25.07.2024 Бесконечная работа
-                       /// blForServiceScan.launchingSimplebackground(2 );
-
-                        Log.d(getApplicationContext().getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
-                                " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                                " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" + " intent " +intent.getAction());
-                        break;
+            blForServiceScan.launchingСomplexbackground(intent.getExtras() );
 
 
-                    case "userUIlaunchingfrombackground":
-                        // TODO: 25.07.2024 Бесконечная работа
-
-                        blForServiceScan.launchingСomplexbackground(intent.getExtras() );
-
-                        Log.d(getApplicationContext().getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
-                                " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                                " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" + " intent " +intent.getAction());
-                        break;
-
-                    case    "fistlauntfrombackground":
-                        // TODO: 25.07.2024 Бесконечная работа
-
-                        // TODO: 05.08.2024  start Fragment SCANNEer
-                        blForServiceScan.    statyingCallBAckFragmentScaner();
-
-
-                        Log.d(getApplicationContext().getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
-                                " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                                " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" + " intent " +intent.getAction());
-                        break;
-
-
-
-                    default:{
-                        Log.d(getApplicationContext().getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
-                                " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                                " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" + " intent " +intent.getAction());
-                    }
-
-
-            }
+            Log.d(getApplicationContext().getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                    " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                    " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" + " intent " +intent.getAction());
 
 
             Log.d(getApplicationContext().getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +

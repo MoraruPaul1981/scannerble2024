@@ -9,14 +9,13 @@ import android.content.Intent;
 import android.util.Log;
 
 import com.sous.scanner.businesslayer.Errors.SubClassErrors;
-import com.sous.scanner.businesslayer.bl_forServices.Businesslogic_JOBServive;
+import com.sous.scanner.businesslayer.bl_forServices.BusinesslogicStartingService;
 
 import org.jetbrains.annotations.NotNull;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Locale;
-import java.util.Optional;
 import java.util.concurrent.atomic.AtomicReference;
 
 import io.reactivex.rxjava3.annotations.NonNull;
@@ -53,7 +52,7 @@ public class Businesslogic_GattClinetSuccessNAMECHANGED {
                         int rssi = intent.getShortExtra(BluetoothDevice.EXTRA_RSSI,Short.MIN_VALUE);
 
                         // TODO: 31.07.2024
-                        Businesslogic_JOBServive businesslogicJobServive=new Businesslogic_JOBServive(context);
+                        BusinesslogicStartingService businesslogicJobServive=new BusinesslogicStartingService(context);
 
 
 
