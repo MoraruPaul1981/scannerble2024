@@ -376,7 +376,7 @@ public class GetNavigationViews {
 
        // TODO: 03.09.2024  запуск службы синхронизвции work mamanger
 
-            new GetBinfingStartingAsync(context,version).binfingStartingAsync();
+            new GetBinfingStartingAsync(context).binfingStartingAsync();
 
             Log.d(context.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                     " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +

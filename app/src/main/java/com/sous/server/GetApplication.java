@@ -68,11 +68,6 @@ public class GetApplication  extends Application {
               remoteMessaging.initWorkmanager();
 
 
-
-            // TODO: 03.09.2024 запускаем синхрониазцию с ссервром Server GATT
-            new GetBinfingStartingAsync(getApplicationContext(),version).binfingStartingAsync();
-
-
             // TODO: 26.07.2024
             Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                     " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +

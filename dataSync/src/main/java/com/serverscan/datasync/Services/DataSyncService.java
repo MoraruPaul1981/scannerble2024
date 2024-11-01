@@ -140,6 +140,7 @@ public class DataSyncService extends IntentService {
                      " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n");
 
          }).doOnTerminate(()->{
+             // TODO: 01.11.2024
 
              Log.d(getApplicationContext().getClass().getName(), "\n"
                      + " END ASYNC  AND GET() AND POST()  class " + Thread.currentThread().getStackTrace()[2].getClassName() +

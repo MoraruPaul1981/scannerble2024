@@ -2,6 +2,8 @@ package com.sous.server.businesslayer.bl_bindingcsartingaync;
 
 import android.content.ContentValues;
 import android.content.Context;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
 import android.util.Log;
 import android.view.Gravity;
 import android.widget.Toast;
@@ -11,6 +13,16 @@ import com.serverscan.datasync.datasync_businesslayer.bl_network.WorkerStatusNew
 import com.sous.server.businesslayer.Errors.SubClassErrors;
 import com.sous.server.businesslayer.bl_bindingcsartingaync.interfaces.GetBinfingStartingAsyncInterface;
 
+import javax.inject.Inject;
+
+import dagger.Module;
+import dagger.hilt.InstallIn;
+import dagger.hilt.android.qualifiers.ApplicationContext;
+import dagger.hilt.components.SingletonComponent;
+
+
+@Module
+@InstallIn(SingletonComponent.class)
 public class GetBinfingStartingAsync implements GetBinfingStartingAsyncInterface {
 
     Context context;
@@ -18,9 +30,19 @@ public class GetBinfingStartingAsync implements GetBinfingStartingAsyncInterface
     Long version;
 
 
-    public GetBinfingStartingAsync(Context context, Long version) {
-        this.context = context;
-        this.version = version;
+    public @Inject GetBinfingStartingAsync(@ApplicationContext Context hitcontext) {
+        this.context = hitcontext;
+        final PackageInfo pInfo;
+        try {
+            pInfo = context.getPackageManager().getPackageInfo(context.getPackageName(), 0);
+        } catch (PackageManager.NameNotFoundException e) {
+            throw new RuntimeException(e);
+        }
+        version = pInfo.getLongVersionCode();
+        Log.d(context.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n");
+
     }
 
     /**

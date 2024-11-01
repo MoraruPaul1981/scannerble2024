@@ -342,9 +342,6 @@ private  Long version;
                                  " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n");
                          break;
                      case BluetoothAdapter.STATE_ON:
-                         // TODO: 26.08.2024
-                          startingServiceGattServer();
-
                          Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                                  " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
                                  " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n");
@@ -1240,6 +1237,9 @@ private  Long version;
             new SubClassErrors(context).МетодЗаписиОшибок(valuesЗаписываемОшибки);
         }
     }
+    // TODO: 01.11.2024
+
+
 
     // TODO: 15.08.2024 end
 

@@ -23,6 +23,7 @@ import com.sous.server.businesslayer.BI_presentationlayer.bl_FragmentBootScanner
 import com.sous.server.businesslayer.Errors.SubClassErrors;
 import com.sous.server.businesslayer.Eventbus.MessageScannerServer;
 import com.sous.server.businesslayer.Eventbus.ParamentsScannerServer;
+import com.sous.server.businesslayer.bl_bindingcsartingaync.GetBinfingStartingAsync;
 import com.sous.server.presentationlayer.ui.FragmentGattServerRecyclerView;
 
 import org.greenrobot.eventbus.EventBus;
@@ -48,6 +49,8 @@ public class FragmentBootServer extends Fragment {
 
     @Inject
     BuccesloginForServiceServerScan buccesloginForServiceServerScan;
+    @Inject
+    GetBinfingStartingAsync getBinfingStartingAsync;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -181,9 +184,14 @@ public class FragmentBootServer extends Fragment {
     public void onResume() {
         super.onResume();
         try{
-            // TODO: 25.07.2024 запускам службы двух серверных
-            // TODO: 19.07.2024 Запуск Службы
-            buccesloginForServiceServerScan.startingServiceGattServer();
+            // TODO: 03.09.2024 запускаем синхрониазцию с ссервром Server GATT
+            getBinfingStartingAsync.binfingStartingAsync();
+
+
+            // TODO: 25.07.2024 запускам GATT SERVER
+           buccesloginForServiceServerScan.startingServiceGattServer();
+
+
 
             Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                     " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
