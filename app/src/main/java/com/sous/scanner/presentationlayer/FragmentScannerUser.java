@@ -83,7 +83,7 @@ public class FragmentScannerUser extends Fragment   {
     private FragmentManager fragmentManager;
     private Message messageClient;
 
-    private  MaterialTextView materialtextview_last_state,materialtextview_last_bremy;
+    private  MaterialTextView materialtextview_last_state,materialtextview_last_bremy,materialtextview_last_get_currentuser;
     private  MaterialTextView  searchview_maclistdeviceserver;
     private Long version = 0l;
     private SharedPreferences preferences;
@@ -217,12 +217,19 @@ public class FragmentScannerUser extends Fragment   {
             // TODO: 31.10.2024
           materialtextview_last_bremy = (MaterialTextView) materialcardview_gattclientonly_bottom.findViewById(R.id.id_materialtextview_last_bremy);
 
+            materialtextview_last_get_currentuser = (MaterialTextView) materialcardview_gattclientonly_bottom.findViewById(R.id.id_materialtextview_last_get_currentuser);
+
 
             // TODO: 07.08.2024 Востанавливаем статус последниуспешый статус ИМЯ ДЕВАЙС
            businessloginOriginallogic.materialtextViewGetLastStateName(preferences,materialtextview_last_state,messageClient);
 
             // TODO: 07.08.2024 Востанавливаем статус последниуспешый статус ИМЯ Время
          businessloginOriginallogic.materialtextViewGetLastStateBremy(preferences,materialtextview_last_bremy,messageClient);
+
+
+         businessloginOriginallogic.materialtextViewGetLastStateCurrentUser(preferences,materialtextview_last_get_currentuser,messageClient);
+
+
 
             // TODO: 07.08.2024 Востанавливаем статус последниуспешый статус ФИО востановливаем во SearchVIew
          businessloginOriginallogic.materialtextViewGetLastStateSearchView(preferences,searchview_maclistdeviceserver,messageClient);
