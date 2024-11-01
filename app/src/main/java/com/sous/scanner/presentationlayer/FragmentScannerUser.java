@@ -1361,38 +1361,70 @@ public class FragmentScannerUser extends Fragment   {
     public void onMessageEvent(EventLocalBroadcastManager event) {
         // Do something
         try {
-            // TODO: 07.08.2024 Обработка пришедшено собтыия от BoadCastReciver
-            BusinessloginforfragmentScanner businessloginforfragmentScanner=
-                    new BusinessloginforfragmentScanner(getContext(),version,preferences);
+                // TODO: 07.08.2024 Обработка пришедшено собтыия от BoadCastReciver
+                BusinessloginforfragmentScanner businessloginforfragmentScanner=
+                        new BusinessloginforfragmentScanner(getContext(),version,preferences);
 
-            businessloginforfragmentScanner .eventprocessingOtEventBus(event);
-
-            // TODO: 31.10.2024 RESET UI for NAME
-
-           businessloginforfragmentScanner.updateUIFragmentScangeMAc(materialtextview_last_state ,
-                    preferences,animation,
-                    materialButtonEventSameOffice,
-                    messageClient, toProccessError, toProccessSuccess);
-            // TODO: 07.08.2024
+                   businessloginforfragmentScanner .eventprocessingOtEventBus(event);
 
 
 
-            // TODO: 31.10.2024 RESET UI for Bremy
-            businessloginforfragmentScanner.updateUIFragmentScanGetBremy(materialtextview_last_bremy ,
-                    preferences,animation,
-                    materialButtonEventSameOffice,
-                    messageClient, toProccessError, toProccessSuccess);
+            String   getMacOtCleintBluetooh=new String();
+            Bundle bundlesearchview=  (Bundle) searchview_maclistdeviceserver.getTag();
+            if (bundlesearchview!=null) {
+                getMacOtCleintBluetooh  =  bundlesearchview.getString("geMAc");
+            }
+            if (getMacOtCleintBluetooh.length()==0) {
+                getMacOtCleintBluetooh  = materialtextview_last_state.getText().toString();
+            }
+          String  getMacGattServer  =  preferences.getString("geMAc","");
+
+            // TODO: 31.07.2024
+            Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                    " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                    " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" + "\n"
+                    + " LocalDateTime.now() " + LocalDateTime.now().toString().toUpperCase()+"\n"+
+                    " getMacOtCleintBluetooh " +getMacOtCleintBluetooh+
+                    "getMacGattServer "+getMacGattServer);
 
 
-            // TODO: 31.10.2024 RESET UI forSearchView
-            businessloginforfragmentScanner.updateUIFragmentScanGetSearchView(searchview_maclistdeviceserver ,
-                    preferences,animation,
-                    materialButtonEventSameOffice,
-                    messageClient, toProccessError, toProccessSuccess);
+            if( getMacGattServer.equalsIgnoreCase(getMacOtCleintBluetooh)) {
 
-            // TODO: 07.08.2024
+
+                // TODO: 31.10.2024 RESET UI for NAME
+
+                businessloginforfragmentScanner.updateUIFragmentScangeMAc(materialtextview_last_state,
+                        preferences, animation,
+                        materialButtonEventSameOffice,
+                        messageClient, toProccessError, toProccessSuccess);
+                // TODO: 07.08.2024
+
+
+                // TODO: 31.10.2024 RESET UI for Bremy
+                businessloginforfragmentScanner.updateUIFragmentScanGetBremy(materialtextview_last_bremy,
+                        preferences, animation,
+                        materialButtonEventSameOffice,
+                        messageClient, toProccessError, toProccessSuccess);
+
+
+                // TODO: 31.10.2024 RESET UI forSearchView
+                businessloginforfragmentScanner.updateUIFragmentScanGetSearchView(searchview_maclistdeviceserver,
+                        preferences, animation,
+                        materialButtonEventSameOffice,
+                        messageClient, toProccessError, toProccessSuccess);
+
+                // TODO: 07.08.2024
 // TODO: 07.08.2024 бирация при успешном пинг с сервром
-          new BusinessloginVibrator(getContext()).alarmVibrator();
+                new BusinessloginVibrator(getContext()).alarmVibrator();
+
+            }
+
+                                // TODO: 31.07.2024
+                                Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                                        " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                                        " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" + "\n"
+                                        + " LocalDateTime.now() " + LocalDateTime.now().toString().toUpperCase()+"\n"+  " event " +event.toString());
+
 
 
 
@@ -1401,6 +1433,9 @@ public class FragmentScannerUser extends Fragment   {
                     " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
                     " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" + "\n"
                     + " LocalDateTime.now() " + LocalDateTime.now().toString().toUpperCase()+"\n"+  " event " +event.toString());
+
+
+
 
         } catch (Exception e) {
             e.printStackTrace();

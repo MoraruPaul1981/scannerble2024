@@ -33,10 +33,10 @@ public class BusinessloginforfragmentScanner {
     }
 
 
-    public void preferencesSaveEvent(   String getBremy, String getAction,  String getAddress, String getName) {
+    public SharedPreferences preferencesSaveEvent(   String getBremy, String getAction,  String getAddress, String getName) {
         try{
 
-            SharedPreferences.Editor editor = preferences.edit();
+          SharedPreferences.Editor editor = preferences.edit();
             editor.putString("getBremy", getBremy);
             editor.putString("getAction",  getAction);
             editor.putString("geMAc", getAddress);
@@ -61,10 +61,12 @@ public class BusinessloginforfragmentScanner {
             valuesЗаписываемОшибки.put("whose_error", ЛокальнаяВерсияПОСравнение);
             new SubClassErrors(context).МетодЗаписиОшибок(valuesЗаписываемОшибки);
         }
+        return  preferences;
     }
 
 
-   public void eventprocessingOtEventBus(@NonNull  EventLocalBroadcastManager event){
+   public SharedPreferences eventprocessingOtEventBus(@NonNull  EventLocalBroadcastManager event){
+       SharedPreferences getsharedPreferences = null;
         try{
             String getBremy =event.getBremy;
             String getAction =event.getAction;
@@ -72,13 +74,13 @@ public class BusinessloginforfragmentScanner {
             String getName =event.getName;
             // TODO: 07.08.2024 записываем в Публичное Хранилище
 
-            preferencesSaveEvent(   getBremy,  getAction,    getAddress,   getName);
+              getsharedPreferences=    preferencesSaveEvent(   getBremy,  getAction,    getAddress,   getName);
 
             // TODO: 31.07.2024
             Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                     " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
                     " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" + "\n"
-                    + " LocalDateTime.now() " + LocalDateTime.now().toString().toUpperCase()+"\n"+  " event " +event.toString());
+                    + " LocalDateTime.now() " + LocalDateTime.now().toString().toUpperCase()+"\n"+  " event " +event.toString() + " getsharedPreferences " +getsharedPreferences);
 
     } catch (Exception e) {
         e.printStackTrace();
@@ -94,6 +96,7 @@ public class BusinessloginforfragmentScanner {
         valuesЗаписываемОшибки.put("whose_error", ЛокальнаяВерсияПОСравнение);
         new SubClassErrors(context).МетодЗаписиОшибок(valuesЗаписываемОшибки);
     }
+        return  getsharedPreferences;
     }
 
     public void updateUIFragmentScangeMAc(@NonNull  MaterialTextView materialtextview_last_stateName ,
