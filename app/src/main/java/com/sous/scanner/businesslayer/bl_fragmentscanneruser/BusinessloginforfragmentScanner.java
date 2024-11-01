@@ -487,6 +487,51 @@ public class BusinessloginforfragmentScanner {
         }
         return  getMacForClick;
     }
+// TODO: 01.11.2024
+
+    public Boolean analysisOftomacBluetoothforSimilarity( @NonNull  MaterialTextView searchview_maclistdeviceserver ,@NonNull MaterialTextView materialtextview_last_state){
+        Boolean analysisoftwomac=false;
+        try{
+            String   getMacOtCleintBluetooh=new String();
+            Bundle bundlesearchview=  (Bundle) searchview_maclistdeviceserver.getTag();
+            if (bundlesearchview!=null) {
+                getMacOtCleintBluetooh  =  bundlesearchview.getString("geMAc");
+            }
+            if (getMacOtCleintBluetooh.length()==0) {
+                getMacOtCleintBluetooh  = materialtextview_last_state.getText().toString();
+            }
+            String  getMacGattServer  =  preferences.getString("geMAc","");
+            if( getMacGattServer.equalsIgnoreCase(getMacOtCleintBluetooh)) {
+                // TODO: 01.11.2024
+                analysisoftwomac=true;
+            }
+            // TODO: 07.08.2024  перезагружаем внешний вид экрана или точнее компонта Последний Статус
+            Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                    " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                    " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" +
+                    " analysisoftwomac " +analysisoftwomac);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() + " Линия  :"
+                    + Thread.currentThread().getStackTrace()[2].getLineNumber());
+            ContentValues valuesЗаписываемОшибки = new ContentValues();
+            valuesЗаписываемОшибки.put("Error", e.toString().toLowerCase());
+            valuesЗаписываемОшибки.put("Klass", this.getClass().getName());
+            valuesЗаписываемОшибки.put("Metod", Thread.currentThread().getStackTrace()[2].getMethodName());
+            valuesЗаписываемОшибки.put("LineError", Thread.currentThread().getStackTrace()[2].getLineNumber());
+            final Object ТекущаяВерсияПрограммы = version;
+            Integer ЛокальнаяВерсияПОСравнение = Integer.parseInt(ТекущаяВерсияПрограммы.toString());
+            valuesЗаписываемОшибки.put("whose_error", ЛокальнаяВерсияПОСравнение);
+            new SubClassErrors(context).МетодЗаписиОшибок(valuesЗаписываемОшибки);
+        }
+        return  analysisoftwomac;
+    }
 
 
+
+
+
+
+    // TODO: 01.11.2024  end class
 }

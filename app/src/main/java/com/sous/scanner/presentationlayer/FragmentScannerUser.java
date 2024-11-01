@@ -1367,32 +1367,19 @@ public class FragmentScannerUser extends Fragment   {
 
                    businessloginforfragmentScanner .eventprocessingOtEventBus(event);
 
-
-
-            String   getMacOtCleintBluetooh=new String();
-            Bundle bundlesearchview=  (Bundle) searchview_maclistdeviceserver.getTag();
-            if (bundlesearchview!=null) {
-                getMacOtCleintBluetooh  =  bundlesearchview.getString("geMAc");
-            }
-            if (getMacOtCleintBluetooh.length()==0) {
-                getMacOtCleintBluetooh  = materialtextview_last_state.getText().toString();
-            }
-          String  getMacGattServer  =  preferences.getString("geMAc","");
+            // TODO: 01.11.2024
+            Boolean analysisoftwomac=    businessloginforfragmentScanner.analysisOftomacBluetoothforSimilarity(searchview_maclistdeviceserver,materialtextview_last_state);
 
             // TODO: 31.07.2024
             Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                     " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
                     " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" + "\n"
                     + " LocalDateTime.now() " + LocalDateTime.now().toString().toUpperCase()+"\n"+
-                    " getMacOtCleintBluetooh " +getMacOtCleintBluetooh+
-                    "getMacGattServer "+getMacGattServer);
+                    " analysisoftwomac " +analysisoftwomac);
 
 
-            if( getMacGattServer.equalsIgnoreCase(getMacOtCleintBluetooh)) {
-
-
+            if(analysisoftwomac) {
                 // TODO: 31.10.2024 RESET UI for NAME
-
                 businessloginforfragmentScanner.updateUIFragmentScangeMAc(materialtextview_last_state,
                         preferences, animation,
                         materialButtonEventSameOffice,
