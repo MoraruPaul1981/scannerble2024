@@ -107,8 +107,7 @@ public class BinesslogicDataSync {
     public    byte[]    callOkhhtpDataSyncService(@NonNull long version,
                                           @NonNull LinkedHashMap<String, String> getJbossAdress,
                                           @NonNull Cursor cursorlocal,
-                                                       @NonNull   OkHttpClient.Builder getOkhhtpBuilder)
-            throws ExecutionException, InterruptedException {
+                                                       @NonNull   OkHttpClient.Builder getOkhhtpBuilder) {
         // TODO: 22.08.2024  Коненпт провайдер для зааписив базу данных
 
         AtomicReference<byte[]>    bytesGetOtJBossGetScanner =new AtomicReference<>(new byte[0]);

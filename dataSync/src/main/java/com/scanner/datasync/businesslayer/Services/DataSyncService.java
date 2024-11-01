@@ -158,10 +158,6 @@ public class DataSyncService extends IntentService {
             // Do something
             stopForeground(true);
 
-            // TODO: 22.08.2024  повсе всего Работы Службы Синхронихации запускаем Фрагмент Сканера   , Самая последная Операция
-            binesslogicDataSync.callBackBroadcastManagerDataSyncService(version);
-            // TODO: 22.08.2024
-
         Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                 " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
                 " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n");
@@ -222,38 +218,72 @@ public class DataSyncService extends IntentService {
     @Override
     protected void onHandleIntent(Intent intent) {
         try{
-          // TODO: 22.08.2024  повсе всего Работы Службы Синхронихации запускаем Фрагмент Сканера   , Самая последная Операция
-                // TODO: 26.08.2024  получаем данные ЛОкальыне с версией данных
-                //Cursor cursorlocal =     binesslogicGetCursors. getLocalDataSyncService(version,resolver);
-                // Cursor cursorlocal =     binesslogicGetCursors. getMAXBremyLocalDataSyncService(version,resolver);
-                Cursor cursorlocal =     binesslogicGetCursors. getMAXVersionLocalDataSyncService(version,resolver);
-                // TODO: 26.08.2024  получаем данные от Сервера
-                byte[] bytesGetOtJBossGetScanner=     binesslogicDataSync.callOkhhtpDataSyncService(version,getJbossAdressDebug,cursorlocal,getOkhhtpBuilder);
-                JsonNode      jsonNodeScannerBLE = null;
+          // TODO: 22.08.2024  Это Клиент Blutooth Пытаемся Получить ДАнные GET()
 
-                if (bytesGetOtJBossGetScanner.length>0) {
-                    // TODO: 26.08.2024  преобразовываем данеы в модель JAKSON
-                    jsonNodeScannerBLE = binesslogincJakson.callJaksonDataSyncService(version,   getHiltJaksonObjectMapper,bytesGetOtJBossGetScanner);
-                }
-                if (jsonNodeScannerBLE!=null) {
-                    // TODO: 23.08.2024  записываем JAKSON в Контент ПРовайер
-                    if (jsonNodeScannerBLE.size()>0) {
-                        binesslogincJakson.updateOperaticallContentResolver(version,jsonNodeScannerBLE);
-                                        }
-                }
+            getDataForClientBluettohd();
 
-                // TODO: 21.08.2024
+            // TODO: 21.08.2024
                 Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                         " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n+ " +
-                        " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"  +
-                        " jsonNodeScannerBLE.size() " +jsonNodeScannerBLE  + " bytesGetOtJBossGetScanner " +bytesGetOtJBossGetScanner);
-
+                        " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n");
 
             // TODO: 21.08.2024  
         Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                 " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n+ " +
                 " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n");
             // TODO: 28.08.2024
+    } catch (Exception e) {
+        e.printStackTrace();
+        Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" +
+                Thread.currentThread().getStackTrace()[2].getMethodName() + " Линия  :"
+                + Thread.currentThread().getStackTrace()[2].getLineNumber());
+        ContentValues valuesЗаписываемОшибки = new ContentValues();
+        valuesЗаписываемОшибки.put("Error", e.toString().toLowerCase());
+        valuesЗаписываемОшибки.put("Klass", this.getClass().getName());
+        valuesЗаписываемОшибки.put("Metod", Thread.currentThread().getStackTrace()[2].getMethodName());
+        valuesЗаписываемОшибки.put("LineError", Thread.currentThread().getStackTrace()[2].getLineNumber());
+        final Object ТекущаяВерсияПрограммы = version;
+        Integer ЛокальнаяВерсияПОСравнение = Integer.parseInt(ТекущаяВерсияПрограммы.toString());
+        valuesЗаписываемОшибки.put("whose_error", ЛокальнаяВерсияПОСравнение);
+        new SubClassErrors(getApplicationContext()).МетодЗаписиОшибок(valuesЗаписываемОшибки);
+    }
+    }
+
+    private void getDataForClientBluettohd() {
+        try{
+        Completable.fromAction(()->{
+
+            //Cursor cursorlocal =     binesslogicGetCursors. getLocalDataSyncService(version,resolver);
+            // Cursor cursorlocal =     binesslogicGetCursors. getMAXBremyLocalDataSyncService(version,resolver);
+            Cursor cursorlocal =     binesslogicGetCursors. getMAXVersionLocalDataSyncService(version,resolver);
+            // TODO: 26.08.2024  получаем данные от Сервера
+            byte[] bytesGetOtJBossGetScanner=     binesslogicDataSync.callOkhhtpDataSyncService(version,getJbossAdressDebug,cursorlocal,getOkhhtpBuilder);
+            JsonNode      jsonNodeScannerBLE = null;
+
+            if (bytesGetOtJBossGetScanner.length>0) {
+                // TODO: 26.08.2024  преобразовываем данеы в модель JAKSON
+                jsonNodeScannerBLE = binesslogincJakson.callJaksonDataSyncService(version,   getHiltJaksonObjectMapper,bytesGetOtJBossGetScanner);
+            }
+            if (jsonNodeScannerBLE!=null) {
+                // TODO: 23.08.2024  записываем JAKSON в Контент ПРовайер
+                if (jsonNodeScannerBLE.size()>0) {
+                    binesslogincJakson.updateOperaticallContentResolver(version,jsonNodeScannerBLE);
+                }
+            }
+
+        }).doOnComplete(()->{
+            // TODO: 21.08.2024
+
+
+            // TODO: 22.08.2024  повсе всего Работы Службы Синхронихации запускаем Фрагмент Сканера   , Самая последная Операция
+            binesslogicDataSync.callBackBroadcastManagerDataSyncService(version);
+            // TODO: 22.08.2024
+
+            Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                    " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n+ " +
+                    " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() );
+        }).blockingSubscribe();
+
     } catch (Exception e) {
         e.printStackTrace();
         Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" +
