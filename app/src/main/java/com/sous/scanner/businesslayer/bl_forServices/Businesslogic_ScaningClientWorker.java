@@ -287,10 +287,6 @@ public class Businesslogic_ScaningClientWorker {
                                         // TODO: 26.07.2024
                                         final BluetoothDevice bluetoothDeviceScan = bluetoothAdapterPhoneClient.getRemoteDevice(getMacGatt);
 
-                                        // TODO: 13.08.2024
-                                      SharedPreferencesNewMacAndNAme(bundleFormSearchMacGatt);
-
-
                                         // TODO: 12.02.2023  init CallBack Gatt Client for Scan
                                         BluetoothGattCallback bluetoothGattCallback= МетодРаботыСТекущийСерверомGATTДляScan( );
 
@@ -454,39 +450,6 @@ public class Businesslogic_ScaningClientWorker {
 
     }
 
-    @NonNull
-    private void SharedPreferencesNewMacAndNAme( @NonNull Bundle bundleFormSearchMacGatt) {
-
-        try{
-            if (!bundleFormSearchMacGatt.isEmpty()) {
-                SharedPreferences.Editor       editor = preferences.edit();
-                editor.putString("geMAc", bundleFormSearchMacGatt.getString("geMAc"));
-                editor.putString("getName",  bundleFormSearchMacGatt.getString("getName"));
-                editor.putLong("getUUID",  bundleFormSearchMacGatt.getLong("getUUID"));
-                editor.putInt("getId",  bundleFormSearchMacGatt.getInt("getId"));
-                editor.apply();
-            }
-        // TODO: 07.04.2024
-        Log.d(this.getClass().getName(), "\n" + " class " +
-                Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
-                " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                " line " + Thread.currentThread().getStackTrace()[2].getLineNumber()  + "preferences " +preferences );
-
-    } catch (Exception e) {
-        e.printStackTrace();
-        Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() + " Линия  :"
-                + Thread.currentThread().getStackTrace()[2].getLineNumber());
-        ContentValues valuesЗаписываемОшибки = new ContentValues();
-        valuesЗаписываемОшибки.put("Error", e.toString().toLowerCase());
-        valuesЗаписываемОшибки.put("Klass", this.getClass().getName());
-        valuesЗаписываемОшибки.put("Metod", Thread.currentThread().getStackTrace()[2].getMethodName());
-        valuesЗаписываемОшибки.put("LineError", Thread.currentThread().getStackTrace()[2].getLineNumber());
-        final Object ТекущаяВерсияПрограммы = version;
-        Integer ЛокальнаяВерсияПОСравнение = Integer.parseInt(ТекущаяВерсияПрограммы.toString());
-        valuesЗаписываемОшибки.put("whose_error", ЛокальнаяВерсияПОСравнение);
-        new SubClassErrors(context).МетодЗаписиОшибок(valuesЗаписываемОшибки);
-    }
-    }
 
 
 

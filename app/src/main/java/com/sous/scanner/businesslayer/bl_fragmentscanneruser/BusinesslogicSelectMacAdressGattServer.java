@@ -639,7 +639,6 @@ public class BusinesslogicSelectMacAdressGattServer {
                                       @NonNull    MaterialTextView getMacForDevice,
                                       @NonNull     MaterialCardView childCardViewMAcAndAdresss) {
         try{
-
         getFioForDevice.setTag(bundle);
         // TODO: 31.10.2024
         getMacForDevice.setTag(bundle);
@@ -647,11 +646,6 @@ public class BusinesslogicSelectMacAdressGattServer {
         childCardViewMAcAndAdresss.setTag(bundle);
 
         searchview_maclistdeviceserver.setTag(bundle);
-            // TODO: 31.10.2024
-         String geMAc=   bundle.getString("geMAc","");
-
-            new BussenloginSaredPreferense(preferences,context,version).workerSharedPreferenGetMac(geMAc);
-
 
         Log.d(this.getClass().getName(), "\n" + " class " +
                 Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
