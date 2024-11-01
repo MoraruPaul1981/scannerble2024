@@ -12,6 +12,7 @@ import android.content.Intent;
 import android.content.Context;
 import android.content.pm.PackageInfo;
 import android.database.Cursor;
+import android.os.Binder;
 import android.os.Build;
 import android.os.IBinder;
 import android.util.Log;
@@ -22,26 +23,21 @@ import androidx.core.app.NotificationCompat;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.google.firebase.crashlytics.buildtools.reloc.com.google.common.eventbus.EventBus;
-import com.google.firebase.crashlytics.buildtools.reloc.com.google.common.util.concurrent.AtomicDouble;
 import com.scanner.datasync.businesslayer.Errors.SubClassErrors;
 
 import com.scanner.datasync.businesslayer.bl_DataSyncService.BinesslogicDataSync;
 import com.scanner.datasync.businesslayer.bl_Jakson.BinesslogincJakson;
 import com.scanner.datasync.businesslayer.bl_JbossAdress.QualifierJbossServer3;
-import com.scanner.datasync.businesslayer.bl_Okhhtp.interfaces.QualifierOkhhtp;
 import com.scanner.datasync.businesslayer.bl_Okhhtp.interfaces.QualifierOkhhtpTLS;
 import com.scanner.datasync.datalayer.local.BinesslogicGetCursors;
 
-import java.io.InputStream;
+import java.util.Date;
 import java.util.LinkedHashMap;
-import java.util.concurrent.TimeUnit;
 
 import javax.inject.Inject;
 
 import dagger.hilt.android.AndroidEntryPoint;
 import io.reactivex.rxjava3.core.Completable;
-import io.reactivex.rxjava3.core.Single;
 import okhttp3.OkHttpClient;
 
 /**
@@ -57,6 +53,8 @@ import okhttp3.OkHttpClient;
 public class DataSyncService extends IntentService {
 
     // TODO: Rename actions, choose action names that describe tasks that this
+
+    public LocalBinderКлиентBLE localBinderКлиентBLE = new LocalBinderКлиентBLE();
     @Inject
     ObjectMapper getHiltJaksonObjectMapper;
 
@@ -178,14 +176,37 @@ public class DataSyncService extends IntentService {
 
     }
 
+    public class LocalBinderКлиентBLE extends Binder {
+        public DataSyncService getService() {
+            // Return this instance of LocalService so clients can call public methods
+            Log.d(getApplicationContext().getClass().getName(), "\n"
+                    + " время: " + new Date() + "\n+" +
+                    " Класс в процессе... " + this.getClass().getName() + "\n" +
+                    " метод в процессе... " + Thread.currentThread().getStackTrace()[2].getMethodName());
+            return DataSyncService.this;
+        }
+
+
+        @Override
+        public boolean pingBinder() {
+            return super.pingBinder();
+        }
+
+    }
+
     @Nullable
     @Override
     public IBinder onBind(Intent intent) {
-        Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
-                " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n");
-        return super.onBind(intent);
+        Log.d(getApplicationContext().getClass().getName(), "\n"
+                + " время: " + new Date() + "\n+" +
+                " Класс в процессе... " + this.getClass().getName() + "\n" +
+                " метод в процессе... " + Thread.currentThread().getStackTrace()[2].getMethodName());
+        //   return super.onBind(intent);
+        return localBinderКлиентBLE;
+
     }
+
+
 
     @Override
     protected void attachBaseContext(Context newBase) {
@@ -220,7 +241,7 @@ public class DataSyncService extends IntentService {
         try{
           // TODO: 22.08.2024  Это Клиент Blutooth Пытаемся Получить ДАнные GET()
 
-            getDataForClientBluettohd();
+            gettingDataForBluetoohtClient();
 
             // TODO: 21.08.2024
                 Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
@@ -249,7 +270,7 @@ public class DataSyncService extends IntentService {
     }
     }
 
-    private void getDataForClientBluettohd() {
+    public void gettingDataForBluetoohtClient() {
         try{
         Completable.fromAction(()->{
 

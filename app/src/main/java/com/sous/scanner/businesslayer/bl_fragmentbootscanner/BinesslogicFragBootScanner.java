@@ -59,7 +59,9 @@ public class BinesslogicFragBootScanner {
                 if (activeNetworkInfo.isConnected()) {
                     // TODO: 22.08.2024
 
-                    businesslogicJobServive.startingServicedataSync(context,version);
+                 ///   businesslogicJobServive.startingServicedataSync(context,version);
+
+                    businesslogicJobServive.bindingServicedataSync(context,version);
 
                     Log.d(context.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                             " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +

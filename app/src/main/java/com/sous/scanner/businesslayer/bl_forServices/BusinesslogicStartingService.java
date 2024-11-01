@@ -1,10 +1,13 @@
 package com.sous.scanner.businesslayer.bl_forServices;
 
 import android.annotation.SuppressLint;
+import android.content.ComponentName;
 import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
+import android.content.ServiceConnection;
 import android.os.Bundle;
+import android.os.IBinder;
 import android.util.Log;
 
 import androidx.annotation.NonNull;
@@ -14,6 +17,8 @@ import com.scanner.datasync.businesslayer.Services.DataSyncService;
 import com.sous.scanner.businesslayer.Errors.SubClassErrors;
 import com.sous.scanner.businesslayer.Services.AdvertisingService;
 import com.sous.scanner.businesslayer.Services.ServiceClientsScanBackground;
+
+import java.util.concurrent.Executors;
 
 import javax.inject.Inject;
 
@@ -182,6 +187,69 @@ long version;
 
     }
 
+    public void bindingServicedataSync(@NonNull  Context context,  @NonNull  Long version ) {
+        try{
+            // TODO: 21.08.2024
+            Intent intentDataSyncService = new Intent(context, DataSyncService.class);
+            intentDataSyncService.addFlags(Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
+            intentDataSyncService.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+            intentDataSyncService.addFlags(Intent.FLAG_FROM_BACKGROUND);
+            intentDataSyncService.addFlags(Intent.FLAG_ACTIVITY_BROUGHT_TO_FRONT);
+            intentDataSyncService.setAction("stateDataSync");
+            intentDataSyncService.addFlags(Intent.FLAG_GRANT_PERSISTABLE_URI_PERMISSION);
+            // TODO: 08.08.2024
+            ServiceConnection serviceConnectionDatStnc=    new ServiceConnection() {
+                @Override
+                public void onServiceConnected(ComponentName componentName, IBinder iBinder) {
+                    // TODO: 26.07.2024
+                    if (iBinder.isBinderAlive()) {
+                        // TODO: 28.07.2023  Update
+                        DataSyncService.LocalBinderКлиентBLE     localBinderКлиентBLE = (DataSyncService.LocalBinderКлиентBLE) iBinder;
+                        // TODO: 03.09.2024
+                        //TODO: 03.09.2024 Запускаем синхронизацию с сервером JBOSS
+                        localBinderКлиентBLE.getService().gettingDataForBluetoohtClient();
+
+                        Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                                " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                                " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" );
+                    }
+
+                    Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                            " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                            " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" );
+                }
+
+                @Override
+                public void onServiceDisconnected(ComponentName componentName) {
+                    // TODO: 26.07.2024
+                    Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                            " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                            " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" );
+                }
+            };
+            // TODO: 19.08.2024
+            // TODO: 23.10.2024 starting
+            context.bindService(intentDataSyncService,Context.BIND_AUTO_CREATE, Executors.newSingleThreadExecutor(),serviceConnectionDatStnc  );
+
+            Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                    " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                    " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n");
+        } catch (Exception e) {
+            e.printStackTrace();
+            Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() + " Линия  :"
+                    + Thread.currentThread().getStackTrace()[2].getLineNumber());
+            ContentValues valuesЗаписываемОшибки = new ContentValues();
+            valuesЗаписываемОшибки.put("Error", e.toString().toLowerCase());
+            valuesЗаписываемОшибки.put("Klass", this.getClass().getName());
+            valuesЗаписываемОшибки.put("Metod", Thread.currentThread().getStackTrace()[2].getMethodName());
+            valuesЗаписываемОшибки.put("LineError", Thread.currentThread().getStackTrace()[2].getLineNumber());
+            final Object ТекущаяВерсияПрограммы = version;
+            Integer ЛокальнаяВерсияПОСравнение = Integer.parseInt(ТекущаяВерсияПрограммы.toString());
+            valuesЗаписываемОшибки.put("whose_error", ЛокальнаяВерсияПОСравнение);
+            new com.scanner.datasync.businesslayer.Errors.SubClassErrors(context).МетодЗаписиОшибок(valuesЗаписываемОшибки);
+        }
+
+    }
 
     // TODO: 24.07.2024  end class
 
