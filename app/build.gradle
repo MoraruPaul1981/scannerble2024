@@ -34,7 +34,7 @@ android {
         applicationId "com.sous.server"
         minSdk 29
         targetSdk 34
-        versionCode 29
+        versionCode 47
         versionName 'Server GATT 2024'
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
