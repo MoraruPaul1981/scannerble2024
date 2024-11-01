@@ -1,6 +1,7 @@
 package com.sous.server.businesslayer.BroadcastreceiverServer;
 
 import android.annotation.SuppressLint;
+import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
 import android.content.BroadcastReceiver;
 import android.content.ContentValues;
@@ -30,10 +31,6 @@ public class BroadcastReceiverGattServerOthers extends BroadcastReceiver {
 
             // TODO: 31.07.2024 Получаем сам девайс
          final   BluetoothDevice     bluetoothDevice = intent.getParcelableExtra(BluetoothDevice.EXTRA_DEVICE);
-            final   int       rssi = intent.getShortExtra(BluetoothDevice.EXTRA_RSSI,Short.MIN_VALUE);
-            final   String     name = intent.getStringExtra(BluetoothDevice.EXTRA_NAME);
-            final   String     transport = intent.getStringExtra(BluetoothDevice.EXTRA_TRANSPORT);
-            intent.putExtra(BluetoothDevice.EXTRA_PAIRING_KEY,555);
 
             final    PackageInfo pInfo = context.getPackageManager().getPackageInfo(context.getPackageName(), 0);
             version = pInfo.getLongVersionCode();
@@ -42,6 +39,7 @@ public class BroadcastReceiverGattServerOthers extends BroadcastReceiver {
             switch (intent.getAction()){
                 // TODO: 31.07.2024
                 case   BluetoothDevice.ACTION_ACL_DISCONNECTED :
+
                     // TODO: 31.07.2024
                     new Businesslogic_GattReflection(context,version).unpairDevice(bluetoothDevice);
                     Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +

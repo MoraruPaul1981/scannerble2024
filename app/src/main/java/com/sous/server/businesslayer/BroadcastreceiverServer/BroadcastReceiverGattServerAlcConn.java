@@ -4,6 +4,7 @@ import static android.content.Context.MODE_PRIVATE;
 
 import android.annotation.SuppressLint;
 import android.bluetooth.BluetoothA2dp;
+import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
 import android.bluetooth.BluetoothGatt;
 import android.bluetooth.BluetoothHidDevice;
@@ -49,12 +50,6 @@ public class BroadcastReceiverGattServerAlcConn extends BroadcastReceiver {
             // TODO: 31.07.2024 Получаем сам девайс
          final   BluetoothDevice     bluetoothDevice = intent.getParcelableExtra(BluetoothDevice.EXTRA_DEVICE);
 
-         final   int       rssi = intent.getShortExtra(BluetoothDevice.EXTRA_RSSI,Short.MIN_VALUE);
-         final   String     name = intent.getStringExtra(BluetoothDevice.EXTRA_NAME);
-            final   int       key = intent.getShortExtra(BluetoothDevice.EXTRA_PAIRING_KEY,Short.MIN_VALUE);
-         final   String     transport = intent.getStringExtra(BluetoothDevice.EXTRA_TRANSPORT);
-         intent.putExtra(BluetoothDevice.EXTRA_PAIRING_KEY,555);
-
             final    PackageInfo pInfo = context.getPackageManager().getPackageInfo(context.getPackageName(), 0);
             version = pInfo.getLongVersionCode();
             // TODO: 31.07.2024 рабочий код
@@ -64,6 +59,8 @@ public class BroadcastReceiverGattServerAlcConn extends BroadcastReceiver {
                 case   BluetoothDevice.ACTION_ACL_CONNECTED :
                 case   BluetoothDevice.ACTION_FOUND:
                     // TODO: 11.08.2024
+
+
                     // TODO: 07.08.2024
                     final Bl_BloadcastGatt_getDeviceClentGatt blBloadcastGattGetDeviceClentGatt=  new Bl_BloadcastGatt_getDeviceClentGatt(context,version);
 
