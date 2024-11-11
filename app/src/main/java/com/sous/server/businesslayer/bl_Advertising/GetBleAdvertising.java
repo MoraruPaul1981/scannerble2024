@@ -64,6 +64,7 @@ public class GetBleAdvertising {
                     " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" + "setingNameDevice " +setingNameDevice);
 
 
+            // Setting LE advertise data
             AdvertiseSettings settings = new AdvertiseSettings.Builder()
                     .setAdvertiseMode(AdvertiseSettings.ADVERTISE_MODE_LOW_LATENCY)
                     .setTxPowerLevel(AdvertiseSettings.ADVERTISE_TX_POWER_HIGH)

@@ -5,7 +5,7 @@ import android.content.Context;
 import androidx.test.platform.app.InstrumentationRegistry;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 
-import com.sous.server.businesslayer.Services.ServiceServerScan;
+import com.sous.server.businesslayer.Services.ServiceServerGattServer;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -31,7 +31,7 @@ public class ExampleInstrumentedTest {
     public void name() {
         appContext = InstrumentationRegistry.getInstrumentation().getTargetContext();
         System.out.println("testМетодЗаписиОтмечаногоСотрудникаВБАзу");
-        ServiceServerScan serviceGattServertest =new ServiceServerScan();
+        ServiceServerGattServer serviceGattServertest =new ServiceServerGattServer();
        // Integer РезультатЗаписиGATTTEst= serviceGattServertest.МетодЗаписиОтмечаногоСотрудникаВБАзу(appContext);
       //  System.out.println(" re"+РезультатЗаписиGATTTEst);
         ///assertNotNull(РезультатЗаписиGATTTEst);

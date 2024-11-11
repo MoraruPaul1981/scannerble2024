@@ -73,7 +73,7 @@ public class ActivityServerScanner extends AppCompatActivity {
 
             // TODO: 24.07.2024 устанвливаем разрешения
 
-       new SetPermissions(version).permissionsActivityGattBle(this );
+           new SetPermissions(version).permissionsActivityGattBle(this );
 
 
 

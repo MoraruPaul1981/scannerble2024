@@ -2,7 +2,6 @@ package com.sous.server.businesslayer.Services;
 
 import static android.app.job.JobInfo.PRIORITY_MAX;
 
-import android.Manifest;
 import android.app.IntentService;
 import android.app.Notification;
 import android.app.NotificationManager;
@@ -12,14 +11,12 @@ import android.content.ContentValues;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageInfo;
-import android.content.pm.PackageManager;
 import android.os.Binder;
 import android.os.Build;
 import android.os.IBinder;
 import android.util.Log;
 
 import androidx.annotation.Nullable;
-import androidx.core.app.ActivityCompat;
 import androidx.core.app.NotificationCompat;
 
 import com.sous.server.R;
@@ -32,8 +29,6 @@ import java.util.Date;
 import javax.inject.Inject;
 
 import dagger.hilt.android.AndroidEntryPoint;
-import io.reactivex.rxjava3.core.Completable;
-import io.reactivex.rxjava3.schedulers.Schedulers;
 
 
 /**
@@ -45,7 +40,7 @@ import io.reactivex.rxjava3.schedulers.Schedulers;
  * helper methods.
  */
 @AndroidEntryPoint
-public class ServiceServerScan extends Service {
+public class ServiceServerGattServer extends Service {
     // TODO: 30.07.2024
     public LocalBinderСерверBLE binderScan = new LocalBinderСерверBLE();
     public Long version = 0l;
@@ -238,13 +233,13 @@ public class ServiceServerScan extends Service {
 
 
     public class LocalBinderСерверBLE extends Binder {
-        public ServiceServerScan getService() {
+        public ServiceServerGattServer getService() {
             // Return this instance of LocalService so clients can call public methods
             Log.d(getApplicationContext().getClass().getName(), "\n"
                     + " время: " + new Date() + "\n+" +
                     " Класс в процессе... " + this.getClass().getName() + "\n" +
                     " метод в процессе... " + Thread.currentThread().getStackTrace()[2].getMethodName());
-            return ServiceServerScan.this;
+            return ServiceServerGattServer.this;
         }
 
     }

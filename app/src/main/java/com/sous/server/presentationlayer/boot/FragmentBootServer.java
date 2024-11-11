@@ -25,6 +25,7 @@ import com.sous.server.businesslayer.Eventbus.MessageScannerServer;
 import com.sous.server.businesslayer.Eventbus.ParamentsScannerServer;
 import com.sous.server.businesslayer.Permissions.SetPermissions;
 import com.sous.server.businesslayer.bl_bindingcsartingaync.GetBinfingStartingAsync;
+import com.sous.server.businesslayer.bl_startingservices.BusinesslogicStartingService;
 import com.sous.server.presentationlayer.ui.FragmentGattServerRecyclerView;
 
 import org.greenrobot.eventbus.EventBus;
@@ -49,7 +50,7 @@ public class FragmentBootServer extends Fragment {
     private ImageView imageviewbootscanner;
 
     @Inject
-    BuccesloginForServiceServerScan buccesloginForServiceServerScan;
+    BusinesslogicStartingService businesslogicStartingService;
     @Inject
     GetBinfingStartingAsync getBinfingStartingAsync;
 
@@ -194,9 +195,10 @@ public class FragmentBootServer extends Fragment {
             // TODO: 03.09.2024 запускаем синхрониазцию с ссервром Server GATT
             getBinfingStartingAsync.binfingStartingAsync();
 
-
+            // TODO: 25.07.2024 запускам расши ширеную службу  опознования Bluetooth
+            businesslogicStartingService.startingServiceAdvertising();
             // TODO: 25.07.2024 запускам GATT SERVER
-           buccesloginForServiceServerScan.startingServiceGattServer();
+            businesslogicStartingService.startingServiceGattServer();
 
 
 

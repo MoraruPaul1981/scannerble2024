@@ -22,9 +22,12 @@ import com.sous.server.R;
 import com.sous.server.businesslayer.BI_Services.BuccesloginForServiceServerScan;
 import com.sous.server.businesslayer.Errors.SubClassErrors;
 import com.sous.server.businesslayer.bl_bindingcsartingaync.GetBinfingStartingAsync;
+import com.sous.server.businesslayer.bl_startingservices.BusinesslogicStartingService;
 
 import java.util.Date;
 import java.util.concurrent.TimeUnit;
+
+import javax.inject.Inject;
 
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
 import io.reactivex.rxjava3.core.Observer;
@@ -316,7 +319,10 @@ public class GetNavigationViews {
             BuccesloginForServiceServerScan rebootServiceGattServer=   new BuccesloginForServiceServerScan(context);
             // TODO: 09.09.2024   Запуск СЛУЖБЫ
             message.getTarget().postDelayed(()->{
-                rebootServiceGattServer. startingServiceGattServer( );
+
+                // TODO: 11.11.2024 запускаем службу яля переразагрукзик Самой это й служыб
+              new  BusinesslogicStartingService (context).startingServiceGattServer();
+                
                 Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                         " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
                         " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" );
