@@ -3,15 +3,12 @@ package com.scanner.datasync.businesslayer.bl_RemoteMessaging;
 
 import android.content.ContentValues;
 import android.content.Context;
-import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 
 import androidx.annotation.NonNull;
-import androidx.core.content.ContextCompat;
 
 import com.scanner.datasync.businesslayer.Errors.SubClassErrors;
-import com.scanner.datasync.businesslayer.Services.DataSyncService;
 
 import javax.inject.Inject;
 
