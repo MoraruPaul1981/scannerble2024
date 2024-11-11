@@ -43,6 +43,7 @@ import com.google.android.material.textview.MaterialTextView;
 import com.jakewharton.rxbinding4.view.RxView;
 import com.sous.scanner.businesslayer.Errors.SubClassErrors;
 import com.sous.scanner.R;
+import com.sous.scanner.businesslayer.Permissions.SetPermissions;
 import com.sous.scanner.businesslayer.bl_EvenBus.EventLocalBroadcastManager;
 import com.sous.scanner.businesslayer.bl_forServices.BusinesslogicStartingService;
 import com.sous.scanner.businesslayer.bl_forServices.BusinessoginEnableBluetoothAdapter;
@@ -120,6 +121,8 @@ public class FragmentScannerUser extends Fragment   {
             businesslogicJobServive=new BusinesslogicStartingService(getContext());
 
 
+            // TODO: 24.07.2024 устанвливаем разрешения
+            new SetPermissions(version).permissionsActivityBle(getActivity());
 
             Log.d(getContext().getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                     " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +

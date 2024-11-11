@@ -1,7 +1,6 @@
 package com.sous.scanner.presentationlayer;
 
 import static android.content.IntentFilter.SYSTEM_HIGH_PRIORITY;
-import static android.content.IntentFilter.SYSTEM_LOW_PRIORITY;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -23,10 +22,6 @@ import android.os.Message;
 import android.util.Log;
 import android.view.WindowManager;
 
-import com.google.android.material.bottomnavigation.BottomNavigationItemView;
-import com.google.android.material.navigation.NavigationBarView;
-import com.google.android.material.tabs.TabLayout;
-import com.scanner.datasync.businesslayer.bl_RemoteMessaging.RemoteMessaging;
 import com.sous.scanner.businesslayer.Broadcastreceiver.BroadcastReceiverACL;
 import com.sous.scanner.businesslayer.Broadcastreceiver.BroadcastReceiverNAME_CHANGED;
 import com.sous.scanner.businesslayer.Errors.SubClassErrors;
@@ -35,8 +30,6 @@ import com.sous.scanner.businesslayer.Permissions.SetPermissions;
 import com.sous.scanner.businesslayer.bl_forActivityScan.BussenslogicOneSignal;
 
 import java.util.Date;
-
-import javax.inject.Inject;
 
 import dagger.hilt.android.AndroidEntryPoint;
 
@@ -72,7 +65,7 @@ public class MainActivityNewScanner extends AppCompatActivity  {
             МетодHandles();
 
             // TODO: 24.07.2024 устанвливаем разрешения
-            new SetPermissions(version).additionalpermissionsBle(this,getApplicationContext());
+            new SetPermissions(version).permissionsActivityBle(this);
 
 
 

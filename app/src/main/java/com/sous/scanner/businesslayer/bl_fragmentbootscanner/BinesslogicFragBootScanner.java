@@ -68,11 +68,16 @@ public class BinesslogicFragBootScanner {
     Completable.complete()
             .subscribeOn(Schedulers.single())
             .observeOn(Schedulers.single())
-            .delay(2,TimeUnit.SECONDS)
+            .delay(1,TimeUnit.SECONDS)
             .subscribe(new CompletableObserver() {
         @Override
         public void onSubscribe(@NonNull Disposable d) {
-        // TODO: 07.11.2024
+
+        // TODO: 07.11.2024  запускаем службу опозваониваен расширеную для Bluettoht
+            BusinesslogicStartingService businesslogicJobServive=new BusinesslogicStartingService(context);
+
+            businesslogicJobServive.startingServiceAdvertising( );
+
             Log.d(context.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                     " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
                     " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"   +
@@ -92,8 +97,7 @@ public class BinesslogicFragBootScanner {
                 // TODO: 22.08.2024  Запускаем слуджу Синжрониазции
                 if (activeNetworkInfo.isConnected()) {
                     // TODO: 22.08.2024
-
-                    ///   businesslogicJobServive.startingServicedataSync(context,version);
+// TODO: 04.09.2024 on adversing
 
                     businesslogicJobServive.bindingServicedataSync(context,version);
 

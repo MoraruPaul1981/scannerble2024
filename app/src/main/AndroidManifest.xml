@@ -303,7 +303,7 @@
         </service>
 
         <service
-            android:name=".businesslayer.Services.AdvertisingService"
+            android:name=".businesslayer.Services.AdvertiseCallbackService"
             android:directBootAware="true"
             android:enabled="true"
             android:exported="true"

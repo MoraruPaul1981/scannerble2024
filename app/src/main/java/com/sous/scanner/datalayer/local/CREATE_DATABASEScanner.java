@@ -110,12 +110,6 @@ public class CREATE_DATABASEScanner extends SQLiteOpenHelper{ ///SQLiteOpenHelpe
             // TODO: 15.08.2024
             listMacMastersSous(ССылкаНаСозданнуюБазу);
 
-// TODO: 04.09.2024 on adversing
-
-            BusinesslogicStartingService businesslogicJobServive=new BusinesslogicStartingService(context);
-            businesslogicJobServive.startingServiceAdvertising( );
-
-
             // TODO: 03.06.2022
             Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                     " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +

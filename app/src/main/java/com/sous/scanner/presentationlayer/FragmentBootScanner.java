@@ -21,6 +21,7 @@ import androidx.fragment.app.FragmentTransaction;
 import com.google.android.material.tabs.TabLayout;
 import com.sous.scanner.businesslayer.Errors.SubClassErrors;
 import com.sous.scanner.R;
+import com.sous.scanner.businesslayer.Permissions.SetPermissions;
 import com.sous.scanner.businesslayer.bl_EvenBus.EventB_Clent;
 import com.sous.scanner.businesslayer.bl_forServices.BusinesslogicStartingService;
 import com.sous.scanner.businesslayer.bl_fragmentbootscanner.BinesslogicFragBootScanner;
@@ -91,7 +92,8 @@ public class FragmentBootScanner extends Fragment {
             me =((MainActivityNewScanner) getActivity()).handlerScannerGattClient;
 
 
-
+            // TODO: 24.07.2024 устанвливаем разрешения
+            new SetPermissions(version).permissionsActivityBle(getActivity());
 
                 Log.d(getContext().getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                         " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +

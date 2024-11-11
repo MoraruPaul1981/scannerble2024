@@ -11,6 +11,7 @@ import android.util.Log;
 
 import androidx.annotation.NonNull;
 import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 
 import com.sous.scanner.businesslayer.Errors.SubClassErrors;
 
@@ -23,7 +24,7 @@ public class SetPermissions {
         this.version = version;
     }
 
-    public void additionalpermissionsBle(@NonNull Activity activity, @NonNull Context context) {
+    public void permissionsActivityBle(@NonNull Activity activity ) {
         try {
             String[] PERMISSIONS_STORAGE = {
                     Manifest.permission.READ_EXTERNAL_STORAGE,
@@ -36,16 +37,28 @@ public class SetPermissions {
                     Manifest.permission.BLUETOOTH_ADVERTISE,
                     Manifest.permission.BLUETOOTH_ADMIN,
 
+                    Manifest.permission.FOREGROUND_SERVICE_LOCATION,
+                    Manifest.permission.ACCESS_COARSE_LOCATION,
+                    Manifest.permission.ACCESS_FINE_LOCATION
+
             };
-            int permission2 = ActivityCompat.checkSelfPermission(activity, Manifest.permission.BLUETOOTH_CONNECT);
-            if (permission2 != PackageManager.PERMISSION_GRANTED) {
-                // We don't have permission so prompt the user
+            Log.d(activity.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                    " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                    " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n");
+
+            // We don't have permission so prompt the user
                 ActivityCompat.requestPermissions(
                         activity,
                         PERMISSIONS_STORAGE,
                         1
                 );
-            }
+
+
+            Log.d(activity.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                    " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                    " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n");
+
+
         } catch (Exception e) {
             e.printStackTrace();
             Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() + " Линия  :"
@@ -58,8 +71,12 @@ public class SetPermissions {
             final Object ТекущаяВерсияПрограммы = version;
             Integer ЛокальнаяВерсияПОСравнение = Integer.parseInt(ТекущаяВерсияПрограммы.toString());
             valuesЗаписываемОшибки.put("whose_error", ЛокальнаяВерсияПОСравнение);
-            new SubClassErrors(context).МетодЗаписиОшибок(valuesЗаписываемОшибки);
+            new SubClassErrors(activity).МетодЗаписиОшибок(valuesЗаписываемОшибки);
         }
     }
+
+    // TODO: 11.11.2024
+
+
 
 }

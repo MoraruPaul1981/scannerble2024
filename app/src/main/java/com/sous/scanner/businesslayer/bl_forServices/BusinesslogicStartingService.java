@@ -15,10 +15,9 @@ import androidx.core.content.ContextCompat;
 
 import com.scanner.datasync.businesslayer.Services.DataSyncService;
 import com.sous.scanner.businesslayer.Errors.SubClassErrors;
-import com.sous.scanner.businesslayer.Services.AdvertisingService;
+import com.sous.scanner.businesslayer.Services.AdvertiseCallbackService;
 import com.sous.scanner.businesslayer.Services.ServiceClientsScanBackground;
 import com.sous.scanner.businesslayer.bl_fragmentbootscanner.BinesslogicFragBootScanner;
-import com.sous.scanner.presentationlayer.FragmentScannerUser;
 
 import java.util.concurrent.Executors;
 
@@ -51,7 +50,7 @@ long version;
     public void startingServiceAdvertising( ) {
         try {
             // TODO: 23.07.2024 starting
-            Intent ServiceAdvertisingService= new Intent(context, AdvertisingService.class);
+            Intent ServiceAdvertisingService= new Intent(context, AdvertiseCallbackService.class);
             // TODO: 15.08.2024
             ServiceAdvertisingService.addFlags(Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
             ServiceAdvertisingService.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
