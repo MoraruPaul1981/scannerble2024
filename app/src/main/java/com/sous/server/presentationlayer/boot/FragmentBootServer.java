@@ -23,6 +23,7 @@ import com.sous.server.businesslayer.BI_presentationlayer.bl_FragmentBootScanner
 import com.sous.server.businesslayer.Errors.SubClassErrors;
 import com.sous.server.businesslayer.Eventbus.MessageScannerServer;
 import com.sous.server.businesslayer.Eventbus.ParamentsScannerServer;
+import com.sous.server.businesslayer.Permissions.SetPermissions;
 import com.sous.server.businesslayer.bl_bindingcsartingaync.GetBinfingStartingAsync;
 import com.sous.server.presentationlayer.ui.FragmentGattServerRecyclerView;
 
@@ -56,6 +57,12 @@ public class FragmentBootServer extends Fragment {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         try{
+            // TODO: 11.11.2024
+            // TODO: 24.07.2024 устанвливаем разрешения
+
+            new SetPermissions(version).permissionsActivityGattBle(getActivity() );
+
+
         /////todo Пришли переменные
         fragmentManager = (FragmentManager) ((ActivityServerScanner) getActivity()).fragmentManager;
         version = (Long) ((ActivityServerScanner) getActivity()).version;

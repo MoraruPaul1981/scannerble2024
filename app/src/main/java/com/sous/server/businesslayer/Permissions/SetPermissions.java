@@ -3,8 +3,6 @@ package com.sous.server.businesslayer.Permissions;
 import android.Manifest;
 import android.app.Activity;
 import android.content.ContentValues;
-import android.content.Context;
-import android.content.pm.PackageManager;
 import android.util.Log;
 
 import androidx.annotation.NonNull;
@@ -20,7 +18,7 @@ private  Long version;
         this.version = version;
     }
 
-    public void additionalpermissionsBle(@NonNull Activity activity, @NonNull Context context) {
+    public void permissionsActivityGattBle(@NonNull Activity activity ) {
         try {
             String[] PERMISSIONS_STORAGE = {
                     Manifest.permission.READ_EXTERNAL_STORAGE,
@@ -47,20 +45,29 @@ private  Long version;
                     Manifest.permission.RECEIVE_SMS,
                     Manifest.permission.SEND_SMS,
                     Manifest.permission.MODIFY_PHONE_STATE,
+
+                    Manifest.permission.FOREGROUND_SERVICE_LOCATION,
+                    Manifest.permission.ACCESS_COARSE_LOCATION,
+                    Manifest.permission.ACCESS_FINE_LOCATION
+
             };
-            int permission2 = ActivityCompat.checkSelfPermission(activity, Manifest.permission.BLUETOOTH_CONNECT);
-            if (permission2 != PackageManager.PERMISSION_GRANTED) {
+            Log.d(activity.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                    " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                    " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n");
                 // We don't have permission so prompt the user
                 ActivityCompat.requestPermissions(
                         activity,
                         PERMISSIONS_STORAGE,
                         1
                 );
-            }
+            Log.d(activity.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                    " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                    " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n");
             // TODO: 03.09.2024
         } catch (Exception e) {
             e.printStackTrace();
-            Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() + " Линия  :"
+            Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :"
+                    + Thread.currentThread().getStackTrace()[2].getMethodName() + " Линия  :"
                     + Thread.currentThread().getStackTrace()[2].getLineNumber());
             ContentValues valuesЗаписываемОшибки = new ContentValues();
             valuesЗаписываемОшибки.put("Error", e.toString().toLowerCase());
@@ -70,7 +77,7 @@ private  Long version;
             final Object ТекущаяВерсияПрограммы = version;
             Integer ЛокальнаяВерсияПОСравнение = Integer.parseInt(ТекущаяВерсияПрограммы.toString());
             valuesЗаписываемОшибки.put("whose_error", ЛокальнаяВерсияПОСравнение);
-            new SubClassErrors(context).МетодЗаписиОшибок(valuesЗаписываемОшибки);
+            new SubClassErrors(activity).МетодЗаписиОшибок(valuesЗаписываемОшибки);
         }
     }
 

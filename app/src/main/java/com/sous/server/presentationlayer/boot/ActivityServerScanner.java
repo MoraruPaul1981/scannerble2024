@@ -3,16 +3,12 @@ package com.sous.server.presentationlayer.boot;
 import static android.content.IntentFilter.SYSTEM_HIGH_PRIORITY;
 
 import android.annotation.SuppressLint;
-import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
 import android.content.ContentValues;
-import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.pm.ActivityInfo;
 import android.content.pm.PackageInfo;
-import android.location.Location;
 import android.location.LocationManager;
-import android.location.LocationRequest;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -28,7 +24,6 @@ import com.sous.server.R;
 import com.sous.server.businesslayer.BI_presentationlayer.bl_MainActivityNewServerScanner.Bi_MainActivityNewServerScanner;
 import com.sous.server.businesslayer.BroadcastreceiverServer.BroadcastReceiverChangedGPSLocation;
 import com.sous.server.businesslayer.BroadcastreceiverServer.BroadcastReceiverGattServerAlcConn;
-import com.sous.server.businesslayer.BroadcastreceiverServer.BroadcastReceiverGattServerName_Changed;
 import com.sous.server.businesslayer.BroadcastreceiverServer.BroadcastReceiverGattServerOthers;
 import com.sous.server.businesslayer.Errors.SubClassErrors;
 import com.sous.server.businesslayer.Permissions.SetPermissions;
@@ -78,7 +73,7 @@ public class ActivityServerScanner extends AppCompatActivity {
 
             // TODO: 24.07.2024 устанвливаем разрешения
 
-       new SetPermissions(version).additionalpermissionsBle(this,getApplicationContext());
+       new SetPermissions(version).permissionsActivityGattBle(this );
 
 
 

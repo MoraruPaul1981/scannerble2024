@@ -34,6 +34,7 @@ import com.sous.server.businesslayer.BI_presentationlayer.bl_navigationView.GetN
 import com.sous.server.businesslayer.Errors.SubClassErrors;
 import com.sous.server.businesslayer.Eventbus.MessageScannerServer;
 import com.sous.server.businesslayer.Eventbus.ParamentsScannerServer;
+import com.sous.server.businesslayer.Permissions.SetPermissions;
 import com.sous.server.presentationlayer.boot.ActivityServerScanner;
 
 import org.greenrobot.eventbus.EventBus;
@@ -79,6 +80,12 @@ public class FragmentGattServerRecyclerView extends Fragment {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         try {
+            // TODO: 24.07.2024 устанвливаем разрешения
+
+            new SetPermissions(version).permissionsActivityGattBle(getActivity() );
+
+
+
             fragmentManager = getActivity().getSupportFragmentManager();
             animation  = AnimationUtils.loadAnimation(getContext(), R.anim.slide_in_row_vibrator2);
 
