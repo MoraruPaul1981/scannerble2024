@@ -11,10 +11,13 @@ import android.content.pm.PackageInfo;
 import android.util.Log;
 
 import com.sous.scanner.businesslayer.Errors.SubClassErrors;
+import com.sous.scanner.businesslayer.bl_BroadcastReciver.BusinesslogicBroadcastReceiverACL;
 import com.sous.scanner.businesslayer.bl_BroadcastReciver.Businesslogic_GattReflection;
 
 import java.time.LocalDateTime;
 import java.util.concurrent.atomic.AtomicReference;
+
+import io.reactivex.rxjava3.core.Completable;
 
 public class BroadcastReceiverNAME_CHANGED extends BroadcastReceiver {
 
@@ -41,16 +44,16 @@ public class BroadcastReceiverNAME_CHANGED extends BroadcastReceiver {
                 // TODO: 31.07.2024
                 case   BluetoothDevice.ACTION_NAME_CHANGED :
                 case   BluetoothDevice.ACTION_CLASS_CHANGED :
-                case   BluetoothAdapter.ACTION_STATE_CHANGED :
                     // TODO: 11.08.2024
-                    /*Businesslogic_GattClinetSuccessNAMECHANGED businesslogicGattClinetSuccessNAMECHANGED
-                            =new Businesslogic_GattClinetSuccessNAMECHANGED(context,version);
+                    if (bluetoothDevice.getAddress()!=null) {
+                        // TODO: 13.08.2024
+                        new BusinesslogicBroadcastReceiverACL(context,version).
+                                successLocalBroadcastManager(intent, bluetoothDevice,  pendingResultAtomicReferenceClient);
 
-                    businesslogicGattClinetSuccessNAMECHANGED.successLocalBroadcastManagerNAMECHANGED(intent,pendingResultAtomicReferenceClient);*/
+                        new Businesslogic_GattReflection(context,version).unpairDevice(bluetoothDevice);
+                    }
 
-                   new Businesslogic_GattReflection(context,version).unpairDevice(bluetoothDevice);
-
-                // TODO: 31.07.2024
+                    // TODO: 31.07.2024
                     Log.i(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                             " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
                             " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"

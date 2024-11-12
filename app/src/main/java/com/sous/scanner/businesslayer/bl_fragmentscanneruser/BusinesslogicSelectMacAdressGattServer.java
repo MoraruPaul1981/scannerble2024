@@ -37,7 +37,6 @@ import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.android.material.textview.MaterialTextView;
 import com.sous.scanner.R;
 import com.sous.scanner.businesslayer.Errors.SubClassErrors;
-import com.sous.scanner.businesslayer.bl_LocalBroadcastManagers.BussenloginSaredPreferense;
 import com.sous.scanner.datalayer.bl_DataBase.BusinesslogicDatabase;
 
 import java.util.Date;
@@ -83,7 +82,7 @@ public class BusinesslogicSelectMacAdressGattServer {
 
 
     @SuppressLint("Range")
-  public   void AlertDialogSelectionMacAdress( ){
+  public   void alertDialogSelectionMacAdress( ){
         // TODO: 19.08.2024
         try {
         alertDialogMacAdress = new MaterialAlertDialogBuilder(activity){

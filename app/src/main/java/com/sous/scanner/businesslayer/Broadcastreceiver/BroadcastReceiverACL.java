@@ -60,11 +60,13 @@ public class BroadcastReceiverACL extends BroadcastReceiver {
                 // TODO: 31.07.2024
                 case   BluetoothDevice.ACTION_ACL_CONNECTED :
                     // TODO: 02.08.2024
-                            // TODO: 13.08.2024
-                            new BusinesslogicBroadcastReceiverACL(context,version).
-                                      successLocalBroadcastManager(intent, bluetoothDevice,  pendingResultAtomicReferenceClient);
+                    if (bluetoothDevice.getAddress()!=null) {
+                        // TODO: 13.08.2024
+                        new BusinesslogicBroadcastReceiverACL(context,version).
+                                  successLocalBroadcastManager(intent, bluetoothDevice,  pendingResultAtomicReferenceClient);
 
-                          new Businesslogic_GattReflection(context,version).unpairDevice(bluetoothDevice);
+                        new Businesslogic_GattReflection(context,version).unpairDevice(bluetoothDevice);
+                    }
 
                     // TODO: 01.11.2024
 

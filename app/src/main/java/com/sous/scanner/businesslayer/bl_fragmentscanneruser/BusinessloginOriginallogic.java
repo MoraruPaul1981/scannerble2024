@@ -244,7 +244,7 @@ public class BusinessloginOriginallogic {
 
                             searchview_maclistdeviceserver.startAnimation(animation);
 
-                            businesslogicSelectMacAdressGattServer.AlertDialogSelectionMacAdress( );
+                            businesslogicSelectMacAdressGattServer.alertDialogSelectionMacAdress( );
 
 
                             Log.d(context.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName()
