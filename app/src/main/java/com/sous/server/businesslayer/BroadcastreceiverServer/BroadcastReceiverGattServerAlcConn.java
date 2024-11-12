@@ -59,25 +59,28 @@ public class BroadcastReceiverGattServerAlcConn extends BroadcastReceiver {
                 case   BluetoothDevice.ACTION_ACL_CONNECTED :
                 case   BluetoothDevice.ACTION_FOUND:
                     // TODO: 11.08.2024
+                    Integer getWriteNewDevice= null;
 
 
-                    // TODO: 07.08.2024
-                    final Bl_BloadcastGatt_getDeviceClentGatt blBloadcastGattGetDeviceClentGatt=  new Bl_BloadcastGatt_getDeviceClentGatt(context,version);
+                    if (bluetoothDevice.getAddress()!=null) {
+                        // TODO: 07.08.2024
+                        final Bl_BloadcastGatt_getDeviceClentGatt blBloadcastGattGetDeviceClentGatt=  new Bl_BloadcastGatt_getDeviceClentGatt(context,version);
 
-            Integer getWriteNewDevice=          blBloadcastGattGetDeviceClentGatt.startingGetDeviceBLECkient(  intent ,   pendingResultAtomicReferenceServer,bluetoothDevice,preferencesGatt);
-                    // TODO: 30.07.2024
+                        getWriteNewDevice = blBloadcastGattGetDeviceClentGatt.startingGetDeviceBLECkient(  intent ,   pendingResultAtomicReferenceServer,bluetoothDevice,preferencesGatt);
+                        // TODO: 30.07.2024
 
 
-                    // TODO: 24.10.2024 Обраьный ответ клиенту от сервера что произошел состыковка
-                    if (getWriteNewDevice>0) {
-                        // TODO: 29.10.2024
-                        GetReversesCallBackToAndroid reversesCallBack=new GetReversesCallBackToAndroid(context,version);
-                        // TODO: 24.10.2024 запускаем обратно вызов уже сервера на клиент
-                        reversesCallBack.getReversesCallBackToAndroid(bluetoothDevice);
+                        // TODO: 24.10.2024 Обраьный ответ клиенту от сервера что произошел состыковка
+                        if (getWriteNewDevice>0) {
+                            // TODO: 29.10.2024
+                            GetReversesCallBackToAndroid reversesCallBack=new GetReversesCallBackToAndroid(context,version);
+                            // TODO: 24.10.2024 запускаем обратно вызов уже сервера на клиент
+                            reversesCallBack.getReversesCallBackToAndroid(bluetoothDevice);
+                        }
+
+
+                        new Businesslogic_GattReflection(context,version).unpairDevice(bluetoothDevice);
                     }
-
-
-                    new Businesslogic_GattReflection(context,version).unpairDevice(bluetoothDevice);
                     // TODO: 31.07.2024
                     Log.i(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                             " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
