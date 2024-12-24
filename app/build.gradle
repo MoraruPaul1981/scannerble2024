@@ -35,9 +35,12 @@ allprojects {
 
 
 
+
 apply plugin: 'com.android.application'
 apply plugin: 'com.google.dagger.hilt.android'
 apply plugin: 'com.google.gms.google-services'
+
+
 /*apply plugin: 'org.jetbrains.kotlin.android'*/
 
 
@@ -181,6 +184,8 @@ dependencies {
     /////TODO Workmanager
     implementation 'androidx.work:work-runtime:2.9.1'
     implementation 'androidx.work:work-runtime-ktx:2.9.1'
+
+
     testImplementation 'androidx.work:work-testing:2.9.1'
     implementation "androidx.work:work-multiprocess:2.9.1"
 
@@ -350,7 +355,11 @@ dependencies {
 
 
     //TODO STARTING
-    implementation "androidx.startup:startup-runtime:1.1.1"
+    implementation 'androidx.startup:startup-runtime:1.1.1'
+
+
+
+
 
 
 }
