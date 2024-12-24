@@ -34,28 +34,26 @@ public class TLSSocketFactoryTLS extends SSLSocketFactory {
     public SSLSocketFactory TLSSocketFactoryTLS(@NotNull Context context) throws KeyManagementException, NoSuchAlgorithmException {
        SSLContext sslContext=null;
         try {
-            CertificateFactory cf = CertificateFactory.getInstance("X.509");
-         InputStream caFileInputStream =  context.getResources().openRawResource(R.raw.keystore32cer);
 
-            X509Certificate certificate = (X509Certificate) cf.generateCertificate(caFileInputStream);
+            KeyStore ksTrust = KeyStore.getInstance("BKS");
+            InputStream instream = context.getResources().openRawResource(R.raw.androidserver);
+            ksTrust.load(instream, "password".toCharArray());
 
-           // Certificate ca = cf.generateCertificate(caFileInputStream);
-            KeyStore keyStore = KeyStore.getInstance(KeyStore.getDefaultType());
-            keyStore.load(null, null);
-            keyStore.setCertificateEntry("jboss", certificate);
-            TrustManagerFactory trustManagerFactory=TrustManagerFactory.getInstance(TrustManagerFactory.getDefaultAlgorithm());
-            trustManagerFactory.init(keyStore);
-            //  final SSLContext sslContext = SSLContext.getInstance("TLSv1.2");
-            sslContext = SSLContext.getInstance("TLSv1.2");
-            sslContext.init(null, trustManagerFactory.getTrustManagers(), new SecureRandom());
+            // TrustManager decides which certificate authorities to use.
+            TrustManagerFactory tmf = TrustManagerFactory
+                    .getInstance(TrustManagerFactory.getDefaultAlgorithm());
+            tmf.init(ksTrust);
+            sslContext = SSLContext.getInstance("TLS");
+            sslContext.init(null, tmf.getTrustManagers(), null);
             // Create an ssl socket factory with our all-trusting manager
             internalSSLSocketFactory = sslContext.getSocketFactory();
             // TODO: 25.12.2023  clear
-            caFileInputStream.close();
+            instream.close();
 
             Log.i(this.getClass().getName(),  " Атоманически установкаОбновление ПО "+
                     Thread.currentThread().getStackTrace()[2].getMethodName()+
-                    " время " +new Date().toLocaleString()+ " sslContext " +sslContext +  "   certificate.getPublicKey() " +   certificate.getPublicKey());
+                    " время " +new Date().toLocaleString()+ " sslContext " +sslContext +  "   certificate.getPublicKey() "
+                    +   ksTrust.getKey("locahost", "password".toCharArray()));
 
         } catch (Exception e) {
             e.printStackTrace();
