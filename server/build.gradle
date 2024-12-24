@@ -1,0 +1,73 @@
+plugins {
+    id 'com.android.application'
+}
+
+android {
+    signingConfigs {
+        debug {
+            storeFile file('C:\\Users\\moraru_pi\\AndroidStudioProjects\\DSU\\dsu1\\dsu1_keys.jks')
+            keyPassword 'dsu1dsu1down'
+            keyAlias 'tabels_releases'
+            storePassword 'dsu1dsu1up'
+        }
+        release {
+            storeFile file('C:\\Users\\moraru_pi\\AndroidStudioProjects\\DSU\\dsu1\\dsu1_keys.jks')
+            storePassword 'dsu1dsu1up'
+            keyAlias 'tabels_releases'
+            keyPassword 'dsu1dsu1down'
+        }
+    }
+    namespace 'com.sous.server'
+    compileSdk 33
+
+    defaultConfig {
+        applicationId "com.sous.server"
+        minSdk 29
+        targetSdk 33
+        versionCode 1
+        versionName "1.0"
+
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_11
+        targetCompatibility JavaVersion.VERSION_11
+    }
+    buildToolsVersion '33.0.1'
+}
+
+dependencies {
+
+    implementation 'androidx.appcompat:appcompat:1.6.0'
+    implementation 'com.google.android.material:material:1.8.0'
+    testImplementation 'junit:junit:4.13.2'
+    androidTestImplementation 'androidx.test.ext:junit:1.1.5'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.1'
+    /////TODO биботека для службы WOrk Manager
+    implementation 'androidx.work:work-runtime:2.7.1'
+    implementation 'androidx.work:work-runtime-ktx:2.7.1'
+    testImplementation 'androidx.work:work-testing:2.7.1'
+    implementation "androidx.work:work-multiprocess:2.7.1"
+
+
+    //TODO Firebase Push Notifications
+    implementation 'com.google.firebase:firebase-crashlytics-buildtools:2.9.2'
+    implementation 'com.firebase:firebase-jobdispatcher:0.5.2'
+    implementation   'com.google.gms:google-services:4.2.0'
+    implementation   'com.google.firebase:firebase-bom:26.1.1'
+    implementation 'com.google.firebase:firebase-crashlytics-gradle:2.8.0'
+    implementation 'com.google.firebase:firebase-messaging-directboot:23.0.0'
+    implementation   'com.google.firebase:firebase-messaging:22.0.0'
+    //TODO OneSignal
+    implementation 'com.onesignal:OneSignal:4.8.3'
+    ///TODO RXJAVA BLE
+
+    implementation "com.polidea.rxandroidble3:rxandroidble:1.17.2"
+}
