@@ -3176,9 +3176,9 @@ Class_GRUD_SQL_Operations classGrudSqlOperationsУдалениеДанныхЧе
 
                                         File ПутькФайлу = null;
                                         if (Build.VERSION.SDK_INT >= 30) {
-                                        ПутькФайлу = context.getExternalFilesDir( Environment.DIRECTORY_DOWNLOADS+ File.separator + PatchDeleteJsonAnalitic);
+                                        ПутькФайлу = context.getExternalFilesDir( Environment.DIRECTORY_DOWNLOADS+ File.separator + PatchDeleteJsonAnalitic+File.separator+ИмяФайлаЗагрузки);
                                         } else {
-                                            ПутькФайлу = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS+ File.separator + PatchDeleteJsonAnalitic);
+                                            ПутькФайлу = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS+ File.separator + PatchDeleteJsonAnalitic+File.separator+ИмяФайлаЗагрузки);
                                         }
 
 
@@ -3196,7 +3196,7 @@ Class_GRUD_SQL_Operations classGrudSqlOperationsУдалениеДанныхЧе
 
 
 
-                                        СамФайлJsonandApk.set(new File(ПутькФайлу, "/" + ИмяФайлаЗагрузки )) ;
+                                        СамФайлJsonandApk.set(ПутькФайлу) ;
                                         СамФайлJsonandApk.get().setWritable(true);
                                         СамФайлJsonandApk.get().setExecutable(true);
 
