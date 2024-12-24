@@ -29,6 +29,7 @@ import java.io.Serializable;
 import java.io.StringWriter;
 import java.util.Date;
 import java.util.LinkedHashMap;
+import java.util.concurrent.Callable;
 import java.util.concurrent.ConcurrentSkipListSet;
 import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.concurrent.ExecutionException;
@@ -39,10 +40,14 @@ import javax.net.ssl.SSLSocketFactory;
 
 import io.reactivex.rxjava3.core.Flowable;
 import io.reactivex.rxjava3.core.Maybe;
+import io.reactivex.rxjava3.core.MaybeObserver;
 import io.reactivex.rxjava3.core.Observable;
+import io.reactivex.rxjava3.disposables.Disposable;
 import io.reactivex.rxjava3.functions.Action;
 import io.reactivex.rxjava3.functions.Consumer;
 import io.reactivex.rxjava3.functions.Predicate;
+import io.reactivex.rxjava3.internal.observers.DisposableAutoReleaseMultiObserver;
+import io.reactivex.rxjava3.observers.DisposableMaybeObserver;
 import io.reactivex.rxjava3.parallel.ParallelFlowable;
 import io.reactivex.rxjava3.schedulers.Schedulers;
 
@@ -224,7 +229,9 @@ public class ProccesorparallelSynch   {
                     " ВерсияДанныхОтSqlServer " +ВерсияДанныхОтSqlServer+ " ИмяТаблицыоТВерсияДанныхОтSqlServer "
                     + ИмяТаблицыоТВерсияДанныхОтSqlServer +
                     "   ВремяВерсияОтSqlServer " + ВремяВерсияОтSqlServer);
-            
+
+
+            ИмяТаблицыоТВерсияДанныхОтSqlServer="data_tabels";
             /////////////TODO ИДЕМ ПО ШАГАМ К ЗАПУСКИ СИНХРОГНИАЗЦИИ
             РезультатТаблицыОбмена=
                     startSendingDataTotheServerOrReceivingDataFromTheJbossServer(ИмяТаблицыоТВерсияДанныхОтSqlServer,
@@ -274,66 +281,77 @@ public class ProccesorparallelSynch   {
                         +" ВремяОтSqlServer " +ВремяОтSqlServer);
 
 // TODO: 24.09.2024 Запускаем Отправление и или ПОлучение данных  сервера JBoss
-            Maybe.fromAction(()->{
+            Maybe.empty().blockingSubscribe(new MaybeObserver<Object>() {
+                @Override
+                public void onSubscribe(@io.reactivex.rxjava3.annotations.NonNull Disposable d) {
 
-// TODO: 08.04.2024 SEND SERVERR JBOSS POST
-                        completedPostAndGetInsertorUpdateOperations.add(  startSendingDatatoTheServerOnjboss(ИмяТаблицы,
-                        ВерсияДанныхсSqlServer,
-                        PublicID,
-                        ВремяОтSqlServer,"POST"));
+                    // TODO: 08.04.2024 SEND SERVERR JBOSS POST
+                    completedPostAndGetInsertorUpdateOperations.add(startSendingDatatoTheServerOnjboss(ИмяТаблицы,
+                            ВерсияДанныхсSqlServer,
+                            PublicID,
+                            ВремяОтSqlServer, "POST"));
 
-                // TODO: 24.09.2024
+                    // TODO: 24.12.2024
+                    onSuccess(d);
+
+                    // TODO: 24.09.2024
+                    Log.d(this.getClass().getName(), "\n"
+                            + " время: " + new Date() + "\n+" +
+                            " Класс в процессе... " + this.getClass().getName() + "\n" +
+                            " метод в процессе... " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                            "  +  completedPostAndGetInsertorUpdateOperations.size() " + completedPostAndGetInsertorUpdateOperations.size());
+                }
+
+                @Override
+                public void onSuccess(@io.reactivex.rxjava3.annotations.NonNull Object o) {
+                    // TODO: 08.04.2024 через Retry Obsever множественое ображение  к серверу
+                    completedPostAndGetInsertorUpdateOperations.add(completedInsertorUpdateOperations(ИмяТаблицы,
+                            ВерсияДанныхсSqlServer,
+                            PublicID,
+                            ВремяОтSqlServer, "GET"));
+
+                    Log.d(this.getClass().getName(), "\n"
+                            + " время: " + new Date() + "\n+" +
+                            " Класс в процессе... " + this.getClass().getName() + "\n" +
+                            " метод в процессе... " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                            "  +  completedPostAndGetInsertorUpdateOperations.get() " + completedPostAndGetInsertorUpdateOperations.size());
+                }
+
+                @Override
+                public void onError(@io.reactivex.rxjava3.annotations.NonNull Throwable e) {
+                    e.printStackTrace();
+                    Exception exception=new Exception(e);
+                    Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
+                            " Линия  :" + Thread.currentThread().getStackTrace()[2].getLineNumber());
+                    new Class_Generation_Errors(context).МетодЗаписиВЖурналНовойОшибки(exception.toString(), this.getClass().getName(),
+                            Thread.currentThread().getStackTrace()[2].getMethodName(), Thread.currentThread().getStackTrace()[2].getLineNumber());
+                }
+
+                @Override
+                public void onComplete() {
+                    ///   TODO: 08.04.2024 Показываем пользовалю ПРоценты
+                    if (completedPostAndGetInsertorUpdateOperations.size() > 0) {
+                        // TODO: 24.12.2024
+                        new GetPrograssbarChangeIndicator(context).setAsyncrograssbarMap(VesionTableAsync, ИмяТаблицы, completedPostAndGetInsertorUpdateOperations.size());
+                    }
+                    Log.d(this.getClass().getName(), "\n"
+                            + " время: " + new Date() + "\n+" +
+                            " Класс в процессе... " + this.getClass().getName() + "\n" +
+                            " метод в процессе... " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                            "  +  completedPostAndGetInsertorUpdateOperations.get() " + completedPostAndGetInsertorUpdateOperations.size());
+                }
+            });
 
 
-                Log.d(this.getClass().getName(), "\n"
-                        + " время: " + new Date() + "\n+" +
-                        " Класс в процессе... " + this.getClass().getName() + "\n" +
-                        " метод в процессе... " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n"+
-                        "  +  completedPostAndGetInsertorUpdateOperations.size() " +  completedPostAndGetInsertorUpdateOperations.size());
-
-            }).doOnError(e->{
-                e.printStackTrace();
-                Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
-                        " Линия  :" + Thread.currentThread().getStackTrace()[2].getLineNumber());
-                new   Class_Generation_Errors(context).МетодЗаписиВЖурналНовойОшибки(e.toString(), this.getClass().getName(),
-                        Thread.currentThread().getStackTrace()[2].getMethodName(), Thread.currentThread().getStackTrace()[2].getLineNumber());
 
 
-
-
-            }).doOnComplete(()->{
-                // TODO: 24.09.2024  GET DATA OT SERVER JBOSS GET
-
-// TODO: 08.04.2024 через Retry Obsever множественое ображение  к серверу
-                        completedPostAndGetInsertorUpdateOperations.add(  completedInsertorUpdateOperations(ИмяТаблицы,
-                        ВерсияДанныхсSqlServer,
-                        PublicID,
-                        ВремяОтSqlServer,"GET"));
-
-                Log.d(this.getClass().getName(), "\n"
-                        + " время: " + new Date() + "\n+" +
-                        " Класс в процессе... " + this.getClass().getName() + "\n" +
-                        " метод в процессе... " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n"+
-                        "  +  completedPostAndGetInsertorUpdateOperations.get() " +  completedPostAndGetInsertorUpdateOperations.size());
-
-            }).doOnTerminate(()->{
-
-                        ///   TODO: 08.04.2024 Показываем пользовалю ПРоценты
-                        if (completedPostAndGetInsertorUpdateOperations.size()>0) {
-                            new GetPrograssbarChangeIndicator(context).setAsyncrograssbarMap( VesionTableAsync,ИмяТаблицы, completedPostAndGetInsertorUpdateOperations.size());
-                        }
-                        Log.d(this.getClass().getName(), "\n"
-                                + " время: " + new Date() + "\n+" +
-                                " Класс в процессе... " + this.getClass().getName() + "\n" +
-                                " метод в процессе... " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n"+
-                                "  +  completedPostAndGetInsertorUpdateOperations.get() " +  completedPostAndGetInsertorUpdateOperations.size());
-                    })
-                    .blockingSubscribe();
             Log.d(this.getClass().getName(), "\n"
                     + " время: " + new Date() + "\n+" +
                     " Класс в процессе... " + this.getClass().getName() + "\n" +
-                    " метод в процессе... " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n"+"  " +
-                    "+  completedPostAndGetInsertorUpdateOperations.get() " +  completedPostAndGetInsertorUpdateOperations.size());
+                    " метод в процессе... " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                    "  +  completedPostAndGetInsertorUpdateOperations.get() " + completedPostAndGetInsertorUpdateOperations.size());
+
+
         } catch (Exception e) {
             e.printStackTrace();
             Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
@@ -341,7 +359,7 @@ public class ProccesorparallelSynch   {
             new   Class_Generation_Errors(context).МетодЗаписиВЖурналНовойОшибки(e.toString(), this.getClass().getName(),
                     Thread.currentThread().getStackTrace()[2].getMethodName(), Thread.currentThread().getStackTrace()[2].getLineNumber());
         }
-        return      completedPostAndGetInsertorUpdateOperations.stream().mapToLong(i->i).reduce(0,Long::sum);
+        return        completedPostAndGetInsertorUpdateOperations.stream().mapToLong(i->i).reduce(0,Long::sum);
     }
 
 

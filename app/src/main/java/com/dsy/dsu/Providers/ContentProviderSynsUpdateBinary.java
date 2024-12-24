@@ -72,6 +72,7 @@ import io.reactivex.rxjava3.core.Flowable;
 import io.reactivex.rxjava3.functions.Action;
 import io.reactivex.rxjava3.functions.Consumer;
 import io.reactivex.rxjava3.functions.Predicate;
+import io.reactivex.rxjava3.parallel.ParallelFlowable;
 
 
 public class ContentProviderSynsUpdateBinary extends ContentProvider {
@@ -540,7 +541,7 @@ public class ContentProviderSynsUpdateBinary extends ContentProvider {
                                                         roomDatabase,ФлагКакойСинхронизацияПерваяИлиНет);
                                 bundleОперацииUpdateOrinsert.putLong("completeasync",РезультатJsonDeserializer);*/
 
-
+                                
 
                                 break;
                             // TODO: 05.07.2023 no empty table

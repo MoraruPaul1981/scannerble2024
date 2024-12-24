@@ -3069,7 +3069,8 @@ Class_GRUD_SQL_Operations classGrudSqlOperationsУдалениеДанныхЧе
                 try {
                     String enableSSl = preferencesJboss.getString("enablesll","http");
 
-                    String PatchDeleteJsonAnalitic="SousAvtoFile/UpdatePO";
+                    String PatchDeleteJsonAnalitic="SousAvtoFile"+File.separator+"UpdatePO";
+
                     String СтрокаСвязиСсервером =enableSSl+"://"+ИмяСервера+":"+ИмяПорта+"/";;
                     СтрокаСвязиСсервером = СтрокаСвязиСсервером.replace(" ", "%20");
                     СтрокаСвязиСсервером = СтрокаСвязиСсервером + АдресЗагрузки; /////"dsu1.glassfish/update_android_dsu1/output-metadata.json";
