@@ -359,7 +359,9 @@ dependencies {
 
 
 
-
+//TODO new MOdules
+    api project(':back')
+    api project(':backasync')
 
 
 }

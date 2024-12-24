@@ -29,7 +29,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 
-import com.dsu.backgroundoperation.BackgroundGet;
+
 import com.dsy.dsu.AllDatabases.SQLTE.GetSQLiteDatabase;
 import com.dsy.dsu.BootAndAsync.EventsBus.MessageEvensBusAyns;
 import com.dsy.dsu.BootAndAsync.EventsBus.MessageEvensBusUpdatePO;
@@ -196,8 +196,8 @@ public class MainActivityPasswords extends AppCompatActivity {
                     " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n");
 
 
-           BackgroundGet backgroundGet=new BackgroundGet();
-            backgroundGet.backgroundGet();;
+       /*    BackgroundGet backgroundGet=new BackgroundGet();
+            backgroundGet.backgroundGet();;*/
 
         } catch (Exception e) {
             ПрогрессБарДляВходаСистему.setVisibility(View.INVISIBLE);// при нажатии делаем видимый програсссбар
