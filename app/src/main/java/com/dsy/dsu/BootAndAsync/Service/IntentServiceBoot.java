@@ -145,7 +145,7 @@ public class IntentServiceBoot extends IntentService {
     @Override
     protected void onHandleIntent(Intent intent) {
         try {
-            stopForeground(true);
+
 
             // TODO: 24.01.2024 Синхрониазция и Обновление ПО
             if (intent.getAction().contains("IntentServiceBootAsync.com")) {
@@ -163,6 +163,10 @@ public class IntentServiceBoot extends IntentService {
                 }
 
             }
+
+            // TODO: 25.12.2024
+            desibleServiceForeground();
+
             Log.d(getApplicationContext().getClass().getName(), "\n"
                     + " время: " + new Date() + "\n+" +
                     " Класс в процессе... " + this.getClass().getName() + "\n" +
@@ -179,7 +183,9 @@ public class IntentServiceBoot extends IntentService {
 
     }
 
-
+    private void desibleServiceForeground() {
+        stopForeground(true);
+    }
 
 
     // TODO: 10.10.2024 end class

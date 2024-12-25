@@ -331,8 +331,8 @@ dependencies {
 
 
 //TODO new MOdules
-    api project(':back')
-    api project(':backasync')
+    implementation project(':back')
+    implementation project(':backasync')
     //implementation project(':backgrud')
 
 

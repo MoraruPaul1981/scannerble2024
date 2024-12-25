@@ -199,20 +199,7 @@ public class MainActivityPasswords extends AppCompatActivity {
                     " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n");
 
 
-            GetModuleBack getModuleBack=new GetModuleBack();
 
-            GetModuleBackAsync getModuleBackAsync=new GetModuleBackAsync();
-
-
-            //GetModuleGrud getModuleGrud=new GetModuleGrud();
-
-
-           getModuleBack.getModuleBack();
-
-
-            getModuleBackAsync.getModuleBackAsync() ;
-
-           // getModuleGrud.getModuleGrud();
 
 
         } catch (Exception e) {

@@ -21,6 +21,7 @@ import com.dsy.dsu.BusinessLogicAll.DATE.Class_Generation_Data;
 
 import com.dsy.dsu.CnangeServers.PUBLIC_CONTENT;
 import com.dsy.dsu.Errors.Class_Generation_Errors;
+import com.dsy.dsu.Hilt.OkhhtpBuilder.GetOkhhtpBuilder;
 import com.dsy.dsu.Hilt.OkhhtpBuilder.GetOkhhtpBuilderSSL;
 import com.dsy.dsu.Hilt.OkhhtpBuilder.InGetOkhhtpBuilder;
 import com.google.common.io.ByteSource;
@@ -452,7 +453,15 @@ import okio.BufferedSink;
 
            /// OkHttpClient.Builder builderokhtttp = new OkHttpClient.Builder();
 
-            InGetOkhhtpBuilder inGetOkhhtpBuilder=new GetOkhhtpBuilderSSL(context);
+            InGetOkhhtpBuilder inGetOkhhtpBuilder;
+            if (enableSSl.equalsIgnoreCase("http")) {
+                // TODO: 25.12.2024 обычное соединение http  
+                inGetOkhhtpBuilder = new GetOkhhtpBuilder(context);
+            } else {
+                inGetOkhhtpBuilder = new GetOkhhtpBuilderSSL(context);
+            }
+
+
             OkHttpClient.Builder builderokhtttp=    inGetOkhhtpBuilder.getOkhhtpBuilder();
             // TODO: 15.12.2023 end test
             OkHttpClient okHttpClientПинг = builderokhtttp.addInterceptor(new Interceptor() {
