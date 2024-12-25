@@ -53,6 +53,9 @@ import com.dsy.dsu.Settings.Model.bl_SettingsActivity.GetSettingTableSaves;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.textfield.TextInputEditText;
 import com.jakewharton.rxbinding4.view.RxView;
+import com.sous.back.GetModuleBack;
+import com.sous.backasync.GetModuleBackAsync;
+
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -196,8 +199,21 @@ public class MainActivityPasswords extends AppCompatActivity {
                     " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n");
 
 
-       /*    BackgroundGet backgroundGet=new BackgroundGet();
-            backgroundGet.backgroundGet();;*/
+            GetModuleBack getModuleBack=new GetModuleBack();
+
+            GetModuleBackAsync getModuleBackAsync=new GetModuleBackAsync();
+
+
+            //GetModuleGrud getModuleGrud=new GetModuleGrud();
+
+
+           getModuleBack.getModuleBack();
+
+
+            getModuleBackAsync.getModuleBackAsync() ;
+
+           // getModuleGrud.getModuleGrud();
+
 
         } catch (Exception e) {
             ПрогрессБарДляВходаСистему.setVisibility(View.INVISIBLE);// при нажатии делаем видимый програсссбар

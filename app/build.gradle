@@ -1,21 +1,13 @@
 
-buildscript {
-    repositories {
-        google()
-        mavenCentral()
-        gradlePluginPortal()
-        jcenter()
-    }
-    dependencies {
-    }
-}
 
-allprojects {
-    repositories {
-        google()
-        mavenCentral()
-        jcenter()
-    }
+
+
+plugins {
+
+    id "com.android.application"
+    id 'com.google.gms.google-services'
+    id 'com.google.dagger.hilt.android'
+
 }
 
 
@@ -24,24 +16,6 @@ allprojects {
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-apply plugin: 'com.android.application'
-apply plugin: 'com.google.dagger.hilt.android'
-apply plugin: 'com.google.gms.google-services'
-
-
-/*apply plugin: 'org.jetbrains.kotlin.android'*/
 
 
 
@@ -92,10 +66,6 @@ android {
 
     buildFeatures {
         compose true
-    }
-    composeOptions {
-        kotlinCompilerExtensionVersion compose_version
-        kotlinCompilerVersion '1.6.0'
     }
 
 
@@ -184,6 +154,7 @@ dependencies {
     /////TODO Workmanager
     implementation 'androidx.work:work-runtime:2.9.1'
     implementation 'androidx.work:work-runtime-ktx:2.9.1'
+
 
 
     testImplementation 'androidx.work:work-testing:2.9.1'
@@ -362,6 +333,7 @@ dependencies {
 //TODO new MOdules
     api project(':back')
     api project(':backasync')
+    //implementation project(':backgrud')
 
 
 }

@@ -2,13 +2,16 @@
 <project version="4">
   <component name="deploymentTargetDropDown">
     <value>
+      <entry key="app">
+        <State />
+      </entry>
       <entry key="app.backgroundoperation">
         <State />
       </entry>
       <entry key="async">
         <State />
       </entry>
-      <entry key="tabel">
+      <entry key="backgrud">
         <State />
       </entry>
     </value>

@@ -1,16 +1,19 @@
 plugins {
-    id 'com.android.library'
+    id 'com.android.application'
 }
 
 android {
-    namespace 'com.sous.backasync'
+    namespace 'com.sous.backgrud'
     compileSdk 34
 
     defaultConfig {
+        applicationId "com.sous.backgrud"
         minSdk 29
+        targetSdk 34
+        versionCode 1
+        versionName "1.0"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
-        consumerProguardFiles "consumer-rules.pro"
     }
 
     buildTypes {
