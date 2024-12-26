@@ -138,7 +138,7 @@ import okio.BufferedSink;
 
 
 
-            InGetOkhhtpBuilder inGetOkhhtpBuilder=new GetOkhhtpBuilderSSL(context);
+            InGetOkhhtpBuilder inGetOkhhtpBuilder=new GetOkhhtpBuilderSSL(context,getsslSocketFactory2);
             OkHttpClient.Builder builderokhtttp=    inGetOkhhtpBuilder.getOkhhtpBuilder();
 
             OkHttpClient okHttpClientДанныеОтСервера = builderokhtttp.addInterceptor(new Interceptor() {
@@ -298,7 +298,7 @@ import okio.BufferedSink;
 
 
 
-            InGetOkhhtpBuilder inGetOkhhtpBuilder=new GetOkhhtpBuilderSSL(context);
+            InGetOkhhtpBuilder inGetOkhhtpBuilder=new GetOkhhtpBuilderSSL(context,getsslSocketFactory2);
             OkHttpClient.Builder builderokhtttp=    inGetOkhhtpBuilder.getOkhhtpBuilder();
             OkHttpClient okHttpClientДанныеОтСервера = builderokhtttp.addInterceptor(new Interceptor() {
                         @Override
@@ -448,21 +448,13 @@ import okio.BufferedSink;
             СтрокаСвязиСсервером = СтрокаСвязиСсервером.replace(" ", "%20");
             URL Adress = new URL(СтрокаСвязиСсервером);
             Log.d(this.getClass().getName(), " СтрокаСвязиСсервером " + СтрокаСвязиСсервером);
-            // TODO: 11.03.2023 новый тест код
-            // MediaType JSON = MediaType.parse("application/json; charset=utf-8");
+            // TODO: 11.03.2023 новый тест коде
 
-           /// OkHttpClient.Builder builderokhtttp = new OkHttpClient.Builder();
+            // TODO: 25.12.2024 Какой тип okhhtp подключить
 
-            InGetOkhhtpBuilder inGetOkhhtpBuilder;
-            if (enableSSl.equalsIgnoreCase("http")) {
-                // TODO: 25.12.2024 обычное соединение http  
-                inGetOkhhtpBuilder = new GetOkhhtpBuilder(context);
-            } else {
-                inGetOkhhtpBuilder = new GetOkhhtpBuilderSSL(context);
-            }
-
-
+            InGetOkhhtpBuilder inGetOkhhtpBuilder= new GetOkhhtpBuilderSSL(context,getsslSocketFactory2);
             OkHttpClient.Builder builderokhtttp=    inGetOkhhtpBuilder.getOkhhtpBuilder();
+
             // TODO: 15.12.2023 end test
             OkHttpClient okHttpClientПинг = builderokhtttp.addInterceptor(new Interceptor() {
                         @Override
@@ -665,7 +657,7 @@ import okio.BufferedSink;
                     Log.d(this.getClass().getName(), " Adress  " + Adress);
 
 
-                    InGetOkhhtpBuilder inGetOkhhtpBuilder=new GetOkhhtpBuilderSSL(context);
+                    InGetOkhhtpBuilder inGetOkhhtpBuilder=new GetOkhhtpBuilderSSL(context,getsslSocketFactory2);
                     OkHttpClient.Builder builderokhtttp=    inGetOkhhtpBuilder.getOkhhtpBuilder();
                     OkHttpClient okHttpClientОтправкиДанныхНаСервер =builderokhtttp.addInterceptor(new Interceptor() {
                                 @Override
@@ -3086,7 +3078,7 @@ Class_GRUD_SQL_Operations classGrudSqlOperationsУдалениеДанныхЧе
                     СтрокаСвязиСсервером = СтрокаСвязиСсервером.replace(" ", "%20");
                     URL    Adress = new URL(СтрокаСвязиСсервером);
 
-                    InGetOkhhtpBuilder inGetOkhhtpBuilder=new GetOkhhtpBuilderSSL(context);
+                    InGetOkhhtpBuilder inGetOkhhtpBuilder=new GetOkhhtpBuilderSSL(context,getsslSocketFactory2);
                     OkHttpClient.Builder builderokhtttp=    inGetOkhhtpBuilder.getOkhhtpBuilder();
                     OkHttpClient okHttpClientЗагрузкаНовогоПО = builderokhtttp.addInterceptor(new Interceptor() {
                                 @Override
@@ -3616,7 +3608,7 @@ Class_GRUD_SQL_Operations classGrudSqlOperationsУдалениеДанныхЧе
             if (ПубличноеЛогин.length()>0 && ПубличноеПароль.length()>0 && СтрокаСвязиСсервером.length()>0) {
 
 
-                InGetOkhhtpBuilder inGetOkhhtpBuilder=new GetOkhhtpBuilderSSL(context);
+                InGetOkhhtpBuilder inGetOkhhtpBuilder=new GetOkhhtpBuilderSSL(context,getsslSocketFactory2);
                 OkHttpClient.Builder builderokhtttp=    inGetOkhhtpBuilder.getOkhhtpBuilder();
                 OkHttpClient okHttpClientИмяиПароль =builderokhtttp.addInterceptor(new Interceptor() {
                             @Override

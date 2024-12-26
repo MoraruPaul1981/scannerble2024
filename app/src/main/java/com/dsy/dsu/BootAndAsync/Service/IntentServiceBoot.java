@@ -145,22 +145,33 @@ public class IntentServiceBoot extends IntentService {
     @Override
     protected void onHandleIntent(Intent intent) {
         try {
+            // TODO: 26.12.2024 выди запуска
+            switch (intent.getAction().trim()){
 
+                // TODO: 26.12.2024 Синхрониазция
+                case "IntentServiceBootAsync.com" :
 
-            // TODO: 24.01.2024 Синхрониазция и Обновление ПО
-            if (intent.getAction().contains("IntentServiceBootAsync.com")) {
-                // TODO: 19.01.2024  запуск класса бизнес логики службы Синхроиазции и Обновление ПО
-                completeRemoteSyncService.startServiceAsybc(getApplicationContext(),getsslSocketFactory2,
-                        getHiltPublicId,"IntentServiceBootAsync.com" , getHiltPortJboss);
+                    // TODO: 19.01.2024  запуск класса бизнес логики службы Синхроиазции и Обновление ПО
+                    completeRemoteSyncService.startServiceAsybc(getApplicationContext(),getsslSocketFactory2,
+                            getHiltPublicId,"IntentServiceBootAsync.com" , getHiltPortJboss);
+                    break;
 
-            }else {
-                // TODO: 24.01.2024 ТОлькоОбновления ПО
+                // TODO: 26.12.2024 Только Обновление ПО
+                case "IntentServiceBootUpdatePo.com":
 
-                if (intent.getAction().contains("IntentServiceBootUpdatePo.com")) {
                     // TODO: 19.01.2024  запуск класса бизнес логики службы Синхроиазции и Обновление ПО
                     completeRemoteSyncService.startServiceUpdatePO(getApplicationContext(),getsslSocketFactory2,
                             getHiltPublicId,"IntentServiceBootUpdatePo.com", getHiltPortJboss);
-                }
+                    break;
+
+                // TODO: 26.12.2024 И Обновление и Синхронизация
+                case "IntentServiceBootUpdatePo.comAndIntentServiceBootAsync.com" :
+
+                    // TODO: 19.01.2024  запуск класса бизнес логики службы Синхроиазции и Обновление ПО
+                    completeRemoteSyncService.startServiceUpdatePOAndAsync(getApplicationContext(),getsslSocketFactory2,
+                            getHiltPublicId,"IntentServiceBootUpdatePo.comAndIntentServiceBootAsync.com", getHiltPortJboss);
+
+                    break;
 
             }
 
