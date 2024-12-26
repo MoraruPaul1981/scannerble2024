@@ -3056,6 +3056,7 @@ Class_GRUD_SQL_Operations classGrudSqlOperationsУдалениеДанныхЧе
 
 
     // TODO: 09.04.2021 Метод Обновление Получение ПО с Сервера
+    // TODO: 09.04.2021 Метод Обновление Получение ПО с Сервера
     public File МетодЗагрузкиОбновлениеПОсСервера(@NonNull String АдресЗагрузки,
                                                   @NonNull Context context,
                                                   @NonNull String ИмяСервера,
@@ -3066,217 +3067,235 @@ Class_GRUD_SQL_Operations classGrudSqlOperationsУдалениеДанныхЧе
                                                   @NonNull  Integer ВремяНАReadFile,
                                                   @NonNull SSLSocketFactory getsslSocketFactory2) {
         // TODO: 24.09.2024
-         AtomicReference<File> СамФайлJsonandApk = new AtomicReference<>();
-                try {
-                    String enableSSl = preferencesJboss.getString("enablesll","http");
+        AtomicReference<File> СамФайлJsonandApk = new AtomicReference<>();
+        try {
+            String enableSSl = preferencesJboss.getString("enablesll","http");
 
-                    String PatchDeleteJsonAnalitic="SousAvtoFile"+File.separator+"UpdatePO";
+            String PatchDeleteJsonAnalitic="SousAvtoFile/UpdatePO";
+            String СтрокаСвязиСсервером =enableSSl+"://"+ИмяСервера+":"+ИмяПорта+"/";;
+            СтрокаСвязиСсервером = СтрокаСвязиСсервером.replace(" ", "%20");
+            СтрокаСвязиСсервером = СтрокаСвязиСсервером + АдресЗагрузки; /////"dsu1.glassfish/update_android_dsu1/output-metadata.json";
+            СтрокаСвязиСсервером = СтрокаСвязиСсервером.replace(" ", "%20");
+            URL    Adress = new URL(СтрокаСвязиСсервером);
 
-                    String СтрокаСвязиСсервером =enableSSl+"://"+ИмяСервера+":"+ИмяПорта+"/";;
-                    СтрокаСвязиСсервером = СтрокаСвязиСсервером.replace(" ", "%20");
-                    СтрокаСвязиСсервером = СтрокаСвязиСсервером + АдресЗагрузки; /////"dsu1.glassfish/update_android_dsu1/output-metadata.json";
-                    СтрокаСвязиСсервером = СтрокаСвязиСсервером.replace(" ", "%20");
-                    URL    Adress = new URL(СтрокаСвязиСсервером);
-
-                    InGetOkhhtpBuilder inGetOkhhtpBuilder=new GetOkhhtpBuilderSSL(context,getsslSocketFactory2);
-                    OkHttpClient.Builder builderokhtttp=    inGetOkhhtpBuilder.getOkhhtpBuilder();
-                    OkHttpClient okHttpClientЗагрузкаНовогоПО = builderokhtttp.addInterceptor(new Interceptor() {
-                                @Override
-                                public Response intercept(Chain chain) throws IOException {
-                                    // TODO: 26.08.2021 НОВЫЙ ВЫЗОВ НОВОГО КЛАСС GRUD - ОПЕРАЦИИ
-                                    Class_GRUD_SQL_Operations grudSqlOperations = new Class_GRUD_SQL_Operations(context);
-                                    grudSqlOperations.concurrentHashMapНабор.put("СамFreeSQLКОд",
-                                            " SELECT success_users,success_login  FROM successlogin  ORDER BY date_update DESC ;");
-                                    // TODO: 12.10.2021  Ссылка Менеджер Потоков
-                                    PUBLIC_CONTENT publicContent = new PUBLIC_CONTENT(context);
-                                    SQLiteCursor Курсор_ПолучаемИмяСотрудникаИзТаблицыФИО = null;
-                                    try {
-                                        Курсор_ПолучаемИмяСотрудникаИзТаблицыФИО = (SQLiteCursor) grudSqlOperations.
-                                                new GetаFreeData(context).getfreedata(grudSqlOperations.
-                                                        concurrentHashMapНабор,
-                                                publicContent.МенеджерПотоков, sqLiteDatabase);
-                                    } catch (ExecutionException e) {
-                                        throw new RuntimeException(e);
-                                    } catch (InterruptedException e) {
-                                        throw new RuntimeException(e);
-                                    }
-                                    if (Курсор_ПолучаемИмяСотрудникаИзТаблицыФИО.getCount() > 0) {
-                                        Курсор_ПолучаемИмяСотрудникаИзТаблицыФИО.moveToFirst();
-                                        ПубличноеЛогин = Курсор_ПолучаемИмяСотрудникаИзТаблицыФИО.getString(0).trim();
-                                        ПубличноеПароль = Курсор_ПолучаемИмяСотрудникаИзТаблицыФИО.getString(1).trim();
-                                    }
-                                    String ANDROID_ID = Settings.Secure.getString(context.getContentResolver(), Settings.Secure.ANDROID_ID);
-                                    Log.d(this.getClass().getName(), "  PUBLIC_CONTENT.ПубличноеИмяПользовательДлСервлета  " + ПубличноеЛогин +
-                                            " PUBLIC_CONTENT.ПубличноеПарольДлСервлета " + ПубличноеПароль);
-                                    Request originalRequest = chain.request();
-                                    Request.Builder builder = originalRequest.newBuilder()
-                                            .header("Content-Type", ВозвращяемыйТип)
-                                            .header("Accept-Encoding", "gzip,deflate,sdch")
-                                            .header("Connection", "Keep-Alive")
-                                            .header("Accept-Language", "ru-RU")
-                                            .header("identifier", ПубличноеЛогин)
-                                            .header("p_identifier", ПубличноеПароль)
-                                            .header("task_downlonupdatepo", ЗаданиеЗагрузки)
-                                            .header("id_device_androis", ANDROID_ID);
-                                    Request newRequest = builder.build();
-                                    return chain.proceed(newRequest);
-                                }
-                            }).connectTimeout(5, TimeUnit.SECONDS)
-                            .writeTimeout(3, TimeUnit.MINUTES)
-                            .readTimeout(3, TimeUnit.MINUTES)
-                            .build();
-                    ///  MediaType JSON = MediaType.parse("application/json; charset=utf-16");
-                    Request requestGET = new Request.Builder().get().url(Adress).build();
-                    Log.d(this.getClass().getName(), "  request  " + requestGET);
-                    Dispatcher  dispatcherЗагрузкаПО = okHttpClientЗагрузкаНовогоПО.dispatcher();
-                    okHttpClientЗагрузкаНовогоПО.newCall(requestGET).enqueue(new Callback() {
-
-                        private BufferedInputStream buf;
-
+            InGetOkhhtpBuilder inGetOkhhtpBuilder=new GetOkhhtpBuilderSSL(context,getsslSocketFactory2);
+            OkHttpClient.Builder builderokhtttp=    inGetOkhhtpBuilder.getOkhhtpBuilder();
+            OkHttpClient okHttpClientЗагрузкаНовогоПО = builderokhtttp.addInterceptor(new Interceptor() {
                         @Override
-                        public void onFailure(@NonNull Call call, @NonNull IOException e) {
-                            try{
-                            Log.e(this.getClass().getName(), "  ERROR call  " + call + "  e" + e.toString());
-                            Log.e(Class_MODEL_synchronized.class.getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
-                                    " Линия  :" + Thread.currentThread().getStackTrace()[2].getLineNumber() + " ОшибкаТекущегоМетода " + e.getMessage());
-                            new Class_Generation_Errors(context).МетодЗаписиВЖурналНовойОшибки(e.toString(), Class_MODEL_synchronized.class.getName(),
-                                    Thread.currentThread().getStackTrace()[2].getMethodName(), Thread.currentThread().getStackTrace()[2].getLineNumber());
-                            // TODO: 31.05.2022
-                        } catch (Exception ex) {
-                                ex.printStackTrace();
-                            Log.e(this.getClass().getName(), "Ошибка " + ex + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() + " Линия  :"
-                                    + Thread.currentThread().getStackTrace()[2].getLineNumber());
-                            new   Class_Generation_Errors(context).МетодЗаписиВЖурналНовойОшибки(ex.toString(), this.getClass().getName(),
-                                    Thread.currentThread().getStackTrace()[2].getMethodName(),
-                                    Thread.currentThread().getStackTrace()[2].getLineNumber());
+                        public Response intercept(Chain chain) throws IOException {
+                            // TODO: 26.08.2021 НОВЫЙ ВЫЗОВ НОВОГО КЛАСС GRUD - ОПЕРАЦИИ
+                            Class_GRUD_SQL_Operations grudSqlOperations = new Class_GRUD_SQL_Operations(context);
+                            grudSqlOperations.concurrentHashMapНабор.put("СамFreeSQLКОд",
+                                    " SELECT success_users,success_login  FROM successlogin  ORDER BY date_update DESC ;");
+                            // TODO: 12.10.2021  Ссылка Менеджер Потоков
+                            PUBLIC_CONTENT publicContent = new PUBLIC_CONTENT(context);
+                            SQLiteCursor Курсор_ПолучаемИмяСотрудникаИзТаблицыФИО = null;
+                            try {
+                                Курсор_ПолучаемИмяСотрудникаИзТаблицыФИО = (SQLiteCursor) grudSqlOperations.
+                                        new GetаFreeData(context).getfreedata(grudSqlOperations.
+                                                concurrentHashMapНабор,
+                                        publicContent.МенеджерПотоков, sqLiteDatabase);
+                            } catch (ExecutionException e) {
+                                throw new RuntimeException(e);
+                            } catch (InterruptedException e) {
+                                throw new RuntimeException(e);
+                            }
+                            if (Курсор_ПолучаемИмяСотрудникаИзТаблицыФИО.getCount() > 0) {
+                                Курсор_ПолучаемИмяСотрудникаИзТаблицыФИО.moveToFirst();
+                                ПубличноеЛогин = Курсор_ПолучаемИмяСотрудникаИзТаблицыФИО.getString(0).trim();
+                                ПубличноеПароль = Курсор_ПолучаемИмяСотрудникаИзТаблицыФИО.getString(1).trim();
+                            }
+                            String ANDROID_ID = Settings.Secure.getString(context.getContentResolver(), Settings.Secure.ANDROID_ID);
+                            Log.d(this.getClass().getName(), "  PUBLIC_CONTENT.ПубличноеИмяПользовательДлСервлета  " + ПубличноеЛогин +
+                                    " PUBLIC_CONTENT.ПубличноеПарольДлСервлета " + ПубличноеПароль);
+                            Request originalRequest = chain.request();
+                            Request.Builder builder = originalRequest.newBuilder()
+                                    .header("Content-Type", ВозвращяемыйТип)
+                                    .header("Accept-Encoding", "gzip,deflate,sdch")
+                                    .header("Connection", "Keep-Alive")
+                                    .header("Accept-Language", "ru-RU")
+                                    .header("identifier", ПубличноеЛогин)
+                                    .header("p_identifier", ПубличноеПароль)
+                                    .header("task_downlonupdatepo", ЗаданиеЗагрузки)
+                                    .header("id_device_androis", ANDROID_ID);
+                            Request newRequest = builder.build();
+                            return chain.proceed(newRequest);
                         }
-                            dispatcherЗагрузкаПО.executorService().shutdown();
-                            //TODO закрываем п отоки
-                        }
-                        @Override
-                        public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
-                            try{
-                                if (response.isSuccessful()) {
-                                    String  ПришедшегоПотока =    response.header("stream_size");
-                                    ПришедшегоПотока =     Optional.ofNullable(ПришедшегоПотока).map(String::valueOf).orElse("0");
-                                    Long РазмерПришедшегоПотока = Long.parseLong(ПришедшегоПотока  );
-                                    Integer КакаяКодировка = Integer.parseInt(   Optional.ofNullable(response.header("getcharsets")).map(String::new).orElse("0"));
-                                    Boolean ФлагgZIPOutputStream =Boolean.parseBoolean (  Optional.ofNullable(response.header("GZIPOutputStream")).map(String::new).orElse("false"));
+                    }).connectTimeout(5, TimeUnit.SECONDS)
+                    .writeTimeout(3, TimeUnit.MINUTES)
+                    .readTimeout(3, TimeUnit.MINUTES)
+                    .build();
+            ///  MediaType JSON = MediaType.parse("application/json; charset=utf-16");
+            Request requestGET = new Request.Builder().get().url(Adress).build();
+            Log.d(this.getClass().getName(), "  request  " + requestGET);
+            Dispatcher  dispatcherЗагрузкаПО = okHttpClientЗагрузкаНовогоПО.dispatcher();
+            okHttpClientЗагрузкаНовогоПО.newCall(requestGET).enqueue(new Callback() {
 
-                                    Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
-                                            " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                                            " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + " ФлагgZIPOutputStream " +ФлагgZIPOutputStream);
+                private BufferedInputStream buf;
 
-                                    // TODO: 06.05.2023  если ПОТОК ЕСТЬ СОДЕРЖИВАЕМ ПАРСИМ
-                                    if(РазмерПришедшегоПотока>0){
-                                        InputStream inputStreamОтПинга =null;
-                                        // TODO: 07.10.2023  get GZIP
-                                        if (ФлагgZIPOutputStream==true) {
-                                           inputStreamОтПинга = new GZIPInputStream(response.body().source().inputStream(),2048);///4096
-                                        }else {
-                                            inputStreamОтПинга = response.body().source().inputStream();
-
-                                        }
-
-
-                                        // TODO: 24.12.2024 создание файла пустого 
-                                        File ПутькФайлу = null;
-                                        if (Build.VERSION.SDK_INT >= 30) {
-                                        ПутькФайлу = context.getExternalFilesDir( Environment.DIRECTORY_DOWNLOADS+ File.separator + PatchDeleteJsonAnalitic+File.separator+ИмяФайлаЗагрузки);
-                                        } else {
-                                            ПутькФайлу = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS+ File.separator + PatchDeleteJsonAnalitic+File.separator+ИмяФайлаЗагрузки);
-                                        }
-                                            //TODO :удаление файла
-                                            ПутькФайлу.delete();
-                                          ПутькФайлу.deleteOnExit();
-
-
-                                        File fileBinary=new File(String.valueOf(ПутькФайлу));
-                                        // TODO: 24.12.2024 создаем файл 
-                                        СамФайлJsonandApk.set(fileBinary) ;
-                                        СамФайлJsonandApk.get().setWritable(true);
-                                        СамФайлJsonandApk.get().setExecutable(true);
-
-
-                                        if (! СамФайлJsonandApk.get().getParentFile().mkdirs() ) {
-                                            // TODO: 24.09.2024
-                                            СамФайлJsonandApk.get().getParentFile().mkdirs();
-
-                                        }
-
-
-                                        // TODO: 24.09.2024
-                                        Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
-                                                " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                                                " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + " СамФайлJsonandApk[0] " +   СамФайлJsonandApk.get());
-
-
-                                        if ( !СамФайлJsonandApk.get().exists()) {
-                                            // TODO: 20.03.2023 само создание файла
-                                            if ( СамФайлJsonandApk.get().createNewFile()) {
-                                                Log.d(context.getClass().getName(), "Будущий файл успешно создалься , далее запись на диск новго APk файла ");
-
-                                                // TODO: 24.12.2024 Сохраняем файл который ПРИШЕЛ
-                                                //OutputStream outputStream = new FileOutputStream(СамФайлJsonandApk.get());
-                                               // IOUtils.copy(inputStreamОтПинга, outputStream);
-                                                FileUtils.copyInputStreamToFile(inputStreamОтПинга, СамФайлJsonandApk.get());
-
-                                                // TODO: 24.09.2024
-                                                Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
-                                                        " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                                                        " line " + Thread.currentThread().getStackTrace()[2].getLineNumber()
-                                                        + " СамФайлJsonandApk[0] " +   СамФайлJsonandApk.get().length());
-                                            } else {
-                                                Log.e(context.getClass().getName(), "Ошибка не создалься Будущий файл успешно создалься , далее запись на диск новго APk файла  СЛУЖБА ");
-                                            }
-                                        }else {
-                                            Log.e(context.getClass().getName(), "Ошибка не создалься Будущий файл успешно создалься , далее запись на диск новго APk файла  СЛУЖБА ");
-                                        }
-
-
-                                        // TODO: 20.03.2023 ответ от сервреа если нет цифры значит не и файла
-                                    }
-                                    Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
-                                            " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                                            " line " + Thread.currentThread().getStackTrace()[2].getLineNumber());//
-                                }
-                                // TODO: 06.05.2023 exit
-                                response.close();
-                                dispatcherЗагрузкаПО.executorService().shutdown();
-                        } catch (Exception e) {
-                            e.printStackTrace();
-                            Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() + " Линия  :"
-                                    + Thread.currentThread().getStackTrace()[2].getLineNumber());
-                            new   Class_Generation_Errors(context).МетодЗаписиВЖурналНовойОшибки(e.toString(),
-                                    this.getClass().getName(), Thread.currentThread().getStackTrace()[2].getMethodName(),
-                                    Thread.currentThread().getStackTrace()[2].getLineNumber());
-                        }
-
-                        }
-                    });
-                    dispatcherЗагрузкаПО.executorService().awaitTermination(1,TimeUnit.DAYS);
-                    dispatcherЗагрузкаПО.cancelAll();
-                    Log.i(context.getClass().getName(), "   СамФайлJsonandApk.get()" +    СамФайлJsonandApk.get());
-                    // TODO: 13.03.2023  конец загрузки файла по новому FILE
-                } catch (IOException | InterruptedException ex) {
-                    ex.printStackTrace();
-                  String  ОшибкаТекущегоМетода = ex.toString();
-                    if (!ОшибкаТекущегоМетода.toString().trim().matches("(.*)java.io.EOFException(.*)") &&
-                            !ОшибкаТекущегоМетода.toString().trim().matches("(.*)java.net.sockettimeoutexception(.*)")
-                            &&
-                            !ОшибкаТекущегоМетода.toString().trim().matches("(.*)SocketTimeout(.*)") &&
-                            !ОшибкаТекущегоМетода.toString().trim().matches("(.*)java.net.ConnectException(.*)")
-                            && !ОшибкаТекущегоМетода.toString().trim().matches("(.*)FileNotFoundException(.*)"))  {
-                        Log.e(Class_MODEL_synchronized.class.getName(), "Ошибка " + ОшибкаТекущегоМетода + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
-                                " Линия  :" + Thread.currentThread().getStackTrace()[2].getLineNumber() + " ОшибкаТекущегоМетода " + ОшибкаТекущегоМетода.toString());
-                        new Class_Generation_Errors(this.context).МетодЗаписиВЖурналНовойОшибки(ex.toString(), Class_MODEL_synchronized.class.getName(),
+                @Override
+                public void onFailure(@NonNull Call call, @NonNull IOException e) {
+                    try{
+                        Log.e(this.getClass().getName(), "  ERROR call  " + call + "  e" + e.toString());
+                        Log.e(Class_MODEL_synchronized.class.getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
+                                " Линия  :" + Thread.currentThread().getStackTrace()[2].getLineNumber() + " ОшибкаТекущегоМетода " + e.getMessage());
+                        new Class_Generation_Errors(context).МетодЗаписиВЖурналНовойОшибки(e.toString(), Class_MODEL_synchronized.class.getName(),
                                 Thread.currentThread().getStackTrace()[2].getMethodName(), Thread.currentThread().getStackTrace()[2].getLineNumber());
-
+                        // TODO: 31.05.2022
+                    } catch (Exception ex) {
+                        ex.printStackTrace();
+                        Log.e(this.getClass().getName(), "Ошибка " + ex + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() + " Линия  :"
+                                + Thread.currentThread().getStackTrace()[2].getLineNumber());
+                        new   Class_Generation_Errors(context).МетодЗаписиВЖурналНовойОшибки(ex.toString(), this.getClass().getName(),
+                                Thread.currentThread().getStackTrace()[2].getMethodName(),
+                                Thread.currentThread().getStackTrace()[2].getLineNumber());
                     }
+                    dispatcherЗагрузкаПО.executorService().shutdown();
+                    //TODO закрываем п отоки
                 }
+                @Override
+                public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
+                    try{
+                        if (response.isSuccessful()) {
+                            String  ПришедшегоПотока =    response.header("stream_size");
+                            ПришедшегоПотока =     Optional.ofNullable(ПришедшегоПотока).map(String::valueOf).orElse("0");
+                            Long РазмерПришедшегоПотока = Long.parseLong(ПришедшегоПотока  );
+                            Integer КакаяКодировка = Integer.parseInt(   Optional.ofNullable(response.header("getcharsets")).map(String::new).orElse("0"));
+                            Boolean ФлагgZIPOutputStream =Boolean.parseBoolean (  Optional.ofNullable(response.header("GZIPOutputStream")).map(String::new).orElse("false"));
+
+                            Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                                    " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                                    " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + " ФлагgZIPOutputStream " +ФлагgZIPOutputStream);
+
+                            // TODO: 06.05.2023  если ПОТОК ЕСТЬ СОДЕРЖИВАЕМ ПАРСИМ
+                            if(РазмерПришедшегоПотока>0){
+                                InputStream inputStreamОтПинга =null;
+                                // TODO: 07.10.2023  get GZIP
+                                if (ФлагgZIPOutputStream==true) {
+                                    inputStreamОтПинга = new GZIPInputStream(response.body().source().inputStream(),2048);///4096
+                                }else {
+                                    inputStreamОтПинга = response.body().source().inputStream();
+
+                                }
+
+
+
+                                File ПутькФайлу = null;
+                                if (Build.VERSION.SDK_INT >= 30) {
+                                    ПутькФайлу = context.getExternalFilesDir( Environment.DIRECTORY_DOWNLOADS+ File.separator + PatchDeleteJsonAnalitic);
+                                } else {
+                                    ПутькФайлу = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS+ File.separator + PatchDeleteJsonAnalitic);
+                                }
+
+
+                                if (ПутькФайлу.isFile() || ПутькФайлу.exists()) {
+                                    //TODO :
+                                    ПутькФайлу.delete();
+                                    Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                                            " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                                            " line " + Thread.currentThread().getStackTrace()[2].getLineNumber());
+                                }
+
+
+
+
+
+
+
+                                СамФайлJsonandApk.set(new File(ПутькФайлу, "/" + ИмяФайлаЗагрузки )) ;
+                                СамФайлJsonandApk.get().setWritable(true);
+                                СамФайлJsonandApk.get().setExecutable(true);
+
+
+                                if (! СамФайлJsonandApk.get().getParentFile().mkdirs() ) {
+                                    // TODO: 24.09.2024
+                                    СамФайлJsonandApk.get().getParentFile().mkdirs();
+
+                                }
+
+
+                                // TODO: 24.09.2024
+                                Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                                        " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                                        " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + " СамФайлJsonandApk[0] " +   СамФайлJsonandApk.get());
+
+
+                                if ( !СамФайлJsonandApk.get().exists()) {
+                                    // TODO: 20.03.2023 само создание файла
+                                    if ( СамФайлJsonandApk.get().createNewFile()) {
+                                        Log.d(context.getClass().getName(), "Будущий файл успешно создалься , далее запись на диск новго APk файла ");
+
+                                        // TODO: 21.09.2023  GET NEW BINATY FILE OT SERVER
+                                        BufferedOutputStream buffer =
+                                                new BufferedOutputStream(
+                                                        new FileOutputStream( СамФайлJsonandApk.get()),2048);//8192  ,2048
+                                        //todo #2
+                                        byte[] bufferfile = new byte[2048];//8192
+                                        int rows= 0;
+                                        while(( rows = inputStreamОтПинга.read( bufferfile )) > 0 ) {
+                                            buffer.write( bufferfile, 0, rows );
+                                        }
+                                        buffer.flush();
+                                        buffer.close();
+                                        inputStreamОтПинга.close();
+                                        Log.d(context.getClass().getName(), "FileUtils.copyInputStreamToFile СамФайлJsonandApk"+ СамФайлJsonandApk.get());
+                                    } else {
+                                        Log.e(context.getClass().getName(), "Ошибка не создалься Будущий файл успешно создалься , далее запись на диск новго APk файла  СЛУЖБА ");
+                                    }
+                                }else {
+                                    Log.e(context.getClass().getName(), "Ошибка не создалься Будущий файл успешно создалься , далее запись на диск новго APk файла  СЛУЖБА ");
+                                }
+
+
+                                // TODO: 20.03.2023 ответ от сервреа если нет цифры значит не и файла
+                            }
+                            Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                                    " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                                    " line " + Thread.currentThread().getStackTrace()[2].getLineNumber());
+                        }
+                        // TODO: 06.05.2023 exit
+                        response.close();
+                        dispatcherЗагрузкаПО.executorService().shutdown();
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                        Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() + " Линия  :"
+                                + Thread.currentThread().getStackTrace()[2].getLineNumber());
+                        new   Class_Generation_Errors(context).МетодЗаписиВЖурналНовойОшибки(e.toString(),
+                                this.getClass().getName(), Thread.currentThread().getStackTrace()[2].getMethodName(),
+                                Thread.currentThread().getStackTrace()[2].getLineNumber());
+                    }
+
+                }
+            });
+            dispatcherЗагрузкаПО.executorService().awaitTermination(1,TimeUnit.DAYS);
+            dispatcherЗагрузкаПО.cancelAll();
+            Log.i(context.getClass().getName(), "   СамФайлJsonandApk.get()" +    СамФайлJsonandApk.get());
+            // TODO: 13.03.2023  конец загрузки файла по новому FILE
+        } catch (IOException | InterruptedException ex) {
+            ex.printStackTrace();
+            String  ОшибкаТекущегоМетода = ex.toString();
+            if (!ОшибкаТекущегоМетода.toString().trim().matches("(.*)java.io.EOFException(.*)") &&
+                    !ОшибкаТекущегоМетода.toString().trim().matches("(.*)java.net.sockettimeoutexception(.*)")
+                    &&
+                    !ОшибкаТекущегоМетода.toString().trim().matches("(.*)SocketTimeout(.*)") &&
+                    !ОшибкаТекущегоМетода.toString().trim().matches("(.*)java.net.ConnectException(.*)")
+                    && !ОшибкаТекущегоМетода.toString().trim().matches("(.*)FileNotFoundException(.*)"))  {
+                Log.e(Class_MODEL_synchronized.class.getName(), "Ошибка " + ОшибкаТекущегоМетода + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
+                        " Линия  :" + Thread.currentThread().getStackTrace()[2].getLineNumber() + " ОшибкаТекущегоМетода " + ОшибкаТекущегоМетода.toString());
+                new Class_Generation_Errors(this.context).МетодЗаписиВЖурналНовойОшибки(ex.toString(), Class_MODEL_synchronized.class.getName(),
+                        Thread.currentThread().getStackTrace()[2].getMethodName(), Thread.currentThread().getStackTrace()[2].getLineNumber());
+
+            }
+        }
         return    СамФайлJsonandApk.get();
 
     }
+
+
+
+
+
+
 
 
 
