@@ -101,9 +101,6 @@ public class ProccesorparallelSynch   {
             preferences =context. getSharedPreferences("sharedPreferencesХранилище", Context.MODE_MULTI_PROCESS);
              РежимЗапускаСинхронизации = preferences.getString("РежимЗапускаСинхронизации","СамыйПервыйЗапускСинхронизации");
 
-            // TODO: 20.12.2024 DEBUG TEST 
-            РежимЗапускаСинхронизации =   "ПовторныйЗапускСинхронизации";
-
             // TODO: 07.04.2024  Г
             ParallelFlowable     flowableGrandeAsync= null;
              switch (РежимЗапускаСинхронизации) {
@@ -111,7 +108,7 @@ public class ProccesorparallelSynch   {
                  case "СамыйПервыйЗапускСинхронизации":
                      flowableGrandeAsync = Flowable.fromIterable( VesionTableAsync.keySet())
                              .filter(fil->!fil.toString().isEmpty())
-                             .parallel(3).runOn(Schedulers.from(Executors.newFixedThreadPool(3)));
+                             .parallel().runOn(Schedulers.from(Executors.newFixedThreadPool(3)));
                      //.parallel(1).runOn(Schedulers.single());
                      // TODO: 24.09.2024  Запускаем Главную Синхронизацию
                      flowableGrandeAsync.doOnNext(new Consumer<String>() {
@@ -130,7 +127,7 @@ public class ProccesorparallelSynch   {
                                              + " coutSucceessItemAsycnTables " +coutSucceessItemAsycnTables.size()+
                                              " coutSucceessItemAsycnTables.stream().mapToLong(l->l)  .reduce(0, Long::sum)"
                                              +coutSucceessItemAsycnTables.stream().mapToLong(l->l)  .reduce(0, Long::sum)+"\n"+
-                                             " VesionTableAsync "+VesionTableAsync);
+                                             " VesionTableAsync "+VesionTableAsync+"\n"+"asynThread" +Thread.currentThread().getName());
                                  }
                              })
                              .doOnError(new Consumer<Throwable>() {
@@ -150,7 +147,7 @@ public class ProccesorparallelSynch   {
 
                                      Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                                              " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                                             " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n");
+                                             " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"+ " РежимЗапускаСинхронизации " +РежимЗапускаСинхронизации);
                                  }
                              }).sequential().blockingSubscribe();
                      break;
@@ -166,28 +163,28 @@ public class ProccesorparallelSynch   {
                  Flowable.fromIterable( VesionTableAsync.keySet())
                              .filter(fil->!fil.toString().isEmpty())
                          .onBackpressureBuffer()
-                         .blockingForEach(ТаблицаОбработываемая->{
+                         .blockingForEach(ТаблицаОбработываемаяSingle->{
 
                              // TODO: 06.12.2023  запуск синхризуции по таблице конктерной
-                             coutSucceessItemAsycnTables.add(getLooTablesPOSTANDGET(ТаблицаОбработываемая))      ;
+                             coutSucceessItemAsycnTables.add(getLooTablesPOSTANDGET(ТаблицаОбработываемаяSingle))      ;
                              // TODO: 30.09.2024
                              // TODO: 15.09.2023
                              Log.d(this.getClass().getName(),"\n" + " class "
                                      + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                                      " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
                                      " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"+
-                                     " ТаблицаОбработываемаяParallel"
-                                     +ТаблицаОбработываемая+"\n"
+                                     " ТаблицаОбработываемаяSingle"
+                                     +ТаблицаОбработываемаяSingle+"\n"
                                      + " coutSucceessItemAsycnTables " +coutSucceessItemAsycnTables.size()+
                                      " coutSucceessItemAsycnTables.stream().mapToLong(l->l)  .reduce(0, Long::sum)"
                                      +coutSucceessItemAsycnTables.stream().mapToLong(l->l)  .reduce(0, Long::sum)+"\n"+
-                                     " VesionTableAsync "+VesionTableAsync);
+                                     " VesionTableAsync "+VesionTableAsync+"\n"+"asynThread" +Thread.currentThread().getName());
 
                            });
 
                      Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                              " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                             " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n");
+                             " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"+ "\n"+ " РежимЗапускаСинхронизации " +РежимЗапускаСинхронизации);
 
                      break;
 

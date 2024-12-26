@@ -66,6 +66,7 @@ import javax.crypto.NoSuchPaddingException;
 import javax.net.ssl.SSLSocketFactory;
 
 import hilt_aggregated_deps._com_dsy_dsu_Hilt_OneSignal_DataModuleOneSignal;
+import io.reactivex.rxjava3.parallel.ParallelFlowable;
 import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.Dispatcher;
@@ -3077,6 +3078,7 @@ Class_GRUD_SQL_Operations classGrudSqlOperationsУдалениеДанныхЧе
             СтрокаСвязиСсервером = СтрокаСвязиСсервером + АдресЗагрузки; /////"dsu1.glassfish/update_android_dsu1/output-metadata.json";
             СтрокаСвязиСсервером = СтрокаСвязиСсервером.replace(" ", "%20");
             URL    Adress = new URL(СтрокаСвязиСсервером);
+
 
             InGetOkhhtpBuilder inGetOkhhtpBuilder=new GetOkhhtpBuilderSSL(context,getsslSocketFactory2);
             OkHttpClient.Builder builderokhtttp=    inGetOkhhtpBuilder.getOkhhtpBuilder();
