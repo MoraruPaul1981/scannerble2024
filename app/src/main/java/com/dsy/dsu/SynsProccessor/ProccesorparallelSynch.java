@@ -229,9 +229,6 @@ public class ProccesorparallelSynch   {
                     " ВерсияДанныхОтSqlServer " +ВерсияДанныхОтSqlServer+ " ИмяТаблицыоТВерсияДанныхОтSqlServer "
                     + ИмяТаблицыоТВерсияДанныхОтSqlServer +
                     "   ВремяВерсияОтSqlServer " + ВремяВерсияОтSqlServer);
-
-
-            ИмяТаблицыоТВерсияДанныхОтSqlServer="data_tabels";
             /////////////TODO ИДЕМ ПО ШАГАМ К ЗАПУСКИ СИНХРОГНИАЗЦИИ
             РезультатТаблицыОбмена=
                     startSendingDataTotheServerOrReceivingDataFromTheJbossServer(ИмяТаблицыоТВерсияДанныхОтSqlServer,

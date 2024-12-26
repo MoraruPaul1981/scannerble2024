@@ -5,12 +5,9 @@ import android.app.Notification;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.content.ContentResolver;
-import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.util.Log;
 
-import androidx.annotation.NonNull;
 import androidx.core.app.NotificationCompat;
 
 import com.dsy.dsu.BootAndAsync.BlBootAsync.CompleteRemoteSyncService;
@@ -19,13 +16,11 @@ import com.dsy.dsu.Hilt.JbossAdrress.qualifiers.QualifierJbossServer3;
 
 import java.util.Date;
 import java.util.LinkedHashMap;
-import java.util.concurrent.TimeUnit;
 
 import javax.inject.Inject;
 import javax.net.ssl.SSLSocketFactory;
 
 import dagger.hilt.android.AndroidEntryPoint;
-import io.reactivex.rxjava3.core.Flowable;
 
 /**
  * An {@link IntentService} subclass for handling asynchronous task requests in
@@ -152,8 +147,8 @@ public class IntentServiceBoot extends IntentService {
                 case "IntentServiceBootAsync.com" :
 
                     // TODO: 19.01.2024  запуск класса бизнес логики службы Синхроиазции и Обновление ПО
-                    completeRemoteSyncService.startServiceAsybc(getApplicationContext(),getsslSocketFactory2,
-                            getHiltPublicId,"IntentServiceBootAsync.com" , getHiltPortJboss);
+                    completeRemoteSyncService.startingBindingAsyncJboss();
+
                     break;
 
                 // TODO: 26.12.2024 Только Обновление ПО

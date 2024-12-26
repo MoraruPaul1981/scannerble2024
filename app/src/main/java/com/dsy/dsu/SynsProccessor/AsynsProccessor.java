@@ -169,14 +169,16 @@ public class AsynsProccessor extends Class_MODEL_synchronized {
             ////САМАЯ ПЕРВАЯ КОМАНДА НАЧАЛА ОБМНЕНА ДАННЫМИ///// TODO ГЛАВНЫЙ МЕТОД ОБМЕНА ДАНЫМИ  НА АКТИВИТИ FACE_APP
             Integer getPublicID = new Class_Generations_PUBLIC_CURRENT_ID().getPublicIDAllApp(context);
             //TODO
-            if(getPublicID>0){    результатСинхрониазции=     МетодПолучениеСпискаТаблицДляОбменаДанными(getPublicID); }else {
-                context.getMainExecutor().execute(()->        Toast.makeText(context, "Нет PublicID !!!", Toast.LENGTH_SHORT).show());
+            if (getPublicID > 0) {
+
+                результатСинхрониазции = МетодПолучениеСпискаТаблицДляОбменаДанными(getPublicID);
             }
+
 
             Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                     " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
                     " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"
-                    + " результатСинхрониазции " + результатСинхрониазции);
+                    + " результатСинхрониазции " + результатСинхрониазции+ " getPublicID "+getPublicID);
 
         } catch (Exception e) {
             e.printStackTrace();
