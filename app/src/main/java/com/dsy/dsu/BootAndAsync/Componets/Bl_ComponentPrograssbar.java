@@ -100,11 +100,13 @@ public class Bl_ComponentPrograssbar {
                             progressbarbootandasync.setMax(MaxКоличествоСТрочеек);
                             progressbarbootandasync.setIndeterminate(false);
                             // TODO: 25.09.2024  
-                            progressbarbootandasync.setProgress(Progress, true);
-                            progressbarbootandasync.setProgressTintList(ColorStateList.valueOf(Color.GRAY));
-                            // TODO: 25.09.2024  
-                            progressbarbootandasync.setSecondaryProgress(SecondaryProgress);
-                            progressbarbootandasync.setSecondaryProgressTintList(ColorStateList.valueOf(Color.BLUE));
+                            if (Progress>progressbarbootandasync.getProgress()) {
+                                progressbarbootandasync.setProgress(Progress, true);
+                                progressbarbootandasync.setProgressTintList(ColorStateList.valueOf(Color.GRAY));
+                                // TODO: 25.09.2024
+                                progressbarbootandasync.setSecondaryProgress(SecondaryProgress);
+                                progressbarbootandasync.setSecondaryProgressTintList(ColorStateList.valueOf(Color.BLUE));
+                            }
                             // TODO: 30.09.2024
                             progressbarbootandasync.setTooltipText(currentEventTable);
                         } else {

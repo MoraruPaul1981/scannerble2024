@@ -536,7 +536,7 @@ public class CompleteRemoteSyncService {
                     case    "IntentServiceBootUpdatePo.comAndIntentServiceBootAsync.com" :
 
                         // TODO: 22.01.2024  запускаем Синхронизацию
-                        welaunchSoftwareupdateandthenSynchronization(СервернаяВерсия, ЛокальнаяВерсияПО);
+                        launchUpdatePOandSync(СервернаяВерсия, ЛокальнаяВерсияПО);
 
                         Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                                 " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
@@ -548,7 +548,7 @@ public class CompleteRemoteSyncService {
 
                     case "IntentServiceBootUpdatePo.com" :
                         // TODO: 22.01.2024  запускаем обновдение ПО
-                        runonlysoftwareUpdateorSoftwareUpdatemessage(СервернаяВерсия, ЛокальнаяВерсияПО);
+                        launchOnlyUpdatePO(СервернаяВерсия, ЛокальнаяВерсияПО);
 
                         Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                                 " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
@@ -576,12 +576,12 @@ public class CompleteRemoteSyncService {
             }
         }
 
-        private void runonlysoftwareUpdateorSoftwareUpdatemessage(Integer СервернаяВерсия, Integer ЛокальнаяВерсияПО) {
+        private void launchOnlyUpdatePO(Integer СервернаяВерсия, Integer ЛокальнаяВерсияПО) {
             // TODO: 22.01.2024  запускаем обновдение ПО
             try{
             if (СервернаяВерсия > ЛокальнаяВерсияПО) {
                 // TODO: 24.09.2024 Запускаем Обновленеи ПО
-                startingUpdatePOComplete(СервернаяВерсия);
+                youhaveLatestVersionofUpdatePOComplete(СервернаяВерсия);
                 // TODO: 03.10.2023
                 Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                         " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
@@ -615,13 +615,14 @@ public class CompleteRemoteSyncService {
 
 
 
-        private void welaunchSoftwareupdateandthenSynchronization(Integer СервернаяВерсия, Integer ЛокальнаяВерсияПО) {
+        private void launchUpdatePOandSync(Integer СервернаяВерсия, Integer ЛокальнаяВерсияПО) {
             // TODO: 22.01.2024  запускаем Синхронизацию
             try{
             if (СервернаяВерсия > ЛокальнаяВерсияПО) {
 
                 // TODO: 24.09.2024 Запускаем Обновленеи ПО
-                startingUpdatePOComplete(СервернаяВерсия);
+                // TODO: 22.01.2024 запускаю обновление ПО
+                metodStartUpdatePoMessgeUser(СервернаяВерсия);
                 // TODO: 03.10.2023
                 Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                         " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
@@ -722,7 +723,7 @@ public class CompleteRemoteSyncService {
             // TODO: 22.01.2024 когда режим офлайн
             new SendUserProssecingUpdatePo(context).startSendBroadSesiver();
         }
-        private void startingUpdatePOComplete(@NonNull Integer СервернаяВерсия) {
+        private void youhaveLatestVersionofUpdatePOComplete(@NonNull Integer СервернаяВерсия) {
             class SendUserAfterVersionPO extends      SendMainActivity{
 
                 public SendUserAfterVersionPO(Context context) {

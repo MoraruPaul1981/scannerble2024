@@ -238,7 +238,7 @@ public     void МетодСообщениеАнализПО( ) {
 
     @UiThread
     private void МетодУстановкиНовойВерсииПО(@NonNull Integer СервернаяВерсияПОВнутри,
-                                             @NonNull File ЗагрузкиФайлаОбновенияПОДополнительный){
+                                             @NonNull File alreadydownloadedUpdateFile){
         try {
             View  promptsViewУстановкаПО=   методЗагрузкиСвоегоВидаДлAliadDialod(R.layout.simple_download_newversii_po);
             MaterialButton bottom_install_and_dwonloadupdatepo=promptsViewУстановкаПО.findViewById(R.id.bottom_install_and_dwonloadupdatepo);
@@ -255,22 +255,12 @@ public     void МетодСообщениеАнализПО( ) {
 
                         Log.i(this.getClass().getName(),  "Установка Обновления .APK СЛУЖБА "
                                 + Thread.currentThread().getStackTrace()[2].getMethodName()+ " время " +new Date().toLocaleString() );
-                        String ФинальныйПутьДляЗагрузкиФайлаОбновения = null;
-                        if (Build.VERSION.SDK_INT >= 30) {
-                            ФинальныйПутьДляЗагрузкиФайлаОбновения = context.getExternalFilesDir(Environment.DIRECTORY_DOWNLOADS) + "/";  //null
-                        } else {
-                            ФинальныйПутьДляЗагрузкиФайлаОбновения = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS) + "/";
-                        }
-                        Log.d(this.getClass().getName(), "Установка Обновления .APK СЛУЖБА  ФинальныйПутьДляЗагрузкиФайлаОбновения " + ФинальныйПутьДляЗагрузкиФайлаОбновения);
-                        String НазваниеФайлаОбновления = "update_dsu1.apk";
-                        ФинальныйПутьДляЗагрузкиФайлаОбновения += НазваниеФайлаОбновления;
-                        Uri URIПутиДляЗагрузкиФайловЧерезПровайдер = FileProvider.getUriForFile(activity,
-                                context.getPackageName() + ".provider",
-                                ЗагрузкиФайлаОбновенияПОДополнительный);
-                        Log.d(this.getClass().getName(), "Установка ЗагрузкиФайлаОбновенияПОДополнительный  "
-                                + ЗагрузкиФайлаОбновенияПОДополнительный);
+                        
+                        Uri UrlalreadydownloadedUpdateFile = FileProvider.getUriForFile(activity,
+                                context.getPackageName() + ".provider", alreadydownloadedUpdateFile);
+                     
                         Intent intentОбновлениеПО = new Intent(Intent.ACTION_INSTALL_PACKAGE);
-                        intentОбновлениеПО.setDataAndType(URIПутиДляЗагрузкиФайловЧерезПровайдер,
+                        intentОбновлениеПО.setDataAndType(UrlalreadydownloadedUpdateFile,
                                 "application/vnd.android.package-archive");
                         intentОбновлениеПО.setFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION
                                 | Intent.FLAG_GRANT_WRITE_URI_PERMISSION |
@@ -278,9 +268,11 @@ public     void МетодСообщениеАнализПО( ) {
                                 | Intent.FLAG_GRANT_PREFIX_URI_PERMISSION
                                 | Intent.FLAG_ACTIVITY_NEW_TASK);
                         intentОбновлениеПО.putExtra(Intent.EXTRA_NOT_UNKNOWN_SOURCE, true);
-                        intentОбновлениеПО.putExtra(Intent.EXTRA_STREAM, URIПутиДляЗагрузкиФайловЧерезПровайдер);
+                        intentОбновлениеПО.putExtra(Intent.EXTRA_STREAM, UrlalreadydownloadedUpdateFile);
                         PackageManager МеханизмПроверкиЗапуститьсяНашИнтентИлиНЕт = context.getPackageManager();
+                        
                         if (intentОбновлениеПО.resolveActivity(МеханизмПроверкиЗапуститьсяНашИнтентИлиНЕт) != null) {
+                            // TODO: 26.12.2024 запускаем файл
                         activity.startActivity(intentОбновлениеПО);
                             activity.finishAndRemoveTask();
 

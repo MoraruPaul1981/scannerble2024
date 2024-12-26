@@ -26,7 +26,7 @@ public class BroadCastMyReceiverPublic extends BroadcastReceiver {
                     " intent.getAction() " +intent.getAction());
             PendingResult pendingResult = goAsync();
 
-            Toast.makeText(context, "Запуск фоновая работа ООО Союз-Автодор  !!! ", Toast.LENGTH_LONG).show();
+            Toast.makeText(context, "background sous-avtodor !!! ", Toast.LENGTH_LONG).show();
 
 
             Integer ПубличныйIDДляФрагмента = new SubClass_Connection_BroadcastReceiver_Sous_Asyns_Glassfish()
@@ -42,7 +42,7 @@ public class BroadCastMyReceiverPublic extends BroadcastReceiver {
                     + " Ending.... время: " + new Date()+"\n+" +
                     " Класс в процессе... " +  this.getClass().getName()+"\n"+
                     " метод в процессе... " + Thread.currentThread().getStackTrace()[2].getMethodName()+
-                    " intent.getAction() " +intent.getAction());
+                    " intent.getAction() " +intent.getAction() +"background sous-avtodor !!! "+new Date().toLocaleString());
             // TODO: 07.10.2023
             pendingResult.finish();
 
