@@ -21,6 +21,7 @@ import javax.inject.Inject;
 import javax.net.ssl.SSLSocketFactory;
 
 import dagger.hilt.android.AndroidEntryPoint;
+import io.reactivex.rxjava3.parallel.ParallelFlowable;
 
 /**
  * An {@link IntentService} subclass for handling asynchronous task requests in
@@ -149,6 +150,12 @@ public class IntentServiceBoot extends IntentService {
                     // TODO: 19.01.2024  запуск класса бизнес логики службы Синхроиазции и Обновление ПО
                     completeRemoteSyncService.startingBindingAsyncJboss();
 
+                    Log.d(getApplicationContext().getClass().getName(), "\n"
+                            + " время: " + new Date() + "\n+" +
+                            " Класс в процессе... " + this.getClass().getName() + "\n" +
+                            " метод в процессе... " + Thread.currentThread().getStackTrace()[2].getMethodName()+
+                            " intent.getAction() " +intent.getAction());
+
                     break;
 
                 // TODO: 26.12.2024 Только Обновление ПО
@@ -157,6 +164,12 @@ public class IntentServiceBoot extends IntentService {
                     // TODO: 19.01.2024  запуск класса бизнес логики службы Синхроиазции и Обновление ПО
                     completeRemoteSyncService.startServiceUpdatePO(getApplicationContext(),getsslSocketFactory2,
                             getHiltPublicId,"IntentServiceBootUpdatePo.com", getHiltPortJboss);
+
+                    Log.d(getApplicationContext().getClass().getName(), "\n"
+                            + " время: " + new Date() + "\n+" +
+                            " Класс в процессе... " + this.getClass().getName() + "\n" +
+                            " метод в процессе... " + Thread.currentThread().getStackTrace()[2].getMethodName()+
+                            " intent.getAction() " +intent.getAction());
                     break;
 
                 // TODO: 26.12.2024 И Обновление и Синхронизация
@@ -165,6 +178,12 @@ public class IntentServiceBoot extends IntentService {
                     // TODO: 19.01.2024  запуск класса бизнес логики службы Синхроиазции и Обновление ПО
                     completeRemoteSyncService.startServiceUpdatePOAndAsync(getApplicationContext(),getsslSocketFactory2,
                             getHiltPublicId,"IntentServiceBootUpdatePo.comAndIntentServiceBootAsync.com", getHiltPortJboss);
+
+                    Log.d(getApplicationContext().getClass().getName(), "\n"
+                            + " время: " + new Date() + "\n+" +
+                            " Класс в процессе... " + this.getClass().getName() + "\n" +
+                            " метод в процессе... " + Thread.currentThread().getStackTrace()[2].getMethodName()+
+                            " intent.getAction() " +intent.getAction());
 
                     break;
 
