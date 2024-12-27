@@ -2576,8 +2576,7 @@ public class FragmentSingleTabelOneSwipe extends Fragment {
                             searchViewДляНовогоПоиска=    (androidx.appcompat.widget.SearchView) view.findViewById(R.id.searchview_newscanner);
                             searchViewДляНовогоПоиска.setQueryHint("Поиск");
                             // TODO: 14.12.2022
-                            searchViewДляНовогоПоиска.setDrawingCacheBackgroundColor(Color.GRAY);
-                            searchViewДляНовогоПоиска.setDrawingCacheEnabled(true);
+
 
 
 
@@ -2607,7 +2606,7 @@ public class FragmentSingleTabelOneSwipe extends Fragment {
                                                     Integer ИндексНазваниеЦФО = cursor.getColumnIndex("name");///user_update  --old/// uuid
                                                     String НазваниеПрофесии = cursor.getString(ИндексНазваниеЦФО);
                                                     // TODO: 13.12.2022  производим состыковку
-                                                    Integer ИндексНазваниеПрофесииID = cursor.getColumnIndex("_id");///user_update  --old/// uuid
+                                                    Integer ИндексНазваниеПрофесииID = cursor.getColumnIndex("uuid");///user_update  --old/// uuid
                                                     Integer ПолучаемIDПрофессии = cursor.getInt(ИндексНазваниеПрофесииID);
                                                     if (ПолучаемIDПрофессии>0) {
                                                         Integer UUIDПрофессии = cursor.getColumnIndex("uuid");///user_update  --old/// uuid
@@ -2968,7 +2967,7 @@ public class FragmentSingleTabelOneSwipe extends Fragment {
                     Integer ПрофессияИзDatatabels = cursor.getInt(cursor.getColumnIndex("dt_prof"));
                     //////TODO ГЛАВНЫЙ КУРСОР ДЛЯ НЕПОСРЕДТСВЕНОГО ЗАГРУЗКИ СОТРУДНИКА
                     Bundle bundleTabelViewПосикПрофессия= new Bundle();
-                    bundleTabelViewПосикПрофессия.putString("СамЗапрос","  SELECT name FROM  prof WHERE _id=? ");
+                    bundleTabelViewПосикПрофессия.putString("СамЗапрос","  SELECT name FROM  prof WHERE uuid=? ");
                     if (ПрофессияИзDatatabels>0) {
                         bundleTabelViewПосикПрофессия.putStringArray("УсловияВыборки" ,new String[]{String.valueOf(ПрофессияИзDatatabels)});
                     } else {

@@ -380,7 +380,7 @@ this.context=context;
             // TODO: 25.09.2024
             if (  jsonNodeParentMAP.has("prof") ) {
                 if (!jsonNodeParentMAP.get("prof").isNull()  ) {
-                    sqLiteStatementInsert.bindLong(40, jsonNodeParentMAP.get("prof").intValue());//"id""
+                    sqLiteStatementInsert.bindLong(40, jsonNodeParentMAP.get("prof").longValue());//"id""
                 }else {
                     sqLiteStatementInsert.bindNull(40);
                 }
@@ -459,7 +459,7 @@ this.context=context;
             // TODO: 25.09.2024
             if (  jsonNodeParentMAP.has("prof") ) {
                 if (!jsonNodeParentMAP.get("prof").isNull()  ) {
-                    sqLiteStatementInsert.bindLong(40, jsonNodeParentMAP.get("prof").intValue());//"id""
+                    sqLiteStatementInsert.bindLong(40, jsonNodeParentMAP.get("prof").longValue());//"id""
                 }else {
                     sqLiteStatementInsert.bindNull(40);
                 }

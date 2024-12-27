@@ -1076,8 +1076,6 @@ public class FragmentNewOrderTransport extends Fragment {
                         searchView =    (androidx.appcompat.widget.SearchView) view.findViewById(R.id.searchview_newordertransport);
                         searchView.setQueryHint("Поиск "+Спровочник);
                         ListViewForSearchView.setTextFilterEnabled(true);
-                        searchView.setDrawingCacheBackgroundColor(Color.GRAY);
-                        searchView.setDrawingCacheEnabled(true);
                         searchView.setSubmitButtonEnabled(true);
 
 

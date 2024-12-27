@@ -1917,7 +1917,6 @@ private  void методСозданиеNewImage(@NonNull MyViewHolder holder){
                                     holder.   listViewДляЦФО.setTextFilterEnabled(true);
                                     searchViewДляНовогоЦФО = (SearchView) view.findViewById(R.id.searchview_newscanner);
                                     // TODO: 14.12.2022
-                                    searchViewДляНовогоЦФО.setDrawingCacheBackgroundColor(Color.GRAY);
                                     searchViewДляНовогоЦФО.setDrawingCacheEnabled(true);
                                         // TODO: 17.01.2024
                                         TextView textViewСтрокаПосика = searchViewДляНовогоЦФО.findViewById(com.google.android.material.R.id.search_src_text);
