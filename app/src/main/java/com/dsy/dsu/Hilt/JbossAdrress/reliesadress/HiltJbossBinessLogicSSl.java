@@ -25,10 +25,10 @@ public class HiltJbossBinessLogicSSl implements HiltJbossBinessLogicIntarface {
 
 
        // TODO: 18.03.2023 московский сервер
-    //   getJbossPort.putIfAbsent(8890,"base.dsu1.ru");// TODO: 10.11.2022
+        getJbossPort.putIfAbsent(8890,"base.dsu1.ru");// TODO: 10.11.2022
 
        // TODO: 18.03.2023 debug сервер
-       getJbossPort.putIfAbsent( 8080,"192.168.3.4");//
+      // getJbossPort.putIfAbsent( 8080,"192.168.3.4");//
 
 
 
