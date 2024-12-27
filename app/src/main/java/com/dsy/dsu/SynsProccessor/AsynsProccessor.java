@@ -25,6 +25,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.LinkedHashMap;
 import java.util.Map;
+import java.util.Optional;
 import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.TimeoutException;
@@ -40,19 +41,17 @@ import io.reactivex.rxjava3.schedulers.Schedulers;
 public class AsynsProccessor extends Class_MODEL_synchronized {
     // TODO: 28.07.2022  переменые
     public Context context;
-    public CopyOnWriteArrayList<String> ГлавныеТаблицыСинхронизации =new CopyOnWriteArrayList();
 
 
-    CopyOnWriteArrayList<String> NameTableAsync = new CopyOnWriteArrayList();
-    ArrayList<String> ИменаПроектовОтСервера = new ArrayList<String>();
-    public LinkedHashMap<String, Date> DatesTableAsync =  new LinkedHashMap<>();
-    LinkedHashMap<String, Long> VesionTableAsync =  new LinkedHashMap<String, Long>();
+
+
+
+
     public SQLiteDatabase sqLiteDatabase ;
     public SharedPreferences preferences;
     public Integer  ПубличныйIDДляФрагмента=0;
-    public     String НазваниеСервернойТаблицы=new String();
-    public  String КлючДляFirebaseNotification = "2a1819db-60c8-4ca3-a752-1b6cd9cadfa1";
 
+    public  String КлючДляFirebaseNotification = "2a1819db-60c8-4ca3-a752-1b6cd9cadfa1";
     public   ObjectMapper jsonGenerator;
 
     public SSLSocketFactory getsslSocketFactory2;
@@ -249,107 +248,99 @@ public class AsynsProccessor extends Class_MODEL_synchronized {
                             " BufferGetVersionData " + BufferGetVersionData.toString());
 
 
-                    //TODO БУфер JSON от Сервера
-                    CopyOnWriteArrayList<Map<String, String>> БуферJsonОтСервераmodification_server =
+                    //TODO Таблицы ОТ  Сервера
+                    CopyOnWriteArrayList<Map<String, String>> getBufferFromJbossServerAllTables =
                             jsonGenerator.readValue(BufferGetVersionData.toString(),
                             new TypeReference<CopyOnWriteArrayList<Map<String, String>>>() {
                             });
-
-                    ГлавныеТаблицыСинхронизации = new PUBLIC_CONTENT(context).методCreatingMainTabels(context);
-                    ///упаковываем в j
-                    Log.d(this.getClass().getName(), "  БуферJsonОтСервераmodification_server  " + БуферJsonОтСервераmodification_server);
-                    VesionTableAsync = new LinkedHashMap<String, Long>();
-                     NameTableAsync=new  CopyOnWriteArrayList<String>();
-
-                    // TODO: 15.09.2023
-                    // TODO: 09.08.2023  бежим по данным версии сервера
-                    Flowable.fromIterable(БуферJsonОтСервераmodification_server)
-                            .onBackpressureBuffer()
-                            .blockingIterable()
-                            .forEach(new Consumer<Map<String, String>>() {
-                                @Override
-                                public void accept(Map<String, String> stringStringMap) {
-                                    stringStringMap.forEach(new BiConsumer<String, String>() {
-                                        @Override
-                                        public void accept(String НазваниеТаблицыСервера, String ВерсияДанныхСервернойТаблицы) {
-
-                                            // TODO: 25.09.2024  анализ табоиц  серер  и таблиц которые локально находятся сдесь
-                                    String currentOtServefJbossNameTable=        stringStringMap.entrySet().stream().filter(fi->fi.getKey().equalsIgnoreCase("name")).findAny().get().getValue().trim();
-                                   /// String getLinkNameOtServerJboss=        stringStringMap.keySet().stream().filter(k->k.equalsIgnoreCase("name")).findAny().orElseGet(()->"");
-
-                                        Boolean AnalysEmptyCurrentTable=    ГлавныеТаблицыСинхронизации.contains(currentOtServefJbossNameTable);
-                                           // TODO: 25.09.2024
-                                            if (AnalysEmptyCurrentTable) {
-                                                // TODO: 25.09.2024  
-                                                if (НазваниеТаблицыСервера.trim().equalsIgnoreCase("name")) {
-                                                   NameTableAsync.add(ВерсияДанныхСервернойТаблицы.trim());
-                                                    НазваниеСервернойТаблицы =ВерсияДанныхСервернойТаблицы.trim();
-    
-                                                    Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
-                                                            " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                                                            " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"
-                                                            + " ВерсияДанныхСервернойТаблицы " + ВерсияДанныхСервернойТаблицы );
-                                                }
-                                                if (НазваниеТаблицыСервера.trim().equalsIgnoreCase("versionserverversion")) {
-                                                  VesionTableAsync.putIfAbsent(НазваниеСервернойТаблицы.trim(),
-                                                            Long.valueOf(ВерсияДанныхСервернойТаблицы));
-    
-                                                    Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
-                                                            " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                                                            " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"
-                                                            + " ВерсияДанныхСервернойТаблицы " + ВерсияДанныхСервернойТаблицы );
-    
-                                                }
-                                                if (НазваниеТаблицыСервера.trim().equalsIgnoreCase("versionserver")) {
-    
-                                                    // TODO: 09.08.2023  даты заполяем таблиц с серверар
-                                                    Date ДатаВерсииДанныхSQLServer=    new FormattingVersionDastaSqlserver(context).formattingDateOnVersionSqlServer(ВерсияДанныхСервернойТаблицы);
-                                                    DatesTableAsync.putIfAbsent(НазваниеСервернойТаблицы.trim(), ДатаВерсииДанныхSQLServer );
-    
-    
-                                                    Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
-                                                            " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                                                            " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"
-                                                            + " ДатаВерсииДанныхSQLServer " + ДатаВерсииДанныхSQLServer );
-                                                }
-                                            }
-
-
-                                            Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
-                                                    " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                                                    " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"
-                                                    + " НазваниеТаблицыСервера " + НазваниеТаблицыСервера + " ВерсияДанныхСервернойТаблицы " + ВерсияДанныхСервернойТаблицы+
-                                                    " НазваниеСервернойТаблицы[0] " +НазваниеСервернойТаблицы+
-                                                     " AnalysEmptyCurrentTable " +AnalysEmptyCurrentTable);
-                                        }
-                                    });
-                                }
-                            });
-                    // TODO: 27.12.2024
-                    Log.d(this.getClass().getName(),"\n" + " class "
-                            + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                    Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                             " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                            " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"+
-                            " VesionTableAsync"
-                            +VesionTableAsync+"\n"
-                            + " NameTableAsync " +NameTableAsync);
+                            " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"
+                            + " getBufferFromJbossServerAllTables " +getBufferFromJbossServerAllTables);
 
+
+
+
+
+
+
+                    Flowable.fromIterable(getBufferFromJbossServerAllTables)
+                            .onBackpressureBuffer()
+                            .blockingIterable().forEach(new Consumer<Map<String, String>>() {
+                        @Override
+                        public void accept(Map<String, String> stringStringMap) {
+                            // TODO: 27.12.2024
+
+                            String getId= stringStringMap.entrySet().stream().filter(e->e.getKey().equalsIgnoreCase("id")).map(Map.Entry::getValue).findFirst().get();
+                            String getName= stringStringMap.entrySet().stream().filter(e->e.getKey().equalsIgnoreCase("name")).map(Map.Entry::getValue).findFirst().get();
+                            String getVersionserver= stringStringMap.entrySet().stream().filter(e->e.getKey().equalsIgnoreCase("versionserver")).map(Map.Entry::getValue).findFirst().get();
+                            String getVersionserverversion= stringStringMap.entrySet().stream().filter(e->e.getKey().equalsIgnoreCase("versionserverversion")).map(Map.Entry::getValue).findFirst().get();
+
+                            Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                                    " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                                    " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"
+                                    + " getBufferFromJbossServerAllTables.size() " + getBufferFromJbossServerAllTables.size());
+
+                        }
+                    });
+
+                    getBufferFromJbossServerAllTables.forEach(new Consumer<Map<String, String>>() {
+                        @Override
+                        public void accept(Map<String, String> stringStringMap) {
+
+
+                           String getId= stringStringMap.entrySet().stream().filter(e->e.getKey().equalsIgnoreCase("id")).map(Map.Entry::getValue).findFirst().get();
+                           String getName= stringStringMap.entrySet().stream().filter(e->e.getKey().equalsIgnoreCase("name")).map(Map.Entry::getValue).findFirst().get();
+                           String getVersionserver= stringStringMap.entrySet().stream().filter(e->e.getKey().equalsIgnoreCase("versionserver")).map(Map.Entry::getValue).findFirst().get();
+                           String getVersionserverversion= stringStringMap.entrySet().stream().filter(e->e.getKey().equalsIgnoreCase("versionserverversion")).map(Map.Entry::getValue).findFirst().get();
+
+                            Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                                    " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                                    " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"
+                                    + " getBufferFromJbossServerAllTables.size() " + getBufferFromJbossServerAllTables.size());
+
+                         /*   // TODO: 02.04.2024  Адресс и Порт Сервера Jboss
+                            String   getname = stringStringMap.values() .stream().filter(f->stringStringMap.entrySet().stream().findFirst().get()="id").findFirst().get();
+                            Integer    s = stringStringMap .stream().mapToInt(m->m).findFirst().getAsInt();*/
+                        }
+                    });
+
+
+
+
+
+
+
+
+
+
+
+                    //TODO Таблицы ОТ  Андройда
+                    CopyOnWriteArrayList<String>      getMainTabelAllAndroid = new PUBLIC_CONTENT(context).методCreatingMainTabels(context);
+
+                    Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                            " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                            " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"   + " getMainTabelAllAndroid " +getMainTabelAllAndroid);
 
 // TODO: 25.09.2024  После Получение таблиц и заполение запускаем ихрониазцтию 
-                    РезультатСинхронизации   = МетодГлавныхЦиклТаблицДляСинхронизации(getPublicID);
+                    РезультатСинхронизации   = МетодГлавныхЦиклТаблицДляСинхронизации(getPublicID,getBufferFromJbossServerAllTables);
 
 
                     Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                             " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
                             " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"
-                            + " РезультатСинхронизации " + РезультатСинхронизации);
+                            + " getBufferFromJbossServerAllTables.size() " + getBufferFromJbossServerAllTables.size());
 
-                    Log.i(this.getClass().getName(), " ИменаТаблицыОтАндройда "
-                            +  NameTableAsync.toString() +
-                            "  ДанныеПришлаСпискаТаблицДляОбмена " + ДанныеПришлаСпискаТаблицДляОбмена);
+
                 }
             }else {
                 Log.i(this.getClass().getName(), " НЕт данных с сервера  BufferGetVersionData " + BufferGetVersionData );
+
+                Log.i(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                        " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                        " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"+
+                        " НЕт данных с сервера  BufferGetVersionData " + BufferGetVersionData);
+
 
             }
         } catch (Exception e) {
@@ -484,17 +475,15 @@ public class AsynsProccessor extends Class_MODEL_synchronized {
 
 
     @SuppressLint("SuspiciousIndentation")
-    Long МетодГлавныхЦиклТаблицДляСинхронизации(@NonNull Integer PublicID)
+    Long МетодГлавныхЦиклТаблицДляСинхронизации(@NonNull Integer PublicID,   @NonNull    CopyOnWriteArrayList<Map<String, String>> getBufferFromJbossServerAllTables)
             throws ExecutionException, InterruptedException {//КонтекстСинхроДляКонтроллера
         // TODO: 07.04.2024
        AtomicReference<Long> ResultatSync =new AtomicReference<>(0l);
         try {
-            Log.i(this.getClass().getName(), " ИменаТаблицыОтАндройда "
-                    +  NameTableAsync.toString()
-                    + " ВерсииВсехСерверныхТаблиц "
-                    +  VesionTableAsync.toString()
-                    + " ВерсииДатыСерверныхТаблиц "
-                    + DatesTableAsync.toString());
+            Log.i(this.getClass().getName(), " PublicID "
+                    +  PublicID.toString()
+                    + " getBufferFromJbossServerAllTables "
+                    +  getBufferFromJbossServerAllTables.toString());
 
 
             /*
@@ -507,10 +496,9 @@ public class AsynsProccessor extends Class_MODEL_synchronized {
                     jsonGenerator,
                     getsslSocketFactory2,
                      getHiltPortJboss,
-                    NameTableAsync,
-                    VesionTableAsync,
-                    DatesTableAsync,
-                    PublicID).startingAsyncParallels());
+                    getBufferFromJbossServerAllTables,
+                    PublicID)
+                    .startingAsyncParallels());
 
             // TODO: 08.04.2024
             Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
