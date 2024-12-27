@@ -15,6 +15,7 @@ import com.dsy.dsu.BusinessLogicAll.Class_MODEL_synchronized;
 import com.dsy.dsu.BusinessLogicAll.Jakson.GeneratorBinarySONSerializer;
 import com.dsy.dsu.BusinessLogicAll.Jakson.GeneratorJSONSerializer;
 import com.dsy.dsu.BusinessLogicAll.SubClassUpVersionDATA;
+import com.dsy.dsu.CnangeServers.PUBLIC_CONTENT;
 import com.dsy.dsu.Errors.Class_Generation_Errors;
 import com.dsy.dsu.SynsProccessor.PrograsBarAsync.GetPrograssbarChangeIndicator;
 import com.fasterxml.jackson.core.JsonParser;
@@ -27,8 +28,13 @@ import org.json.JSONException;
 import java.io.InputStream;
 import java.io.Serializable;
 import java.io.StringWriter;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.LinkedHashMap;
+import java.util.Locale;
 import java.util.Map;
 import java.util.concurrent.Callable;
 import java.util.concurrent.ConcurrentSkipListSet;
@@ -36,6 +42,7 @@ import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
+import java.util.function.Consumer;
 
 import javax.net.ssl.SSLSocketFactory;
 
@@ -45,7 +52,6 @@ import io.reactivex.rxjava3.core.MaybeObserver;
 import io.reactivex.rxjava3.core.Observable;
 import io.reactivex.rxjava3.disposables.Disposable;
 import io.reactivex.rxjava3.functions.Action;
-import io.reactivex.rxjava3.functions.Consumer;
 import io.reactivex.rxjava3.functions.Predicate;
 import io.reactivex.rxjava3.internal.observers.DisposableAutoReleaseMultiObserver;
 import io.reactivex.rxjava3.observers.DisposableMaybeObserver;
@@ -154,44 +160,32 @@ public class ProccesorparallelSynch   {
 
 
                  // TODO: 07.10.2024
-                 case "ПовторныйЗапускСинхронизации":
-                 Flowable.fromIterable( getBufferFromJbossServerAllTables)
-                             .filter(fil->!fil.toString().isEmpty())
-                         .onBackpressureBuffer()
-                         .blockingIterable()
-                         .forEach(rowSingleThread->{
-                             // TODO: 27.12.2024
+                // case "ПовторныйЗапускСинхронизации":
+                 case "СамыйПервыйЗапускСинхронизации":
+                     // TODO: 27.12.2024
+                     Flowable.fromIterable(getBufferFromJbossServerAllTables)
+                             .onBackpressureBuffer()
+                             .blockingIterable().forEach(new Consumer<Map<String, String>>() {
+                                 @Override
+                                 public void accept(Map<String, String> stringStringMapRowSingle) {
+                                     // TODO: 27.12.2024
+                                     String getNameTableSingle= stringStringMapRowSingle.entrySet().stream().filter(e->e.getKey().equalsIgnoreCase("name")).map(Map.Entry::getValue).findFirst().get();
 
+                                     // TODO: 06.12.2023  запуск синхризуции по таблице конктерной
+                                    coutSucceessItemAsycnTablesComplete.add(getLooTablesPOSTANDGET(stringStringMapRowSingle))      ;
+                                     // TODO: 30.09.2024
+                                     // TODO: 15.09.2023
+                                     Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                                             " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                                             " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"
+                                             + " getBufferFromJbossServerAllTables.size() " + getBufferFromJbossServerAllTables.size()
+                                             +"\n"+" getNameTableSingle " +getNameTableSingle);
 
-                             Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
-                                     " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                                     " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"+ "\n"+ " РежимЗапускаСинхронизации " +РежимЗапускаСинхронизации+
-                                     " rowSingleThread " +rowSingleThread);
-
-
-                           //  ТаблицаОбработываемаяSingle= "data_tabels";
-
-                             // TODO: 06.12.2023  запуск синхризуции по таблице конктерной
-                            // coutSucceessItemAsycnTablesComplete.add(getLooTablesPOSTANDGET(ТаблицаОбработываемаяSingle))      ;
-                             // TODO: 30.09.2024
-                             // TODO: 15.09.2023
-                            /* Log.d(this.getClass().getName(),"\n" + " class "
-                                     + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
-                                     " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                                     " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"+
-                                     " ТаблицаОбработываемаяSingle"
-                                     +ТаблицаОбработываемаяSingle+"\n"
-                                     + " coutSucceessItemAsycnTablesComplete " +coutSucceessItemAsycnTablesComplete.size()+
-                                     " coutSucceessItemAsycnTables.stream().mapToLong(l->l)  .reduce(0, Long::sum)"
-                                     +coutSucceessItemAsycnTablesComplete.stream().mapToLong(l->l)  .reduce(0, Long::sum)+"\n"+
-                                     " ТаблицаОбработываемаяSingle "+ТаблицаОбработываемаяSingle+"\n"+"asynThread" +Thread.currentThread().getName());*/
-
-                           });
-
+                                 }
+                             });
                      Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                              " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
                              " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"+ "\n"+ " РежимЗапускаСинхронизации " +РежимЗапускаСинхронизации);
-
                      break;
 
                  // TODO: 07.10.2024  chsnage
@@ -217,32 +211,35 @@ public class ProccesorparallelSynch   {
 
 
 
-/*    public Long getLooTablesPOSTANDGET(@NonNull String ИмяТаблицыоТВерсияДанныхОтSqlServer) {
+    public Long getLooTablesPOSTANDGET(@NonNull Map<String, String> stringStringMapRowSingle) {
         Long   РезультатТаблицыОбмена=0l;
         try{
             // TODO: 21.08.2023 Запуск Синхронизации после получение Версии
-            Long     ВерсияДанныхОтSqlServerж;// = VesionTableAsync.get(ИмяТаблицыоТВерсияДанныхОтSqlServer);
-            // TODO: 02.04.2024 верям данных
-            Date ВремяВерсияОтSqlServer;// = DatesTableAsync.get(ИмяТаблицыоТВерсияДанныхОтSqlServer);
+            String getId= stringStringMapRowSingle.entrySet().stream().filter(e->e.getKey().equalsIgnoreCase("id")).map(Map.Entry::getValue).findFirst().get();
+            String getNameTable= stringStringMapRowSingle.entrySet().stream().filter(e->e.getKey().equalsIgnoreCase("name")).map(Map.Entry::getValue).findFirst().get();
+            String getVersionserver= stringStringMapRowSingle.entrySet().stream().filter(e->e.getKey().equalsIgnoreCase("versionserver")).map(Map.Entry::getValue).findFirst().get();
+            Long getVersionserverversion= Long.valueOf(stringStringMapRowSingle.entrySet().stream().filter(e->e.getKey().equalsIgnoreCase("versionserverversion")).map(Map.Entry::getValue).findFirst().get());
 
+         // TODO: 27.12.2024 get Date parser
+            DateFormat dateFormat =   new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS",new Locale("ru"));
+           Date  getParserVersionserver= dateFormat.parse(getVersionserver);
 
             Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                     " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
                     " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"+
-                    " ВерсияДанныхОтSqlServer " +ВерсияДанныхОтSqlServer+ " ИмяТаблицыоТВерсияДанныхОтSqlServer "
-                    + ИмяТаблицыоТВерсияДанныхОтSqlServer +
-                    "   ВремяВерсияОтSqlServer " + ВремяВерсияОтSqlServer);
+                    " getVersionserver " +getVersionserver+ " getNameTable "
+                    + getNameTable);
             /////////////TODO ИДЕМ ПО ШАГАМ К ЗАПУСКИ СИНХРОГНИАЗЦИИ
             РезультатТаблицыОбмена=
-                    startSendingDataTotheServerOrReceivingDataFromTheJbossServer(ИмяТаблицыоТВерсияДанныхОтSqlServer,
-                            ВерсияДанныхОтSqlServer, PublicID,ВремяВерсияОтSqlServer);
+                    startSendingDataTotheServerOrReceivingDataFromTheJbossServer(getNameTable,
+                            getVersionserverversion, PublicID,getParserVersionserver);
             // TODO: 12.07.2023
 
             Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                     " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
                     " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"+
-                    " ВерсияДанныхОтSqlServer " +ВерсияДанныхОтSqlServer+ " ИмяТаблицыоТВерсияДанныхОтSqlServer "
-                    + ИмяТаблицыоТВерсияДанныхОтSqlServer +
+                    " getNameTable " +getNameTable+ " getVersionserver "
+                    + getVersionserver +" getVersionserverversion " +getVersionserverversion+
                     "   РезультатТаблицыОбмена " + РезультатТаблицыОбмена);
 
         } catch (Exception e) {
@@ -254,7 +251,7 @@ public class ProccesorparallelSynch   {
                     Thread.currentThread().getStackTrace()[2].getMethodName(), Thread.currentThread().getStackTrace()[2].getLineNumber());
         }
         return  РезультатТаблицыОбмена;
-    }*/
+    }
 
 // TODO: 07.04.2024
 
@@ -312,11 +309,13 @@ public class ProccesorparallelSynch   {
                     " метод в процессе... " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
                     "  +  completedPostAndGetInsertorUpdateOperations.size() " + completedPostAndGetInsertorUpdateOperations.size());
 
-      /*      ///   TODO: 08.04.2024 Показываем пользовалю ПРоценты
-            if (completedPostAndGetInsertorUpdateOperations.size() > 0) {
+            ///   TODO: 08.04.2024 Показываем пользовалю ПРоценты
+             if (completedPostAndGetInsertorUpdateOperations.size() > 0) {
+                //TODO Таблицы ОТ  Андройда
+                CopyOnWriteArrayList<String>      getMainTabelAllAndroid = new PUBLIC_CONTENT(context).методCreatingMainTabels(context);
                 // TODO: 24.12.2024
-                new GetPrograssbarChangeIndicator(context).setAsyncrograssbarMap(VesionTableAsync, ИмяТаблицы, completedPostAndGetInsertorUpdateOperations.size());
-            }*/
+                new GetPrograssbarChangeIndicator(context).setAsyncrograssbarMap(getMainTabelAllAndroid, ИмяТаблицы, completedPostAndGetInsertorUpdateOperations.size());
+            }
 
 
 

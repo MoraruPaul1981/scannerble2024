@@ -259,62 +259,6 @@ public class AsynsProccessor extends Class_MODEL_synchronized {
                             + " getBufferFromJbossServerAllTables " +getBufferFromJbossServerAllTables);
 
 
-
-
-
-
-
-                    Flowable.fromIterable(getBufferFromJbossServerAllTables)
-                            .onBackpressureBuffer()
-                            .blockingIterable().forEach(new Consumer<Map<String, String>>() {
-                        @Override
-                        public void accept(Map<String, String> stringStringMap) {
-                            // TODO: 27.12.2024
-
-                            String getId= stringStringMap.entrySet().stream().filter(e->e.getKey().equalsIgnoreCase("id")).map(Map.Entry::getValue).findFirst().get();
-                            String getName= stringStringMap.entrySet().stream().filter(e->e.getKey().equalsIgnoreCase("name")).map(Map.Entry::getValue).findFirst().get();
-                            String getVersionserver= stringStringMap.entrySet().stream().filter(e->e.getKey().equalsIgnoreCase("versionserver")).map(Map.Entry::getValue).findFirst().get();
-                            String getVersionserverversion= stringStringMap.entrySet().stream().filter(e->e.getKey().equalsIgnoreCase("versionserverversion")).map(Map.Entry::getValue).findFirst().get();
-
-                            Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
-                                    " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                                    " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"
-                                    + " getBufferFromJbossServerAllTables.size() " + getBufferFromJbossServerAllTables.size());
-
-                        }
-                    });
-
-                    getBufferFromJbossServerAllTables.forEach(new Consumer<Map<String, String>>() {
-                        @Override
-                        public void accept(Map<String, String> stringStringMap) {
-
-
-                           String getId= stringStringMap.entrySet().stream().filter(e->e.getKey().equalsIgnoreCase("id")).map(Map.Entry::getValue).findFirst().get();
-                           String getName= stringStringMap.entrySet().stream().filter(e->e.getKey().equalsIgnoreCase("name")).map(Map.Entry::getValue).findFirst().get();
-                           String getVersionserver= stringStringMap.entrySet().stream().filter(e->e.getKey().equalsIgnoreCase("versionserver")).map(Map.Entry::getValue).findFirst().get();
-                           String getVersionserverversion= stringStringMap.entrySet().stream().filter(e->e.getKey().equalsIgnoreCase("versionserverversion")).map(Map.Entry::getValue).findFirst().get();
-
-                            Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
-                                    " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                                    " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"
-                                    + " getBufferFromJbossServerAllTables.size() " + getBufferFromJbossServerAllTables.size());
-
-                         /*   // TODO: 02.04.2024  Адресс и Порт Сервера Jboss
-                            String   getname = stringStringMap.values() .stream().filter(f->stringStringMap.entrySet().stream().findFirst().get()="id").findFirst().get();
-                            Integer    s = stringStringMap .stream().mapToInt(m->m).findFirst().getAsInt();*/
-                        }
-                    });
-
-
-
-
-
-
-
-
-
-
-
                     //TODO Таблицы ОТ  Андройда
                     CopyOnWriteArrayList<String>      getMainTabelAllAndroid = new PUBLIC_CONTENT(context).методCreatingMainTabels(context);
 
@@ -322,7 +266,7 @@ public class AsynsProccessor extends Class_MODEL_synchronized {
                             " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
                             " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"   + " getMainTabelAllAndroid " +getMainTabelAllAndroid);
 
-// TODO: 25.09.2024  После Получение таблиц и заполение запускаем ихрониазцтию 
+// TODO: 25.09.2024  Запускаем ГЛАВНУЮ ОБРБАБОТКУ по таблицам
                     РезультатСинхронизации   = МетодГлавныхЦиклТаблицДляСинхронизации(getPublicID,getBufferFromJbossServerAllTables);
 
 

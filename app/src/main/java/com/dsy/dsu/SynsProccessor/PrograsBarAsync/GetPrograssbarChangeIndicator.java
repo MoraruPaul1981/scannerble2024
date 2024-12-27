@@ -27,20 +27,18 @@ Context context;
     }
 
     @Override
-    public void setAsyncrograssbarMap(@NonNull LinkedHashMap<String, Long> linkedHashMap,
+    public void setAsyncrograssbarMap(@NonNull CopyOnWriteArrayList<String> getMainTabelAllAndroid,
                                       @NonNull String имяТаблицаAsync,
                                       @NonNull Integer SuccessInsertOrUpdates) {
         try {
             int Проценты;
-            ArrayList<String> ВерсииВсехFindCurrentTable= (ArrayList<String>) linkedHashMap.keySet().stream().collect(Collectors.toList());
-
-            Integer ПозицияТекущейТаблицы=      ВерсииВсехFindCurrentTable.indexOf(имяТаблицаAsync);
+            Integer ПозицияТекущейТаблицы=      getMainTabelAllAndroid.indexOf(имяТаблицаAsync);
             Проценты = new Class_Visible_Processing_Async(context).
-                    ГенерируемПРОЦЕНТЫДляAsync(ПозицияТекущейТаблицы, ВерсииВсехFindCurrentTable.size());
+                    ГенерируемПРОЦЕНТЫДляAsync(ПозицияТекущейТаблицы, getMainTabelAllAndroid.size());
 
 
             // TODO: 22.01.2024 текущее отобраение процентов
-            методCallBackPrograssBars(  Проценты,имяТаблицаAsync, ПозицияТекущейТаблицы,ВерсииВсехFindCurrentTable.size(),SuccessInsertOrUpdates );
+            методCallBackPrograssBars(  Проценты,имяТаблицаAsync, ПозицияТекущейТаблицы,getMainTabelAllAndroid.size(),SuccessInsertOrUpdates );
 
             Log.d(this.getClass().getName(),"\n" + " class " +
                     Thread.currentThread().getStackTrace()[2].getClassName()
