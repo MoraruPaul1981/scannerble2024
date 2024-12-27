@@ -162,8 +162,10 @@ public class ProccesorparallelSynch   {
                  case "ПовторныйЗапускСинхронизации":
                  Flowable.fromIterable( VesionTableAsync.keySet())
                              .filter(fil->!fil.toString().isEmpty())
-                         .onBackpressureBuffer()
-                         .blockingForEach(ТаблицаОбработываемаяSingle->{
+                         .onBackpressureBuffer().blockingIterable().forEach(ТаблицаОбработываемаяSingle->{
+                             // TODO: 27.12.2024
+
+                             ТаблицаОбработываемаяSingle= "data_tabels";
 
                              // TODO: 06.12.2023  запуск синхризуции по таблице конктерной
                              coutSucceessItemAsycnTables.add(getLooTablesPOSTANDGET(ТаблицаОбработываемаяSingle))      ;
@@ -275,66 +277,42 @@ public class ProccesorparallelSynch   {
                         +" ВремяОтSqlServer " +ВремяОтSqlServer);
 
 // TODO: 24.09.2024 Запускаем Отправление и или ПОлучение данных  сервера JBoss
-            Maybe.empty().blockingSubscribe(new MaybeObserver<Object>() {
-                @Override
-                public void onSubscribe(@io.reactivex.rxjava3.annotations.NonNull Disposable d) {
 
-                    // TODO: 08.04.2024 SEND SERVERR JBOSS POST
-                    completedPostAndGetInsertorUpdateOperations.add(startSendingDatatoTheServerOnjboss(ИмяТаблицы,
-                            ВерсияДанныхсSqlServer,
-                            PublicID,
-                            ВремяОтSqlServer, "POST"));
 
-                    // TODO: 24.12.2024
-                    onSuccess(d);
+            // TODO: 08.04.2024 SEND SERVERR JBOSS POST
+            completedPostAndGetInsertorUpdateOperations.add(startSendingDatatoTheServerOnjboss(ИмяТаблицы,
+                    ВерсияДанныхсSqlServer,
+                    PublicID,
+                    ВремяОтSqlServer, "POST"));
 
-                    // TODO: 24.09.2024
-                    Log.d(this.getClass().getName(), "\n"
-                            + " время: " + new Date() + "\n+" +
-                            " Класс в процессе... " + this.getClass().getName() + "\n" +
-                            " метод в процессе... " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                            "  +  completedPostAndGetInsertorUpdateOperations.size() " + completedPostAndGetInsertorUpdateOperations.size());
-                }
+// TODO: 24.09.2024
+            Log.d(this.getClass().getName(), "\n"
+                    + " время: " + new Date() + "\n+" +
+                    " Класс в процессе... " + this.getClass().getName() + "\n" +
+                    " метод в процессе... " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                    "  +  completedPostAndGetInsertorUpdateOperations.size() " + completedPostAndGetInsertorUpdateOperations.size());
 
-                @Override
-                public void onSuccess(@io.reactivex.rxjava3.annotations.NonNull Object o) {
-                    // TODO: 08.04.2024 через Retry Obsever множественое ображение  к серверу
-                    completedPostAndGetInsertorUpdateOperations.add(completedInsertorUpdateOperations(ИмяТаблицы,
-                            ВерсияДанныхсSqlServer,
-                            PublicID,
-                            ВремяОтSqlServer, "GET"));
 
-                    Log.d(this.getClass().getName(), "\n"
-                            + " время: " + new Date() + "\n+" +
-                            " Класс в процессе... " + this.getClass().getName() + "\n" +
-                            " метод в процессе... " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                            "  +  completedPostAndGetInsertorUpdateOperations.get() " + completedPostAndGetInsertorUpdateOperations.size());
-                }
 
-                @Override
-                public void onError(@io.reactivex.rxjava3.annotations.NonNull Throwable e) {
-                    e.printStackTrace();
-                    Exception exception=new Exception(e);
-                    Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
-                            " Линия  :" + Thread.currentThread().getStackTrace()[2].getLineNumber());
-                    new Class_Generation_Errors(context).МетодЗаписиВЖурналНовойОшибки(exception.toString(), this.getClass().getName(),
-                            Thread.currentThread().getStackTrace()[2].getMethodName(), Thread.currentThread().getStackTrace()[2].getLineNumber());
-                }
 
-                @Override
-                public void onComplete() {
-                    ///   TODO: 08.04.2024 Показываем пользовалю ПРоценты
-                    if (completedPostAndGetInsertorUpdateOperations.size() > 0) {
-                        // TODO: 24.12.2024
-                        new GetPrograssbarChangeIndicator(context).setAsyncrograssbarMap(VesionTableAsync, ИмяТаблицы, completedPostAndGetInsertorUpdateOperations.size());
-                    }
-                    Log.d(this.getClass().getName(), "\n"
-                            + " время: " + new Date() + "\n+" +
-                            " Класс в процессе... " + this.getClass().getName() + "\n" +
-                            " метод в процессе... " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                            "  +  completedPostAndGetInsertorUpdateOperations.get() " + completedPostAndGetInsertorUpdateOperations.size());
-                }
-            });
+            // TODO: 08.04.2024 через Retry Obsever множественое ображение  к серверу GET
+            completedPostAndGetInsertorUpdateOperations.add(completedInsertorUpdateOperations(ИмяТаблицы,
+                    ВерсияДанныхсSqlServer,
+                    PublicID,
+                    ВремяОтSqlServer, "GET"));
+
+            // TODO: 24.09.2024
+            Log.d(this.getClass().getName(), "\n"
+                    + " время: " + new Date() + "\n+" +
+                    " Класс в процессе... " + this.getClass().getName() + "\n" +
+                    " метод в процессе... " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                    "  +  completedPostAndGetInsertorUpdateOperations.size() " + completedPostAndGetInsertorUpdateOperations.size());
+
+            ///   TODO: 08.04.2024 Показываем пользовалю ПРоценты
+            if (completedPostAndGetInsertorUpdateOperations.size() > 0) {
+                // TODO: 24.12.2024
+                new GetPrograssbarChangeIndicator(context).setAsyncrograssbarMap(VesionTableAsync, ИмяТаблицы, completedPostAndGetInsertorUpdateOperations.size());
+            }
 
 
 

@@ -259,11 +259,12 @@ public class AsynsProccessor extends Class_MODEL_synchronized {
                     ///упаковываем в j
                     Log.d(this.getClass().getName(), "  БуферJsonОтСервераmodification_server  " + БуферJsonОтСервераmodification_server);
                     VesionTableAsync = new LinkedHashMap<String, Long>();
-                     NameTableAsync.clear();
+                     NameTableAsync=new  CopyOnWriteArrayList<String>();
+
+                    // TODO: 15.09.2023
                     // TODO: 09.08.2023  бежим по данным версии сервера
                     Flowable.fromIterable(БуферJsonОтСервераmodification_server)
                             .onBackpressureBuffer()
-                            .subscribeOn(Schedulers.trampoline())
                             .blockingIterable()
                             .forEach(new Consumer<Map<String, String>>() {
                                 @Override
@@ -324,6 +325,16 @@ public class AsynsProccessor extends Class_MODEL_synchronized {
                                     });
                                 }
                             });
+                    // TODO: 27.12.2024
+                    Log.d(this.getClass().getName(),"\n" + " class "
+                            + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                            " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                            " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"+
+                            " VesionTableAsync"
+                            +VesionTableAsync+"\n"
+                            + " NameTableAsync " +NameTableAsync);
+
+
 // TODO: 25.09.2024  После Получение таблиц и заполение запускаем ихрониазцтию 
                     РезультатСинхронизации   = МетодГлавныхЦиклТаблицДляСинхронизации(getPublicID);
 

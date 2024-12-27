@@ -18,6 +18,7 @@ import io.reactivex.rxjava3.core.Flowable;
 import io.reactivex.rxjava3.functions.Action;
 import io.reactivex.rxjava3.functions.Consumer;
 import io.reactivex.rxjava3.functions.Predicate;
+import io.reactivex.rxjava3.parallel.ParallelFlowable;
 
 public class Data_tabelsJsonDeserializer extends JsonMainDeseirialzer {
     private Context context;
