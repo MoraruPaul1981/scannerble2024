@@ -580,16 +580,18 @@ public class CompleteRemoteSyncService {
             // TODO: 22.01.2024  запускаем обновдение ПО
             try{
             if (СервернаяВерсия > ЛокальнаяВерсияПО) {
-                // TODO: 24.09.2024 Запускаем Обновленеи ПО
-                youhaveLatestVersionofUpdatePOComplete(СервернаяВерсия);
+
+                // TODO: 22.01.2024 запускаю обновление ПО
+                youStartingUpdatePOComplete(СервернаяВерсия);
                 // TODO: 03.10.2023
                 Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                         " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
                         " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" );
                 // TODO: 22.01.2024  запускаем обновдение ПО
             }else {
-                // TODO: 22.01.2024 запускаю обновление ПО
-                metodStartUpdatePoMessgeUser(СервернаяВерсия);
+
+                // TODO: 24.09.2024 Запускаем  НЕ Обновленеи ПО  версии одинаковые
+                youhaveLatestVersionofUpdatePOComplete(СервернаяВерсия);
                 // TODO: 03.10.2023
                 Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                         " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
@@ -622,7 +624,7 @@ public class CompleteRemoteSyncService {
 
                 // TODO: 24.09.2024 Запускаем Обновленеи ПО
                 // TODO: 22.01.2024 запускаю обновление ПО
-                metodStartUpdatePoMessgeUser(СервернаяВерсия);
+                youStartingUpdatePOComplete(СервернаяВерсия);
                 // TODO: 03.10.2023
                 Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                         " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
@@ -697,7 +699,7 @@ public class CompleteRemoteSyncService {
 
 
 
-        private void metodStartUpdatePoMessgeUser(@NonNull Integer СервернаяВерсия) {
+        private void youStartingUpdatePOComplete(@NonNull Integer СервернаяВерсия) {
             class SendUserProssecingUpdatePo extends      SendMainActivity{
 
                 public SendUserProssecingUpdatePo(Context context) {
@@ -705,17 +707,30 @@ public class CompleteRemoteSyncService {
                 }
 
                 public void startSendBroadSesiver( ) {
+                    try{
                     //  super.startSendBroadSesiver();
                     intentComunications.setAction("Broad_messageAsyncOrUpdatePO");
                     bundleComunications.putString("Статус",  "Запускаем Обновление ПО !!!!");///"В процесс"
-                    bundleComunications.putString("Действие",  "Заблакирован пользователь !!!!");///"В процесс"
                     bundleComunications.putInt("СервернаяВерсия",  СервернаяВерсия);///"В процесс"
                     intentComunications.putExtras(bundleComunications);
 
                     EventBus.getDefault().post(new MessageEvensBusUpdatePO(intentComunications));
 
-              /*      // TODO: 22.01.2024 останавливаем службу
-                    stopServiceBoot();*/
+                    Log.d(context.getClass().getName(), "\n"
+                            + " время: " + new Date() + "\n+" +
+                            " Класс в процессе... " + this.getClass().getName() + "\n" +
+                            " метод в процессе... " + Thread.currentThread().getStackTrace()[2].getMethodName());
+
+
+
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() + " Линия  :"
+                            + Thread.currentThread().getStackTrace()[2].getLineNumber());
+                    new Class_Generation_Errors(context).МетодЗаписиВЖурналНовойОшибки(e.toString(),
+                            this.getClass().getName(), Thread.currentThread().getStackTrace()[2].getMethodName(),
+                            Thread.currentThread().getStackTrace()[2].getLineNumber());
+                }
 
 
                 }
@@ -751,8 +766,11 @@ public class CompleteRemoteSyncService {
 
                     EventBus.getDefault().post(new MessageEvensBusUpdatePO(intentComunications));
 
-              /*      // TODO: 22.01.2024 останавливаем службу
-                    stopServiceBoot();*/
+                        Log.d(context.getClass().getName(), "\n"
+                                + " время: " + new Date() + "\n+" +
+                                " Класс в процессе... " + this.getClass().getName() + "\n" +
+                                " метод в процессе... " + Thread.currentThread().getStackTrace()[2].getMethodName());
+
 
 
                 } catch (Exception e) {

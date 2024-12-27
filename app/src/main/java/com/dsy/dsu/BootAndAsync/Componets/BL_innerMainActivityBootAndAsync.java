@@ -63,6 +63,31 @@ public class BL_innerMainActivityBootAndAsync extends MainActivityBootAndAsync {
     @NonNull LinkedHashMap<Integer,String> getHiltPortJboss;
 
 
+    // TODO: 27.12.2024 первый КОНСТРУКТОР
+
+
+    public BL_innerMainActivityBootAndAsync(@NonNull SSLSocketFactory getsslSocketFactory2,
+                                            @NonNull Activity activity,
+                                            @NonNull Context context,
+                                            @NonNull LifecycleOwner lifecycleOwner,
+                                            @NonNull LinkedHashMap<Integer,String> getHiltPortJboss ) {
+
+        this.getsslSocketFactory2 = getsslSocketFactory2;
+        this.activity = activity;
+        this.context = context;
+        this.lifecycleOwner = lifecycleOwner;
+        this.getHiltPortJboss = getHiltPortJboss;
+        // TODO: 24.01.2024
+    }
+
+
+
+
+
+
+
+
+    // TODO: 27.12.2024 ВТОРОЙ КОНТСРУКТОР
     public BL_innerMainActivityBootAndAsync(@NonNull SSLSocketFactory getsslSocketFactory2,
                                             @NonNull  ProgressBar progressbarbootandasync,
                                             @NonNull Activity activity,

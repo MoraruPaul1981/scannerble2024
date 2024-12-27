@@ -37,6 +37,8 @@ import androidx.multidex.BuildConfig;
 
 import com.dsy.dsu.BootAndAsync.BlBootAsync.Hilts.ServiceBootBinessLogic;
 
+import com.dsy.dsu.BootAndAsync.Componets.BL_innerMainActivityBootAndAsync;
+import com.dsy.dsu.BootAndAsync.EventsBus.MessageEvensBusUpdatePO;
 import com.dsy.dsu.BusinessLogicAll.Class_Clears_Tables;
 import com.dsy.dsu.BusinessLogicAll.Class_Connections_Server;
 import com.dsy.dsu.BusinessLogicAll.Class_Find_Setting_User_Network;
@@ -55,6 +57,10 @@ import com.google.android.material.button.MaterialButton;
 import com.google.android.material.card.MaterialCardView;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.jakewharton.rxbinding4.view.RxView;
+
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.Date;
 import java.util.LinkedHashMap;
@@ -94,7 +100,7 @@ public class DashboardFragmentSettings extends  DialogFragment {
 
     private AlertDialog DialogBox=null;
     private  Handler handlerAsync;
-    private MaterialButton КнопкаоСистеме, КнопкаПользователи ,  КнопкаОбменДанными,Кнопкаобновление,КнопкаОшибки,КнопкаШаблоны;
+    private MaterialButton КнопкаоСистеме, КнопкаПользователи ,  КнопкаОбменДанными, КнопкаОбновление,КнопкаОшибки,КнопкаШаблоны;
     private Animation  animation6;
     private TextView TextViewLogo;
     private LifecycleOwner lifecycleOwner;
@@ -116,7 +122,7 @@ public class DashboardFragmentSettings extends  DialogFragment {
     public LinkedHashMap<Integer,String> getHiltPortJboss;
 
 
-
+    protected BL_innerMainActivityBootAndAsync blInnerMainActivityBootAndAsync;
 
     public DashboardFragmentSettings() {
         // Required empty public constructor
@@ -148,8 +154,13 @@ public class DashboardFragmentSettings extends  DialogFragment {
 
             classBiznesLogikaSettings.    методСлушательФрагментовBinder( );
 
+            // TODO: 27.12.2024
 
+            registeEventBusFirst();
 
+// TODO: 27.12.2024 Инициализирукм Конструктор Класса для запуска Обновление ПО
+            blInnerMainActivityBootAndAsync=new BL_innerMainActivityBootAndAsync(getsslSocketFactory2,
+                   getActivity(),getContext() ,lifecycleOwner, getHiltPortJboss);
 
             //  setStyle(DialogFragment.STYLE_NORMAL,android.R.style.Theme_Material_Dialog_Alert);//Theme_Dialog
        // setStyle(DialogFragment.STYLE_NORMAL,android.R.style.Theme_DeviceDefault_Light_NoActionBar_Fullscreen);//Theme_Dialog
@@ -240,7 +251,7 @@ public class DashboardFragmentSettings extends  DialogFragment {
             КнопкаоСистеме   = (MaterialButton) view.findViewById(R.id.КнопкаоСистеме); /////КНОПКА ТАБЕЛЬНОГО УЧЕТА
             КнопкаПользователи         = (MaterialButton) view.findViewById(R.id.КнопкаПользователи); /////КНОПКА ТАБЕЛЬНОГО УЧЕТА
             КнопкаОбменДанными         = (MaterialButton) view.findViewById(R.id.КнопкаОбменДанными); /////КНОПКА ТАБЕЛЬНОГО УЧЕТА
-            Кнопкаобновление          = (MaterialButton) view.findViewById(R.id.Кнопкаобновление); /////КНОПКА ТАБЕЛЬНОГО УЧЕТА
+            КнопкаОбновление = (MaterialButton) view.findViewById(R.id.Кнопкаобновление); /////КНОПКА ТАБЕЛЬНОГО УЧЕТА
             КнопкаОшибки          = (MaterialButton) view.findViewById(R.id.КнопкаОшибки); /////КНОПКА ТАБЕЛЬНОГО УЧЕТА
             КнопкаШаблоны          = (MaterialButton) view.findViewById(R.id.КнопкаШаблоны); /////КНОПКА ТАБЕЛЬНОГО УЧЕТА
 
@@ -312,6 +323,8 @@ public class DashboardFragmentSettings extends  DialogFragment {
             if (connectionОбновлениеПО!=null) {
                 getActivity().unbindService(connectionОбновлениеПО);
             }
+
+            unregisterEventBusFirst();
             // TODO: 17.08.2023
         Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                 " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
@@ -346,6 +359,56 @@ public class DashboardFragmentSettings extends  DialogFragment {
         Log.d(this.getClass().getName(), "  Полусаем Ошибку e.toString() " + e.toString());
     }
     }
+
+
+
+    private void registeEventBusFirst() {
+
+        if (  !EventBus.getDefault().isRegistered(this)) {
+            EventBus.getDefault().register(this);
+        }
+        Log.d(getContext().getClass().getName(), "\n"
+                + " время: " + new Date() + "\n+" +
+                " Класс в процессе... " + this.getClass().getName() + "\n" +
+                " метод в процессе... " + Thread.currentThread().getStackTrace()[2].getMethodName()
+                + "   starting... onRestart" + " starting... onRestart");
+    }
+
+    private void unregisterEventBusFirst() {
+        if (  EventBus.getDefault().isRegistered(this)) {
+            EventBus.getDefault().unregister(this);
+        }
+        Log.d(getContext().getClass().getName(), "\n"
+                + " время: " + new Date() + "\n+" +
+                " Класс в процессе... " + this.getClass().getName() + "\n" +
+                " метод в процессе... " + Thread.currentThread().getStackTrace()[2].getMethodName()
+                + "   starting... onRestart" + " starting... onRestart");
+    }
+
+
+    // TODO: 23.01.2024 EventBus for Update PO
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void EventMessageEvensBusUpdatePO(MessageEvensBusUpdatePO messageEvensBusUpdatePO){
+        try{
+
+            blInnerMainActivityBootAndAsync   .getEventBusUpdatePo(messageEvensBusUpdatePO, getHiltPortJboss);
+
+            Log.d(getContext().getClass().getName(), "\n"
+                    + " время: " + new Date() + "\n+" +
+                    " Класс в процессе... " + this.getClass().getName() + "\n" +
+                    " метод в процессе... " + Thread.currentThread().getStackTrace()[2].getMethodName()
+                    + "   starting... onRestart" + " starting... onRestart");
+        } catch (Exception e) {
+            e.printStackTrace();
+            Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() + " Линия  :"
+                    + Thread.currentThread().getStackTrace()[2].getLineNumber());
+            new Class_Generation_Errors(getContext()).МетодЗаписиВЖурналНовойОшибки(e.toString(), this.getClass().getName(), Thread.currentThread().getStackTrace()[2].getMethodName(),
+                    Thread.currentThread().getStackTrace()[2].getLineNumber());
+        }
+
+
+    }
+
 
     // TODO: 15.08.2023  Бизнес Логика Фрагмета Настройки
     class ClassBiznesLogikaSettings{
@@ -919,29 +982,71 @@ try{
             // TODO: 23.08.2023 \ Class EntityMaterialBinary Обновление ПО
             class  ClassUpdatePO{
            void методОбновлениеПО(){
-               Кнопкаобновление.setOnClickListener(new View.OnClickListener() {
-                   @Override
-                   public void onClick(View v) {
-                       try {
+               try{
+               RxView.clicks(КнопкаОбновление)
+                       .throttleFirst(3, TimeUnit.SECONDS)
+                       .filter(s -> !s.toString().isEmpty())
+                       .map(new Function<Unit, Object>() {
+                           @Override
+                           public Object apply(Unit unit) throws Throwable {
+                               Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                                       " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                                       " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" );
+                               return    КнопкаОбновление;
+                           }
+                       })
+                       .doOnError(new io.reactivex.rxjava3.functions.Consumer<Throwable>() {
+                           @Override
+                           public void accept(Throwable throwable) throws Throwable {
+                               throwable.printStackTrace();
+                               Log.e(getContext().getClass().getName(),
+                                       "Ошибка " + throwable + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
+                                               " Линия  :" + Thread.currentThread().getStackTrace()[2].getLineNumber());
+                               new Class_Generation_Errors(getContext()).МетодЗаписиВЖурналНовойОшибки(throwable.toString(),
+                                       this.getClass().getName().toString(), Thread.currentThread().getStackTrace()[2].getMethodName().toString(),
+                                       Thread.currentThread().getStackTrace()[2].getLineNumber());
+                           }
+                       })
+                       .onErrorComplete(new Predicate<Throwable>() {
+                           @Override
+                           public boolean test(Throwable throwable) throws Throwable {
+                               throwable.printStackTrace();
+                               Log.e(getContext().getClass().getName(),
+                                       "Ошибка " + throwable + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
+                                               " Линия  :" + Thread.currentThread().getStackTrace()[2].getLineNumber());
+                               new Class_Generation_Errors(getContext()).МетодЗаписиВЖурналНовойОшибки(throwable.toString(),
+                                       this.getClass().getName().toString(), Thread.currentThread().getStackTrace()[2].getMethodName().toString(),
+                                       Thread.currentThread().getStackTrace()[2].getLineNumber());
+                               return false;
+                           }
+                       })
+                       .subscribe( GetNameSingleAsync1c-> {
+
+
 
 // TODO: 10.07.2023  запуск обновление ПО
+
 // TODO: 10.07.2023  запуск обновление ПО
-                           serviceBootBinessLogic.startServiceBootAndAsync("IntentServiceBootUpdatePo.com");
-                          
-                           Log.i(this.getClass().getName(), " Из меню установкаОбновление ПО "
-                                   + Thread.currentThread().getStackTrace()[2].getMethodName()
-                                   + " время " + new Date().toLocaleString());
-                       } catch (Exception e) {
-                           e.printStackTrace();
-                           Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :"
-                                   + Thread.currentThread().getStackTrace()[2].getMethodName() + " Линия  :"
-                                   + Thread.currentThread().getStackTrace()[2].getLineNumber());
-                           new Class_Generation_Errors(getContext()).МетодЗаписиВЖурналНовойОшибки(e.toString(),
-                                   this.getClass().getName(), Thread.currentThread().getStackTrace()[2].getMethodName(),
-                                   Thread.currentThread().getStackTrace()[2].getLineNumber());
-                       }
-                   }
-               });
+                               serviceBootBinessLogic.startServiceBootAndAsync("IntentServiceBootUpdatePo.com");
+
+                               Log.i(this.getClass().getName(), " Из меню установкаОбновление ПО "
+                                       + Thread.currentThread().getStackTrace()[2].getMethodName()
+                                       + " время " + new Date().toLocaleString());
+
+
+                       });
+
+
+           } catch (Exception e) {
+                    e.printStackTrace();
+                    Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :"
+                            + Thread.currentThread().getStackTrace()[2].getMethodName() + " Линия  :"
+                            + Thread.currentThread().getStackTrace()[2].getLineNumber());
+                    new Class_Generation_Errors(getContext()).МетодЗаписиВЖурналНовойОшибки(e.toString(),
+                            this.getClass().getName(), Thread.currentThread().getStackTrace()[2].getMethodName(),
+                            Thread.currentThread().getStackTrace()[2].getLineNumber());
+                }
+
 
            }
                 //TODO END   class  ClassUpdatePO
@@ -1135,10 +1240,6 @@ try{
 
 
             }
-
-
-
-
 
 
 
