@@ -545,6 +545,7 @@ public class MainActivity_New_Tabely extends AppCompatActivity {
                                                     Long UUIDНазваниеЦФО = bundle.getLong("UUIDНазваниеЦФО", 0l);
                                                     СпинерВыборЦФО.setTag(bundle);
                                                     СпинерВыборЦФО.setText(НазваниеЦФО);
+                                                    СпинерВыборЦФО.setTooltipText(UUIDНазваниеЦФО.toString());
                                       /*      searchViewДляНовогоЦФО.setQueryHint(НазваниеЦФО);
                                             searchViewДляНовогоЦФО.setQuery(НазваниеЦФО,true);*/
 
