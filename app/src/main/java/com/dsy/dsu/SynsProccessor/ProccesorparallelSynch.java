@@ -160,8 +160,8 @@ public class ProccesorparallelSynch   {
 
 
                  // TODO: 07.10.2024
-                // case "ПовторныйЗапускСинхронизации":
-                 case "СамыйПервыйЗапускСинхронизации":
+                 case "ПовторныйЗапускСинхронизации":
+              //   case "СамыйПервыйЗапускСинхронизации":
                      // TODO: 27.12.2024
                      Flowable.fromIterable(getBufferFromJbossServerAllTables)
                              .onBackpressureBuffer()
