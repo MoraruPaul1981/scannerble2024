@@ -679,7 +679,7 @@ public class ProccesorparallelSynch   {
                 // TODO: 19.10.2021   GET()->
                 if (ВерсияДанныхсSqlServer > ВерсииНаАндройдеСерверная ) {
                     // TODO: 05.04.2024
-                    if ( ВремяОтSqlServer.after(ВремяДанныхНаАндройде)) {
+                    if ( ВремяОтSqlServer.compareTo(ВремяДанныхНаАндройде)!=0) {
                         // TODO: 05.04.2024
                         if (!ИмяТаблицы.trim().equalsIgnoreCase("errordsu1")
                                 && !ИмяТаблицы.trim().equalsIgnoreCase("settings_tabels")) {

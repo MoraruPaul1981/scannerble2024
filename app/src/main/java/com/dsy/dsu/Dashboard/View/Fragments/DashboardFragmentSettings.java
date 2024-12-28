@@ -156,7 +156,7 @@ public class DashboardFragmentSettings extends  DialogFragment {
 
             // TODO: 27.12.2024
 
-            registeEventBusFirst();
+            //registeEventBusFirst();
 
 // TODO: 27.12.2024 Инициализирукм Конструктор Класса для запуска Обновление ПО
             blInnerMainActivityBootAndAsync=new BL_innerMainActivityBootAndAsync(getsslSocketFactory2,
@@ -324,7 +324,7 @@ public class DashboardFragmentSettings extends  DialogFragment {
                 getActivity().unbindService(connectionОбновлениеПО);
             }
 
-            unregisterEventBusFirst();
+            //unregisterEventBusFirst();
             // TODO: 17.08.2023
         Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                 " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
@@ -362,7 +362,7 @@ public class DashboardFragmentSettings extends  DialogFragment {
 
 
 
-    private void registeEventBusFirst() {
+/*    private void registeEventBusFirst() {
 
         if (  !EventBus.getDefault().isRegistered(this)) {
             EventBus.getDefault().register(this);
@@ -372,9 +372,9 @@ public class DashboardFragmentSettings extends  DialogFragment {
                 " Класс в процессе... " + this.getClass().getName() + "\n" +
                 " метод в процессе... " + Thread.currentThread().getStackTrace()[2].getMethodName()
                 + "   starting... onRestart" + " starting... onRestart");
-    }
+    }*/
 
-    private void unregisterEventBusFirst() {
+/*    private void unregisterEventBusFirst() {
         if (  EventBus.getDefault().isRegistered(this)) {
             EventBus.getDefault().unregister(this);
         }
@@ -383,7 +383,7 @@ public class DashboardFragmentSettings extends  DialogFragment {
                 " Класс в процессе... " + this.getClass().getName() + "\n" +
                 " метод в процессе... " + Thread.currentThread().getStackTrace()[2].getMethodName()
                 + "   starting... onRestart" + " starting... onRestart");
-    }
+    }*/
 
 
     // TODO: 23.01.2024 EventBus for Update PO
