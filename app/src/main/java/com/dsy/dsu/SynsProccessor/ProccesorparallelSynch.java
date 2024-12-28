@@ -103,65 +103,66 @@ public class ProccesorparallelSynch   {
              РежимЗапускаСинхронизации = preferences.getString("РежимЗапускаСинхронизации","СамыйПервыйЗапускСинхронизации");
 
             // TODO: 07.04.2024  Г
-            ParallelFlowable     flowableGrandeAsync= null;
              switch (РежимЗапускаСинхронизации) {
                  // TODO: 07.10.2024
-          /*       case "СамыйПервыйЗапускСинхронизации":
-                     flowableGrandeAsync = Flowable.fromIterable( VesionTableAsync.keySet())
-                             .filter(fil->!fil.toString().isEmpty())
-                             .parallel().runOn(Schedulers.from(Executors.newFixedThreadPool(3)));
-                     //.parallel(1).runOn(Schedulers.single());
-                     // TODO: 24.09.2024  Запускаем Главную Синхронизацию
-                     flowableGrandeAsync.doOnNext(new Consumer<String>() {
-                                 @Override
-                                 public void accept(String ТаблицаОбработываемаяParallel) throws Throwable {
-                                     // TODO: 06.12.2023  запуск синхризуции по таблице конктерной
-                                     coutSucceessItemAsycnTables.add(getLooTablesPOSTANDGET(ТаблицаОбработываемаяParallel))      ;
-                                     // TODO: 30.09.2024
-                                     // TODO: 15.09.2023
-                                     Log.d(this.getClass().getName(),"\n" + " class "
-                                             + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
-                                             " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                                             " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"+
-                                             " ТаблицаОбработываемаяParallel"
-                                             +ТаблицаОбработываемаяParallel+"\n"
-                                             + " coutSucceessItemAsycnTables " +coutSucceessItemAsycnTables.size()+
-                                             " coutSucceessItemAsycnTables.stream().mapToLong(l->l)  .reduce(0, Long::sum)"
-                                             +coutSucceessItemAsycnTables.stream().mapToLong(l->l)  .reduce(0, Long::sum)+"\n"+
-                                             " VesionTableAsync "+VesionTableAsync+"\n"+"asynThread" +Thread.currentThread().getName());
-                                 }
-                             })
-                             .doOnError(new Consumer<Throwable>() {
-                                 @Override
-                                 public void accept(Throwable throwable) throws Throwable {
-                                     throwable.printStackTrace();
-                                     Log.e(this.getClass().getName(), "Ошибка " +throwable + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() + " Линия  :"
-                                             + Thread.currentThread().getStackTrace()[2].getLineNumber());
-                                     new Class_Generation_Errors(context).МетодЗаписиВЖурналНовойОшибки(throwable.toString(),
-                                             this.getClass().getName(), Thread.currentThread().getStackTrace()[2].getMethodName(),
-                                             Thread.currentThread().getStackTrace()[2].getLineNumber());
-                                 }
-                             })
-                             .doOnComplete(new Action() {
-                                 @Override
-                                 public void run() throws Throwable {
+                 case "СамыйПервыйЗапускСинхронизации":
+                 // TODO: 27.12.2024
+                 Flowable.fromIterable(getBufferFromJbossServerAllTables)
+                         .parallel()
+                         .runOn(Schedulers.from(Executors.newFixedThreadPool(2)))
+                         .doOnNext(new io.reactivex.rxjava3.functions.Consumer<Map<String, String>>() {
+                             @Override
+                             public void accept(Map<String, String> stringStringMapMultiPotoks) throws Throwable {
+                                 // TODO: 28.12.2024
+                                 // TODO: 27.12.2024
+                                 String getNameTableSingle= stringStringMapMultiPotoks.entrySet().stream().filter(e->e.getKey().equalsIgnoreCase("name")).map(Map.Entry::getValue).findFirst().get();
 
-                                     Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
-                                             " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                                             " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"+ " РежимЗапускаСинхронизации " +РежимЗапускаСинхронизации);
-                                 }
-                             }).sequential().blockingSubscribe();
-                     break;
-                 // TODO: 07.10.2024*/
+                                 // TODO: 06.12.2023  запуск синхризуции по таблице конктерной
+                                 coutSucceessItemAsycnTablesComplete.add(getLooTablesPOSTANDGET(stringStringMapMultiPotoks))      ;
+                                 // TODO: 30.09.2024
+                                 // TODO: 15.09.2023
+                                 Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                                         " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                                         " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"
+                                         + " getBufferFromJbossServerAllTables.size() " + getBufferFromJbossServerAllTables.size()
+                                         +"\n"+" getNameTableSingle " +getNameTableSingle);
+                             }
+                         })
+                         .doOnError(new io.reactivex.rxjava3.functions.Consumer<Throwable>() {
+                             @Override
+                             public void accept(Throwable throwable) throws Throwable {
+                                 throwable.printStackTrace();
+                                 Log.e(this.getClass().getName(), "Ошибка " +throwable + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() + " Линия  :"
+                                         + Thread.currentThread().getStackTrace()[2].getLineNumber());
+                                 new Class_Generation_Errors(context).МетодЗаписиВЖурналНовойОшибки(throwable.toString(),
+                                         this.getClass().getName(), Thread.currentThread().getStackTrace()[2].getMethodName(),
+                                         Thread.currentThread().getStackTrace()[2].getLineNumber());
+                             }
+                         })
+                         .doOnComplete(new Action() {
+                             @Override
+                             public void run() throws Throwable {
+
+                                 Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                                         " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                                         " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"+ " РежимЗапускаСинхронизации " +РежимЗапускаСинхронизации);
+                             }
+                         }).sequential().blockingSubscribe();
 
 
 
+
+
+
+                 Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                         " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                         " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"+ "\n"+ " РежимЗапускаСинхронизации " +РежимЗапускаСинхронизации);
+                 break;
 
 
 
                  // TODO: 07.10.2024
                  case "ПовторныйЗапускСинхронизации":
-                case "СамыйПервыйЗапускСинхронизации":
                      // TODO: 27.12.2024
                      Flowable.fromIterable(getBufferFromJbossServerAllTables)
                              .onBackpressureBuffer()
