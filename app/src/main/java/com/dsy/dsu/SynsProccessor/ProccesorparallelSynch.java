@@ -679,7 +679,7 @@ public class ProccesorparallelSynch   {
                 // TODO: 19.10.2021   GET()->
                 if (ВерсияДанныхсSqlServer > ВерсииНаАндройдеСерверная ) {
                     // TODO: 05.04.2024
-                    if ( !ВремяОтSqlServer.equals(ВремяДанныхНаАндройде)) {
+                    if ( !ВремяОтSqlServer.after(ВремяДанныхНаАндройде)) {
                         // TODO: 05.04.2024
                         if (!ИмяТаблицы.trim().equalsIgnoreCase("errordsu1")
                                 && !ИмяТаблицы.trim().equalsIgnoreCase("settings_tabels")) {
@@ -914,6 +914,7 @@ public class ProccesorparallelSynch   {
 // TODO: 07.04.2024
 
     /////// TODO МЕТОД ПАСРИНГА ПРИШЕДШЕГО  С СЕРВЕРА ВНУТРИ ASYNSTASK В ФОНЕ
+    @SuppressLint("SuspiciousIndentation")
     Long МетодПарсингJSONФайлаОтСервреравФоне(@NonNull  InputStream БуферGetByteJson,
                                               @NonNull  String имяТаблицаAsync) throws InterruptedException, JSONException {
         // TODO: 05.07.2023 result suync

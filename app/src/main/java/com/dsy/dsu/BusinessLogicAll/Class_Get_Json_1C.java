@@ -131,7 +131,9 @@ public InputStream   МетодПолучемJSONОт1СДляСогласова
                             " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "     inputStream1c " + inputStream1c[0]);
                 }
                     // TODO: 09.11.2023  close
-                    response.body().source().close();
+                    // TODO: 28.12.2024 closeting
+                    call.cancel();
+                    response.close();
                     //TODO
                     dispatcher.executorService().shutdown();
             } catch (Exception e) {
@@ -221,6 +223,11 @@ public InputStream   МетодПолучемJSONОт1СДляСогласова
                       //  new SubClass_CommitPayAfter_Для_СогласованияПосле().     МетодПослеСменыСтаусаСогласованЧерезЛокльныйБродКастерОтправимИзмениниянаАктивти(stringBuffer,contextGetClassNumberAllRowsJSON);
                         Log.i(context.getClass().getName(), "stringBuffer" + stringBufferВторайШагПолучаемСамиДанныеНАОснованииЦФО);
                     }
+                        // TODO: 28.12.2024
+                        // TODO: 28.12.2024 closeting
+                        call.cancel();
+                        response.close();
+
                     //TODO закрываем п отоки
                     okHttpClientДляЛимитаМатериалов.dispatcher().executorService().shutdown();
                 } catch (Exception e) {
@@ -307,6 +314,10 @@ public InputStream   МетодПолучемJSONОт1СДляСогласова
                         //  new SubClass_CommitPayAfter_Для_СогласованияПосле().     МетодПослеСменыСтаусаСогласованЧерезЛокльныйБродКастерОтправимИзмениниянаАктивти(stringBuffer,contextGetClassNumberAllRowsJSON);
                         Log.i(context.getClass().getName(), "stringBufferМатериаловЭтапПервый" + stringBufferМатериаловЭтапПервый);
                     }
+                        // TODO: 28.12.2024
+                        // TODO: 28.12.2024 closeting
+                        call.cancel();
+                        response.close();
                     //TODO закрываем п отоки
                     okHttpClientЛиммитМатериаловЭтаппервый.dispatcher().executorService().shutdown();
                 } catch (Exception e) {
@@ -450,6 +461,12 @@ public InputStream   МетодПолучемJSONОт1СДляСогласова
                         ///TODO оттоепт обрабно о резульатате вставки статуса в 1с согласования
                         Log.i(context.getClass().getName(), "stringBuffer" + stringBufferотправкаНа1С);
                     }
+
+                        // TODO: 28.12.2024 closeting
+                        call.cancel();
+                        response.close();
+
+                        // TODO: 28.12.2024
                         dispatcher.executorService().shutdown();
 
                 } catch (Exception e) {
@@ -568,8 +585,11 @@ public InputStream   МетодПолучемJSONОт1СДляСогласова
                                         + "\n" + "  newFileBinaty1c[0] " +   newFileBinaty1c[0].length+" response.code() " + response.code());
 
                             }
+
+                            // TODO: 28.12.2024 closeting
+                            call.cancel();
+                            response.close();
                             // TODO: 10.11.2023 exit
-                            response.body().source().close();
                             dispatcher.executorService().shutdown();
 
                         } catch (Exception e) {

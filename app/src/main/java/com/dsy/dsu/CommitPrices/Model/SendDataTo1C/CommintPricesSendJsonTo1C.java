@@ -149,8 +149,10 @@ public class CommintPricesSendJsonTo1C extends  SendDataParent {
                                     +  " OtvetPostComminhgPrices " + OtvetPostComminhgPrices[0]);
                         }
 
-                        response.body().source().close();
-                        //TODO
+                        // TODO: 28.12.2024 closeting
+                        call.cancel();
+                        response.close();
+                        // TODO: 28.12.2024
                         dispatcher.executorService().shutdown();
                     } catch (Exception e) {
                         e.printStackTrace();

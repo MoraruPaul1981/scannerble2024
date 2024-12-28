@@ -200,6 +200,8 @@ import okio.BufferedSink;
                             " Линия  :" + Thread.currentThread().getStackTrace()[2].getLineNumber() + " ОшибкаТекущегоМетода " + e.getMessage());
                     new Class_Generation_Errors(context).МетодЗаписиВЖурналНовойОшибки(e.toString(), Class_MODEL_synchronized.class.getName(),
                             Thread.currentThread().getStackTrace()[2].getMethodName(), Thread.currentThread().getStackTrace()[2].getLineNumber());
+                    // TODO: 28.12.2024
+                    call.cancel();
                     // TODO: 31.05.2022
                     dispatcherДанныеОтСервера.executorService().shutdown();
                     //TODO закрываем п отоки
@@ -235,6 +237,10 @@ import okio.BufferedSink;
 
 
                         Log.d(this.getClass().getName(), "БуферСамиДанныеОтСервера " + БуферСамиДанныеОтСервера[0] +  " РазмерПришедшегоПотока " +РазмерПришедшегоПотока);
+
+                        // TODO: 28.12.2024 closeting
+                      call.cancel();
+                        response.close();
                         // TODO: 31.05.2022
                         dispatcherДанныеОтСервера.executorService().shutdown();
                     }
@@ -386,6 +392,9 @@ import okio.BufferedSink;
                                         " inputStreamJaksonByte " +inputStreamJaksonByte.get());
 
                             }
+                            // TODO: 28.12.2024 closeting
+                            call.cancel();
+                            response.close();
                             // TODO: 31.05.2022
                             dispatcherДанныеОтСервера.executorService().shutdown();
                         }
@@ -551,6 +560,10 @@ import okio.BufferedSink;
                         }
                         Log.d(this.getClass().getName(), "БуферРезультатПингасСервером " + БуферРезультатПингасСервером +  " РазмерПришедшегоПотока[0] " + РазмерПришедшегоПотока[0]);
                     }
+
+                        // TODO: 28.12.2024 closeting
+                        call.cancel();
+                        response.close();
                         // TODO: 31.05.2022
                         dispatcherПинг.executorService().shutdown();
                 } catch (Exception e) {
@@ -793,6 +806,10 @@ import okio.BufferedSink;
                                 }
 
                                 Log.d(this.getClass().getName(), " БуферCallsBackОтСеврера[0] " +  БуферCallsBackОтСеврера[0] +  " РазмерПришедшегоПотока " +РазмерПришедшегоПотока);
+
+                                // TODO: 28.12.2024 closeting
+                                call.cancel();
+                                response.close();
                                 // TODO: 31.05.2022
                                 dispatcherCallsBackСервера.executorService().shutdown();
                             }
@@ -3255,8 +3272,11 @@ Class_GRUD_SQL_Operations classGrudSqlOperationsУдалениеДанныхЧе
                                     " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
                                     " line " + Thread.currentThread().getStackTrace()[2].getLineNumber());
                         }
-                        // TODO: 06.05.2023 exit
+
+                        // TODO: 28.12.2024 closeting
+                        call.cancel();
                         response.close();
+                        // TODO: 06.05.2023 exit
                         dispatcherЗагрузкаПО.executorService().shutdown();
                     } catch (Exception e) {
                         e.printStackTrace();
@@ -3720,6 +3740,10 @@ Class_GRUD_SQL_Operations classGrudSqlOperationsУдалениеДанныхЧе
                                 }
 
                             }
+                            // TODO: 28.12.2024 closeting
+                            call.cancel();
+                            response.close();
+                            // TODO: 28.12.2024
                             dispatcherПроверкаЛогиниПароль.executorService().shutdown();
                         } catch (Exception e) {
                             e.printStackTrace();

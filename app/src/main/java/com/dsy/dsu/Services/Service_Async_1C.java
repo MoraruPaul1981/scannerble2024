@@ -223,6 +223,9 @@ public class Service_Async_1C extends IntentService {
                         @Override
                         public void onFailure(@NonNull Call call, @NonNull IOException e) {
                             Log.e(this.getClass().getName(), "  ERROR call  " + call + "  e" + e.toString());
+
+                            // TODO: 28.12.2024 closeting
+                            call.cancel();
                             //TODO закрываем п отоки
                             okHttpClient.dispatcher().executorService().shutdown();
                         }
@@ -239,13 +242,15 @@ public class Service_Async_1C extends IntentService {
                                 ///TODO оттоепт обрабно о резульатате вставки статуса в 1с согласования
                                 Log.d(this.getClass().getName(), "  БуферGET1С  " + БуферGET1С[0].toString() + "  responseGet.code()" + response.code());
                             }
+                            // TODO: 28.12.2024 closeting
+                            call.cancel();
+                            response.close();
+
                             //TODO закрываем п отоки
                             okHttpClient.dispatcher().executorService().shutdown();
                         }
                     });
                     // TODO: 31.05.2022
-                    while (!okHttpClient.dispatcher().executorService().isShutdown());
-                    Log.i(context.getClass().getName(), "БуферGET1С" + БуферGET1С[0]);
                     okHttpClient.dispatcher().executorService().awaitTermination(1,TimeUnit.DAYS);
             okHttpClient.dispatcher().cancelAll();
                     // TODO: 06.07.2022

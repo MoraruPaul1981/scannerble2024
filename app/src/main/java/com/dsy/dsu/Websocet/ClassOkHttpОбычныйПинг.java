@@ -80,6 +80,9 @@ public class  ClassOkHttpОбычныйПинг {
                             stringBuffer.append(response.body().string());
                             Log.d(this.getClass().getName(), "  stringBuffer  " + stringBuffer.toString() + "  responseGet.code()" + response.code());
                         }
+                        // TODO: 28.12.2024 closeting
+                        call.cancel();
+                        response.close();
                         //TODO закрываем п отоки
                         okHttpClient.dispatcher().executorService().shutdown();
                     } catch (Exception e) {

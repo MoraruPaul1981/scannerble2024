@@ -111,8 +111,10 @@ public class GetJsonOt1cComminhgPrices extends  GetJsonOt1cComminhgPricesParent 
                                 + "     getInputStreamComminhgPrices " + getInputStreamComminhgPrices[0].available());*/
                     }
 
-                    response.body().source().close();
-                    //TODO
+                    // TODO: 28.12.2024 closeting
+                    call.cancel();
+                    response.close();
+                    // TODO: 28.12.2024
                     dispatcher.executorService().shutdown();
                 } catch (Exception e) {
                     e.printStackTrace();
