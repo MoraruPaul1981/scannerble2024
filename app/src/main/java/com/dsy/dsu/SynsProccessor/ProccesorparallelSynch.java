@@ -934,7 +934,8 @@ public class ProccesorparallelSynch   {
                         " jsonNodeParentMAP.size() " +jsonNodeParentMAP.size() );
 
                 // TODO: 03.10.2023 все кроме байт
-               // РезультСинхрониазции=   методRowJsonRow(jsonNodeParentMAP,имяТаблицаAsync, VesionTableAsync);
+              РезультСинхрониазции=   методRowJsonRow(jsonNodeParentMAP,имяТаблицаAsync);
+
                 Log.d(this.getClass().getName(),"\n" + " class " +
                         Thread.currentThread().getStackTrace()[2].getClassName()
                         + "\n" +
@@ -969,8 +970,7 @@ public class ProccesorparallelSynch   {
 
     // TODO: 13.09.2023   ROW
     Long методRowJsonRow(@NonNull  JsonNode jsonNodeParentMAP,
-                         @NonNull String имяТаблицаAsync,
-                         @NonNull  LinkedHashMap<String, Long> ВерсииВсехСерверныхТаблиц){
+                         @NonNull String имяТаблицаAsync){
         Long РезультСинхрониазции=0l;
         try{
     

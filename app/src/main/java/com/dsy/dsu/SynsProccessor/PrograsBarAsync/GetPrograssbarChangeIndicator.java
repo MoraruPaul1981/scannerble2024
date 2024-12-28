@@ -32,7 +32,7 @@ Context context;
                                       @NonNull Integer SuccessInsertOrUpdates) {
         try {
             int Проценты;
-            Integer ПозицияТекущейТаблицы=      getMainTabelAllAndroid.indexOf(имяТаблицаAsync);
+            Integer ПозицияТекущейТаблицы=      getMainTabelAllAndroid.indexOf(имяТаблицаAsync)+1;
             Проценты = new Class_Visible_Processing_Async(context).
                     ГенерируемПРОЦЕНТЫДляAsync(ПозицияТекущейТаблицы, getMainTabelAllAndroid.size());
 
