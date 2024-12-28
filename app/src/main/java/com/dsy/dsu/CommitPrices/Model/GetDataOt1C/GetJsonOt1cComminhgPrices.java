@@ -112,7 +112,6 @@ public class GetJsonOt1cComminhgPrices extends  GetJsonOt1cComminhgPricesParent 
                     }
 
                     // TODO: 28.12.2024 closeting
-                    call.cancel();
                     response.close();
                     // TODO: 28.12.2024
                     dispatcher.executorService().shutdown();

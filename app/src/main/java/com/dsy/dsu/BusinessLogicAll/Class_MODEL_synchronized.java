@@ -201,7 +201,6 @@ import okio.BufferedSink;
                     new Class_Generation_Errors(context).МетодЗаписиВЖурналНовойОшибки(e.toString(), Class_MODEL_synchronized.class.getName(),
                             Thread.currentThread().getStackTrace()[2].getMethodName(), Thread.currentThread().getStackTrace()[2].getLineNumber());
                     // TODO: 28.12.2024
-                    call.cancel();
                     // TODO: 31.05.2022
                     dispatcherДанныеОтСервера.executorService().shutdown();
                     //TODO закрываем п отоки
@@ -239,7 +238,6 @@ import okio.BufferedSink;
                         Log.d(this.getClass().getName(), "БуферСамиДанныеОтСервера " + БуферСамиДанныеОтСервера[0] +  " РазмерПришедшегоПотока " +РазмерПришедшегоПотока);
 
                         // TODO: 28.12.2024 closeting
-                      call.cancel();
                         response.close();
                         // TODO: 31.05.2022
                         dispatcherДанныеОтСервера.executorService().shutdown();
@@ -393,7 +391,6 @@ import okio.BufferedSink;
 
                             }
                             // TODO: 28.12.2024 closeting
-                            call.cancel();
                             response.close();
                             // TODO: 31.05.2022
                             dispatcherДанныеОтСервера.executorService().shutdown();
@@ -562,7 +559,6 @@ import okio.BufferedSink;
                     }
 
                         // TODO: 28.12.2024 closeting
-                        call.cancel();
                         response.close();
                         // TODO: 31.05.2022
                         dispatcherПинг.executorService().shutdown();
@@ -808,7 +804,6 @@ import okio.BufferedSink;
                                 Log.d(this.getClass().getName(), " БуферCallsBackОтСеврера[0] " +  БуферCallsBackОтСеврера[0] +  " РазмерПришедшегоПотока " +РазмерПришедшегоПотока);
 
                                 // TODO: 28.12.2024 closeting
-                                call.cancel();
                                 response.close();
                                 // TODO: 31.05.2022
                                 dispatcherCallsBackСервера.executorService().shutdown();
@@ -3274,7 +3269,6 @@ Class_GRUD_SQL_Operations classGrudSqlOperationsУдалениеДанныхЧе
                         }
 
                         // TODO: 28.12.2024 closeting
-                        call.cancel();
                         response.close();
                         // TODO: 06.05.2023 exit
                         dispatcherЗагрузкаПО.executorService().shutdown();
@@ -3741,7 +3735,6 @@ Class_GRUD_SQL_Operations classGrudSqlOperationsУдалениеДанныхЧе
 
                             }
                             // TODO: 28.12.2024 closeting
-                            call.cancel();
                             response.close();
                             // TODO: 28.12.2024
                             dispatcherПроверкаЛогиниПароль.executorService().shutdown();

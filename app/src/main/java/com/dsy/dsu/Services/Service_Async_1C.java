@@ -225,7 +225,6 @@ public class Service_Async_1C extends IntentService {
                             Log.e(this.getClass().getName(), "  ERROR call  " + call + "  e" + e.toString());
 
                             // TODO: 28.12.2024 closeting
-                            call.cancel();
                             //TODO закрываем п отоки
                             okHttpClient.dispatcher().executorService().shutdown();
                         }
@@ -243,7 +242,6 @@ public class Service_Async_1C extends IntentService {
                                 Log.d(this.getClass().getName(), "  БуферGET1С  " + БуферGET1С[0].toString() + "  responseGet.code()" + response.code());
                             }
                             // TODO: 28.12.2024 closeting
-                            call.cancel();
                             response.close();
 
                             //TODO закрываем п отоки

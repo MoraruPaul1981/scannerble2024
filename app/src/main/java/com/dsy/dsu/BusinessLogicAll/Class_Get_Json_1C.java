@@ -132,7 +132,6 @@ public InputStream   МетодПолучемJSONОт1СДляСогласова
                 }
                     // TODO: 09.11.2023  close
                     // TODO: 28.12.2024 closeting
-                    call.cancel();
                     response.close();
                     //TODO
                     dispatcher.executorService().shutdown();
@@ -225,7 +224,6 @@ public InputStream   МетодПолучемJSONОт1СДляСогласова
                     }
                         // TODO: 28.12.2024
                         // TODO: 28.12.2024 closeting
-                        call.cancel();
                         response.close();
 
                     //TODO закрываем п отоки
@@ -316,7 +314,6 @@ public InputStream   МетодПолучемJSONОт1СДляСогласова
                     }
                         // TODO: 28.12.2024
                         // TODO: 28.12.2024 closeting
-                        call.cancel();
                         response.close();
                     //TODO закрываем п отоки
                     okHttpClientЛиммитМатериаловЭтаппервый.dispatcher().executorService().shutdown();
@@ -463,7 +460,6 @@ public InputStream   МетодПолучемJSONОт1СДляСогласова
                     }
 
                         // TODO: 28.12.2024 closeting
-                        call.cancel();
                         response.close();
 
                         // TODO: 28.12.2024
@@ -587,7 +583,6 @@ public InputStream   МетодПолучемJSONОт1СДляСогласова
                             }
 
                             // TODO: 28.12.2024 closeting
-                            call.cancel();
                             response.close();
                             // TODO: 10.11.2023 exit
                             dispatcher.executorService().shutdown();

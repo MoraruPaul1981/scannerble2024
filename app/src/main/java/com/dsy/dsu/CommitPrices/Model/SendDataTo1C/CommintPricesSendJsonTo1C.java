@@ -150,7 +150,6 @@ public class CommintPricesSendJsonTo1C extends  SendDataParent {
                         }
 
                         // TODO: 28.12.2024 closeting
-                        call.cancel();
                         response.close();
                         // TODO: 28.12.2024
                         dispatcher.executorService().shutdown();

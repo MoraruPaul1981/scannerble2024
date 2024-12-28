@@ -161,7 +161,7 @@ public class ProccesorparallelSynch   {
 
                  // TODO: 07.10.2024
                  case "ПовторныйЗапускСинхронизации":
-              //   case "СамыйПервыйЗапускСинхронизации":
+                case "СамыйПервыйЗапускСинхронизации":
                      // TODO: 27.12.2024
                      Flowable.fromIterable(getBufferFromJbossServerAllTables)
                              .onBackpressureBuffer()
@@ -505,7 +505,7 @@ public class ProccesorparallelSynch   {
                     КурсорДляАнализаВерсииДанныхАндройда.getColumnIndex("versionserveraandroid"));
 
             // TODO: 09.08.2023  даты заполяем таблиц с серверар
-            Date ВремяДанныхНаАндройде = new FormattingVersionDastaSqlserver(context).formattingDateOnVersionSqlServer(ВремяДанныхSQliteНаАндройде);
+           Date ВремяДанныхНаАндройде = new FormattingVersionDastaSqlserver(context).formattingDateOnVersionSqlServerMirror(ВремяДанныхSQliteНаАндройде);
 
             Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                     " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
@@ -679,7 +679,7 @@ public class ProccesorparallelSynch   {
                 // TODO: 19.10.2021   GET()->
                 if (ВерсияДанныхсSqlServer > ВерсииНаАндройдеСерверная ) {
                     // TODO: 05.04.2024
-                    if ( !ВремяОтSqlServer.after(ВремяДанныхНаАндройде)) {
+                    if ( ВремяОтSqlServer.after(ВремяДанныхНаАндройде)) {
                         // TODO: 05.04.2024
                         if (!ИмяТаблицы.trim().equalsIgnoreCase("errordsu1")
                                 && !ИмяТаблицы.trim().equalsIgnoreCase("settings_tabels")) {
