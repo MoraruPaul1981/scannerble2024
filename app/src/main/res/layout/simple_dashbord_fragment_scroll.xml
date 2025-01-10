@@ -11,7 +11,27 @@
     android:background="#FFFFFF"
     android:gravity="top"
     android:theme="@style/Theme.MaterialComponents.Light.NoActionBar"
-    tools:context=".Dashboard.View.MainActivity_Dashboard">
+    tools:context=".Dashboard.View.MainActivity_Dashboard"
+    tools:ignore="MissingClass">
+
+
+
+
+
+
+    <TableRow
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical|center_horizontal">
+
+
+
+
+
+
+
+    </TableRow>
+
 
 
     <!--//TODO   ROW#1-->
