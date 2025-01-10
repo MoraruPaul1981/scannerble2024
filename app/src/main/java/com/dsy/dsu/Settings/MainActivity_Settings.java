@@ -911,16 +911,6 @@ return (int) РезультатВставкиНовогоСотрудникар�
             @Override
             public void onClick(View v) {
                 Log.d(this.getClass().getName(), " кликнем для созданни новго сотрдника при нажатии  ");
-                ///todo код которыц возврящет предыдущий актвитики кнопка back
-      /*          Intent ИнтентВозврящемсяНазад = new Intent();
-                ИнтентВозврящемсяНазад .setClass(getApplication(),  MainActivity_Dashboard.class); // ТУТ ЗАПВСКАЕТЬСЯ ВЫБОР ПРИЛОЖЕНИЯ КОТОРЫЕ ЕСТЬ FACE APP НА ДАННЫЙ МОМЕТНТ РАЗРАБОТНАО ТАБЕЛЬНЫЙ УЧЁТ
-                ИнтентВозврящемсяНазад.setFlags( Intent.FLAG_ACTIVITY_NEW_TASK);
-                startActivity(ИнтентВозврящемсяНазад);
-                Log.d(this.getClass().getName(), " кликнем для созданни новго сотрдника при нажатии  ");
-*/
-
-
-
                 // TODO Запусукаем Фргамент НАстройки  dashbord
                 DashboardFragmentSettings dashboardFragmentSettings = DashboardFragmentSettings.newInstance();
                 Bundle data=new Bundle();

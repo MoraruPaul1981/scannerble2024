@@ -14,10 +14,12 @@ import android.view.Gravity;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.WindowManager;
+import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.lifecycle.LifecycleOwner;
 
@@ -26,7 +28,6 @@ import com.dsy.dsu.BootAndAsync.DowloadUpdatePO.DownLoadPO;
 import com.dsy.dsu.BootAndAsync.EventsBus.MessageEvensBusAyns;
 import com.dsy.dsu.BootAndAsync.EventsBus.MessageEvensBusEndAync;
 import com.dsy.dsu.BootAndAsync.EventsBus.MessageEvensBusUpdatePO;
-import com.dsy.dsu.BootAndAsync.Service.IntentServiceBoot;
 import com.dsy.dsu.BootAndAsync.Window.MainActivityBootAndAsync;
 import com.dsy.dsu.BusinessLogicAll.Permissions.ClassPermissions;
 import com.dsy.dsu.Dashboard.View.MainActivity_Dashboard;
@@ -62,7 +63,7 @@ public class BL_innerMainActivityBootAndAsync extends MainActivityBootAndAsync {
 
     @NonNull LinkedHashMap<Integer,String> getHiltPortJboss;
 
-
+    ImageView imageView_faceapp_settings;
     // TODO: 27.12.2024 первый КОНСТРУКТОР
 
 
@@ -70,7 +71,7 @@ public class BL_innerMainActivityBootAndAsync extends MainActivityBootAndAsync {
                                             @NonNull Activity activity,
                                             @NonNull Context context,
                                             @NonNull LifecycleOwner lifecycleOwner,
-                                            @NonNull LinkedHashMap<Integer,String> getHiltPortJboss ) {
+                                            @NonNull LinkedHashMap<Integer,String> getHiltPortJboss) {
 
         this.getsslSocketFactory2 = getsslSocketFactory2;
         this.activity = activity;
@@ -95,7 +96,8 @@ public class BL_innerMainActivityBootAndAsync extends MainActivityBootAndAsync {
                                             @NonNull  NavigationView navigationViewAsyncApp,
                                             @NonNull Context context,
                                             @NonNull LifecycleOwner lifecycleOwner,
-                                            @NonNull LinkedHashMap<Integer,String> getHiltPortJboss ) {
+                                            @NonNull LinkedHashMap<Integer,String> getHiltPortJboss ,
+                                            @NonNull ImageView imageView_faceapp_settings) {
 
         this.lifecycleOwner = lifecycleOwner;
         this.getsslSocketFactory2 = getsslSocketFactory2;
@@ -106,6 +108,7 @@ public class BL_innerMainActivityBootAndAsync extends MainActivityBootAndAsync {
         this.context = context;
         this.lifecycleOwner = lifecycleOwner;
         this.getHiltPortJboss = getHiltPortJboss;
+        this.imageView_faceapp_settings = imageView_faceapp_settings;
         // TODO: 24.01.2024
     }
 
@@ -260,7 +263,8 @@ public class BL_innerMainActivityBootAndAsync extends MainActivityBootAndAsync {
             bundleBinderUpdate.putBinder("callbackbinderdashbord", localBinderОбновлениеПО);
                 bundleBinderUpdate.putBoolean("CallBackMainActivityBootAndAsync", true);
                 Интент_ЗапускаетDashboard.putExtras(bundleBinderUpdate);
-                activity.  startActivity(Интент_ЗапускаетDashboard);//tso*/
+                // TODO: 10.01.2025  после успешной или не успешной синхрониазции переходим на все приложения APP
+               /// activity.  startActivity(Интент_ЗапускаетDashboard);//tso*/
 
 
                 // TODO: 26.12.2022  конец основгого кода
@@ -481,7 +485,7 @@ public class BL_innerMainActivityBootAndAsync extends MainActivityBootAndAsync {
 
 
     // TODO: 04.10.2023
-    public void МетодДляСлушательБоковойПанелиAsyncApp() {
+    public void listerNavigationViewAsyncApp() {
         // TODO: 06.04.2022
         try {
             drawerLayoutAsync.addDrawerListener(new DrawerLayout.SimpleDrawerListener() {
@@ -522,72 +526,100 @@ public class BL_innerMainActivityBootAndAsync extends MainActivityBootAndAsync {
                 }
 
             });
+            // TODO: 25.03.2023
+            Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                    " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                    " line " + Thread.currentThread().getStackTrace()[2].getLineNumber());
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() + " Линия  :"
+                    + Thread.currentThread().getStackTrace()[2].getLineNumber());
+            new Class_Generation_Errors(context).МетодЗаписиВЖурналНовойОшибки(e.toString(), this.getClass().getName(),
+                    Thread.currentThread().getStackTrace()[2].getMethodName(),
+                    Thread.currentThread().getStackTrace()[2].getLineNumber());
+        }
+
+
+
+    }
+
+// TODO: 10.01.2025
+
+    // TODO: 04.10.2023
+    public void  workerNavigationViewAsyncApp() {
+        // TODO: 06.04.2022
+        try {
             navigationViewAsyncApp.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
                 @Override
                 public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                     try{
-                    switch (item.getItemId()) {
-                        // TODO: 06.04.2022 Запускаем ОШибки
-                        case R.id.one:
-                            try {
-                            item.setChecked(true);
-                                Intent Интент_Меню = new Intent(activity, MainActivity_Errors.class);
-                                Интент_Меню.setAction("com.CallBackBootAndAsync");
-                                Интент_Меню.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);//////FLAG_ACTIVITY_SINGLE_TOP
+                        switch (item.getItemId()) {
+                            // TODO: 06.04.2022 Запускаем ОШибки
+                            case R.id.one:
+                                try {
+                                    item.setChecked(true);
+                                    Intent Интент_Меню = new Intent(activity, MainActivity_Errors.class);
+                                    Интент_Меню.setAction("com.CallBackBootAndAsync");
+                                    Интент_Меню.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);//////FLAG_ACTIVITY_SINGLE_TOP
 
-                               context. startActivity(Интент_Меню);
+                                    context. startActivity(Интент_Меню);
 
-                                Log.d(context.getClass().getName(), "\n"
-                                        + " время: " + new Date() + "\n+" +
-                                        " Класс в процессе... " + this.getClass().getName() + "\n" +
-                                        " метод в процессе... " + Thread.currentThread().getStackTrace()[2].getMethodName()+
-                                        " intent.getAction() "  );
-                            } catch (Exception e) {
-                                e.printStackTrace();
-                                Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :"
-                                        + Thread.currentThread().getStackTrace()[2].getMethodName() + " Линия  :"
-                                        + Thread.currentThread().getStackTrace()[2].getLineNumber());
-                                new Class_Generation_Errors(context).МетодЗаписиВЖурналНовойОшибки(e.toString(),
-                                        this.getClass().getName(), Thread.currentThread().getStackTrace()[2].getMethodName(),
-                                        Thread.currentThread().getStackTrace()[2].getLineNumber());
-                            }
+                                    Log.d(context.getClass().getName(), "\n"
+                                            + " время: " + new Date() + "\n+" +
+                                            " Класс в процессе... " + this.getClass().getName() + "\n" +
+                                            " метод в процессе... " + Thread.currentThread().getStackTrace()[2].getMethodName()+
+                                            " intent.getAction() "  );
+                                } catch (Exception e) {
+                                    e.printStackTrace();
+                                    Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :"
+                                            + Thread.currentThread().getStackTrace()[2].getMethodName() + " Линия  :"
+                                            + Thread.currentThread().getStackTrace()[2].getLineNumber());
+                                    new Class_Generation_Errors(context).МетодЗаписиВЖурналНовойОшибки(e.toString(),
+                                            this.getClass().getName(), Thread.currentThread().getStackTrace()[2].getMethodName(),
+                                            Thread.currentThread().getStackTrace()[2].getLineNumber());
+                                }
 
-                            break;
-                        // TODO: 06.04.2022 ЗапускаемОбновление ПО
-                        case R.id.item_async_updatepo:
-                            item.setChecked(true);
-                            try {
+                                break;
+                            // TODO: 06.04.2022 ЗапускаемОбновление ПО
+                            case R.id.item_async_updatepo:
+                                item.setChecked(true);
+                                try {
 // TODO: 10.07.2023  запуск обновление ПО
-                                serviceBootBinessLogic.startServiceBootAndAsync("IntentServiceBootUpdatePo.com");
+                                    serviceBootBinessLogic.startServiceBootAndAsync("IntentServiceBootUpdatePo.com");
 
-                                Log.d(context.getClass().getName(), "\n"
-                                        + " время: " + new Date() + "\n+" +
-                                        " Класс в процессе... " + this.getClass().getName() + "\n" +
-                                        " метод в процессе... " + Thread.currentThread().getStackTrace()[2].getMethodName()+
-                                        " intent.getAction() "  );
-                            } catch (Exception e) {
-                                e.printStackTrace();
-                                Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() + " Линия  :"
-                                        + Thread.currentThread().getStackTrace()[2].getLineNumber());
-                                new Class_Generation_Errors(context)
-                                        .МетодЗаписиВЖурналНовойОшибки(e.toString(), this.getClass().getName(), Thread.currentThread().getStackTrace()[2].getMethodName(),
-                                                Thread.currentThread().getStackTrace()[2].getLineNumber());
-                            }
-                            break;
+                                    Log.d(context.getClass().getName(), "\n"
+                                            + " время: " + new Date() + "\n+" +
+                                            " Класс в процессе... " + this.getClass().getName() + "\n" +
+                                            " метод в процессе... " + Thread.currentThread().getStackTrace()[2].getMethodName()+
+                                            " intent.getAction() "  );
+                                } catch (Exception e) {
+                                    e.printStackTrace();
+                                    Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() + " Линия  :"
+                                            + Thread.currentThread().getStackTrace()[2].getLineNumber());
+                                    new Class_Generation_Errors(context)
+                                            .МетодЗаписиВЖурналНовойОшибки(e.toString(), this.getClass().getName(), Thread.currentThread().getStackTrace()[2].getMethodName(),
+                                                    Thread.currentThread().getStackTrace()[2].getLineNumber());
+                                }
+                                break;
 
+                        }
+                        if (drawerLayoutAsync.isDrawerOpen(Gravity.LEFT)) {
+                            drawerLayoutAsync.closeDrawer(Gravity.LEFT);
+                        }
+                        // TODO: 25.03.2023
+                        Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                                " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                                " line " + Thread.currentThread().getStackTrace()[2].getLineNumber());
+
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                        Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() + " Линия  :"
+                                + Thread.currentThread().getStackTrace()[2].getLineNumber());
+                        new Class_Generation_Errors(context).МетодЗаписиВЖурналНовойОшибки(e.toString(), this.getClass().getName(),
+                                Thread.currentThread().getStackTrace()[2].getMethodName(),
+                                Thread.currentThread().getStackTrace()[2].getLineNumber());
                     }
-                    if (drawerLayoutAsync.isDrawerOpen(Gravity.LEFT)) {
-                        drawerLayoutAsync.closeDrawer(Gravity.LEFT);
-                    }
-
-                } catch (Exception e) {
-                    e.printStackTrace();
-                    Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() + " Линия  :"
-                            + Thread.currentThread().getStackTrace()[2].getLineNumber());
-                    new Class_Generation_Errors(context).МетодЗаписиВЖурналНовойОшибки(e.toString(), this.getClass().getName(),
-                            Thread.currentThread().getStackTrace()[2].getMethodName(),
-                            Thread.currentThread().getStackTrace()[2].getLineNumber());
-                }
                     return true;
                 }
             });
@@ -599,142 +631,58 @@ public class BL_innerMainActivityBootAndAsync extends MainActivityBootAndAsync {
                     Thread.currentThread().getStackTrace()[2].getMethodName(),
                     Thread.currentThread().getStackTrace()[2].getLineNumber());
         }
-        // TODO: 04.04.2022
+
+
+
+    }
+
+    // TODO: 04.10.2023
+    public void  workerImageViewsettings() {
+        // TODO: 06.04.2022
+        try {
+            imageView_faceapp_settings.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    // TODO: 25.03.2023
+                   // navigationViewAsyncApp.bringToFront();
+
+
+                    drawerLayoutAsync.openDrawer(Gravity.LEFT);
+
+
+
+
+
+
+                    Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                            " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                            " line " + Thread.currentThread().getStackTrace()[2].getLineNumber());
+
+                }
+            });
+                        // TODO: 25.03.2023
+                        Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                                " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                                " line " + Thread.currentThread().getStackTrace()[2].getLineNumber());
+
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() + " Линия  :"
+                    + Thread.currentThread().getStackTrace()[2].getLineNumber());
+            new Class_Generation_Errors(context).МетодЗаписиВЖурналНовойОшибки(e.toString(), this.getClass().getName(),
+                    Thread.currentThread().getStackTrace()[2].getMethodName(),
+                    Thread.currentThread().getStackTrace()[2].getLineNumber());
+        }
+
+
+
     }
 
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+    // TODO: 04.04.2022  END CLASS
 }
 
 

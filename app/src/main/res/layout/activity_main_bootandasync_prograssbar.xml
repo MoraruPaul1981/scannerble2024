@@ -7,18 +7,37 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:openDrawer="left"
-    android:visibility="visible"
-    android:background="#FFFFFF"
     android:backgroundTint="@color/cardview_light_background"
     tools:context=".BootAndAsync.Window.MainActivityBootAndAsync">
 
 
 
-<!--//TODO Начало Основного Экрана Boot Screen -->
+  <!--  <RelativeLayout
+        android:id="@+id/containersetting"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#FFFFFF"
+        android:visibility="visible">
+        <ImageView
+            android:id="@+id/imageView_faceapp_settings"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentRight="true"
+            android:adjustViewBounds="false"
+            android:visibility="visible"
+            android:layout_margin="10dp"
+            android:padding="5dp"
+            app:srcCompat="@drawable/icon_setting_bootactivitu" />
+    </RelativeLayout>
+
+
+
+&lt;!&ndash;//TODO Начало Основного Экрана Boot Screen &ndash;&gt;
     <TableLayout
         android:shrinkColumns="*"
         android:stretchColumns="*"
-        android:gravity="center_horizontal|center_vertical"
+        android:gravity="center"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
@@ -29,22 +48,18 @@
             <RelativeLayout
                 android:id="@+id/container1"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:background="#FFFFFF"
-                android:clickable="false"
-                android:focusable="false"
-                android:focusableInTouchMode="false"
-                android:paddingTop="?attr/actionBarSize"
-                android:theme="@style/Theme.AppCompat.DayNight"
-                android:touchscreenBlocksFocus="false"
                 android:visibility="visible">
                 <ImageView
                     android:id="@+id/imageviewbootlogo"
-                    android:layout_width="80dp"
-                    android:layout_height="80dp"
+                    android:layout_width="90dp"
+                    android:layout_height="90dp"
                     android:layout_centerHorizontal="true"
                     android:adjustViewBounds="false"
                     android:visibility="visible"
+                    android:layout_margin="10dp"
+                    android:padding="5dp"
                     app:srcCompat="@mipmap/deliverytruckblack" />
             </RelativeLayout>
         </TableRow>
@@ -60,14 +75,8 @@
             <RelativeLayout
                 android:id="@+id/container2"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:background="#FFFFFF"
-                android:clickable="false"
-                android:focusable="false"
-                android:focusableInTouchMode="false"
-                android:paddingTop="?attr/actionBarSize"
-                android:theme="@style/Theme.AppCompat.DayNight"
-                android:touchscreenBlocksFocus="false"
                 android:visibility="visible">
                 <ProgressBar
                     android:id="@+id/progressbarbootandasync"
@@ -79,17 +88,24 @@
                     android:indeterminate="false"
                     android:max="100"
                     android:visibility="visible"
-                    android:indeterminateTint="@color/colorPrimaryDark"
+                    android:layout_margin="10dp"
+                    android:padding="5dp"
+                    android:indeterminateTint="@color/colorPrimary"
                     android:progress="0"
                     android:scaleY="1.5" />
-
             </RelativeLayout>
         </TableRow>
 
 
 
-    </TableLayout>
 
+
+
+
+
+
+    </TableLayout>
+-->
 
 
 
@@ -97,20 +113,28 @@
 
 
     <!--TODO НАчало Боллоковой Панели-->
+
     <com.google.android.material.navigation.NavigationView
         android:id="@+id/navigator_asyncapp"
-        android:layout_width="230dp"
+        android:layout_width="80dp"
+        android:background="@drawable/dialog_bg_dashbord_bokobvay_panel_up_grey"
+        android:layout_gravity="left|center"
         android:layout_height="match_parent"
-        android:background="#FFFFFF"
-        android:layout_gravity="left"
-        android:layout_marginRight="160dp"
+        android:layout_margin="10dp"
+        android:layout_marginRight="10dp"
         android:fitsSystemWindows="true"
-        app:itemIconSize="35dp"
-        app:itemIconTint="#00ACC1"
-        android:visibility="gone"
-        android:backgroundTint="@color/cardview_light_background"
+        app:itemIconSize="30dp"
+        app:itemIconTint="#E7EDED"
+        android:visibility="visible"
+        app:cardElevation="20dp"
+        app:cardMaxElevation="10dp"
+        android:translationZ="100dp"
+        app:itemBackground="@drawable/dialog_bg_dashbord_bokobvay_panel_grey_navigarotbar"
         app:itemTextColor="@color/cardview_dark_background"
-        app:menu="@menu/menu_for_asynsapp_navigationview">
+        app:menu="@menu/menu_for_doadboard_navigationview"
+        tools:ignore="MissingConstraints">
+
     </com.google.android.material.navigation.NavigationView>
+
 
 </androidx.drawerlayout.widget.DrawerLayout>

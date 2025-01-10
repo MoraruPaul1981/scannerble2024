@@ -116,12 +116,12 @@ public class MainActivity_Dashboard extends AppCompatActivity {
 
             // TODO: 15.08.2023 Начинается Пользовательский КОд
             buniccessLogicaActivityDashboard=new BuniccessLogicaActivityDashboard();
+
             методПолучениеДанныхBinder();
             // TODO: 04.10.2023 разрешения для всего
             new ClassPermissions(this,ALL_PERSSION_CODE,CAMERA_PERSSION_CODE);
 
-            // TODO: 15.11.2023  ТЕСТ КОД
-        ///  buniccessLogicaActivityDashboard.      testingCode();
+
             eventBuss=new EventBuss(activity,getApplicationContext());
 
             // TODO: 28.09.2023

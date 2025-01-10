@@ -14,6 +14,7 @@ import android.widget.RelativeLayout;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.Fragment;
@@ -40,7 +41,7 @@ public class DashboardFragmentHarmonyOS extends DialogFragment {
     private FragmentTransaction fragmentTransaction;
     private          View ViewDashboart=null;
 
-    DrawerLayout navigator_dashboord;
+    DrawerLayout navigator_dashboord_ubuntu;
     RelativeLayout relativelayout_dashboard;
 
     private Handler handlerDashBord;
@@ -157,7 +158,7 @@ public class DashboardFragmentHarmonyOS extends DialogFragment {
 
             ViewDashboart=view;
             DrawerLayout      drawerLayout_dashdord                  = (DrawerLayout) view.findViewById(R.id.drawerLayout_dashdord); /////КНОПКА ТАБЕЛЬНОГО УЧЕТА
-            navigator_dashboord         = (DrawerLayout) drawerLayout_dashdord.findViewById(R.id.drawerLayout_dashdord); /////КНОПКА ТАБЕЛЬНОГО УЧЕТА
+            navigator_dashboord_ubuntu = (DrawerLayout) drawerLayout_dashdord.findViewById(R.id.navigator_dashboord_ubuntu); /////КНОПКА ТАБЕЛЬНОГО УЧЕТА
             // TODO: 17.08.2023
             Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                     " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
@@ -273,19 +274,20 @@ public class DashboardFragmentHarmonyOS extends DialogFragment {
         // TODO: 17.08.2023  Класс Для Компонента Для  Боковой Панели
 
                 class BuniccessLogicNavigarlaout{
+
                             void  методНастройкиБоковойпанели() {
                                 try{
 
 
 
                                     handlerDashBord.postDelayed(()->{
-                                        navigator_dashboord.openDrawer(Gravity.END | Gravity.CENTER,true);
+                                        navigator_dashboord_ubuntu.openDrawer(Gravity.LEFT | Gravity.LEFT,true);
 
                                     },500);
 
                                 handlerDashBord.postDelayed(()->{
-                                    if (  navigator_dashboord.isDrawerOpen(Gravity.END | Gravity.CENTER)) {
-                                        navigator_dashboord.closeDrawer(Gravity.END | Gravity.CENTER,true);
+                                    if (  navigator_dashboord_ubuntu.isDrawerOpen(GravityCompat.END | Gravity.LEFT)) {
+                                        navigator_dashboord_ubuntu.closeDrawer(GravityCompat.END | Gravity.LEFT,true);
                                     }
 
                                 },1500);

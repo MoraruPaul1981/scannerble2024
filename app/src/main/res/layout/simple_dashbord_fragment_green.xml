@@ -798,7 +798,7 @@
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <com.google.android.material.navigation.NavigationView
-        android:id="@+id/navigator_dashboord"
+        android:id="@+id/navigator_dashboord_ubuntu"
         android:layout_width="80dp"
         android:background="@drawable/dialog_bg_dashbord_bokobvay_panel_up_green"
         android:layout_gravity="end|center"

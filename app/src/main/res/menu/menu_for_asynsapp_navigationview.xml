@@ -8,13 +8,24 @@
         android:checkableBehavior="single"
         android:menuCategory="system">
 
+        <item android:title="">
+            <menu>
+                <item
+                    android:checked="true"
+                    app:showAsAction="always"
+                    android:id="@+id/faur_abount"
+                    android:icon="@drawable/icon_dsu1_for_navigator_view_11"
+                    android:title="Трак 2025" />
+            </menu>
+
+        </item>
 
         <item
             android:id="@+id/one"
             android:icon="@drawable/icon_sodergimoe"
             app:itemTextAppearance="@style/TextAppearance.AppCompat.Display1"
             app:itemIconSize="100dp"
-            android:title="Отчёт Ошибок" />
+            android:title="Ошибки" />
 
 
         <item
@@ -25,15 +36,5 @@
             android:title="Обновление ПО" />
     </group>
 
-    <item android:title="">
-        <menu>
-            <item
-                android:checked="true"
-                android:id="@+id/faur_abount"
-                android:icon="@drawable/icon_dsu1_for_navigator_view_11"
-                android:title="ООО Союз Автодор" />
-
-        </menu>
-    </item>
 
 </menu>
