@@ -12,7 +12,7 @@
 
 
 
-  <!--  <RelativeLayout
+    <RelativeLayout
         android:id="@+id/containersetting"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -33,7 +33,7 @@
 
 
 
-&lt;!&ndash;//TODO Начало Основного Экрана Boot Screen &ndash;&gt;
+<!--//TODO Начало Основного Экрана Boot Screen -->
     <TableLayout
         android:shrinkColumns="*"
         android:stretchColumns="*"
@@ -105,7 +105,6 @@
 
 
     </TableLayout>
--->
 
 
 
@@ -131,8 +130,8 @@
         android:translationZ="100dp"
         app:itemBackground="@drawable/dialog_bg_dashbord_bokobvay_panel_grey_navigarotbar"
         app:itemTextColor="@color/cardview_dark_background"
-        app:menu="@menu/menu_for_doadboard_navigationview"
-        tools:ignore="MissingConstraints">
+        app:menu="@menu/menu_for_asynsapp_navigationview"
+        tools:ignore="ExtraText">
 
     </com.google.android.material.navigation.NavigationView>
 

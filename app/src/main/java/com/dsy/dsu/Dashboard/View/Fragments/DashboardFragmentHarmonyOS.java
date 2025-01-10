@@ -21,6 +21,7 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
+import com.dsy.dsu.CallNavigarlaout.CallNavigarlaout;
 import com.dsy.dsu.Errors.Class_Generation_Errors;
 import com.dsy.dsu.R;
 import com.google.android.material.card.MaterialCardView;
@@ -189,9 +190,8 @@ public class DashboardFragmentHarmonyOS extends DialogFragment {
 
 
 
-            /*          buniccessLogicFra4gmentDashboard.new BunicessLogicTabel().методНАстройкиДизайнаТабеля();*/
 
-            buniccessLogicFra4gmentDashboard.new BuniccessLogicNavigarlaout().методНастройкиБоковойпанели();;
+          new CallNavigarlaout(navigator_dashboord_ubuntu,handlerDashBord,getContext()).методНастройкиБоковойпанели();
 
 
         // TODO: 20.07.2023
@@ -271,50 +271,7 @@ public class DashboardFragmentHarmonyOS extends DialogFragment {
 
 
 
-        // TODO: 17.08.2023  Класс Для Компонента Для  Боковой Панели
 
-                class BuniccessLogicNavigarlaout{
-
-                            void  методНастройкиБоковойпанели() {
-                                try{
-
-
-
-                                    handlerDashBord.postDelayed(()->{
-                                        navigator_dashboord_ubuntu.openDrawer(Gravity.LEFT | Gravity.LEFT,true);
-
-                                    },500);
-
-                                handlerDashBord.postDelayed(()->{
-                                    if (  navigator_dashboord_ubuntu.isDrawerOpen(GravityCompat.END | Gravity.LEFT)) {
-                                        navigator_dashboord_ubuntu.closeDrawer(GravityCompat.END | Gravity.LEFT,true);
-                                    }
-
-                                },1500);
-
-                                    Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
-                                            " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                                            " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"  );
-                            } catch (Exception e) {
-                        e.printStackTrace();
-                        Log.e(getContext().getClass().getName(),
-                                "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
-                                        " Линия  :" + Thread.currentThread().getStackTrace()[2].getLineNumber());
-                        new Class_Generation_Errors(getContext()).МетодЗаписиВЖурналНовойОшибки(e.toString(),
-                                this.getClass().getName().toString(), Thread.currentThread().getStackTrace()[2].getMethodName().toString(),
-                                Thread.currentThread().getStackTrace()[2].getLineNumber());
-                    }
-
-                    }
-
-
-
-
-
-
-
-
-}
 
 
 

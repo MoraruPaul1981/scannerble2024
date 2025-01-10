@@ -9,6 +9,7 @@ import android.content.pm.PackageManager;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.MenuItem;
@@ -30,6 +31,7 @@ import com.dsy.dsu.BootAndAsync.EventsBus.MessageEvensBusEndAync;
 import com.dsy.dsu.BootAndAsync.EventsBus.MessageEvensBusUpdatePO;
 import com.dsy.dsu.BootAndAsync.Window.MainActivityBootAndAsync;
 import com.dsy.dsu.BusinessLogicAll.Permissions.ClassPermissions;
+import com.dsy.dsu.CallNavigarlaout.CallNavigarlaout;
 import com.dsy.dsu.Dashboard.View.MainActivity_Dashboard;
 import com.dsy.dsu.Errors.Class_Generation_Errors;
 import com.dsy.dsu.Errors.MainActivity_Errors;
@@ -643,14 +645,9 @@ public class BL_innerMainActivityBootAndAsync extends MainActivityBootAndAsync {
             imageView_faceapp_settings.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    // TODO: 25.03.2023
-                   // navigationViewAsyncApp.bringToFront();
 
-
-                    drawerLayoutAsync.openDrawer(Gravity.LEFT);
-
-
-
+                    // TODO: 25.03.2025
+                    new CallNavigarlaout(drawerLayoutAsync,new Handler(),context).методНастройкиБоковойпанели();
 
 
 

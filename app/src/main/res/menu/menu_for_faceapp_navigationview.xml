@@ -10,48 +10,16 @@
 
 
         <item
-            android:id="@+id/one"
-            android:icon="@drawable/icon_sodergimoe"
-            android:title="Ошибки" />
-
-
-        <item
-            android:id="@+id/two"
-            android:icon="@drawable/icon_dsu1_for_menufacepp"
-            android:title="Настройки" />
-
-        <item
-            android:id="@+id/tree"
-            android:icon="@drawable/icon_account_2"
-            android:title="Пользователи" />
-
-
-        <item
-            android:id="@+id/four"
-            android:icon="@drawable/icon_dsu1_sucesss_fro_menus"
-            android:title="Обмен" />
-
-
-        <item
             android:id="@+id/shestoy"
             android:icon="@drawable/icon_dsu1_insertdata"
-            android:title="Шаблоны" />
+            android:title="" />
 
         <item
             android:id="@+id/sedmoy"
             android:icon="@drawable/icon_dsu1_download_formenu"
-            android:title="Обновление" />
+            android:title="" />
     </group>
 
-    <item android:title="">
-        <menu>
-            <item
-                android:checked="true"
-                android:id="@+id/faur_abount"
-                android:icon="@drawable/icon_dsu1_for_navigator_view_11"
-                android:title="Союз-Автодор"  />
 
-        </menu>
-    </item>
 
 </menu>
