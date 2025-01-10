@@ -52,12 +52,7 @@
         android:textStyle="bold"
         android:theme="@style/Theme.AppCompat.DayNight.DarkActionBar"
         android:visibility="invisible"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@id/Линияview4"
-        app:layout_constraintVertical_bias="0.093" />
+        tools:ignore="MissingConstraints" />
 
     <TextView
         android:id="@+id/textViewНастройки"
@@ -204,6 +199,26 @@
 
 
 
+
+
+    <TextView
+        android:id="@+id/textViewРазрабочикПрогрммы"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="50dp"
+        android:layout_marginEnd="50dp"
+        android:layout_marginBottom="10dp"
+        android:fontFamily="sans-serif-condensed-light"
+        android:gravity="center_horizontal"
+        android:textAlignment="gravity"
+        android:textStyle="bold"
+        android:text="Собственость: ООО Союз-Автодор"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+
+
     <TextView
         android:id="@+id/textViewВерсияПрограммы"
         android:layout_width="match_parent"
@@ -212,10 +227,13 @@
         android:layout_marginEnd="50dp"
         android:layout_marginBottom="10dp"
         android:fontFamily="sans-serif-condensed-light"
-        android:textAlignment="center"
+        android:gravity="center_horizontal"
+        android:textAlignment="gravity"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/textViewРазрабочикПрогрммы"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent" />
 
     <TextView
@@ -226,7 +244,8 @@
         android:layout_marginEnd="50dp"
         android:layout_marginBottom="5dp"
         android:fontFamily="sans-serif-condensed-light"
-        android:textAlignment="center"
+        android:gravity="center_horizontal"
+        android:textAlignment="gravity"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintBottom_toTopOf="@id/textViewВерсияПрограммы"
@@ -242,7 +261,8 @@
         android:layout_marginEnd="50dp"
         android:layout_marginBottom="5dp"
         android:fontFamily="sans-serif-condensed-light"
-        android:textAlignment="center"
+        android:gravity="center_horizontal"
+        android:textAlignment="gravity"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintBottom_toTopOf="@id/textViewТекущийПользователь"
