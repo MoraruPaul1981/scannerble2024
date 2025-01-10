@@ -29,7 +29,7 @@
             app:mwhStartColor="@color/colorPrimary"
             app:mwhCloseColor="@color/color_beliyi"
             app:mwhWaves="MultiWave"
-            android:layout_height="60dp"/>
+            android:layout_height="90dp"/>
     </TableRow>
 
 
