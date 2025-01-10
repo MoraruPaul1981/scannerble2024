@@ -29,6 +29,21 @@
             android:layout_margin="10dp"
             android:padding="5dp"
             app:srcCompat="@drawable/icon_setting_bootactivitu" />
+
+
+        <TextView
+            android:layout_width="150dp"
+            android:layout_height="50dp"
+            android:gravity="center"
+            android:layout_weight="1"
+            android:text=" Союз-Автодор 2025 г."
+            android:textAlignment="center"
+            android:textColor="#0C0A0A"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:textSize="12sp" />
+
+
     </RelativeLayout>
 
 
@@ -40,6 +55,13 @@
         android:gravity="center"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
+
+
+
+
+
+
+
 
         <TableRow
             android:layout_width="match_parent"
@@ -98,13 +120,19 @@
 
 
 
+        <TableRow
+            android:background="@drawable/disayn_line_tablerow30"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical|center_horizontal">
 
-
-
-
+        </TableRow>
 
 
     </TableLayout>
+
+
+
 
 
 
@@ -134,6 +162,15 @@
         tools:ignore="ExtraText">
 
     </com.google.android.material.navigation.NavigationView>
+
+
+
+
+
+
+
+
+
 
 
 </androidx.drawerlayout.widget.DrawerLayout>
