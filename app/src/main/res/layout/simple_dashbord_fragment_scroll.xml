@@ -23,13 +23,13 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center_vertical|center_horizontal">
-
-
-
-
-
-
-
+        <com.scwang.wave.MultiWaveHeader
+            android:id="@+id/waveHeader"
+            android:layout_width="match_parent"
+            app:mwhStartColor="@color/colorPrimary"
+            app:mwhCloseColor="@color/color_beliyi"
+            app:mwhWaves="MultiWave"
+            android:layout_height="60dp"/>
     </TableRow>
 
 
@@ -48,7 +48,7 @@
         <androidx.appcompat.widget.Toolbar
             android:id="@+id/toolbarcamera_dashbord"
             android:layout_width="match_parent"
-            android:layout_height="340dp"
+            android:layout_height="250dp"
             android:elevation="0dp"
             app:showAsAction="always"
             app:theme="@style/AppTheme">
@@ -63,11 +63,11 @@
                     android:id="@+id/imageview_to_settings"
                     android:layout_width="50dp"
                     android:layout_height="50dp"
-                    android:layout_alignLeft="@+id/TextViewLogo"
-                    android:layout_alignParentLeft="true"
+                    android:layout_alignRight="@+id/TextViewLogo"
+                    android:layout_alignParentRight="true"
                     android:layout_alignParentTop="true"
-                    android:layout_marginLeft="0dp"
-                    android:layout_marginTop="10dp"
+                    android:layout_margin="5dp"
+                    android:padding="2dp"
                     android:alpha="0.5"
                     android:backgroundTint="#FFFFFF"
                     android:visibility="visible"

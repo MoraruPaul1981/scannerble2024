@@ -22,13 +22,25 @@
             android:id="@+id/imageView_faceapp_settings"
             android:layout_width="40dp"
             android:layout_height="40dp"
-            android:layout_alignParentTop="true"
-            android:layout_alignParentRight="true"
+            android:layout_below="@+id/waveHeader"
             android:adjustViewBounds="false"
+            android:layout_alignParentRight="true"
             android:visibility="visible"
-            android:layout_margin="10dp"
+            android:layout_margin="5dp"
             android:padding="5dp"
             app:srcCompat="@drawable/icon_setting_bootactivitu" />
+
+
+        <com.scwang.wave.MultiWaveHeader
+            android:id="@+id/waveHeader"
+            android:layout_alignParentTop="true"
+            android:layout_width="match_parent"
+            app:mwhStartColor="@color/colorPrimary"
+            app:mwhCloseColor="@color/color_beliyi"
+            app:mwhWaves="MultiWave"
+            android:layout_height="50dp"/>
+
+
 
 
         <TextView
@@ -42,6 +54,12 @@
             android:layout_alignParentBottom="true"
             android:layout_centerHorizontal="true"
             android:textSize="12sp" />
+
+
+
+
+
+
 
 
     </RelativeLayout>
