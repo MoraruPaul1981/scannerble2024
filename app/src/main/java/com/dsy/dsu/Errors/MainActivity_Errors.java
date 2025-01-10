@@ -160,10 +160,27 @@ public class MainActivity_Errors extends AppCompatActivity  {
     }
 
     private void getDataForMainErrors() {
+
+        try{
         СтатусЗадачи=getIntent().getAction();
 
-        localBinderОбновлениеПО =
-                (ServiceUpdatePoОбновлениеПО.localBinderОбновлениеПО) getIntent().getExtras().getBinder("callbackbinderdashbord");
+        if (getIntent().getExtras()!=null) {
+            localBinderОбновлениеПО =
+                    (ServiceUpdatePoОбновлениеПО.localBinderОбновлениеПО) getIntent().getExtras().getBinder("callbackbinderdashbord");
+        }
+
+        Log.d(this.getClass().getName(),"\n" + " class FaceAPp " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" + "localBinderОбновлениеПО "+localBinderОбновлениеПО);
+    } catch (Exception e) {
+        e.printStackTrace();
+        Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName()
+                + " Линия  :" + Thread.currentThread().getStackTrace()[2].getLineNumber());
+        // TODO: 01.09.2021 метод вызова
+        new Class_Generation_Errors(getApplicationContext()).МетодЗаписиВЖурналНовойОшибки(e.toString(),
+                this.getClass().getName(), Thread.currentThread().getStackTrace()[2].getMethodName(),
+                Thread.currentThread().getStackTrace()[2].getLineNumber());
+    }
     }
 
 

@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.res.ColorStateList;
 import android.graphics.Color;
 import android.graphics.drawable.ClipDrawable;
+import android.graphics.drawable.Drawable;
 import android.graphics.drawable.ShapeDrawable;
 import android.graphics.drawable.shapes.RoundRectShape;
 import android.os.Bundle;
@@ -83,10 +84,19 @@ public class Bl_ComponentPrograssbar {
     @MainThread
     private void МетодВизуализацииСинхронизации(@NonNull Bundle bundleCallsBackAsynsService,@NonNull  Handler handlerProfgarsBar) {
         try {
-
             // TODO: 25.09.2024
             handlerProfgarsBar.post(()->{
+                // TODO: 10.01.2025
+                try{
                 // TODO: 25.09.2024
+
+                Drawable progressDrawable = progressbarbootandasync.getProgressDrawable().mutate();
+                progressDrawable.setColorFilter(Color.parseColor("#000000"), android.graphics.PorterDuff.Mode.SRC_IN);
+                progressbarbootandasync.setProgressDrawable(progressDrawable);
+                //      progressbarbootandasync.setProgressDrawableTiled(progressDrawable);
+
+
+
                     // TODO: 25.09.2024
                      Integer MaxКоличествоСТрочеек = bundleCallsBackAsynsService.getInt("maxtables", 0);
                     String currentEventTable = bundleCallsBackAsynsService.getString("имятаблицы", "");
@@ -102,10 +112,11 @@ public class Bl_ComponentPrograssbar {
                             // TODO: 25.09.2024  
                             if (Progress>progressbarbootandasync.getProgress()) {
                                 progressbarbootandasync.setProgress(Progress, true);
-                                progressbarbootandasync.setProgressTintList(ColorStateList.valueOf(Color.GRAY));
                                 // TODO: 25.09.2024
                                 progressbarbootandasync.setSecondaryProgress(SecondaryProgress);
-                                progressbarbootandasync.setSecondaryProgressTintList(ColorStateList.valueOf(Color.BLUE));
+                                progressbarbootandasync.setSecondaryProgressTintList(ColorStateList.valueOf(Color.GRAY));
+                                // TODO: 10.01.2025
+                                progressbarbootandasync.setTooltipText(currentEventTableAnSync);
                             }
                             // TODO: 30.09.2024
                             progressbarbootandasync.setTooltipText(currentEventTable);
@@ -124,6 +135,15 @@ public class Bl_ComponentPrograssbar {
                             " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
                             " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"
                             + " progressbarbootandasync" + progressbarbootandasync.getProgress());
+                // TODO: 10.01.2025
+            } catch (Exception e) {
+                e.printStackTrace();
+                Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() + " Линия  :"
+                        + Thread.currentThread().getStackTrace()[2].getLineNumber());
+                new Class_Generation_Errors(context).МетодЗаписиВЖурналНовойОшибки(e.toString(),
+                        this.getClass().getName(), Thread.currentThread().getStackTrace()[2].getMethodName(),
+                        Thread.currentThread().getStackTrace()[2].getLineNumber());
+            }
             });
 
             Log.d(this.getClass().getName(), "\n" + " class " +

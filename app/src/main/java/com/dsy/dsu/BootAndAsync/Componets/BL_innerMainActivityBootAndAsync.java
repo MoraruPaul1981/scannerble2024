@@ -59,9 +59,8 @@ public class BL_innerMainActivityBootAndAsync extends MainActivityBootAndAsync {
     
     private  Context context;
 
-    @Inject
-    @Named("serviceBootBinessLogic")
-    ServiceBootBinessLogic serviceBootBinessLogic;
+
+
 
     @NonNull LinkedHashMap<Integer,String> getHiltPortJboss;
 
@@ -253,20 +252,18 @@ public class BL_innerMainActivityBootAndAsync extends MainActivityBootAndAsync {
             
             if (Статус.contains("AnsycEnding")) {
                 // TODO: 26.03.2024
-                ServiceUpdatePoОбновлениеПО.localBinderОбновлениеПО localBinderОбновлениеПО =
-                        (ServiceUpdatePoОбновлениеПО.localBinderОбновлениеПО) bundleGetOtServicePrograssBar.getBinder("callbackbinderdashbord");
 
-            Intent Интент_ЗапускаетDashboard = new Intent();
+
+                Intent Интент_ЗапускаетDashboard = new Intent();
                 Интент_ЗапускаетDashboard.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_SINGLE_TOP);
                 Интент_ЗапускаетDashboard.setAction("MainActivity_Dashboard.class");
                 Интент_ЗапускаетDashboard.setClass(context, MainActivity_Dashboard.class);
-
-            Bundle bundleBinderUpdate=new Bundle();
-            bundleBinderUpdate.putBinder("callbackbinderdashbord", localBinderОбновлениеПО);
+                Bundle bundleBinderUpdate=new Bundle();
                 bundleBinderUpdate.putBoolean("CallBackMainActivityBootAndAsync", true);
                 Интент_ЗапускаетDashboard.putExtras(bundleBinderUpdate);
+
                 // TODO: 10.01.2025  после успешной или не успешной синхрониазции переходим на все приложения APP
-               /// activity.  startActivity(Интент_ЗапускаетDashboard);//tso*/
+                activity.  startActivity(Интент_ЗапускаетDashboard);//tso*/
 
 
                 // TODO: 26.12.2022  конец основгого кода
@@ -494,7 +491,7 @@ public class BL_innerMainActivityBootAndAsync extends MainActivityBootAndAsync {
                 @Override
                 public void onDrawerOpened(View drawerView) {
                     try {
-                    Drawable drawable =context. getResources().getDrawable(R.mipmap.icon_dsu1_for_asyncapp_close_naviga);///
+
 
                     navigationViewAsyncApp.setVisibility(View.VISIBLE);
 
@@ -588,7 +585,7 @@ public class BL_innerMainActivityBootAndAsync extends MainActivityBootAndAsync {
                                 item.setChecked(true);
                                 try {
 // TODO: 10.07.2023  запуск обновление ПО
-                                    serviceBootBinessLogic.startServiceBootAndAsync("IntentServiceBootUpdatePo.com");
+                                    new ServiceBootBinessLogic(context).startServiceBootAndAsync("IntentServiceBootUpdatePo.com");
 
                                     Log.d(context.getClass().getName(), "\n"
                                             + " время: " + new Date() + "\n+" +

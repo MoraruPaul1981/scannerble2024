@@ -110,19 +110,22 @@ public class MainActivity_Dashboard extends AppCompatActivity {
 
             preferences=   getApplicationContext() .getSharedPreferences("sharedPreferencesХранилище", Context.MODE_MULTI_PROCESS);
 
-            // TODO: 29.09.2023 Статус Повтороной Синхрониазции
-            методЗаписываемПовторныйЭтапСинхрогниазции( );
 
+
+            // TODO: 04.10.2023 разрешения для всего
+            new ClassPermissions(this,ALL_PERSSION_CODE,CAMERA_PERSSION_CODE);
 
             // TODO: 15.08.2023 Начинается Пользовательский КОд
             buniccessLogicaActivityDashboard=new BuniccessLogicaActivityDashboard();
 
-            методПолучениеДанныхBinder();
-            // TODO: 04.10.2023 разрешения для всего
-            new ClassPermissions(this,ALL_PERSSION_CODE,CAMERA_PERSSION_CODE);
-
-
             eventBuss=new EventBuss(activity,getApplicationContext());
+
+            buniccessLogicaActivityDashboard.     МетодИнициализацияHandler();
+            buniccessLogicaActivityDashboard.     МетодБиндингаОбновлениеПО();
+
+            // TODO: 29.09.2023 Статус Повтороной Синхрониазции
+            методЗаписываемПовторныйЭтапСинхрогниазции( );
+
 
             // TODO: 28.09.2023
             Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
@@ -152,11 +155,6 @@ public class MainActivity_Dashboard extends AppCompatActivity {
             if (  !EventBus.getDefault().isRegistered(this)) {
                 EventBus.getDefault().register(this);
             }
-
-
-            buniccessLogicaActivityDashboard.     МетодИнициализацияHandler();
-            buniccessLogicaActivityDashboard.     МетодБиндингаОбновлениеПО();
-
 
 
 
@@ -307,33 +305,28 @@ public class MainActivity_Dashboard extends AppCompatActivity {
 
 
 
-    @SuppressLint("SuspiciousIndentation")
-    private void методПолучениеДанныхBinder() {
-        try{
-            Bundle bundleBinderUpdate=      getIntent().getExtras();
-            if (bundleBinderUpdate!=null) {
-                localBinderОбновлениеПО= ( ServiceUpdatePoОбновлениеПО.localBinderОбновлениеПО)  bundleBinderUpdate.getBinder("callbackbinderdashbord");
-                // TODO: 28.09.2023
-            }
-            Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
-                            " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                            " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"+ "localBinderОбновлениеПО " +localBinderОбновлениеПО  );
-                // TODO: 28.09.2023
-    } catch (Exception e) {
-        e.printStackTrace();
-        Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() + " Линия  :"
-                + Thread.currentThread().getStackTrace()[2].getLineNumber());
-        new Class_Generation_Errors(getApplicationContext()).МетодЗаписиВЖурналНовойОшибки(e.toString(), this.getClass().getName(), Thread.currentThread().getStackTrace()[2].getMethodName(),
-                Thread.currentThread().getStackTrace()[2].getLineNumber());
-        Log.d(this.getClass().getName(), "  Полусаем Ошибку e.toString() " + e.toString());
-    }
 
-    }
 
     private void metodSetListerBinder(    ) {
+        try{
         Bundle bundleBinderПрихолОтAsync=new Bundle();
         bundleBinderПрихолОтAsync.putBinder("callbackbinderdashbord", localBinderОбновлениеПО);
         fragmentManager.setFragmentResult("callbackbinderdashbord" , bundleBinderПрихолОтAsync);
+
+        Log.d(getApplicationContext().getClass().getName(), "\n"
+                + " время: " + new Date() + "\n+" +
+                " Класс в процессе... " + this.getClass().getName() + "\n" +
+                " метод в процессе... " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n"
+                + "localBinderОбновлениеПО " + localBinderОбновлениеПО);
+
+    } catch (Exception e) {
+        e.printStackTrace();
+        Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
+                " Линия  :" + Thread.currentThread().getStackTrace()[2].getLineNumber());
+        new Class_Generation_Errors(getApplicationContext()).МетодЗаписиВЖурналНовойОшибки(e.toString(),
+                this.getClass().getName(),
+                Thread.currentThread().getStackTrace()[2].getMethodName(), Thread.currentThread().getStackTrace()[2].getLineNumber());
+    }
     }
 
 
