@@ -50,10 +50,6 @@ public class CreatePublicWorkManager {
                     .addTag(ИмяСлужбыСинхронизации)
                     .setInputData(myDataДляОбщейСинхрониазации)
                     .setConstraints(constraintsСинхронизация)
-                    .setBackoffCriteria(
-                            BackoffPolicy.LINEAR,
-                            PeriodicWorkRequest.MIN_BACKOFF_MILLIS,
-                            TimeUnit.MILLISECONDS)
                     .build();
 
 
@@ -64,7 +60,7 @@ public class CreatePublicWorkManager {
                 // TODO: 14.08.2024
                 switch ( workInfo.get(0).getState())   {
 
-                    case RUNNING,BLOCKED,ENQUEUED ,CANCELLED,SUCCEEDED,FAILED -> {
+                    case RUNNING,ENQUEUED ,SUCCEEDED,FAILED -> {
                         // TODO: 26.07.2024
                         Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                                 " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
