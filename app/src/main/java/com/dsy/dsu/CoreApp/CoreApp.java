@@ -7,6 +7,7 @@ import android.util.Log;
 
 
 import com.dsy.dsu.Errors.Class_Generation_Errors;
+import com.sous.backasync.GetModuleBufferGrud;
 
 import javax.inject.Inject;
 
@@ -18,6 +19,10 @@ public class CoreApp extends Application {
 
     @Inject
   public   SQLiteDatabase getSqlLiteCoreApp;
+
+
+    @Inject
+    public GetModuleBufferGrud getModuleBufferGrud;
 
 
     @Override
@@ -35,6 +40,9 @@ public class CoreApp extends Application {
 // Reference to the application graph that is used across the whole app
 
      // Cursor c= sqlite.rawQuery("select * from fio",null);
+
+// TODO: 13.01.2025  Запускаем  
+            getModuleBufferGrud.getModuleBufferGrud();
         // TODO: 17.04.2023
         Log.d(this.getClass().getName(),"\n" + " class FaceAPp " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                 " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
