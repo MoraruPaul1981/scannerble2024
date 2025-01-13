@@ -12,7 +12,6 @@
             <option value="$PROJECT_DIR$/app" />
             <option value="$PROJECT_DIR$/back" />
             <option value="$PROJECT_DIR$/backasync" />
-            <option value="$PROJECT_DIR$/backgrud" />
           </set>
         </option>
         <option name="resolveExternalAnnotations" value="false" />

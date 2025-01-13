@@ -17,7 +17,7 @@ import dagger.hilt.android.HiltAndroidApp;
 public class CoreApp extends Application {
 
     @Inject
-  public   SQLiteDatabase sqlite;
+  public   SQLiteDatabase getSqlLiteCoreApp;
 
 
     @Override
@@ -27,7 +27,7 @@ public class CoreApp extends Application {
 
           ///  getBinderAsync = EntryPoints.get(getApplicationContext(), HiltInterfaceBinderAsync.class).metodBinderAsync();
             // TODO: 02.09.2023  CREATE get SQLITE
-          //  new GetSqlite().методGetSqlite(getApplicationContext());
+        //    SQLiteDatabase getSQLites =   new GetSqlite().методGetSqlite(getApplicationContext());
 
                         // TODO: 29.08.2023  CREATE ROOM
       /// new CreateROOM(getApplicationContext()).метоInizROOM();
@@ -39,7 +39,7 @@ public class CoreApp extends Application {
         Log.d(this.getClass().getName(),"\n" + " class FaceAPp " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                 " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
                 " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"+
-                " sqlite " +sqlite);
+                " sqlite " + getSqlLiteCoreApp);
     } catch (Exception e) {
         e.printStackTrace();
         Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" +

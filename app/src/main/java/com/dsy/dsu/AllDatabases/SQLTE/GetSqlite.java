@@ -12,9 +12,11 @@ import com.dsy.dsu.Errors.Class_Generation_Errors;
 
 public class GetSqlite {
     private Context context;
-    public void методGetSqlite(@NonNull Context context) {
+    public SQLiteDatabase методGetSqlite(@NonNull Context context) {
+        // TODO: 13.01.2025
+        SQLiteDatabase getSQLites = null;
         try{
-            SQLiteDatabase getSQLites=       new GetSQLiteDatabase(context).методinitDatbase(context);
+              getSQLites=       new GetSQLiteDatabase(context).методinitDatbase(context);
                         // TODO: 17.04.2023
                         Log.d(this.getClass().getName(),"\n" + " class FaceAPp "
                                 + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
@@ -30,6 +32,7 @@ public class GetSqlite {
                     this.getClass().getName(), Thread.currentThread().getStackTrace()[2].getMethodName(),
                     Thread.currentThread().getStackTrace()[2].getLineNumber());
         }
+        return  getSQLites;
 
     }
 
