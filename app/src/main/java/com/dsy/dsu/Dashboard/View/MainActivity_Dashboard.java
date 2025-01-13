@@ -27,7 +27,6 @@ import androidx.fragment.app.FragmentResultListener;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.LifecycleOwner;
 
-import com.dsy.dsu.BootAndAsync.Componets.BL_innerMainActivityBootAndAsync;
 import com.dsy.dsu.BootAndAsync.EventsBus.MessageEvensBusAyns;
 import com.dsy.dsu.BootAndAsync.EventsBus.MessageEvensBusUpdatePO;
 import com.dsy.dsu.BroadcastRecievers.Bl.RegisterBroadcastForWorkManager;
@@ -35,7 +34,7 @@ import com.dsy.dsu.BusinessLogicAll.Permissions.ClassPermissions;
 import com.dsy.dsu.Dashboard.View.Fragments.DashboardFragmentSettings;
 import com.dsy.dsu.Errors.Class_Generation_Errors;
 import com.dsy.dsu.EventBus.EventBuss;
-import com.dsy.dsu.FirebaseAndOneSignal.OneSignal.StartigOneSignal.ServiceRegistraziyOneSIgnalAndFireBase;
+import com.dsy.dsu.FirebaseAndOneSignal.OneSignal.StartigOneSignal.GetStartingRegistraziyOneSIgnalAndFireBase;
 import com.dsy.dsu.Services.ServiceUpdatePoОбновлениеПО;
 import com.dsy.dsu.Dashboard.View.Fragments.DashboardFragmentMaterialDesign;
 import com.dsy.dsu.R;
@@ -64,7 +63,7 @@ public class MainActivity_Dashboard extends AppCompatActivity {
     RegisterBroadcastForWorkManager registerBroadcastForWorkManager;
 
     @Inject
-    ServiceRegistraziyOneSIgnalAndFireBase sIgnalAndFireBase;
+    GetStartingRegistraziyOneSIgnalAndFireBase getStartingRegistraziyOneSIgnalAndFireBase;
 
     private   Activity activity;
     private ScrollView scrollview_dashboard;
@@ -634,7 +633,7 @@ try{
         private void strartigOneSignal() {
             try{
 
-                sIgnalAndFireBase.getStartingRegistraziyOneSignalFirebase();
+                getStartingRegistraziyOneSIgnalAndFireBase.getStartingRegistraziyOneSignalFirebase();
 
                 // TODO: 25.03.2023
                 Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
