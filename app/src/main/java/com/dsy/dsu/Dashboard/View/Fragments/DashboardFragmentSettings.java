@@ -41,7 +41,7 @@ import com.dsy.dsu.BootAndAsync.Componets.BL_innerMainActivityBootAndAsync;
 import com.dsy.dsu.BootAndAsync.EventsBus.MessageEvensBusUpdatePO;
 import com.dsy.dsu.BusinessLogicAll.Class_Clears_Tables;
 import com.dsy.dsu.BusinessLogicAll.Class_Connections_Server;
-import com.dsy.dsu.BusinessLogicAll.Class_Find_Setting_User_Network;
+import com.dsy.dsu.BusinessLogicAll.GetConnectivityManagerAndroid;
 import com.dsy.dsu.Errors.Class_Generation_Errors;
 
 import com.dsy.dsu.BusinessLogicAll.Class_MODEL_synchronized;
@@ -58,7 +58,6 @@ import com.google.android.material.card.MaterialCardView;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.jakewharton.rxbinding4.view.RxView;
 
-import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
@@ -754,8 +753,16 @@ try{
                     Completable.complete().blockingSubscribe(new CompletableObserver() {
                         @Override
                         public void onSubscribe(@io.reactivex.rxjava3.annotations.NonNull Disposable d) {
-                            Boolean     СтатусСетиВыбранныйПользователем  =
-                                    new Class_Find_Setting_User_Network(getContext()).МетодПроветяетКакуюУстановкуВыбралПользовательСети();
+                            // TODO: 13.01.2025
+
+                            // TODO: 22.12.2022  сама запуска синхронищации из workmanager ОБЩЕГО
+                            boolean ВыбранныйРежимСети =
+                                    new GetConnectivityManagerAndroid(getContext()).сonnectivityManageruserselection();
+
+                            Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                                    " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                                    " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"
+                                    + " lВыбранныйРежимСети" + ВыбранныйРежимСети);
 
                             // TODO: 26.06.2022
                             Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
@@ -765,9 +772,16 @@ try{
                             Class_Connections_Server class_connections_serverПингаСерераИзАктивтиМеню = new Class_Connections_Server(getActivity());
 
 
-                            if (СтатусСетиВыбранныйПользователем == true) {
+                            if (ВыбранныйРежимСети == true) {
+                                // TODO: 16.12.2021 НЕПОСРЕДСТВЕННЫЙ ПИНГ СИСТЕНМ ИНТРЕНАТ НА НАЛИЧЕНИ СВАЗИ С БАЗОЙ SQL SERVER
                                 СтатусСервераСоюзаВключенИлиНЕт[0] =
-                                        class_connections_serverПингаСерераИзАктивтиМеню.МетодПингаСервераРаботаетИлиНет(getContext(),getsslSocketFactory2,   getHiltPortJboss);
+                                        new Class_Connections_Server(getContext()). pingServerJbossSuccessfulOrNot(getContext(),getsslSocketFactory2,getHiltPortJboss);
+
+                                Log.d(this.getClass().getName(), "\n"
+                                        + " время: " + new Date() + "\n+" +
+                                        " Класс в процессе... " + this.getClass().getName() + "\n" +
+                                        " метод в процессе... " + Thread.currentThread().getStackTrace()[2].getMethodName() +
+                                        "   СтатусСервераСоюзаВключенИлиНЕт[0] " + СтатусСервераСоюзаВключенИлиНЕт[0]);
                                 // TODO: 26.06.2022
                                 Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                                         " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
@@ -862,10 +876,11 @@ try{
                         @Override
                         public void onClick(View v) {
                             try {
-                                Boolean ЕслиСвязьсСервером =
-                                        new Class_Connections_Server(getContext()).МетодПингаСервераРаботаетИлиНет(getContext(),getsslSocketFactory2,   getHiltPortJboss);
+                                // TODO: 16.12.2021 НЕПОСРЕДСТВЕННЫЙ ПИНГ СИСТЕНМ ИНТРЕНАТ НА НАЛИЧЕНИ СВАЗИ С БАЗОЙ SQL SERVER
+                             Boolean   СтатусРаботыСервера =
+                                        new Class_Connections_Server(getContext()). pingServerJbossSuccessfulOrNot(getContext(),getsslSocketFactory2,getHiltPortJboss);
 
-                                if (ЕслиСвязьсСервером == true) {
+                                if (СтатусРаботыСервера == true) {
                                     String ПолученыйТекущееИмяПользователя = new Class_MODEL_synchronized(getContext())
                                             .МетодПолучениеИмяСистемыДляСменыПользователя(getActivity());
 

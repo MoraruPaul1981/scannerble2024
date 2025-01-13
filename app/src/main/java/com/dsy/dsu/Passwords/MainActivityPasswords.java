@@ -36,10 +36,11 @@ import com.dsy.dsu.BootAndAsync.EventsBus.MessageEvensBusUpdatePO;
 import com.dsy.dsu.BootAndAsync.Window.MainActivityBootAndAsync;
 import com.dsy.dsu.BusinessLogicAll.Class_Clears_Tables;
 import com.dsy.dsu.BusinessLogicAll.Class_Connections_Server;
-import com.dsy.dsu.BusinessLogicAll.Class_Find_Setting_User_Network;
+
 import com.dsy.dsu.BusinessLogicAll.CreateFolderBinatySave.ClassCreateFolderCommitPays1C;
 import com.dsy.dsu.BusinessLogicAll.CreateFolderBinatySave.ClassDeleteErrorFile;
 import com.dsy.dsu.BusinessLogicAll.Errors.ClassCreateFileForError;
+import com.dsy.dsu.BusinessLogicAll.GetConnectivityManagerAndroid;
 import com.dsy.dsu.Errors.Class_Generation_Errors;
 import com.dsy.dsu.BusinessLogicAll.Class_MODEL_synchronized;
 import com.dsy.dsu.BusinessLogicAll.CreateFolderBinatySave.ClassCreateFolderBinatyMatrilal;
@@ -53,8 +54,6 @@ import com.dsy.dsu.Settings.Model.bl_SettingsActivity.GetSettingTableSaves;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.textfield.TextInputEditText;
 import com.jakewharton.rxbinding4.view.RxView;
-import com.sous.back.GetModuleBack;
-import com.sous.backasync.GetModuleBackAsync;
 
 
 import org.greenrobot.eventbus.EventBus;
@@ -672,20 +671,30 @@ public class MainActivityPasswords extends AppCompatActivity {
 
             // TODO: 29.09.2023 пароль и логин
             if (ПубличноеЛогин.length() > 3 && ПубличноеПароль.length() > 3) {
-                boolean ПроверкаНАстройкиСети =
-                        new Class_Find_Setting_User_Network(getApplicationContext()).МетодПроветяетКакуюУстановкуВыбралПользовательСети();
-                if (ПроверкаНАстройкиСети == true) {
-                    Boolean РеальныйПингСервера =
-                            new Class_Connections_Server(getApplicationContext()).МетодПингаСервераРаботаетИлиНет(getApplicationContext(),
-                                    getsslSocketFactory2,   getHiltPortJboss);
+                // TODO: 22.12.2022  сама запуска синхронищации из workmanager ОБЩЕГО
+                boolean ВыбранныйРежимСети =
+                        new GetConnectivityManagerAndroid(getApplicationContext()).сonnectivityManageruserselection();
+
+                Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                        " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                        " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"
+                        + " lВыбранныйРежимСети" + ВыбранныйРежимСети);
+
+
+
+                if (ВыбранныйРежимСети == true) {
+                    // TODO: 16.12.2021 НЕПОСРЕДСТВЕННЫЙ ПИНГ СИСТЕНМ ИНТРЕНАТ НА НАЛИЧЕНИ СВАЗИ С БАЗОЙ SQL SERVER
+                    Boolean   СтатусРаботыСервера =
+                            new Class_Connections_Server(getApplicationContext()). pingServerJbossSuccessfulOrNot(getApplicationContext(),getsslSocketFactory2,getHiltPortJboss);
+
                     // TODO: 07.10.2023 пинг сервера
-                    if (РеальныйПингСервера == true) {
+                    if (СтатусРаботыСервера == true) {
                             // TODO: 15.09.2023 ОБРАБОТКА ПАРОЛИ
                             методGetПарольОбработка(КнопкаВходавСистему);
                             Log.d(this.getClass().getName(), " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
                                     " Линия  :" + Thread.currentThread().getStackTrace()[2].getLineNumber()+
                                     " Класс  :" + Thread.currentThread().getStackTrace()[2].getClassName() +
-                                    "  РеальныйПингСервера " +РеальныйПингСервера + " ФлагЕслиРАзрешенияКамераИлиНет " +ФлагЕслиРАзрешенияКамераИлиНет);
+                                    "  СтатусРаботыСервера " +СтатусРаботыСервера + " ФлагЕслиРАзрешенияКамераИлиНет " +ФлагЕслиРАзрешенияКамераИлиНет);
 
                         // TODO: 15.09.2023 end password
                     } else {

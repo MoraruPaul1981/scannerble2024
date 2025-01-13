@@ -8,32 +8,21 @@ import android.content.ServiceConnection;
 import android.content.SharedPreferences;
 import android.os.IBinder;
 import android.util.Log;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.work.Data;
-import androidx.work.ForegroundInfo;
 import androidx.work.WorkInfo;
-import androidx.work.WorkManager;
 import androidx.work.Worker;
 import androidx.work.WorkerParameters;
 
-import com.dsy.dsu.BootAndAsync.Service.IntentServiceBoot;
-import com.dsy.dsu.BusinessLogicAll.Class_Find_Setting_User_Network;
+import com.dsy.dsu.BusinessLogicAll.GetConnectivityManagerAndroid;
 import com.dsy.dsu.Errors.Class_Generation_Errors;
 import com.dsy.dsu.Services.Service_For_Remote_Async_Binary;
 
 import com.dsy.dsu.WorkManagers.BL_WorkMangers.FindRunnigServiceBeforeWorkManager;
 import com.dsy.dsu.WorkManagers.BL_WorkMangers.ListenableFutures;
-import com.dsy.dsu.WorkManagers.BL_WorkMangers.WorkInfoStates;
-import com.google.common.util.concurrent.ListenableFuture;
 
 import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.concurrent.CountDownLatch;
-import java.util.concurrent.Executor;
-import java.util.concurrent.Executors;
 
 public class MyWork_Async_Public extends Worker {
  /*   private String ИмяСлужбыWorkManger ="WorkManager Synchronizasiy_Data";*/
@@ -192,9 +181,12 @@ public class MyWork_Async_Public extends Worker {
         try {
             // TODO: 22.12.2022  сама запуска синхронищации из workmanager ОБЩЕГО
             boolean ВыбранныйРежимСети =
-                    new Class_Find_Setting_User_Network(getApplicationContext()).МетодПроветяетКакуюУстановкуВыбралПользовательСети();
-            Log.d(this.getClass().getName(), "  ВыбранныйРежимСети ВыбранныйРежимСети "
-                    + ВыбранныйРежимСети);
+                    new GetConnectivityManagerAndroid(getApplicationContext()).сonnectivityManageruserselection();
+
+            Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                    " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                    " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"
+                    + " lВыбранныйРежимСети" + ВыбранныйРежимСети);
 
 
           Boolean isMyActivityRunning=  new FindRunnigServiceBeforeWorkManager(getApplicationContext()).isSharedPreferencesRunning(preferencesJboss);

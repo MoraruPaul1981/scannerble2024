@@ -3,36 +3,19 @@ package com.dsy.dsu.BusinessLogicAll;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.util.Log;
-import android.widget.ImageView;
 
 import androidx.annotation.NonNull;
 import androidx.loader.content.AsyncTaskLoader;
 
-import com.dsy.dsu.CnangeServers.PUBLIC_CONTENT;
 import com.dsy.dsu.Errors.Class_Generation_Errors;
 
 import org.jetbrains.annotations.NotNull;
 
-import java.security.InvalidKeyException;
-import java.security.NoSuchAlgorithmException;
 import java.util.Date;
 import java.util.LinkedHashMap;
 import java.util.Map;
-import java.util.concurrent.ExecutionException;
-import java.util.concurrent.TimeUnit;
-import java.util.concurrent.TimeoutException;
-import java.util.stream.Collectors;
 
-import javax.crypto.NoSuchPaddingException;
 import javax.net.ssl.SSLSocketFactory;
-
-import io.reactivex.rxjava3.core.Flowable;
-import io.reactivex.rxjava3.core.Observable;
-import io.reactivex.rxjava3.functions.Action;
-import io.reactivex.rxjava3.functions.Consumer;
-import io.reactivex.rxjava3.functions.Predicate;
-import io.reactivex.rxjava3.internal.observers.BlockingBaseObserver;
-import io.reactivex.rxjava3.internal.observers.ForEachWhileObserver;
 
 
 public class Class_Connections_Server  extends  Class_GRUD_SQL_Operations {
@@ -48,32 +31,7 @@ public class Class_Connections_Server  extends  Class_GRUD_SQL_Operations {
         preferences =context.getSharedPreferences("sharedPreferencesХранилище", Context.MODE_MULTI_PROCESS);
     }
     ///////// TODO ПРОВЕРЯЕТ ЕСЛИ ПОДКЛЧБЕНИ В ИНТРЕНТУ
-    public Boolean МетодПингаСервераРаботаетИлиНет(         @NotNull Context КонтекстКоторыйДляСинхронизации,
-                                                   @NotNull SSLSocketFactory getsslSocketFactory2,
-                                                            @NonNull LinkedHashMap<Integer,String> getHiltPortJboss) {
-        Boolean РезультатПингакСервераРаботаетЛиОНРеально=false;
-                            try{
-                                РезультатПингакСервераРаботаетЛиОНРеально=
-                                        МетодПингаСервераРаботаетИлиНетВнутри(КонтекстКоторыйДляСинхронизации,getsslSocketFactory2,
-                                                getHiltPortJboss);
 
-                                Log.d(this.getClass().getName(), "\n"
-                                        + " время: " + new Date() + "\n+" +
-                                        " Класс в процессе... " + this.getClass().getName() + "\n" +
-                                        " метод в процессе... " + Thread.currentThread().getStackTrace()[2].getMethodName() +
-                                        "  РезультатПингакСервераРаботаетЛиОНРеально " +РезультатПингакСервераРаботаетЛиОНРеально);
-                        } catch (Exception e) {
-                            e.printStackTrace();
-                            if (! e.toString().equalsIgnoreCase("java.util.concurrent.TimeoutException: The source did not signal an event for 5 seconds and has been terminated.")) {
-                                Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
-                                        " Линия  :" + Thread.currentThread().getStackTrace()[2].getLineNumber());
-                                new Class_Generation_Errors(КонтекстКоторыйДляСинхронизации).МетодЗаписиВЖурналНовойОшибки(e.toString(),
-                                        this.getClass().getName(), Thread.currentThread().getStackTrace()[2].getMethodName(),
-                                        Thread.currentThread().getStackTrace()[2].getLineNumber());
-                            }
-                        }
-                            return РезультатПингакСервераРаботаетЛиОНРеально;
-                        }
 
 
 
@@ -84,11 +42,9 @@ public class Class_Connections_Server  extends  Class_GRUD_SQL_Operations {
 
 
     ///////// TODO ПРОВЕРЯЕТ ЕСЛИ ПОДКЛЧБЕНИ В ИНТРЕНТУ
-    private Boolean МетодПингаСервераРаботаетИлиНетВнутри(@NotNull Context КонтекстКоторыйДляСинхронизации,
-                                                          @NotNull SSLSocketFactory getsslSocketFactory2,
-                                                          @NonNull LinkedHashMap<Integer,String> getHiltPortJboss )
-            throws ExecutionException, InterruptedException,
-            TimeoutException, NoSuchPaddingException, NoSuchAlgorithmException, InvalidKeyException {
+    public Boolean pingServerJbossSuccessfulOrNot(@NotNull Context КонтекстКоторыйДляСинхронизации,
+                                                  @NotNull SSLSocketFactory getsslSocketFactory2,
+                                                  @NonNull LinkedHashMap<Integer, String> getHiltPortJboss) {
          Boolean результатПрозвонаСокетом = false;
         try {
             // TODO: 02.04.2024  цикл пинг  
@@ -102,11 +58,28 @@ public class Class_Connections_Server  extends  Class_GRUD_SQL_Operations {
 
 
 // TODO: 12.01.2024  производим пинг через 3 попытки
+                // TODO: 22.12.2022  сама запуска синхронищации из workmanager ОБЩЕГО
+                // TODO: 22.12.2022  сама запуска синхронищации из workmanager ОБЩЕГО
+                boolean ВыбранныйРежимСети =
+                        new GetConnectivityManagerAndroid(context).сonnectivityManageruserselection();
+
+                Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                        " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                        " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"
+                        + " lВыбранныйРежимСети" + ВыбранныйРежимСети);
+
+                Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                        " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                        " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"
+                        + " lВыбранныйРежимСети" + ВыбранныйРежимСети);
 
 
+                Long  БуферПолучениеДанныхРЕальныйСтатусРАботыSQLServer= 0l;
 
-              Long  БуферПолучениеДанныхРЕальныйСтатусРАботыSQLServer=    pingS3Popitkami(КонтекстКоторыйДляСинхронизации, getsslSocketFactory2, ИмяПорта, ИмяСервера);
-
+                if (ВыбранныйРежимСети==true) {
+                    // TODO: 13.01.2025  
+                    БуферПолучениеДанныхРЕальныйСтатусРАботыSQLServer = pingingJbossServer(КонтекстКоторыйДляСинхронизации, getsslSocketFactory2, ИмяПорта, ИмяСервера);
+                }
 
 
                 Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
@@ -157,9 +130,9 @@ public class Class_Connections_Server  extends  Class_GRUD_SQL_Operations {
 
 
     // TODO: 12.01.2024 метод пинга с тремя попытками
-    private Long pingS3Popitkami(@androidx.annotation.NonNull Context КонтекстКоторыйДляСинхронизации,
-                                 @androidx.annotation.NonNull SSLSocketFactory getsslSocketFactory2,
-                                 Integer ИмяПорта, String ИмяСервера) {
+    private Long pingingJbossServer(@androidx.annotation.NonNull Context КонтекстКоторыйДляСинхронизации,
+                                    @androidx.annotation.NonNull SSLSocketFactory getsslSocketFactory2,
+                                    Integer ИмяПорта, String ИмяСервера) {
         // TODO: 12.01.2024
       Long  БуферПолучениеДанныхРЕальныйСтатусРАботыSQLServer =0l ;
         try{

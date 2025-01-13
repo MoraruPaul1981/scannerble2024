@@ -20,10 +20,10 @@ import com.dsy.dsu.BootAndAsync.EventsBus.MessageEvensBusPrograssBar;
 import com.dsy.dsu.BootAndAsync.EventsBus.MessageEvensBusUpdatePO;
 import com.dsy.dsu.BroadcastRecievers.Bl.RegisterBroadcastForWorkManager;
 import com.dsy.dsu.BusinessLogicAll.Class_Connections_Server;
-import com.dsy.dsu.BusinessLogicAll.Class_Find_Setting_User_Network;
 import com.dsy.dsu.BusinessLogicAll.CreateFolderBinatySave.ClassCreateFolderBinatyMatrilal;
 import com.dsy.dsu.BusinessLogicAll.CreateFolderBinatySave.ClassCreateFolderCommitPays1C;
 import com.dsy.dsu.BusinessLogicAll.Errors.ClassCreateFileForError;
+import com.dsy.dsu.BusinessLogicAll.GetConnectivityManagerAndroid;
 import com.dsy.dsu.Dashboard.Model.endingasynsdashboard.GetEndingAsyn;
 import com.dsy.dsu.Errors.Class_Generation_Errors;
 import com.dsy.dsu.Services.ServiceUpdatePoОбновлениеПО;
@@ -661,7 +661,15 @@ public class CompleteRemoteSyncService {
         void startingJbossAsyncComplete( ){
             try{
                 // TODO: 03.10.2023
-                Boolean ВыбранныйРежимСети = new Class_Find_Setting_User_Network(context).МетодПроветяетКакуюУстановкуВыбралПользовательСети();
+                // TODO: 22.12.2022  сама запуска синхронищации из workmanager ОБЩЕГО
+                boolean ВыбранныйРежимСети =
+                        new GetConnectivityManagerAndroid(context).сonnectivityManageruserselection();
+
+                Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                        " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                        " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"
+                        + " lВыбранныйРежимСети" + ВыбранныйРежимСети);
+
 
                 Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                         " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
@@ -937,7 +945,7 @@ public class CompleteRemoteSyncService {
         try {
             // TODO: 16.12.2021 НЕПОСРЕДСТВЕННЫЙ ПИНГ СИСТЕНМ ИНТРЕНАТ НА НАЛИЧЕНИ СВАЗИ С БАЗОЙ SQL SERVER
             СтатусРаботыСервера =
-                    new Class_Connections_Server(context). МетодПингаСервераРаботаетИлиНет(context,getsslSocketFactory2,getHiltPortJboss);
+                    new Class_Connections_Server(context). pingServerJbossSuccessfulOrNot(context,getsslSocketFactory2,getHiltPortJboss);
 
    Log.d(this.getClass().getName(), "\n"
                     + " время: " + new Date() + "\n+" +

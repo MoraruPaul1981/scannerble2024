@@ -5,8 +5,6 @@ import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.ServiceConnection;
-import android.net.Uri;
-import android.os.Bundle;
 import android.os.IBinder;
 import android.util.Log;
 
@@ -16,35 +14,18 @@ import androidx.work.WorkInfo;
 import androidx.work.WorkManager;
 import androidx.work.Worker;
 import androidx.work.WorkerParameters;
-import androidx.work.impl.utils.taskexecutor.TaskExecutor;
 
-import com.dsy.dsu.BootAndAsync.EventsBus.MessageEvensBusEndAync;
-import com.dsy.dsu.BusinessLogicAll.Class_Find_Setting_User_Network;
-import com.dsy.dsu.Dashboard.Model.endingasynsdashboard.GetEndingAsyn;
+import com.dsy.dsu.BusinessLogicAll.GetConnectivityManagerAndroid;
 import com.dsy.dsu.Errors.Class_Generation_Errors;
 import com.dsy.dsu.Services.ServiceUpdatePoОбновлениеПО;
 import com.dsy.dsu.Services.Service_For_Remote_Async_Binary;
 import com.dsy.dsu.WorkManagers.BL_WorkMangers.ListenableFutures;
 
 
-import org.greenrobot.eventbus.EventBus;
-
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.concurrent.Executor;
-import java.util.concurrent.Executors;
-import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicReference;
-
-import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
-import io.reactivex.rxjava3.core.BackpressureStrategy;
-import io.reactivex.rxjava3.core.Observable;
-import io.reactivex.rxjava3.functions.Action;
-import io.reactivex.rxjava3.functions.Consumer;
-import io.reactivex.rxjava3.functions.Predicate;
-import io.reactivex.rxjava3.schedulers.Schedulers;
-import io.reactivex.rxjava3.schedulers.Timed;
 
 @SuppressLint("RestrictedApi")
 public class MyWork_AsyncSingle extends Worker {
@@ -360,9 +341,14 @@ public class MyWork_AsyncSingle extends Worker {
         private Long МетодЗапускаОднаразовая() {
             Long ФинальныйРезультатAsyncBackgroud=0l;
             try{
-                boolean ВыбранныйРежимСети = new Class_Find_Setting_User_Network(getApplicationContext()).МетодПроветяетКакуюУстановкуВыбралПользовательСети();
-                Log.d(this.getClass().getName(), "  ВыбранныйРежимСети ВыбранныйРежимСети "
-                        + ВыбранныйРежимСети);
+                // TODO: 22.12.2022  сама запуска синхронищации из workmanager ОБЩЕГО
+                boolean ВыбранныйРежимСети =
+                        new GetConnectivityManagerAndroid(getApplicationContext()).сonnectivityManageruserselection();
+
+                Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                        " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                        " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"
+                        + " lВыбранныйРежимСети" + ВыбранныйРежимСети);
 
                 if (ВыбранныйРежимСети == true && localBinderAsyncSingleWorkManager !=null ) {
 
