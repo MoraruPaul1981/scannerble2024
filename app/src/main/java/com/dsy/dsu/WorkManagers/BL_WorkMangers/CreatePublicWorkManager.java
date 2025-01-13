@@ -64,7 +64,8 @@ public class CreatePublicWorkManager {
                         // TODO: 26.07.2024
                         Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                                 " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                                " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"+ " workInfo.size() " +workInfo.size());
+                                " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"+ " workInfo.size() " +workInfo.size()
+                                + "\n" + " workInfo.get(0).getState() " +workInfo.get(0).getState());
                     }
 
                     default -> {
@@ -74,7 +75,8 @@ public class CreatePublicWorkManager {
                         // TODO: 26.07.2024
                         Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                                 " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                                " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"+ "workInfo.size() " +workInfo.size());
+                                " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"+ "workInfo.size() " +workInfo.size()
+                                + "\n" + " workInfo.get(0).getState() " +workInfo.get(0).getState());
                     }
                 }
 
@@ -87,20 +89,16 @@ public class CreatePublicWorkManager {
                 // TODO: 26.07.2024
                 Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                         " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                        " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n");
+                        " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"
+                        + "\n" + " workInfo.get(0).getState() " +workInfo.get(0).getState());
             }
-
-
-
-
-
-
 
                 Log.d(context.getClass().getName(), "\n"
                         + " время: " + new Date()+"\n+" +
                         " Класс в процессе... " +  this.getClass().getName()+"\n"+
                         " метод в процессе... " + Thread.currentThread().getStackTrace()[2].getMethodName()+
-                        " PublicId " +PublicId+ " callbackRunnable ");
+                        " PublicId " +PublicId+ " callbackRunnable "
+                        + "\n" + " workInfo.get(0).getState() " +workInfo.get(0).getState());
 
         } catch (Exception e) {
             e.printStackTrace();
