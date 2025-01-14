@@ -190,7 +190,7 @@ public class MyWork_Async_Public extends Worker {
 
 
           //Boolean isMyActivityRunning=  new FindRunnigServiceBeforeWorkManager(getApplicationContext()).isGetMyActivityRunning( );
-          Boolean isMyActivityRunning=  new FindRunnigServiceBeforeWorkManager(getApplicationContext()).isMyServiceRunningWithNameActivity( );
+          Boolean isMyActivityRunning=  new FindRunnigServiceBeforeWorkManager(getApplicationContext()).isGetMyActivityRunning( );
 
 
             if (ВыбранныйРежимСети == true && localBinderAsyncWorkmanager!=null  && isMyActivityRunning==false) {
