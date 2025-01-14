@@ -53,7 +53,7 @@ public class FindRunnigServiceBeforeWorkManager {
         if (tasks!=null) {
             String currentPackageName = tasks.get(0).topActivity.getPackageName();
 
-            if(tasks.get(0).isRunning==false){
+            if(tasks.get(0).isRunning==true){
 
                 isMyActivityRunning=true;
 
@@ -75,7 +75,7 @@ public class FindRunnigServiceBeforeWorkManager {
                 Thread.currentThread().getStackTrace()[2].getMethodName(),
                 Thread.currentThread().getStackTrace()[2].getLineNumber());
     }
-        return false;
+        return isMyActivityRunning;
     }
 
 }
