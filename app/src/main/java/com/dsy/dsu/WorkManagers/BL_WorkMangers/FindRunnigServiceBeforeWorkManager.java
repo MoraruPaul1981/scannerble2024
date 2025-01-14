@@ -19,10 +19,16 @@ public class FindRunnigServiceBeforeWorkManager {
         this.context = context;
     }
 
-    public boolean isMyServiceRunning(String serviceClassFindService) {
+    public boolean isMyServiceRunningWithNameActivity( ) {
+        // TODO: 14.01.2025
+        Boolean isMyActivityRunning=false;
+        try{
         ActivityManager manager = (ActivityManager) context.getSystemService(Context.ACTIVITY_SERVICE);
         for (ActivityManager.RunningServiceInfo service : manager.getRunningServices(Integer.MAX_VALUE)) {
-            if (service.service.getClassName().equalsIgnoreCase(serviceClassFindService.trim())) {
+
+
+
+            if (service.service.getClassName().equalsIgnoreCase("MainActivityBootAndAsync")) {
                 // TODO: 10.10.2024
 
                 Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
@@ -37,7 +43,20 @@ public class FindRunnigServiceBeforeWorkManager {
                     " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"
                     + "service.service.getClassName()" + service.service.getClassName());
         }
-        return false;
+        Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n");
+
+    } catch (Exception e) {
+        e.printStackTrace();
+        Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
+                " Линия  :" + Thread.currentThread().getStackTrace()[2].getLineNumber());
+        new Class_Generation_Errors(context).МетодЗаписиВЖурналНовойОшибки(e.toString(), this.getClass().getName(),
+                Thread.currentThread().getStackTrace()[2].getMethodName(),
+                Thread.currentThread().getStackTrace()[2].getLineNumber());
+    }
+        return isMyActivityRunning;
+
     }
     @SuppressLint("SuspiciousIndentation")
     public boolean isGetMyActivityRunning() {
@@ -53,7 +72,7 @@ public class FindRunnigServiceBeforeWorkManager {
         if (tasks!=null) {
             String currentPackageName = tasks.get(0).topActivity.getPackageName();
 
-            if(tasks.get(0).isRunning==true){
+            if(tasks.get(0).isRunning){
 
                 isMyActivityRunning=true;
 
