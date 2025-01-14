@@ -84,7 +84,7 @@ public class MyWork_Async_Public extends Worker {
                     + "\n" +
                     " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
                     " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"
-                    + " ФинальныйРезультатAsyncBackgroudPublic " +ФинальныйРезультатAsyncBackgroudPublic+
+                    + " ФинальныйРезультатAsyncBackgroudPublic " +ФинальныйРезультатAsyncBackgroudPublic+"\n"+
                      " stateSingle " +stateSingle +"\n"+
                     " stateWorkPublic " +stateWorkPublic);
 
