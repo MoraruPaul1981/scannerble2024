@@ -45,7 +45,9 @@ public class CoreApp extends Application {
             getModuleBufferGrud.getModuleBufferGrud();
 
             // TODO: 13.01.2025  Запускаем
-            getModuleBufferGrud.getModuleBufferGrud(getSqlLiteCoreApp);
+            getModuleBufferGrud.getModuleBufferGrud(getApplicationContext(), getSqlLiteCoreApp);
+
+
         // TODO: 17.04.2023
         Log.d(this.getClass().getName(),"\n" + " class FaceAPp " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                 " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +

@@ -50,14 +50,14 @@ public class GetModuleBufferGrud {
 
 
 
-    public   void  getModuleBufferGrud(@NonNull    SQLiteDatabase getSqlLiteCoreApp ){
+    public   void  getModuleBufferGrud(@NonNull  Context context ,@NonNull    SQLiteDatabase getSqlLiteCoreApp ){
         try {
             // TODO: 13.01.2025
             // TODO: 17.04.2023
             Log.d(this.getClass().getName(),"\n" + " class FaceAPp " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                     " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
                     " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"+
-                    " getSqlLiteCoreApp " + getSqlLiteCoreApp);
+                    " getSqlLiteCoreApp " + getSqlLiteCoreApp  + " context " +context);
         } catch (Exception e) {
             e.printStackTrace();
             Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" +

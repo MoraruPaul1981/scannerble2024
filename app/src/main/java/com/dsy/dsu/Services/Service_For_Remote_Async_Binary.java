@@ -203,8 +203,7 @@ try{
         try{
         super.onDestroy();
 
-            // TODO: 10.10.2024 записываем статус службы ка в работе
-            getSharedPreferenceSyncEditor(false);
+
 
         Log.d(getApplicationContext().getClass().getName(), "\n"
                 + " время: " + new Date() + "\n+" +
@@ -245,8 +244,7 @@ try{
         Long       ФинальныйРезультатAsyncBackgroud=0l;
         try{
 
-            // TODO: 10.10.2024 записываем статус службы ка в работе
-            getSharedPreferenceSyncEditor(true);
+
 
 
             // TODO: 25.03.2023 ДОПОЛНИТЕОТНЕ УДЛАНИЕ СТАТУСА УДАЛЕНИЕ ПОСЛЕ СИНХРОНИАЗЦИИ
@@ -288,20 +286,6 @@ try{
                     Thread.currentThread().getStackTrace()[2].getMethodName(), Thread.currentThread().getStackTrace()[2].getLineNumber());
         }
         return ФинальныйРезультатAsyncBackgroud;
-    }
-
-    private void getSharedPreferenceSyncEditor(@NonNull Boolean flagrunnigSericeback) {
-        SharedPreferences.Editor editor = preferencesJboss.edit();
-        editor.putBoolean("synsgrandisrunnig",flagrunnigSericeback);
-        // TODO: 10.10.2024
-        editor.apply();
-
-        Log.d(getApplicationContext().getClass().getName(), "\n"
-                + " время: " + new Date() + "\n+" +
-                " Класс в процессе... " + this.getClass().getName() + "\n" +
-                " метод в процессе... " + Thread.currentThread().getStackTrace()[2].getMethodName()
-                + " flagrunnigSericeback " +flagrunnigSericeback);
-
     }
 
 

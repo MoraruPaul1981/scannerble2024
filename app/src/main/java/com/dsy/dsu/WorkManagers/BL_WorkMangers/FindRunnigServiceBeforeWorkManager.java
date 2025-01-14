@@ -6,9 +6,9 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.util.Log;
 
-import java.util.List;
+import com.dsy.dsu.Errors.Class_Generation_Errors;
 
-import io.reactivex.rxjava3.schedulers.Schedulers;
+import java.util.List;
 
 public class FindRunnigServiceBeforeWorkManager {
 
@@ -40,36 +40,42 @@ public class FindRunnigServiceBeforeWorkManager {
         return false;
     }
     @SuppressLint("SuspiciousIndentation")
-    public boolean isMyActivityRunning(String serviceClassFindService) {
+    public boolean isGetMyActivityRunning() {
+        // TODO: 14.01.2025
+        Boolean isMyActivityRunning=false;
+        try{
         ActivityManager activityManager = (ActivityManager) context.getSystemService(Context.ACTIVITY_SERVICE);
-        List<ActivityManager.RunningTaskInfo> tasks = activityManager.getRunningTasks(Integer.MAX_VALUE);
+            List<ActivityManager.RunningTaskInfo> tasks = null;
+            if (activityManager!=null) {
+                tasks = activityManager.getRunningTasks(Integer.MAX_VALUE);
+            }
+            //Operator bellow should be replaced to match the package name
+        if (tasks!=null) {
+            String currentPackageName = tasks.get(0).topActivity.getPackageName();
 
-        for (ActivityManager.RunningTaskInfo task : tasks) {
+            if(tasks.get(0).isRunning==false){
 
-            if (context.getPackageName().equalsIgnoreCase(task.baseActivity.getPackageName()))
-                // TODO: 10.10.2024
+                isMyActivityRunning=true;
+
                 Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                         " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                        " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"
-                        + "serviceClassFindService" + serviceClassFindService);
+                        " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"+" isMyActivityRunning "+isMyActivityRunning);
 
-                return true;
+            }
         }
         Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                 " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"
-                + "serviceClassFindService" + serviceClassFindService);
+                " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n");
+
+    } catch (Exception e) {
+        e.printStackTrace();
+        Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
+                " Линия  :" + Thread.currentThread().getStackTrace()[2].getLineNumber());
+        new Class_Generation_Errors(context).МетодЗаписиВЖурналНовойОшибки(e.toString(), this.getClass().getName(),
+                Thread.currentThread().getStackTrace()[2].getMethodName(),
+                Thread.currentThread().getStackTrace()[2].getLineNumber());
+    }
         return false;
     }
 
-    @SuppressLint("SuspiciousIndentation")
-    public boolean isSharedPreferencesRunning( SharedPreferences preferencesJboss) {
-        // TODO: 10.10.2024  
-        Boolean synsGrandiSrunnig = preferencesJboss.getBoolean("synsgrandisrunnig",true );
-        Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
-                " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"
-                + "synsGrandiSrunnig" + synsGrandiSrunnig);
-        return synsGrandiSrunnig;
-    }
 }

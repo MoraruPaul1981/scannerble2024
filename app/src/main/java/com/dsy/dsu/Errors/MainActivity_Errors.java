@@ -1,11 +1,13 @@
 package com.dsy.dsu.Errors;
 
+import android.Manifest;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.ActivityInfo;
+import android.content.pm.PackageManager;
 import android.content.res.Resources;
 import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
@@ -25,6 +27,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
 import androidx.core.content.FileProvider;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
@@ -77,8 +80,6 @@ public class MainActivity_Errors extends AppCompatActivity  {
     public static final int CAMERA_PERSSION_CODE=1;
     public static final int ALL_PERSSION_CODE=1;
     private  BiccessLogicActivityError biccessLogicActivityError;
-
-  private   File fileNewPhotoFromCameraX;
 
   private Activity activity;
 
@@ -133,13 +134,33 @@ public class MainActivity_Errors extends AppCompatActivity  {
 
             getDataForMainErrors();
 
+// Storage Permissions
+             final int REQUEST_EXTERNAL_STORAGE = 1;
+           String[] PERMISSIONS_STORAGE = {
+                    Manifest.permission.READ_EXTERNAL_STORAGE,
+                    Manifest.permission.WRITE_EXTERNAL_STORAGE };
+            // Check if we have write permission
+            int permission = ActivityCompat.checkSelfPermission(activity, Manifest.permission.WRITE_EXTERNAL_STORAGE);
+
+            if (permission != PackageManager.PERMISSION_GRANTED) {
+                // We don't have permission so prompt the user
+                ActivityCompat.requestPermissions(
+                        activity,
+                        PERMISSIONS_STORAGE,
+                        REQUEST_EXTERNAL_STORAGE
+                );
+            }
+
+
             // TODO: 12.12.2023  staring biscce logic
             biccessLogicActivityError=new BiccessLogicActivityError();
 
             // TODO: 22.09.2023  exit error fragment
             biccessLogicActivityError.   методBackInError();
 
-            biccessLogicActivityError.    metodProssecingErrorsAll();
+            StringBuffer БуерДляОшибок =     biccessLogicActivityError. metodGetDataFotmFileErrorTxt();
+
+            biccessLogicActivityError.    metodProssecingErrorsAll(БуерДляОшибок);
             // TODO: 12.12.2023  Данные ОШибки
 
         // TODO: 17.04.2023
@@ -279,11 +300,11 @@ public class MainActivity_Errors extends AppCompatActivity  {
 
         private void методЧистимФайлсОшибкамиErrors() {
             try    {
-                fileNewPhotoFromCameraX = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS),
+                File getFileAllErrors = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS),
                         File.separator+patchFileName +File.separator+ fileName);
 
-                if (fileNewPhotoFromCameraX.exists()) {
-                    BufferedWriter bf = Files.newBufferedWriter(Paths.get(fileNewPhotoFromCameraX.getPath()),
+                if (getFileAllErrors.exists()) {
+                    BufferedWriter bf = Files.newBufferedWriter(Paths.get(getFileAllErrors.getPath()),
                             StandardOpenOption.TRUNCATE_EXISTING);
 
                     bf.flush();
@@ -334,55 +355,24 @@ public class MainActivity_Errors extends AppCompatActivity  {
 
         }
 
-        private void metodProssecingErrorsAll() {
+        private void metodProssecingErrorsAll(@NonNull   StringBuffer БуерДляОшибок) {
             try{
 
-                Message message=Message.obtain(new Handler() , new Runnable() {
-                    @Override
-                    public void run() {
-                        // TODO: 17.04.2023
-                        Log.d(this.getClass().getName(),"\n" + " class FaceAPp " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
-                                " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                                " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n");
-                    }
-                });
+                if (БуерДляОшибок.length()>0) {
 
+                    biccessLogicActivityError. metodSendErrorsToMail(БуерДляОшибок);
 
+                    biccessLogicActivityError. metodInfoPhone(БуерДляОшибок);
 
-                CompletableFuture
-                        .supplyAsync(()->biccessLogicActivityError.   metodGetDataFotmFileErrorTxt())
-                        .exceptionally(throwable ->biccessLogicActivityError.  ErrorHadler(throwable))
-                        .thenAcceptAsync(new Consumer<StringBuffer>() {
-                            @Override
-                            public void accept(StringBuffer stringBufferEror) {
+                    biccessLogicActivityError.    metodScreenErrorForUsers(БуерДляОшибок);
 
-                                message.getTarget().post(new Runnable() {
-                                    @Override
-                                    public void run() {
-                                        if (stringBufferEror.length()>0) {
+                    biccessLogicActivityError.    metodButtonEnables();
+                } else {
+                    biccessLogicActivityError.  metodInfoPhone(БуерДляОшибок);
+                    biccessLogicActivityError.    metodScreenDontErrorForUsers(БуерДляОшибок);
+                }
 
-                                            biccessLogicActivityError. metodSendErrorsToMail(stringBufferEror);
-
-                                            biccessLogicActivityError. metodInfoPhone(stringBufferEror);
-
-                                            biccessLogicActivityError.    metodScreenErrorForUsers(stringBufferEror);
-
-                                            biccessLogicActivityError.    metodButtonEnables();
-                                        } else {
-                                            biccessLogicActivityError.  metodInfoPhone(stringBufferEror);
-                                            biccessLogicActivityError.    metodScreenDontErrorForUsers(stringBufferEror);
-                                        }
-
-                                        biccessLogicActivityError.    metodReebotNameErros(stringBufferEror);
-                                    }
-                                });
-
-                            }
-                        }).exceptionally(throwable -> {
-                            biccessLogicActivityError.  ErrorHadler(throwable);
-                            return null;
-                        });
-
+                biccessLogicActivityError.    metodReebotNameErros(БуерДляОшибок);
 
 
                 Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
@@ -496,21 +486,27 @@ public class MainActivity_Errors extends AppCompatActivity  {
 
         protected StringBuffer metodGetDataFotmFileErrorTxt()   {
             StringBuffer БуерДляОшибок =new StringBuffer();
+            // TODO: 14.01.2025
+            java.io.File getFileAllErrors ;
             try{
 
-                // TODO: 11.12.2023  для android 11++
+
+
+      // TODO: 11.12.2023  для android 11++
                 String NameNewPhotosCamerax="Sous-Avtodor-ERROR"+".txt";
-                fileNewPhotoFromCameraX = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS)
+          File      fileNewPhotoFromCameraX = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS)
                         +File.separator+patchFileName + File.separator+NameNewPhotosCamerax);
 
                 File fileNewPhotoDirectory= new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS)
                         +File.separator+patchFileName  );
 
+                ///// getFileAllErrors = new java.io.File((activity.getFileStreamPath(fileName).getPath()));
+             ///String getNameNewErrorFile=  Environment.DIRECTORY_DOWNLOADS +"/"+patchFileName + "/"+NameNewErrorFile;
 
                 if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.R) {
                     // TODO: 27.09.2023  BUFFER
-                    if (fileNewPhotoDirectory.isDirectory() && fileNewPhotoFromCameraX.exists()) {
-                        Uri address = FileProvider.getUriForFile(getApplicationContext(), "com.dsy.dsu.provider", fileNewPhotoFromCameraX);
+                    if ( fileNewPhotoFromCameraX.getName()!=null) {
+                        Uri address = FileProvider.getUriForFile(getApplicationContext(), "com.dsy.dsu.provider",fileNewPhotoFromCameraX);
                         final InputStream imageStream = getApplicationContext().getContentResolver().openInputStream(address);
 
                         Log.d(this.getClass().getName(),  " date " +new Date().toGMTString().toString()   );

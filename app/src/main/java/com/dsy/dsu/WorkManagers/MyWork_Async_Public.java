@@ -189,7 +189,7 @@ public class MyWork_Async_Public extends Worker {
                     + " lВыбранныйРежимСети" + ВыбранныйРежимСети);
 
 
-          Boolean isMyActivityRunning=  new FindRunnigServiceBeforeWorkManager(getApplicationContext()).isSharedPreferencesRunning(preferencesJboss);
+          Boolean isMyActivityRunning=  new FindRunnigServiceBeforeWorkManager(getApplicationContext()).isGetMyActivityRunning( );
 
 
             if (ВыбранныйРежимСети == true && localBinderAsyncWorkmanager!=null  && isMyActivityRunning==false) {
