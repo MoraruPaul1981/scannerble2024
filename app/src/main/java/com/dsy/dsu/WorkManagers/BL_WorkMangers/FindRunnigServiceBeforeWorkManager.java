@@ -66,40 +66,32 @@ public class FindRunnigServiceBeforeWorkManager {
     @SuppressLint({"SuspiciousIndentation", "NewApi"})
     public boolean isGetMyActivityRunning() {
         // TODO: 14.01.2025
-        final Boolean[] isMyActivityRunning = {false};
+         Boolean  isMyActivityRunning = false;
         try{
         ActivityManager activityManager = (ActivityManager) context.getSystemService(Context.ACTIVITY_SERVICE);
             List<ActivityManager.RunningTaskInfo> tasks = null;
             if (activityManager!=null) {
                 tasks = activityManager.getRunningTasks(Integer.MAX_VALUE);
-
-
-
-                tasks.stream().takeWhile(new Predicate<ActivityManager.RunningTaskInfo>() {
+                // TODO: 14.01.2025
+                isMyActivityRunning=    tasks.stream().anyMatch(new Predicate<ActivityManager.RunningTaskInfo>() {
                     @Override
                     public boolean test(ActivityManager.RunningTaskInfo runningTaskInfo) {
-
                         // TODO: 14.01.2025
+                        Boolean  isMyActivityRunning = false;
                         ComponentName currentPackageName =   runningTaskInfo.topActivity;
                         if(currentPackageName.getClassName().equalsIgnoreCase("com.dsy.dsu.BootAndAsync.Window.MainActivityBootAndAsync")){
-
-                            isMyActivityRunning[0] =true;
-
+                            if (runningTaskInfo.isRunning) {
+                                isMyActivityRunning =true;
+                            }
                             Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                                     " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                                    " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"+" isMyActivityRunning "+ isMyActivityRunning[0]);
+                                    " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"+" isMyActivityRunning "+ isMyActivityRunning);
                         }
-                        return isMyActivityRunning[0];
-                    }
-                }).forEach(new Consumer<ActivityManager.RunningTaskInfo>() {
-                    @Override
-                    public void accept(ActivityManager.RunningTaskInfo runningTaskInfo) {
-                        ComponentName currentPackageName =   runningTaskInfo.topActivity;
+                        return isMyActivityRunning;
                     }
                 });
 
             }
-
         Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                 " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
                 " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n");
@@ -112,7 +104,7 @@ public class FindRunnigServiceBeforeWorkManager {
                 Thread.currentThread().getStackTrace()[2].getMethodName(),
                 Thread.currentThread().getStackTrace()[2].getLineNumber());
     }
-        return isMyActivityRunning[0];
+        return isMyActivityRunning;
     }
 
 }
