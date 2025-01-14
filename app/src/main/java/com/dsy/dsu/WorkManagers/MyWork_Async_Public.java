@@ -25,7 +25,7 @@ import com.dsy.dsu.WorkManagers.BL_WorkMangers.ListenableFutures;
 import java.util.Date;
 
 public class MyWork_Async_Public extends Worker {
- /*   private String ИмяСлужбыWorkManger ="WorkManager Synchronizasiy_Data";*/
+    private String ИмяСлужбыWorkManger ="WorkManager Synchronizasiy_Data";
     private  String ИмяСлужбыSingleWorkManger ="WorkManager Synchronizasiy_Data Disposable";
     private ServiceConnection serviceConnectionWorkManager;
     private Service_For_Remote_Async_Binary.LocalBinderAsync localBinderAsyncWorkmanager;
@@ -74,6 +74,7 @@ public class MyWork_Async_Public extends Worker {
         try {
             // TODO: 01.04.2024  запускаем Listertable
             WorkInfo.State stateSingle = new ListenableFutures(getApplicationContext()).listenableFutureWorkManager(ИмяСлужбыSingleWorkManger);
+            WorkInfo.State stateWorkPublic = new ListenableFutures(getApplicationContext()).listenableFutureWorkManager(ИмяСлужбыWorkManger);
             // TODO: 26.12.2021
             if ( stateSingle!= WorkInfo.State.RUNNING   ) {
                 // TODO: 01.04.2024
@@ -84,7 +85,8 @@ public class MyWork_Async_Public extends Worker {
                     " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
                     " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"
                     + " ФинальныйРезультатAsyncBackgroudPublic " +ФинальныйРезультатAsyncBackgroudPublic+
-                     " stateSingle " +stateSingle);
+                     " stateSingle " +stateSingle +"\n"+
+                    " stateWorkPublic " +stateWorkPublic);
 
             Data.Builder      myDataОтветОбщейСлужбы = new Data.Builder()
                     .putLong("ReturnWorklong", ФинальныйРезультатAsyncBackgroudPublic)
