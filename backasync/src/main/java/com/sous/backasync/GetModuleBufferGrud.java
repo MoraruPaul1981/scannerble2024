@@ -49,7 +49,7 @@ public class GetModuleBufferGrud {
 
 
 
-    public   void  getModuleBufferGrud( ){
+    public   void  backasyncQuery( ){
         try {
         // TODO: 17.04.2023
         Log.d(this.getClass().getName(),"\n" + " class FaceAPp " + Thread.currentThread().getStackTrace()[2].getClassName()
@@ -67,7 +67,7 @@ public class GetModuleBufferGrud {
 
 
 
-    public   void  getModuleBufferGrud(@NonNull  Context context ,@NonNull    SQLiteDatabase getSqlLiteCoreApp ){
+    public   void  backasyncQuery(@NonNull  Context context ,@NonNull    SQLiteDatabase getSqlLiteCoreApp ){
         try {
             // TODO: 13.01.2025
             // TODO: 17.04.2023

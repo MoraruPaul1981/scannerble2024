@@ -31,6 +31,8 @@ import androidx.loader.content.AsyncTaskLoader;
 
 import com.sous.backasync.GetModuleBufferGrud;
 import com.sous.backasync.alltables.GetainAllTables;
+import com.sous.backasync.erros.GetError;
+import com.sous.backasync.operationsprovider.Getquery;
 
 import java.util.ArrayList;
 import java.util.Optional;
@@ -101,6 +103,28 @@ public class GetProvider extends ContentProvider  {
 
 
 
+
+    @Nullable
+    @Override
+    public Cursor query(@NonNull Uri uri, @Nullable String[] projection, @Nullable String selection, @Nullable String[] selectionArgs, @Nullable String sortOrder) {
+        Cursor cursor = null;
+        try {
+            Log.d(this.getClass().getName(), " uri"+uri  + "selection "+selection );
+            String table = МетодОпределяемТаблицу(uri);
+            Getquery getError=new Getquery(getContext(),getsqLiteDatabase);
+// TODO: 15.01.2025 et Cursor with Data 
+             cursor =   getError.getQuery( table,selection,  selectionArgs);
+            Log.d(this.getClass().getName(),"\n" + " class FaceAPp " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                    " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                    " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"+
+                    " cursor " + cursor);
+        } catch (Exception e) {
+            e.printStackTrace();
+            Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() + " Линия  :"
+                    + Thread.currentThread().getStackTrace()[2].getLineNumber());
+        }
+        return cursor;
+    }
 
 
 
@@ -279,27 +303,6 @@ public class GetProvider extends ContentProvider  {
 
 
 
-
-    @Nullable
-    @Override
-    public Cursor query(@NonNull Uri uri, @Nullable String[] projection, @Nullable String selection, @Nullable String[] selectionArgs, @Nullable String sortOrder) {
-        Cursor cursor = null;
-        try {
-            Log.d(this.getClass().getName(), " uri"+uri  + "selection "+selection );
-            String table = МетодОпределяемТаблицу(uri);
-            cursor=     getsqLiteDatabase.rawQuery(selection,selectionArgs);
-
-            Log.d(this.getClass().getName(),"\n" + " class FaceAPp " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
-                    " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                    " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"+
-                    " cursor " + cursor);
-        } catch (Exception e) {
-            e.printStackTrace();
-            Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() + " Линия  :"
-                    + Thread.currentThread().getStackTrace()[2].getLineNumber());
-        }
-        return cursor;
-    }
 
     @NonNull
     @Override

@@ -11,23 +11,22 @@ import android.util.Log;
 import androidx.annotation.NonNull;
 import androidx.loader.content.CursorLoader;
 
-public class GetCursor {
+public class BackasyncCursor {
 
-
-
+    private  final String getNameProvider="com.sous.backasync.provider";
 
     public Cursor getCursor(@NonNull Context context, @NonNull Bundle bundle) throws SQLException {
         Cursor cursor=null;
         CursorLoader cursorLoader=null;
         try{
             cursorLoader=new CursorLoader(context);
-            String[] УсловияВыборки=      bundle.getStringArray("УсловияВыборки");
-            String  СамЗапрос=      bundle.getString("СамЗапрос");
+            String[] SelectionArgs=      bundle.getStringArray("УсловияВыборки");
+            String  Selection=      bundle.getString("СамЗапрос");
             String  Таблица=      bundle.getString("Таблица");
-            Uri uri = Uri.parse("content://com.dsy.dsu.providerdatabasecurrentoperations/" + Таблица + "");
+            Uri uri = Uri.parse("content://"+getNameProvider+"/" + Таблица + "");
             cursorLoader.setUri(uri);
-            cursorLoader.setSelection(СамЗапрос);
-            cursorLoader.setSelectionArgs(УсловияВыборки);//МесяцПростоАнализа
+            cursorLoader.setSelection(Selection);
+            cursorLoader.setSelectionArgs(SelectionArgs);//МесяцПростоАнализа
             cursor=    cursorLoader.loadInBackground();
             if (cursor.getCount() > 0 && cursor!=null) {
                 cursor.moveToFirst();
