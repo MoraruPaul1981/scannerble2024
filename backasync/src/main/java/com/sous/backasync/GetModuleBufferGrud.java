@@ -28,22 +28,32 @@ public class GetModuleBufferGrud {
 
 
     public  @Inject GetModuleBufferGrud(@ApplicationContext Context context , @NonNull SQLiteDatabase sqlite) {
-        this.context = context;
-        this.sqliteModuleGrud = sqlite;
+        try {
+            this.context = context;
+            this.sqliteModuleGrud = sqlite;
+            // TODO: 13.01.2025
+            GetProvider getProvider = new GetProvider();
+            getProvider.onCreate();
+            Log.d(this.getClass().getName(),"\n" + " class GetModuleBufferGrud  " + Thread.currentThread().getStackTrace()[2].getClassName()
+                    + "\n" +
+                    " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                    " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"+
+                    " sqliteModuleGrud " + sqliteModuleGrud);
+        } catch (Exception e) {
+            e.printStackTrace();
+            Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" +
+                    Thread.currentThread().getStackTrace()[2].getMethodName() + " Линия  :"
+                    + Thread.currentThread().getStackTrace()[2].getLineNumber());
+        }
     }
-
-
 
 
 
     public   void  getModuleBufferGrud( ){
         try {
-            // TODO: 13.01.2025
-
-            GetProvider getProvider=new GetProvider();
-            getProvider.onCreate();
         // TODO: 17.04.2023
-        Log.d(this.getClass().getName(),"\n" + " class FaceAPp " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+        Log.d(this.getClass().getName(),"\n" + " class FaceAPp " + Thread.currentThread().getStackTrace()[2].getClassName()
+                + "\n" +
                 " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
                 " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"+
                 " sqliteModuleGrud " + sqliteModuleGrud);

@@ -80,7 +80,11 @@ public class GetProvider extends ContentProvider  {
     @Override
     public boolean onCreate() {
         try{
+            // TODO: 15.01.2025
             getsqLiteDatabase=sqliteModuleGrud;
+            if (getsqLiteDatabase!=null) {
+                return  true;
+            }
 
             Log.d(this.getClass().getName(),"\n"
                     + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
@@ -92,7 +96,7 @@ public class GetProvider extends ContentProvider  {
             Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() + " Линия  :"
                     + Thread.currentThread().getStackTrace()[2].getLineNumber());
         }
-        return  true;
+        return  false;
     }
 
 

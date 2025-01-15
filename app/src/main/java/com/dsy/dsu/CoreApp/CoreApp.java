@@ -41,15 +41,18 @@ public class CoreApp extends Application {
 
      // Cursor c= sqlite.rawQuery("select * from fio",null);
 
+
+    // TODO: 13.01.2025  Запускаем
+    //  getModuleBufferGrud.getModuleBufferGrud(getApplicationContext(), getSqlLiteCoreApp);
+
+
+
 // TODO: 13.01.2025  Запускаем  
             getModuleBufferGrud.getModuleBufferGrud();
 
-            // TODO: 13.01.2025  Запускаем
-            getModuleBufferGrud.getModuleBufferGrud(getApplicationContext(), getSqlLiteCoreApp);
-
-
         // TODO: 17.04.2023
-        Log.d(this.getClass().getName(),"\n" + " class FaceAPp " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+        Log.d(this.getClass().getName(),"\n" + " class FaceAPp " + Thread.currentThread().getStackTrace()[2].getClassName()
+                + "\n" +
                 " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
                 " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"+
                 " sqlite " + getSqlLiteCoreApp);
