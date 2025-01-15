@@ -256,7 +256,11 @@ public class GetProvider extends ContentProvider  {
             }
             РезультатМассовогоВсатвкиДанныхФинал=РезультатВнутренаяbulk.size();
             // TODO: 09.11.2022  получаем результаты
-            Log.w(this.getClass().getName(), "count bulkInsert РезультатМассовогоВсатвкиДанныхФинал " + РезультатМассовогоВсатвкиДанныхФинал);
+            Log.d(this.getClass().getName(),"\n" + " class FaceAPp " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                    " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                    " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"+
+                    " РезультатМассовогоВсатвкиДанныхФинал " + РезультатМассовогоВсатвкиДанныхФинал);
+
         } catch (Exception e) {
             e.printStackTrace();
             Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() + " Линия  :"
@@ -280,7 +284,11 @@ public class GetProvider extends ContentProvider  {
             Log.d(this.getClass().getName(), " uri"+uri  + "selection "+selection );
             String table = МетодОпределяемТаблицу(uri);
             cursor=     getsqLiteDatabase.rawQuery(selection,selectionArgs);
-            Log.w(getContext().getClass().getName(), " Полученый для Получение Материалов cursor  " + cursor);/////
+
+            Log.d(this.getClass().getName(),"\n" + " class FaceAPp " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                    " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                    " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"+
+                    " cursor " + cursor);
         } catch (Exception e) {
             e.printStackTrace();
             Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() + " Линия  :"
@@ -292,7 +300,10 @@ public class GetProvider extends ContentProvider  {
     @NonNull
     @Override
     public ContentProviderResult[] applyBatch(@NonNull ArrayList<ContentProviderOperation> operations) throws OperationApplicationException {
-        Log.w(getContext().getClass().getName(), " Полученый для Получение Материалов cursor  " );/////
+        Log.d(this.getClass().getName(),"\n" + " class FaceAPp " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"+
+                " operations " + operations);
         return super.applyBatch(operations);
     }
 
@@ -300,7 +311,10 @@ public class GetProvider extends ContentProvider  {
     @Override
     public ContentProviderResult[] applyBatch(@NonNull String authority, @NonNull ArrayList<ContentProviderOperation> operations)
             throws OperationApplicationException {
-        Log.w(getContext().getClass().getName(), " Полученый для Получение Материалов cursor  " );/////
+        Log.d(this.getClass().getName(),"\n" + " class FaceAPp " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"+
+                " operations " + operations);
         return super.applyBatch(authority, operations);
     }
 
@@ -308,6 +322,9 @@ public class GetProvider extends ContentProvider  {
     @Override
     public void shutdown() {
         super.shutdown();
+        Log.d(this.getClass().getName(),"\n" + " class FaceAPp " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n");
     }
 
     @Nullable
@@ -364,7 +381,7 @@ public class GetProvider extends ContentProvider  {
 
                             Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                                     " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                                    " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n");
+                                    " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" + " РезультатUpdateCurrentPro " +РезультатUpdateCurrentPro);
 
         } catch (Exception e) {
             e.printStackTrace();
