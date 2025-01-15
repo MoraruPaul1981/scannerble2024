@@ -6,6 +6,8 @@ import android.util.Log;
 
 import androidx.annotation.NonNull;
 
+import com.sous.backasync.provider.GetProvider;
+
 import javax.inject.Inject;
 import javax.inject.Named;
 
@@ -19,13 +21,15 @@ import dagger.hilt.components.SingletonComponent;
 @InstallIn(SingletonComponent.class)
 @Named("getModuleBufferGrud")
 public class GetModuleBufferGrud {
-    SQLiteDatabase sqlite;
+
+
+  public  static      SQLiteDatabase sqliteModuleGrud;
     Context context;
 
 
     public  @Inject GetModuleBufferGrud(@ApplicationContext Context context , @NonNull SQLiteDatabase sqlite) {
         this.context = context;
-        this.sqlite = sqlite;
+        this.sqliteModuleGrud = sqlite;
     }
 
 
@@ -35,11 +39,14 @@ public class GetModuleBufferGrud {
     public   void  getModuleBufferGrud( ){
         try {
             // TODO: 13.01.2025
+
+            GetProvider getProvider=new GetProvider();
+            getProvider.onCreate();
         // TODO: 17.04.2023
         Log.d(this.getClass().getName(),"\n" + " class FaceAPp " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                 " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
                 " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"+
-                " sqlite " + sqlite);
+                " sqliteModuleGrud " + sqliteModuleGrud);
     } catch (Exception e) {
         e.printStackTrace();
         Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" +
@@ -65,5 +72,8 @@ public class GetModuleBufferGrud {
                     + Thread.currentThread().getStackTrace()[2].getLineNumber());
         }
     }
+
+
+
 
 }
