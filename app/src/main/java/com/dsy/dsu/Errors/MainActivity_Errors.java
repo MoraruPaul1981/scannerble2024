@@ -46,7 +46,9 @@ import org.jetbrains.annotations.NotNull;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
+import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -493,20 +495,71 @@ public class MainActivity_Errors extends AppCompatActivity  {
 
 
       // TODO: 11.12.2023  для android 11++
-                String NameNewPhotosCamerax="Sous-Avtodor-ERROR"+".txt";
-          File      fileNewPhotoFromCameraX = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS)
-                        +File.separator+patchFileName + File.separator+NameNewPhotosCamerax);
+                String NameNewErrorFile="Sous-Avtodor-ERROR.txt";
 
-                File fileNewPhotoDirectory= new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS)
-                        +File.separator+patchFileName  );
-
-                ///// getFileAllErrors = new java.io.File((activity.getFileStreamPath(fileName).getPath()));
-             ///String getNameNewErrorFile=  Environment.DIRECTORY_DOWNLOADS +"/"+patchFileName + "/"+NameNewErrorFile;
 
                 if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.R) {
-                    // TODO: 27.09.2023  BUFFER
-                    if ( fileNewPhotoFromCameraX.getName()!=null) {
-                        Uri address = FileProvider.getUriForFile(getApplicationContext(), "com.dsy.dsu.provider",fileNewPhotoFromCameraX);
+
+
+
+                    File fileNewPhotoFromCameraX = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS)
+                            +File.separator+patchFileName +File.separator+NameNewErrorFile);
+
+                    fileNewPhotoFromCameraX.setWritable(true);
+                    fileNewPhotoFromCameraX.setExecutable(true);
+                    fileNewPhotoFromCameraX.setReadable(true);
+
+                    File fileNewPhotoDirectory= new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS)
+                            +File.separator+patchFileName  );
+
+                    if (fileNewPhotoDirectory.isDirectory() && fileNewPhotoFromCameraX.exists()) {
+                        Uri address = FileProvider.getUriForFile(getApplicationContext(), "com.dsy.dsu.provider", fileNewPhotoFromCameraX);
+                        final InputStream imageStream = getApplicationContext().getContentResolver().openInputStream(address);
+
+                        ByteArrayOutputStream buffer = new ByteArrayOutputStream(2048);
+                    }
+
+
+
+                    // TODO: 15.01.2025
+                    File     ПутькФайлуErrorUp30VersionANdroid = getApplicationContext().getExternalFilesDir( Environment.DIRECTORY_DOWNLOADS+ File.separator+patchFileName+ File.separator +NameNewErrorFile);
+                    ПутькФайлуErrorUp30VersionANdroid.setWritable(true);
+                    ПутькФайлуErrorUp30VersionANdroid.setExecutable(true);
+                    ПутькФайлуErrorUp30VersionANdroid.setReadable(true,true);
+                    //File file = new File(getApplicationContext().getFilesDir(), NameNewErrorFile);
+
+                    if (ПутькФайлуErrorUp30VersionANdroid.exists()) {
+                        ПутькФайлуErrorUp30VersionANdroid.getParentFile().mkdirs();
+                        ПутькФайлуErrorUp30VersionANdroid.createNewFile();
+
+                        FileOutputStream fos = new FileOutputStream(ПутькФайлуErrorUp30VersionANdroid);
+
+                /*    InputStream content = getContentResolver().openInputStream(content://.../path_of_the_folder/file_name.txt);
+                    BufferedReader reader1 = new BufferedReader(new InputStreamReader(content));
+                    String linetext;
+                    while ((linetext = reader1.readLine()) != null) {*/
+
+                    }
+
+
+
+                    // TODO: 15.01.2025  
+              //File     ПутькФайлуErrorUp30VersionANdroid = getApplicationContext().getExternalFilesDir( Environment.DIRECTORY_DOWNLOADS+ File.separator+patchFileName+ File.separator +NameNewErrorFile);
+
+
+                    //File  getFileAllError = new java.io.File((activity.getFileStreamPath(ПутькФайлуErrorUp30VersionANdroid.getName()).getPath()));
+
+                    BufferedReader newBufferedReader = Files.newBufferedReader(Paths.get(ПутькФайлуErrorUp30VersionANdroid.getPath()), StandardCharsets.UTF_16);
+
+
+                    /*File     fileError =new File(ПутькФайлуErrorUp30VersionANdroid, "/" + NameNewErrorFile ) ;
+                    fileError.setWritable(true);
+                    fileError.setExecutable(true);*/
+
+
+
+                /*    if ( fileError.getName()!=null) {
+                        Uri address = FileProvider.getUriForFile(getApplicationContext(), "com.dsy.dsu.provider",fileError);
                         final InputStream imageStream = getApplicationContext().getContentResolver().openInputStream(address);
 
                         Log.d(this.getClass().getName(),  " date " +new Date().toGMTString().toString()   );
@@ -520,24 +573,47 @@ public class MainActivity_Errors extends AppCompatActivity  {
                             Log.d(this.getClass().getName(), "line " +lineErrorsAll  );
                         }
 
-                    }
+                    }*/
                     Log.d(this.getClass().getName(),  " date " +new Date().toGMTString().toString()   );
 
 
 
 
-                    // TODO: 11.12.2023  для android 10
-                }else {
-                    // TODO: 11.12.2023  для android 10
-                    BufferedReader newBufferedReader = Files.newBufferedReader(Paths.get(fileNewPhotoFromCameraX.getPath()), StandardCharsets.UTF_16);
-                    String lineErrorsAll = null;
-                    while ((lineErrorsAll = newBufferedReader.readLine()) != null) {
-                        БуерДляОшибок.append(lineErrorsAll);
-                        БуерДляОшибок.append('\n');
-                        Log.d(this.getClass().getName(), "line " + lineErrorsAll);
+                } else {
+                    File   ПутькФайлуErrorOldVersion = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS+ File.separator +
+                            patchFileName+ File.separator +NameNewErrorFile);
+
+                    BufferedReader newBufferedReader = Files.newBufferedReader(Paths.get(ПутькФайлуErrorOldVersion.getPath()), StandardCharsets.UTF_16);
+
+                    File     fileError =new File(ПутькФайлуErrorOldVersion, "/" + NameNewErrorFile ) ;
+                    fileError.setWritable(true);
+                    fileError.setExecutable(true);
+
+                    if ( fileError.getName()!=null) {
+                        BufferedReader newBufferedReader2 = Files.newBufferedReader(Paths.get(fileError.getPath()), StandardCharsets.UTF_16);
+
+
+                     /*   Uri address = FileProvider.getUriForFile(getApplicationContext(), "com.dsy.dsu.provider",fileError);
+                        final InputStream imageStream = getApplicationContext().getContentResolver().openInputStream(address);*/
+
+                        Log.d(this.getClass().getName(),  " date " +new Date().toGMTString().toString()   );
+
+                        //BufferedReader r = new BufferedReader(new InputStreamReader(imageStream, StandardCharsets.UTF_16));
+
+                  /*      String    lineErrorsAll=null;
+                        while ((lineErrorsAll = r.readLine()) != null) {
+                            БуерДляОшибок.append(lineErrorsAll);
+                            БуерДляОшибок.append('\n');
+                            Log.d(this.getClass().getName(), "line " +lineErrorsAll  );
+                        }*/
+
                     }
 
                 }
+                
+                ///// getFileAllErrors = new java.io.File((activity.getFileStreamPath(fileName).getPath()));
+             ///String getNameNewErrorFile=  Environment.DIRECTORY_DOWNLOADS +"/"+patchFileName + "/"+NameNewErrorFile;
+
                 Log.d(this.getClass().getName(),  " date " +new Date().toGMTString().toString() + " БуерДляОшибок "  +БуерДляОшибок);
                 Log.d(this.getClass().getName(),  " date " +new Date().toGMTString().toString() + " preferences " +preferences.getAll());
             } catch (Exception e) {
