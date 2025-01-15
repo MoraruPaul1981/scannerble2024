@@ -16,6 +16,7 @@ import android.content.OperationApplicationException;
 import android.content.UriMatcher;
 import android.database.Cursor;
 
+import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
@@ -46,7 +47,9 @@ public class GetProvider extends ContentProvider  {
 
     private Integer ТекущаяСтрокаПриДОбавлениииURL=0;
 
+ private SQLiteDatabase getsqLiteDatabase;
 
+ private  final String getNameProvider="com.sous.backasync.provider";
 
     public GetProvider() throws InterruptedException {
         try{
@@ -58,8 +61,10 @@ public class GetProvider extends ContentProvider  {
             ИменаТаблицыОтАндройда.forEach(new Consumer<String>() {
                 @Override
                 public void accept(String ЭлементТаблица) {
-                    uriMatcherДЛяПровайдераКонтентБазаДанных.addURI("com.sous.backasync.provider",ЭлементТаблица.toString(),ТекущаяСтрокаПриДОбавлениииURL);
+                    uriMatcherДЛяПровайдераКонтентБазаДанных.addURI(getNameProvider,ЭлементТаблица.toString(),ТекущаяСтрокаПриДОбавлениииURL);
+
                     Log.d(this.getClass().getName(), " ЭлементТаблица "+ЭлементТаблица + " ТекущаяСтрокаПриДОбавлениииURL " +ТекущаяСтрокаПриДОбавлениииURL);
+
                     ТекущаяСтрокаПриДОбавлениииURL++;
                 }
             });
@@ -72,6 +77,30 @@ public class GetProvider extends ContentProvider  {
 
         }
     }
+    @Override
+    public boolean onCreate() {
+        try{
+            getsqLiteDatabase=sqliteModuleGrud;
+
+            Log.d(this.getClass().getName(),"\n"
+                    + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                    " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                    " line " + Thread.currentThread().getStackTrace()[2].getLineNumber()  + " sqliteModuleGrud "  +sqliteModuleGrud  +
+                    " getsqLiteDatabase " +getsqLiteDatabase);
+        } catch (Exception e) {
+            e.printStackTrace();
+            Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() + " Линия  :"
+                    + Thread.currentThread().getStackTrace()[2].getLineNumber());
+        }
+        return  true;
+    }
+
+
+
+
+
+
+
 
 
 
@@ -79,18 +108,14 @@ public class GetProvider extends ContentProvider  {
     public int delete(Uri uri, String selection, String[] selectionArgs) {
         Integer РезультатУдаления=0;
         try{
-            CompletableFuture       completableFutureУдаление=         CompletableFuture.supplyAsync(new Supplier<Integer>() {
-                @Override
-                public Integer get() {
-                    Integer РезультатУдаления=0;
-                    if (!sqliteModuleGrud.inTransaction()) {
-                        sqliteModuleGrud.beginTransaction();
+                    if (!getsqLiteDatabase.inTransaction()) {
+                        getsqLiteDatabase.beginTransaction();
                     }
                     Log.d(this.getClass().getName(), " uri"+uri );
                     // TODO: 14.10.2022 метод определения текущней таблицы
                     String table = МетодОпределяемТаблицу(uri);
                     if (table!=null) {
-                        РезультатУдаления  = sqliteModuleGrud.delete(table, selection, selectionArgs);
+                        РезультатУдаления  = getsqLiteDatabase.delete(table, selection, selectionArgs);
                         // TODO: 30.10.2021
                         Log.w(getContext().getClass().getName(), " РезультатУдаления  " + РезультатУдаления);/////
                         Uri ОтветВставкиДанных  = Uri.parse("content://"+РезультатУдаления.toString());
@@ -102,24 +127,16 @@ public class GetProvider extends ContentProvider  {
                     }else {
                         Log.w(getContext().getClass().getName(), " table  " + table);/////
                     }
-                    if (sqliteModuleGrud.inTransaction()) {
-
-                        sqliteModuleGrud.setTransactionSuccessful();
+                    if (getsqLiteDatabase.inTransaction()) {
+                        getsqLiteDatabase.setTransactionSuccessful();
                     }
-                    if (sqliteModuleGrud.inTransaction()) {
-                        sqliteModuleGrud.endTransaction();
+                    if (getsqLiteDatabase.inTransaction()) {
+                        getsqLiteDatabase.endTransaction();
                     }
-                    return РезультатУдаления;
-                }
-            }).exceptionally(e -> {
-                System.out.println(e.getClass());
-                e.printStackTrace();
-                Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" +
-                        Thread.currentThread().getStackTrace()[2].getMethodName() +
-                        " Линия  :" + Thread.currentThread().getStackTrace()[2].getLineNumber());
-                return null;
-            });
-            РезультатУдаления=  (Integer) completableFutureУдаление.get();
+            Log.d(this.getClass().getName(),"\n" + " class FaceAPp " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                    " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                    " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"+
+                    " РезультатУдаления " + РезультатУдаления);
         } catch (Exception e) {
             e.printStackTrace();
             Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() + " Линия  :"
@@ -134,7 +151,7 @@ public class GetProvider extends ContentProvider  {
         String table = new String();
         try{
             Log.d(this.getClass().getName(), " uri"+ uri);
-            table=    Optional.ofNullable(uri).map(Emmeter->Emmeter.toString().replace("content://com.dsy.dsu.providerdatabasecurrentoperations/","")).get();
+            table=    Optional.ofNullable(uri).map(Emmeter->Emmeter.toString().replace("content://"+getNameProvider+"/","")).get();
             Log.w(getContext().getClass().getName(),
                     " defaluit table  " + table  + " uri " + uri);/////
             Log.d(this.getClass().getName(), " table"+ table);
@@ -158,47 +175,32 @@ public class GetProvider extends ContentProvider  {
         // TODO: Implement this to handle requests to insert a new row.
         final Uri[] ОтветВставкиДанных = {null};
         try {
-            CompletableFuture<Uri>   completableFutureВстака=   CompletableFuture.supplyAsync(new Supplier<Uri>() {
-                @Override
-                public Uri get() {
-                    //   sqliteModuleGrudDatabase=new CREATE_DATABASE(getContext()).getССылкаНаСозданнуюБазуORM();
-                    if (!sqliteModuleGrud.inTransaction()) {
-                        sqliteModuleGrud.beginTransaction();
+                    if (!getsqLiteDatabase.inTransaction()) {
+                        getsqLiteDatabase.beginTransaction();
                     }
                     Log.d(this.getClass().getName(), " uri"+uri );
                     // TODO: 14.10.2022 метод определения текущней таблицы
                     String table = МетодОпределяемТаблицу(uri);
 
 
-                    Long   РезультатВставкиДанных  = sqliteModuleGrud.insert(table, null, values);
+                    Long   РезультатВставкиДанных  = getsqLiteDatabase.insert(table, null, values);
                     // TODO: 30.10.2021
                     Log.w(getContext().getClass().getName(), " РезультатВставкиДанных  " + РезультатВставкиДанных);/////
 
                     ОтветВставкиДанных[0] = Uri.parse("content://"+РезультатВставкиДанных.toString());
                     if (РезультатВставкиДанных> 0) {
-                        if (sqliteModuleGrud.inTransaction()) {
 
-                            sqliteModuleGrud.setTransactionSuccessful();
+                        if (getsqLiteDatabase.inTransaction()) {
+                            getsqLiteDatabase.setTransactionSuccessful();
                             // TODO: 22.09.2022 увеличивает версию данных
                         }
                     }
-                    if (sqliteModuleGrud.inTransaction()) {
-                        sqliteModuleGrud.endTransaction();
+                    if (getsqLiteDatabase.inTransaction()) {
+                        getsqLiteDatabase.endTransaction();
                     }
                     Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                             " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
                             " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n");
-                    return ОтветВставкиДанных[0];
-                }
-            }).exceptionally(e->{
-                e.printStackTrace();
-                Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() + " Линия  :"
-                        + Thread.currentThread().getStackTrace()[2].getLineNumber());
-                return  null;
-            });
-            ОтветВставкиДанных[0]=   completableFutureВстака.get();
-            // TODO: 30.10.2021
-            getContext().getContentResolver().notifyChange(uri, null);
         } catch (Exception e) {
             e.printStackTrace();
             Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() + " Линия  :"
@@ -214,9 +216,8 @@ public class GetProvider extends ContentProvider  {
         Integer РезультатМассовогоВсатвкиДанныхФинал=0;
         ArrayList<Integer> РезультатВнутренаяbulk = new ArrayList<>();
         try {
-            //  sqliteModuleGrudDatabase=new CREATE_DATABASE(getContext()).getССылкаНаСозданнуюБазуORM();
-            if (!sqliteModuleGrud.inTransaction()) {
-                sqliteModuleGrud.beginTransaction();
+            if (!getsqLiteDatabase.inTransaction()) {
+                getsqLiteDatabase.beginTransaction();
             }
             Log.d(this.getClass().getName(), " uri"+uri );
             String table = МетодОпределяемТаблицу(uri);
@@ -229,7 +230,7 @@ public class GetProvider extends ContentProvider  {
                             try{
                                 Long     id  = 0l;
                                 if (ТекущаяСтрочкаИзМассо.size()>0 ) {
-                                    id = sqliteModuleGrud.insertOrThrow(table, null, ТекущаяСтрочкаИзМассо);
+                                    id = getsqLiteDatabase.insert(table, null, ТекущаяСтрочкаИзМассо);
                                 }
                                 Log.w(this.getClass().getName(), " Вставка массовая через burkInsert   id " +  id);
                                 if (0 < id) РезультатВнутренаяbulk.add( Integer.parseInt(id.toString()) );
@@ -246,12 +247,12 @@ public class GetProvider extends ContentProvider  {
                         }
                     });
             // TODO: 09.11.2022 закрывает ТРАНЗАКЦИИ ВНУТРИ
-            if (sqliteModuleGrud.inTransaction()) {
+            if (getsqLiteDatabase.inTransaction()) {
 
-                sqliteModuleGrud.setTransactionSuccessful();
+                getsqLiteDatabase.setTransactionSuccessful();
             }
-            if (sqliteModuleGrud.inTransaction()) {
-                sqliteModuleGrud.endTransaction();
+            if (getsqLiteDatabase.inTransaction()) {
+                getsqLiteDatabase.endTransaction();
             }
             РезультатМассовогоВсатвкиДанныхФинал=РезультатВнутренаяbulk.size();
             // TODO: 09.11.2022  получаем результаты
@@ -267,22 +268,7 @@ public class GetProvider extends ContentProvider  {
 
 
 
-    @Override
-    public boolean onCreate() {
-        try{
-            // TODO: 02.09.2023  CREATE get sqliteModuleGrud;
 
-            Log.d(this.getClass().getName(),"\n"
-                    + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
-                    " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                    " line " + Thread.currentThread().getStackTrace()[2].getLineNumber()  + " sqliteModuleGrud "  +sqliteModuleGrud);
-        } catch (Exception e) {
-            e.printStackTrace();
-            Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() + " Линия  :"
-                    + Thread.currentThread().getStackTrace()[2].getLineNumber());
-        }
-        return  true;
-    }
 
 
 
@@ -293,7 +279,7 @@ public class GetProvider extends ContentProvider  {
         try {
             Log.d(this.getClass().getName(), " uri"+uri  + "selection "+selection );
             String table = МетодОпределяемТаблицу(uri);
-            cursor=     sqliteModuleGrud.rawQuery(selection,selectionArgs);
+            cursor=     getsqLiteDatabase.rawQuery(selection,selectionArgs);
             Log.w(getContext().getClass().getName(), " Полученый для Получение Материалов cursor  " + cursor);/////
         } catch (Exception e) {
             e.printStackTrace();
@@ -346,19 +332,16 @@ public class GetProvider extends ContentProvider  {
     public int update(@NonNull Uri uri, @Nullable ContentValues values, @Nullable String selection, @Nullable String[] selectionArgs) {
         Integer РезультатUpdateCurrentPro=0;
         try{
-            CompletableFuture<Integer>  completableFutureUpdate=
-                    CompletableFuture.supplyAsync(new Supplier<Integer>() {
-                        @Override
-                        public Integer get() {
-                            if (!sqliteModuleGrud.inTransaction()) {
-                                sqliteModuleGrud.beginTransaction();
+
+                            if (!getsqLiteDatabase.inTransaction()) {
+                                getsqLiteDatabase.beginTransaction();
                             }
-                            Integer  РезультатUpdateCurrentPro=0;
+
                             Log.d(this.getClass().getName(), " uri"+uri );
                             // TODO: 14.10.2022 метод определения текущней таблицы
                             String table = МетодОпределяемТаблицу(uri);
                             if (table!=null) {
-                                Integer РезультатУдаления  = sqliteModuleGrud.update(table,values, selection, selectionArgs);
+                                Integer РезультатУдаления  = getsqLiteDatabase.update(table,values, selection, selectionArgs);
                                 // TODO: 30.10.2021
                                 Log.w(getContext().getClass().getName(), " РезультатУдаления  " + РезультатУдаления);/////
                                 Uri ОтветВставкиДанных  = Uri.parse("content://"+РезультатУдаления.toString());
@@ -371,28 +354,17 @@ public class GetProvider extends ContentProvider  {
                             }else {
                                 Log.w(getContext().getClass().getName(), " table  " + table);/////
                             }
-                            if (sqliteModuleGrud.inTransaction()) {
+                            if (getsqLiteDatabase.inTransaction()) {
 
-                                sqliteModuleGrud.setTransactionSuccessful();
+                                getsqLiteDatabase.setTransactionSuccessful();
                             }
-                            if (sqliteModuleGrud.inTransaction()) {
-                                sqliteModuleGrud.endTransaction();
+                            if (getsqLiteDatabase.inTransaction()) {
+                                getsqLiteDatabase.endTransaction();
                             }
-                            shutdown();
+
                             Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                                     " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
                                     " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n");
-                            return РезультатUpdateCurrentPro;
-                        }
-                    }).exceptionally(e -> {
-                        System.out.println(e.getClass());
-                        e.printStackTrace();
-                        Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" +
-                                Thread.currentThread().getStackTrace()[2].getMethodName() +
-                                " Линия  :" + Thread.currentThread().getStackTrace()[2].getLineNumber());
-                        return null;
-                    });
-            РезультатUpdateCurrentPro=     completableFutureUpdate.get();
 
         } catch (Exception e) {
             e.printStackTrace();
