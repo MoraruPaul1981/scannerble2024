@@ -1,10 +1,6 @@
 package com.sous.backasync.provider;
 
 
-
-import static com.sous.backasync.GetModuleBufferGrud.sqliteModuleGrud;
-
-
 import android.annotation.SuppressLint;
 import android.content.ContentProvider;
 import android.content.ContentProviderOperation;
@@ -32,6 +28,7 @@ import androidx.loader.content.AsyncTaskLoader;
 import com.sous.backasync.GetModuleBufferGrud;
 import com.sous.backasync.alltables.GetainAllTables;
 import com.sous.backasync.erros.GetError;
+import com.sous.backasync.hill.HiltInterfacesqliteBack;
 import com.sous.backasync.operationsprovider.Getquery;
 
 import java.util.ArrayList;
@@ -49,9 +46,9 @@ public class GetProvider extends ContentProvider  {
 
     private Integer ТекущаяСтрокаПриДОбавлениииURL=0;
 
- private SQLiteDatabase getsqLiteDatabase;
-
  private  final String getNameProvider="com.sous.backasync.provider";
+
+    private SQLiteDatabase  sqliteBAck;
 
     public GetProvider() throws InterruptedException {
         try{
@@ -70,7 +67,8 @@ public class GetProvider extends ContentProvider  {
                     ТекущаяСтрокаПриДОбавлениииURL++;
                 }
             });
-            Log.d(this.getClass().getName(),  " uriMatcherДЛяПровайдераКонтентБазаДанных" +uriMatcherДЛяПровайдераКонтентБазаДанных );
+            Log.d(this.getClass().getName(),  " uriMatcherДЛяПровайдераКонтентБазаДанных" +uriMatcherДЛяПровайдераКонтентБазаДанных
+                    + " sqliteBAck "+ sqliteBAck );
             // TODO: 04.10.2022
         } catch (Exception e) {
             e.printStackTrace();
@@ -82,23 +80,19 @@ public class GetProvider extends ContentProvider  {
     @Override
     public boolean onCreate() {
         try{
+             sqliteBAck = EntryPoints.get(getContext(), HiltInterfacesqliteBack.class).getHiltSqliteBAck();
             // TODO: 15.01.2025
-            getsqLiteDatabase=sqliteModuleGrud;
-            if (getsqLiteDatabase!=null) {
-                return  true;
-            }
-
             Log.d(this.getClass().getName(),"\n"
                     + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                     " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                    " line " + Thread.currentThread().getStackTrace()[2].getLineNumber()  + " sqliteModuleGrud "  +sqliteModuleGrud  +
-                    " getsqLiteDatabase " +getsqLiteDatabase);
+                    " line " + Thread.currentThread().getStackTrace()[2].getLineNumber()  + " sqliteBAck "  +sqliteBAck  +
+                    " sqliteBAck " +sqliteBAck);
         } catch (Exception e) {
             e.printStackTrace();
             Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() + " Линия  :"
                     + Thread.currentThread().getStackTrace()[2].getLineNumber());
         }
-        return  false;
+        return  true;
     }
 
 
@@ -111,7 +105,7 @@ public class GetProvider extends ContentProvider  {
         try {
             Log.d(this.getClass().getName(), " uri"+uri  + "selection "+selection );
             String table = МетодОпределяемТаблицу(uri);
-            Getquery getError=new Getquery(getContext(),getsqLiteDatabase);
+            Getquery getError=new Getquery(getContext(),sqliteBAck);
 // TODO: 15.01.2025 et Cursor with Data 
              cursor =   getError.getQuery( table,selection,  selectionArgs);
             Log.d(this.getClass().getName(),"\n" + " class FaceAPp " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
@@ -136,14 +130,14 @@ public class GetProvider extends ContentProvider  {
     public int delete(Uri uri, String selection, String[] selectionArgs) {
         Integer РезультатУдаления=0;
         try{
-                    if (!getsqLiteDatabase.inTransaction()) {
-                        getsqLiteDatabase.beginTransaction();
+                    if (!sqliteBAck.inTransaction()) {
+                        sqliteBAck.beginTransaction();
                     }
                     Log.d(this.getClass().getName(), " uri"+uri );
                     // TODO: 14.10.2022 метод определения текущней таблицы
                     String table = МетодОпределяемТаблицу(uri);
                     if (table!=null) {
-                        РезультатУдаления  = getsqLiteDatabase.delete(table, selection, selectionArgs);
+                        РезультатУдаления  = sqliteBAck.delete(table, selection, selectionArgs);
                         // TODO: 30.10.2021
                         Log.w(getContext().getClass().getName(), " РезультатУдаления  " + РезультатУдаления);/////
                         Uri ОтветВставкиДанных  = Uri.parse("content://"+РезультатУдаления.toString());
@@ -155,11 +149,11 @@ public class GetProvider extends ContentProvider  {
                     }else {
                         Log.w(getContext().getClass().getName(), " table  " + table);/////
                     }
-                    if (getsqLiteDatabase.inTransaction()) {
-                        getsqLiteDatabase.setTransactionSuccessful();
+                    if (sqliteBAck.inTransaction()) {
+                        sqliteBAck.setTransactionSuccessful();
                     }
-                    if (getsqLiteDatabase.inTransaction()) {
-                        getsqLiteDatabase.endTransaction();
+                    if (sqliteBAck.inTransaction()) {
+                        sqliteBAck.endTransaction();
                     }
             Log.d(this.getClass().getName(),"\n" + " class FaceAPp " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                     " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
@@ -203,28 +197,28 @@ public class GetProvider extends ContentProvider  {
         // TODO: Implement this to handle requests to insert a new row.
         final Uri[] ОтветВставкиДанных = {null};
         try {
-                    if (!getsqLiteDatabase.inTransaction()) {
-                        getsqLiteDatabase.beginTransaction();
+                    if (!sqliteBAck.inTransaction()) {
+                        sqliteBAck.beginTransaction();
                     }
                     Log.d(this.getClass().getName(), " uri"+uri );
                     // TODO: 14.10.2022 метод определения текущней таблицы
                     String table = МетодОпределяемТаблицу(uri);
 
 
-                    Long   РезультатВставкиДанных  = getsqLiteDatabase.insert(table, null, values);
+                    Long   РезультатВставкиДанных  = sqliteBAck.insert(table, null, values);
                     // TODO: 30.10.2021
                     Log.w(getContext().getClass().getName(), " РезультатВставкиДанных  " + РезультатВставкиДанных);/////
 
                     ОтветВставкиДанных[0] = Uri.parse("content://"+РезультатВставкиДанных.toString());
                     if (РезультатВставкиДанных> 0) {
 
-                        if (getsqLiteDatabase.inTransaction()) {
-                            getsqLiteDatabase.setTransactionSuccessful();
+                        if (sqliteBAck.inTransaction()) {
+                            sqliteBAck.setTransactionSuccessful();
                             // TODO: 22.09.2022 увеличивает версию данных
                         }
                     }
-                    if (getsqLiteDatabase.inTransaction()) {
-                        getsqLiteDatabase.endTransaction();
+                    if (sqliteBAck.inTransaction()) {
+                        sqliteBAck.endTransaction();
                     }
                     Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                             " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
@@ -244,8 +238,8 @@ public class GetProvider extends ContentProvider  {
         Integer РезультатМассовогоВсатвкиДанныхФинал=0;
         ArrayList<Integer> РезультатВнутренаяbulk = new ArrayList<>();
         try {
-            if (!getsqLiteDatabase.inTransaction()) {
-                getsqLiteDatabase.beginTransaction();
+            if (!sqliteBAck.inTransaction()) {
+                sqliteBAck.beginTransaction();
             }
             Log.d(this.getClass().getName(), " uri"+uri );
             String table = МетодОпределяемТаблицу(uri);
@@ -258,7 +252,7 @@ public class GetProvider extends ContentProvider  {
                             try{
                                 Long     id  = 0l;
                                 if (ТекущаяСтрочкаИзМассо.size()>0 ) {
-                                    id = getsqLiteDatabase.insert(table, null, ТекущаяСтрочкаИзМассо);
+                                    id = sqliteBAck.insert(table, null, ТекущаяСтрочкаИзМассо);
                                 }
                                 Log.w(this.getClass().getName(), " Вставка массовая через burkInsert   id " +  id);
                                 if (0 < id) РезультатВнутренаяbulk.add( Integer.parseInt(id.toString()) );
@@ -275,12 +269,12 @@ public class GetProvider extends ContentProvider  {
                         }
                     });
             // TODO: 09.11.2022 закрывает ТРАНЗАКЦИИ ВНУТРИ
-            if (getsqLiteDatabase.inTransaction()) {
+            if (sqliteBAck.inTransaction()) {
 
-                getsqLiteDatabase.setTransactionSuccessful();
+                sqliteBAck.setTransactionSuccessful();
             }
-            if (getsqLiteDatabase.inTransaction()) {
-                getsqLiteDatabase.endTransaction();
+            if (sqliteBAck.inTransaction()) {
+                sqliteBAck.endTransaction();
             }
             РезультатМассовогоВсатвкиДанныхФинал=РезультатВнутренаяbulk.size();
             // TODO: 09.11.2022  получаем результаты
@@ -357,15 +351,15 @@ public class GetProvider extends ContentProvider  {
         Integer РезультатUpdateCurrentPro=0;
         try{
 
-                            if (!getsqLiteDatabase.inTransaction()) {
-                                getsqLiteDatabase.beginTransaction();
+                            if (!sqliteBAck.inTransaction()) {
+                                sqliteBAck.beginTransaction();
                             }
 
                             Log.d(this.getClass().getName(), " uri"+uri );
                             // TODO: 14.10.2022 метод определения текущней таблицы
                             String table = МетодОпределяемТаблицу(uri);
                             if (table!=null) {
-                                Integer РезультатУдаления  = getsqLiteDatabase.update(table,values, selection, selectionArgs);
+                                Integer РезультатУдаления  = sqliteBAck.update(table,values, selection, selectionArgs);
                                 // TODO: 30.10.2021
                                 Log.w(getContext().getClass().getName(), " РезультатУдаления  " + РезультатУдаления);/////
                                 Uri ОтветВставкиДанных  = Uri.parse("content://"+РезультатУдаления.toString());
@@ -378,12 +372,12 @@ public class GetProvider extends ContentProvider  {
                             }else {
                                 Log.w(getContext().getClass().getName(), " table  " + table);/////
                             }
-                            if (getsqLiteDatabase.inTransaction()) {
+                            if (sqliteBAck.inTransaction()) {
 
-                                getsqLiteDatabase.setTransactionSuccessful();
+                                sqliteBAck.setTransactionSuccessful();
                             }
-                            if (getsqLiteDatabase.inTransaction()) {
-                                getsqLiteDatabase.endTransaction();
+                            if (sqliteBAck.inTransaction()) {
+                                sqliteBAck.endTransaction();
                             }
 
                             Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +

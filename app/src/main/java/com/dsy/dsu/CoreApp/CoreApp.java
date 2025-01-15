@@ -48,7 +48,7 @@ public class CoreApp extends Application {
 
 
 // TODO: 13.01.2025  Запускаем  
-            getModuleBufferGrud.backasyncQuery();
+            getModuleBufferGrud.backasyncQueryError();
 
         // TODO: 17.04.2023
         Log.d(this.getClass().getName(),"\n" + " class FaceAPp " + Thread.currentThread().getStackTrace()[2].getClassName()

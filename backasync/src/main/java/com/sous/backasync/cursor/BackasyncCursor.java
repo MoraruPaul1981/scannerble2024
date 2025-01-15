@@ -15,7 +15,7 @@ public class BackasyncCursor {
 
     private  final String getNameProvider="com.sous.backasync.provider";
 
-    public Cursor getCursor(@NonNull Context context, @NonNull Bundle bundle) throws SQLException {
+    public Cursor getBackasyncCursor(@NonNull Context context, @NonNull Bundle bundle) throws SQLException {
         Cursor cursor=null;
         CursorLoader cursorLoader=null;
         try{
