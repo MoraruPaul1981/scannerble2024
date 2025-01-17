@@ -3,18 +3,16 @@ package com.dsy.dsu.CommitPrices.View.ComponentsPayPrices;
 import android.content.Context;
 import android.content.Intent;
 import android.util.Log;
-import android.widget.ProgressBar;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.LifecycleOwner;
 import androidx.lifecycle.MutableLiveData;
-import androidx.recyclerview.widget.RecyclerView;
 
 import com.dsy.dsu.CommitPrices.Model.BiccessLogicas.setAndStartingRecyreViewNestedClickArrow;
 import com.dsy.dsu.CommitPrices.Model.LiveDataPrices.GetLiveDataForrecyreViewPrices;
 import com.dsy.dsu.CommitPrices.View.MyRecycleView.MyRecycleViewIsAdaptersCommintPrices;
 import com.dsy.dsu.CommitPrices.View.MyRecycleView.MyViewHoldersCommintPrices;
-import com.dsy.dsu.Errors.Class_Generation_Errors;
+import com.dsy.dsu.Errors.controller.RecordNewErros;
 import com.dsy.dsu.R;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -78,7 +76,7 @@ public class ComponentsForRecyreView {
         e.printStackTrace();
         Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
                 " Линия  :" + Thread.currentThread().getStackTrace()[2].getLineNumber());
-        new Class_Generation_Errors(context).МетодЗаписиВЖурналНовойОшибки(e.toString(), this.getClass().getName(),
+        new RecordNewErros(context).recordnewerror(e.toString(), this.getClass().getName(),
                 Thread.currentThread().getStackTrace()[2].getMethodName(), Thread.currentThread().getStackTrace()[2].getLineNumber());
     }
     }
@@ -104,7 +102,7 @@ public class ComponentsForRecyreView {
             e.printStackTrace();
             Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
                     " Линия  :" + Thread.currentThread().getStackTrace()[2].getLineNumber());
-            new Class_Generation_Errors(context).МетодЗаписиВЖурналНовойОшибки(e.toString(), this.getClass().getName(),
+            new RecordNewErros(context).recordnewerror(e.toString(), this.getClass().getName(),
                     Thread.currentThread().getStackTrace()[2].getMethodName(), Thread.currentThread().getStackTrace()[2].getLineNumber());
         }
         return mTV_commitingprices_value;
@@ -134,7 +132,7 @@ public class ComponentsForRecyreView {
             e.printStackTrace();
             Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
                     " Линия  :" + Thread.currentThread().getStackTrace()[2].getLineNumber());
-            new Class_Generation_Errors(context).МетодЗаписиВЖурналНовойОшибки(e.toString(), this.getClass().getName(),
+            new RecordNewErros(context).recordnewerror(e.toString(), this.getClass().getName(),
                     Thread.currentThread().getStackTrace()[2].getMethodName(), Thread.currentThread().getStackTrace()[2].getLineNumber());
         }
         return mTV_NumberDOc_value;
@@ -171,7 +169,7 @@ public class ComponentsForRecyreView {
                         Log.e(context.getClass().getName(),
                                 "Ошибка " + throwable + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
                                         " Линия  :" + Thread.currentThread().getStackTrace()[2].getLineNumber());
-                        new Class_Generation_Errors(context).МетодЗаписиВЖурналНовойОшибки(throwable.toString(),
+                        new RecordNewErros(context).recordnewerror(throwable.toString(),
                                 this.getClass().getName().toString(), Thread.currentThread().getStackTrace()[2].getMethodName().toString(),
                                 Thread.currentThread().getStackTrace()[2].getLineNumber());
                     }
@@ -183,7 +181,7 @@ public class ComponentsForRecyreView {
                         Log.e(context.getClass().getName(),
                                 "Ошибка " + throwable + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
                                         " Линия  :" + Thread.currentThread().getStackTrace()[2].getLineNumber());
-                        new Class_Generation_Errors(context).МетодЗаписиВЖурналНовойОшибки(throwable.toString(),
+                        new RecordNewErros(context).recordnewerror(throwable.toString(),
                                 this.getClass().getName().toString(), Thread.currentThread().getStackTrace()[2].getMethodName().toString(),
                                 Thread.currentThread().getStackTrace()[2].getLineNumber());
                         return false;
@@ -213,7 +211,7 @@ public class ComponentsForRecyreView {
         e.printStackTrace();
         Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
                 " Линия  :" + Thread.currentThread().getStackTrace()[2].getLineNumber());
-        new Class_Generation_Errors(context).МетодЗаписиВЖурналНовойОшибки(e.toString(), this.getClass().getName(),
+        new RecordNewErros(context).recordnewerror(e.toString(), this.getClass().getName(),
                 Thread.currentThread().getStackTrace()[2].getMethodName(), Thread.currentThread().getStackTrace()[2].getLineNumber());
     }
 
@@ -246,7 +244,7 @@ public class ComponentsForRecyreView {
                             Log.e(context.getClass().getName(),
                                     "Ошибка " + throwable + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
                                             " Линия  :" + Thread.currentThread().getStackTrace()[2].getLineNumber());
-                            new Class_Generation_Errors(context).МетодЗаписиВЖурналНовойОшибки(throwable.toString(),
+                            new RecordNewErros(context).recordnewerror(throwable.toString(),
                                     this.getClass().getName().toString(), Thread.currentThread().getStackTrace()[2].getMethodName().toString(),
                                     Thread.currentThread().getStackTrace()[2].getLineNumber());
                         }
@@ -258,7 +256,7 @@ public class ComponentsForRecyreView {
                             Log.e(context.getClass().getName(),
                                     "Ошибка " + throwable + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
                                             " Линия  :" + Thread.currentThread().getStackTrace()[2].getLineNumber());
-                            new Class_Generation_Errors(context).МетодЗаписиВЖурналНовойОшибки(throwable.toString(),
+                            new RecordNewErros(context).recordnewerror(throwable.toString(),
                                     this.getClass().getName().toString(), Thread.currentThread().getStackTrace()[2].getMethodName().toString(),
                                     Thread.currentThread().getStackTrace()[2].getLineNumber());
                             return false;
@@ -290,7 +288,7 @@ public class ComponentsForRecyreView {
             e.printStackTrace();
             Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
                     " Линия  :" + Thread.currentThread().getStackTrace()[2].getLineNumber());
-            new Class_Generation_Errors(context).МетодЗаписиВЖурналНовойОшибки(e.toString(), this.getClass().getName(),
+            new RecordNewErros(context).recordnewerror(e.toString(), this.getClass().getName(),
                     Thread.currentThread().getStackTrace()[2].getMethodName(), Thread.currentThread().getStackTrace()[2].getLineNumber());
         }
 
@@ -329,7 +327,7 @@ public class ComponentsForRecyreView {
             e.printStackTrace();
             Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
                     " Линия  :" + Thread.currentThread().getStackTrace()[2].getLineNumber());
-            new Class_Generation_Errors(context).МетодЗаписиВЖурналНовойОшибки(e.toString(), this.getClass().getName(),
+            new RecordNewErros(context).recordnewerror(e.toString(), this.getClass().getName(),
                     Thread.currentThread().getStackTrace()[2].getMethodName(), Thread.currentThread().getStackTrace()[2].getLineNumber());
         }
     }

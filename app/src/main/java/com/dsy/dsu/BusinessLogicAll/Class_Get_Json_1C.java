@@ -8,7 +8,7 @@ import android.util.Log;
 import androidx.annotation.NonNull;
 
 import com.dsy.dsu.BusinessLogicAll.Jakson.GeneratorJSON1CPayCommitSerializer;
-import com.dsy.dsu.Errors.Class_Generation_Errors;
+import com.dsy.dsu.Errors.controller.RecordNewErros;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.module.SimpleModule;
@@ -139,7 +139,7 @@ public InputStream   МетодПолучемJSONОт1СДляСогласова
                 e.printStackTrace();
                 Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() + " Линия  :"
                         + Thread.currentThread().getStackTrace()[2].getLineNumber());
-                new Class_Generation_Errors(context).МетодЗаписиВЖурналНовойОшибки(e.toString(),
+                new RecordNewErros(context).recordnewerror(e.toString(),
                         this.getClass().getName(), Thread.currentThread().getStackTrace()[2].getMethodName(),
                         Thread.currentThread().getStackTrace()[2].getLineNumber());
             }
@@ -156,7 +156,7 @@ public InputStream   МетодПолучемJSONОт1СДляСогласова
         e.printStackTrace();
         Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
                 " Линия  :" + Thread.currentThread().getStackTrace()[2].getLineNumber());
-        new Class_Generation_Errors(context).МетодЗаписиВЖурналНовойОшибки(e.toString(),
+        new RecordNewErros(context).recordnewerror(e.toString(),
                 this.getClass().getName(), Thread.currentThread().getStackTrace()[2].getMethodName(),
                 Thread.currentThread().getStackTrace()[2].getLineNumber());
     }
@@ -232,7 +232,7 @@ public InputStream   МетодПолучемJSONОт1СДляСогласова
                     e.printStackTrace();
                     Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() + " Линия  :"
                             + Thread.currentThread().getStackTrace()[2].getLineNumber());
-                    new   Class_Generation_Errors(context).МетодЗаписиВЖурналНовойОшибки(e.toString(),
+                    new RecordNewErros(context).recordnewerror(e.toString(),
                             this.getClass().getName(), Thread.currentThread().getStackTrace()[2].getMethodName(),
                             Thread.currentThread().getStackTrace()[2].getLineNumber());
                 }
@@ -247,7 +247,7 @@ public InputStream   МетодПолучемJSONОт1СДляСогласова
             e.printStackTrace();
             Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
                     " Линия  :" + Thread.currentThread().getStackTrace()[2].getLineNumber());
-            new Class_Generation_Errors(context).МетодЗаписиВЖурналНовойОшибки(e.toString(),
+            new RecordNewErros(context).recordnewerror(e.toString(),
                     this.getClass().getName(), Thread.currentThread().getStackTrace()[2].getMethodName(),
                     Thread.currentThread().getStackTrace()[2].getLineNumber());
         }
@@ -321,7 +321,7 @@ public InputStream   МетодПолучемJSONОт1СДляСогласова
                     e.printStackTrace();
                     Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() + " Линия  :"
                             + Thread.currentThread().getStackTrace()[2].getLineNumber());
-                    new   Class_Generation_Errors(context).МетодЗаписиВЖурналНовойОшибки(e.toString(),
+                    new RecordNewErros(context).recordnewerror(e.toString(),
                             this.getClass().getName(), Thread.currentThread().getStackTrace()[2].getMethodName(),
                             Thread.currentThread().getStackTrace()[2].getLineNumber());
                 }
@@ -342,7 +342,7 @@ public InputStream   МетодПолучемJSONОт1СДляСогласова
             ///метод запись ошибок в таблицу
             Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
                     " Линия  :" + Thread.currentThread().getStackTrace()[2].getLineNumber());
-            new Class_Generation_Errors(context).МетодЗаписиВЖурналНовойОшибки(e.toString(),
+            new RecordNewErros(context).recordnewerror(e.toString(),
                     this.getClass().getName(), Thread.currentThread().getStackTrace()[2].getMethodName(),
                     Thread.currentThread().getStackTrace()[2].getLineNumber());
         }
@@ -435,7 +435,7 @@ public InputStream   МетодПолучемJSONОт1СДляСогласова
                     e.printStackTrace();
                     Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
                             " Линия  :" + Thread.currentThread().getStackTrace()[2].getLineNumber());
-                    new Class_Generation_Errors(context).МетодЗаписиВЖурналНовойОшибки(e.toString(),
+                    new RecordNewErros(context).recordnewerror(e.toString(),
                             this.getClass().getName(), Thread.currentThread().getStackTrace()[2].getMethodName(),
                             Thread.currentThread().getStackTrace()[2].getLineNumber());
                 }
@@ -469,7 +469,7 @@ public InputStream   МетодПолучемJSONОт1СДляСогласова
                     e.printStackTrace();
                     Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
                             " Линия  :" + Thread.currentThread().getStackTrace()[2].getLineNumber());
-                    new Class_Generation_Errors(context).МетодЗаписиВЖурналНовойОшибки(e.toString(),
+                    new RecordNewErros(context).recordnewerror(e.toString(),
                             this.getClass().getName(), Thread.currentThread().getStackTrace()[2].getMethodName(),
                             Thread.currentThread().getStackTrace()[2].getLineNumber());
                     }}
@@ -481,7 +481,7 @@ public InputStream   МетодПолучемJSONОт1СДляСогласова
             e.printStackTrace();
             Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
                     " Линия  :" + Thread.currentThread().getStackTrace()[2].getLineNumber());
-            new Class_Generation_Errors(context).МетодЗаписиВЖурналНовойОшибки(e.toString(),
+            new RecordNewErros(context).recordnewerror(e.toString(),
                     this.getClass().getName(), Thread.currentThread().getStackTrace()[2].getMethodName(),
                     Thread.currentThread().getStackTrace()[2].getLineNumber());
         }
@@ -552,7 +552,7 @@ public InputStream   МетодПолучемJSONОт1СДляСогласова
                             e.printStackTrace();
                             Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
                                     " Линия  :" + Thread.currentThread().getStackTrace()[2].getLineNumber());
-                            new Class_Generation_Errors(context).МетодЗаписиВЖурналНовойОшибки(e.toString(),
+                            new RecordNewErros(context).recordnewerror(e.toString(),
                                     this.getClass().getName(), Thread.currentThread().getStackTrace()[2].getMethodName(),
                                     Thread.currentThread().getStackTrace()[2].getLineNumber());
                         }
@@ -591,7 +591,7 @@ public InputStream   МетодПолучемJSONОт1СДляСогласова
                             e.printStackTrace();
                             Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
                                     " Линия  :" + Thread.currentThread().getStackTrace()[2].getLineNumber());
-                            new Class_Generation_Errors(context).МетодЗаписиВЖурналНовойОшибки(e.toString(),
+                            new RecordNewErros(context).recordnewerror(e.toString(),
                                     this.getClass().getName(), Thread.currentThread().getStackTrace()[2].getMethodName(),
                                     Thread.currentThread().getStackTrace()[2].getLineNumber());
                         }}
@@ -604,7 +604,7 @@ public InputStream   МетодПолучемJSONОт1СДляСогласова
             e.printStackTrace();
             Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
                     " Линия  :" + Thread.currentThread().getStackTrace()[2].getLineNumber());
-            new Class_Generation_Errors(context).МетодЗаписиВЖурналНовойОшибки(e.toString(),
+            new RecordNewErros(context).recordnewerror(e.toString(),
                     this.getClass().getName(), Thread.currentThread().getStackTrace()[2].getMethodName(),
                     Thread.currentThread().getStackTrace()[2].getLineNumber());
         }
@@ -656,7 +656,7 @@ public InputStream   МетодПолучемJSONОт1СДляСогласова
             e.printStackTrace();
             Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
                     " Линия  :" + Thread.currentThread().getStackTrace()[2].getLineNumber());
-            new Class_Generation_Errors(context).МетодЗаписиВЖурналНовойОшибки(e.toString(), this.getClass().getName(),
+            new RecordNewErros(context).recordnewerror(e.toString(), this.getClass().getName(),
                     Thread.currentThread().getStackTrace()[2].getMethodName(), Thread.currentThread().getStackTrace()[2].getLineNumber());
         }
         return jsonNode1сСогласования;
@@ -702,7 +702,7 @@ public InputStream   МетодПолучемJSONОт1СДляСогласова
         e.printStackTrace();
         Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
                 " Линия  :" + Thread.currentThread().getStackTrace()[2].getLineNumber());
-        new Class_Generation_Errors(context).МетодЗаписиВЖурналНовойОшибки(e.toString(), this.getClass().getName(),
+        new RecordNewErros(context).recordnewerror(e.toString(), this.getClass().getName(),
                 Thread.currentThread().getStackTrace()[2].getMethodName(), Thread.currentThread().getStackTrace()[2].getLineNumber());
     }
       return JsonByte1cPayCommit;

@@ -4,21 +4,17 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.res.ColorStateList;
 import android.graphics.Color;
-import android.graphics.drawable.ClipDrawable;
 import android.graphics.drawable.Drawable;
-import android.graphics.drawable.ShapeDrawable;
-import android.graphics.drawable.shapes.RoundRectShape;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
-import android.view.Gravity;
 import android.widget.ProgressBar;
 
 import androidx.annotation.MainThread;
 import androidx.annotation.NonNull;
 
 import com.dsy.dsu.BootAndAsync.EventsBus.MessageEvensBusPrograssBar;
-import com.dsy.dsu.Errors.Class_Generation_Errors;
+import com.dsy.dsu.Errors.controller.RecordNewErros;
 
 import java.util.Optional;
 
@@ -64,7 +60,7 @@ public class Bl_ComponentPrograssbar {
             e.printStackTrace();
             Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() + " Линия  :"
                     + Thread.currentThread().getStackTrace()[2].getLineNumber());
-            new Class_Generation_Errors(context).МетодЗаписиВЖурналНовойОшибки(e.toString(),
+            new RecordNewErros(context).recordnewerror(e.toString(),
                     this.getClass().getName(), Thread.currentThread().getStackTrace()[2].getMethodName(),
                     Thread.currentThread().getStackTrace()[2].getLineNumber());
         }
@@ -140,7 +136,7 @@ public class Bl_ComponentPrograssbar {
                 e.printStackTrace();
                 Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() + " Линия  :"
                         + Thread.currentThread().getStackTrace()[2].getLineNumber());
-                new Class_Generation_Errors(context).МетодЗаписиВЖурналНовойОшибки(e.toString(),
+                new RecordNewErros(context).recordnewerror(e.toString(),
                         this.getClass().getName(), Thread.currentThread().getStackTrace()[2].getMethodName(),
                         Thread.currentThread().getStackTrace()[2].getLineNumber());
             }
@@ -157,7 +153,7 @@ public class Bl_ComponentPrograssbar {
             e.printStackTrace();
             Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() + " Линия  :"
                     + Thread.currentThread().getStackTrace()[2].getLineNumber());
-            new Class_Generation_Errors(context).МетодЗаписиВЖурналНовойОшибки(e.toString(),
+            new RecordNewErros(context).recordnewerror(e.toString(),
                     this.getClass().getName(), Thread.currentThread().getStackTrace()[2].getMethodName(),
                     Thread.currentThread().getStackTrace()[2].getLineNumber());
         }

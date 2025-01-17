@@ -1,27 +1,15 @@
 package com.dsy.dsu.WorkManagers.BL_WorkMangers;
 
 import android.content.Context;
-import android.content.Intent;
-import android.os.Bundle;
 import android.util.Log;
 
 import androidx.annotation.NonNull;
-import androidx.lifecycle.Lifecycle;
 import androidx.lifecycle.LifecycleOwner;
-import androidx.lifecycle.Observer;
 import androidx.work.Data;
 import androidx.work.WorkInfo;
 import androidx.work.WorkManager;
 
-import com.dsy.dsu.BootAndAsync.EventsBus.MessageEvensBusEndAync;
-import com.dsy.dsu.Errors.Class_Generation_Errors;
-import com.google.common.util.concurrent.AtomicDouble;
-
-import org.greenrobot.eventbus.EventBus;
-
-import java.util.Date;
-import java.util.List;
-import java.util.function.Consumer;
+import com.dsy.dsu.Errors.controller.RecordNewErros;
 
 public class WorkInfoStates {
 
@@ -55,7 +43,7 @@ public class WorkInfoStates {
             Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" +
                     Thread.currentThread().getStackTrace()[2].getMethodName() +
                     " Линия  :" + Thread.currentThread().getStackTrace()[2].getLineNumber());
-            new Class_Generation_Errors(context).МетодЗаписиВЖурналНовойОшибки(e.toString(), this.getClass().getName(),
+            new RecordNewErros(context).recordnewerror(e.toString(), this.getClass().getName(),
                     Thread.currentThread().getStackTrace()[2].getMethodName(),
                     Thread.currentThread().getStackTrace()[2].getLineNumber());
         }

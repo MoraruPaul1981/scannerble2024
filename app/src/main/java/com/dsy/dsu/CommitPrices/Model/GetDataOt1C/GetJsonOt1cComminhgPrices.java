@@ -5,15 +5,10 @@ import android.util.Log;
 
 import androidx.annotation.NonNull;
 
-import com.dsy.dsu.Errors.Class_Generation_Errors;
+import com.dsy.dsu.Errors.controller.RecordNewErros;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.google.common.io.ByteSource;
 
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.nio.charset.StandardCharsets;
 import java.util.Optional;
 import java.util.concurrent.TimeUnit;
 
@@ -119,7 +114,7 @@ public class GetJsonOt1cComminhgPrices extends  GetJsonOt1cComminhgPricesParent 
                     e.printStackTrace();
                     Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() + " Линия  :"
                             + Thread.currentThread().getStackTrace()[2].getLineNumber());
-                    new Class_Generation_Errors(context).МетодЗаписиВЖурналНовойОшибки(e.toString(),
+                    new RecordNewErros(context).recordnewerror(e.toString(),
                             this.getClass().getName(), Thread.currentThread().getStackTrace()[2].getMethodName(),
                             Thread.currentThread().getStackTrace()[2].getLineNumber());
                 }
@@ -140,7 +135,7 @@ public class GetJsonOt1cComminhgPrices extends  GetJsonOt1cComminhgPricesParent 
         e.printStackTrace();
         Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
                 " Линия  :" + Thread.currentThread().getStackTrace()[2].getLineNumber());
-        new Class_Generation_Errors(context).МетодЗаписиВЖурналНовойОшибки(e.toString(), this.getClass().getName(),
+        new RecordNewErros(context).recordnewerror(e.toString(), this.getClass().getName(),
                 Thread.currentThread().getStackTrace()[2].getMethodName(), Thread.currentThread().getStackTrace()[2].getLineNumber());
     }
         return getbyteComminhgPrices[0];

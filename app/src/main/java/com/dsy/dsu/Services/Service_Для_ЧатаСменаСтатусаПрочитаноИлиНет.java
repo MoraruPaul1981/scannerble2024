@@ -21,7 +21,7 @@ import androidx.annotation.Nullable;
 import com.dsy.dsu.AllDatabases.SQLTE.GetSQLiteDatabase;
 import com.dsy.dsu.BusinessLogicAll.Class_GRUD_SQL_Operations;
 import com.dsy.dsu.BusinessLogicAll.DATE.Class_Generation_Data;
-import com.dsy.dsu.Errors.Class_Generation_Errors;
+import com.dsy.dsu.Errors.controller.RecordNewErros;
 import com.dsy.dsu.BusinessLogicAll.Class_Generation_UUID;
 import com.dsy.dsu.BusinessLogicAll.Class_MODEL_synchronized;
 import com.dsy.dsu.CnangeServers.PUBLIC_CONTENT;
@@ -57,7 +57,7 @@ public class Service_Для_ЧатаСменаСтатусаПрочитаноИ
     private SQLiteDatabase sqLiteDatabase ;
     private  Class_MODEL_synchronized  modelДляФрагментаДляОперацииЗаписиНовгоСтатусаПрочитанного ;
     private PUBLIC_CONTENT   Class_Engine_SQLГдеНаходитьсяМенеджерПотоков ;
-    private Class_Generation_Errors class_generation_errors;
+    private RecordNewErros recordNewErros;
 
 
     public Service_Для_ЧатаСменаСтатусаПрочитаноИлиНет() {
@@ -122,7 +122,7 @@ public class Service_Для_ЧатаСменаСтатусаПрочитаноИ
         e.printStackTrace();
         Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
                 " Линия  :" + Thread.currentThread().getStackTrace()[2].getLineNumber());
-        new Class_Generation_Errors(getApplicationContext()).МетодЗаписиВЖурналНовойОшибки(e.toString(),
+        new RecordNewErros(getApplicationContext()).recordnewerror(e.toString(),
                 this.getClass().getName(),
                 Thread.currentThread().getStackTrace()[2].getMethodName(), Thread.currentThread().getStackTrace()[2].getLineNumber());
     }
@@ -188,7 +188,7 @@ public class Service_Для_ЧатаСменаСтатусаПрочитаноИ
             e.printStackTrace();
             Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
                     " Линия  :" + Thread.currentThread().getStackTrace()[2].getLineNumber());
-            new Class_Generation_Errors(context).МетодЗаписиВЖурналНовойОшибки(e.toString(), this.getClass().getName(),
+            new RecordNewErros(context).recordnewerror(e.toString(), this.getClass().getName(),
                     Thread.currentThread().getStackTrace()[2].getMethodName(), Thread.currentThread().getStackTrace()[2].getLineNumber());
         }
 
@@ -215,7 +215,7 @@ public class Service_Для_ЧатаСменаСтатусаПрочитаноИ
            class_grud_sql_operations = new Class_GRUD_SQL_Operations(context);
          modelДляФрагментаДляОперацииЗаписиНовгоСтатусаПрочитанного = new Class_MODEL_synchronized(context);
              Class_Engine_SQLГдеНаходитьсяМенеджерПотоков = new PUBLIC_CONTENT(context);
-            class_generation_errors=new Class_Generation_Errors(context);
+            recordNewErros =new RecordNewErros(context);
 
             // TODO: 15.07.2022
 
@@ -241,7 +241,7 @@ public class Service_Для_ЧатаСменаСтатусаПрочитаноИ
             e.printStackTrace();
             Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
                     " Линия  :" + Thread.currentThread().getStackTrace()[2].getLineNumber());
-            class_generation_errors.МетодЗаписиВЖурналНовойОшибки(e.toString(),
+            recordNewErros.recordnewerror(e.toString(),
                     this.getClass().getName(),
                     Thread.currentThread().getStackTrace()[2].getMethodName(), Thread.currentThread().getStackTrace()[2].getLineNumber());
         }
@@ -262,7 +262,7 @@ public class Service_Для_ЧатаСменаСтатусаПрочитаноИ
             class_grud_sql_operations = new Class_GRUD_SQL_Operations(context);
             modelДляФрагментаДляОперацииЗаписиНовгоСтатусаПрочитанного = new Class_MODEL_synchronized(context);
             Class_Engine_SQLГдеНаходитьсяМенеджерПотоков = new PUBLIC_CONTENT(context);
-            class_generation_errors=new Class_Generation_Errors(context);
+            recordNewErros =new RecordNewErros(context);
 
             Log.i(context.getClass().getName(),
                     " ПолученыйУжеСуществующийUUIDИзПерепискиДляЧата    " +ПолученыйУжеСуществующийUUIDИзПерепискиДляЧата);//todo super.onBind(intent)
@@ -297,7 +297,7 @@ public class Service_Для_ЧатаСменаСтатусаПрочитаноИ
             e.printStackTrace();
             Log.e(context.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
                     " Линия  :" + Thread.currentThread().getStackTrace()[2].getLineNumber());
-            class_generation_errors.МетодЗаписиВЖурналНовойОшибки(e.toString(),
+            recordNewErros.recordnewerror(e.toString(),
                     context.getClass().getName(),
                     Thread.currentThread().getStackTrace()[2].getMethodName(), Thread.currentThread().getStackTrace()[2].getLineNumber());
         }
@@ -326,7 +326,7 @@ private Long МетодЗаписиНовогоСообщенияТольков�
         class_grud_sql_operations = new Class_GRUD_SQL_Operations(context);
         modelДляФрагментаДляОперацииЗаписиНовгоСтатусаПрочитанного = new Class_MODEL_synchronized(context);
         Class_Engine_SQLГдеНаходитьсяМенеджерПотоков = new PUBLIC_CONTENT(context);
-        class_generation_errors=new Class_Generation_Errors(context);
+        recordNewErros =new RecordNewErros(context);
 
 
         LinkedBlockingQueue<Integer> linkedBlockingQueueДляЗаписиСразуДвестрокиЧатОДляКого = new LinkedBlockingQueue();
@@ -374,7 +374,7 @@ private Long МетодЗаписиНовогоСообщенияТольков�
             e.printStackTrace();
             Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
                     " Линия  :" + Thread.currentThread().getStackTrace()[2].getLineNumber());
-            class_generation_errors.МетодЗаписиВЖурналНовойОшибки(e.toString(),
+            recordNewErros.recordnewerror(e.toString(),
                     this.getClass().getName(),
                     Thread.currentThread().getStackTrace()[2].getMethodName(), Thread.currentThread().getStackTrace()[2].getLineNumber());
         }
@@ -386,7 +386,7 @@ private Long МетодЗаписиНовогоСообщенияТольков�
         e.printStackTrace();
         Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
                 " Линия  :" + Thread.currentThread().getStackTrace()[2].getLineNumber());
-        class_generation_errors.МетодЗаписиВЖурналНовойОшибки(e.toString(),
+        recordNewErros.recordnewerror(e.toString(),
                 this.getClass().getName(),
                 Thread.currentThread().getStackTrace()[2].getMethodName(), Thread.currentThread().getStackTrace()[2].getLineNumber());
     }
@@ -412,7 +412,7 @@ private Long МетодЗаписиНовогоСообщенияТольков�
             class_grud_sql_operations = new Class_GRUD_SQL_Operations(context);
             modelДляФрагментаДляОперацииЗаписиНовгоСтатусаПрочитанного = new Class_MODEL_synchronized(context);
             Class_Engine_SQLГдеНаходитьсяМенеджерПотоков = new PUBLIC_CONTENT(context);
-            class_generation_errors=new Class_Generation_Errors(context);
+            recordNewErros =new RecordNewErros(context);
 
             final String ТаблицаВторойОбработкиДляТаблицыДата_Табеля = "data_chat";
 
@@ -453,7 +453,7 @@ private Long МетодЗаписиНовогоСообщенияТольков�
             e.printStackTrace();
             Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
                     " Линия  :" + Thread.currentThread().getStackTrace()[2].getLineNumber());
-            class_generation_errors.МетодЗаписиВЖурналНовойОшибки(e.toString(),
+            recordNewErros.recordnewerror(e.toString(),
                     this.getClass().getName(),
                     Thread.currentThread().getStackTrace()[2].getMethodName(), Thread.currentThread().getStackTrace()[2].getLineNumber());
         }
@@ -474,7 +474,7 @@ private Long МетодЗаписиНовогоСообщенияТольков�
             class_grud_sql_operations = new Class_GRUD_SQL_Operations(context);
             modelДляФрагментаДляОперацииЗаписиНовгоСтатусаПрочитанного = new Class_MODEL_synchronized(context);
             Class_Engine_SQLГдеНаходитьсяМенеджерПотоков = new PUBLIC_CONTENT(context);
-            class_generation_errors=new Class_Generation_Errors(context);
+            recordNewErros =new RecordNewErros(context);
 
 
             // TODO: 15.07.2022
@@ -497,7 +497,7 @@ private Long МетодЗаписиНовогоСообщенияТольков�
             e.printStackTrace();
             Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
                     " Линия  :" + Thread.currentThread().getStackTrace()[2].getLineNumber());
-            class_generation_errors.МетодЗаписиВЖурналНовойОшибки(e.toString(),
+            recordNewErros.recordnewerror(e.toString(),
                     this.getClass().getName(),
                     Thread.currentThread().getStackTrace()[2].getMethodName(), Thread.currentThread().getStackTrace()[2].getLineNumber());
         }
@@ -520,7 +520,7 @@ private Long МетодЗаписиНовогоСообщенияТольков�
             class_grud_sql_operations = new Class_GRUD_SQL_Operations(context);
             modelДляФрагментаДляОперацииЗаписиНовгоСтатусаПрочитанного = new Class_MODEL_synchronized(context);
             Class_Engine_SQLГдеНаходитьсяМенеджерПотоков = new PUBLIC_CONTENT(context);
-            class_generation_errors=new Class_Generation_Errors(context);
+            recordNewErros =new RecordNewErros(context);
 
             
             class_grud_sql_operations.
@@ -561,7 +561,7 @@ private Long МетодЗаписиНовогоСообщенияТольков�
             e.printStackTrace();
             Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
                     " Линия  :" + Thread.currentThread().getStackTrace()[2].getLineNumber());
-            class_generation_errors.МетодЗаписиВЖурналНовойОшибки(e.toString(), this.getClass().getName(),
+            recordNewErros.recordnewerror(e.toString(), this.getClass().getName(),
                     Thread.currentThread().getStackTrace()[2].getMethodName(), Thread.currentThread().getStackTrace()[2].getLineNumber());
             ПолученныйРезультаЗаписьЖирнаяИлиНет = false;
         }
@@ -584,7 +584,7 @@ private Long МетодЗаписиНовогоСообщенияТольков�
             class_grud_sql_operations = new Class_GRUD_SQL_Operations(context);
             modelДляФрагментаДляОперацииЗаписиНовгоСтатусаПрочитанного = new Class_MODEL_synchronized(context);
             Class_Engine_SQLГдеНаходитьсяМенеджерПотоков = new PUBLIC_CONTENT(context);
-            class_generation_errors=new Class_Generation_Errors(context);
+            recordNewErros =new RecordNewErros(context);
 
             // TODO: 15.07.2022  смены статуса
 
@@ -616,7 +616,7 @@ private Long МетодЗаписиНовогоСообщенияТольков�
             e.printStackTrace();
             Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
                     " Линия  :" + Thread.currentThread().getStackTrace()[2].getLineNumber());
-            class_generation_errors.МетодЗаписиВЖурналНовойОшибки(e.toString(),
+            recordNewErros.recordnewerror(e.toString(),
                     this.getClass().getName(),
                     Thread.currentThread().getStackTrace()[2].getMethodName(), Thread.currentThread().getStackTrace()[2].getLineNumber());
         }
@@ -637,7 +637,7 @@ private Long МетодЗаписиНовогоСообщенияТольков�
             class_grud_sql_operations = new Class_GRUD_SQL_Operations(context);
             modelДляФрагментаДляОперацииЗаписиНовгоСтатусаПрочитанного = new Class_MODEL_synchronized(context);
             Class_Engine_SQLГдеНаходитьсяМенеджерПотоков = new PUBLIC_CONTENT(context);
-            class_generation_errors=new Class_Generation_Errors(context);
+            recordNewErros =new RecordNewErros(context);
 
             // TODO: 15.07.2022
             String ФиналДата = null;
@@ -655,7 +655,7 @@ private Long МетодЗаписиНовогоСообщенияТольков�
                 e.printStackTrace();
                 Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() + " Линия  :"
                         + Thread.currentThread().getStackTrace()[2].getLineNumber());
-                class_generation_errors.МетодЗаписиВЖурналНовойОшибки(e.toString(),
+                recordNewErros.recordnewerror(e.toString(),
                         this.getClass().getName(), Thread.currentThread().getStackTrace()[2].getMethodName(),
                         Thread.currentThread().getStackTrace()[2].getLineNumber());
 
@@ -682,7 +682,7 @@ private Long МетодЗаписиНовогоСообщенияТольков�
             e.printStackTrace();
             Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
                     " Линия  :" + Thread.currentThread().getStackTrace()[2].getLineNumber());
-            class_generation_errors.МетодЗаписиВЖурналНовойОшибки(e.toString(), this.getClass().getName(),
+            recordNewErros.recordnewerror(e.toString(), this.getClass().getName(),
                     Thread.currentThread().getStackTrace()[2].getMethodName(), Thread.currentThread().getStackTrace()[2].getLineNumber());
         }
         return БуферПолученойФИОиДатаСообещния;
@@ -704,7 +704,7 @@ private Long МетодЗаписиНовогоСообщенияТольков�
             class_grud_sql_operations = new Class_GRUD_SQL_Operations(context);
             modelДляФрагментаДляОперацииЗаписиНовгоСтатусаПрочитанного = new Class_MODEL_synchronized(context);
             Class_Engine_SQLГдеНаходитьсяМенеджерПотоков = new PUBLIC_CONTENT(context);
-            class_generation_errors=new Class_Generation_Errors(context);
+            recordNewErros =new RecordNewErros(context);
 
 
 
@@ -718,7 +718,7 @@ private Long МетодЗаписиНовогоСообщенияТольков�
                 e.printStackTrace();
                 Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() + " Линия  :"
                         + Thread.currentThread().getStackTrace()[2].getLineNumber());
-                class_generation_errors.МетодЗаписиВЖурналНовойОшибки(e.toString(),
+                recordNewErros.recordnewerror(e.toString(),
                         this.getClass().getName(), Thread.currentThread().getStackTrace()[2].getMethodName(),
                         Thread.currentThread().getStackTrace()[2].getLineNumber());
 
@@ -769,7 +769,7 @@ private Long МетодЗаписиНовогоСообщенияТольков�
             e.printStackTrace();
             Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
                     " Линия  :" + Thread.currentThread().getStackTrace()[2].getLineNumber());
-            class_generation_errors.МетодЗаписиВЖурналНовойОшибки(e.toString(), this.getClass().getName(),
+            recordNewErros.recordnewerror(e.toString(), this.getClass().getName(),
                     Thread.currentThread().getStackTrace()[2].getMethodName(), Thread.currentThread().getStackTrace()[2].getLineNumber());
         }
         return БуферПолученойФИОиДатаСообещния;
@@ -809,7 +809,7 @@ private Long МетодЗаписиНовогоСообщенияТольков�
             e.printStackTrace();
             Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
                     " Линия  :" + Thread.currentThread().getStackTrace()[2].getLineNumber());
-            class_generation_errors.МетодЗаписиВЖурналНовойОшибки(e.toString(), this.getClass().getName(),
+            recordNewErros.recordnewerror(e.toString(), this.getClass().getName(),
                     Thread.currentThread().getStackTrace()[2].getMethodName(), Thread.currentThread().getStackTrace()[2].getLineNumber());
         }
     }

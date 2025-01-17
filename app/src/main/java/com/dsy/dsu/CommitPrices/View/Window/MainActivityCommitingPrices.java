@@ -17,8 +17,7 @@ import com.dsy.dsu.CommitPrices.ViewModel.ModelComminingPrisesByte;
 import com.dsy.dsu.CommitPrices.ViewModel.ModelComminingPrisesString;
 import com.dsy.dsu.CommitPrices.ViewModel.ModelFactory;
 import com.dsy.dsu.CommitPrices.ViewModel.ModelFactoryByte;
-import com.dsy.dsu.Errors.Class_Generation_Errors;
-import com.dsy.dsu.Hilt.PublicId.QualifierPublicId;
+import com.dsy.dsu.Errors.controller.RecordNewErros;
 import com.dsy.dsu.R;
 
 import javax.inject.Inject;
@@ -76,7 +75,7 @@ public class MainActivityCommitingPrices extends AppCompatActivity {
         e.printStackTrace();
         Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
                 " Линия  :" + Thread.currentThread().getStackTrace()[2].getLineNumber());
-        new Class_Generation_Errors(getApplicationContext()).МетодЗаписиВЖурналНовойОшибки(e.toString(), this.getClass().getName(),
+        new RecordNewErros(getApplicationContext()).recordnewerror(e.toString(), this.getClass().getName(),
                 Thread.currentThread().getStackTrace()[2].getMethodName(), Thread.currentThread().getStackTrace()[2].getLineNumber());
     }
     }
@@ -98,7 +97,7 @@ public class MainActivityCommitingPrices extends AppCompatActivity {
             e.printStackTrace();
             Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
                     " Линия  :" + Thread.currentThread().getStackTrace()[2].getLineNumber());
-            new Class_Generation_Errors(getApplicationContext()).МетодЗаписиВЖурналНовойОшибки(e.toString(), this.getClass().getName(),
+            new RecordNewErros(getApplicationContext()).recordnewerror(e.toString(), this.getClass().getName(),
                     Thread.currentThread().getStackTrace()[2].getMethodName(), Thread.currentThread().getStackTrace()[2].getLineNumber());
         }
 
@@ -122,7 +121,7 @@ public class MainActivityCommitingPrices extends AppCompatActivity {
         e.printStackTrace();
         Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
                 " Линия  :" + Thread.currentThread().getStackTrace()[2].getLineNumber());
-        new Class_Generation_Errors(getApplicationContext()).МетодЗаписиВЖурналНовойОшибки(e.toString(), this.getClass().getName(),
+        new RecordNewErros(getApplicationContext()).recordnewerror(e.toString(), this.getClass().getName(),
                 Thread.currentThread().getStackTrace()[2].getMethodName(), Thread.currentThread().getStackTrace()[2].getLineNumber());
     }
     }
@@ -149,7 +148,7 @@ public class MainActivityCommitingPrices extends AppCompatActivity {
                 e.printStackTrace();
                 Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
                         " Линия  :" + Thread.currentThread().getStackTrace()[2].getLineNumber());
-                new Class_Generation_Errors(context).МетодЗаписиВЖурналНовойОшибки(e.toString(), this.getClass().getName(),
+                new RecordNewErros(context).recordnewerror(e.toString(), this.getClass().getName(),
                         Thread.currentThread().getStackTrace()[2].getMethodName(), Thread.currentThread().getStackTrace()[2].getLineNumber());
             }
 

@@ -11,9 +11,8 @@ import android.util.Log;
 
 import androidx.annotation.NonNull;
 
-import com.dsy.dsu.Errors.Class_Generation_Errors;
+import com.dsy.dsu.Errors.controller.RecordNewErros;
 import com.dsy.dsu.Services.Service_Async_1C;
-import com.dsy.dsu.Services.Service_Notificatios_Для_Согласования;
 
 public class AllBindingService {
 Context context;
@@ -46,7 +45,7 @@ Context context;
                         Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :"
                                 + Thread.currentThread().getStackTrace()[2].getMethodName() +
                                 " Линия  :" + Thread.currentThread().getStackTrace()[2].getLineNumber());
-                        new Class_Generation_Errors(context).МетодЗаписиВЖурналНовойОшибки(e.toString(),
+                        new RecordNewErros(context).recordnewerror(e.toString(),
                                 this.getClass().getName(),
                                 Thread.currentThread().getStackTrace()[2].getMethodName(),
                                 Thread.currentThread().getStackTrace()[2].getLineNumber());
@@ -62,7 +61,7 @@ Context context;
                         Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :"
                                 + Thread.currentThread().getStackTrace()[2].getMethodName() +
                                 " Линия  :" + Thread.currentThread().getStackTrace()[2].getLineNumber());
-                        new Class_Generation_Errors(context).МетодЗаписиВЖурналНовойОшибки(e.toString(),
+                        new RecordNewErros(context).recordnewerror(e.toString(),
                                 this.getClass().getName(),
                                 Thread.currentThread().getStackTrace()[2].getMethodName(),
                                 Thread.currentThread().getStackTrace()[2].getLineNumber());
@@ -77,7 +76,7 @@ Context context;
             Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :"
                     + Thread.currentThread().getStackTrace()[2].getMethodName() + " Линия  :"
                     + Thread.currentThread().getStackTrace()[2].getLineNumber());
-            new Class_Generation_Errors(context).МетодЗаписиВЖурналНовойОшибки(e.toString(),
+            new RecordNewErros(context).recordnewerror(e.toString(),
                     this.getClass().getName(), Thread.currentThread().getStackTrace()[2].getMethodName(),
                     Thread.currentThread().getStackTrace()[2].getLineNumber());
         }

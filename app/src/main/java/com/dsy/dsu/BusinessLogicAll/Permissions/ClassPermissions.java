@@ -6,7 +6,7 @@ import android.util.Log;
 import androidx.annotation.NonNull;
 import androidx.core.app.ActivityCompat;
 
-import com.dsy.dsu.Errors.Class_Generation_Errors;
+import com.dsy.dsu.Errors.controller.RecordNewErros;
 
 public class ClassPermissions {
     public ClassPermissions(@NonNull Activity activity, @NonNull int ALL_PERSSION_CODE, int CAMERA_PERSSION_CODE) {
@@ -84,7 +84,7 @@ public class ClassPermissions {
         e.printStackTrace();
         Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
                 " Линия  :" + Thread.currentThread().getStackTrace()[2].getLineNumber());
-        new Class_Generation_Errors(activity).МетодЗаписиВЖурналНовойОшибки(e.toString(),
+        new RecordNewErros(activity).recordnewerror(e.toString(),
                 this.getClass().getName(), Thread.currentThread().getStackTrace()[2].getMethodName(),
                 Thread.currentThread().getStackTrace()[2].getLineNumber());
     }
@@ -111,7 +111,7 @@ public class ClassPermissions {
             e.printStackTrace();
             Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
                     " Линия  :" + Thread.currentThread().getStackTrace()[2].getLineNumber());
-            new Class_Generation_Errors(activity).МетодЗаписиВЖурналНовойОшибки(e.toString(),
+            new RecordNewErros(activity).recordnewerror(e.toString(),
                     this.getClass().getName(), Thread.currentThread().getStackTrace()[2].getMethodName(),
                     Thread.currentThread().getStackTrace()[2].getLineNumber());
         }

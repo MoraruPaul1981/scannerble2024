@@ -1,11 +1,8 @@
 package com.dsy.dsu.Dashboard.View.Fragments;
 
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
-import android.os.VibrationEffect;
-import android.os.Vibrator;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -30,7 +27,7 @@ import com.dsy.dsu.AdmissionMaterials.Window.MainActivity_AdmissionMaterials;
 import com.dsy.dsu.CommitPrices.View.Window.MainActivityCommitingPrices;
 
 import com.dsy.dsu.Dashboard.Model.changeaccessrights.DashboardGRANTorREVOKE;
-import com.dsy.dsu.Errors.Class_Generation_Errors;
+import com.dsy.dsu.Errors.controller.RecordNewErros;
 import com.dsy.dsu.OrdersTransports.Window.MainActivityOrdersTransports;
 import com.dsy.dsu.PaysCommit.View.Window.MainActivity_CommitPay;
 import com.dsy.dsu.R;
@@ -154,7 +151,7 @@ public class DashboardFragmentMaterialDesign extends  DialogFragment  {
             Log.e(getContext().getClass().getName(),
                     "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
                             " Линия  :" + Thread.currentThread().getStackTrace()[2].getLineNumber());
-            new Class_Generation_Errors(getContext()).МетодЗаписиВЖурналНовойОшибки(e.toString(),
+            new RecordNewErros(getContext()).recordnewerror(e.toString(),
                     this.getClass().getName().toString(), Thread.currentThread().getStackTrace()[2].getMethodName().toString(),
                     Thread.currentThread().getStackTrace()[2].getLineNumber());
         }
@@ -176,7 +173,7 @@ public class DashboardFragmentMaterialDesign extends  DialogFragment  {
             Log.e(getContext().getClass().getName(),
                     "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
                             " Линия  :" + Thread.currentThread().getStackTrace()[2].getLineNumber());
-            new Class_Generation_Errors(getContext()).МетодЗаписиВЖурналНовойОшибки(e.toString(),
+            new RecordNewErros(getContext()).recordnewerror(e.toString(),
                     this.getClass().getName().toString(), Thread.currentThread().getStackTrace()[2].getMethodName().toString(),
                     Thread.currentThread().getStackTrace()[2].getLineNumber());
         }
@@ -204,7 +201,7 @@ public class DashboardFragmentMaterialDesign extends  DialogFragment  {
             Log.e(getContext().getClass().getName(),
                     "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
                             " Линия  :" + Thread.currentThread().getStackTrace()[2].getLineNumber());
-            new Class_Generation_Errors(getContext()).МетодЗаписиВЖурналНовойОшибки(e.toString(),
+            new RecordNewErros(getContext()).recordnewerror(e.toString(),
                     this.getClass().getName().toString(), Thread.currentThread().getStackTrace()[2].getMethodName().toString(),
                     Thread.currentThread().getStackTrace()[2].getLineNumber());
         }
@@ -232,7 +229,7 @@ public class DashboardFragmentMaterialDesign extends  DialogFragment  {
             Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :"
                     + Thread.currentThread().getStackTrace()[2].getMethodName() + " Линия  :"
                     + Thread.currentThread().getStackTrace()[2].getLineNumber());
-            new   Class_Generation_Errors(getContext()).МетодЗаписиВЖурналНовойОшибки(e.toString(), this.getClass().getName(),
+            new RecordNewErros(getContext()).recordnewerror(e.toString(), this.getClass().getName(),
                     Thread.currentThread().getStackTrace()[2].getMethodName(),
                     Thread.currentThread().getStackTrace()[2].getLineNumber());
         }
@@ -308,7 +305,7 @@ public class DashboardFragmentMaterialDesign extends  DialogFragment  {
             Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :"
                     + Thread.currentThread().getStackTrace()[2].getMethodName() + " Линия  :"
                     + Thread.currentThread().getStackTrace()[2].getLineNumber());
-            new Class_Generation_Errors(getContext()).МетодЗаписиВЖурналНовойОшибки(e.toString(), this.getClass().getName(),
+            new RecordNewErros(getContext()).recordnewerror(e.toString(), this.getClass().getName(),
                     Thread.currentThread().getStackTrace()[2].getMethodName(),
                     Thread.currentThread().getStackTrace()[2].getLineNumber());
         }
@@ -340,7 +337,7 @@ public class DashboardFragmentMaterialDesign extends  DialogFragment  {
             Log.e(getContext().getClass().getName(),
                     "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
                             " Линия  :" + Thread.currentThread().getStackTrace()[2].getLineNumber());
-            new Class_Generation_Errors(getContext()).МетодЗаписиВЖурналНовойОшибки(e.toString(),
+            new RecordNewErros(getContext()).recordnewerror(e.toString(),
                     this.getClass().getName().toString(), Thread.currentThread().getStackTrace()[2].getMethodName().toString(),
                     Thread.currentThread().getStackTrace()[2].getLineNumber());
         }
@@ -372,7 +369,7 @@ public class DashboardFragmentMaterialDesign extends  DialogFragment  {
                 Log.e(getContext().getClass().getName(),
                         "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
                                 " Линия  :" + Thread.currentThread().getStackTrace()[2].getLineNumber());
-                new Class_Generation_Errors(getContext()).МетодЗаписиВЖурналНовойОшибки(e.toString(),
+                new RecordNewErros(getContext()).recordnewerror(e.toString(),
                         this.getClass().getName().toString(), Thread.currentThread().getStackTrace()[2].getMethodName().toString(),
                         Thread.currentThread().getStackTrace()[2].getLineNumber());
             }
@@ -407,7 +404,7 @@ public class DashboardFragmentMaterialDesign extends  DialogFragment  {
                                 Log.e(getContext().getClass().getName(),
                                         "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
                                                 " Линия  :" + Thread.currentThread().getStackTrace()[2].getLineNumber());
-                                new   Class_Generation_Errors(getContext()).МетодЗаписиВЖурналНовойОшибки(e.toString(),
+                                new RecordNewErros(getContext()).recordnewerror(e.toString(),
                                         this.getClass().getName().toString(), Thread.currentThread().getStackTrace()[2].getMethodName().toString(),
                                         Thread.currentThread().getStackTrace()[2].getLineNumber());
                             }
@@ -423,7 +420,7 @@ public class DashboardFragmentMaterialDesign extends  DialogFragment  {
                 Log.e(getContext().getClass().getName(),
                         "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
                                 " Линия  :" + Thread.currentThread().getStackTrace()[2].getLineNumber());
-                new   Class_Generation_Errors(getContext()).МетодЗаписиВЖурналНовойОшибки(e.toString(),
+                new RecordNewErros(getContext()).recordnewerror(e.toString(),
                         this.getClass().getName().toString(), Thread.currentThread().getStackTrace()[2].getMethodName().toString(),
                         Thread.currentThread().getStackTrace()[2].getLineNumber());
             }
@@ -453,7 +450,7 @@ public class DashboardFragmentMaterialDesign extends  DialogFragment  {
                             e.printStackTrace();
                             Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() + " Линия  :"
                                     + Thread.currentThread().getStackTrace()[2].getLineNumber());
-                            new Class_Generation_Errors(getContext()).МетодЗаписиВЖурналНовойОшибки(e.toString(), this.getClass().getName(),
+                            new RecordNewErros(getContext()).recordnewerror(e.toString(), this.getClass().getName(),
                                     Thread.currentThread().getStackTrace()[2].getMethodName(),
                                     Thread.currentThread().getStackTrace()[2].getLineNumber());
                         }
@@ -478,7 +475,7 @@ public class DashboardFragmentMaterialDesign extends  DialogFragment  {
                             e.printStackTrace();
                             Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() + " Линия  :"
                                     + Thread.currentThread().getStackTrace()[2].getLineNumber());
-                            new Class_Generation_Errors(getContext()).МетодЗаписиВЖурналНовойОшибки(e.toString(), this.getClass().getName(),
+                            new RecordNewErros(getContext()).recordnewerror(e.toString(), this.getClass().getName(),
                                     Thread.currentThread().getStackTrace()[2].getMethodName(),
                                     Thread.currentThread().getStackTrace()[2].getLineNumber());
                         }
@@ -505,7 +502,7 @@ public class DashboardFragmentMaterialDesign extends  DialogFragment  {
                             e.printStackTrace();
                             Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() + " Линия  :"
                                     + Thread.currentThread().getStackTrace()[2].getLineNumber());
-                            new Class_Generation_Errors(getContext()).МетодЗаписиВЖурналНовойОшибки(e.toString(), this.getClass().getName(),
+                            new RecordNewErros(getContext()).recordnewerror(e.toString(), this.getClass().getName(),
                                     Thread.currentThread().getStackTrace()[2].getMethodName(),
                                     Thread.currentThread().getStackTrace()[2].getLineNumber());
                         }
@@ -531,7 +528,7 @@ public class DashboardFragmentMaterialDesign extends  DialogFragment  {
                             e.printStackTrace();
                             Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() + " Линия  :"
                                     + Thread.currentThread().getStackTrace()[2].getLineNumber());
-                            new Class_Generation_Errors(getContext()).МетодЗаписиВЖурналНовойОшибки(e.toString(), this.getClass().getName(),
+                            new RecordNewErros(getContext()).recordnewerror(e.toString(), this.getClass().getName(),
                                     Thread.currentThread().getStackTrace()[2].getMethodName(),
                                     Thread.currentThread().getStackTrace()[2].getLineNumber());
                         }
@@ -558,7 +555,7 @@ public class DashboardFragmentMaterialDesign extends  DialogFragment  {
                             e.printStackTrace();
                             Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() + " Линия  :"
                                     + Thread.currentThread().getStackTrace()[2].getLineNumber());
-                            new Class_Generation_Errors(getContext()).МетодЗаписиВЖурналНовойОшибки(e.toString(), this.getClass().getName(),
+                            new RecordNewErros(getContext()).recordnewerror(e.toString(), this.getClass().getName(),
                                     Thread.currentThread().getStackTrace()[2].getMethodName(),
                                     Thread.currentThread().getStackTrace()[2].getLineNumber());
                         }
@@ -586,7 +583,7 @@ public class DashboardFragmentMaterialDesign extends  DialogFragment  {
                             e.printStackTrace();
                             Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() + " Линия  :"
                                     + Thread.currentThread().getStackTrace()[2].getLineNumber());
-                            new Class_Generation_Errors(getContext()).МетодЗаписиВЖурналНовойОшибки(e.toString(), this.getClass().getName(),
+                            new RecordNewErros(getContext()).recordnewerror(e.toString(), this.getClass().getName(),
                                     Thread.currentThread().getStackTrace()[2].getMethodName(),
                                     Thread.currentThread().getStackTrace()[2].getLineNumber());
                         }
@@ -646,7 +643,7 @@ public class DashboardFragmentMaterialDesign extends  DialogFragment  {
                             e.printStackTrace();
                             Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() + " Линия  :"
                                     + Thread.currentThread().getStackTrace()[2].getLineNumber());
-                            new   Class_Generation_Errors(getContext()).МетодЗаписиВЖурналНовойОшибки(e.toString(),
+                            new RecordNewErros(getContext()).recordnewerror(e.toString(),
                                     this.getClass().getName(), Thread.currentThread().getStackTrace()[2].getMethodName(),
                                     Thread.currentThread().getStackTrace()[2].getLineNumber());
                         }
@@ -675,7 +672,7 @@ public class DashboardFragmentMaterialDesign extends  DialogFragment  {
                 e.printStackTrace();
                 Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() + " Линия  :"
                         + Thread.currentThread().getStackTrace()[2].getLineNumber());
-                new   Class_Generation_Errors(getContext()).МетодЗаписиВЖурналНовойОшибки(e.toString(),
+                new RecordNewErros(getContext()).recordnewerror(e.toString(),
                         this.getClass().getName(), Thread.currentThread().getStackTrace()[2].getMethodName(),
                         Thread.currentThread().getStackTrace()[2].getLineNumber());
             }
@@ -703,7 +700,7 @@ public class DashboardFragmentMaterialDesign extends  DialogFragment  {
                 e.printStackTrace();
                 Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() + " Линия  :"
                         + Thread.currentThread().getStackTrace()[2].getLineNumber());
-                new   Class_Generation_Errors(getContext()).МетодЗаписиВЖурналНовойОшибки(e.toString(),
+                new RecordNewErros(getContext()).recordnewerror(e.toString(),
                         this.getClass().getName(), Thread.currentThread().getStackTrace()[2].getMethodName(),
                         Thread.currentThread().getStackTrace()[2].getLineNumber());
             }

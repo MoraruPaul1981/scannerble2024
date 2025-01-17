@@ -10,7 +10,7 @@ import android.util.Log;
 
 import androidx.annotation.NonNull;
 
-import com.dsy.dsu.Errors.Class_Generation_Errors;
+import com.dsy.dsu.Errors.controller.RecordNewErros;
 import com.dsy.dsu.BusinessLogicAll.SubClassCreatingMainAllTables;
 
 import org.jetbrains.annotations.NotNull;
@@ -44,7 +44,7 @@ public class GetSQLiteDatabase extends SQLiteOpenHelper{ ///SQLiteOpenHelper
             e.printStackTrace();
             Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
                     " Линия  :" + Thread.currentThread().getStackTrace()[2].getLineNumber());
-            new Class_Generation_Errors(this.context).МетодЗаписиВЖурналНовойОшибки(e.toString(),
+            new RecordNewErros(this.context).recordnewerror(e.toString(),
                     this.getClass().getName(), Thread.currentThread().getStackTrace()[2].getMethodName(),
                     Thread.currentThread().getStackTrace()[2].getLineNumber());
 
@@ -74,7 +74,7 @@ public class GetSQLiteDatabase extends SQLiteOpenHelper{ ///SQLiteOpenHelper
         e.printStackTrace();
         Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
                 " Линия  :" + Thread.currentThread().getStackTrace()[2].getLineNumber());
-        new Class_Generation_Errors(this.context).МетодЗаписиВЖурналНовойОшибки(e.toString(),
+        new RecordNewErros(this.context).recordnewerror(e.toString(),
                 this.getClass().getName(), Thread.currentThread().getStackTrace()[2].getMethodName(),
                 Thread.currentThread().getStackTrace()[2].getLineNumber());
 
@@ -159,7 +159,7 @@ public class GetSQLiteDatabase extends SQLiteOpenHelper{ ///SQLiteOpenHelper
             e.printStackTrace();
             Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
                     " Линия  :" + Thread.currentThread().getStackTrace()[2].getLineNumber());
-            new   Class_Generation_Errors(context).МетодЗаписиВЖурналНовойОшибки(e.toString(),
+            new RecordNewErros(context).recordnewerror(e.toString(),
                     this.getClass().getName(), Thread.currentThread().getStackTrace()[2].getMethodName(),
                     Thread.currentThread().getStackTrace()[2].getLineNumber());
         }}
@@ -443,7 +443,7 @@ public class GetSQLiteDatabase extends SQLiteOpenHelper{ ///SQLiteOpenHelper
             Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() + " Линия  :"
                     + Thread.currentThread().getStackTrace()[2].getLineNumber());
             // TODO: 01.09.2021 метод вызова
-            new   Class_Generation_Errors(context).МетодЗаписиВЖурналНовойОшибки(e.toString(),
+            new RecordNewErros(context).recordnewerror(e.toString(),
                     this.getClass().getName(), Thread.currentThread().getStackTrace()[2].getMethodName(),
                     Thread.currentThread().getStackTrace()[2].getLineNumber());
         }
@@ -507,7 +507,7 @@ public class GetSQLiteDatabase extends SQLiteOpenHelper{ ///SQLiteOpenHelper
             e.printStackTrace();
             Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() + " Линия  :"
                     + Thread.currentThread().getStackTrace()[2].getLineNumber());
-            new   Class_Generation_Errors(context).МетодЗаписиВЖурналНовойОшибки(e.toString(),
+            new RecordNewErros(context).recordnewerror(e.toString(),
                     this.getClass().getName(), Thread.currentThread().getStackTrace()[2].getMethodName(),
                     Thread.currentThread().getStackTrace()[2].getLineNumber());
 
@@ -940,7 +940,7 @@ public class GetSQLiteDatabase extends SQLiteOpenHelper{ ///SQLiteOpenHelper
             Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() + " Линия  :"
                     + Thread.currentThread().getStackTrace()[2].getLineNumber());
             // TODO: 01.09.2021 метод вызова
-            new   Class_Generation_Errors(context).МетодЗаписиВЖурналНовойОшибки(e.toString(),
+            new RecordNewErros(context).recordnewerror(e.toString(),
                     this.getClass().getName(), Thread.currentThread().getStackTrace()[2].getMethodName(),
                     Thread.currentThread().getStackTrace()[2].getLineNumber());
 
@@ -980,7 +980,7 @@ public class GetSQLiteDatabase extends SQLiteOpenHelper{ ///SQLiteOpenHelper
             e.printStackTrace();
             Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() + " Линия  :"
                     + Thread.currentThread().getStackTrace()[2].getLineNumber());
-            new   Class_Generation_Errors(context).МетодЗаписиВЖурналНовойОшибки(e.toString(),
+            new RecordNewErros(context).recordnewerror(e.toString(),
                     this.getClass().getName(), Thread.currentThread().getStackTrace()[2].getMethodName(),
                     Thread.currentThread().getStackTrace()[2].getLineNumber());
         }
@@ -1006,7 +1006,7 @@ public class GetSQLiteDatabase extends SQLiteOpenHelper{ ///SQLiteOpenHelper
             e.printStackTrace();
             Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() + " Линия  :"
                     + Thread.currentThread().getStackTrace()[2].getLineNumber());
-            new   Class_Generation_Errors(context).МетодЗаписиВЖурналНовойОшибки(e.toString(),
+            new RecordNewErros(context).recordnewerror(e.toString(),
                     this.getClass().getName(), Thread.currentThread().getStackTrace()[2].getMethodName(),
                     Thread.currentThread().getStackTrace()[2].getLineNumber());
         }
@@ -1032,7 +1032,7 @@ public class GetSQLiteDatabase extends SQLiteOpenHelper{ ///SQLiteOpenHelper
             e.printStackTrace();
             Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() + " Линия  :"
                     + Thread.currentThread().getStackTrace()[2].getLineNumber());
-            new   Class_Generation_Errors(context).МетодЗаписиВЖурналНовойОшибки(e.toString(),
+            new RecordNewErros(context).recordnewerror(e.toString(),
                     this.getClass().getName(), Thread.currentThread().getStackTrace()[2].getMethodName(),
                     Thread.currentThread().getStackTrace()[2].getLineNumber());
         }
@@ -1062,7 +1062,7 @@ public class GetSQLiteDatabase extends SQLiteOpenHelper{ ///SQLiteOpenHelper
             e.printStackTrace();
             Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() + " Линия  :"
                     + Thread.currentThread().getStackTrace()[2].getLineNumber());
-            new   Class_Generation_Errors(context).МетодЗаписиВЖурналНовойОшибки(e.toString(),
+            new RecordNewErros(context).recordnewerror(e.toString(),
                     this.getClass().getName(), Thread.currentThread().getStackTrace()[2].getMethodName(),
                     Thread.currentThread().getStackTrace()[2].getLineNumber());
         }
@@ -1085,7 +1085,7 @@ public class GetSQLiteDatabase extends SQLiteOpenHelper{ ///SQLiteOpenHelper
             e.printStackTrace();
             Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() + " Линия  :"
                     + Thread.currentThread().getStackTrace()[2].getLineNumber());
-            new   Class_Generation_Errors(context).МетодЗаписиВЖурналНовойОшибки(e.toString(),
+            new RecordNewErros(context).recordnewerror(e.toString(),
                     this.getClass().getName(), Thread.currentThread().getStackTrace()[2].getMethodName(),
                     Thread.currentThread().getStackTrace()[2].getLineNumber());
         }
@@ -1110,7 +1110,7 @@ public class GetSQLiteDatabase extends SQLiteOpenHelper{ ///SQLiteOpenHelper
             e.printStackTrace();
             Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() + " Линия  :"
                     + Thread.currentThread().getStackTrace()[2].getLineNumber());
-            new   Class_Generation_Errors(context).МетодЗаписиВЖурналНовойОшибки(e.toString(),
+            new RecordNewErros(context).recordnewerror(e.toString(),
                     this.getClass().getName(), Thread.currentThread().getStackTrace()[2].getMethodName(),
                     Thread.currentThread().getStackTrace()[2].getLineNumber());
         }
@@ -1140,7 +1140,7 @@ public class GetSQLiteDatabase extends SQLiteOpenHelper{ ///SQLiteOpenHelper
             e.printStackTrace();
             Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() + " Линия  :"
                     + Thread.currentThread().getStackTrace()[2].getLineNumber());
-            new   Class_Generation_Errors(context).МетодЗаписиВЖурналНовойОшибки(e.toString(),
+            new RecordNewErros(context).recordnewerror(e.toString(),
                     this.getClass().getName(), Thread.currentThread().getStackTrace()[2].getMethodName(),
                     Thread.currentThread().getStackTrace()[2].getLineNumber());
         }
@@ -1161,7 +1161,7 @@ public class GetSQLiteDatabase extends SQLiteOpenHelper{ ///SQLiteOpenHelper
             e.printStackTrace();
             Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() + " Линия  :"
                     + Thread.currentThread().getStackTrace()[2].getLineNumber());
-            new   Class_Generation_Errors(context).МетодЗаписиВЖурналНовойОшибки(e.toString(),
+            new RecordNewErros(context).recordnewerror(e.toString(),
                     this.getClass().getName(), Thread.currentThread().getStackTrace()[2].getMethodName(),
                     Thread.currentThread().getStackTrace()[2].getLineNumber());
         }
@@ -1186,7 +1186,7 @@ public class GetSQLiteDatabase extends SQLiteOpenHelper{ ///SQLiteOpenHelper
             e.printStackTrace();
             Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() + " Линия  :"
                     + Thread.currentThread().getStackTrace()[2].getLineNumber());
-            new   Class_Generation_Errors(context).МетодЗаписиВЖурналНовойОшибки(e.toString(),
+            new RecordNewErros(context).recordnewerror(e.toString(),
                     this.getClass().getName(), Thread.currentThread().getStackTrace()[2].getMethodName(),
                     Thread.currentThread().getStackTrace()[2].getLineNumber());
         }
@@ -1218,7 +1218,7 @@ public class GetSQLiteDatabase extends SQLiteOpenHelper{ ///SQLiteOpenHelper
             e.printStackTrace();
             Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() + " Линия  :"
                     + Thread.currentThread().getStackTrace()[2].getLineNumber());
-            new   Class_Generation_Errors(context).МетодЗаписиВЖурналНовойОшибки(e.toString(),
+            new RecordNewErros(context).recordnewerror(e.toString(),
                     this.getClass().getName(), Thread.currentThread().getStackTrace()[2].getMethodName(),
                     Thread.currentThread().getStackTrace()[2].getLineNumber());
         }
@@ -1243,7 +1243,7 @@ public class GetSQLiteDatabase extends SQLiteOpenHelper{ ///SQLiteOpenHelper
             e.printStackTrace();
             Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() + " Линия  :"
                     + Thread.currentThread().getStackTrace()[2].getLineNumber());
-            new   Class_Generation_Errors(context).МетодЗаписиВЖурналНовойОшибки(e.toString(),
+            new RecordNewErros(context).recordnewerror(e.toString(),
                     this.getClass().getName(), Thread.currentThread().getStackTrace()[2].getMethodName(),
                     Thread.currentThread().getStackTrace()[2].getLineNumber());
         }
@@ -1297,7 +1297,7 @@ public class GetSQLiteDatabase extends SQLiteOpenHelper{ ///SQLiteOpenHelper
             e.printStackTrace();
             Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() + " Линия  :"
                     + Thread.currentThread().getStackTrace()[2].getLineNumber());
-            new   Class_Generation_Errors(context).МетодЗаписиВЖурналНовойОшибки(e.toString(),
+            new RecordNewErros(context).recordnewerror(e.toString(),
                     this.getClass().getName(), Thread.currentThread().getStackTrace()[2].getMethodName(),
                     Thread.currentThread().getStackTrace()[2].getLineNumber());
         }

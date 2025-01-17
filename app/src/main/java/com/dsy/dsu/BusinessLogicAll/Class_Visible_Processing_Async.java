@@ -3,7 +3,7 @@ package com.dsy.dsu.BusinessLogicAll;
 import android.content.Context;
 import android.util.Log;
 
-import com.dsy.dsu.Errors.Class_Generation_Errors;
+import com.dsy.dsu.Errors.controller.RecordNewErros;
 
 import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
@@ -77,7 +77,7 @@ public class Class_Visible_Processing_Async {
             e.printStackTrace();
             Log.e(Class_MODEL_synchronized.class.getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
                     " Линия  :" + Thread.currentThread().getStackTrace()[2].getLineNumber());
-            new Class_Generation_Errors(context).МетодЗаписиВЖурналНовойОшибки(e.toString(), Class_MODEL_synchronized.class.getName(),
+            new RecordNewErros(context).recordnewerror(e.toString(), Class_MODEL_synchronized.class.getName(),
                     Thread.currentThread().getStackTrace()[2].getMethodName(), Thread.currentThread().getStackTrace()[2].getLineNumber());
 
         }

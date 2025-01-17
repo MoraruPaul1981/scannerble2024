@@ -42,7 +42,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.dsy.dsu.BusinessLogicAll.Class_Generations_PUBLIC_CURRENT_ID;
 import com.dsy.dsu.Dashboard.View.MainActivity_Dashboard;
-import com.dsy.dsu.Errors.Class_Generation_Errors;
+import com.dsy.dsu.Errors.controller.RecordNewErros;
 import com.dsy.dsu.Gsons.SubClass_JSON_B_P_GET_1C_shipment_of_materials;
 import com.dsy.dsu.R;
 import com.dsy.dsu.Services.Service_Get1C_ПолучениеДанныхОт1С;
@@ -152,7 +152,7 @@ public class Fragment1_List_Shipment_of_Materials extends Fragment    {
             ///метод запись ошибок в таблицу
             Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
                     " Линия  :" + Thread.currentThread().getStackTrace()[2].getLineNumber());
-            new Class_Generation_Errors(getActivity()).МетодЗаписиВЖурналНовойОшибки(e.toString(), this.getClass().getName(),
+            new RecordNewErros(getActivity()).recordnewerror(e.toString(), this.getClass().getName(),
                     Thread.currentThread().getStackTrace()[2].getMethodName(), Thread.currentThread().getStackTrace()[2].getLineNumber());
             ///
 
@@ -188,7 +188,7 @@ public class Fragment1_List_Shipment_of_Materials extends Fragment    {
             ///метод запись ошибок в таблицу
             Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
                     " Линия  :" + Thread.currentThread().getStackTrace()[2].getLineNumber());
-            new Class_Generation_Errors(getActivity()).МетодЗаписиВЖурналНовойОшибки(e.toString(), this.getClass().getName(),
+            new RecordNewErros(getActivity()).recordnewerror(e.toString(), this.getClass().getName(),
                     Thread.currentThread().getStackTrace()[2].getMethodName(), Thread.currentThread().getStackTrace()[2].getLineNumber());
         }
         return viewДляПервойКнопкиОтказалМатерилов;
@@ -231,7 +231,7 @@ public class Fragment1_List_Shipment_of_Materials extends Fragment    {
             ///метод запись ошибок в таблицу
             Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
                     " Линия  :" + Thread.currentThread().getStackTrace()[2].getLineNumber());
-            new Class_Generation_Errors(getActivity()).МетодЗаписиВЖурналНовойОшибки(e.toString(), this.getClass().getName(),
+            new RecordNewErros(getActivity()).recordnewerror(e.toString(), this.getClass().getName(),
                     Thread.currentThread().getStackTrace()[2].getMethodName(), Thread.currentThread().getStackTrace()[2].getLineNumber());
         }
     }
@@ -269,7 +269,7 @@ public class Fragment1_List_Shipment_of_Materials extends Fragment    {
         ///метод запись ошибок в таблицу
         Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
                 " Линия  :" + Thread.currentThread().getStackTrace()[2].getLineNumber());
-        new Class_Generation_Errors(getActivity()).МетодЗаписиВЖурналНовойОшибки(e.toString(), this.getClass().getName(),
+        new RecordNewErros(getActivity()).recordnewerror(e.toString(), this.getClass().getName(),
                 Thread.currentThread().getStackTrace()[2].getMethodName(), Thread.currentThread().getStackTrace()[2].getLineNumber());
     }
     }
@@ -305,7 +305,7 @@ public class Fragment1_List_Shipment_of_Materials extends Fragment    {
             ///метод запись ошибок в таблицу
             Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
                     " Линия  :" + Thread.currentThread().getStackTrace()[2].getLineNumber());
-            new Class_Generation_Errors(getActivity()).МетодЗаписиВЖурналНовойОшибки(e.toString(), this.getClass().getName(),
+            new RecordNewErros(getActivity()).recordnewerror(e.toString(), this.getClass().getName(),
                     Thread.currentThread().getStackTrace()[2].getMethodName(), Thread.currentThread().getStackTrace()[2].getLineNumber());
         }
     }
@@ -326,7 +326,7 @@ public class Fragment1_List_Shipment_of_Materials extends Fragment    {
             ///метод запись ошибок в таблицу
             Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
                     " Линия  :" + Thread.currentThread().getStackTrace()[2].getLineNumber());
-            new Class_Generation_Errors(getContext()).МетодЗаписиВЖурналНовойОшибки(e.toString(), this.getClass().getName(),
+            new RecordNewErros(getContext()).recordnewerror(e.toString(), this.getClass().getName(),
                     Thread.currentThread().getStackTrace()[2].getMethodName(), Thread.currentThread().getStackTrace()[2].getLineNumber());
         }
     }
@@ -347,7 +347,7 @@ public class Fragment1_List_Shipment_of_Materials extends Fragment    {
                     e.printStackTrace();
                     Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
                             " Линия  :" + Thread.currentThread().getStackTrace()[2].getLineNumber());
-                    new Class_Generation_Errors(getContext()).МетодЗаписиВЖурналНовойОшибки(e.toString(),
+                    new RecordNewErros(getContext()).recordnewerror(e.toString(),
                             this.getClass().getName(),
                             Thread.currentThread().getStackTrace()[2].getMethodName(), Thread.currentThread().getStackTrace()[2].getLineNumber());
                 }
@@ -360,7 +360,7 @@ public class Fragment1_List_Shipment_of_Materials extends Fragment    {
                     e.printStackTrace();
                     Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
                             " Линия  :" + Thread.currentThread().getStackTrace()[2].getLineNumber());
-                    new Class_Generation_Errors(getContext()).МетодЗаписиВЖурналНовойОшибки(e.toString(),
+                    new RecordNewErros(getContext()).recordnewerror(e.toString(),
                             this.getClass().getName(),
                             Thread.currentThread().getStackTrace()[2].getMethodName(), Thread.currentThread().getStackTrace()[2].getLineNumber());
                 }
@@ -435,7 +435,7 @@ public class Fragment1_List_Shipment_of_Materials extends Fragment    {
                 Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
                         " Линия  :" + Thread.currentThread().getStackTrace()[2].getLineNumber());
                 // TODO: 01.09.2021 метод вызова
-                new Class_Generation_Errors(getContext()).МетодЗаписиВЖурналНовойОшибки(e.toString(),
+                new RecordNewErros(getContext()).recordnewerror(e.toString(),
                         this.getClass().getName(), Thread.currentThread().getStackTrace()[2].getMethodName(),
                         Thread.currentThread().getStackTrace()[2].getLineNumber());
                 ///
@@ -494,7 +494,7 @@ public class Fragment1_List_Shipment_of_Materials extends Fragment    {
                 ///метод запись ошибок в таблицу
                 Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
                         " Линия  :" + Thread.currentThread().getStackTrace()[2].getLineNumber());
-                new Class_Generation_Errors(getContext()).МетодЗаписиВЖурналНовойОшибки(e.toString(), this.getClass().getName(),
+                new RecordNewErros(getContext()).recordnewerror(e.toString(), this.getClass().getName(),
                         Thread.currentThread().getStackTrace()[2].getMethodName(), Thread.currentThread().getStackTrace()[2].getLineNumber());
             }
         }
@@ -533,7 +533,7 @@ public class Fragment1_List_Shipment_of_Materials extends Fragment    {
                         ///метод запись ошибок в таблицу
                         Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
                                 " Линия  :" + Thread.currentThread().getStackTrace()[2].getLineNumber());
-                        new Class_Generation_Errors(getContext()).МетодЗаписиВЖурналНовойОшибки(e.toString(), this.getClass().getName(),
+                        new RecordNewErros(getContext()).recordnewerror(e.toString(), this.getClass().getName(),
                                 Thread.currentThread().getStackTrace()[2].getMethodName(), Thread.currentThread().getStackTrace()[2].getLineNumber());
                     }
                 }
@@ -571,7 +571,7 @@ public class Fragment1_List_Shipment_of_Materials extends Fragment    {
                 ///метод запись ошибок в таблицу
                 Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
                         " Линия  :" + Thread.currentThread().getStackTrace()[2].getLineNumber());
-                new Class_Generation_Errors(getContext()).МетодЗаписиВЖурналНовойОшибки(e.toString(), this.getClass().getName(),
+                new RecordNewErros(getContext()).recordnewerror(e.toString(), this.getClass().getName(),
                         Thread.currentThread().getStackTrace()[2].getMethodName(), Thread.currentThread().getStackTrace()[2].getLineNumber());
             }
         }
@@ -595,7 +595,7 @@ public class Fragment1_List_Shipment_of_Materials extends Fragment    {
                 ///метод запись ошибок в таблицу
                 Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
                         " Линия  :" + Thread.currentThread().getStackTrace()[2].getLineNumber());
-                new Class_Generation_Errors(getContext()).МетодЗаписиВЖурналНовойОшибки(e.toString(), this.getClass().getName(),
+                new RecordNewErros(getContext()).recordnewerror(e.toString(), this.getClass().getName(),
                         Thread.currentThread().getStackTrace()[2].getMethodName(), Thread.currentThread().getStackTrace()[2].getLineNumber());
             }
         }
@@ -635,7 +635,7 @@ public class Fragment1_List_Shipment_of_Materials extends Fragment    {
                         ///метод запись ошибок в таблицу
                         Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
                                 " Линия  :" + Thread.currentThread().getStackTrace()[2].getLineNumber());
-                        new Class_Generation_Errors(getContext()).МетодЗаписиВЖурналНовойОшибки(e.toString(), this.getClass().getName(),
+                        new RecordNewErros(getContext()).recordnewerror(e.toString(), this.getClass().getName(),
                                 Thread.currentThread().getStackTrace()[2].getMethodName(), Thread.currentThread().getStackTrace()[2].getLineNumber());
                     }
 
@@ -673,7 +673,7 @@ public class Fragment1_List_Shipment_of_Materials extends Fragment    {
                 ///метод запись ошибок в таблицу
                 Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
                         " Линия  :" + Thread.currentThread().getStackTrace()[2].getLineNumber());
-                new Class_Generation_Errors(getContext()).МетодЗаписиВЖурналНовойОшибки(e.toString(), this.getClass().getName(),
+                new RecordNewErros(getContext()).recordnewerror(e.toString(), this.getClass().getName(),
                         Thread.currentThread().getStackTrace()[2].getMethodName(), Thread.currentThread().getStackTrace()[2].getLineNumber());
             }
 
@@ -743,7 +743,7 @@ public class Fragment1_List_Shipment_of_Materials extends Fragment    {
                             ///метод запись ошибок в таблицу
                             Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
                                     " Линия  :" + Thread.currentThread().getStackTrace()[2].getLineNumber());
-                            new Class_Generation_Errors(getContext()).МетодЗаписиВЖурналНовойОшибки(e.toString(), this.getClass().getName(),
+                            new RecordNewErros(getContext()).recordnewerror(e.toString(), this.getClass().getName(),
                                     Thread.currentThread().getStackTrace()[2].getMethodName(), Thread.currentThread().getStackTrace()[2].getLineNumber());
                             ///
                         }
@@ -756,7 +756,7 @@ public class Fragment1_List_Shipment_of_Materials extends Fragment    {
                 ///метод запись ошибок в таблицу
                 Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
                         " Линия  :" + Thread.currentThread().getStackTrace()[2].getLineNumber());
-                new Class_Generation_Errors(getContext()).МетодЗаписиВЖурналНовойОшибки(e.toString(), this.getClass().getName(),
+                new RecordNewErros(getContext()).recordnewerror(e.toString(), this.getClass().getName(),
                         Thread.currentThread().getStackTrace()[2].getMethodName(), Thread.currentThread().getStackTrace()[2].getLineNumber());
             }
         }
@@ -804,7 +804,7 @@ public class Fragment1_List_Shipment_of_Materials extends Fragment    {
                 ///метод запись ошибок в таблицу
                 Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
                         " Линия  :" + Thread.currentThread().getStackTrace()[2].getLineNumber());
-                new Class_Generation_Errors(getContext()).МетодЗаписиВЖурналНовойОшибки(e.toString(), this.getClass().getName(),
+                new RecordNewErros(getContext()).recordnewerror(e.toString(), this.getClass().getName(),
                         Thread.currentThread().getStackTrace()[2].getMethodName(), Thread.currentThread().getStackTrace()[2].getLineNumber());
             }
         }
@@ -837,7 +837,7 @@ public class Fragment1_List_Shipment_of_Materials extends Fragment    {
                 ///метод запись ошибок в таблицу
                 Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
                         " Линия  :" + Thread.currentThread().getStackTrace()[2].getLineNumber());
-                new Class_Generation_Errors(getContext()).МетодЗаписиВЖурналНовойОшибки(e.toString(), this.getClass().getName(),
+                new RecordNewErros(getContext()).recordnewerror(e.toString(), this.getClass().getName(),
                         Thread.currentThread().getStackTrace()[2].getMethodName(), Thread.currentThread().getStackTrace()[2].getLineNumber());
                 //   mNotificationManagerДляЧАТА.cancel(1);///.cancelAll();
             }
@@ -874,7 +874,7 @@ public class Fragment1_List_Shipment_of_Materials extends Fragment    {
                 ///метод запись ошибок в таблицу
                 Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
                         " Линия  :" + Thread.currentThread().getStackTrace()[2].getLineNumber());
-                new Class_Generation_Errors(getContext()).МетодЗаписиВЖурналНовойОшибки(e.toString(), this.getClass().getName(),
+                new RecordNewErros(getContext()).recordnewerror(e.toString(), this.getClass().getName(),
                         Thread.currentThread().getStackTrace()[2].getMethodName(), Thread.currentThread().getStackTrace()[2].getLineNumber());
                 //   mNotificationManagerДляЧАТА.cancel(1);///.cancelAll();
             }
@@ -933,7 +933,7 @@ public class Fragment1_List_Shipment_of_Materials extends Fragment    {
                 ///метод запись ошибок в таблицу
                 Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
                         " Линия  :" + Thread.currentThread().getStackTrace()[2].getLineNumber());
-                new Class_Generation_Errors(getContext()).МетодЗаписиВЖурналНовойОшибки(e.toString(), this.getClass().getName(),
+                new RecordNewErros(getContext()).recordnewerror(e.toString(), this.getClass().getName(),
                         Thread.currentThread().getStackTrace()[2].getMethodName(), Thread.currentThread().getStackTrace()[2].getLineNumber());
                 //   mNotificationManagerДляЧАТА.cancel(1);///.cancelAll();
             }
@@ -985,7 +985,7 @@ public class Fragment1_List_Shipment_of_Materials extends Fragment    {
                                     ///метод запись ошибок в таблицу
                                     Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
                                             " Линия  :" + Thread.currentThread().getStackTrace()[2].getLineNumber());
-                                    new Class_Generation_Errors(getContext()).МетодЗаписиВЖурналНовойОшибки(e.toString(), this.getClass().getName(),
+                                    new RecordNewErros(getContext()).recordnewerror(e.toString(), this.getClass().getName(),
                                             Thread.currentThread().getStackTrace()[2].getMethodName(), Thread.currentThread().getStackTrace()[2].getLineNumber());
                                 }
                             }
@@ -998,7 +998,7 @@ public class Fragment1_List_Shipment_of_Materials extends Fragment    {
                 ///метод запись ошибок в таблицу
                 Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
                         " Линия  :" + Thread.currentThread().getStackTrace()[2].getLineNumber());
-                new Class_Generation_Errors(getContext()).МетодЗаписиВЖурналНовойОшибки(e.toString(), this.getClass().getName(),
+                new RecordNewErros(getContext()).recordnewerror(e.toString(), this.getClass().getName(),
                         Thread.currentThread().getStackTrace()[2].getMethodName(), Thread.currentThread().getStackTrace()[2].getLineNumber());
                 //   mNotificationManagerДляЧАТА.cancel(1);///.cancelAll();
             }
@@ -1038,7 +1038,7 @@ public class Fragment1_List_Shipment_of_Materials extends Fragment    {
                             e.printStackTrace();
                             Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
                                     " Линия  :" + Thread.currentThread().getStackTrace()[2].getLineNumber());
-                            new Class_Generation_Errors(getActivity()).МетодЗаписиВЖурналНовойОшибки(e.toString(),
+                            new RecordNewErros(getActivity()).recordnewerror(e.toString(),
                                     this.getClass().getName(), Thread.currentThread().getStackTrace()[2].getMethodName(),
                                     Thread.currentThread().getStackTrace()[2].getLineNumber());
                         }
@@ -1083,7 +1083,7 @@ public class Fragment1_List_Shipment_of_Materials extends Fragment    {
                         Log.e(this.getClass().getName(), "Ошибка " + throwable.getMessage().toString()
                                 + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
                                 " Линия  :" + Thread.currentThread().getStackTrace()[2].getLineNumber());
-                        new Class_Generation_Errors(getContext()).МетодЗаписиВЖурналНовойОшибки(throwable.toString(), this.getClass().getName(),
+                        new RecordNewErros(getContext()).recordnewerror(throwable.toString(), this.getClass().getName(),
                                 Thread.currentThread().getStackTrace()[2].getMethodName(), Thread.currentThread().getStackTrace()[2].getLineNumber());
                         return false;
                     }
@@ -1132,7 +1132,7 @@ public class Fragment1_List_Shipment_of_Materials extends Fragment    {
                                 ///метод запись ошибок в таблицу
                                 Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
                                         " Линия  :" + Thread.currentThread().getStackTrace()[2].getLineNumber());
-                                new Class_Generation_Errors(getContext()).МетодЗаписиВЖурналНовойОшибки(e.toString(), this.getClass().getName(),
+                                new RecordNewErros(getContext()).recordnewerror(e.toString(), this.getClass().getName(),
                                         Thread.currentThread().getStackTrace()[2].getMethodName(), Thread.currentThread().getStackTrace()[2].getLineNumber());
                             }
                     }
@@ -1147,7 +1147,7 @@ public class Fragment1_List_Shipment_of_Materials extends Fragment    {
                                 ///метод запись ошибок в таблицу
                                 Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
                                         " Линия  :" + Thread.currentThread().getStackTrace()[2].getLineNumber());
-                                new Class_Generation_Errors(getContext()).МетодЗаписиВЖурналНовойОшибки(e.toString(), this.getClass().getName(),
+                                new RecordNewErros(getContext()).recordnewerror(e.toString(), this.getClass().getName(),
                                         Thread.currentThread().getStackTrace()[2].getMethodName(), Thread.currentThread().getStackTrace()[2].getLineNumber());
                             }
                             }
@@ -1165,7 +1165,7 @@ public class Fragment1_List_Shipment_of_Materials extends Fragment    {
                                 ///метод запись ошибок в таблицу
                                 Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
                                         " Линия  :" + Thread.currentThread().getStackTrace()[2].getLineNumber());
-                                new Class_Generation_Errors(getContext()).МетодЗаписиВЖурналНовойОшибки(e.toString(), this.getClass().getName(),
+                                new RecordNewErros(getContext()).recordnewerror(e.toString(), this.getClass().getName(),
                                         Thread.currentThread().getStackTrace()[2].getMethodName(), Thread.currentThread().getStackTrace()[2].getLineNumber());
                             }
                             }
@@ -1176,7 +1176,7 @@ public class Fragment1_List_Shipment_of_Materials extends Fragment    {
                 ///метод запись ошибок в таблицу
                 Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
                         " Линия  :" + Thread.currentThread().getStackTrace()[2].getLineNumber());
-                new Class_Generation_Errors(getActivity()).МетодЗаписиВЖурналНовойОшибки(e.toString(), this.getClass().getName(),
+                new RecordNewErros(getActivity()).recordnewerror(e.toString(), this.getClass().getName(),
                         Thread.currentThread().getStackTrace()[2].getMethodName(), Thread.currentThread().getStackTrace()[2].getLineNumber());
             }
             return БуферОт1ССписокЦФО;
@@ -1199,7 +1199,7 @@ public class Fragment1_List_Shipment_of_Materials extends Fragment    {
                 e.printStackTrace();
                 Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
                         " Линия  :" + Thread.currentThread().getStackTrace()[2].getLineNumber());
-                new Class_Generation_Errors(getContext()).МетодЗаписиВЖурналНовойОшибки(e.toString(),
+                new RecordNewErros(getContext()).recordnewerror(e.toString(),
                         this.getClass().getName(),
                         Thread.currentThread().getStackTrace()[2].getMethodName(), Thread.currentThread().getStackTrace()[2].getLineNumber());
             }
@@ -1249,7 +1249,7 @@ public class Fragment1_List_Shipment_of_Materials extends Fragment    {
                 ///метод запись ошибок в таблицу
                 Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
                         " Линия  :" + Thread.currentThread().getStackTrace()[2].getLineNumber());
-                new Class_Generation_Errors(getContext()).МетодЗаписиВЖурналНовойОшибки(e.toString(), this.getClass().getName(),
+                new RecordNewErros(getContext()).recordnewerror(e.toString(), this.getClass().getName(),
                         Thread.currentThread().getStackTrace()[2].getMethodName(), Thread.currentThread().getStackTrace()[2].getLineNumber());
             }
             return  ЛистВнутриХэшМапДляЗаполненияСпинераМатериаловЛеммита;
@@ -1332,7 +1332,7 @@ public class Fragment1_List_Shipment_of_Materials extends Fragment    {
                 ///метод запись ошибок в таблицу
                 Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
                         " Линия  :" + Thread.currentThread().getStackTrace()[2].getLineNumber());
-                new Class_Generation_Errors(getContext()).МетодЗаписиВЖурналНовойОшибки(e.toString(), this.getClass().getName(),
+                new RecordNewErros(getContext()).recordnewerror(e.toString(), this.getClass().getName(),
                         Thread.currentThread().getStackTrace()[2].getMethodName(), Thread.currentThread().getStackTrace()[2].getLineNumber());
                 //   mNotificationManagerДляЧАТА.cancel(1);///.cancelAll();
             }
@@ -1426,7 +1426,7 @@ public class Fragment1_List_Shipment_of_Materials extends Fragment    {
                                     ///метод запись ошибок в таблицу
                                     Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
                                             " Линия  :" + Thread.currentThread().getStackTrace()[2].getLineNumber());
-                                    new Class_Generation_Errors(getContext()).МетодЗаписиВЖурналНовойОшибки(e.toString(), this.getClass().getName(),
+                                    new RecordNewErros(getContext()).recordnewerror(e.toString(), this.getClass().getName(),
                                             Thread.currentThread().getStackTrace()[2].getMethodName(), Thread.currentThread().getStackTrace()[2].getLineNumber());
                                 }
                             }
@@ -1436,7 +1436,7 @@ public class Fragment1_List_Shipment_of_Materials extends Fragment    {
                             public boolean test(Throwable throwable) throws Throwable {
                                 Log.e(this.getClass().getName(), "Ошибка " + throwable.getMessage().toString() + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
                                         " Линия  :" + Thread.currentThread().getStackTrace()[2].getLineNumber());
-                                new Class_Generation_Errors(getContext()).МетодЗаписиВЖурналНовойОшибки(throwable.toString(), this.getClass().getName(),
+                                new RecordNewErros(getContext()).recordnewerror(throwable.toString(), this.getClass().getName(),
                                         Thread.currentThread().getStackTrace()[2].getMethodName(), Thread.currentThread().getStackTrace()[2].getLineNumber());
                                 return false;
                             }
@@ -1474,7 +1474,7 @@ public class Fragment1_List_Shipment_of_Materials extends Fragment    {
                                     ///метод запись ошибок в таблицу
                                     Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
                                             " Линия  :" + Thread.currentThread().getStackTrace()[2].getLineNumber());
-                                    new Class_Generation_Errors(getContext()).МетодЗаписиВЖурналНовойОшибки(e.toString(), this.getClass().getName(),
+                                    new RecordNewErros(getContext()).recordnewerror(e.toString(), this.getClass().getName(),
                                             Thread.currentThread().getStackTrace()[2].getMethodName(), Thread.currentThread().getStackTrace()[2].getLineNumber());
                                 }
                             }
@@ -1488,7 +1488,7 @@ public class Fragment1_List_Shipment_of_Materials extends Fragment    {
                                 ///метод запись ошибок в таблицу
                                 Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
                                         " Линия  :" + Thread.currentThread().getStackTrace()[2].getLineNumber());
-                                new Class_Generation_Errors(getContext()).МетодЗаписиВЖурналНовойОшибки(e.toString(), this.getClass().getName(),
+                                new RecordNewErros(getContext()).recordnewerror(e.toString(), this.getClass().getName(),
                                         Thread.currentThread().getStackTrace()[2].getMethodName(), Thread.currentThread().getStackTrace()[2].getLineNumber());
                             }
                             }
@@ -1499,7 +1499,7 @@ public class Fragment1_List_Shipment_of_Materials extends Fragment    {
                 ///метод запись ошибок в таблицу
                 Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
                         " Линия  :" + Thread.currentThread().getStackTrace()[2].getLineNumber());
-                new Class_Generation_Errors(getContext()).МетодЗаписиВЖурналНовойОшибки(e.toString(), this.getClass().getName(),
+                new RecordNewErros(getContext()).recordnewerror(e.toString(), this.getClass().getName(),
                         Thread.currentThread().getStackTrace()[2].getMethodName(), Thread.currentThread().getStackTrace()[2].getLineNumber());
             }
             return БуферОт1СсамиДанныеJSON;
@@ -1584,7 +1584,7 @@ public class Fragment1_List_Shipment_of_Materials extends Fragment    {
                     Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() + " Линия  :"
                             + Thread.currentThread().getStackTrace()[2].getLineNumber());
                     // TODO: 01.09.2021 метод вызова
-                    new Class_Generation_Errors(getContext()).МетодЗаписиВЖурналНовойОшибки(e.toString(),
+                    new RecordNewErros(getContext()).recordnewerror(e.toString(),
                             this.getClass().getName(), Thread.currentThread().getStackTrace()[2].getMethodName(),
                             Thread.currentThread().getStackTrace()[2].getLineNumber());
                 }
@@ -1634,7 +1634,7 @@ public class Fragment1_List_Shipment_of_Materials extends Fragment    {
                     ///метод запись ошибок в таблицу
                     Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
                             " Линия  :" + Thread.currentThread().getStackTrace()[2].getLineNumber());
-                    new Class_Generation_Errors(getContext()).МетодЗаписиВЖурналНовойОшибки(e.toString(), this.getClass().getName(),
+                    new RecordNewErros(getContext()).recordnewerror(e.toString(), this.getClass().getName(),
                             Thread.currentThread().getStackTrace()[2].getMethodName(), Thread.currentThread().getStackTrace()[2].getLineNumber());
                     //   mNotificationManagerДляЧАТА.cancel(1);///.cancelAll();
                 }
@@ -1693,7 +1693,7 @@ public class Fragment1_List_Shipment_of_Materials extends Fragment    {
                     ///метод запись ошибок в таблицу
                     Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
                             " Линия  :" + Thread.currentThread().getStackTrace()[2].getLineNumber());
-                    new Class_Generation_Errors(getContext()).МетодЗаписиВЖурналНовойОшибки(e.toString(), this.getClass().getName(),
+                    new RecordNewErros(getContext()).recordnewerror(e.toString(), this.getClass().getName(),
                             Thread.currentThread().getStackTrace()[2].getMethodName(), Thread.currentThread().getStackTrace()[2].getLineNumber());
                     //   mNotificationManagerДляЧАТА.cancel(1);///.cancelAll();
                 }
@@ -1765,7 +1765,7 @@ public class Fragment1_List_Shipment_of_Materials extends Fragment    {
                     ///метод запись ошибок в таблицу
                     Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
                             " Линия  :" + Thread.currentThread().getStackTrace()[2].getLineNumber());
-                    new Class_Generation_Errors(getContext()).МетодЗаписиВЖурналНовойОшибки(e.toString(), this.getClass().getName(),
+                    new RecordNewErros(getContext()).recordnewerror(e.toString(), this.getClass().getName(),
                             Thread.currentThread().getStackTrace()[2].getMethodName(), Thread.currentThread().getStackTrace()[2].getLineNumber());
                 }
                 return myViewHolder;
@@ -1804,7 +1804,7 @@ public class Fragment1_List_Shipment_of_Materials extends Fragment    {
                     ///метод запись ошибок в таблицу
                     Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
                             " Линия  :" + Thread.currentThread().getStackTrace()[2].getLineNumber());
-                    new Class_Generation_Errors(getContext()).МетодЗаписиВЖурналНовойОшибки(e.toString(), this.getClass().getName(),
+                    new RecordNewErros(getContext()).recordnewerror(e.toString(), this.getClass().getName(),
                             Thread.currentThread().getStackTrace()[2].getMethodName(), Thread.currentThread().getStackTrace()[2].getLineNumber());
                     //   mNotificationManagerДляЧАТА.cancel(1);///.cancelAll();
                 }
@@ -1845,7 +1845,7 @@ public class Fragment1_List_Shipment_of_Materials extends Fragment    {
                     ///метод запись ошибок в таблицу
                     Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
                             " Линия  :" + Thread.currentThread().getStackTrace()[2].getLineNumber());
-                    new Class_Generation_Errors(getContext()).МетодЗаписиВЖурналНовойОшибки(e.toString(), this.getClass().getName(),
+                    new RecordNewErros(getContext()).recordnewerror(e.toString(), this.getClass().getName(),
                             Thread.currentThread().getStackTrace()[2].getMethodName(), Thread.currentThread().getStackTrace()[2].getLineNumber());
                     //   mNotificationManagerДляЧАТА.cancel(1);///.cancelAll();
                 }
@@ -1872,7 +1872,7 @@ public class Fragment1_List_Shipment_of_Materials extends Fragment    {
                     ///метод запись ошибок в таблицу
                     Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
                             " Линия  :" + Thread.currentThread().getStackTrace()[2].getLineNumber());
-                    new Class_Generation_Errors(getContext()).МетодЗаписиВЖурналНовойОшибки(e.toString(), this.getClass().getName(),
+                    new RecordNewErros(getContext()).recordnewerror(e.toString(), this.getClass().getName(),
                             Thread.currentThread().getStackTrace()[2].getMethodName(), Thread.currentThread().getStackTrace()[2].getLineNumber());
                     //   mNotificationManagerДляЧАТА.cancel(1);///.cancelAll();
                 }
@@ -1899,7 +1899,7 @@ public class Fragment1_List_Shipment_of_Materials extends Fragment    {
                     ///метод запись ошибок в таблицу
                     Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
                             " Линия  :" + Thread.currentThread().getStackTrace()[2].getLineNumber());
-                    new Class_Generation_Errors(getContext()).МетодЗаписиВЖурналНовойОшибки(e.toString(), this.getClass().getName(),
+                    new RecordNewErros(getContext()).recordnewerror(e.toString(), this.getClass().getName(),
                             Thread.currentThread().getStackTrace()[2].getMethodName(), Thread.currentThread().getStackTrace()[2].getLineNumber());
                     //   mNotificationManagerДляЧАТА.cancel(1);///.cancelAll();
                 }
@@ -1926,7 +1926,7 @@ public class Fragment1_List_Shipment_of_Materials extends Fragment    {
                     ///метод запись ошибок в таблицу
                     Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
                             " Линия  :" + Thread.currentThread().getStackTrace()[2].getLineNumber());
-                    new Class_Generation_Errors(getContext()).МетодЗаписиВЖурналНовойОшибки(e.toString(), this.getClass().getName(),
+                    new RecordNewErros(getContext()).recordnewerror(e.toString(), this.getClass().getName(),
                             Thread.currentThread().getStackTrace()[2].getMethodName(), Thread.currentThread().getStackTrace()[2].getLineNumber());
                     //   mNotificationManagerДляЧАТА.cancel(1);///.cancelAll();
                 }
@@ -1955,7 +1955,7 @@ public class Fragment1_List_Shipment_of_Materials extends Fragment    {
                     ///метод запись ошибок в таблицу
                     Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
                             " Линия  :" + Thread.currentThread().getStackTrace()[2].getLineNumber());
-                    new Class_Generation_Errors(getContext()).МетодЗаписиВЖурналНовойОшибки(e.toString(), this.getClass().getName(),
+                    new RecordNewErros(getContext()).recordnewerror(e.toString(), this.getClass().getName(),
                             Thread.currentThread().getStackTrace()[2].getMethodName(), Thread.currentThread().getStackTrace()[2].getLineNumber());
                     //   mNotificationManagerДляЧАТА.cancel(1);///.cancelAll();
                 }
@@ -1981,7 +1981,7 @@ public class Fragment1_List_Shipment_of_Materials extends Fragment    {
                     ///метод запись ошибок в таблицу
                     Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
                             " Линия  :" + Thread.currentThread().getStackTrace()[2].getLineNumber());
-                    new Class_Generation_Errors(getContext()).МетодЗаписиВЖурналНовойОшибки(e.toString(), this.getClass().getName(),
+                    new RecordNewErros(getContext()).recordnewerror(e.toString(), this.getClass().getName(),
                             Thread.currentThread().getStackTrace()[2].getMethodName(), Thread.currentThread().getStackTrace()[2].getLineNumber());
                     //   mNotificationManagerДляЧАТА.cancel(1);///.cancelAll();
                 }
@@ -2071,7 +2071,7 @@ public class Fragment1_List_Shipment_of_Materials extends Fragment    {
                                 ///метод запись ошибок в таблицу
                                 Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
                                         " Линия  :" + Thread.currentThread().getStackTrace()[2].getLineNumber());
-                                new Class_Generation_Errors(getContext()).МетодЗаписиВЖурналНовойОшибки(e.toString(), this.getClass().getName(),
+                                new RecordNewErros(getContext()).recordnewerror(e.toString(), this.getClass().getName(),
                                         Thread.currentThread().getStackTrace()[2].getMethodName(), Thread.currentThread().getStackTrace()[2].getLineNumber());
                             }
                         }
@@ -2115,7 +2115,7 @@ public class Fragment1_List_Shipment_of_Materials extends Fragment    {
                         ///метод запись ошибок в таблицу
                         Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
                                 " Линия  :" + Thread.currentThread().getStackTrace()[2].getLineNumber());
-                        new Class_Generation_Errors(getContext()).МетодЗаписиВЖурналНовойОшибки(e.toString(), this.getClass().getName(),
+                        new RecordNewErros(getContext()).recordnewerror(e.toString(), this.getClass().getName(),
                                 Thread.currentThread().getStackTrace()[2].getMethodName(), Thread.currentThread().getStackTrace()[2].getLineNumber());
                     }
                         }
@@ -2132,7 +2132,7 @@ public class Fragment1_List_Shipment_of_Materials extends Fragment    {
                     ///метод запись ошибок в таблицу
                     Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
                             " Линия  :" + Thread.currentThread().getStackTrace()[2].getLineNumber());
-                    new Class_Generation_Errors(getContext()).МетодЗаписиВЖурналНовойОшибки(e.toString(), this.getClass().getName(),
+                    new RecordNewErros(getContext()).recordnewerror(e.toString(), this.getClass().getName(),
                             Thread.currentThread().getStackTrace()[2].getMethodName(), Thread.currentThread().getStackTrace()[2].getLineNumber());
                 }
             }
@@ -2155,7 +2155,7 @@ public class Fragment1_List_Shipment_of_Materials extends Fragment    {
                     ///метод запись ошибок в таблицу
                     Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
                             " Линия  :" + Thread.currentThread().getStackTrace()[2].getLineNumber());
-                    new Class_Generation_Errors(getContext()).МетодЗаписиВЖурналНовойОшибки(e.toString(), this.getClass().getName(),
+                    new RecordNewErros(getContext()).recordnewerror(e.toString(), this.getClass().getName(),
                             Thread.currentThread().getStackTrace()[2].getMethodName(), Thread.currentThread().getStackTrace()[2].getLineNumber());
                     //   mNotificationManagerДляЧАТА.cancel(1);///.cancelAll();
                 }
@@ -2335,7 +2335,7 @@ public class Fragment1_List_Shipment_of_Materials extends Fragment    {
                     ///метод запись ошибок в таблицу
                     Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
                             " Линия  :" + Thread.currentThread().getStackTrace()[2].getLineNumber());
-                    new Class_Generation_Errors(getContext()).МетодЗаписиВЖурналНовойОшибки(e.toString(), this.getClass().getName(),
+                    new RecordNewErros(getContext()).recordnewerror(e.toString(), this.getClass().getName(),
                             Thread.currentThread().getStackTrace()[2].getMethodName(), Thread.currentThread().getStackTrace()[2].getLineNumber());
                     //   mNotificationManagerДляЧАТА.cancel(1);///.cancelAll();
                 }
@@ -2405,7 +2405,7 @@ class SubClass_StyleSpinner_СтильСпинера{
             ///метод запись ошибок в таблицу
             Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
                     " Линия  :" + Thread.currentThread().getStackTrace()[2].getLineNumber());
-            new Class_Generation_Errors(context).МетодЗаписиВЖурналНовойОшибки(e.toString(), this.getClass().getName(),
+            new RecordNewErros(context).recordnewerror(e.toString(), this.getClass().getName(),
                     Thread.currentThread().getStackTrace()[2].getMethodName(), Thread.currentThread().getStackTrace()[2].getLineNumber());
             //   mNotificationManagerДляЧАТА.cancel(1);///.cancelAll();
         }
@@ -2428,7 +2428,7 @@ class SubClass_StyleSpinner_СтильСпинера{
             ///метод запись ошибок в таблицу
             Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
                     " Линия  :" + Thread.currentThread().getStackTrace()[2].getLineNumber());
-            new Class_Generation_Errors(context).МетодЗаписиВЖурналНовойОшибки(e.toString(), this.getClass().getName(),
+            new RecordNewErros(context).recordnewerror(e.toString(), this.getClass().getName(),
                     Thread.currentThread().getStackTrace()[2].getMethodName(), Thread.currentThread().getStackTrace()[2].getLineNumber());
             //   mNotificationManagerДляЧАТА.cancel(1);///.cancelAll();
         }

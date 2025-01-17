@@ -6,8 +6,8 @@ import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 
 
-import com.dsy.dsu.Errors.Class_Generation_Errors;
-import com.sous.backasync.ModuleBackAsync;
+import com.dsy.dsu.Errors.controller.RecordNewErros;
+import com.sous.backasync.startingbackasync.StartingModuleBackAsync;
 
 import javax.inject.Inject;
 
@@ -22,7 +22,7 @@ public class CoreApp extends Application {
 
 
     @Inject
-    public ModuleBackAsync moduleBackAsync;
+    public StartingModuleBackAsync startingModuleBackAsync;
 
 
     @Override
@@ -43,28 +43,30 @@ public class CoreApp extends Application {
 
 
     // TODO: 13.01.2025  Запускаем
-    //  moduleBackAsync.moduleBackAsync(getApplicationContext(), getSqlLiteCoreApp);
+    //  startingBackAsync.startingBackAsync(getApplicationContext(), getSqlLiteCoreApp);
 
 
 
 // TODO: 13.01.2025  Запускаем  
-        //   moduleBackAsync.backasyncQueryandWhere("errordsu1"," SELECT  *   FROM errordsu1  AS er WHERE er.Error=?  ORDER BY id DESC" ,new String[]{"IS  NOT NULL"});
-           //moduleBackAsync.backasyncQueryandWhere("fio"," SELECT  *   FROM fio   " ,null);
-        //   moduleBackAsync.backasyncQueryandWhere("errordsu1"," SELECT  *   FROM errordsu1 WHERE  id=? AND ERROR IS  NOT NULL  ORDER BY id DESC  " ,new String[]{"3"});
-          /* moduleBackAsync.backasyncQueryandWhere("errordsu1"," SELECT  *   FROM errordsu1  WHERE ERROR IS  NOT NULL  ORDER BY id DESC  " ,null);*/
-
+        //   startingBackAsync.backasyncQueryandWhere("errordsu1"," SELECT  *   FROM errordsu1  AS er WHERE er.Error=?  ORDER BY id DESC" ,new String[]{"IS  NOT NULL"});
+           //startingBackAsync.backasyncQueryandWhere("fio"," SELECT  *   FROM fio   " ,null);
+        //   startingBackAsync.backasyncQueryandWhere("errordsu1"," SELECT  *   FROM errordsu1 WHERE  id=? AND ERROR IS  NOT NULL  ORDER BY id DESC  " ,new String[]{"3"});
+          /* startingBackAsync.backasyncQueryandWhere("errordsu1"," SELECT  *   FROM errordsu1  WHERE ERROR IS  NOT NULL  ORDER BY id DESC  " ,null);*/
+          //  startingBackAsync.backasyncQueryandWhere("errordsu1"," SELECT  *   FROM errordsu1 AS er  WHERE er.ERROR IS  NOT NULL  ORDER BY er.id DESC  " ,null);
+            //startingModuleBackAsync.backasyncQueryandWhere("errordsu1"," SELECT  *   FROM errordsu1 AS er  WHERE er.ERROR IS  NOT NULL  ORDER BY er.id DESC  " ,null);
         // TODO: 17.04.2023
         Log.d(this.getClass().getName(),"\n" + " class CoreApp    " + Thread.currentThread().getStackTrace()[2].getClassName()
                 + "\n" +
                 " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
                 " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"+
                 " sqlite " + getSqlLiteCoreApp);
+
     } catch (Exception e) {
         e.printStackTrace();
         Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" +
                 Thread.currentThread().getStackTrace()[2].getMethodName() + " Линия  :"
                 + Thread.currentThread().getStackTrace()[2].getLineNumber());
-        new Class_Generation_Errors(getApplicationContext()).МетодЗаписиВЖурналНовойОшибки(e.toString(),
+        new RecordNewErros(getApplicationContext()).recordnewerror(e.toString(),
                 this.getClass().getName(), Thread.currentThread().getStackTrace()[2].getMethodName(),
                 Thread.currentThread().getStackTrace()[2].getLineNumber());
     }

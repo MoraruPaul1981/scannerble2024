@@ -42,7 +42,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import androidx.work.WorkInfo;
 import androidx.work.WorkManager;
 
-import com.dsy.dsu.Errors.Class_Generation_Errors;
+import com.dsy.dsu.Errors.controller.RecordNewErros;
 import com.dsy.dsu.BusinessLogicAll.Class_Generations_PUBLIC_CURRENT_ID;
 
 import com.dsy.dsu.Services.Service_for_AdminissionMaterial;
@@ -134,7 +134,7 @@ public class FragmentDetailingMaterials extends Fragment {
             Log.e(getContext().getClass().getName(),
                     "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
                             " Линия  :" + Thread.currentThread().getStackTrace()[2].getLineNumber());
-            new   Class_Generation_Errors(getContext()).МетодЗаписиВЖурналНовойОшибки(e.toString(),
+            new RecordNewErros(getContext()).recordnewerror(e.toString(),
                     this.getClass().getName().toString(), Thread.currentThread().getStackTrace()[2].getMethodName().toString(),
                     Thread.currentThread().getStackTrace()[2].getLineNumber());
         }
@@ -152,7 +152,7 @@ public class FragmentDetailingMaterials extends Fragment {
             Log.e(getContext().getClass().getName(),
                     "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
                             " Линия  :" + Thread.currentThread().getStackTrace()[2].getLineNumber());
-            new   Class_Generation_Errors(getContext()).МетодЗаписиВЖурналНовойОшибки(e.toString(),
+            new RecordNewErros(getContext()).recordnewerror(e.toString(),
                     this.getClass().getName().toString(), Thread.currentThread().getStackTrace()[2].getMethodName().toString(),
                     Thread.currentThread().getStackTrace()[2].getLineNumber());
         }
@@ -206,7 +206,7 @@ public class FragmentDetailingMaterials extends Fragment {
             Log.e(getContext().getClass().getName(),
                     "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
                             " Линия  :" + Thread.currentThread().getStackTrace()[2].getLineNumber());
-            new   Class_Generation_Errors(getContext()).МетодЗаписиВЖурналНовойОшибки(e.toString(),
+            new RecordNewErros(getContext()).recordnewerror(e.toString(),
                     this.getClass().getName().toString(), Thread.currentThread().getStackTrace()[2].getMethodName().toString(),
                     Thread.currentThread().getStackTrace()[2].getLineNumber());
         }
@@ -232,7 +232,7 @@ public class FragmentDetailingMaterials extends Fragment {
             Log.e(getContext().getClass().getName(),
                     "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
                             " Линия  :" + Thread.currentThread().getStackTrace()[2].getLineNumber());
-            new   Class_Generation_Errors(getContext()).МетодЗаписиВЖурналНовойОшибки(e.toString(),
+            new RecordNewErros(getContext()).recordnewerror(e.toString(),
                     this.getClass().getName().toString(), Thread.currentThread().getStackTrace()[2].getMethodName().toString(),
                     Thread.currentThread().getStackTrace()[2].getLineNumber());
         }
@@ -262,7 +262,7 @@ public class FragmentDetailingMaterials extends Fragment {
         Log.e(getContext().getClass().getName(),
                 "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
                         " Линия  :" + Thread.currentThread().getStackTrace()[2].getLineNumber());
-        new   Class_Generation_Errors(getContext()).МетодЗаписиВЖурналНовойОшибки(e.toString(),
+        new RecordNewErros(getContext()).recordnewerror(e.toString(),
                 this.getClass().getName().toString(), Thread.currentThread().getStackTrace()[2].getMethodName().toString(),
                 Thread.currentThread().getStackTrace()[2].getLineNumber());
     }
@@ -280,7 +280,7 @@ public class FragmentDetailingMaterials extends Fragment {
             e.printStackTrace();
             Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
                     " Линия  :" + Thread.currentThread().getStackTrace()[2].getLineNumber());
-            new   Class_Generation_Errors(getContext()).МетодЗаписиВЖурналНовойОшибки(e.toString(),
+            new RecordNewErros(getContext()).recordnewerror(e.toString(),
                     this.getClass().getName().toString(), Thread.currentThread().getStackTrace()[2].getMethodName().toString(),
                     Thread.currentThread().getStackTrace()[2].getLineNumber());
         }
@@ -308,7 +308,7 @@ public class FragmentDetailingMaterials extends Fragment {
             Log.e(getContext().getClass().getName(),
                     "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
                             " Линия  :" + Thread.currentThread().getStackTrace()[2].getLineNumber());
-            new   Class_Generation_Errors(getContext()).МетодЗаписиВЖурналНовойОшибки(e.toString(),
+            new RecordNewErros(getContext()).recordnewerror(e.toString(),
                     this.getClass().getName().toString(), Thread.currentThread().getStackTrace()[2].getMethodName().toString(),
                     Thread.currentThread().getStackTrace()[2].getLineNumber());
         }
@@ -329,7 +329,7 @@ public class FragmentDetailingMaterials extends Fragment {
             Log.e(getContext().getClass().getName(),
                     "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
                             " Линия  :" + Thread.currentThread().getStackTrace()[2].getLineNumber());
-            new   Class_Generation_Errors(getContext()).МетодЗаписиВЖурналНовойОшибки(e.toString(),
+            new RecordNewErros(getContext()).recordnewerror(e.toString(),
                     this.getClass().getName().toString(), Thread.currentThread().getStackTrace()[2].getMethodName().toString(),
                     Thread.currentThread().getStackTrace()[2].getLineNumber());
         }
@@ -378,7 +378,7 @@ public class FragmentDetailingMaterials extends Fragment {
                             Log.e(getContext().getClass().getName(),
                                     "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
                                             " Линия  :" + Thread.currentThread().getStackTrace()[2].getLineNumber());
-                            new   Class_Generation_Errors(getContext()).МетодЗаписиВЖурналНовойОшибки(e.toString(),
+                            new RecordNewErros(getContext()).recordnewerror(e.toString(),
                                     this.getClass().getName().toString(), Thread.currentThread().getStackTrace()[2].getMethodName().toString(),
                                     Thread.currentThread().getStackTrace()[2].getLineNumber());
                         }
@@ -392,7 +392,7 @@ public class FragmentDetailingMaterials extends Fragment {
                 Log.e(getContext().getClass().getName(),
                         "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
                                 " Линия  :" + Thread.currentThread().getStackTrace()[2].getLineNumber());
-                new   Class_Generation_Errors(getContext()).МетодЗаписиВЖурналНовойОшибки(e.toString(),
+                new RecordNewErros(getContext()).recordnewerror(e.toString(),
                         this.getClass().getName().toString(), Thread.currentThread().getStackTrace()[2].getMethodName().toString(),
                         Thread.currentThread().getStackTrace()[2].getLineNumber());
             }
@@ -421,7 +421,7 @@ public class FragmentDetailingMaterials extends Fragment {
             Log.e(getContext().getClass().getName(),
                     "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
                             " Линия  :" + Thread.currentThread().getStackTrace()[2].getLineNumber());
-            new   Class_Generation_Errors(getContext()).МетодЗаписиВЖурналНовойОшибки(e.toString(),
+            new RecordNewErros(getContext()).recordnewerror(e.toString(),
                     this.getClass().getName().toString(), Thread.currentThread().getStackTrace()[2].getMethodName().toString(),
                     Thread.currentThread().getStackTrace()[2].getLineNumber());
         }
@@ -443,7 +443,7 @@ public class FragmentDetailingMaterials extends Fragment {
             Log.e(getContext().getClass().getName(),
                     "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
                             " Линия  :" + Thread.currentThread().getStackTrace()[2].getLineNumber());
-            new   Class_Generation_Errors(getContext()).МетодЗаписиВЖурналНовойОшибки(e.toString(),
+            new RecordNewErros(getContext()).recordnewerror(e.toString(),
                     this.getClass().getName().toString(), Thread.currentThread().getStackTrace()[2].getMethodName().toString(),
                     Thread.currentThread().getStackTrace()[2].getLineNumber());
         }
@@ -473,7 +473,7 @@ public class FragmentDetailingMaterials extends Fragment {
                             Log.e(getContext().getClass().getName(),
                                     "Ошибка " + throwable + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
                                             " Линия  :" + Thread.currentThread().getStackTrace()[2].getLineNumber());
-                            new Class_Generation_Errors(getContext()).МетодЗаписиВЖурналНовойОшибки(throwable.toString(),
+                            new RecordNewErros(getContext()).recordnewerror(throwable.toString(),
                                     this.getClass().getName().toString(), Thread.currentThread().getStackTrace()[2].getMethodName().toString(),
                                     Thread.currentThread().getStackTrace()[2].getLineNumber());
                         }
@@ -485,7 +485,7 @@ public class FragmentDetailingMaterials extends Fragment {
                             Log.e(getContext().getClass().getName(),
                                     "Ошибка " + throwable + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
                                             " Линия  :" + Thread.currentThread().getStackTrace()[2].getLineNumber());
-                            new Class_Generation_Errors(getContext()).МетодЗаписиВЖурналНовойОшибки(throwable.toString(),
+                            new RecordNewErros(getContext()).recordnewerror(throwable.toString(),
                                     this.getClass().getName().toString(), Thread.currentThread().getStackTrace()[2].getMethodName().toString(),
                                     Thread.currentThread().getStackTrace()[2].getLineNumber());
                             return false;
@@ -517,7 +517,7 @@ public class FragmentDetailingMaterials extends Fragment {
             Log.e(getContext().getClass().getName(),
                     "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
                             " Линия  :" + Thread.currentThread().getStackTrace()[2].getLineNumber());
-            new   Class_Generation_Errors(getContext()).МетодЗаписиВЖурналНовойОшибки(e.toString(),
+            new RecordNewErros(getContext()).recordnewerror(e.toString(),
                     this.getClass().getName().toString(), Thread.currentThread().getStackTrace()[2].getMethodName().toString(),
                     Thread.currentThread().getStackTrace()[2].getLineNumber());
         }
@@ -546,7 +546,7 @@ public class FragmentDetailingMaterials extends Fragment {
                         Log.e(getContext().getClass().getName(),
                                 "Ошибка " + throwable + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
                                         " Линия  :" + Thread.currentThread().getStackTrace()[2].getLineNumber());
-                        new Class_Generation_Errors(getContext()).МетодЗаписиВЖурналНовойОшибки(throwable.toString(),
+                        new RecordNewErros(getContext()).recordnewerror(throwable.toString(),
                                 this.getClass().getName().toString(), Thread.currentThread().getStackTrace()[2].getMethodName().toString(),
                                 Thread.currentThread().getStackTrace()[2].getLineNumber());
                     }
@@ -558,7 +558,7 @@ public class FragmentDetailingMaterials extends Fragment {
                         Log.e(getContext().getClass().getName(),
                                 "Ошибка " + throwable + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
                                         " Линия  :" + Thread.currentThread().getStackTrace()[2].getLineNumber());
-                        new Class_Generation_Errors(getContext()).МетодЗаписиВЖурналНовойОшибки(throwable.toString(),
+                        new RecordNewErros(getContext()).recordnewerror(throwable.toString(),
                                 this.getClass().getName().toString(), Thread.currentThread().getStackTrace()[2].getMethodName().toString(),
                                 Thread.currentThread().getStackTrace()[2].getLineNumber());
                         return false;
@@ -608,7 +608,7 @@ public class FragmentDetailingMaterials extends Fragment {
                         Log.e(getContext().getClass().getName(),
                                 "Ошибка " + throwable + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
                                         " Линия  :" + Thread.currentThread().getStackTrace()[2].getLineNumber());
-                        new Class_Generation_Errors(getContext()).МетодЗаписиВЖурналНовойОшибки(throwable.toString(),
+                        new RecordNewErros(getContext()).recordnewerror(throwable.toString(),
                                 this.getClass().getName().toString(), Thread.currentThread().getStackTrace()[2].getMethodName().toString(),
                                 Thread.currentThread().getStackTrace()[2].getLineNumber());
                     }
@@ -620,7 +620,7 @@ public class FragmentDetailingMaterials extends Fragment {
                         Log.e(getContext().getClass().getName(),
                                 "Ошибка " + throwable + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
                                         " Линия  :" + Thread.currentThread().getStackTrace()[2].getLineNumber());
-                        new Class_Generation_Errors(getContext()).МетодЗаписиВЖурналНовойОшибки(throwable.toString(),
+                        new RecordNewErros(getContext()).recordnewerror(throwable.toString(),
                                 this.getClass().getName().toString(), Thread.currentThread().getStackTrace()[2].getMethodName().toString(),
                                 Thread.currentThread().getStackTrace()[2].getLineNumber());
                         return false;
@@ -662,7 +662,7 @@ public class FragmentDetailingMaterials extends Fragment {
             e.printStackTrace();
             Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() + " Линия  :"
                     + Thread.currentThread().getStackTrace()[2].getLineNumber());
-            new Class_Generation_Errors(getContext()).МетодЗаписиВЖурналНовойОшибки(e.toString(), this.getClass().getName(),
+            new RecordNewErros(getContext()).recordnewerror(e.toString(), this.getClass().getName(),
                     Thread.currentThread().getStackTrace()[2].getMethodName(),
                     Thread.currentThread().getStackTrace()[2].getLineNumber());
         }
@@ -685,8 +685,8 @@ public class FragmentDetailingMaterials extends Fragment {
             Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :"
                     + Thread.currentThread().getStackTrace()[2].getMethodName().toString() + " Линия  :"
                     + Thread.currentThread().getStackTrace()[2].getLineNumber());
-            new Class_Generation_Errors(getContext()).
-                    МетодЗаписиВЖурналНовойОшибки(e.toString(),
+            new RecordNewErros(getContext()).
+                    recordnewerror(e.toString(),
                             this.getClass().getName().toString(),
                             Thread.currentThread().getStackTrace()[2].getMethodName().toString(),
                             Thread.currentThread().getStackTrace()[2].getLineNumber());
@@ -721,7 +721,7 @@ public class FragmentDetailingMaterials extends Fragment {
             Log.e(getContext().getClass().getName(),
                     "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
                             " Линия  :" + Thread.currentThread().getStackTrace()[2].getLineNumber());
-            new   Class_Generation_Errors(getContext()).МетодЗаписиВЖурналНовойОшибки(e.toString(),
+            new RecordNewErros(getContext()).recordnewerror(e.toString(),
                     this.getClass().getName().toString(), Thread.currentThread().getStackTrace()[2].getMethodName().toString(),
                     Thread.currentThread().getStackTrace()[2].getLineNumber());
         }
@@ -740,7 +740,7 @@ public class FragmentDetailingMaterials extends Fragment {
                     Log.e(getContext().getClass().getName(),
                             "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
                                     " Линия  :" + Thread.currentThread().getStackTrace()[2].getLineNumber());
-                    new   Class_Generation_Errors(getContext()).МетодЗаписиВЖурналНовойОшибки(e.toString(),
+                    new RecordNewErros(getContext()).recordnewerror(e.toString(),
                             this.getClass().getName().toString(), Thread.currentThread().getStackTrace()[2].getMethodName().toString(),
                             Thread.currentThread().getStackTrace()[2].getLineNumber());
                 }
@@ -765,7 +765,7 @@ public class FragmentDetailingMaterials extends Fragment {
                             Log.e(getContext().getClass().getName(),
                                     "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
                                             " Линия  :" + Thread.currentThread().getStackTrace()[2].getLineNumber());
-                            new   Class_Generation_Errors(getContext()).МетодЗаписиВЖурналНовойОшибки(e.toString(),
+                            new RecordNewErros(getContext()).recordnewerror(e.toString(),
                                     this.getClass().getName().toString(), Thread.currentThread().getStackTrace()[2].getMethodName().toString(),
                                     Thread.currentThread().getStackTrace()[2].getLineNumber());
                         }
@@ -783,7 +783,7 @@ public class FragmentDetailingMaterials extends Fragment {
                             Log.e(getContext().getClass().getName(),
                                     "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
                                             " Линия  :" + Thread.currentThread().getStackTrace()[2].getLineNumber());
-                            new   Class_Generation_Errors(getContext()).МетодЗаписиВЖурналНовойОшибки(e.toString(),
+                            new RecordNewErros(getContext()).recordnewerror(e.toString(),
                                     this.getClass().getName().toString(), Thread.currentThread().getStackTrace()[2].getMethodName().toString(),
                                     Thread.currentThread().getStackTrace()[2].getLineNumber());
                         }
@@ -800,7 +800,7 @@ public class FragmentDetailingMaterials extends Fragment {
                             Log.e(getContext().getClass().getName(),
                                     "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
                                             " Линия  :" + Thread.currentThread().getStackTrace()[2].getLineNumber());
-                            new   Class_Generation_Errors(getContext()).МетодЗаписиВЖурналНовойОшибки(e.toString(),
+                            new RecordNewErros(getContext()).recordnewerror(e.toString(),
                                     this.getClass().getName().toString(), Thread.currentThread().getStackTrace()[2].getMethodName().toString(),
                                     Thread.currentThread().getStackTrace()[2].getLineNumber());
                         }
@@ -817,7 +817,7 @@ public class FragmentDetailingMaterials extends Fragment {
                             Log.e(getContext().getClass().getName(),
                                     "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
                                             " Линия  :" + Thread.currentThread().getStackTrace()[2].getLineNumber());
-                            new   Class_Generation_Errors(getContext()).МетодЗаписиВЖурналНовойОшибки(e.toString(),
+                            new RecordNewErros(getContext()).recordnewerror(e.toString(),
                                     this.getClass().getName().toString(), Thread.currentThread().getStackTrace()[2].getMethodName().toString(),
                                     Thread.currentThread().getStackTrace()[2].getLineNumber());
                         }
@@ -834,7 +834,7 @@ public class FragmentDetailingMaterials extends Fragment {
                             Log.e(getContext().getClass().getName(),
                                     "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
                                             " Линия  :" + Thread.currentThread().getStackTrace()[2].getLineNumber());
-                            new   Class_Generation_Errors(getContext()).МетодЗаписиВЖурналНовойОшибки(e.toString(),
+                            new RecordNewErros(getContext()).recordnewerror(e.toString(),
                                     this.getClass().getName().toString(), Thread.currentThread().getStackTrace()[2].getMethodName().toString(),
                                     Thread.currentThread().getStackTrace()[2].getLineNumber());
                         }
@@ -851,7 +851,7 @@ public class FragmentDetailingMaterials extends Fragment {
                             Log.e(getContext().getClass().getName(),
                                     "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
                                             " Линия  :" + Thread.currentThread().getStackTrace()[2].getLineNumber());
-                            new   Class_Generation_Errors(getContext()).МетодЗаписиВЖурналНовойОшибки(e.toString(),
+                            new RecordNewErros(getContext()).recordnewerror(e.toString(),
                                     this.getClass().getName().toString(), Thread.currentThread().getStackTrace()[2].getMethodName().toString(),
                                     Thread.currentThread().getStackTrace()[2].getLineNumber());
                         }
@@ -885,7 +885,7 @@ public class FragmentDetailingMaterials extends Fragment {
                             Log.e(getContext().getClass().getName(),
                                     "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
                                             " Линия  :" + Thread.currentThread().getStackTrace()[2].getLineNumber());
-                            new   Class_Generation_Errors(getContext()).МетодЗаписиВЖурналНовойОшибки(e.toString(),
+                            new RecordNewErros(getContext()).recordnewerror(e.toString(),
                                     this.getClass().getName().toString(), Thread.currentThread().getStackTrace()[2].getMethodName().toString(),
                                     Thread.currentThread().getStackTrace()[2].getLineNumber());
                         }
@@ -899,7 +899,7 @@ public class FragmentDetailingMaterials extends Fragment {
                             Log.e(getContext().getClass().getName(),
                                     "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
                                             " Линия  :" + Thread.currentThread().getStackTrace()[2].getLineNumber());
-                            new   Class_Generation_Errors(getContext()).МетодЗаписиВЖурналНовойОшибки(e.toString(),
+                            new RecordNewErros(getContext()).recordnewerror(e.toString(),
                                     this.getClass().getName().toString(), Thread.currentThread().getStackTrace()[2].getMethodName().toString(),
                                     Thread.currentThread().getStackTrace()[2].getLineNumber());
                         }
@@ -914,7 +914,7 @@ public class FragmentDetailingMaterials extends Fragment {
             Log.e(getContext().getClass().getName(),
                     "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
                             " Линия  :" + Thread.currentThread().getStackTrace()[2].getLineNumber());
-            new   Class_Generation_Errors(getContext()).МетодЗаписиВЖурналНовойОшибки(e.toString(),
+            new RecordNewErros(getContext()).recordnewerror(e.toString(),
                     this.getClass().getName().toString(), Thread.currentThread().getStackTrace()[2].getMethodName().toString(),
                     Thread.currentThread().getStackTrace()[2].getLineNumber());
         }
@@ -965,7 +965,7 @@ public class FragmentDetailingMaterials extends Fragment {
             e.printStackTrace();
             Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
                     " Линия  :" + Thread.currentThread().getStackTrace()[2].getLineNumber());
-            new Class_Generation_Errors(getContext()).МетодЗаписиВЖурналНовойОшибки(e.toString(), this.getClass().getName(),
+            new RecordNewErros(getContext()).recordnewerror(e.toString(), this.getClass().getName(),
                     Thread.currentThread().getStackTrace()[2].getMethodName(), Thread.currentThread().getStackTrace()[2].getLineNumber());
         }
     }
@@ -1006,7 +1006,7 @@ public class FragmentDetailingMaterials extends Fragment {
             Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" +
                     Thread.currentThread().getStackTrace()[2].getMethodName() + " Линия  :"
                     + Thread.currentThread().getStackTrace()[2].getLineNumber());
-            new Class_Generation_Errors(getContext()).МетодЗаписиВЖурналНовойОшибки(e.toString(),
+            new RecordNewErros(getContext()).recordnewerror(e.toString(),
                     this.getClass().getName(), Thread.currentThread().getStackTrace()[2].getMethodName(),
                     Thread.currentThread().getStackTrace()[2].getLineNumber());
         }
@@ -1061,7 +1061,7 @@ public class FragmentDetailingMaterials extends Fragment {
             e.printStackTrace();
             Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() + " Линия  :"
                     + Thread.currentThread().getStackTrace()[2].getLineNumber());
-            new Class_Generation_Errors(getContext()).МетодЗаписиВЖурналНовойОшибки(e.toString(), this.getClass().getName(), Thread.currentThread().getStackTrace()[2].getMethodName(),
+            new RecordNewErros(getContext()).recordnewerror(e.toString(), this.getClass().getName(), Thread.currentThread().getStackTrace()[2].getMethodName(),
                     Thread.currentThread().getStackTrace()[2].getLineNumber());
         }
     }
@@ -1080,7 +1080,7 @@ public class FragmentDetailingMaterials extends Fragment {
                 Log.e(getContext().getClass().getName(),
                         "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
                                 " Линия  :" + Thread.currentThread().getStackTrace()[2].getLineNumber());
-                new   Class_Generation_Errors(getContext()).МетодЗаписиВЖурналНовойОшибки(e.toString(),
+                new RecordNewErros(getContext()).recordnewerror(e.toString(),
                         this.getClass().getName().toString(), Thread.currentThread().getStackTrace()[2].getMethodName().toString(),
                         Thread.currentThread().getStackTrace()[2].getLineNumber());
             }
@@ -1097,7 +1097,7 @@ public class FragmentDetailingMaterials extends Fragment {
                 Log.e(getContext().getClass().getName(),
                         "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
                                 " Линия  :" + Thread.currentThread().getStackTrace()[2].getLineNumber());
-                new   Class_Generation_Errors(getContext()).МетодЗаписиВЖурналНовойОшибки(e.toString(),
+                new RecordNewErros(getContext()).recordnewerror(e.toString(),
                         this.getClass().getName().toString(), Thread.currentThread().getStackTrace()[2].getMethodName().toString(),
                         Thread.currentThread().getStackTrace()[2].getLineNumber());
             }
@@ -1130,7 +1130,7 @@ public class FragmentDetailingMaterials extends Fragment {
                 Log.e(getContext().getClass().getName(),
                         "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
                                 " Линия  :" + Thread.currentThread().getStackTrace()[2].getLineNumber());
-                new   Class_Generation_Errors(getContext()).МетодЗаписиВЖурналНовойОшибки(e.toString(),
+                new RecordNewErros(getContext()).recordnewerror(e.toString(),
                         this.getClass().getName().toString(), Thread.currentThread().getStackTrace()[2].getMethodName().toString(),
                         Thread.currentThread().getStackTrace()[2].getLineNumber());
             }
@@ -1185,7 +1185,7 @@ public class FragmentDetailingMaterials extends Fragment {
                 Log.e(getContext().getClass().getName(),
                         "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
                                 " Линия  :" + Thread.currentThread().getStackTrace()[2].getLineNumber());
-                new   Class_Generation_Errors(getContext()).МетодЗаписиВЖурналНовойОшибки(e.toString(),
+                new RecordNewErros(getContext()).recordnewerror(e.toString(),
                         this.getClass().getName().toString(), Thread.currentThread().getStackTrace()[2].getMethodName().toString(),
                         Thread.currentThread().getStackTrace()[2].getLineNumber());
             }
@@ -1218,7 +1218,7 @@ public class FragmentDetailingMaterials extends Fragment {
                 Log.e(getContext().getClass().getName(),
                         "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
                                 " Линия  :" + Thread.currentThread().getStackTrace()[2].getLineNumber());
-                new   Class_Generation_Errors(getContext()).МетодЗаписиВЖурналНовойОшибки(e.toString(),
+                new RecordNewErros(getContext()).recordnewerror(e.toString(),
                         this.getClass().getName().toString(), Thread.currentThread().getStackTrace()[2].getMethodName().toString(),
                         Thread.currentThread().getStackTrace()[2].getLineNumber());
             }
@@ -1236,7 +1236,7 @@ public class FragmentDetailingMaterials extends Fragment {
                 Log.e(getContext().getClass().getName(),
                         "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
                                 " Линия  :" + Thread.currentThread().getStackTrace()[2].getLineNumber());
-                new   Class_Generation_Errors(getContext()).МетодЗаписиВЖурналНовойОшибки(e.toString(),
+                new RecordNewErros(getContext()).recordnewerror(e.toString(),
                         this.getClass().getName().toString(), Thread.currentThread().getStackTrace()[2].getMethodName().toString(),
                         Thread.currentThread().getStackTrace()[2].getLineNumber());
             }
@@ -1270,7 +1270,7 @@ public class FragmentDetailingMaterials extends Fragment {
                 Log.e(getContext().getClass().getName(),
                         "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
                                 " Линия  :" + Thread.currentThread().getStackTrace()[2].getLineNumber());
-                new   Class_Generation_Errors(getContext()).МетодЗаписиВЖурналНовойОшибки(e.toString(),
+                new RecordNewErros(getContext()).recordnewerror(e.toString(),
                         this.getClass().getName().toString(), Thread.currentThread().getStackTrace()[2].getMethodName().toString(),
                         Thread.currentThread().getStackTrace()[2].getLineNumber());
             }
@@ -1329,7 +1329,7 @@ public class FragmentDetailingMaterials extends Fragment {
                                                     Log.e(getContext().getClass().getName(),
                                                             "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
                                                                     " Линия  :" + Thread.currentThread().getStackTrace()[2].getLineNumber());
-                                                    new   Class_Generation_Errors(getContext()).МетодЗаписиВЖурналНовойОшибки(e.toString(),
+                                                    new RecordNewErros(getContext()).recordnewerror(e.toString(),
                                                             this.getClass().getName().toString(), Thread.currentThread().getStackTrace()[2].getMethodName().toString(),
                                                             Thread.currentThread().getStackTrace()[2].getLineNumber());
                                                 }
@@ -1350,7 +1350,7 @@ public class FragmentDetailingMaterials extends Fragment {
                 Log.e(getContext().getClass().getName(),
                         "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
                                 " Линия  :" + Thread.currentThread().getStackTrace()[2].getLineNumber());
-                new   Class_Generation_Errors(getContext()).МетодЗаписиВЖурналНовойОшибки(e.toString(),
+                new RecordNewErros(getContext()).recordnewerror(e.toString(),
                         this.getClass().getName().toString(), Thread.currentThread().getStackTrace()[2].getMethodName().toString(),
                         Thread.currentThread().getStackTrace()[2].getLineNumber());
             }
@@ -1385,7 +1385,7 @@ public class FragmentDetailingMaterials extends Fragment {
                 Log.e(getContext().getClass().getName(),
                         "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
                                 " Линия  :" + Thread.currentThread().getStackTrace()[2].getLineNumber());
-                new   Class_Generation_Errors(getContext()).МетодЗаписиВЖурналНовойОшибки(e.toString(),
+                new RecordNewErros(getContext()).recordnewerror(e.toString(),
                         this.getClass().getName().toString(), Thread.currentThread().getStackTrace()[2].getMethodName().toString(),
                         Thread.currentThread().getStackTrace()[2].getLineNumber());
             }
@@ -1425,7 +1425,7 @@ public class FragmentDetailingMaterials extends Fragment {
             Log.e(getContext().getClass().getName(),
                     "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
                             " Линия  :" + Thread.currentThread().getStackTrace()[2].getLineNumber());
-            new   Class_Generation_Errors(getContext()).МетодЗаписиВЖурналНовойОшибки(e.toString(),
+            new RecordNewErros(getContext()).recordnewerror(e.toString(),
                     this.getClass().getName().toString(), Thread.currentThread().getStackTrace()[2].getMethodName().toString(),
                     Thread.currentThread().getStackTrace()[2].getLineNumber());
         }
@@ -1447,7 +1447,7 @@ public class FragmentDetailingMaterials extends Fragment {
             Log.e(getContext().getClass().getName(),
                     "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
                             " Линия  :" + Thread.currentThread().getStackTrace()[2].getLineNumber());
-            new   Class_Generation_Errors(getContext()).МетодЗаписиВЖурналНовойОшибки(e.toString(),
+            new RecordNewErros(getContext()).recordnewerror(e.toString(),
                     this.getClass().getName().toString(), Thread.currentThread().getStackTrace()[2].getMethodName().toString(),
                     Thread.currentThread().getStackTrace()[2].getLineNumber());
         }
@@ -1478,7 +1478,7 @@ public class FragmentDetailingMaterials extends Fragment {
                 Log.e(getContext().getClass().getName(),
                         "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
                                 " Линия  :" + Thread.currentThread().getStackTrace()[2].getLineNumber());
-                new   Class_Generation_Errors(getContext()).МетодЗаписиВЖурналНовойОшибки(e.toString(),
+                new RecordNewErros(getContext()).recordnewerror(e.toString(),
                         this.getClass().getName().toString(), Thread.currentThread().getStackTrace()[2].getMethodName().toString(),
                         Thread.currentThread().getStackTrace()[2].getLineNumber());
             }
@@ -1498,7 +1498,7 @@ public class FragmentDetailingMaterials extends Fragment {
                 Log.e(getContext().getClass().getName(),
                         "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
                                 " Линия  :" + Thread.currentThread().getStackTrace()[2].getLineNumber());
-                new   Class_Generation_Errors(getContext()).МетодЗаписиВЖурналНовойОшибки(e.toString(),
+                new RecordNewErros(getContext()).recordnewerror(e.toString(),
                         this.getClass().getName().toString(), Thread.currentThread().getStackTrace()[2].getMethodName().toString(),
                         Thread.currentThread().getStackTrace()[2].getLineNumber());
             }
@@ -1519,7 +1519,7 @@ public class FragmentDetailingMaterials extends Fragment {
                 Log.e(getContext().getClass().getName(),
                         "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
                                 " Линия  :" + Thread.currentThread().getStackTrace()[2].getLineNumber());
-                new   Class_Generation_Errors(getContext()).МетодЗаписиВЖурналНовойОшибки(e.toString(),
+                new RecordNewErros(getContext()).recordnewerror(e.toString(),
                         this.getClass().getName().toString(), Thread.currentThread().getStackTrace()[2].getMethodName().toString(),
                         Thread.currentThread().getStackTrace()[2].getLineNumber());
             }
@@ -1577,7 +1577,7 @@ public class FragmentDetailingMaterials extends Fragment {
                 Log.e(getContext().getClass().getName(),
                         "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
                                 " Линия  :" + Thread.currentThread().getStackTrace()[2].getLineNumber());
-                new   Class_Generation_Errors(getContext()).МетодЗаписиВЖурналНовойОшибки(e.toString(),
+                new RecordNewErros(getContext()).recordnewerror(e.toString(),
                         this.getClass().getName().toString(), Thread.currentThread().getStackTrace()[2].getMethodName().toString(),
                         Thread.currentThread().getStackTrace()[2].getLineNumber());
             }
@@ -1607,7 +1607,7 @@ public class FragmentDetailingMaterials extends Fragment {
                 Log.e(getContext().getClass().getName(),
                         "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
                                 " Линия  :" + Thread.currentThread().getStackTrace()[2].getLineNumber());
-                new   Class_Generation_Errors(getContext()).МетодЗаписиВЖурналНовойОшибки(e.toString(),
+                new RecordNewErros(getContext()).recordnewerror(e.toString(),
                         this.getClass().getName().toString(), Thread.currentThread().getStackTrace()[2].getMethodName().toString(),
                         Thread.currentThread().getStackTrace()[2].getLineNumber());
             }
@@ -1629,7 +1629,7 @@ public class FragmentDetailingMaterials extends Fragment {
                 Log.e(getContext().getClass().getName(),
                         "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
                                 " Линия  :" + Thread.currentThread().getStackTrace()[2].getLineNumber());
-                new   Class_Generation_Errors(getContext()).МетодЗаписиВЖурналНовойОшибки(e.toString(),
+                new RecordNewErros(getContext()).recordnewerror(e.toString(),
                         this.getClass().getName().toString(), Thread.currentThread().getStackTrace()[2].getMethodName().toString(),
                         Thread.currentThread().getStackTrace()[2].getLineNumber());
             }
@@ -1660,7 +1660,7 @@ public class FragmentDetailingMaterials extends Fragment {
         Log.e(getContext().getClass().getName(),
                 "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
                         " Линия  :" + Thread.currentThread().getStackTrace()[2].getLineNumber());
-        new   Class_Generation_Errors(getContext()).МетодЗаписиВЖурналНовойОшибки(e.toString(),
+        new RecordNewErros(getContext()).recordnewerror(e.toString(),
                 this.getClass().getName().toString(), Thread.currentThread().getStackTrace()[2].getMethodName().toString(),
                 Thread.currentThread().getStackTrace()[2].getLineNumber());
     }
@@ -1689,7 +1689,7 @@ public class FragmentDetailingMaterials extends Fragment {
         Log.e(getContext().getClass().getName(),
                 "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
                         " Линия  :" + Thread.currentThread().getStackTrace()[2].getLineNumber());
-        new   Class_Generation_Errors(getContext()).МетодЗаписиВЖурналНовойОшибки(e.toString(),
+        new RecordNewErros(getContext()).recordnewerror(e.toString(),
                 this.getClass().getName().toString(), Thread.currentThread().getStackTrace()[2].getMethodName().toString(),
                 Thread.currentThread().getStackTrace()[2].getLineNumber());
     }
@@ -1717,7 +1717,7 @@ public class FragmentDetailingMaterials extends Fragment {
             Log.e(getContext().getClass().getName(),
                     "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
                             " Линия  :" + Thread.currentThread().getStackTrace()[2].getLineNumber());
-            new   Class_Generation_Errors(getContext()).МетодЗаписиВЖурналНовойОшибки(e.toString(),
+            new RecordNewErros(getContext()).recordnewerror(e.toString(),
                     this.getClass().getName().toString(), Thread.currentThread().getStackTrace()[2].getMethodName().toString(),
                     Thread.currentThread().getStackTrace()[2].getLineNumber());
         }
@@ -1745,7 +1745,7 @@ public class FragmentDetailingMaterials extends Fragment {
             Log.e(getContext().getClass().getName(),
                     "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
                             " Линия  :" + Thread.currentThread().getStackTrace()[2].getLineNumber());
-            new   Class_Generation_Errors(getContext()).МетодЗаписиВЖурналНовойОшибки(e.toString(),
+            new RecordNewErros(getContext()).recordnewerror(e.toString(),
                     this.getClass().getName().toString(), Thread.currentThread().getStackTrace()[2].getMethodName().toString(),
                     Thread.currentThread().getStackTrace()[2].getLineNumber());
         }
@@ -1773,7 +1773,7 @@ public class FragmentDetailingMaterials extends Fragment {
             Log.e(getContext().getClass().getName(),
                     "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
                             " Линия  :" + Thread.currentThread().getStackTrace()[2].getLineNumber());
-            new   Class_Generation_Errors(getContext()).МетодЗаписиВЖурналНовойОшибки(e.toString(),
+            new RecordNewErros(getContext()).recordnewerror(e.toString(),
                     this.getClass().getName().toString(), Thread.currentThread().getStackTrace()[2].getMethodName().toString(),
                     Thread.currentThread().getStackTrace()[2].getLineNumber());
         }

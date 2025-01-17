@@ -7,7 +7,7 @@ import android.util.Log;
 
 import com.dsy.dsu.AllDatabases.ROOM.CreateROOM;
 import com.dsy.dsu.AllDatabases.ROOM.ROOMDatabase;
-import com.dsy.dsu.Errors.Class_Generation_Errors;
+import com.dsy.dsu.Errors.controller.RecordNewErros;
 
 import javax.inject.Singleton;
 
@@ -39,7 +39,7 @@ public class DataModuleRoom {
         Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" +
                 Thread.currentThread().getStackTrace()[2].getMethodName() + " Линия  :"
                 + Thread.currentThread().getStackTrace()[2].getLineNumber());
-        new Class_Generation_Errors(context.getApplicationContext()).МетодЗаписиВЖурналНовойОшибки(e.toString(),
+        new RecordNewErros(context.getApplicationContext()).recordnewerror(e.toString(),
                 this.getClass().getName(), Thread.currentThread().getStackTrace()[2].getMethodName(),
                 Thread.currentThread().getStackTrace()[2].getLineNumber());
     }

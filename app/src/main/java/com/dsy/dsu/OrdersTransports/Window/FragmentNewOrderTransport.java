@@ -43,7 +43,7 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
 
-import com.dsy.dsu.Errors.Class_Generation_Errors;
+import com.dsy.dsu.Errors.controller.RecordNewErros;
 import com.dsy.dsu.BusinessLogicAll.Class_Generation_UUID;
 import com.dsy.dsu.BusinessLogicAll.Class_Generations_PUBLIC_CURRENT_ID;
 
@@ -125,7 +125,7 @@ public class FragmentNewOrderTransport extends Fragment {
             Log.e(getContext().getClass().getName(),
                     "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
                             " Линия  :" + Thread.currentThread().getStackTrace()[2].getLineNumber());
-            new   Class_Generation_Errors(getContext()).МетодЗаписиВЖурналНовойОшибки(e.toString(),
+            new RecordNewErros(getContext()).recordnewerror(e.toString(),
                     this.getClass().getName().toString(), Thread.currentThread().getStackTrace()[2].getMethodName().toString(),
                     Thread.currentThread().getStackTrace()[2].getLineNumber());
         }
@@ -165,7 +165,7 @@ public class FragmentNewOrderTransport extends Fragment {
             Log.e(getContext().getClass().getName(),
                     "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
                             " Линия  :" + Thread.currentThread().getStackTrace()[2].getLineNumber());
-            new   Class_Generation_Errors(getContext()).МетодЗаписиВЖурналНовойОшибки(e.toString(),
+            new RecordNewErros(getContext()).recordnewerror(e.toString(),
                     this.getClass().getName().toString(), Thread.currentThread().getStackTrace()[2].getMethodName().toString(),
                     Thread.currentThread().getStackTrace()[2].getLineNumber());
         }
@@ -199,7 +199,7 @@ public class FragmentNewOrderTransport extends Fragment {
             Log.e(getContext().getClass().getName(),
                     "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
                             " Линия  :" + Thread.currentThread().getStackTrace()[2].getLineNumber());
-            new   Class_Generation_Errors(getContext()).МетодЗаписиВЖурналНовойОшибки(e.toString(),
+            new RecordNewErros(getContext()).recordnewerror(e.toString(),
                     this.getClass().getName().toString(), Thread.currentThread().getStackTrace()[2].getMethodName().toString(),
                     Thread.currentThread().getStackTrace()[2].getLineNumber());
         }
@@ -262,7 +262,7 @@ public class FragmentNewOrderTransport extends Fragment {
             Log.e(getContext().getClass().getName(),
                     "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
                             " Линия  :" + Thread.currentThread().getStackTrace()[2].getLineNumber());
-            new   Class_Generation_Errors(getContext()).МетодЗаписиВЖурналНовойОшибки(e.toString(),
+            new RecordNewErros(getContext()).recordnewerror(e.toString(),
                     this.getClass().getName().toString(), Thread.currentThread().getStackTrace()[2].getMethodName().toString(),
                     Thread.currentThread().getStackTrace()[2].getLineNumber());
         }
@@ -294,7 +294,7 @@ public class FragmentNewOrderTransport extends Fragment {
             Log.e(getContext().getClass().getName(),
                     "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
                             " Линия  :" + Thread.currentThread().getStackTrace()[2].getLineNumber());
-            new   Class_Generation_Errors(getContext()).МетодЗаписиВЖурналНовойОшибки(e.toString(),
+            new RecordNewErros(getContext()).recordnewerror(e.toString(),
                     this.getClass().getName().toString(), Thread.currentThread().getStackTrace()[2].getMethodName().toString(),
                     Thread.currentThread().getStackTrace()[2].getLineNumber());
         }
@@ -324,7 +324,7 @@ public class FragmentNewOrderTransport extends Fragment {
                             Log.e(getContext().getClass().getName(),
                                     "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
                                             " Линия  :" + Thread.currentThread().getStackTrace()[2].getLineNumber());
-                            new   Class_Generation_Errors(getContext()).МетодЗаписиВЖурналНовойОшибки(e.toString(),
+                            new RecordNewErros(getContext()).recordnewerror(e.toString(),
                                     this.getClass().getName().toString(), Thread.currentThread().getStackTrace()[2].getMethodName().toString(),
                                     Thread.currentThread().getStackTrace()[2].getLineNumber());
                         }
@@ -335,7 +335,7 @@ public class FragmentNewOrderTransport extends Fragment {
                 Log.e(getContext().getClass().getName(),
                         "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
                                 " Линия  :" + Thread.currentThread().getStackTrace()[2].getLineNumber());
-                new   Class_Generation_Errors(getContext()).МетодЗаписиВЖурналНовойОшибки(e.toString(),
+                new RecordNewErros(getContext()).recordnewerror(e.toString(),
                         this.getClass().getName().toString(), Thread.currentThread().getStackTrace()[2].getMethodName().toString(),
                         Thread.currentThread().getStackTrace()[2].getLineNumber());
             }
@@ -366,8 +366,8 @@ public class FragmentNewOrderTransport extends Fragment {
                 Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :"
                         + Thread.currentThread().getStackTrace()[2].getMethodName().toString() + " Линия  :"
                         + Thread.currentThread().getStackTrace()[2].getLineNumber());
-                new Class_Generation_Errors(getContext()).
-                        МетодЗаписиВЖурналНовойОшибки(e.toString(),
+                new RecordNewErros(getContext()).
+                        recordnewerror(e.toString(),
                                 this.getClass().getName().toString(),
                                 Thread.currentThread().getStackTrace()[2].getMethodName().toString(),
                                 Thread.currentThread().getStackTrace()[2].getLineNumber());
@@ -392,8 +392,8 @@ public class FragmentNewOrderTransport extends Fragment {
             Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :"
                     + Thread.currentThread().getStackTrace()[2].getMethodName().toString() + " Линия  :"
                     + Thread.currentThread().getStackTrace()[2].getLineNumber());
-            new Class_Generation_Errors(getContext()).
-                    МетодЗаписиВЖурналНовойОшибки(e.toString(),
+            new RecordNewErros(getContext()).
+                    recordnewerror(e.toString(),
                             this.getClass().getName().toString(),
                             Thread.currentThread().getStackTrace()[2].getMethodName().toString(),
                             Thread.currentThread().getStackTrace()[2].getLineNumber());
@@ -432,7 +432,7 @@ public class FragmentNewOrderTransport extends Fragment {
                 e.printStackTrace();
                 Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() + " Линия  :"
                         + Thread.currentThread().getStackTrace()[2].getLineNumber());
-                new Class_Generation_Errors(getContext()).МетодЗаписиВЖурналНовойОшибки(e.toString(), this.getClass().getName(), Thread.currentThread().getStackTrace()[2].getMethodName(),
+                new RecordNewErros(getContext()).recordnewerror(e.toString(), this.getClass().getName(), Thread.currentThread().getStackTrace()[2].getMethodName(),
                         Thread.currentThread().getStackTrace()[2].getLineNumber());
             }
             return cursor;
@@ -458,7 +458,7 @@ public class FragmentNewOrderTransport extends Fragment {
                 e.printStackTrace();
                 Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() + " Линия  :"
                         + Thread.currentThread().getStackTrace()[2].getLineNumber());
-                new Class_Generation_Errors(getContext()).МетодЗаписиВЖурналНовойОшибки(e.toString(), this.getClass().getName(), Thread.currentThread().getStackTrace()[2].getMethodName(),
+                new RecordNewErros(getContext()).recordnewerror(e.toString(), this.getClass().getName(), Thread.currentThread().getStackTrace()[2].getMethodName(),
                         Thread.currentThread().getStackTrace()[2].getLineNumber());
             }
             return cursor;
@@ -497,7 +497,7 @@ public class FragmentNewOrderTransport extends Fragment {
                 e.printStackTrace();
                 Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() + " Линия  :"
                         + Thread.currentThread().getStackTrace()[2].getLineNumber());
-                new Class_Generation_Errors(getContext()).МетодЗаписиВЖурналНовойОшибки(e.toString(),
+                new RecordNewErros(getContext()).recordnewerror(e.toString(),
                         this.getClass().getName(), Thread.currentThread().getStackTrace()[2].getMethodName(),
                         Thread.currentThread().getStackTrace()[2].getLineNumber());
             }
@@ -519,7 +519,7 @@ public class FragmentNewOrderTransport extends Fragment {
             e.printStackTrace();
             Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() + " Линия  :"
                     + Thread.currentThread().getStackTrace()[2].getLineNumber());
-            new Class_Generation_Errors(getContext()).МетодЗаписиВЖурналНовойОшибки(e.toString(),
+            new RecordNewErros(getContext()).recordnewerror(e.toString(),
                     this.getClass().getName(), Thread.currentThread().getStackTrace()[2].getMethodName(),
                     Thread.currentThread().getStackTrace()[2].getLineNumber());
 
@@ -551,7 +551,7 @@ public class FragmentNewOrderTransport extends Fragment {
                 Log.e(getContext().getClass().getName(),
                         "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
                                 " Линия  :" + Thread.currentThread().getStackTrace()[2].getLineNumber());
-                new   Class_Generation_Errors(getContext()).МетодЗаписиВЖурналНовойОшибки(e.toString(),
+                new RecordNewErros(getContext()).recordnewerror(e.toString(),
                         this.getClass().getName().toString(), Thread.currentThread().getStackTrace()[2].getMethodName().toString(),
                         Thread.currentThread().getStackTrace()[2].getLineNumber());
             }
@@ -578,7 +578,7 @@ public class FragmentNewOrderTransport extends Fragment {
                 Log.e(getContext().getClass().getName(),
                         "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
                                 " Линия  :" + Thread.currentThread().getStackTrace()[2].getLineNumber());
-                new   Class_Generation_Errors(getContext()).МетодЗаписиВЖурналНовойОшибки(e.toString(),
+                new RecordNewErros(getContext()).recordnewerror(e.toString(),
                         this.getClass().getName().toString(), Thread.currentThread().getStackTrace()[2].getMethodName().toString(),
                         Thread.currentThread().getStackTrace()[2].getLineNumber());
             }
@@ -614,8 +614,8 @@ public class FragmentNewOrderTransport extends Fragment {
                 Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" +
                         Thread.currentThread().getStackTrace()[2].getMethodName() +
                         " Линия  :" + Thread.currentThread().getStackTrace()[2].getLineNumber());
-                new   Class_Generation_Errors( getContext())
-                        .МетодЗаписиВЖурналНовойОшибки(e.toString(),
+                new RecordNewErros( getContext())
+                        .recordnewerror(e.toString(),
                                 this.getClass().getName(),
                                 Thread.currentThread().getStackTrace()[2].getMethodName(),
                                 Thread.currentThread().getStackTrace()[2].getLineNumber());
@@ -674,7 +674,7 @@ public class FragmentNewOrderTransport extends Fragment {
                 e.printStackTrace();
                 Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
                         " Линия  :" + Thread.currentThread().getStackTrace()[2].getLineNumber());
-                new   Class_Generation_Errors(getContext()).МетодЗаписиВЖурналНовойОшибки(e.toString(), this.getClass().getName(),
+                new RecordNewErros(getContext()).recordnewerror(e.toString(), this.getClass().getName(),
                         Thread.currentThread().getStackTrace()[2].getMethodName(), Thread.currentThread().getStackTrace()[2].getLineNumber());
             }
         }
@@ -701,7 +701,7 @@ public class FragmentNewOrderTransport extends Fragment {
                 e.printStackTrace();
                 Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() + " Линия  :"
                         + Thread.currentThread().getStackTrace()[2].getLineNumber());
-                new Class_Generation_Errors(getContext()).МетодЗаписиВЖурналНовойОшибки(e.toString(),
+                new RecordNewErros(getContext()).recordnewerror(e.toString(),
                         this.getClass().getName(), Thread.currentThread().getStackTrace()[2].getMethodName(),
                         Thread.currentThread().getStackTrace()[2].getLineNumber());
             }
@@ -734,7 +734,7 @@ public class FragmentNewOrderTransport extends Fragment {
                 e.printStackTrace();
                 Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
                         " Линия  :" + Thread.currentThread().getStackTrace()[2].getLineNumber());
-                new   Class_Generation_Errors(getContext()).МетодЗаписиВЖурналНовойОшибки(e.toString(), this.getClass().getName(),
+                new RecordNewErros(getContext()).recordnewerror(e.toString(), this.getClass().getName(),
                         Thread.currentThread().getStackTrace()[2].getMethodName(), Thread.currentThread().getStackTrace()[2].getLineNumber());
             }
         }
@@ -765,7 +765,7 @@ public class FragmentNewOrderTransport extends Fragment {
                 e.printStackTrace();
                 Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
                         " Линия  :" + Thread.currentThread().getStackTrace()[2].getLineNumber());
-                new   Class_Generation_Errors(getContext()).МетодЗаписиВЖурналНовойОшибки(e.toString(), this.getClass().getName(),
+                new RecordNewErros(getContext()).recordnewerror(e.toString(), this.getClass().getName(),
                         Thread.currentThread().getStackTrace()[2].getMethodName(), Thread.currentThread().getStackTrace()[2].getLineNumber());
             }
         }
@@ -801,7 +801,7 @@ public class FragmentNewOrderTransport extends Fragment {
                         e.printStackTrace();
                         Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
                                 " Линия  :" + Thread.currentThread().getStackTrace()[2].getLineNumber());
-                        new   Class_Generation_Errors(getContext()).МетодЗаписиВЖурналНовойОшибки(e.toString(), this.getClass().getName(),
+                        new RecordNewErros(getContext()).recordnewerror(e.toString(), this.getClass().getName(),
                                 Thread.currentThread().getStackTrace()[2].getMethodName(), Thread.currentThread().getStackTrace()[2].getLineNumber());
                     }
 
@@ -814,7 +814,7 @@ public class FragmentNewOrderTransport extends Fragment {
                 e.printStackTrace();
                 Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
                         " Линия  :" + Thread.currentThread().getStackTrace()[2].getLineNumber());
-                new   Class_Generation_Errors(getContext()).МетодЗаписиВЖурналНовойОшибки(e.toString(), this.getClass().getName(),
+                new RecordNewErros(getContext()).recordnewerror(e.toString(), this.getClass().getName(),
                         Thread.currentThread().getStackTrace()[2].getMethodName(), Thread.currentThread().getStackTrace()[2].getLineNumber());
             }
         }
@@ -921,7 +921,7 @@ public class FragmentNewOrderTransport extends Fragment {
                 e.printStackTrace();
                 Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
                         " Линия  :" + Thread.currentThread().getStackTrace()[2].getLineNumber());
-                new   Class_Generation_Errors(getContext()).МетодЗаписиВЖурналНовойОшибки(e.toString(), this.getClass().getName(),
+                new RecordNewErros(getContext()).recordnewerror(e.toString(), this.getClass().getName(),
                         Thread.currentThread().getStackTrace()[2].getMethodName(), Thread.currentThread().getStackTrace()[2].getLineNumber());
             }
         }
@@ -940,7 +940,7 @@ public class FragmentNewOrderTransport extends Fragment {
                 e.printStackTrace();
                 Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
                         " Линия  :" + Thread.currentThread().getStackTrace()[2].getLineNumber());
-                new   Class_Generation_Errors(getContext()).МетодЗаписиВЖурналНовойОшибки(e.toString(), this.getClass().getName(),
+                new RecordNewErros(getContext()).recordnewerror(e.toString(), this.getClass().getName(),
                         Thread.currentThread().getStackTrace()[2].getMethodName(), Thread.currentThread().getStackTrace()[2].getLineNumber());
             }
         }
@@ -963,7 +963,7 @@ public class FragmentNewOrderTransport extends Fragment {
                 e.printStackTrace();
                 Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() + " Линия  :"
                         + Thread.currentThread().getStackTrace()[2].getLineNumber());
-                new Class_Generation_Errors(getContext()).МетодЗаписиВЖурналНовойОшибки(e.toString(), this.getClass().getName(), Thread.currentThread().getStackTrace()[2].getMethodName(),
+                new RecordNewErros(getContext()).recordnewerror(e.toString(), this.getClass().getName(), Thread.currentThread().getStackTrace()[2].getMethodName(),
                         Thread.currentThread().getStackTrace()[2].getLineNumber());
 
                 // TODO: 11.05.2021 запись ошибок
@@ -1013,7 +1013,7 @@ public class FragmentNewOrderTransport extends Fragment {
                 e.printStackTrace();
                 Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() + " Линия  :"
                         + Thread.currentThread().getStackTrace()[2].getLineNumber());
-                new Class_Generation_Errors(getContext()).МетодЗаписиВЖурналНовойОшибки(e.toString(),
+                new RecordNewErros(getContext()).recordnewerror(e.toString(),
                         this.getClass().getName(), Thread.currentThread().getStackTrace()[2].getMethodName(),
                         Thread.currentThread().getStackTrace()[2].getLineNumber());
             }
@@ -1031,7 +1031,7 @@ public class FragmentNewOrderTransport extends Fragment {
                 e.printStackTrace();
                 Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() + " Линия  :"
                         + Thread.currentThread().getStackTrace()[2].getLineNumber());
-                new Class_Generation_Errors(getContext()).МетодЗаписиВЖурналНовойОшибки(e.toString(),
+                new RecordNewErros(getContext()).recordnewerror(e.toString(),
                         this.getClass().getName(), Thread.currentThread().getStackTrace()[2].getMethodName(),
                         Thread.currentThread().getStackTrace()[2].getLineNumber());
             }
@@ -1139,7 +1139,7 @@ public class FragmentNewOrderTransport extends Fragment {
                                                 e.printStackTrace();
                                                 Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
                                                         " Линия  :" + Thread.currentThread().getStackTrace()[2].getLineNumber());
-                                                new   Class_Generation_Errors( getContext()).МетодЗаписиВЖурналНовойОшибки(e.toString(),
+                                                new RecordNewErros( getContext()).recordnewerror(e.toString(),
                                                         this.getClass().getName(),
                                                         Thread.currentThread().getStackTrace()[2].getMethodName(), Thread.currentThread().getStackTrace()[2].getLineNumber());
                                             }
@@ -1179,8 +1179,8 @@ public class FragmentNewOrderTransport extends Fragment {
                         Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" +
                                 Thread.currentThread().getStackTrace()[2].getMethodName() +
                                 " Линия  :" + Thread.currentThread().getStackTrace()[2].getLineNumber());
-                        new   Class_Generation_Errors(this.getContext())
-                                .МетодЗаписиВЖурналНовойОшибки(e.toString(),
+                        new RecordNewErros(this.getContext())
+                                .recordnewerror(e.toString(),
                                 this.getClass().getName(),
                                 Thread.currentThread().getStackTrace()[2].getMethodName(),
                                         Thread.currentThread().getStackTrace()[2].getLineNumber());
@@ -1227,8 +1227,8 @@ public class FragmentNewOrderTransport extends Fragment {
                             Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" +
                                     Thread.currentThread().getStackTrace()[2].getMethodName() +
                                     " Линия  :" + Thread.currentThread().getStackTrace()[2].getLineNumber());
-                            new   Class_Generation_Errors( getContext())
-                                    .МетодЗаписиВЖурналНовойОшибки(e.toString(),
+                            new RecordNewErros( getContext())
+                                    .recordnewerror(e.toString(),
                                             this.getClass().getName(),
                                             Thread.currentThread().getStackTrace()[2].getMethodName(),
                                             Thread.currentThread().getStackTrace()[2].getLineNumber());
@@ -1240,8 +1240,8 @@ public class FragmentNewOrderTransport extends Fragment {
                     Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" +
                             Thread.currentThread().getStackTrace()[2].getMethodName() +
                             " Линия  :" + Thread.currentThread().getStackTrace()[2].getLineNumber());
-                    new   Class_Generation_Errors( getContext())
-                            .МетодЗаписиВЖурналНовойОшибки(e.toString(),
+                    new RecordNewErros( getContext())
+                            .recordnewerror(e.toString(),
                                     this.getClass().getName(),
                                     Thread.currentThread().getStackTrace()[2].getMethodName(),
                                     Thread.currentThread().getStackTrace()[2].getLineNumber());
@@ -1283,7 +1283,7 @@ public class FragmentNewOrderTransport extends Fragment {
                             e.printStackTrace();
                             Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
                                     " Линия  :" + Thread.currentThread().getStackTrace()[2].getLineNumber());
-                            new   Class_Generation_Errors( getContext()).МетодЗаписиВЖурналНовойОшибки(e.toString(),
+                            new RecordNewErros( getContext()).recordnewerror(e.toString(),
                                     this.getClass().getName(),
                                     Thread.currentThread().getStackTrace()[2].getMethodName(), Thread.currentThread().getStackTrace()[2].getLineNumber());
                         }
@@ -1311,7 +1311,7 @@ public class FragmentNewOrderTransport extends Fragment {
                             e.printStackTrace();
                             Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
                                     " Линия  :" + Thread.currentThread().getStackTrace()[2].getLineNumber());
-                            new   Class_Generation_Errors(getContext() ).МетодЗаписиВЖурналНовойОшибки(e.toString(),
+                            new RecordNewErros(getContext() ).recordnewerror(e.toString(),
                                     this.getClass().getName(),
                                     Thread.currentThread().getStackTrace()[2].getMethodName(), Thread.currentThread().getStackTrace()[2].getLineNumber());
                         }
@@ -1345,7 +1345,7 @@ public class FragmentNewOrderTransport extends Fragment {
                             e.printStackTrace();
                             Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
                                     " Линия  :" + Thread.currentThread().getStackTrace()[2].getLineNumber());
-                            new   Class_Generation_Errors( getContext()).МетодЗаписиВЖурналНовойОшибки(e.toString(),
+                            new RecordNewErros( getContext()).recordnewerror(e.toString(),
                                     this.getClass().getName(),
                                     Thread.currentThread().getStackTrace()[2].getMethodName(), Thread.currentThread().getStackTrace()[2].getLineNumber());
                         }
@@ -1356,7 +1356,7 @@ public class FragmentNewOrderTransport extends Fragment {
                 e.printStackTrace();
                 Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
                         " Линия  :" + Thread.currentThread().getStackTrace()[2].getLineNumber());
-                new   Class_Generation_Errors( getContext()).МетодЗаписиВЖурналНовойОшибки(e.toString(),
+                new RecordNewErros( getContext()).recordnewerror(e.toString(),
                         this.getClass().getName(),
                         Thread.currentThread().getStackTrace()[2].getMethodName(), Thread.currentThread().getStackTrace()[2].getLineNumber());
             }
@@ -1393,7 +1393,7 @@ public class FragmentNewOrderTransport extends Fragment {
             e.printStackTrace();
             Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
                     " Линия  :" + Thread.currentThread().getStackTrace()[2].getLineNumber());
-            new   Class_Generation_Errors( getContext()).МетодЗаписиВЖурналНовойОшибки(e.toString(),
+            new RecordNewErros( getContext()).recordnewerror(e.toString(),
                     this.getClass().getName(),
                     Thread.currentThread().getStackTrace()[2].getMethodName(), Thread.currentThread().getStackTrace()[2].getLineNumber());
         }
@@ -1417,7 +1417,7 @@ public class FragmentNewOrderTransport extends Fragment {
                 e.printStackTrace();
                 Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
                         " Линия  :" + Thread.currentThread().getStackTrace()[2].getLineNumber());
-                new   Class_Generation_Errors(materialButtonFilterЗакрытьДиалог.getContext()).МетодЗаписиВЖурналНовойОшибки(e.toString(),
+                new RecordNewErros(materialButtonFilterЗакрытьДиалог.getContext()).recordnewerror(e.toString(),
                         this.getClass().getName(),
                         Thread.currentThread().getStackTrace()[2].getMethodName(), Thread.currentThread().getStackTrace()[2].getLineNumber());
             }
@@ -1464,7 +1464,7 @@ public class FragmentNewOrderTransport extends Fragment {
                                     e.printStackTrace();
                                     Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
                                             " Линия  :" + Thread.currentThread().getStackTrace()[2].getLineNumber());
-                                    new   Class_Generation_Errors(getContext()).МетодЗаписиВЖурналНовойОшибки(e.toString(), this.getClass().getName(),
+                                    new RecordNewErros(getContext()).recordnewerror(e.toString(), this.getClass().getName(),
                                             Thread.currentThread().getStackTrace()[2].getMethodName(), Thread.currentThread().getStackTrace()[2].getLineNumber());
                                 }
                             }
@@ -1485,7 +1485,7 @@ public class FragmentNewOrderTransport extends Fragment {
                 e.printStackTrace();
                 Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
                         " Линия  :" + Thread.currentThread().getStackTrace()[2].getLineNumber());
-                new   Class_Generation_Errors(getContext()).МетодЗаписиВЖурналНовойОшибки(e.toString(), this.getClass().getName(),
+                new RecordNewErros(getContext()).recordnewerror(e.toString(), this.getClass().getName(),
                         Thread.currentThread().getStackTrace()[2].getMethodName(), Thread.currentThread().getStackTrace()[2].getLineNumber());
             }
 
@@ -1504,7 +1504,7 @@ public class FragmentNewOrderTransport extends Fragment {
             e.printStackTrace();
             Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
                     " Линия  :" + Thread.currentThread().getStackTrace()[2].getLineNumber());
-            new   Class_Generation_Errors(getContext()).МетодЗаписиВЖурналНовойОшибки(e.toString(), this.getClass().getName(),
+            new RecordNewErros(getContext()).recordnewerror(e.toString(), this.getClass().getName(),
                     Thread.currentThread().getStackTrace()[2].getMethodName(), Thread.currentThread().getStackTrace()[2].getLineNumber());
         }
         }
@@ -1532,7 +1532,7 @@ public class FragmentNewOrderTransport extends Fragment {
                 e.printStackTrace();
                 Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
                         " Линия  :" + Thread.currentThread().getStackTrace()[2].getLineNumber());
-                new   Class_Generation_Errors(getContext()).МетодЗаписиВЖурналНовойОшибки(e.toString(), this.getClass().getName(),
+                new RecordNewErros(getContext()).recordnewerror(e.toString(), this.getClass().getName(),
                         Thread.currentThread().getStackTrace()[2].getMethodName(), Thread.currentThread().getStackTrace()[2].getLineNumber());
             }
 

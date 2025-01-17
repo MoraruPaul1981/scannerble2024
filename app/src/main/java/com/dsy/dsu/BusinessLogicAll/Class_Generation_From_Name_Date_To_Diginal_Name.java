@@ -5,7 +5,7 @@ import static java.util.Calendar.getInstance;
 import android.content.Context;
 import android.util.Log;
 
-import com.dsy.dsu.Errors.Class_Generation_Errors;
+import com.dsy.dsu.Errors.controller.RecordNewErros;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -72,7 +72,7 @@ public class Class_Generation_From_Name_Date_To_Diginal_Name {
             ///метод запись ошибок в таблицу
             Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() + " Линия  :"
                     + Thread.currentThread().getStackTrace()[2].getLineNumber());
-            new Class_Generation_Errors(contextДляКлассаПереводимИзНазваниеДатыВЦифруМесяцОтвдельноГодОтдельно).МетодЗаписиВЖурналНовойОшибки(e.toString(), this.getClass().getName(), Thread.currentThread().getStackTrace()[2].getMethodName(),
+            new RecordNewErros(contextДляКлассаПереводимИзНазваниеДатыВЦифруМесяцОтвдельноГодОтдельно).recordnewerror(e.toString(), this.getClass().getName(), Thread.currentThread().getStackTrace()[2].getMethodName(),
                     Thread.currentThread().getStackTrace()[2].getLineNumber());
         }
         ////
@@ -120,7 +120,7 @@ public class Class_Generation_From_Name_Date_To_Diginal_Name {
             ///метод запись ошибок в таблицу
             Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() + " Линия  :"
                     + Thread.currentThread().getStackTrace()[2].getLineNumber());
-            new   Class_Generation_Errors(contextДляКлассаПереводимИзНазваниеДатыВЦифруМесяцОтвдельноГодОтдельно).МетодЗаписиВЖурналНовойОшибки(e.toString(), this.getClass().getName(), Thread.currentThread().getStackTrace()[2].getMethodName(),
+            new RecordNewErros(contextДляКлассаПереводимИзНазваниеДатыВЦифруМесяцОтвдельноГодОтдельно).recordnewerror(e.toString(), this.getClass().getName(), Thread.currentThread().getStackTrace()[2].getMethodName(),
                     Thread.currentThread().getStackTrace()[2].getLineNumber());
         }
         return ПолученныйГод;

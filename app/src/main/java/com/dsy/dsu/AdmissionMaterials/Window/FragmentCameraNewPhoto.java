@@ -43,7 +43,7 @@ import android.widget.ImageButton;
 import android.widget.Toast;
 
 import com.dsy.dsu.AdmissionMaterials.bl_admissonmaterils.PesssionCameta;
-import com.dsy.dsu.Errors.Class_Generation_Errors;
+import com.dsy.dsu.Errors.controller.RecordNewErros;
 import com.dsy.dsu.BusinessLogicAll.Class_Generation_UUID;
 import com.dsy.dsu.BusinessLogicAll.Permissions.ClassPermissions;
 import com.dsy.dsu.R;
@@ -153,7 +153,7 @@ public class FragmentCameraNewPhoto extends DialogFragment  implements CameraXIn
         Log.e(getContext().getClass().getName(),
                 "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
                         " Линия  :" + Thread.currentThread().getStackTrace()[2].getLineNumber());
-        new Class_Generation_Errors(getContext()).МетодЗаписиВЖурналНовойОшибки(e.toString(),
+        new RecordNewErros(getContext()).recordnewerror(e.toString(),
                 this.getClass().getName().toString(), Thread.currentThread().getStackTrace()[2].getMethodName().toString(),
                 Thread.currentThread().getStackTrace()[2].getLineNumber());
     }
@@ -184,7 +184,7 @@ public class FragmentCameraNewPhoto extends DialogFragment  implements CameraXIn
         Log.e(getContext().getClass().getName(),
                 "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
                         " Линия  :" + Thread.currentThread().getStackTrace()[2].getLineNumber());
-        new Class_Generation_Errors(getContext()).МетодЗаписиВЖурналНовойОшибки(e.toString(),
+        new RecordNewErros(getContext()).recordnewerror(e.toString(),
                 this.getClass().getName().toString(), Thread.currentThread().getStackTrace()[2].getMethodName().toString(),
                 Thread.currentThread().getStackTrace()[2].getLineNumber());
     }
@@ -207,7 +207,7 @@ public class FragmentCameraNewPhoto extends DialogFragment  implements CameraXIn
         Log.e(getContext().getClass().getName(),
                 "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
                         " Линия  :" + Thread.currentThread().getStackTrace()[2].getLineNumber());
-        new Class_Generation_Errors(getContext()).МетодЗаписиВЖурналНовойОшибки(e.toString(),
+        new RecordNewErros(getContext()).recordnewerror(e.toString(),
                 this.getClass().getName().toString(), Thread.currentThread().getStackTrace()[2].getMethodName().toString(),
                 Thread.currentThread().getStackTrace()[2].getLineNumber());
     }
@@ -230,7 +230,7 @@ public class FragmentCameraNewPhoto extends DialogFragment  implements CameraXIn
             Log.e(getContext().getClass().getName(),
                     "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
                             " Линия  :" + Thread.currentThread().getStackTrace()[2].getLineNumber());
-            new Class_Generation_Errors(getContext()).МетодЗаписиВЖурналНовойОшибки(e.toString(),
+            new RecordNewErros(getContext()).recordnewerror(e.toString(),
                     this.getClass().getName().toString(), Thread.currentThread().getStackTrace()[2].getMethodName().toString(),
                     Thread.currentThread().getStackTrace()[2].getLineNumber());
         }
@@ -250,7 +250,7 @@ public class FragmentCameraNewPhoto extends DialogFragment  implements CameraXIn
         Log.e(getContext().getClass().getName(),
                 "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
                         " Линия  :" + Thread.currentThread().getStackTrace()[2].getLineNumber());
-        new Class_Generation_Errors(getContext()).МетодЗаписиВЖурналНовойОшибки(e.toString(),
+        new RecordNewErros(getContext()).recordnewerror(e.toString(),
                 this.getClass().getName().toString(), Thread.currentThread().getStackTrace()[2].getMethodName().toString(),
                 Thread.currentThread().getStackTrace()[2].getLineNumber());
     }
@@ -268,7 +268,7 @@ public class FragmentCameraNewPhoto extends DialogFragment  implements CameraXIn
         Log.e(getContext().getClass().getName(),
                 "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
                         " Линия  :" + Thread.currentThread().getStackTrace()[2].getLineNumber());
-        new Class_Generation_Errors(getContext()).МетодЗаписиВЖурналНовойОшибки(e.toString(),
+        new RecordNewErros(getContext()).recordnewerror(e.toString(),
                 this.getClass().getName().toString(), Thread.currentThread().getStackTrace()[2].getMethodName().toString(),
                 Thread.currentThread().getStackTrace()[2].getLineNumber());
     }
@@ -294,7 +294,7 @@ public class FragmentCameraNewPhoto extends DialogFragment  implements CameraXIn
         Log.e(getContext().getClass().getName(),
                 "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
                         " Линия  :" + Thread.currentThread().getStackTrace()[2].getLineNumber());
-        new Class_Generation_Errors(getContext()).МетодЗаписиВЖурналНовойОшибки(e.toString(),
+        new RecordNewErros(getContext()).recordnewerror(e.toString(),
                 this.getClass().getName().toString(), Thread.currentThread().getStackTrace()[2].getMethodName().toString(),
                 Thread.currentThread().getStackTrace()[2].getLineNumber());
     }
@@ -313,7 +313,7 @@ public class FragmentCameraNewPhoto extends DialogFragment  implements CameraXIn
         Log.e(getContext().getClass().getName(),
                 "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
                         " Линия  :" + Thread.currentThread().getStackTrace()[2].getLineNumber());
-        new Class_Generation_Errors(getContext()).МетодЗаписиВЖурналНовойОшибки(e.toString(),
+        new RecordNewErros(getContext()).recordnewerror(e.toString(),
                 this.getClass().getName().toString(), Thread.currentThread().getStackTrace()[2].getMethodName().toString(),
                 Thread.currentThread().getStackTrace()[2].getLineNumber());
     }
@@ -340,7 +340,7 @@ try{
                     e.printStackTrace();
                     Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() + " Линия  :"
                             + Thread.currentThread().getStackTrace()[2].getLineNumber());
-                    new Class_Generation_Errors(getContext()).МетодЗаписиВЖурналНовойОшибки(e.toString(), this.getClass().getName(), Thread.currentThread().getStackTrace()[2].getMethodName(),
+                    new RecordNewErros(getContext()).recordnewerror(e.toString(), this.getClass().getName(), Thread.currentThread().getStackTrace()[2].getMethodName(),
                             Thread.currentThread().getStackTrace()[2].getLineNumber());
                 }
                 }
@@ -379,7 +379,7 @@ try{
                     e.printStackTrace();
                     Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() + " Линия  :"
                             + Thread.currentThread().getStackTrace()[2].getLineNumber());
-                    new Class_Generation_Errors(getContext()).МетодЗаписиВЖурналНовойОшибки(e.toString(), this.getClass().getName(), Thread.currentThread().getStackTrace()[2].getMethodName(),
+                    new RecordNewErros(getContext()).recordnewerror(e.toString(), this.getClass().getName(), Thread.currentThread().getStackTrace()[2].getMethodName(),
                             Thread.currentThread().getStackTrace()[2].getLineNumber());
                 }
                 }
@@ -405,7 +405,7 @@ try{
                 Log.e(getContext().getClass().getName(),
                         "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
                                 " Линия  :" + Thread.currentThread().getStackTrace()[2].getLineNumber());
-                new Class_Generation_Errors(getContext()).МетодЗаписиВЖурналНовойОшибки(e.toString(),
+                new RecordNewErros(getContext()).recordnewerror(e.toString(),
                         this.getClass().getName().toString(), Thread.currentThread().getStackTrace()[2].getMethodName().toString(),
                         Thread.currentThread().getStackTrace()[2].getLineNumber());
             }
@@ -433,7 +433,7 @@ try{
                         Log.e(getContext().getClass().getName(),
                                 "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
                                         " Линия  :" + Thread.currentThread().getStackTrace()[2].getLineNumber());
-                        new Class_Generation_Errors(getContext()).МетодЗаписиВЖурналНовойОшибки(e.toString(),
+                        new RecordNewErros(getContext()).recordnewerror(e.toString(),
                                 this.getClass().getName().toString(), Thread.currentThread().getStackTrace()[2].getMethodName().toString(),
                                 Thread.currentThread().getStackTrace()[2].getLineNumber());
                     }
@@ -501,7 +501,7 @@ try{
                     Log.e(getContext().getClass().getName(),
                             "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
                                     " Линия  :" + Thread.currentThread().getStackTrace()[2].getLineNumber());
-                    new Class_Generation_Errors(getContext()).МетодЗаписиВЖурналНовойОшибки(e.toString(),
+                    new RecordNewErros(getContext()).recordnewerror(e.toString(),
                             this.getClass().getName().toString(), Thread.currentThread().getStackTrace()[2].getMethodName().toString(),
                             Thread.currentThread().getStackTrace()[2].getLineNumber());
                 }
@@ -531,7 +531,7 @@ try{
                         Log.e(getContext().getClass().getName(),
                                 "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
                                         " Линия  :" + Thread.currentThread().getStackTrace()[2].getLineNumber());
-                        new Class_Generation_Errors(getContext()).МетодЗаписиВЖурналНовойОшибки(e.toString(),
+                        new RecordNewErros(getContext()).recordnewerror(e.toString(),
                                 this.getClass().getName().toString(), Thread.currentThread().getStackTrace()[2].getMethodName().toString(),
                                 Thread.currentThread().getStackTrace()[2].getLineNumber());
                     }
@@ -623,7 +623,7 @@ try{
                                             Log.e(getContext().getClass().getName(),
                                                     "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
                                                             " Линия  :" + Thread.currentThread().getStackTrace()[2].getLineNumber());
-                                            new Class_Generation_Errors(getContext()).МетодЗаписиВЖурналНовойОшибки(e.toString(),
+                                            new RecordNewErros(getContext()).recordnewerror(e.toString(),
                                                     this.getClass().getName().toString(), Thread.currentThread().getStackTrace()[2].getMethodName().toString(),
                                                     Thread.currentThread().getStackTrace()[2].getLineNumber());
                                         }
@@ -644,7 +644,7 @@ try{
                                     Log.e(getContext().getClass().getName(),
                                             "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
                                                     " Линия  :" + Thread.currentThread().getStackTrace()[2].getLineNumber());
-                                    new Class_Generation_Errors(getContext()).МетодЗаписиВЖурналНовойОшибки(e.toString(),
+                                    new RecordNewErros(getContext()).recordnewerror(e.toString(),
                                             this.getClass().getName().toString(), Thread.currentThread().getStackTrace()[2].getMethodName().toString(),
                                             Thread.currentThread().getStackTrace()[2].getLineNumber());
                                 }
@@ -675,7 +675,7 @@ try{
                                         Log.e(getContext().getClass().getName(),
                                                 "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
                                                         " Линия  :" + Thread.currentThread().getStackTrace()[2].getLineNumber());
-                                        new Class_Generation_Errors(getContext()).МетодЗаписиВЖурналНовойОшибки(e.toString(),
+                                        new RecordNewErros(getContext()).recordnewerror(e.toString(),
                                                 this.getClass().getName().toString(), Thread.currentThread().getStackTrace()[2].getMethodName().toString(),
                                                 Thread.currentThread().getStackTrace()[2].getLineNumber());
                                     }
@@ -691,7 +691,7 @@ try{
                 Log.e(getContext().getClass().getName(),
                         "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
                                 " Линия  :" + Thread.currentThread().getStackTrace()[2].getLineNumber());
-                new Class_Generation_Errors(getContext()).МетодЗаписиВЖурналНовойОшибки(e.toString(),
+                new RecordNewErros(getContext()).recordnewerror(e.toString(),
                         this.getClass().getName().toString(), Thread.currentThread().getStackTrace()[2].getMethodName().toString(),
                         Thread.currentThread().getStackTrace()[2].getLineNumber());
             }

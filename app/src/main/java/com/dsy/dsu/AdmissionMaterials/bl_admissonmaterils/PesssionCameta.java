@@ -8,7 +8,7 @@ import android.util.Log;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
-import com.dsy.dsu.Errors.Class_Generation_Errors;
+import com.dsy.dsu.Errors.controller.RecordNewErros;
 
 public class PesssionCameta {
 
@@ -55,7 +55,7 @@ public class PesssionCameta {
               } catch(Exception e){
                   Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
                           " Линия  :" + Thread.currentThread().getStackTrace()[2].getLineNumber());
-                  new Class_Generation_Errors(activity).МетодЗаписиВЖурналНовойОшибки(e.toString(), this.getClass().getName(),
+                  new RecordNewErros(activity).recordnewerror(e.toString(), this.getClass().getName(),
                           Thread.currentThread().getStackTrace()[2].getMethodName(), Thread.currentThread().getStackTrace()[2].getLineNumber());
               }
               return ФлагЕслиРАзрешенияКамераИлиНет;
@@ -91,7 +91,7 @@ public class PesssionCameta {
         } catch(Exception e){
             Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
                     " Линия  :" + Thread.currentThread().getStackTrace()[2].getLineNumber());
-            new Class_Generation_Errors(activity).МетодЗаписиВЖурналНовойОшибки(e.toString(), this.getClass().getName(),
+            new RecordNewErros(activity).recordnewerror(e.toString(), this.getClass().getName(),
                     Thread.currentThread().getStackTrace()[2].getMethodName(), Thread.currentThread().getStackTrace()[2].getLineNumber());
         }
         return ФлагЕслиРАзрешенияКамераИлиНет;

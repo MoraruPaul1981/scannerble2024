@@ -15,7 +15,7 @@ import com.dsy.dsu.CommitPrices.Model.SendDataTo1C.CommintPricesSendJsonTo1C;
 import com.dsy.dsu.CommitPrices.Model.SendDataTo1C.ProcceroingResultatOtveta1CPost;
 import com.dsy.dsu.CommitPrices.View.MyRecycleViewNested.MyRecycleViewIsAdaptersNestedCommintPrices;
 import com.dsy.dsu.CommitPrices.View.MyRecycleViewNested.MyViewHoldersNestedCommintPrices;
-import com.dsy.dsu.Errors.Class_Generation_Errors;
+import com.dsy.dsu.Errors.controller.RecordNewErros;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.google.android.material.card.MaterialCardView;
 import com.google.android.material.textview.MaterialTextView;
@@ -101,7 +101,7 @@ public class GetLiveDataForrecyreViewPrices {
                             Log.e(context.getClass().getName(),
                                     "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
                                             " Линия  :" + Thread.currentThread().getStackTrace()[2].getLineNumber());
-                            new Class_Generation_Errors(context).МетодЗаписиВЖурналНовойОшибки(e.toString(),
+                            new RecordNewErros(context).recordnewerror(e.toString(),
                                     this.getClass().getName().toString(), Thread.currentThread().getStackTrace()[2].getMethodName().toString(),
                                     Thread.currentThread().getStackTrace()[2].getLineNumber());
                         }
@@ -121,7 +121,7 @@ public class GetLiveDataForrecyreViewPrices {
             Log.e(context.getClass().getName(),
                     "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
                             " Линия  :" + Thread.currentThread().getStackTrace()[2].getLineNumber());
-            new Class_Generation_Errors(context).МетодЗаписиВЖурналНовойОшибки(e.toString(),
+            new RecordNewErros(context).recordnewerror(e.toString(),
                     this.getClass().getName().toString(), Thread.currentThread().getStackTrace()[2].getMethodName().toString(),
                     Thread.currentThread().getStackTrace()[2].getLineNumber());
         }

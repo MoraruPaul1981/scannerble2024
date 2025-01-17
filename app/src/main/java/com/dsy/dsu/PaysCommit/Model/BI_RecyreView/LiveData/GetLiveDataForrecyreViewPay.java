@@ -17,7 +17,7 @@ import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.Observer;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.dsy.dsu.Errors.Class_Generation_Errors;
+import com.dsy.dsu.Errors.controller.RecordNewErros;
 import com.dsy.dsu.PaysCommit.Model.BI_RecyreView.Bl_CommintigPay;
 import com.dsy.dsu.PaysCommit.Model.BI_RecyreView.ProccesingCancelOrOKPay;
 import com.dsy.dsu.PaysCommit.View.RecyreView.MyRecycleViewAdapterCommingPay;
@@ -109,7 +109,7 @@ public class GetLiveDataForrecyreViewPay {
                             Log.e(context.getClass().getName(),
                                     "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
                                             " Линия  :" + Thread.currentThread().getStackTrace()[2].getLineNumber());
-                            new Class_Generation_Errors(context).МетодЗаписиВЖурналНовойОшибки(e.toString(),
+                            new RecordNewErros(context).recordnewerror(e.toString(),
                                     this.getClass().getName().toString(), Thread.currentThread().getStackTrace()[2].getMethodName().toString(),
                                     Thread.currentThread().getStackTrace()[2].getLineNumber());
                         }
@@ -129,7 +129,7 @@ public class GetLiveDataForrecyreViewPay {
             Log.e(context.getClass().getName(),
                     "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
                             " Линия  :" + Thread.currentThread().getStackTrace()[2].getLineNumber());
-            new Class_Generation_Errors(context).МетодЗаписиВЖурналНовойОшибки(e.toString(),
+            new RecordNewErros(context).recordnewerror(e.toString(),
                     this.getClass().getName().toString(), Thread.currentThread().getStackTrace()[2].getMethodName().toString(),
                     Thread.currentThread().getStackTrace()[2].getLineNumber());
         }
@@ -212,7 +212,7 @@ public class GetLiveDataForrecyreViewPay {
         Log.e(context.getClass().getName(),
                 "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
                         " Линия  :" + Thread.currentThread().getStackTrace()[2].getLineNumber());
-        new Class_Generation_Errors(context).МетодЗаписиВЖурналНовойОшибки(e.toString(),
+        new RecordNewErros(context).recordnewerror(e.toString(),
                 this.getClass().getName().toString(), Thread.currentThread().getStackTrace()[2].getMethodName().toString(),
                 Thread.currentThread().getStackTrace()[2].getLineNumber());
     }
@@ -253,7 +253,7 @@ public class GetLiveDataForrecyreViewPay {
         Log.e(context.getClass().getName(),
                 "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
                         " Линия  :" + Thread.currentThread().getStackTrace()[2].getLineNumber());
-        new Class_Generation_Errors(context).МетодЗаписиВЖурналНовойОшибки(e.toString(),
+        new RecordNewErros(context).recordnewerror(e.toString(),
                 this.getClass().getName().toString(), Thread.currentThread().getStackTrace()[2].getMethodName().toString(),
                 Thread.currentThread().getStackTrace()[2].getLineNumber());
     }

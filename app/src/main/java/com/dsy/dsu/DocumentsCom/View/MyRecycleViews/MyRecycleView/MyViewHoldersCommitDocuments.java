@@ -10,7 +10,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.dsy.dsu.DocumentsCom.View.ComponentsUI.InitiativeComponentCommitDocumentsUI;
-import com.dsy.dsu.Errors.Class_Generation_Errors;
+import com.dsy.dsu.Errors.controller.RecordNewErros;
 import com.dsy.dsu.R;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.google.android.material.bottomnavigation.BottomNavigationItemView;
@@ -68,7 +68,7 @@ public class MyViewHoldersCommitDocuments extends RecyclerView.ViewHolder {// TO
             Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() + " Линия  :"
                     + Thread.currentThread().getStackTrace()[2].getLineNumber());
             // TODO: 01.09.2021 метод вызова
-            new Class_Generation_Errors(context).МетодЗаписиВЖурналНовойОшибки(e.toString(),
+            new RecordNewErros(context).recordnewerror(e.toString(),
                     this.getClass().getName(), Thread.currentThread().getStackTrace()[2].getMethodName(),
                     Thread.currentThread().getStackTrace()[2].getLineNumber());
         }
@@ -104,7 +104,7 @@ public class MyViewHoldersCommitDocuments extends RecyclerView.ViewHolder {// TO
         Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() + " Линия  :"
                 + Thread.currentThread().getStackTrace()[2].getLineNumber());
         // TODO: 01.09.2021 метод вызова
-        new Class_Generation_Errors(context).МетодЗаписиВЖурналНовойОшибки(e.toString(),
+        new RecordNewErros(context).recordnewerror(e.toString(),
                 this.getClass().getName(), Thread.currentThread().getStackTrace()[2].getMethodName(),
                 Thread.currentThread().getStackTrace()[2].getLineNumber());
     }

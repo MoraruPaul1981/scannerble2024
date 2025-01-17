@@ -3,12 +3,9 @@ package com.dsy.dsu.BusinessLogicAll;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
-import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 
-import androidx.annotation.NonNull;
-
-import com.dsy.dsu.Errors.Class_Generation_Errors;
+import com.dsy.dsu.Errors.controller.RecordNewErros;
 
 import java.io.File;
 
@@ -31,8 +28,7 @@ public class Class_Sendiing_Errors {
 
     public void МетодПослываемОшибкиАдминистаторуПо(StringBuffer ЗаписьОшибковВстврочку,
                                                     Activity activity,Integer
-                                                            ПубличноеIDПолученныйИзСервлетаДляUUID ,
-                                                    @NonNull SQLiteDatabase sqLiteDatabase) {
+                                                            ПубличноеIDПолученныйИзСервлетаДляUUID ) {
         try {
             Intent sendErrorsMail = new Intent(Intent.ACTION_SEND);
             sendErrorsMail.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
@@ -53,7 +49,7 @@ public class Class_Sendiing_Errors {
                     " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n");
         } catch (Exception e) {
             e.printStackTrace();
-            new Class_Generation_Errors(context).МетодЗаписиВЖурналНовойОшибки(e.toString(),
+            new RecordNewErros(context).recordnewerror(e.toString(),
                     this.getClass().getName(), Thread.currentThread().getStackTrace()[2].getMethodName(),
                     Thread.currentThread().getStackTrace()[2].getLineNumber());
         }

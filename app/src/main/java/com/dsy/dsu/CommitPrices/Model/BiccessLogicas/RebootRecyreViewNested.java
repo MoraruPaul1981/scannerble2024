@@ -7,8 +7,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.dsy.dsu.CommitPrices.View.MyRecycleViewNested.MyRecycleViewIsAdaptersNestedCommintPrices;
-import com.dsy.dsu.CommitPrices.View.MyRecycleViewNested.MyViewHoldersNestedCommintPrices;
-import com.dsy.dsu.Errors.Class_Generation_Errors;
+import com.dsy.dsu.Errors.controller.RecordNewErros;
 import com.fasterxml.jackson.databind.JsonNode;
 
 import org.jetbrains.annotations.NotNull;
@@ -56,7 +55,7 @@ Context context;
             Log.e(context.getClass().getName(),
                     "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
                             " Линия  :" + Thread.currentThread().getStackTrace()[2].getLineNumber());
-            new Class_Generation_Errors(context).МетодЗаписиВЖурналНовойОшибки(e.toString(),
+            new RecordNewErros(context).recordnewerror(e.toString(),
                     this.getClass().getName().toString(), Thread.currentThread().getStackTrace()[2].getMethodName().toString(),
                     Thread.currentThread().getStackTrace()[2].getLineNumber());
         }

@@ -6,9 +6,9 @@ import android.content.Intent;
 import android.util.Log;
 import android.widget.Toast;
 
+import com.dsy.dsu.Errors.controller.RecordNewErros;
 import com.dsy.dsu.WorkManagers.BL_WorkMangers.CreatePublicWorkManager;
 import com.dsy.dsu.BusinessLogicAll.SubClass_Connection_BroadcastReceiver_Sous_Asyns_Glassfish;
-import com.dsy.dsu.Errors.Class_Generation_Errors;
 
 import java.util.Date;
 
@@ -54,7 +54,7 @@ public class BroadCastMyReceiverPublic extends BroadcastReceiver {
             e.printStackTrace();
             Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
                     " Линия  :" + Thread.currentThread().getStackTrace()[2].getLineNumber());
-            new Class_Generation_Errors(context.getApplicationContext()).МетодЗаписиВЖурналНовойОшибки(e.toString(),
+            new RecordNewErros(context.getApplicationContext()).recordnewerror(e.toString(),
                     this.getClass().getName(), Thread.currentThread().getStackTrace()[2].getMethodName(),
                     Thread.currentThread().getStackTrace()[2].getLineNumber());
         }

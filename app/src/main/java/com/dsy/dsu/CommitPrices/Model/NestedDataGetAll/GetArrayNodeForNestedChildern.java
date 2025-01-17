@@ -3,12 +3,11 @@ package com.dsy.dsu.CommitPrices.Model.NestedDataGetAll;
 import android.content.Context;
 import android.util.Log;
 
-import com.dsy.dsu.Errors.Class_Generation_Errors;
+import com.dsy.dsu.Errors.controller.RecordNewErros;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.node.ArrayNode;
 
 import java.util.Iterator;
-import java.util.function.Consumer;
 
 
 // TODO: 09.01.2024  данные класс оплучаеем все дочерниуе едементы для ArrayNode от Согласование Цены
@@ -67,7 +66,7 @@ public class GetArrayNodeForNestedChildern implements  InForChilderArrayJSon  {
             e.printStackTrace();
             Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
                     " Линия  :" + Thread.currentThread().getStackTrace()[2].getLineNumber());
-            new Class_Generation_Errors(context).МетодЗаписиВЖурналНовойОшибки(e.toString(), this.getClass().getName(),
+            new RecordNewErros(context).recordnewerror(e.toString(), this.getClass().getName(),
                     Thread.currentThread().getStackTrace()[2].getMethodName(), Thread.currentThread().getStackTrace()[2].getLineNumber());
         }
         return jsonNodeNested;

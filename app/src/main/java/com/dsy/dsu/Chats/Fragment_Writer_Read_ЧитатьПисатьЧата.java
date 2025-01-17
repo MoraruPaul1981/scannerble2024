@@ -40,7 +40,7 @@ import androidx.work.WorkManager;
 
 import com.dsy.dsu.AllDatabases.SQLTE.GetSQLiteDatabase;
 import com.dsy.dsu.BusinessLogicAll.Class_GRUD_SQL_Operations;
-import com.dsy.dsu.Errors.Class_Generation_Errors;
+import com.dsy.dsu.Errors.controller.RecordNewErros;
 import com.dsy.dsu.BusinessLogicAll.Class_Generations_PUBLIC_CURRENT_ID;
 
 import com.dsy.dsu.BusinessLogicAll.SubClass_RetryGEtRowInChatsКлассПроверемЕщеРАзПоявилосЛИПуббличныйUUIDМеждуУчасникамиЧата;
@@ -88,7 +88,7 @@ public class Fragment_Writer_Read_ЧитатьПисатьЧата extends Fragm
     protected Long ПолученыйУжеСуществующийUUIDИзПерепискиДляЧата = 0l;
     protected Class_GRUD_SQL_Operations class_grud_sql_operations;
     protected Handler handlerФрагментЧитатьПисатьЧАТ;
-    protected Class_Generation_Errors class_generation_errors;
+    protected RecordNewErros recordNewErros;
     protected   ProgressBar progressBarДляЧатаЧитатьПисать;
     protected RecyclerView recyclerViewДляЧата;
     protected MyRecycleViewAdapterДляЧата myRecycleViewAdapterДляЧата;
@@ -108,7 +108,7 @@ public class Fragment_Writer_Read_ЧитатьПисатьЧата extends Fragm
         e.printStackTrace();
         Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
                 " Линия  :" + Thread.currentThread().getStackTrace()[2].getLineNumber());
-        class_generation_errors.МетодЗаписиВЖурналНовойОшибки(e.toString(),
+        recordNewErros.recordnewerror(e.toString(),
                 this.getClass().getName(), Thread.currentThread().getStackTrace()[2].getMethodName(),
                 Thread.currentThread().getStackTrace()[2].getLineNumber());
     }
@@ -125,7 +125,7 @@ public class Fragment_Writer_Read_ЧитатьПисатьЧата extends Fragm
             e.printStackTrace();
             Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
                     " Линия  :" + Thread.currentThread().getStackTrace()[2].getLineNumber());
-            class_generation_errors.МетодЗаписиВЖурналНовойОшибки(e.toString(),
+            recordNewErros.recordnewerror(e.toString(),
                     this.getClass().getName(), Thread.currentThread().getStackTrace()[2].getMethodName(),
                     Thread.currentThread().getStackTrace()[2].getLineNumber());
         }
@@ -159,7 +159,7 @@ public class Fragment_Writer_Read_ЧитатьПисатьЧата extends Fragm
             e.printStackTrace();
             Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
                     " Линия  :" + Thread.currentThread().getStackTrace()[2].getLineNumber());
-            class_generation_errors.МетодЗаписиВЖурналНовойОшибки(e.toString(),
+            recordNewErros.recordnewerror(e.toString(),
                     this.getClass().getName(), Thread.currentThread().getStackTrace()[2].getMethodName(),
                     Thread.currentThread().getStackTrace()[2].getLineNumber());
         }
@@ -174,7 +174,7 @@ public class Fragment_Writer_Read_ЧитатьПисатьЧата extends Fragm
         super.onStart();
         try {
             class_grud_sql_operations = new Class_GRUD_SQL_Operations(getContext());
-            class_generation_errors=new Class_Generation_Errors(getContext());
+            recordNewErros =new RecordNewErros(getContext());
 
             Class_Engine_SQLГдеНаходитьсяМенеджерПотоков = new PUBLIC_CONTENT(getContext());
             modelДляФрагментаДляОперацииЗаписиНовгоСтатусаПрочитанного = new Class_MODEL_synchronized(getContext());
@@ -206,7 +206,7 @@ public class Fragment_Writer_Read_ЧитатьПисатьЧата extends Fragm
             e.printStackTrace();
             Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
                     " Линия  :" + Thread.currentThread().getStackTrace()[2].getLineNumber());
-            class_generation_errors.МетодЗаписиВЖурналНовойОшибки(e.toString(),
+            recordNewErros.recordnewerror(e.toString(),
                     this.getClass().getName(),
                     Thread.currentThread().getStackTrace()[2].getMethodName(), Thread.currentThread().getStackTrace()[2].getLineNumber());
         }
@@ -226,7 +226,7 @@ public class Fragment_Writer_Read_ЧитатьПисатьЧата extends Fragm
             e.printStackTrace();
             Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
                     " Линия  :" + Thread.currentThread().getStackTrace()[2].getLineNumber());
-            class_generation_errors.МетодЗаписиВЖурналНовойОшибки(e.toString(),
+            recordNewErros.recordnewerror(e.toString(),
                     this.getClass().getName(),
                     Thread.currentThread().getStackTrace()[2].getMethodName(), Thread.currentThread().getStackTrace()[2].getLineNumber());
         }
@@ -265,7 +265,7 @@ public class Fragment_Writer_Read_ЧитатьПисатьЧата extends Fragm
             e.printStackTrace();
             Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
                     " Линия  :" + Thread.currentThread().getStackTrace()[2].getLineNumber());
-            class_generation_errors.МетодЗаписиВЖурналНовойОшибки(e.toString(),
+            recordNewErros.recordnewerror(e.toString(),
                     this.getClass().getName(), Thread.currentThread().getStackTrace()[2].getMethodName(),
                     Thread.currentThread().getStackTrace()[2].getLineNumber());
         }
@@ -325,7 +325,7 @@ public class Fragment_Writer_Read_ЧитатьПисатьЧата extends Fragm
             e.printStackTrace();
             Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
                     " Линия  :" + Thread.currentThread().getStackTrace()[2].getLineNumber());
-            class_generation_errors.МетодЗаписиВЖурналНовойОшибки(e.toString(),
+            recordNewErros.recordnewerror(e.toString(),
                     this.getClass().getName(), Thread.currentThread().getStackTrace()[2].getMethodName(),
                     Thread.currentThread().getStackTrace()[2].getLineNumber());
         }
@@ -364,7 +364,7 @@ public class Fragment_Writer_Read_ЧитатьПисатьЧата extends Fragm
                                     Log.e(this.getClass().getName(), "Ошибка  Фрагмент Читать и Писать   observerОдноразоваяДляWORKMANAGER = new Observer<List<WorkInfo>>() {" +
                                             " МетодЗапускаСинхрониазцииПоРАсписаниювНезависимостиОтВставкиНовгоСообщения  " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
                                             " Линия  :" + Thread.currentThread().getStackTrace()[2].getLineNumber());
-                                    class_generation_errors.МетодЗаписиВЖурналНовойОшибки(e.toString(), this.getClass().getName(),
+                                    recordNewErros.recordnewerror(e.toString(), this.getClass().getName(),
                                             Thread.currentThread().getStackTrace()[2].getMethodName(), Thread.currentThread().getStackTrace()[2].getLineNumber());
                                 }
                             });
@@ -376,7 +376,7 @@ public class Fragment_Writer_Read_ЧитатьПисатьЧата extends Fragm
             e.printStackTrace();
             Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
                     " Линия  :" + Thread.currentThread().getStackTrace()[2].getLineNumber());
-            class_generation_errors.МетодЗаписиВЖурналНовойОшибки(e.toString(), this.getClass().getName(),
+            recordNewErros.recordnewerror(e.toString(), this.getClass().getName(),
                     Thread.currentThread().getStackTrace()[2].getMethodName(), Thread.currentThread().getStackTrace()[2].getLineNumber());
         }
     }
@@ -404,7 +404,7 @@ public class Fragment_Writer_Read_ЧитатьПисатьЧата extends Fragm
                                     Log.e(this.getClass().getName(), "Ошибка  Фрагмент Читать и Писать   observerОдноразоваяДляWORKMANAGER = new Observer<List<WorkInfo>>() {" +
                                             " МетодЗапускаСинхрониазцииПоРАсписаниювНезависимостиОтВставкиНовгоСообщения  " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
                                             " Линия  :" + Thread.currentThread().getStackTrace()[2].getLineNumber());
-                                    class_generation_errors.МетодЗаписиВЖурналНовойОшибки(e.toString(), this.getClass().getName(),
+                                    recordNewErros.recordnewerror(e.toString(), this.getClass().getName(),
                                             Thread.currentThread().getStackTrace()[2].getMethodName(), Thread.currentThread().getStackTrace()[2].getLineNumber());
                                 }
                             });
@@ -416,7 +416,7 @@ public class Fragment_Writer_Read_ЧитатьПисатьЧата extends Fragm
             e.printStackTrace();
             Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
                     " Линия  :" + Thread.currentThread().getStackTrace()[2].getLineNumber());
-            class_generation_errors.МетодЗаписиВЖурналНовойОшибки(e.toString(), this.getClass().getName(),
+            recordNewErros.recordnewerror(e.toString(), this.getClass().getName(),
                     Thread.currentThread().getStackTrace()[2].getMethodName(), Thread.currentThread().getStackTrace()[2].getLineNumber());
         }
     }
@@ -442,7 +442,7 @@ public class Fragment_Writer_Read_ЧитатьПисатьЧата extends Fragm
             e.printStackTrace();
             Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
                     " Линия  :" + Thread.currentThread().getStackTrace()[2].getLineNumber());
-            class_generation_errors.МетодЗаписиВЖурналНовойОшибки(e.toString(),
+            recordNewErros.recordnewerror(e.toString(),
                     getContext().getClass().getName(),
                     Thread.currentThread().getStackTrace()[2].getMethodName(), Thread.currentThread().getStackTrace()[2].getLineNumber());
         }
@@ -465,7 +465,7 @@ public class Fragment_Writer_Read_ЧитатьПисатьЧата extends Fragm
                 e.printStackTrace();
                 Log.e(getContext().getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
                         " Линия  :" + Thread.currentThread().getStackTrace()[2].getLineNumber());
-                class_generation_errors.МетодЗаписиВЖурналНовойОшибки(e.toString(),
+                recordNewErros.recordnewerror(e.toString(),
                         this.getClass().getName(),
                         Thread.currentThread().getStackTrace()[2].getMethodName(), Thread.currentThread().getStackTrace()[2].getLineNumber());
             }
@@ -479,7 +479,7 @@ public class Fragment_Writer_Read_ЧитатьПисатьЧата extends Fragm
                 e.printStackTrace();
                 Log.e(getContext().getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
                         " Линия  :" + Thread.currentThread().getStackTrace()[2].getLineNumber());
-                class_generation_errors.МетодЗаписиВЖурналНовойОшибки(e.toString(),
+                recordNewErros.recordnewerror(e.toString(),
                         getContext().getClass().getName(),
                         Thread.currentThread().getStackTrace()[2].getMethodName(), Thread.currentThread().getStackTrace()[2].getLineNumber());
             }
@@ -588,7 +588,7 @@ public class Fragment_Writer_Read_ЧитатьПисатьЧата extends Fragm
                         e.printStackTrace();
                         Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
                                 " Линия  :" + Thread.currentThread().getStackTrace()[2].getLineNumber());
-                        class_generation_errors.МетодЗаписиВЖурналНовойОшибки(e.toString(),
+                        recordNewErros.recordnewerror(e.toString(),
                                 this.getClass().getName(),
                                 Thread.currentThread().getStackTrace()[2].getMethodName(), Thread.currentThread().getStackTrace()[2].getLineNumber());
                     }
@@ -598,7 +598,7 @@ public class Fragment_Writer_Read_ЧитатьПисатьЧата extends Fragm
             e.printStackTrace();
             Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
                     " Линия  :" + Thread.currentThread().getStackTrace()[2].getLineNumber());
-            class_generation_errors.МетодЗаписиВЖурналНовойОшибки(e.toString(),
+            recordNewErros.recordnewerror(e.toString(),
                     this.getClass().getName(),
                     Thread.currentThread().getStackTrace()[2].getMethodName(), Thread.currentThread().getStackTrace()[2].getLineNumber());
         }
@@ -650,7 +650,7 @@ public class Fragment_Writer_Read_ЧитатьПисатьЧата extends Fragm
             e.printStackTrace();
             Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
                     " Линия  :" + Thread.currentThread().getStackTrace()[2].getLineNumber());
-            class_generation_errors.МетодЗаписиВЖурналНовойОшибки(e.toString(),
+            recordNewErros.recordnewerror(e.toString(),
                     this.getClass().getName(),
                     Thread.currentThread().getStackTrace()[2].getMethodName(), Thread.currentThread().getStackTrace()[2].getLineNumber());
         }
@@ -680,7 +680,7 @@ public class Fragment_Writer_Read_ЧитатьПисатьЧата extends Fragm
             e.printStackTrace();
             Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
                     " Линия  :" + Thread.currentThread().getStackTrace()[2].getLineNumber());
-            class_generation_errors.МетодЗаписиВЖурналНовойОшибки(e.toString(),
+            recordNewErros.recordnewerror(e.toString(),
                     this.getClass().getName(),
                     Thread.currentThread().getStackTrace()[2].getMethodName(), Thread.currentThread().getStackTrace()[2].getLineNumber());
         }
@@ -761,7 +761,7 @@ public class Fragment_Writer_Read_ЧитатьПисатьЧата extends Fragm
                 Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() + " Линия  :"
                         + Thread.currentThread().getStackTrace()[2].getLineNumber());
                 // TODO: 01.09.2021 метод вызова
-                new Class_Generation_Errors(getContext()).МетодЗаписиВЖурналНовойОшибки(e.toString(),
+                new RecordNewErros(getContext()).recordnewerror(e.toString(),
                         this.getClass().getName(), Thread.currentThread().getStackTrace()[2].getMethodName(),
                         Thread.currentThread().getStackTrace()[2].getLineNumber());
             }
@@ -808,7 +808,7 @@ public class Fragment_Writer_Read_ЧитатьПисатьЧата extends Fragm
                 ///метод запись ошибок в таблицу
                 Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
                         " Линия  :" + Thread.currentThread().getStackTrace()[2].getLineNumber());
-                new Class_Generation_Errors(getContext()).МетодЗаписиВЖурналНовойОшибки(e.toString(), this.getClass().getName(),
+                new RecordNewErros(getContext()).recordnewerror(e.toString(), this.getClass().getName(),
                         Thread.currentThread().getStackTrace()[2].getMethodName(), Thread.currentThread().getStackTrace()[2].getLineNumber());
                 //   mNotificationManagerДляЧАТА.cancel(1);///.cancelAll();
             }
@@ -867,7 +867,7 @@ public class Fragment_Writer_Read_ЧитатьПисатьЧата extends Fragm
                 ///метод запись ошибок в таблицу
                 Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
                         " Линия  :" + Thread.currentThread().getStackTrace()[2].getLineNumber());
-                new Class_Generation_Errors(getContext()).МетодЗаписиВЖурналНовойОшибки(e.toString(), this.getClass().getName(),
+                new RecordNewErros(getContext()).recordnewerror(e.toString(), this.getClass().getName(),
                         Thread.currentThread().getStackTrace()[2].getMethodName(), Thread.currentThread().getStackTrace()[2].getLineNumber());
                 //   mNotificationManagerДляЧАТА.cancel(1);///.cancelAll();
             }
@@ -911,7 +911,7 @@ public class Fragment_Writer_Read_ЧитатьПисатьЧата extends Fragm
                 ///метод запись ошибок в таблицу
                 Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
                         " Линия  :" + Thread.currentThread().getStackTrace()[2].getLineNumber());
-                new Class_Generation_Errors(getContext()).МетодЗаписиВЖурналНовойОшибки(e.toString(), this.getClass().getName(),
+                new RecordNewErros(getContext()).recordnewerror(e.toString(), this.getClass().getName(),
                         Thread.currentThread().getStackTrace()[2].getMethodName(), Thread.currentThread().getStackTrace()[2].getLineNumber());
                 //   mNotificationManagerДляЧАТА.cancel(1);///.cancelAll();
             }
@@ -950,7 +950,7 @@ public class Fragment_Writer_Read_ЧитатьПисатьЧата extends Fragm
                 ///метод запись ошибок в таблицу
                 Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
                         " Линия  :" + Thread.currentThread().getStackTrace()[2].getLineNumber());
-                new Class_Generation_Errors(getContext()).МетодЗаписиВЖурналНовойОшибки(e.toString(), this.getClass().getName(),
+                new RecordNewErros(getContext()).recordnewerror(e.toString(), this.getClass().getName(),
                         Thread.currentThread().getStackTrace()[2].getMethodName(), Thread.currentThread().getStackTrace()[2].getLineNumber());
                 //   mNotificationManagerДляЧАТА.cancel(1);///.cancelAll();
             }
@@ -985,7 +985,7 @@ public class Fragment_Writer_Read_ЧитатьПисатьЧата extends Fragm
                 ///метод запись ошибок в таблицу
                 Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
                         " Линия  :" + Thread.currentThread().getStackTrace()[2].getLineNumber());
-                new Class_Generation_Errors(getContext()).МетодЗаписиВЖурналНовойОшибки(e.toString(), this.getClass().getName(),
+                new RecordNewErros(getContext()).recordnewerror(e.toString(), this.getClass().getName(),
                         Thread.currentThread().getStackTrace()[2].getMethodName(), Thread.currentThread().getStackTrace()[2].getLineNumber());
                 //   mNotificationManagerДляЧАТА.cancel(1);///.cancelAll();
             }
@@ -1010,7 +1010,7 @@ public class Fragment_Writer_Read_ЧитатьПисатьЧата extends Fragm
                 ///метод запись ошибок в таблицу
                 Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
                         " Линия  :" + Thread.currentThread().getStackTrace()[2].getLineNumber());
-                new Class_Generation_Errors(getContext()).МетодЗаписиВЖурналНовойОшибки(e.toString(), this.getClass().getName(),
+                new RecordNewErros(getContext()).recordnewerror(e.toString(), this.getClass().getName(),
                         Thread.currentThread().getStackTrace()[2].getMethodName(), Thread.currentThread().getStackTrace()[2].getLineNumber());
                 //   mNotificationManagerДляЧАТА.cancel(1);///.cancelAll();
             }
@@ -1035,7 +1035,7 @@ public class Fragment_Writer_Read_ЧитатьПисатьЧата extends Fragm
                 ///метод запись ошибок в таблицу
                 Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
                         " Линия  :" + Thread.currentThread().getStackTrace()[2].getLineNumber());
-                new Class_Generation_Errors(getContext()).МетодЗаписиВЖурналНовойОшибки(e.toString(), this.getClass().getName(),
+                new RecordNewErros(getContext()).recordnewerror(e.toString(), this.getClass().getName(),
                         Thread.currentThread().getStackTrace()[2].getMethodName(), Thread.currentThread().getStackTrace()[2].getLineNumber());
                 //   mNotificationManagerДляЧАТА.cancel(1);///.cancelAll();
             }
@@ -1061,7 +1061,7 @@ public class Fragment_Writer_Read_ЧитатьПисатьЧата extends Fragm
                 ///метод запись ошибок в таблицу
                 Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
                         " Линия  :" + Thread.currentThread().getStackTrace()[2].getLineNumber());
-                new Class_Generation_Errors(getContext()).МетодЗаписиВЖурналНовойОшибки(e.toString(), this.getClass().getName(),
+                new RecordNewErros(getContext()).recordnewerror(e.toString(), this.getClass().getName(),
                         Thread.currentThread().getStackTrace()[2].getMethodName(), Thread.currentThread().getStackTrace()[2].getLineNumber());
                 //   mNotificationManagerДляЧАТА.cancel(1);///.cancelAll();
             }
@@ -1089,7 +1089,7 @@ public class Fragment_Writer_Read_ЧитатьПисатьЧата extends Fragm
                 ///метод запись ошибок в таблицу
                 Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
                         " Линия  :" + Thread.currentThread().getStackTrace()[2].getLineNumber());
-                new Class_Generation_Errors(getContext()).МетодЗаписиВЖурналНовойОшибки(e.toString(), this.getClass().getName(),
+                new RecordNewErros(getContext()).recordnewerror(e.toString(), this.getClass().getName(),
                         Thread.currentThread().getStackTrace()[2].getMethodName(), Thread.currentThread().getStackTrace()[2].getLineNumber());
                 //   mNotificationManagerДляЧАТА.cancel(1);///.cancelAll();
             }
@@ -1114,7 +1114,7 @@ public class Fragment_Writer_Read_ЧитатьПисатьЧата extends Fragm
                 ///метод запись ошибок в таблицу
                 Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
                         " Линия  :" + Thread.currentThread().getStackTrace()[2].getLineNumber());
-                new Class_Generation_Errors(getContext()).МетодЗаписиВЖурналНовойОшибки(e.toString(), this.getClass().getName(),
+                new RecordNewErros(getContext()).recordnewerror(e.toString(), this.getClass().getName(),
                         Thread.currentThread().getStackTrace()[2].getMethodName(), Thread.currentThread().getStackTrace()[2].getLineNumber());
                 //   mNotificationManagerДляЧАТА.cancel(1);///.cancelAll();
             }
@@ -1142,7 +1142,7 @@ public class Fragment_Writer_Read_ЧитатьПисатьЧата extends Fragm
                 ///метод запись ошибок в таблицу
                 Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
                         " Линия  :" + Thread.currentThread().getStackTrace()[2].getLineNumber());
-                new Class_Generation_Errors(getContext()).МетодЗаписиВЖурналНовойОшибки(e.toString(), this.getClass().getName(),
+                new RecordNewErros(getContext()).recordnewerror(e.toString(), this.getClass().getName(),
                         Thread.currentThread().getStackTrace()[2].getMethodName(), Thread.currentThread().getStackTrace()[2].getLineNumber());
                 //   mNotificationManagerДляЧАТА.cancel(1);///.cancelAll();
             }
@@ -1195,7 +1195,7 @@ public class Fragment_Writer_Read_ЧитатьПисатьЧата extends Fragm
                 ///метод запись ошибок в таблицу
                 Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
                         " Линия  :" + Thread.currentThread().getStackTrace()[2].getLineNumber());
-                new Class_Generation_Errors(getContext()).МетодЗаписиВЖурналНовойОшибки(e.toString(), this.getClass().getName(),
+                new RecordNewErros(getContext()).recordnewerror(e.toString(), this.getClass().getName(),
                         Thread.currentThread().getStackTrace()[2].getMethodName(), Thread.currentThread().getStackTrace()[2].getLineNumber());
                 //   mNotificationManagerДляЧАТА.cancel(1);///.cancelAll();
             }
@@ -1233,7 +1233,7 @@ public class Fragment_Writer_Read_ЧитатьПисатьЧата extends Fragm
                 ///метод запись ошибок в таблицу
                 Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
                         " Линия  :" + Thread.currentThread().getStackTrace()[2].getLineNumber());
-                new Class_Generation_Errors(getContext()).МетодЗаписиВЖурналНовойОшибки(e.toString(), this.getClass().getName(),
+                new RecordNewErros(getContext()).recordnewerror(e.toString(), this.getClass().getName(),
                         Thread.currentThread().getStackTrace()[2].getMethodName(), Thread.currentThread().getStackTrace()[2].getLineNumber());
                 //   mNotificationManagerДляЧАТА.cancel(1);///.cancelAll();
             }
@@ -1281,7 +1281,7 @@ public class Fragment_Writer_Read_ЧитатьПисатьЧата extends Fragm
                 e.printStackTrace();
                 Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
                         " Линия  :" + Thread.currentThread().getStackTrace()[2].getLineNumber());
-                class_generation_errors.МетодЗаписиВЖурналНовойОшибки(e.toString(), this.getClass().getName(),
+                recordNewErros.recordnewerror(e.toString(), this.getClass().getName(),
                         Thread.currentThread().getStackTrace()[2].getMethodName(), Thread.currentThread().getStackTrace()[2].getLineNumber());
             }
             return ПолученноеСтатусПрочитанноСообщениеТекущееИлиНетНольСтоитИЛиЦифраОДИН;

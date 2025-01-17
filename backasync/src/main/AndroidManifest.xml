@@ -7,7 +7,7 @@
         android:allowBackup="true">
 
         <provider
-            android:name=".provider.GetProvider"
+            android:name=".provider.ProviderBackAsync"
             android:authorities="com.sous.backasync.provider"
             android:directBootAware="true"
             android:enabled="true"

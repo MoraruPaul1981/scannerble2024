@@ -13,8 +13,7 @@ import com.dsy.dsu.CommitPrices.Model.BiccessLogicas.RebootRecyreViewNested;
 import com.dsy.dsu.CommitPrices.Model.LiveDataPrices.GetLiveDataForrecyreViewPrices;
 import com.dsy.dsu.CommitPrices.View.MyRecycleView.MyViewHoldersCommintPrices;
 import com.dsy.dsu.CommitPrices.View.MyRecycleViewNested.MyRecycleViewIsAdaptersNestedCommintPrices;
-import com.dsy.dsu.CommitPrices.View.MyRecycleViewNested.MyViewHoldersNestedCommintPrices;
-import com.dsy.dsu.Errors.Class_Generation_Errors;
+import com.dsy.dsu.Errors.controller.RecordNewErros;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -133,7 +132,7 @@ public class CallBacksLiveDataNested {
                 e.printStackTrace();
                 Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
                         " Линия  :" + Thread.currentThread().getStackTrace()[2].getLineNumber());
-                new Class_Generation_Errors(context).МетодЗаписиВЖурналНовойОшибки(e.toString(), this.getClass().getName(),
+                new RecordNewErros(context).recordnewerror(e.toString(), this.getClass().getName(),
                         Thread.currentThread().getStackTrace()[2].getMethodName(), Thread.currentThread().getStackTrace()[2].getLineNumber());
             }
         });
@@ -168,7 +167,7 @@ public class CallBacksLiveDataNested {
             e.printStackTrace();
             Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
                     " Линия  :" + Thread.currentThread().getStackTrace()[2].getLineNumber());
-            new Class_Generation_Errors(context).МетодЗаписиВЖурналНовойОшибки(e.toString(), this.getClass().getName(),
+            new RecordNewErros(context).recordnewerror(e.toString(), this.getClass().getName(),
                     Thread.currentThread().getStackTrace()[2].getMethodName(), Thread.currentThread().getStackTrace()[2].getLineNumber());
         }
     }

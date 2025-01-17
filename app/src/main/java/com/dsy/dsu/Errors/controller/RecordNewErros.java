@@ -1,4 +1,4 @@
-package com.dsy.dsu.Errors;
+package com.dsy.dsu.Errors.controller;
 
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
@@ -24,10 +24,8 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.nio.file.StandardOpenOption;
 import java.util.ArrayList;
-import java.util.Date;
-import java.util.concurrent.ExecutionException;
 
-public class Class_Generation_Errors {
+public class RecordNewErros {
 
     private Context context;
     private Class_GRUD_SQL_Operations classGrudSqlOperationsОшибки;
@@ -36,16 +34,13 @@ public class Class_Generation_Errors {
 
     private   String patchFileName="SousAvtoFile";
     private SQLiteDatabase sqLiteDatabase ;
-    public Class_Generation_Errors(@NonNull Context context) {
+    public RecordNewErros(@NonNull Context context) {
 
         this.context = context;
         sqLiteDatabase=    GetSQLiteDatabase.SqliteDatabase();
     }
-    //функция получающая время операции ДАННАЯ ФУНКЦИЯ ВРЕМЯ ПРИМЕНЯЕТЬСЯ ВО ВСЕЙ ПРОГРАММЕ
-    // TODO: 05.07.2021
 
-    //// второй метод с современный
-    public void МетодЗаписиВЖурналНовойОшибки(@NonNull String ТекстОшибки,
+    public void recordnewerror(@NonNull String ТекстОшибки,
                                               @NonNull String КлассГнерацииОшибки,
                                               @NonNull String МетодаОшибки,
                                               @NonNull Integer ЛинияОшибки) {
@@ -83,17 +78,17 @@ public class Class_Generation_Errors {
                         && !ТекстОшибки.trim().matches("(.*)ConnectException(.*)")) {
 
                     // TODO: 21.12.2022  главная  файл ErrorDSU1
-                   метометодЗаписьОшибкиОбынуюТаблицуErrorDSU1( );
+                   getWriteNewError( );
 
                     // TODO: 20.12.2022  дополнительный механизм записи ошибкок
-                    методЗаписиОшибкиВФайлErrorDSU1txt(ТекстОшибки, КлассГнерацииОшибки, МетодаОшибки, ЛинияОшибки);
+                    getWriteNewErrorNotePad(ТекстОшибки, КлассГнерацииОшибки, МетодаОшибки, ЛинияОшибки);
 
 
                 }
                 Log.d(this.getClass().getName(), "PезультатВставкиНовойОшибки " + PезультатВставкиНовойОшибки);
 
             } else {
-                System.err.println("  Ошибка в самом классе записи ошибок нет КОНТЕКСТА Class_Generation_Errors");
+                System.err.println("  Ошибка в самом классе записи ошибок нет КОНТЕКСТА RecordNewErros");
             }
             // TODO: 17.04.2023
             Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
@@ -101,9 +96,10 @@ public class Class_Generation_Errors {
                     " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n");
             // TODO: 09.07.2023 clear
             classGrudSqlOperationsОшибки.concurrentHashMapНабор.clear();
+
         } catch (Exception e) {
             e.printStackTrace();
-            System.err.println("  Ошибка в самом классе записи ошибок нет КОНТЕКСТА Class_Generation_Errors");
+            System.err.println("  Ошибка в самом классе записи ошибок нет КОНТЕКСТА RecordNewErros");
             Log.e(context.getClass().getName(), "Ошибка в самом классе создание ОШИБКИ (записи новой ошибки) ERROR  inse ERROR" + e
                     + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
                     " Линия  :" + Thread.currentThread().getStackTrace()[2].getLineNumber());
@@ -111,37 +107,47 @@ public class Class_Generation_Errors {
 
     }
 
-    private void методЗаписиОшибкиВФайлErrorDSU1txt(@NonNull String ТекстОшибки, @NonNull String КлассГнерацииОшибки, @NonNull String МетодаОшибки, @NonNull Integer ЛинияОшибки) {
+    private void getWriteNewErrorNotePad(@NonNull String ТекстОшибки, @NonNull String КлассГнерацииОшибки, @NonNull String МетодаОшибки, @NonNull Integer ЛинияОшибки) {
         try{
         ArrayList<String> arrayListОшибкиДляЗаписивФайл = new ArrayList();
         arrayListОшибкиДляЗаписивФайл.add(ТекстОшибки);
         arrayListОшибкиДляЗаписивФайл.add(КлассГнерацииОшибки);
         arrayListОшибкиДляЗаписивФайл.add(МетодаОшибки);
         arrayListОшибкиДляЗаписивФайл.add(String.valueOf(ЛинияОшибки));
+
         // TODO: 09.07.2023 запись ошибки в файл  .txt
-        new SubClassWriteErrorFile(context, arrayListОшибкиДляЗаписивФайл).МетодЗаписьДополенительеноОшибвкивФайл();
+
+        new SubClassWriteErrorFile(context, arrayListОшибкиДляЗаписивФайл).writeDownAnewErrorFile();
+
+            Log.d(this.getClass().getName(),"\n" + " class CoreApp    " + Thread.currentThread().getStackTrace()[2].getClassName()
+                    + "\n" +
+                    " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                    " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"+
+                    " arrayListОшибкиДляЗаписивФайл " + arrayListОшибкиДляЗаписивФайл);
     } catch (Exception e) {
         e.printStackTrace();
-        System.err.println("  Ошибка в самом классе записи ошибок нет КОНТЕКСТА Class_Generation_Errors");
+        System.err.println("  Ошибка в самом классе записи ошибок нет КОНТЕКСТА RecordNewErros");
         Log.e(context.getClass().getName(), "Ошибка в самом классе создание ОШИБКИ (записи новой ошибки) ERROR  inse ERROR" + e
                 + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
                 " Линия  :" + Thread.currentThread().getStackTrace()[2].getLineNumber());
     }
     }
 
-    private void метометодЗаписьОшибкиОбынуюТаблицуErrorDSU1( )
-            throws ExecutionException, InterruptedException {
-        Long PезультатВставкиНовойОшибки=0l;
+    private void getWriteNewError( ) {
         try{
      Long   pезультатВставкиНовойОшибки = (Long) classGrudSqlOperationsОшибки.
                 new InsertData(context).insertdata(classGrudSqlOperationsОшибки.concurrentHashMapНабор,
                 classGrudSqlOperationsОшибки.contentValuesДляSQLBuilder_Для_GRUD_Операций,
                 new PUBLIC_CONTENT(context).МенеджерПотоков,
                 sqLiteDatabase);
-        Log.d(this.getClass().getName(), " date " + new Date().toGMTString().toString() + " PезультатВставкиНовойОшибки " + pезультатВставкиНовойОшибки);
+            Log.d(this.getClass().getName(),"\n" + " class CoreApp    " + Thread.currentThread().getStackTrace()[2].getClassName()
+                    + "\n" +
+                    " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                    " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"+
+                    " pезультатВставкиНовойОшибки " + pезультатВставкиНовойОшибки);
     } catch (Exception e) {
         e.printStackTrace();
-        System.err.println("  Ошибка в самом классе записи ошибок нет КОНТЕКСТА Class_Generation_Errors");
+        System.err.println("  Ошибка в самом классе записи ошибок нет КОНТЕКСТА RecordNewErros");
         Log.e(context.getClass().getName(), "Ошибка в самом классе создание ОШИБКИ (записи новой ошибки) ERROR  inse ERROR" + e
                 + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
                 " Линия  :" + Thread.currentThread().getStackTrace()[2].getLineNumber());
@@ -160,10 +166,9 @@ public class Class_Generation_Errors {
             this.linkedBlockingQueueВскеОшибкиДляЗаписи = linkedBlockingQueueВскеОшибкиДляЗаписи;
         }
 
-        void МетодЗаписьДополенительеноОшибвкивФайл() {
+        void writeDownAnewErrorFile() {
             try {
-
-                методСозданиеИЗАписиОшибки(linkedBlockingQueueВскеОшибкиДляЗаписи);
+                writeDownAnewErrorNotePad(linkedBlockingQueueВскеОшибкиДляЗаписи);
 
                 Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                         " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
@@ -179,7 +184,7 @@ public class Class_Generation_Errors {
     }
 
 
-    public void методСозданиеИЗАписиОшибки(@NonNull  ArrayList<String> linkedBlockingQueueВскеОшибкиДляЗаписи) {
+    public void writeDownAnewErrorNotePad(@NonNull  ArrayList<String> linkedBlockingQueueВскеОшибкиДляЗаписи) {
         try {
             //File file = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS), File.separator + fileName);
             File file = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS), File.separator+patchFileName +File.separator+ fileName);

@@ -11,17 +11,20 @@ import android.util.Log;
 import androidx.annotation.NonNull;
 import androidx.loader.content.CursorLoader;
 
-public class CursorLoaderBackSync {
+import com.sous.backasync.cursor.intarface.LoaderBackSyncInterface;
+
+public class LoaderBackSync implements LoaderBackSyncInterface {
 
     Context context;
 
-    private final String getNameProvider = "com.sous.backasync.provider";
 
-    public CursorLoaderBackSync(Context context) {//ModuleBackAsync
+
+    public LoaderBackSync(Context context) {//StartingModuleBackAsync
         this.context = context;
     }
 
-    public Cursor getBackasyncCursor(@NonNull Bundle bundle) throws SQLException {
+    @Override
+    public Cursor getBackasyncCursor(@NonNull Bundle bundle)   {
         Cursor getBackasyncCursor = null;
         CursorLoader cursorLoader = null;
         try {
@@ -35,15 +38,20 @@ public class CursorLoaderBackSync {
             cursorLoader.setUri(uri);
             cursorLoader.setSelection(Selection);
             cursorLoader.setSelectionArgs(SelectionArgs);//МесяцПростоАнализа
+            cursorLoader.forceLoad() ;
             getBackasyncCursor = cursorLoader.loadInBackground();
-            if (getBackasyncCursor.getCount() > 0 && getBackasyncCursor != null) {
-                getBackasyncCursor.moveToFirst();
-                Log.d(this.getClass().getName(), "cursor.getCount() "
-                        + getBackasyncCursor.getCount());
+            // TODO: 17.01.2025
+            if (getBackasyncCursor != null) {
+                if (getBackasyncCursor.getCount() > 0) {
+                    getBackasyncCursor.moveToFirst();
+                    // TODO: 17.04.2023
+                    Log.d(this.getClass().getName(), "\n" + " class FaceAPp " + Thread.currentThread().getStackTrace()[2].getClassName()
+                            + "\n" +
+                            " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                            " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" + " cursorLoader " + getBackasyncCursor);
+                }
             }
             cursorLoader.commitContentChanged();
-       String s=     cursorLoader.dataToString(getBackasyncCursor);
-
             // TODO: 17.04.2023
             Log.d(this.getClass().getName(), "\n" + " class FaceAPp " + Thread.currentThread().getStackTrace()[2].getClassName()
                     + "\n" +

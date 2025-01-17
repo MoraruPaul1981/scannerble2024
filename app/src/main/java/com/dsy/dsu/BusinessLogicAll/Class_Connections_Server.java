@@ -7,7 +7,7 @@ import android.util.Log;
 import androidx.annotation.NonNull;
 import androidx.loader.content.AsyncTaskLoader;
 
-import com.dsy.dsu.Errors.Class_Generation_Errors;
+import com.dsy.dsu.Errors.controller.RecordNewErros;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -121,7 +121,7 @@ public class Class_Connections_Server  extends  Class_GRUD_SQL_Operations {
             Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" +
                     Thread.currentThread().getStackTrace()[2].getMethodName() +
                     " Линия  :" + Thread.currentThread().getStackTrace()[2].getLineNumber());
-            new   Class_Generation_Errors(КонтекстКоторыйДляСинхронизации).МетодЗаписиВЖурналНовойОшибки(e.toString(),
+            new RecordNewErros(КонтекстКоторыйДляСинхронизации).recordnewerror(e.toString(),
                     this.getClass().getName(), Thread.currentThread().getStackTrace()[2].getMethodName(),
                     Thread.currentThread().getStackTrace()[2].getLineNumber());
         }
@@ -156,7 +156,7 @@ public class Class_Connections_Server  extends  Class_GRUD_SQL_Operations {
             Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" +
                     Thread.currentThread().getStackTrace()[2].getMethodName() +
                     " Линия  :" + Thread.currentThread().getStackTrace()[2].getLineNumber());
-            new   Class_Generation_Errors(КонтекстКоторыйДляСинхронизации).МетодЗаписиВЖурналНовойОшибки(e.toString(),
+            new RecordNewErros(КонтекстКоторыйДляСинхронизации).recordnewerror(e.toString(),
                     this.getClass().getName(), Thread.currentThread().getStackTrace()[2].getMethodName(),
                     Thread.currentThread().getStackTrace()[2].getLineNumber());
         }

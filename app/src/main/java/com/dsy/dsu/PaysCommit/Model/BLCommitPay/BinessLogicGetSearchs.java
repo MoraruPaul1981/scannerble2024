@@ -9,7 +9,7 @@ import android.util.Log;
 import androidx.annotation.NonNull;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
-import com.dsy.dsu.Errors.Class_Generation_Errors;
+import com.dsy.dsu.Errors.controller.RecordNewErros;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 
@@ -161,7 +161,7 @@ public class BinessLogicGetSearchs extends BinessLogicCommitPayAbstract {
         })
 
                 .onErrorReturn(err->{
-                    new Class_Generation_Errors(context).МетодЗаписиВЖурналНовойОшибки(err.toString(),
+                    new RecordNewErros(context).recordnewerror(err.toString(),
                             this.getClass().getName().toString(), Thread.currentThread().getStackTrace()[2].getMethodName().toString(),
                             Thread.currentThread().getStackTrace()[2].getLineNumber());
                     return Log.e(context.getClass().getName(),

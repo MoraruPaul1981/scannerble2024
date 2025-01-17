@@ -23,7 +23,7 @@ import androidx.annotation.Nullable;
 import androidx.loader.content.AsyncTaskLoader;
 
 
-import com.dsy.dsu.Errors.Class_Generation_Errors;
+import com.dsy.dsu.Errors.controller.RecordNewErros;
 import com.dsy.dsu.BusinessLogicAll.DATE.Class_Generation_Data;
 import com.dsy.dsu.CnangeServers.PUBLIC_CONTENT;
 import com.dsy.dsu.BusinessLogicAll.SubClassCreatingMainAllTables;
@@ -88,7 +88,7 @@ public class ContentProviderSynsUpdateChangeDeleting extends ContentProvider {
                     Log.d(this.getClass().getName(), " bundle  "+bundle);
                 } catch (Exception e) {
                     e.printStackTrace();
-                    System.err.println("  Ошибка в самом классе записи ошибок нет КОНТЕКСТА Class_Generation_Errors");
+                    System.err.println("  Ошибка в самом классе записи ошибок нет КОНТЕКСТА RecordNewErros");
                     ///метод запись ошибок в таблицу
                     Log.e(getContext().getClass().getName(),
                             "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
@@ -102,7 +102,7 @@ public class ContentProviderSynsUpdateChangeDeleting extends ContentProvider {
         e.printStackTrace();
         Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() + " Линия  :"
                 + Thread.currentThread().getStackTrace()[2].getLineNumber());
-        new Class_Generation_Errors(getContext()).МетодЗаписиВЖурналНовойОшибки(e.toString(), this.getClass().getName(), Thread.currentThread().getStackTrace()[2].getMethodName(),
+        new RecordNewErros(getContext()).recordnewerror(e.toString(), this.getClass().getName(), Thread.currentThread().getStackTrace()[2].getMethodName(),
                 Thread.currentThread().getStackTrace()[2].getLineNumber());
     }
     }
@@ -132,7 +132,7 @@ public class ContentProviderSynsUpdateChangeDeleting extends ContentProvider {
         e.printStackTrace();
         Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() + " Линия  :"
                 + Thread.currentThread().getStackTrace()[2].getLineNumber());
-        new Class_Generation_Errors(getContext()).МетодЗаписиВЖурналНовойОшибки(e.toString(), this.getClass().getName(), Thread.currentThread().getStackTrace()[2].getMethodName(),
+        new RecordNewErros(getContext()).recordnewerror(e.toString(), this.getClass().getName(), Thread.currentThread().getStackTrace()[2].getMethodName(),
                 Thread.currentThread().getStackTrace()[2].getLineNumber());
     }
         return  true;
@@ -166,7 +166,7 @@ public class ContentProviderSynsUpdateChangeDeleting extends ContentProvider {
         e.printStackTrace();
         Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() + " Линия  :"
                 + Thread.currentThread().getStackTrace()[2].getLineNumber());
-        new Class_Generation_Errors(getContext()).МетодЗаписиВЖурналНовойОшибки(e.toString(), this.getClass().getName(), Thread.currentThread().getStackTrace()[2].getMethodName(),
+        new RecordNewErros(getContext()).recordnewerror(e.toString(), this.getClass().getName(), Thread.currentThread().getStackTrace()[2].getMethodName(),
                 Thread.currentThread().getStackTrace()[2].getLineNumber());
     }
       return РезультатУдалениеСтатуса;
@@ -185,7 +185,7 @@ public class ContentProviderSynsUpdateChangeDeleting extends ContentProvider {
         e.printStackTrace();
         Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() + " Линия  :"
                 + Thread.currentThread().getStackTrace()[2].getLineNumber());
-        new Class_Generation_Errors(getContext()).МетодЗаписиВЖурналНовойОшибки(e.toString(), this.getClass().getName(), Thread.currentThread().getStackTrace()[2].getMethodName(),
+        new RecordNewErros(getContext()).recordnewerror(e.toString(), this.getClass().getName(), Thread.currentThread().getStackTrace()[2].getMethodName(),
                 Thread.currentThread().getStackTrace()[2].getLineNumber());
     }
         return table;
@@ -219,7 +219,7 @@ public class ContentProviderSynsUpdateChangeDeleting extends ContentProvider {
             e.printStackTrace();
             Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() + " Линия  :"
                     + Thread.currentThread().getStackTrace()[2].getLineNumber());
-            new Class_Generation_Errors(getContext()).МетодЗаписиВЖурналНовойОшибки(e.toString(), this.getClass().getName(), Thread.currentThread().getStackTrace()[2].getMethodName(),
+            new RecordNewErros(getContext()).recordnewerror(e.toString(), this.getClass().getName(), Thread.currentThread().getStackTrace()[2].getMethodName(),
                     Thread.currentThread().getStackTrace()[2].getLineNumber());
         }
         return ОтветВставкиДанных;
@@ -277,7 +277,7 @@ public class ContentProviderSynsUpdateChangeDeleting extends ContentProvider {
         e.printStackTrace();
         Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() + " Линия  :"
                 + Thread.currentThread().getStackTrace()[2].getLineNumber());
-        new Class_Generation_Errors(getContext()).МетодЗаписиВЖурналНовойОшибки(e.toString(),
+        new RecordNewErros(getContext()).recordnewerror(e.toString(),
                 this.getClass().getName(), Thread.currentThread().getStackTrace()[2].getMethodName(),
                 Thread.currentThread().getStackTrace()[2].getLineNumber());
     }
@@ -359,8 +359,8 @@ public class ContentProviderSynsUpdateChangeDeleting extends ContentProvider {
                                 Log.e(this.getClass().getName(), "Ошибка " + throwable + " Метод :" +
                                         Thread.currentThread().getStackTrace()[2].getMethodName() + " Линия  :"
                                         + Thread.currentThread().getStackTrace()[2].getLineNumber());
-                                new Class_Generation_Errors(getContext()).
-                                        МетодЗаписиВЖурналНовойОшибки(throwable.toString(), this.getClass().getName(),
+                                new RecordNewErros(getContext()).
+                                        recordnewerror(throwable.toString(), this.getClass().getName(),
                                                 Thread.currentThread().getStackTrace()[2].getMethodName(),
                                         Thread.currentThread().getStackTrace()[2].getLineNumber());
                             }
@@ -400,7 +400,7 @@ public class ContentProviderSynsUpdateChangeDeleting extends ContentProvider {
                                     Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" +
                                             Thread.currentThread().getStackTrace()[2].getMethodName() + " Линия  :"
                                             + Thread.currentThread().getStackTrace()[2].getLineNumber());
-                                    new Class_Generation_Errors(getContext()).МетодЗаписиВЖурналНовойОшибки(e.toString(), this.getClass().getName(),
+                                    new RecordNewErros(getContext()).recordnewerror(e.toString(), this.getClass().getName(),
                                             Thread.currentThread().getStackTrace()[2].getMethodName(),
                                             Thread.currentThread().getStackTrace()[2].getLineNumber());
                                 }
@@ -426,7 +426,7 @@ public class ContentProviderSynsUpdateChangeDeleting extends ContentProvider {
                             public boolean test(Throwable throwable) throws Throwable {
                                 Log.e(this.getClass().getName(), "Ошибка " + throwable + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() + " Линия  :"
                                         + Thread.currentThread().getStackTrace()[2].getLineNumber());
-                                new Class_Generation_Errors(getContext()).МетодЗаписиВЖурналНовойОшибки(throwable.toString(), this.getClass().getName(),
+                                new RecordNewErros(getContext()).recordnewerror(throwable.toString(), this.getClass().getName(),
                                         Thread.currentThread().getStackTrace()[2].getMethodName(),
                                         Thread.currentThread().getStackTrace()[2].getLineNumber());
                                 return false;
@@ -440,7 +440,7 @@ public class ContentProviderSynsUpdateChangeDeleting extends ContentProvider {
             e.printStackTrace();
             Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() + " Линия  :"
                     + Thread.currentThread().getStackTrace()[2].getLineNumber());
-            new Class_Generation_Errors(getContext()).МетодЗаписиВЖурналНовойОшибки(e.toString(), this.getClass().getName(), Thread.currentThread().getStackTrace()[2].getMethodName(),
+            new RecordNewErros(getContext()).recordnewerror(e.toString(), this.getClass().getName(), Thread.currentThread().getStackTrace()[2].getMethodName(),
                     Thread.currentThread().getStackTrace()[2].getLineNumber());
         }
 

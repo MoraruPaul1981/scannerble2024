@@ -1,15 +1,13 @@
 package com.dsy.dsu.BroadcastRecievers.Bl;
 
 import android.content.Context;
-import android.net.Uri;
 import android.util.Log;
 
 import androidx.annotation.NonNull;
 
 import com.dsy.dsu.WorkManagers.BL_WorkMangers.CreatePublicWorkManager;
 import com.dsy.dsu.BusinessLogicAll.SubClass_Connection_BroadcastReceiver_Sous_Asyns_Glassfish;
-import com.dsy.dsu.Errors.Class_Generation_Errors;
-import com.dsy.dsu.WorkManagers.BL_WorkMangers.CreateSingleWorkManager;
+import com.dsy.dsu.Errors.controller.RecordNewErros;
 
 import java.util.Date;
 
@@ -34,7 +32,7 @@ public class getStartingWorkmanagerPublic {
             e.printStackTrace();
             Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
                     " Линия  :" + Thread.currentThread().getStackTrace()[2].getLineNumber());
-            new Class_Generation_Errors(context.getApplicationContext()).МетодЗаписиВЖурналНовойОшибки(e.toString(),
+            new RecordNewErros(context.getApplicationContext()).recordnewerror(e.toString(),
                     this.getClass().getName(), Thread.currentThread().getStackTrace()[2].getMethodName(),
                     Thread.currentThread().getStackTrace()[2].getLineNumber());
         }

@@ -1,44 +1,28 @@
 package com.dsy.dsu.Hilt.OkhhtpBuilder;
 
-import android.annotation.SuppressLint;
 import android.content.Context;
 import android.util.Log;
 
-import com.dsy.dsu.Errors.Class_Generation_Errors;
-import com.dsy.dsu.Hilt.getSSLSocketFactory2.QualifiergetsslSocketFactory2;
-import com.dsy.dsu.R;
+import com.dsy.dsu.Errors.controller.RecordNewErros;
 
 import org.jetbrains.annotations.NotNull;
 
-import java.io.InputStream;
-import java.security.KeyStore;
-import java.security.SecureRandom;
 import java.security.cert.CertificateException;
-import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.Date;
-import java.util.List;
 import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
 
-import javax.inject.Inject;
-import javax.inject.Singleton;
 import javax.net.ssl.HostnameVerifier;
-import javax.net.ssl.SSLContext;
 import javax.net.ssl.SSLSession;
 import javax.net.ssl.SSLSocketFactory;
 import javax.net.ssl.TrustManager;
-import javax.net.ssl.TrustManagerFactory;
 import javax.net.ssl.X509TrustManager;
 
-import dagger.Provides;
-import okhttp3.CipherSuite;
 import okhttp3.ConnectionPool;
 import okhttp3.ConnectionSpec;
 import okhttp3.Dispatcher;
 import okhttp3.OkHttpClient;
-import okhttp3.TlsVersion;
 
 public class GetOkhhtpBuilderSSL implements  InGetOkhhtpBuilder {
     private  Context context;
@@ -114,7 +98,7 @@ public class GetOkhhtpBuilderSSL implements  InGetOkhhtpBuilder {
             Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" +
                     Thread.currentThread().getStackTrace()[2].getMethodName() + " Линия  :"
                     + Thread.currentThread().getStackTrace()[2].getLineNumber());
-            new Class_Generation_Errors(context).МетодЗаписиВЖурналНовойОшибки(e.toString(),
+            new RecordNewErros(context).recordnewerror(e.toString(),
                     this.getClass().getName(), Thread.currentThread().getStackTrace()[2].getMethodName(),
                     Thread.currentThread().getStackTrace()[2].getLineNumber());
         }

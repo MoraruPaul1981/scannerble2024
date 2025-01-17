@@ -31,7 +31,7 @@ import java.util.stream.Stream;
 
 import dagger.hilt.EntryPoints;
 
-public class GetProvider extends ContentProvider  {
+public class ProviderBackAsync extends ContentProvider  {
     private   UriMatcher uriMatcherДЛяПровайдераКонтентБазаДанных;
 
     private Integer ТекущаяСтрокаПриДОбавлениииURL=0;
@@ -40,7 +40,7 @@ public class GetProvider extends ContentProvider  {
 
     private SQLiteDatabase  sqliteBAck;
 
-    public GetProvider() throws InterruptedException {
+    public ProviderBackAsync() throws InterruptedException {
         try{
 
             CopyOnWriteArrayList<String> ИменаТаблицыОтАндройда= new GetainAllTables(getContext()).

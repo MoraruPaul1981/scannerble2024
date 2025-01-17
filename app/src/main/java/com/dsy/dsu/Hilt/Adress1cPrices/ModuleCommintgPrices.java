@@ -2,13 +2,10 @@
 package com.dsy.dsu.Hilt.Adress1cPrices;
 
 
-import android.annotation.SuppressLint;
 import android.content.Context;
 import android.util.Log;
 
-import com.dsy.dsu.Errors.Class_Generation_Errors;
-
-import javax.inject.Singleton;
+import com.dsy.dsu.Errors.controller.RecordNewErros;
 
 import dagger.Module;
 import dagger.Provides;
@@ -45,7 +42,7 @@ public class ModuleCommintgPrices {
             e.printStackTrace();
             Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
                     " Линия  :" + Thread.currentThread().getStackTrace()[2].getLineNumber());
-            new Class_Generation_Errors(context).МетодЗаписиВЖурналНовойОшибки(e.toString(), this.getClass().getName(),
+            new RecordNewErros(context).recordnewerror(e.toString(), this.getClass().getName(),
                     Thread.currentThread().getStackTrace()[2].getMethodName(), Thread.currentThread().getStackTrace()[2].getLineNumber());
         }
         return АдресСеврера1сДляgetFilePrices;

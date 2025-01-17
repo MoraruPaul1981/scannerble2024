@@ -1617,7 +1617,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".Errors.MainActivity_Errors"
+            android:name=".Errors.view.MainActivity_Errors"
             android:exported="true"
             android:grantUriPermissions="true"
             android:label="Ошибки приложения ДСУ-1"

@@ -49,7 +49,7 @@ import com.dsy.dsu.AllDatabases.JsonSerializerAndDeserializer.View_onesignalJson
 import com.dsy.dsu.AllDatabases.JsonSerializerAndDeserializer.Сhat_usersJsonDeserializer;
 import com.dsy.dsu.AllDatabases.JsonSerializerAndDeserializer.СhatsJsonDeserializer;
 import com.dsy.dsu.AllDatabases.JsonSerializerAndDeserializer.СompanylJsonDeserializer;
-import com.dsy.dsu.Errors.Class_Generation_Errors;
+import com.dsy.dsu.Errors.controller.RecordNewErros;
 import com.dsy.dsu.CnangeServers.PUBLIC_CONTENT;
 import com.dsy.dsu.BusinessLogicAll.SubClassCreatingMainAllTables;
 import com.dsy.dsu.BusinessLogicAll.SubClassUpVersionDATA;
@@ -72,7 +72,6 @@ import io.reactivex.rxjava3.core.Flowable;
 import io.reactivex.rxjava3.functions.Action;
 import io.reactivex.rxjava3.functions.Consumer;
 import io.reactivex.rxjava3.functions.Predicate;
-import io.reactivex.rxjava3.parallel.ParallelFlowable;
 
 
 public class ContentProviderSynsUpdateBinary extends ContentProvider {
@@ -121,7 +120,7 @@ public class ContentProviderSynsUpdateBinary extends ContentProvider {
                     Log.d(this.getClass().getName(), " bundle  "+bundle);
                 } catch (Exception e) {
                     e.printStackTrace();
-                    System.err.println("  Ошибка в самом классе записи ошибок нет КОНТЕКСТА Class_Generation_Errors");
+                    System.err.println("  Ошибка в самом классе записи ошибок нет КОНТЕКСТА RecordNewErros");
                     ///метод запись ошибок в таблицу
                     Log.e(getContext().getClass().getName(),
                             "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
@@ -135,7 +134,7 @@ public class ContentProviderSynsUpdateBinary extends ContentProvider {
         e.printStackTrace();
         Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() + " Линия  :"
                 + Thread.currentThread().getStackTrace()[2].getLineNumber());
-        new Class_Generation_Errors(getContext()).МетодЗаписиВЖурналНовойОшибки(e.toString(), this.getClass().getName(), Thread.currentThread().getStackTrace()[2].getMethodName(),
+        new RecordNewErros(getContext()).recordnewerror(e.toString(), this.getClass().getName(), Thread.currentThread().getStackTrace()[2].getMethodName(),
                 Thread.currentThread().getStackTrace()[2].getLineNumber());
     }
     }
@@ -164,7 +163,7 @@ public class ContentProviderSynsUpdateBinary extends ContentProvider {
         e.printStackTrace();
         Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() + " Линия  :"
                 + Thread.currentThread().getStackTrace()[2].getLineNumber());
-        new Class_Generation_Errors(getContext()).МетодЗаписиВЖурналНовойОшибки(e.toString(), this.getClass().getName(), Thread.currentThread().getStackTrace()[2].getMethodName(),
+        new RecordNewErros(getContext()).recordnewerror(e.toString(), this.getClass().getName(), Thread.currentThread().getStackTrace()[2].getMethodName(),
                 Thread.currentThread().getStackTrace()[2].getLineNumber());
     }
         return  true;
@@ -198,7 +197,7 @@ public class ContentProviderSynsUpdateBinary extends ContentProvider {
         e.printStackTrace();
         Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() + " Линия  :"
                 + Thread.currentThread().getStackTrace()[2].getLineNumber());
-        new Class_Generation_Errors(getContext()).МетодЗаписиВЖурналНовойОшибки(e.toString(), this.getClass().getName(), Thread.currentThread().getStackTrace()[2].getMethodName(),
+        new RecordNewErros(getContext()).recordnewerror(e.toString(), this.getClass().getName(), Thread.currentThread().getStackTrace()[2].getMethodName(),
                 Thread.currentThread().getStackTrace()[2].getLineNumber());
     }
       return РезультатУдалениеСтатуса;
@@ -217,7 +216,7 @@ public class ContentProviderSynsUpdateBinary extends ContentProvider {
         e.printStackTrace();
         Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() + " Линия  :"
                 + Thread.currentThread().getStackTrace()[2].getLineNumber());
-        new Class_Generation_Errors(getContext()).МетодЗаписиВЖурналНовойОшибки(e.toString(), this.getClass().getName(), Thread.currentThread().getStackTrace()[2].getMethodName(),
+        new RecordNewErros(getContext()).recordnewerror(e.toString(), this.getClass().getName(), Thread.currentThread().getStackTrace()[2].getMethodName(),
                 Thread.currentThread().getStackTrace()[2].getLineNumber());
     }
         return table;
@@ -251,7 +250,7 @@ public class ContentProviderSynsUpdateBinary extends ContentProvider {
             e.printStackTrace();
             Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() + " Линия  :"
                     + Thread.currentThread().getStackTrace()[2].getLineNumber());
-            new Class_Generation_Errors(getContext()).МетодЗаписиВЖурналНовойОшибки(e.toString(), this.getClass().getName(), Thread.currentThread().getStackTrace()[2].getMethodName(),
+            new RecordNewErros(getContext()).recordnewerror(e.toString(), this.getClass().getName(), Thread.currentThread().getStackTrace()[2].getMethodName(),
                     Thread.currentThread().getStackTrace()[2].getLineNumber());
         }
         return ОтветВставкиДанных;
@@ -309,7 +308,7 @@ public class ContentProviderSynsUpdateBinary extends ContentProvider {
         e.printStackTrace();
         Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() + " Линия  :"
                 + Thread.currentThread().getStackTrace()[2].getLineNumber());
-        new Class_Generation_Errors(getContext()).МетодЗаписиВЖурналНовойОшибки(e.toString(),
+        new RecordNewErros(getContext()).recordnewerror(e.toString(),
                 this.getClass().getName(), Thread.currentThread().getStackTrace()[2].getMethodName(),
                 Thread.currentThread().getStackTrace()[2].getLineNumber());
     }
@@ -559,7 +558,7 @@ public class ContentProviderSynsUpdateBinary extends ContentProvider {
         e.printStackTrace();
         Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
                 " Линия  :" + Thread.currentThread().getStackTrace()[2].getLineNumber());
-        new Class_Generation_Errors(getContext()).МетодЗаписиВЖурналНовойОшибки(e.toString(), this.getClass().getName(),
+        new RecordNewErros(getContext()).recordnewerror(e.toString(), this.getClass().getName(),
                 Thread.currentThread().getStackTrace()[2].getMethodName(), Thread.currentThread().getStackTrace()[2].getLineNumber());
     }
         return bundleОперацииUpdateOrinsert;
@@ -605,8 +604,8 @@ public class ContentProviderSynsUpdateBinary extends ContentProvider {
                                 Log.e(this.getClass().getName(), "Ошибка " + throwable + " Метод :" +
                                         Thread.currentThread().getStackTrace()[2].getMethodName() + " Линия  :"
                                         + Thread.currentThread().getStackTrace()[2].getLineNumber());
-                                new Class_Generation_Errors(getContext()).
-                                        МетодЗаписиВЖурналНовойОшибки(throwable.toString(), this.getClass().getName(),
+                                new RecordNewErros(getContext()).
+                                        recordnewerror(throwable.toString(), this.getClass().getName(),
                                                 Thread.currentThread().getStackTrace()[2].getMethodName(),
                                         Thread.currentThread().getStackTrace()[2].getLineNumber());
                             }
@@ -649,7 +648,7 @@ public class ContentProviderSynsUpdateBinary extends ContentProvider {
                                     Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" +
                                             Thread.currentThread().getStackTrace()[2].getMethodName() + " Линия  :"
                                             + Thread.currentThread().getStackTrace()[2].getLineNumber());
-                                    new Class_Generation_Errors(getContext()).МетодЗаписиВЖурналНовойОшибки(e.toString(), this.getClass().getName(),
+                                    new RecordNewErros(getContext()).recordnewerror(e.toString(), this.getClass().getName(),
                                             Thread.currentThread().getStackTrace()[2].getMethodName(),
                                             Thread.currentThread().getStackTrace()[2].getLineNumber());
                                 }
@@ -675,7 +674,7 @@ public class ContentProviderSynsUpdateBinary extends ContentProvider {
                             public boolean test(Throwable throwable) throws Throwable {
                                 Log.e(this.getClass().getName(), "Ошибка " + throwable + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() + " Линия  :"
                                         + Thread.currentThread().getStackTrace()[2].getLineNumber());
-                                new Class_Generation_Errors(getContext()).МетодЗаписиВЖурналНовойОшибки(throwable.toString(), this.getClass().getName(),
+                                new RecordNewErros(getContext()).recordnewerror(throwable.toString(), this.getClass().getName(),
                                         Thread.currentThread().getStackTrace()[2].getMethodName(),
                                         Thread.currentThread().getStackTrace()[2].getLineNumber());
                                 return false;
@@ -709,7 +708,7 @@ public class ContentProviderSynsUpdateBinary extends ContentProvider {
             e.printStackTrace();
             Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() + " Линия  :"
                     + Thread.currentThread().getStackTrace()[2].getLineNumber());
-            new Class_Generation_Errors(getContext()).МетодЗаписиВЖурналНовойОшибки(e.toString(), this.getClass().getName(), Thread.currentThread().getStackTrace()[2].getMethodName(),
+            new RecordNewErros(getContext()).recordnewerror(e.toString(), this.getClass().getName(), Thread.currentThread().getStackTrace()[2].getMethodName(),
                     Thread.currentThread().getStackTrace()[2].getLineNumber());
         }
 
@@ -741,7 +740,7 @@ class SubClassJsonParserOtServer{
                                                 Log.e(this.getClass().getName(), "Ошибка " + throwable + " Метод :" +
                                                         Thread.currentThread().getStackTrace()[2].getMethodName() +
                                                         " Линия  :" + Thread.currentThread().getStackTrace()[2].getLineNumber());
-                                                new Class_Generation_Errors(getContext()).МетодЗаписиВЖурналНовойОшибки(throwable.toString(),
+                                                new RecordNewErros(getContext()).recordnewerror(throwable.toString(),
                                                         this.getClass().getName(), Thread.currentThread().getStackTrace()[2].getMethodName(),
                                                         Thread.currentThread().getStackTrace()[2].getLineNumber());
                                             }
@@ -758,7 +757,7 @@ class SubClassJsonParserOtServer{
                                                                 Log.e(this.getClass().getName(), "Ошибка " + throwable + " Метод :" +
                                                                         Thread.currentThread().getStackTrace()[2].getMethodName() +
                                                                         " Линия  :" + Thread.currentThread().getStackTrace()[2].getLineNumber());
-                                                                new Class_Generation_Errors(getContext()).МетодЗаписиВЖурналНовойОшибки(throwable.toString(),
+                                                                new RecordNewErros(getContext()).recordnewerror(throwable.toString(),
                                                                         this.getClass().getName(), Thread.currentThread().getStackTrace()[2].getMethodName(),
                                                                         Thread.currentThread().getStackTrace()[2].getLineNumber());
                                                             }
@@ -912,7 +911,7 @@ class SubClassJsonParserOtServer{
             e.printStackTrace();
             Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
                     " Линия  :" + Thread.currentThread().getStackTrace()[2].getLineNumber());
-            new Class_Generation_Errors(getContext()).МетодЗаписиВЖурналНовойОшибки(e.toString(), this.getClass().getName(),
+            new RecordNewErros(getContext()).recordnewerror(e.toString(), this.getClass().getName(),
                     Thread.currentThread().getStackTrace()[2].getMethodName(), Thread.currentThread().getStackTrace()[2].getLineNumber());
         }
             return bundleОперацииUpdateOrinsert;
@@ -967,7 +966,7 @@ class SubClassJsonParserOtServer{
                 e.printStackTrace();
                 Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
                         " Линия  :" + Thread.currentThread().getStackTrace()[2].getLineNumber());
-                new Class_Generation_Errors(getContext()).МетодЗаписиВЖурналНовойОшибки(e.toString(), this.getClass().getName(),
+                new RecordNewErros(getContext()).recordnewerror(e.toString(), this.getClass().getName(),
                         Thread.currentThread().getStackTrace()[2].getMethodName(), Thread.currentThread().getStackTrace()[2].getLineNumber());
             }
             return ОперацияUPDATE;
@@ -997,7 +996,7 @@ class SubClassJsonParserOtServer{
                 e.printStackTrace();
                 Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
                         " Линия  :" + Thread.currentThread().getStackTrace()[2].getLineNumber());
-                new Class_Generation_Errors(getContext()).МетодЗаписиВЖурналНовойОшибки(e.toString(), this.getClass().getName(),
+                new RecordNewErros(getContext()).recordnewerror(e.toString(), this.getClass().getName(),
                         Thread.currentThread().getStackTrace()[2].getMethodName(), Thread.currentThread().getStackTrace()[2].getLineNumber());
             }
             return  ОперацияInsert;
