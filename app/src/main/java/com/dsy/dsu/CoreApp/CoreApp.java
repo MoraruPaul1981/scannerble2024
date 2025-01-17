@@ -48,7 +48,9 @@ public class CoreApp extends Application {
 
 
 // TODO: 13.01.2025  Запускаем  
-           getModuleBufferGrud.backasyncQueryError("errordsu1"," SELECT  *   FROM errordsu1  AS er WHERE er.Error=?  " ,new String[]{"IS  NOT NULL"});
+        //   getModuleBufferGrud.backasyncQueryError("errordsu1"," SELECT  *   FROM errordsu1  AS er WHERE er.Error=?  ORDER BY id DESC" ,new String[]{"IS  NOT NULL"});
+           //getModuleBufferGrud.backasyncQueryError("fio"," SELECT  *   FROM fio   " ,null);
+           getModuleBufferGrud.backasyncQueryError("errordsu1"," SELECT  *   FROM errordsu1 WHERE  id=? AND ERROR IS  NOT NULL  ORDER BY id DESC  " ,new String[]{"3"});
 
         // TODO: 17.04.2023
         Log.d(this.getClass().getName(),"\n" + " class FaceAPp " + Thread.currentThread().getStackTrace()[2].getClassName()
