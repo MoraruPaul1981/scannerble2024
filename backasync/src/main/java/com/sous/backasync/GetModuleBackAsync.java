@@ -2,7 +2,6 @@ package com.sous.backasync;
 
 import android.content.Context;
 import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.util.Log;
 
@@ -21,19 +20,19 @@ import dagger.hilt.components.SingletonComponent;
 
 @Module
 @InstallIn(SingletonComponent.class)
-@Named("getModuleBufferGrud")
-public class GetModuleBufferGrud {
+@Named("getModuleBackAsync")
+public class GetModuleBackAsync {
 
 
 
     Context context;
 
 
-    public  @Inject GetModuleBufferGrud(@ApplicationContext Context context ) {
+    public  @Inject GetModuleBackAsync(@ApplicationContext Context context ) {
         try {
             this.context = context;
             // TODO: 13.01.2025
-            Log.d(this.getClass().getName(),"\n" + " class GetModuleBufferGrud  " + Thread.currentThread().getStackTrace()[2].getClassName()
+            Log.d(this.getClass().getName(),"\n" + " class GetModuleBackAsync  " + Thread.currentThread().getStackTrace()[2].getClassName()
                     + "\n" +
                     " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
                     " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n");
@@ -46,46 +45,61 @@ public class GetModuleBufferGrud {
     }
 
 
+    // TODO: 17.01.2025 Курсор получение данных   сусловиями WHERE
 
-    public   void  backasyncQueryError(@NonNull String Таблица, @NonNull  String   СамЗапрос ,@NonNull   String[]УсловияЗапроса){
+    public   Cursor backasyncQueryandWhere(@NonNull String Таблица, @NonNull  String   СамЗапрос , @NonNull   String[]УсловияЗапроса){
+        // TODO: 17.01.2025
+        Cursor getbackasyncQueryandWhere=null;
         try {
             BackasyncCursor backasyncCursor=new BackasyncCursor(context);
             //////TODO ГЛАВНЫЙ КУРСОР ДЛЯ НЕПОСРЕДТСВЕНОГО ЗАГРУЗКИ СОТРУДНИКА
-            Bundle bundleError= new Bundle();
-            bundleError.putString("Таблица",Таблица);
-            bundleError.putString("СамЗапрос",СамЗапрос);
-            bundleError.putStringArray("УсловияЗапроса",УсловияЗапроса);
-            Cursor cursorError=    backasyncCursor.getBackasyncCursor( bundleError);
+            Bundle bundle = new Bundle();
+            bundle.putString("Таблица",Таблица);
+            bundle.putString("СамЗапрос",СамЗапрос);
+            bundle.putStringArray("УсловияЗапроса",УсловияЗапроса);
+            // TODO: 17.01.2025
+              getbackasyncQueryandWhere=    backasyncCursor.getBackasyncCursor( bundle);
 
         // TODO: 17.04.2023
         Log.d(this.getClass().getName(),"\n" + " class FaceAPp " + Thread.currentThread().getStackTrace()[2].getClassName()
                 + "\n" +
                 " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n");
+                " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" + " getbackasyncQueryandWhere " +getbackasyncQueryandWhere);
     } catch (Exception e) {
         e.printStackTrace();
         Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" +
                 Thread.currentThread().getStackTrace()[2].getMethodName() + " Линия  :"
                 + Thread.currentThread().getStackTrace()[2].getLineNumber());
     }
+        return  getbackasyncQueryandWhere;
     }
 
 
+    // TODO: 17.01.2025 Курсор получение данных
 
-    public   void  backasyncQueryError(@NonNull  Context context ,@NonNull    SQLiteDatabase getSqlLiteCoreApp ){
+    public   Cursor backasyncQuery(@NonNull String Таблица, @NonNull  String   СамЗапрос  ){
+        // TODO: 17.01.2025
+        Cursor getbackasyncQuery=null;
         try {
-            // TODO: 13.01.2025
+            BackasyncCursor backasyncCursor=new BackasyncCursor(context);
+            //////TODO ГЛАВНЫЙ КУРСОР ДЛЯ НЕПОСРЕДТСВЕНОГО ЗАГРУЗКИ СОТРУДНИКА
+            Bundle bundle = new Bundle();
+            bundle.putString("Таблица",Таблица);
+            bundle.putString("СамЗапрос",СамЗапрос);
+            // TODO: 17.01.2025
+              getbackasyncQuery=    backasyncCursor.getBackasyncCursor( bundle);
             // TODO: 17.04.2023
-            Log.d(this.getClass().getName(),"\n" + " class FaceAPp " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+            Log.d(this.getClass().getName(),"\n" + " class FaceAPp " + Thread.currentThread().getStackTrace()[2].getClassName()
+                    + "\n" +
                     " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                    " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"+
-                    " getSqlLiteCoreApp " + getSqlLiteCoreApp  + " context " +context);
+                    " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"  + "getbackasyncQuery " +getbackasyncQuery);
         } catch (Exception e) {
             e.printStackTrace();
             Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" +
                     Thread.currentThread().getStackTrace()[2].getMethodName() + " Линия  :"
                     + Thread.currentThread().getStackTrace()[2].getLineNumber());
         }
+        return getbackasyncQuery;
     }
 
 

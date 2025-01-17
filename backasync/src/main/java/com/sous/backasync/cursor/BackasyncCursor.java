@@ -22,7 +22,7 @@ public class BackasyncCursor {
     }
 
     public Cursor getBackasyncCursor(@NonNull Bundle bundle) throws SQLException {
-        Cursor cursor = null;
+        Cursor getBackasyncCursor = null;
         CursorLoader cursorLoader = null;
         try {
             cursorLoader = new CursorLoader(context);
@@ -35,11 +35,11 @@ public class BackasyncCursor {
             cursorLoader.setUri(uri);
             cursorLoader.setSelection(Selection);
             cursorLoader.setSelectionArgs(SelectionArgs);//МесяцПростоАнализа
-            cursor = cursorLoader.loadInBackground();
-            if (cursor.getCount() > 0 && cursor != null) {
-                cursor.moveToFirst();
+            getBackasyncCursor = cursorLoader.loadInBackground();
+            if (getBackasyncCursor.getCount() > 0 && getBackasyncCursor != null) {
+                getBackasyncCursor.moveToFirst();
                 Log.d(this.getClass().getName(), "cursor.getCount() "
-                        + cursor.getCount());
+                        + getBackasyncCursor.getCount());
             }
             cursorLoader.commitContentChanged();
 
@@ -47,7 +47,7 @@ public class BackasyncCursor {
             Log.d(this.getClass().getName(), "\n" + " class FaceAPp " + Thread.currentThread().getStackTrace()[2].getClassName()
                     + "\n" +
                     " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                    " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" + " cursorLoader " + cursorLoader);
+                    " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" + " cursorLoader " + getBackasyncCursor);
         } catch (Exception e) {
             e.printStackTrace();
             Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
@@ -55,7 +55,7 @@ public class BackasyncCursor {
 
 
         }
-        return cursor;
+        return getBackasyncCursor;
 
     }
 

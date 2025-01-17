@@ -7,7 +7,7 @@ import android.util.Log;
 
 
 import com.dsy.dsu.Errors.Class_Generation_Errors;
-import com.sous.backasync.GetModuleBufferGrud;
+import com.sous.backasync.GetModuleBackAsync;
 
 import javax.inject.Inject;
 
@@ -22,7 +22,7 @@ public class CoreApp extends Application {
 
 
     @Inject
-    public GetModuleBufferGrud getModuleBufferGrud;
+    public GetModuleBackAsync getModuleBackAsync;
 
 
     @Override
@@ -43,14 +43,14 @@ public class CoreApp extends Application {
 
 
     // TODO: 13.01.2025  Запускаем
-    //  getModuleBufferGrud.getModuleBufferGrud(getApplicationContext(), getSqlLiteCoreApp);
+    //  getModuleBackAsync.getModuleBackAsync(getApplicationContext(), getSqlLiteCoreApp);
 
 
 
 // TODO: 13.01.2025  Запускаем  
-        //   getModuleBufferGrud.backasyncQueryError("errordsu1"," SELECT  *   FROM errordsu1  AS er WHERE er.Error=?  ORDER BY id DESC" ,new String[]{"IS  NOT NULL"});
-           //getModuleBufferGrud.backasyncQueryError("fio"," SELECT  *   FROM fio   " ,null);
-           getModuleBufferGrud.backasyncQueryError("errordsu1"," SELECT  *   FROM errordsu1 WHERE  id=? AND ERROR IS  NOT NULL  ORDER BY id DESC  " ,new String[]{"3"});
+        //   getModuleBackAsync.backasyncQueryandWhere("errordsu1"," SELECT  *   FROM errordsu1  AS er WHERE er.Error=?  ORDER BY id DESC" ,new String[]{"IS  NOT NULL"});
+           //getModuleBackAsync.backasyncQueryandWhere("fio"," SELECT  *   FROM fio   " ,null);
+           getModuleBackAsync.backasyncQueryandWhere("errordsu1"," SELECT  *   FROM errordsu1 WHERE  id=? AND ERROR IS  NOT NULL  ORDER BY id DESC  " ,new String[]{"3"});
 
         // TODO: 17.04.2023
         Log.d(this.getClass().getName(),"\n" + " class FaceAPp " + Thread.currentThread().getStackTrace()[2].getClassName()

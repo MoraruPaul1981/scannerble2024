@@ -5,9 +5,7 @@ import android.annotation.SuppressLint;
 import android.content.ContentProvider;
 import android.content.ContentProviderOperation;
 import android.content.ContentProviderResult;
-import android.content.ContentResolver;
 import android.content.ContentValues;
-import android.content.Context;
 import android.content.OperationApplicationException;
 import android.content.UriMatcher;
 import android.database.Cursor;
@@ -15,29 +13,20 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Looper;
-import android.os.RemoteException;
 import android.util.Log;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.loader.content.AsyncTaskLoader;
 
 
-import com.sous.backasync.GetModuleBufferGrud;
 import com.sous.backasync.alltables.GetainAllTables;
-import com.sous.backasync.erros.GetError;
 import com.sous.backasync.hill.HiltInterfacesqliteBack;
-import com.sous.backasync.operationsprovider.Getquery;
 import com.sous.backasync.operationsprovider.GetqueryWhere;
 
 import java.util.ArrayList;
 import java.util.Optional;
-import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.function.Consumer;
-import java.util.function.Supplier;
 import java.util.stream.Stream;
 
 import dagger.hilt.EntryPoints;
