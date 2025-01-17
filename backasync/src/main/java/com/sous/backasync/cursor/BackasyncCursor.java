@@ -13,36 +13,50 @@ import androidx.loader.content.CursorLoader;
 
 public class BackasyncCursor {
 
-    private  final String getNameProvider="com.sous.backasync.provider";
+    Context context;
 
-    public Cursor getBackasyncCursor(@NonNull Context context, @NonNull Bundle bundle) throws SQLException {
-        Cursor cursor=null;
-        CursorLoader cursorLoader=null;
-        try{
-            cursorLoader=new CursorLoader(context);
-            String[] SelectionArgs=      bundle.getStringArray("УсловияВыборки");
-            String  Selection=      bundle.getString("СамЗапрос");
-            String  Таблица=      bundle.getString("Таблица");
-            Uri uri = Uri.parse("content://"+getNameProvider+"/" + Таблица + "");
+    private final String getNameProvider = "com.sous.backasync.provider";
+
+    public BackasyncCursor(Context context) {
+        this.context = context;
+    }
+
+    public Cursor getBackasyncCursor(@NonNull Bundle bundle) throws SQLException {
+        Cursor cursor = null;
+        CursorLoader cursorLoader = null;
+        try {
+            cursorLoader = new CursorLoader(context);
+            String Таблица = bundle.getString("Таблица");
+            String Selection = bundle.getString("СамЗапрос");
+            String[] SelectionArgs = bundle.getStringArray("УсловияЗапроса");
+
+
+            Uri uri = Uri.parse("content://" + getNameProvider + "/" + Таблица + "");
             cursorLoader.setUri(uri);
             cursorLoader.setSelection(Selection);
             cursorLoader.setSelectionArgs(SelectionArgs);//МесяцПростоАнализа
-            cursor=    cursorLoader.loadInBackground();
-            if (cursor.getCount() > 0 && cursor!=null) {
+            cursor = cursorLoader.loadInBackground();
+            if (cursor.getCount() > 0 && cursor != null) {
                 cursor.moveToFirst();
                 Log.d(this.getClass().getName(), "cursor.getCount() "
                         + cursor.getCount());
-                cursorLoader.reset();
             }
-        } catch ( Exception e) {
+            cursorLoader.commitContentChanged();
+
+            // TODO: 17.04.2023
+            Log.d(this.getClass().getName(), "\n" + " class FaceAPp " + Thread.currentThread().getStackTrace()[2].getClassName()
+                    + "\n" +
+                    " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                    " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" + " cursorLoader " + cursorLoader);
+        } catch (Exception e) {
             e.printStackTrace();
             Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
                     " Линия  :" + Thread.currentThread().getStackTrace()[2].getLineNumber());
-        }finally {
-            cursorLoader.commitContentChanged();
-        }
-        return  cursor;
-    }
 
+
+        }
+        return cursor;
+
+    }
 
 }

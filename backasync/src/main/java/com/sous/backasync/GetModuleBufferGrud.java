@@ -47,18 +47,15 @@ public class GetModuleBufferGrud {
 
 
 
-    public   void  backasyncQueryError( ){
+    public   void  backasyncQueryError(@NonNull String Таблица, @NonNull  String   СамЗапрос ,@NonNull   String[]УсловияЗапроса){
         try {
-
-            BackasyncCursor backasyncCursor=new BackasyncCursor();
-
-
-         String   СамЗапрос=" SELECT  *   FROM errordsu1 AS e " ;
+            BackasyncCursor backasyncCursor=new BackasyncCursor(context);
             //////TODO ГЛАВНЫЙ КУРСОР ДЛЯ НЕПОСРЕДТСВЕНОГО ЗАГРУЗКИ СОТРУДНИКА
             Bundle bundleError= new Bundle();
+            bundleError.putString("Таблица",Таблица);
             bundleError.putString("СамЗапрос",СамЗапрос);
-            bundleError.putString("Таблица","errordsu1");
-            Cursor cursorError=    backasyncCursor.getBackasyncCursor(context,bundleError);
+            bundleError.putStringArray("УсловияЗапроса",УсловияЗапроса);
+            Cursor cursorError=    backasyncCursor.getBackasyncCursor( bundleError);
 
         // TODO: 17.04.2023
         Log.d(this.getClass().getName(),"\n" + " class FaceAPp " + Thread.currentThread().getStackTrace()[2].getClassName()

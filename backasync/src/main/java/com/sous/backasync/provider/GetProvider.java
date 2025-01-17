@@ -30,6 +30,7 @@ import com.sous.backasync.alltables.GetainAllTables;
 import com.sous.backasync.erros.GetError;
 import com.sous.backasync.hill.HiltInterfacesqliteBack;
 import com.sous.backasync.operationsprovider.Getquery;
+import com.sous.backasync.operationsprovider.GetqueryWhere;
 
 import java.util.ArrayList;
 import java.util.Optional;
@@ -105,8 +106,10 @@ public class GetProvider extends ContentProvider  {
         try {
             Log.d(this.getClass().getName(), " uri"+uri  + "selection "+selection );
             String table = МетодОпределяемТаблицу(uri);
-            Getquery getError=new Getquery(getContext(),sqliteBAck);
-// TODO: 15.01.2025 et Cursor with Data 
+
+           // Getquery getError=new Getquery(getContext(),sqliteBAck);
+            GetqueryWhere getError=new GetqueryWhere(getContext(),sqliteBAck);
+// TODO: 15.01.2025 et Cursor with Data
              cursor =   getError.getQuery( table,selection,  selectionArgs);
             Log.d(this.getClass().getName(),"\n" + " class FaceAPp " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                     " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
