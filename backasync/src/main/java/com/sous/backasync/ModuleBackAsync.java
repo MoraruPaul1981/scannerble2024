@@ -7,7 +7,7 @@ import android.util.Log;
 
 import androidx.annotation.NonNull;
 
-import com.sous.backasync.cursor.BackasyncCursor;
+import com.sous.backasync.cursor.CursorLoaderBackSync;
 
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -21,18 +21,18 @@ import dagger.hilt.components.SingletonComponent;
 @Module
 @InstallIn(SingletonComponent.class)
 @Named("getModuleBackAsync")
-public class GetModuleBackAsync {
+public class ModuleBackAsync {
 
 
 
     Context context;
 
 
-    public  @Inject GetModuleBackAsync(@ApplicationContext Context context ) {
+    public  @Inject ModuleBackAsync(@ApplicationContext Context context ) {
         try {
             this.context = context;
             // TODO: 13.01.2025
-            Log.d(this.getClass().getName(),"\n" + " class GetModuleBackAsync  " + Thread.currentThread().getStackTrace()[2].getClassName()
+            Log.d(this.getClass().getName(),"\n" + " class ModuleBackAsync  " + Thread.currentThread().getStackTrace()[2].getClassName()
                     + "\n" +
                     " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
                     " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n");
@@ -51,14 +51,14 @@ public class GetModuleBackAsync {
         // TODO: 17.01.2025
         Cursor getbackasyncQueryandWhere=null;
         try {
-            BackasyncCursor backasyncCursor=new BackasyncCursor(context);
+            CursorLoaderBackSync cursorLoaderBackSync =new CursorLoaderBackSync(context);
             //////TODO ГЛАВНЫЙ КУРСОР ДЛЯ НЕПОСРЕДТСВЕНОГО ЗАГРУЗКИ СОТРУДНИКА
             Bundle bundle = new Bundle();
             bundle.putString("Таблица",Таблица);
             bundle.putString("СамЗапрос",СамЗапрос);
             bundle.putStringArray("УсловияЗапроса",УсловияЗапроса);
             // TODO: 17.01.2025
-              getbackasyncQueryandWhere=    backasyncCursor.getBackasyncCursor( bundle);
+              getbackasyncQueryandWhere=    cursorLoaderBackSync.getBackasyncCursor( bundle);
 
         // TODO: 17.04.2023
         Log.d(this.getClass().getName(),"\n" + " class FaceAPp " + Thread.currentThread().getStackTrace()[2].getClassName()
@@ -81,13 +81,13 @@ public class GetModuleBackAsync {
         // TODO: 17.01.2025
         Cursor getbackasyncQuery=null;
         try {
-            BackasyncCursor backasyncCursor=new BackasyncCursor(context);
+            CursorLoaderBackSync cursorLoaderBackSync =new CursorLoaderBackSync(context);
             //////TODO ГЛАВНЫЙ КУРСОР ДЛЯ НЕПОСРЕДТСВЕНОГО ЗАГРУЗКИ СОТРУДНИКА
             Bundle bundle = new Bundle();
             bundle.putString("Таблица",Таблица);
             bundle.putString("СамЗапрос",СамЗапрос);
             // TODO: 17.01.2025
-              getbackasyncQuery=    backasyncCursor.getBackasyncCursor( bundle);
+              getbackasyncQuery=    cursorLoaderBackSync.getBackasyncCursor( bundle);
             // TODO: 17.04.2023
             Log.d(this.getClass().getName(),"\n" + " class FaceAPp " + Thread.currentThread().getStackTrace()[2].getClassName()
                     + "\n" +

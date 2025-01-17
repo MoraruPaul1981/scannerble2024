@@ -7,7 +7,7 @@ import android.util.Log;
 
 
 import com.dsy.dsu.Errors.Class_Generation_Errors;
-import com.sous.backasync.GetModuleBackAsync;
+import com.sous.backasync.ModuleBackAsync;
 
 import javax.inject.Inject;
 
@@ -22,7 +22,7 @@ public class CoreApp extends Application {
 
 
     @Inject
-    public GetModuleBackAsync getModuleBackAsync;
+    public ModuleBackAsync moduleBackAsync;
 
 
     @Override
@@ -43,17 +43,18 @@ public class CoreApp extends Application {
 
 
     // TODO: 13.01.2025  Запускаем
-    //  getModuleBackAsync.getModuleBackAsync(getApplicationContext(), getSqlLiteCoreApp);
+    //  moduleBackAsync.moduleBackAsync(getApplicationContext(), getSqlLiteCoreApp);
 
 
 
 // TODO: 13.01.2025  Запускаем  
-        //   getModuleBackAsync.backasyncQueryandWhere("errordsu1"," SELECT  *   FROM errordsu1  AS er WHERE er.Error=?  ORDER BY id DESC" ,new String[]{"IS  NOT NULL"});
-           //getModuleBackAsync.backasyncQueryandWhere("fio"," SELECT  *   FROM fio   " ,null);
-           getModuleBackAsync.backasyncQueryandWhere("errordsu1"," SELECT  *   FROM errordsu1 WHERE  id=? AND ERROR IS  NOT NULL  ORDER BY id DESC  " ,new String[]{"3"});
+        //   moduleBackAsync.backasyncQueryandWhere("errordsu1"," SELECT  *   FROM errordsu1  AS er WHERE er.Error=?  ORDER BY id DESC" ,new String[]{"IS  NOT NULL"});
+           //moduleBackAsync.backasyncQueryandWhere("fio"," SELECT  *   FROM fio   " ,null);
+        //   moduleBackAsync.backasyncQueryandWhere("errordsu1"," SELECT  *   FROM errordsu1 WHERE  id=? AND ERROR IS  NOT NULL  ORDER BY id DESC  " ,new String[]{"3"});
+          /* moduleBackAsync.backasyncQueryandWhere("errordsu1"," SELECT  *   FROM errordsu1  WHERE ERROR IS  NOT NULL  ORDER BY id DESC  " ,null);*/
 
         // TODO: 17.04.2023
-        Log.d(this.getClass().getName(),"\n" + " class FaceAPp " + Thread.currentThread().getStackTrace()[2].getClassName()
+        Log.d(this.getClass().getName(),"\n" + " class CoreApp    " + Thread.currentThread().getStackTrace()[2].getClassName()
                 + "\n" +
                 " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
                 " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"+

@@ -11,13 +11,13 @@ import android.util.Log;
 import androidx.annotation.NonNull;
 import androidx.loader.content.CursorLoader;
 
-public class BackasyncCursor {
+public class CursorLoaderBackSync {
 
     Context context;
 
     private final String getNameProvider = "com.sous.backasync.provider";
 
-    public BackasyncCursor(Context context) {
+    public CursorLoaderBackSync(Context context) {//ModuleBackAsync
         this.context = context;
     }
 
@@ -42,6 +42,7 @@ public class BackasyncCursor {
                         + getBackasyncCursor.getCount());
             }
             cursorLoader.commitContentChanged();
+       String s=     cursorLoader.dataToString(getBackasyncCursor);
 
             // TODO: 17.04.2023
             Log.d(this.getClass().getName(), "\n" + " class FaceAPp " + Thread.currentThread().getStackTrace()[2].getClassName()
