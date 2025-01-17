@@ -34,6 +34,15 @@
             app:itemTextAppearance="@style/TextAppearance.AppCompat.Display1"
             app:itemIconSize="100dp"
             android:title="Обновление ПО" />
+
+        <item
+            android:id="@+id/item_settings"
+            android:icon="@drawable/icon_navigatorsettings"
+            app:itemTextAppearance="@style/TextAppearance.AppCompat.Display1"
+            app:itemIconSize="100dp"
+            android:title="Настройки" />
+
+
     </group>
 
 

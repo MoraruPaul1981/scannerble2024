@@ -32,7 +32,7 @@ import com.dsy.dsu.BusinessLogicAll.Class_Sendiing_Errors;
 import com.dsy.dsu.BusinessLogicAll.Permissions.ClassPermissions;
 import com.dsy.dsu.Dashboard.View.MainActivity_Dashboard;
 import com.dsy.dsu.Errors.controller.BiccessLogicActivityError;
-import com.dsy.dsu.Errors.controller.GettingErrorsIsFile;
+import com.dsy.dsu.Errors.controller.GettingErrorsIsFileOrIsCursor;
 import com.dsy.dsu.Errors.controller.RecordNewErros;
 import com.dsy.dsu.Hilt.Sqlitehilt.HiltInterfacesqlite;
 import com.dsy.dsu.R;
@@ -75,12 +75,19 @@ public class MainActivity_Errors extends AppCompatActivity  {
     public StartingModuleBackAsync startingModuleBackAsync;
     SQLiteDatabase sqLiteDatabase_error;
 
+
+
+
     @SuppressLint("MissingInflatedId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         try {
                 super.onCreate(savedInstanceState);
 
+            // TODO: 12.12.2023
+            activity=this;
+            setContentView(R.layout.activitymain_errors); ///activitymain_viewlogin  /// fragment_dashboard
+            getSupportActionBar().hide(); ///скрывать тул бар
 
             // TODO: 04.10.2023 разрешения для всего
             new ClassPermissions(this,ALL_PERSSION_CODE,CAMERA_PERSSION_CODE);
@@ -104,12 +111,6 @@ public class MainActivity_Errors extends AppCompatActivity  {
                 );
             }
 
-
-
-            // TODO: 12.12.2023
-            activity=this;
-            setContentView(R.layout.activitymain_errors); ///activitymain_viewlogin  /// fragment_dashboard
-            getSupportActionBar().hide(); ///скрывать тул бар
             fragmentManager = getSupportFragmentManager();
             fragmentTransaction = fragmentManager.beginTransaction();
             textViewAllError = (TextView) findViewById(R.id.textViewAllError);
@@ -160,10 +161,10 @@ public class MainActivity_Errors extends AppCompatActivity  {
 
             // TODO: 17.01.2025  Получаем Ошибку двумя разными способами из файла и из курсора 
 
-           //StringBuffer БуерДляОшибокИзФайла =     new GettingErrorsIsFile(getApplicationContext()).gettingErrorsIsFile();
-           StringBuffer БуерДляОшибокИзКурсора =     new GettingErrorsIsFile(getApplicationContext()).gettingErrorsIsCursor();
+           //StringBuffer БуерДляОшибокИзФайла =     new GettingErrorsIsFileOrIsCursor(getApplicationContext()).gettingErrorsIsFile();
+           StringBuffer БуерДляОшибокИзКурсора =     new GettingErrorsIsFileOrIsCursor(getApplicationContext(),startingModuleBackAsync).gettingErrorsIsCursor();
 
-            // TODO: 17.01.2025  полученные ошибку отправляем на экран ПОльзователю  
+            // TODO: 17.01.2025  полученные ошибку отправляем на экран ПОльзователю
               metodProssecingErrorsAll(БуерДляОшибокИзКурсора);
             // TODO: 12.12.2023  Данные ОШибки
 
@@ -243,27 +244,28 @@ public class MainActivity_Errors extends AppCompatActivity  {
 
             if (БуерДляОшибок.length()>0) {
 
-               metodSendErrorsToMail(БуерДляОшибок);
-
-             metodInfoPhone(БуерДляОшибок);
-
+                  metodSendErrorsToMail(БуерДляОшибок);
                   metodScreenErrorForUsers(БуерДляОшибок);
+                   metodButtonEnables();
 
-                 metodButtonEnables();
+
+
             } else {
 
-               metodInfoPhone(БуерДляОшибок);
+               metodInfoPhone();
 
-            metodScreenDontErrorForUsers(БуерДляОшибок);
+            metodScreenDontErrorForUsers();
+
+                metodButtonINVISIBLEs();
             }
 
-               metodReebotNameErros(БуерДляОшибок);
+            metodInfoPhone( );
 
 
             Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                     " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
                     " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n");
-            Log.d(this.getClass().getName(), " Ошибок Нет. время :   " +new Date().toString());
+            Log.d(this.getClass().getName(), " Ошибок Нет. время :   " +new Date().toString()  + "БуерДляОшибок " +БуерДляОшибок);
         } catch (Exception e) {
             e.printStackTrace();
             Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :"
@@ -335,18 +337,17 @@ public class MainActivity_Errors extends AppCompatActivity  {
     }
 
     @SuppressLint("SuspiciousIndentation")
-    private String metodInfoPhone(@NotNull StringBuffer stringBufferEror) {
+    private String metodInfoPhone() {
         String ИнфоТелефон=null;
         try{
             ИнфоТелефон = Build.MANUFACTURER
                     + " " + Build.MODEL + " " + Build.VERSION.RELEASE
                     + " " + Build.VERSION_CODES.class.getFields()[android.os.Build.VERSION.SDK_INT].getName();
-            stringBufferEror.append(ИнфоТелефон);
 
             Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                     " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
                     " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n");
-            Log.d(this.getClass().getName(), " Ошибок Нет. время :   " +new Date().toString());
+            Log.d(this.getClass().getName(), " ИнфоТелефон   " +ИнфоТелефон);
         } catch (Exception e) {
             e.printStackTrace();
             Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :"
@@ -384,8 +385,28 @@ public class MainActivity_Errors extends AppCompatActivity  {
     }
     private void metodButtonEnables( ) {
         try{
-            materialButtonОтправка.setClickable(true);
-            materialButtonОтправка.setFocusable(true);
+            materialButtonОтправка.setVisibility(View.VISIBLE);
+            materialButtonОтправка.requestLayout();
+            materialButtonОтправка.refreshDrawableState();
+            Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                    " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                    " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n");
+            Log.d(this.getClass().getName(), " Ошибок Нет. время :   " +new Date().toString());
+        } catch (Exception e) {
+            e.printStackTrace();
+            Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :"
+                    + Thread.currentThread().getStackTrace()[2].getMethodName() + " Линия  :"
+                    + Thread.currentThread().getStackTrace()[2].getLineNumber());
+            // TODO: 01.09.2021 метод вызова
+            new RecordNewErros(getApplicationContext()).recordnewerror(e.toString(),
+                    this.getClass().getName(), Thread.currentThread().getStackTrace()[2].getMethodName(),
+                    Thread.currentThread().getStackTrace()[2].getLineNumber());
+        }
+    }
+
+    private void metodButtonINVISIBLEs( ) {
+        try{
+            materialButtonОтправка.setVisibility(View.INVISIBLE);
             materialButtonОтправка.requestLayout();
             materialButtonОтправка.refreshDrawableState();
             Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
@@ -406,9 +427,7 @@ public class MainActivity_Errors extends AppCompatActivity  {
 
 
 
-
-
-    private void metodScreenDontErrorForUsers(@NotNull StringBuffer stringBufferError) {
+    private void metodScreenDontErrorForUsers( ) {
         try{
             textViewAllError.setText("Нет ошибок !!! ");
 
@@ -429,29 +448,7 @@ public class MainActivity_Errors extends AppCompatActivity  {
                     Thread.currentThread().getStackTrace()[2].getLineNumber());
         }
     }
-    private void metodReebotNameErros(@NotNull StringBuffer stringBufferError) {
-        try{
-            int blockCount = stringBufferError.toString().split("Line").length-1 ;
-            textViewHeaderErrors.setText(null);
-            textViewHeaderErrors.setText("Ошибки "+"("+blockCount+")");
 
-            textViewHeaderErrors.requestLayout();
-            textViewHeaderErrors.refreshDrawableState();
-            Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
-                    " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                    " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n");
-            Log.d(this.getClass().getName(), " Ошибок Нет. время :   " +new Date().toString());
-        } catch (Exception e) {
-            e.printStackTrace();
-            Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :"
-                    + Thread.currentThread().getStackTrace()[2].getMethodName() + " Линия  :"
-                    + Thread.currentThread().getStackTrace()[2].getLineNumber());
-            // TODO: 01.09.2021 метод вызова
-            new RecordNewErros(getApplicationContext()).recordnewerror(e.toString(),
-                    this.getClass().getName(), Thread.currentThread().getStackTrace()[2].getMethodName(),
-                    Thread.currentThread().getStackTrace()[2].getLineNumber());
-        }
-    }
 
 
 

@@ -36,6 +36,7 @@ import com.dsy.dsu.Errors.controller.RecordNewErros;
 import com.dsy.dsu.Errors.view.MainActivity_Errors;
 import com.dsy.dsu.Passwords.MainActivityPasswords;
 import com.dsy.dsu.R;
+import com.dsy.dsu.Settings.MainActivity_Settings;
 import com.google.android.material.navigation.NavigationView;
 
 import java.util.Date;
@@ -395,7 +396,7 @@ public class BL_innerMainActivityBootAndAsync extends MainActivityBootAndAsync {
             };
             for (Intent intent : AUTO_START_INTENTS) {
                 if (context.getPackageManager().resolveActivity(intent, PackageManager.MATCH_DEFAULT_ONLY) != null) {
-                    context.startActivity(intent);
+                    activity.startActivity(intent);
                     // break;
                 }
             }
@@ -558,7 +559,7 @@ public class BL_innerMainActivityBootAndAsync extends MainActivityBootAndAsync {
                                     Интент_Меню.setAction("com.CallBackBootAndAsync");
                                     Интент_Меню.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);//////FLAG_ACTIVITY_SINGLE_TOP
 
-                                    context. startActivity(Интент_Меню);
+                                    activity. startActivity(Интент_Меню);
 
                                     Log.d(context.getClass().getName(), "\n"
                                             + " время: " + new Date() + "\n+" +
@@ -598,7 +599,35 @@ public class BL_innerMainActivityBootAndAsync extends MainActivityBootAndAsync {
                                 }
                                 break;
 
+                            // TODO: 06.04.2022 ЗапускаемОбновление ПО
+                            case R.id.item_settings:
+                                item.setChecked(true);
+                                try {
+                                    Intent Интент_Меню = new Intent(activity, MainActivity_Settings.class);
+                                    Интент_Меню.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK  );
+                                    activity.startActivity(Интент_Меню);
+
+                                    Log.d(context.getClass().getName(), "\n"
+                                            + " время: " + new Date() + "\n+" +
+                                            " Класс в процессе... " + this.getClass().getName() + "\n" +
+                                            " метод в процессе... " + Thread.currentThread().getStackTrace()[2].getMethodName()+
+                                            " intent.getAction() "  );
+                                } catch (Exception e) {
+                                    e.printStackTrace();
+                                    Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() + " Линия  :"
+                                            + Thread.currentThread().getStackTrace()[2].getLineNumber());
+                                    new RecordNewErros(context)
+                                            .recordnewerror(e.toString(), this.getClass().getName(), Thread.currentThread().getStackTrace()[2].getMethodName(),
+                                                    Thread.currentThread().getStackTrace()[2].getLineNumber());
+                                }
+                                break;
+
+
+
+
+
                         }
+
                         if (drawerLayoutAsync.isDrawerOpen(Gravity.LEFT)) {
                             drawerLayoutAsync.closeDrawer(Gravity.LEFT);
                         }

@@ -87,42 +87,64 @@
 
 
 
+
+
+
+
+
     <com.google.android.material.button.MaterialButton
         android:id="@+id/materialButtonОтправка"
-        style="@style/Widget.MaterialComponents.Button.TextButton.Icon"
-        android:layout_width="180dp"
-        android:layout_height="40dp"
-        android:layout_centerInParent="true"
-        android:layout_marginLeft="20dp"
-        android:layout_marginRight="20dp"
-
-        android:background="@drawable/style_for_assitiionmatrial_create_name2"
-
-        android:backgroundTint="#FFFFFF"
-        android:fontFamily="@font/alfa_slab_one"
-        android:gravity="center"
-        android:minHeight="70dp"
-        android:paddingLeft="15dp"
+        android:theme="@style/Theme.MaterialComponents.Light.NoActionBar"
+        style="@style/Widget.MaterialComponents.Button.UnelevatedButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="100dp"
+        android:layout_marginEnd="100dp"
+        android:layout_marginBottom="30dp"
+        android:layout_marginTop="10dp"
+        android:backgroundTint="#797C7C"
+        android:backgroundTintMode="screen"
+        android:clickable="true"
+        android:focusable="auto"
+        android:fontFamily="sans-serif-medium"
+        android:foregroundGravity="center"
+        android:gravity="center|center_vertical"
+        android:scrollbarStyle="outsideInset"
         android:text="Отправить"
-        android:textColor="#000000"
-        android:textSize="11sp"
-        android:textStyle="normal"
-        android:translationZ="2dp"
+        android:textColor="#0E0E0E"
+        android:textSize="14sp"
+        android:textStyle="bold"
+        android:typeface="normal"
         android:visibility="visible"
-        app:cardElevation="2dp"
-        app:cardMaxElevation="1dp"
-        app:cornerRadius="15dp"
-        app:iconGravity="textStart"
-        app:rippleColor="@color/design_default_color_on_secondary"
-        app:strokeColor="#EEEDEF"
+        app:cornerRadius="18dp"
         app:strokeWidth="1dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/scrollView4"
+        app:layout_constraintTop_toBottomOf="@+id/scrollView4" />
 
-        />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
