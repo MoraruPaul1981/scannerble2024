@@ -1,5 +1,6 @@
 package com.dsy.dsu.WorkManagers.BL_WorkMangers;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.util.Log;
 
@@ -18,7 +19,10 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 import java.util.concurrent.TimeUnit;
+
+import io.reactivex.rxjava3.parallel.ParallelFlowable;
 
 public class CreatePublicWorkManager {
     Context context;
@@ -29,6 +33,7 @@ public class CreatePublicWorkManager {
     // TODO: 08.10.2023 вызов из БроадКста для Синхрониазции ТОлько
 
 
+    @SuppressLint("NewApi")
     public void getcreatePublicWorkManager(@NotNull Context context,
                                            @NotNull Integer PublicId) {
 
@@ -52,42 +57,28 @@ public class CreatePublicWorkManager {
 
             List<WorkInfo> workInfo = WorkManager.getInstance(context).getWorkInfosByTag(ИмяСлужбыСинхронизации).get();
 
-            if (workInfo.size()>0) {
+        Integer RunWorkInfo=  Optional.ofNullable(workInfo).stream().mapToInt(e->e.size()).findAny().orElse(0);
 
-                // TODO: 14.08.2024
-                switch ( workInfo.get(0).getState())   {
 
-                    case RUNNING,ENQUEUED ,SUCCEEDED,FAILED -> {
-                        // TODO: 26.07.2024
-                        Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
-                                " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                                " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"+ " workInfo.size() " +workInfo.size()
-                                + "\n" + " workInfo.get(0).getState() " +workInfo.get(0).getState());
-                    }
-
-                    default -> {
-                        // TODO: 14.08.2024
-                        WorkManager.getInstance(context ).enqueueUniquePeriodicWork(ИмяСлужбыСинхронизации,
-                                ExistingPeriodicWorkPolicy.UPDATE, periodicWorkRequestСинхронизация);
-                        // TODO: 26.07.2024
-                        Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
-                                " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                                " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"+ "workInfo.size() " +workInfo.size()
-                                + "\n" + " workInfo.get(0).getState() " +workInfo.get(0).getState());
-                    }
-                }
-
-                // TODO: 14.08.2024
-
-            }else {
-// TODO: 14.08.2024
+            if (RunWorkInfo==0) {
+                // TODO: 20.01.2025  ЗАпускаем Work Manger
                 WorkManager.getInstance(context).enqueueUniquePeriodicWork(ИмяСлужбыСинхронизации,
                         ExistingPeriodicWorkPolicy.UPDATE, periodicWorkRequestСинхронизация);
                 // TODO: 26.07.2024
                 Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                         " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
                         " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"
-                        + "\n" + " workInfo.get(0).getState() " +workInfo.get(0).getState());
+                        + "\n" + " workInfo.get(0).getState() " +RunWorkInfo);
+            }else {
+
+                // TODO: 20.01.2025  ЗАпускаем Work Manger
+                WorkManager.getInstance(context).enqueueUniquePeriodicWork(ИмяСлужбыСинхронизации,
+                        ExistingPeriodicWorkPolicy.KEEP, periodicWorkRequestСинхронизация);
+                // TODO: 26.07.2024
+                Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                        " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                        " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"
+                        + "\n" + " workInfo.get(0).getState() " +RunWorkInfo);
             }
 
                 Log.d(context.getClass().getName(), "\n"
@@ -95,7 +86,7 @@ public class CreatePublicWorkManager {
                         " Класс в процессе... " +  this.getClass().getName()+"\n"+
                         " метод в процессе... " + Thread.currentThread().getStackTrace()[2].getMethodName()+
                         " PublicId " +PublicId+ " callbackRunnable "
-                        + "\n" + " workInfo.get(0).getState() " +workInfo.get(0).getState());
+                        + "\n" + " workInfo.get(0).getState() " +RunWorkInfo);
 
         } catch (Exception e) {
             e.printStackTrace();

@@ -211,8 +211,8 @@ public class Service_Async_1C extends IntentService {
                                     return chain.proceed(newRequest);
                                 }
                             }).connectTimeout(5, TimeUnit.SECONDS)
-                      .writeTimeout(3, TimeUnit.MINUTES)
-                      .readTimeout(3, TimeUnit.MINUTES)
+                      .writeTimeout(1, TimeUnit.MINUTES)
+                      .readTimeout(1, TimeUnit.MINUTES)
                       .build();
                     //
                     ///  MediaType JSON = MediaType.parse("application/json; charset=utf-16");

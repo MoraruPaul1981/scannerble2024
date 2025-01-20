@@ -98,8 +98,8 @@ public class CommintPricesSendJsonTo1C extends  SendDataParent {
                             return chain.proceed(newRequest);
                         }
                     }).connectTimeout(5, TimeUnit.SECONDS)
-                    .writeTimeout(3, TimeUnit.MINUTES)
-                    .readTimeout(3, TimeUnit.MINUTES)
+                    .writeTimeout(1, TimeUnit.MINUTES)
+                    .readTimeout(1, TimeUnit.MINUTES)
                     .build();
             // TODO: 25.10.2022 Диспечер
             Dispatcher dispatcher=  okHttpClient1cPOSTСогласованиеЦенbyte.dispatcher();
