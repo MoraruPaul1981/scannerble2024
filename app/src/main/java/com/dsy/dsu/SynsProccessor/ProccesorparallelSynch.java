@@ -100,7 +100,7 @@ public class ProccesorparallelSynch   {
                  // TODO: 07.10.2024
                  case "СамыйПервыйЗапускСинхронизации":
                  // TODO: 27.12.2024
-                     executorServiceAsync= Executors.newFixedThreadPool(1);
+                     executorServiceAsync= Executors.newFixedThreadPool(3);
                  Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                          " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
                          " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"+ "\n"+ " РежимЗапускаСинхронизации " +РежимЗапускаСинхронизации);
@@ -126,7 +126,7 @@ public class ProccesorparallelSynch   {
                         public void accept(Map<String, String> stringStringMapMultiPotoks) throws Throwable {
                             // TODO: 28.12.2024
                             // TODO: 27.12.2024
-                            String getNameTableSingle= stringStringMapMultiPotoks.entrySet().stream().filter(e->e.getKey().equalsIgnoreCase("name")).map(Map.Entry::getValue).findFirst().get();
+                            String getNameTableRunning= stringStringMapMultiPotoks.entrySet().stream().filter(e->e.getKey().equalsIgnoreCase("name")).map(Map.Entry::getValue).findFirst().get();
 
                             // TODO: 06.12.2023  запуск синхризуции по таблице конктерной
                             coutSucceessItemAsycnTablesComplete.add(getLooTablesPOSTANDGET(stringStringMapMultiPotoks))      ;
@@ -136,7 +136,7 @@ public class ProccesorparallelSynch   {
                                     " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
                                     " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"
                                     + " getBufferFromJbossServerAllTables.size() " + getBufferFromJbossServerAllTables.size()
-                                    +"\n"+" getNameTableSingle " +getNameTableSingle);
+                                    +"\n"+" getNameTableRunning " +getNameTableRunning);
                         }
                     })
                     .doOnError(new io.reactivex.rxjava3.functions.Consumer<Throwable>() {
