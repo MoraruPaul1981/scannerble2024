@@ -69,7 +69,6 @@ import com.dsy.dsu.Services.Service_for_AdminissionMaterial;
 import com.dsy.dsu.R;
 import com.google.android.material.bottomnavigation.BottomNavigationItemView;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
-import com.google.android.material.bottomnavigation.LabelVisibilityMode;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.android.material.navigation.NavigationBarView;
@@ -125,7 +124,7 @@ public class FragmentMaretialNew extends Fragment implements CameraXInterface{
     private  Object ВытаскиваемIDМатериаловИзСправочника;
     private  View view=null;
     private SharedPreferences preferencesМатериалы;
-    private Boolean ФлагЧтоУжепервыйПрогоУжеПрошул=false;
+
     private  ScrollView scrollViewНовыйматериал;
     private  AsyncTaskLoader<Cursor> asyncTaskLoaderForNewMaterial;
 
@@ -1085,8 +1084,11 @@ void методCallsBackFromCameraX(@NonNull  Bitmap bitmapNewCompleteImage, @No
                     МетодДанныеНастйрокаВводаКоличества(holder);
 
                     // TODO: 16.12.2022  указываем флаг что мы один раз прошли по строчкем
-                    ФлагЧтоУжепервыйПрогоУжеПрошул=true;
-                    Log.i(this.getClass().getName(), "    holder. ФдагЧтоУжеОдинРАзБылПервыйПроход "+  ФлагЧтоУжепервыйПрогоУжеПрошул);
+
+                Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                        " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                        " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"
+                        + " holder.valueavtomobil "+ holder.valueavtomobil  + " CursorДляАвтомобиля " +CursorДляАвтомобиля);
             } catch (Exception e) {
                 e.printStackTrace();
                 Log.e(getContext().getClass().getName(),
@@ -1102,7 +1104,7 @@ void методCallsBackFromCameraX(@NonNull  Bitmap bitmapNewCompleteImage, @No
             try {
                 Log.i(this.getClass().getName(), "  holder "+holder  );
                 Boolean ФлагВыбиралУжеЦФОИзСпинера=         preferencesМатериалы.getBoolean("ДляСпинераУжеВибиралЦФО",false);
-                if(ФлагВыбиралУжеЦФОИзСпинера && ФлагЧтоУжепервыйПрогоУжеПрошул==false) {
+                if(ФлагВыбиралУжеЦФОИзСпинера) {
                     // TODO: 09.12.2022 возвраящяем данные для ЦФО
                     String УжеВыбраннаяТТН = preferencesМатериалы.getString("НазваниеВыбраногоДатаТТН", "");
                     // TODO: 09.12.2022 Востановление ТТН и ДатыТТН
@@ -1125,7 +1127,7 @@ void методCallsBackFromCameraX(@NonNull  Bitmap bitmapNewCompleteImage, @No
             try {
                 Log.i(this.getClass().getName(), "  holder "+holder  );
                 Boolean ФлагВыбиралУжеЦФОИзСпинера=         preferencesМатериалы.getBoolean("ДляСпинераУжеВибиралЦФО",false);
-                if(ФлагВыбиралУжеЦФОИзСпинера && ФлагЧтоУжепервыйПрогоУжеПрошул==false) {
+                if(ФлагВыбиралУжеЦФОИзСпинера ) {
                     // TODO: 09.12.2022 возвраящяем данные для ЦФО
                     String ВыбранаяДатаТТГУже = preferencesМатериалы.getString("ПозицияВыбраногоТТН", "");
                     // TODO: 09.12.2022 Востановление ТТН и ДатыТТН
@@ -1146,24 +1148,9 @@ void методCallsBackFromCameraX(@NonNull  Bitmap bitmapNewCompleteImage, @No
         // TODO: 19.10.2022 заполеения ЦФО ФРАГМЕНТ ПОЛУЧЕНИЕ МАТЕРИАЛОВ
         private void МетодДанныеЦФО(@NonNull MyViewHolder holder) {
             try {
-                // TODO: 17.11.2022  если пользователь уже выбирал
-                Boolean ФлагВыбиралУжеЦФОИзСпинера=         preferencesМатериалы.getBoolean("ДляСпинераУжеВибиралЦФО",false);
-                if(ФлагВыбиралУжеЦФОИзСпинера && ФлагЧтоУжепервыйПрогоУжеПрошул ==false){
-                    Integer ПозицияВыбраногоЦФО=            preferencesМатериалы.getInt("ПозицияВыбраногоЦФО",0);
-                    String НазваниеВыбраногоЦФО=            preferencesМатериалы.getString("НазваниеВыбраногоЦФО","");
-                    Bundle bundle=new Bundle();
-                    bundle.putInt("ПолучаемIDЦфо",ПозицияВыбраногоЦФО);
-                    bundle.putString("НазваниеЦФО",НазваниеВыбраногоЦФО);
-                    holder.    textViewcfo.setTag(bundle);
-                    holder.    textViewcfo.setText(НазваниеВыбраногоЦФО);
-
-                    holder.  textViewcfo.refreshDrawableState();
-                    holder.   textViewcfo.requestLayout();
-                }
                 // TODO: 15.12.2022 НОВЫЙ ПОСИК ДЛЯ ЦФО
-                SubClassNewFilterSFOНовыйФильтДанных sfoНовыйФильтДанныхЦФО=     new SubClassNewFilterSFOНовыйФильтДанных(cursorДляЦФО);
-                sfoНовыйФильтДанныхЦФО.МетодЗапускаНовогоФильтра( holder.textViewcfo,holder,
-                        "ЦФО","cfo","name" );
+                SubClassNewFilterSFOНовыйФильтДанных ЦФОстоблик=     new SubClassNewFilterSFOНовыйФильтДанных(cursorДляЦФО);
+                ЦФОстоблик.МетодЗапускаНовогоФильтра( holder.textViewcfo,holder, "ЦФО","cfo","name" );
 
                 Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                         " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
@@ -1421,21 +1408,6 @@ void методCallsBackFromCameraX(@NonNull  Bitmap bitmapNewCompleteImage, @No
         private void МетодДанныеГруппаМатериалов(@NonNull MyViewHolder holder) {
             try {
                 // TODO: 17.11.2022  если пользователь уже выбирал
-                Boolean ФлагВыбиралУжеЦФОИзСпинера=         preferencesМатериалы.getBoolean("ДляСпинераУжеВибиралЦФО",false);
-                if(ФлагВыбиралУжеЦФОИзСпинера && ФлагЧтоУжепервыйПрогоУжеПрошул==false ){
-                    Integer ПозицияВыбраногоМатериалов=            preferencesМатериалы.getInt("ПозицияВыбраногоГруппыМатериалов",0);
-                    String НазваниеВыбраногоМатериалов=            preferencesМатериалы.getString("НазваниеВыбраногоГруппыМатериалов","");
-                    Bundle bundle=new Bundle();
-                    bundle.putInt("ПолучаемIDЦфо",ПозицияВыбраногоМатериалов);
-                    bundle.putString("НазваниеЦФО",НазваниеВыбраногоМатериалов);
-                    holder.marerialtextgroupmaterial.setTag(bundle);
-                    holder. marerialtextgroupmaterial.setText(НазваниеВыбраногоМатериалов);
-
-                    holder.  marerialtextgroupmaterial.refreshDrawableState();
-
-                    holder. marerialtextgroupmaterial.requestLayout();
-                }
-                // TODO: 15.12.2022 НОВЫЙ ПОСИК ДЛЯ группы МАТЕРИАЛОВ
 
                 SubClassNewFilterSFOНовыйФильтДанных sfoНовыйФильтДанныхГруппаМатериалов=       new SubClassNewFilterSFOНовыйФильтДанных(CursorДляГруппаМатериалов);
                 sfoНовыйФильтДанныхГруппаМатериалов   .МетодЗапускаНовогоФильтра( holder.marerialtextgroupmaterial, holder,"Группа материалов",
@@ -1462,21 +1434,6 @@ void методCallsBackFromCameraX(@NonNull  Bitmap bitmapNewCompleteImage, @No
         private void МетодДанныеОдинМатериалВесовые(@NonNull MyViewHolder holder) {
             try {
                 // TODO: 15.12.2022 НОВЫЙ ПОСИК ДЛЯ Одного МАТЕРАИАЛ ОДДИН БЫШИЙ ВЕСОВОЙ
-                Boolean ФлагВыбиралУжеЦФОИзСпинера=         preferencesМатериалы.getBoolean("ДляСпинераУжеВибиралЦФО",false);
-                if(ФлагВыбиралУжеЦФОИзСпинера && ФлагЧтоУжепервыйПрогоУжеПрошул==false ){
-                    Integer ПозицияВыбраногоГруппыМатериалов=            preferencesМатериалы.getInt("ПозицияВыбраногоМатериала",0);
-                    String НазваниеВыбраногоГруппыМатериалов=            preferencesМатериалы.getString("НазваниеВыбраногоМатериала","");
-                    Bundle bundle=new Bundle();
-                    bundle.putInt("ПолучаемIDЦфо",ПозицияВыбраногоГруппыМатериалов);
-                    bundle.putString("НазваниеЦФО",НазваниеВыбраногоГруппыМатериалов);
-                    holder.   materialtext_onematerial_ves.setTag(bundle);
-                    holder.  materialtext_onematerial_ves.setText(НазваниеВыбраногоГруппыМатериалов);
-
-                    holder.   materialtext_onematerial_ves.refreshDrawableState();
-
-                    holder. materialtext_onematerial_ves.requestLayout();
-                }
-                // TODO: 15.12.2022 НОВЫЙ ПОСИК ДЛЯ Весовая
 
                 SubClassNewFilterSFOНовыйФильтДанных sfoНовыйФильтДанныхВесовая=       new SubClassNewFilterSFOНовыйФильтДанных(CursorДляОдногоМатериалаБышВесов);
                 sfoНовыйФильтДанныхВесовая.МетодЗапускаНовогоФильтра( holder.materialtext_onematerial_ves,holder,"материал",
@@ -1503,7 +1460,7 @@ void методCallsBackFromCameraX(@NonNull  Bitmap bitmapNewCompleteImage, @No
             try {
                 // TODO: 15.12.2022 НОВЫЙ ПОСИК ДЛЯ Автомобили
                 Boolean ФлагВыбиралУжеАвтомобилиИзСпинера=         preferencesМатериалы.getBoolean("ДляСпинераУжеВибиралЦФО",false);
-                if(ФлагВыбиралУжеАвтомобилиИзСпинера==true && ФлагЧтоУжепервыйПрогоУжеПрошул==false ){
+                if(ФлагВыбиралУжеАвтомобилиИзСпинера==true  ){
                     Integer ПозицияВыбраногоАвтомобили=            preferencesМатериалы.getInt("ПозицияВыбраногоАвтомобили",0);
                     String НазваниеВыбраногоАтомобиля=            preferencesМатериалы.getString("НазваниеВыбраногоАвтомобили","");
                     Bundle bundle=new Bundle();
@@ -1541,7 +1498,7 @@ void методCallsBackFromCameraX(@NonNull  Bitmap bitmapNewCompleteImage, @No
             try {
                 // TODO: 15.12.2022 НОВЫЙ ПОСИК ДЛЯ Контрагенты
                 Boolean ФлагВыбиралУжеКонтагенты=         preferencesМатериалы.getBoolean("ДляСпинераУжеВибиралЦФО",false);
-                if(ФлагВыбиралУжеКонтагенты==true && ФлагЧтоУжепервыйПрогоУжеПрошул==false ){
+                if(ФлагВыбиралУжеКонтагенты==true ){
                     Integer ПозицияВыбраногоКонтрагент=            preferencesМатериалы.getInt("ПозицияВыбраногоКонтрагент",0);
                     String НазваниеВыбраногоКонтрагент=            preferencesМатериалы.getString("НазваниеВыбраногоКонтрагент","");
                     Bundle bundle=new Bundle();
@@ -1937,7 +1894,7 @@ private  void методСозданиеNewImage(@NonNull MyViewHolder holder){
 
                                     // TODO: 01.08.2023  Метод Выбираем  Какие ДАные БУдут ЗАгруженны и В зависимости выбран был или нет Старшый Материал
 
-                                    методВЫбираемКакиеДанныеНужноЗагрузить(searchViewДляНовогоЦФО);
+                                    методВЫбираемКакиеДанныеНужноЗагрузить(searchViewДляНовогоЦФО,materialTextТекущийВыбранныйСправочник);
 
 
                                     // TODO: 17.04.2023
@@ -1968,12 +1925,15 @@ private  void методСозданиеNewImage(@NonNull MyViewHolder holder){
                             }
 
                              // TODO: 01.08.2023 выбирает какие данные надо загружать
-                             private void методВЫбираемКакиеДанныеНужноЗагрузить(SearchView searchViewДляНовогоЦФО) {
+                             private void методВЫбираемКакиеДанныеНужноЗагрузить(SearchView searchViewДляНовогоЦФО, @NonNull MaterialTextView materialTextТекущийВыбранныйСправочник) {
                                 try{
+                                    // TODO: 22.01.2025
                                  if (materialTextТекущийВыбранныйСправочник.getId()==  holder.materialtext_onematerial_ves.getId()) {
+                                     // TODO: 22.01.2025
                                      if (holder. marerialtextgroupmaterial.getText().length()>0) {
+
                                          // TODO: 01.08.2023 Когда есть данных и СТраший Компонет ВЫбрал Группу Материалов
-                                         cursor = методПолучениеДанныхЕслиУжеЗаполеныПоляВсахроненииВНАстройкахтелефона(holder);
+                                         cursor = методПолучениеДанныхЕслиУжеЗаполеныПоляВсахроненииВНАстройкахтелефона(holder,materialTextТекущийВыбранныйСправочник);
                                          КакойИмменоВидЗагружатьДляНовогоПосика =R.layout.simple_for_new_spinner_searchview;
                                          // TODO: 01.08.2023 метод с Полынми Данными
                                          методКогдаДАнныеВыбраныСправочникиSimpleCursor(searchViewДляНовогоЦФО);
@@ -1989,7 +1949,6 @@ private  void методСозданиеNewImage(@NonNull MyViewHolder holder){
                                          " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
                                          " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"+
                                          "materialButtonЗакрытьДиалогSearveView"+  materialButtonЗакрытьДиалогSearveView);
-
 
                              } catch (Exception e) {
                                  e.printStackTrace();
@@ -2026,8 +1985,8 @@ private  void методСозданиеNewImage(@NonNull MyViewHolder holder){
                                                              Integer UUIDНазваниеЦФО = cursor.getColumnIndex("uuid");///user_update  --old/// uuid
                                                              Long UUIDЦФО = cursor.getLong(UUIDНазваниеЦФО);
                                                              Bundle bundle=new Bundle();
-                                                             bundle.putString("НазваниеЦФО",НазваниеЦФО);
-                                                             bundle.putLong("UUIDНазваниеЦФО",UUIDЦФО);
+                                                             bundle.putString("NewMaterialЦФО",НазваниеЦФО);
+                                                             bundle.putLong("NewMaterialUUID",UUIDЦФО);
                                                              materialTextViewЭлементСписка.setTag(bundle);
 
                                                          Log.d(this.getClass().getName()," НазваниеЦФО"+ НазваниеЦФО+
@@ -2077,7 +2036,7 @@ private  void методСозданиеNewImage(@NonNull MyViewHolder holder){
                                  // TODO: 13.12.2022  Поиск и его слушель
                                  МетодПоискаФильтр(searchViewДляНовогоЦФО,simpleCursorAdapterДляНовыхСтпавочниках,holder,v,ТаблицаДляФильтра,materialTextТекущийВыбранныйСправочник);
                                  // TODO: 26.07.2023  клик по данным
-                                 методКликПоДанным();
+                                 методКликПоЦФО();
 
                                     Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                                             " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
@@ -2195,7 +2154,7 @@ private  void методСозданиеNewImage(@NonNull MyViewHolder holder){
 
 
 
-                    private void методКликПоДанным() {
+                    private void методКликПоЦФО() {
                         holder.listViewДляЦФО.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                             @Override
                             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -2207,12 +2166,39 @@ private  void методСозданиеNewImage(@NonNull MyViewHolder holder){
                                         //MaterialTextView materialTextViewЭлементСписка=(MaterialTextView) view;
                                         materialTextViewЭлементСписка.startAnimation(animation);
                                         Bundle bundle=(Bundle)   ((MaterialTextView)view).getTag();
-                                        String НазваниеЦФО=   bundle.getString("НазваниеЦФО","");
-                                        Long UUIDНазваниеЦФО =   bundle.getLong("UUIDНазваниеЦФО",0l);
-                                        materialTextТекущийВыбранныйСправочник.setTag(bundle);
-                                        materialTextТекущийВыбранныйСправочник.setText(НазваниеЦФО);
-                                        materialTextТекущийВыбранныйСправочник.refreshDrawableState();
-                                        materialTextТекущийВыбранныйСправочник.forceLayout();
+                                        // TODO: 22.01.2025
+                                        String NewMaterialЦФО = null;
+                                        Long NewMaterialUUID = null;
+
+                                        if (materialTextТекущийВыбранныйСправочник.getId()==  holder.textViewcfo.getId()) {
+                                             NewMaterialЦФО=   bundle.getString("NewMaterialЦФО","");
+                                             NewMaterialUUID =   bundle.getLong("NewMaterialUUID",0l);
+                                        }
+                                        if (materialTextТекущийВыбранныйСправочник.getId()==  holder. marerialtextgroupmaterial.getId()) {
+                                            NewMaterialЦФО=   bundle.getString("groupNewMaterialЦФО","");
+                                            NewMaterialUUID =   bundle.getLong("oneNewMaterialUUID",0l);
+                                        }
+                                        if (materialTextТекущийВыбранныйСправочник.getId()==  holder.materialtext_onematerial_ves.getId()) {
+                                            NewMaterialЦФО=   bundle.getString("oneNewMaterialЦФО","");
+                                            NewMaterialUUID =   bundle.getLong("oneNewMaterialUUID",0l);
+                                        }
+
+
+                                        Log.d(getContext().getClass().getName(), "\n"
+                                                + " BootCompletedReceiver sous .... bremy: " + new Date()+"\n+" +
+                                                " Класс в процессе... " +  this.getClass().getName()+"\n"+
+                                                " метод в процессе... " + Thread.currentThread().getStackTrace()[2].getMethodName()+
+                                                " NewMaterialЦФО" +NewMaterialЦФО  + " NewMaterialUUID " +NewMaterialUUID);
+
+
+                                        if (NewMaterialUUID>0) {
+                                            materialTextТекущийВыбранныйСправочник.setTag(bundle);
+                                            materialTextТекущийВыбранныйСправочник.setTextSize(12l);
+                                            materialTextТекущийВыбранныйСправочник.setText(NewMaterialЦФО);
+                                            materialTextТекущийВыбранныйСправочник.setTooltipText(NewMaterialUUID.toString());
+                                            materialTextТекущийВыбранныйСправочник.refreshDrawableState();
+                                            materialTextТекущийВыбранныйСправочник.forceLayout();
+                                        }
 
                                         if (    materialTextТекущийВыбранныйСправочник.getText().toString().length()==0) {
                                             Snackbar.make(view, " Вы не выбрали цфо !!! "
@@ -2226,13 +2212,12 @@ private  void методСозданиеNewImage(@NonNull MyViewHolder holder){
                                             // TODO: 24.07.2023  закрытие Новго Создание РИсунков и или Upload Image
                                             subClassCreateNewImageForMateril.  методЗакрытиеNewCreateIMAGE(holder.alertDialog);
                                             Log.d(this.getClass().getName()," bundle.keySet().size() "+bundle.keySet().size());
-
-
-                                            // TODO: 16.12.2022  для Второго Компонета ГРУППА МАТЕРИАЛОВ, после ВЫБЫБОРА ГУРППЫ МАТЕРИАЛОВ ДАЛЕЕ ИНИЦИАЛИЗУЕМ ОДИН МАТЕРИАЛОВ
-                                            МетодДляГруппыМатериаловЗапускатьОдинМатериаловВесовой(bundle,holder);
-
                                         }
-                                        Log.d(this.getClass().getName()," position");
+                                        Log.d(getContext().getClass().getName(), "\n"
+                                                + " BootCompletedReceiver sous .... bremy: " + new Date()+"\n+" +
+                                                " Класс в процессе... " +  this.getClass().getName()+"\n"+
+                                                " метод в процессе... " + Thread.currentThread().getStackTrace()[2].getMethodName()+
+                                                " position" +position);
                                     }
                                 } catch (Exception e) {
                                     e.printStackTrace();
@@ -2246,6 +2231,7 @@ private  void методСозданиеNewImage(@NonNull MyViewHolder holder){
 
                         });
                     }
+
 
                     void методGetCursorForQuertyFilter(CharSequence constraint) {
                         try{
@@ -2330,11 +2316,11 @@ private  void методСозданиеNewImage(@NonNull MyViewHolder holder){
 
             // TODO: 19.12.2022  курсор текущий операйции  какой Спинер
             @SuppressLint("SuspiciousIndentation")
-            protected Cursor методПолучениеДанныхЕслиУжеЗаполеныПоляВсахроненииВНАстройкахтелефона(@NonNull MyViewHolder holder) {
+            protected Cursor методПолучениеДанныхЕслиУжеЗаполеныПоляВсахроненииВНАстройкахтелефона(@NonNull MyViewHolder holder,@NonNull MaterialTextView gettextView) {
                 Cursor cursorОдногоВыбраногоТИпаМатериала=null;
                 try{
                     Intent intentДляПолучениеСправочкинов=new Intent("НовыеМатериалыПолучениеСправочников");
-                        Bundle bundle= (Bundle)  holder. marerialtextgroupmaterial.getTag();
+                       Bundle bundle= (Bundle)  gettextView.getTag();
                         Integer ФильтрВесовых=bundle.getInt("ПолучаемIDЦфо");
 
                     cursorОдногоВыбраногоТИпаМатериала=       МетоПолучениеДанныхДляОдногоМатериала(intentДляПолучениеСправочкинов,ФильтрВесовых);
@@ -2355,49 +2341,9 @@ private  void методСозданиеNewImage(@NonNull MyViewHolder holder){
             }
 
             // TODO: 16.12.2022  для Второго Компонета ГРУППА МАТЕРИАЛОВ, после ВЫБЫБОРА ГУРППЫ МАТЕРИАЛОВ ДАЛЕЕ ИНИЦИАЛИЗУЕМ ОДИН МАТЕРИАЛОВ
-            protected void МетодДляГруппыМатериаловЗапускатьОдинМатериаловВесовой(Bundle bundle,@NonNull MyViewHolder holder) {
-                try{
-                Log.d(this.getClass().getName()," materialTextView.getId() "+materialTextView.getId()+
-                        " holder.marerialtextgroupmaterial.getId()   "+  holder. marerialtextgroupmaterial.getId()  );
-                if(materialTextView.getId()==  holder. marerialtextgroupmaterial.getId() ){
-                    Log.d(this.getClass().getName()," materialTextView.getId() "+materialTextView.getId()+
-                            " holder.marerialtextgroupmaterial.getId()   "+  holder. marerialtextgroupmaterial.getId()+
-                            "  bundle.getInt(\"ПолучаемIDЦфо\",0) " + bundle.getInt("ПолучаемIDЦфо",0));
-                    // TODO: 24.10.2022 дополнительное получение весовых через фильтр Группы материалов
-                    if (bundle.getInt("ПолучаемIDЦфо",0)>0) {
-                            МетодПереопределенияСпинераВесовой(bundle.getInt("ПолучаемIDЦфо",0),holder);
-                    }
-                }
-            } catch (Exception e) {
-                e.printStackTrace();
-                Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
-                        " Линия  :" + Thread.currentThread().getStackTrace()[2].getLineNumber());
-                new RecordNewErros(getContext()).recordnewerror(e.toString(), this.getClass().getName(),
-                        Thread.currentThread().getStackTrace()[2].getMethodName(), Thread.currentThread().getStackTrace()[2].getLineNumber());
-            }
-            }
-            // TODO: 16.12.2022  третий вариант для ВЫбора Материала
-            protected void МетодПереопределенияСпинераВесовой(@NonNull  Integer ФильтрВесовых, @NonNull MyViewHolder holder) {
-                try{
-                    Intent intentДляПолучениеСправочкинов=new Intent("НовыеМатериалыПолучениеСправочников");
-                    МетоПолучениеДанныхДляОдногоМатериала(intentДляПолучениеСправочкинов,ФильтрВесовых);
-                    Log.d(this.getClass().getName(), " cursor  " + cursor);
-                    // TODO: 24.10.2022 перезапускаем Метод Спинера
-                    holder.  materialtext_onematerial_ves.setText("");
-                    holder.  materialtext_onematerial_ves.forceLayout();
-                 ///   МетодДанныеОдинМатериалВесовые(holder);
-                    Log.d(this.getClass().getName()," materialTextView.getId() "+materialTextView.getId()+
-                            " holder.marerialtextgroupmaterial.getId()   "+  holder. marerialtextgroupmaterial.getId()+
-                            "  ФильтрВесовых " + ФильтрВесовых);
 
-                } catch (Exception e) {
-                    e.printStackTrace();
-                    Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
-                            " Линия  :" + Thread.currentThread().getStackTrace()[2].getLineNumber());
-                    new RecordNewErros(getContext()).recordnewerror(e.toString(), this.getClass().getName(),
-                            Thread.currentThread().getStackTrace()[2].getMethodName(), Thread.currentThread().getStackTrace()[2].getLineNumber());
-                }
-            }
+            // TODO: 16.12.2022  третий вариант для ВЫбора Материала
+
             // TODO: 19.12.2022 Конец КЛАССА    SubClassNewFilterSFOНовыйФильтДанных  , НОВЫЙ ФИЛЬТР
         }
 
