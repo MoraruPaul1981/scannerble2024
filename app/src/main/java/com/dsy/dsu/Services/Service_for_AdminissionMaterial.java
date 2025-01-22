@@ -796,6 +796,8 @@ public class Service_for_AdminissionMaterial extends IntentService {
                 this.intent=intent;
                 Log.w(this.getClass().getName(), "   Таблица  " +Таблица);
                 Bundle data=intent.getExtras();
+                Integer  ПубличныйIDДляФрагмента=data.getInt("ПубличныйIDДляФрагмента",0);
+                String  ФильтрДляПоиска=data.getString("ФильтрДляПоиска","");
                 Long  ФильтрДляПоискаДляОдногоМатериалаВесовые=data.getLong("ФильтрДляПоискаДляОдногоМатериалаВесовые",0);
                 Uri uri = Uri.parse("content://com.dsy.dsu.providerdatabase/" + Таблица.trim() + "");
                 ContentResolver resolver = context.getContentResolver();
@@ -809,15 +811,17 @@ public class Service_for_AdminissionMaterial extends IntentService {
                         data.putString("sortOrder","name");
                         break;
                     case "nomen_vesov":
-                        data.putString("selection"," type_material =? ");
+                        data.putString("selection"," type_material =? ");//type_material =?
                         data.putStringArray("selectionArgs",new String[]{String.valueOf(ФильтрДляПоискаДляОдногоМатериалаВесовые)});
                         data.putString("sortOrder","name");
                         break;
                 }
                 // TODO: 16.12.2022 ПОЛУЧАЕМ ДАННЫЕ
                 курсор = resolver.query(uri,new String[]{"*"},data,null);// TODO: 13.10.2022 ,"Удаленная"
+                Log.d(this.getClass().getName(), "курсор   " + курсор);
+                курсор = resolver.query(uri,new String[]{"*"},data,null);// TODO: 13.10.2022 ,"Удаленная"
                 Log.d(context.getClass().getName(), "\n"
-                        + " BootCompletedReceiver sous .... bremy: " + new Date()+"\n+" +
+                        + "   .... bremy: " + new Date()+"\n+" +
                         " Класс в процессе... " +  this.getClass().getName()+"\n"+
                         " метод в процессе... " + Thread.currentThread().getStackTrace()[2].getMethodName()+
                         " intent.getAction() " +intent.getAction()+"курсор   " + курсор);

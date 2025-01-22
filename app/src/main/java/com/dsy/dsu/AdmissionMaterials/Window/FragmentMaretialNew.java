@@ -1073,14 +1073,13 @@ void методCallsBackFromCameraX(@NonNull  Bitmap bitmapNewCompleteImage, @No
                     МетодДанныеЦФО(holder);
                     МетодДанныеГруппаМатериалов(holder);
                     МетодДанныеОдинМатериалВесовые(holder);
+                // TODO: 22.01.2025
+                    МетодДанныеАвтомобили(holder);
                     МетоднажатиеСозданиеМатериалов(holder);
                     методСозданиеNewImage(holder);
+                // TODO: 22.01.2025
                     // TODO: 19.12.2022  ДВА НОВЫХ МЕТОДА ттн И ДАТА ТТН
-                    МетодТТН(holder);
-                    МетодДатаТТН(holder);
                     // TODO: 23.12.2022  новые два поля Автомобиль и Котрагент
-                    МетодДанныеАвтомобили(holder);
-                    МетодДанныеКонтагент(holder);
                     МетодДанныеНастйрокаВводаКоличества(holder);
 
                     // TODO: 16.12.2022  указываем флаг что мы один раз прошли по строчкем
@@ -1430,6 +1429,37 @@ void методCallsBackFromCameraX(@NonNull  Bitmap bitmapNewCompleteImage, @No
             }
         }
 
+
+        // TODO: 19.10.2022 ГРУППА МАТЕРИАЛОВ
+        private void МетодДанныеАвтомобили(@NonNull MyViewHolder holder) {
+            try {
+                // TODO: 17.11.2022  если пользователь уже выбирал
+
+                SubClassNewFilterSFOНовыйФильтДанных sfoНовыйФильтДанныхГруппаМатериалов=       new SubClassNewFilterSFOНовыйФильтДанных(CursorДляАвтомобиля);
+                sfoНовыйФильтДанныхГруппаМатериалов   .МетодЗапускаНовогоФильтра( holder.valueavtomobil, holder,"Автомобили",
+                        "track","fullname" );
+
+
+                Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                        " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                        " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"
+                        + " CursorДляГруппаМатериалов " +CursorДляГруппаМатериалов);
+
+            } catch (Exception e) {
+                e.printStackTrace();
+                Log.e(getContext().getClass().getName(),
+                        "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
+                                " Линия  :" + Thread.currentThread().getStackTrace()[2].getLineNumber());
+                new RecordNewErros(getContext()).recordnewerror(e.toString(),
+                        this.getClass().getName().toString(), Thread.currentThread().getStackTrace()[2].getMethodName().toString(),
+                        Thread.currentThread().getStackTrace()[2].getLineNumber());
+            }
+        }
+
+
+
+
+
         // TODO: 19.10.2022 ПОЛУЧАЕМ ОДИН МАТЕРИАЛ ПОСЛЕ ВСЕХ ВЕСОВЫЕ
         private void МетодДанныеОдинМатериалВесовые(@NonNull MyViewHolder holder) {
             try {
@@ -1456,85 +1486,9 @@ void методCallsBackFromCameraX(@NonNull  Bitmap bitmapNewCompleteImage, @No
         }
 
         // TODO: 19.10.2022 ПОЛУЧАЕМ Автомобиля
-        private void МетодДанныеАвтомобили(@NonNull MyViewHolder holder) {
-            try {
-                // TODO: 15.12.2022 НОВЫЙ ПОСИК ДЛЯ Автомобили
-                Boolean ФлагВыбиралУжеАвтомобилиИзСпинера=         preferencesМатериалы.getBoolean("ДляСпинераУжеВибиралЦФО",false);
-                if(ФлагВыбиралУжеАвтомобилиИзСпинера==true  ){
-                    Integer ПозицияВыбраногоАвтомобили=            preferencesМатериалы.getInt("ПозицияВыбраногоАвтомобили",0);
-                    String НазваниеВыбраногоАтомобиля=            preferencesМатериалы.getString("НазваниеВыбраногоАвтомобили","");
-                    Bundle bundle=new Bundle();
-                    bundle.putInt("ПолучаемIDЦфо",ПозицияВыбраногоАвтомобили);
-                    bundle.putString("НазваниеЦФО",НазваниеВыбраногоАтомобиля);
-                    holder.valueavtomobil.setTag(bundle);
-                    holder.   valueavtomobil.setText(НазваниеВыбраногоАтомобиля);
-
-                    holder.   valueavtomobil.refreshDrawableState();
-
-                    holder.  valueavtomobil.requestLayout();
-                }
-                // TODO: 15.12.2022 НОВЫЙ ПОСИК ДЛЯ Автомомиби
-
-                SubClassNewFilterSFOНовыйФильтДанных sfoНовыйФильтДанныхАвтомобили=      new SubClassNewFilterSFOНовыйФильтДанных(CursorДляАвтомобиля);
-                sfoНовыйФильтДанныхАвтомобили.МетодЗапускаНовогоФильтра( holder.valueavtomobil,holder, "автомобиль","track","fullname" );
-
-                Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
-                        " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                        " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"
-                        + " holder.valueavtomobil "+ holder.valueavtomobil  + " CursorДляАвтомобиля " +CursorДляАвтомобиля);
-            } catch (Exception e) {
-                e.printStackTrace();
-                Log.e(getContext().getClass().getName(),
-                        "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
-                                " Линия  :" + Thread.currentThread().getStackTrace()[2].getLineNumber());
-                new RecordNewErros(getContext()).recordnewerror(e.toString(),
-                        this.getClass().getName().toString(), Thread.currentThread().getStackTrace()[2].getMethodName().toString(),
-                        Thread.currentThread().getStackTrace()[2].getLineNumber());
-            }
-        }
-
-        // TODO: 19.10.2022 ПОЛУЧАЕМ Контагент
-        private void МетодДанныеКонтагент(@NonNull MyViewHolder holder) {
-            try {
-                // TODO: 15.12.2022 НОВЫЙ ПОСИК ДЛЯ Контрагенты
-                Boolean ФлагВыбиралУжеКонтагенты=         preferencesМатериалы.getBoolean("ДляСпинераУжеВибиралЦФО",false);
-                if(ФлагВыбиралУжеКонтагенты==true ){
-                    Integer ПозицияВыбраногоКонтрагент=            preferencesМатериалы.getInt("ПозицияВыбраногоКонтрагент",0);
-                    String НазваниеВыбраногоКонтрагент=            preferencesМатериалы.getString("НазваниеВыбраногоКонтрагент","");
-                    Bundle bundle=new Bundle();
-                    bundle.putInt("ПолучаемIDЦфо",ПозицияВыбраногоКонтрагент);
-                    bundle.putString("НазваниеЦФО",НазваниеВыбраногоКонтрагент);
-                    holder. valuekontragent.setTag(bundle);
-                    holder. valuekontragent.setText(НазваниеВыбраногоКонтрагент);
 
 
-                    holder. valuekontragent.refreshDrawableState();
 
-                    holder. valuekontragent.requestLayout();
-
-                }
-                // TODO: 15.12.2022 НОВЫЙ ПОСИК ДЛЯ Контрагент
-
-                SubClassNewFilterSFOНовыйФильтДанных sfoНовыйФильтДанныхКонтрагенты=            new SubClassNewFilterSFOНовыйФильтДанных(CursorДляКонтрагента);
-                // TODO: 01.08.2023 Контрагенты
-                sfoНовыйФильтДанныхКонтрагенты.МетодЗапускаНовогоФильтра( holder.valuekontragent,holder, "контрагент",
-                        "company","name"  );
-
-                Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
-                        " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                        " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"
-                        + " CursorДляКонтрагента " +CursorДляКонтрагента);
-
-            } catch (Exception e) {
-                e.printStackTrace();
-                Log.e(getContext().getClass().getName(),
-                        "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
-                                " Линия  :" + Thread.currentThread().getStackTrace()[2].getLineNumber());
-                new RecordNewErros(getContext()).recordnewerror(e.toString(),
-                        this.getClass().getName().toString(), Thread.currentThread().getStackTrace()[2].getMethodName().toString(),
-                        Thread.currentThread().getStackTrace()[2].getLineNumber());
-            }
-        }
 
         // TODO: 19.10.2022 ПОЛУЧАЕМ Контагент
         private void МетодДанныеНастйрокаВводаКоличества(@NonNull MyViewHolder holder) {
@@ -2004,7 +1958,10 @@ private  void методСозданиеNewImage(@NonNull MyViewHolder holder){
                                                                 bundle.putString("oneNewMaterialЦФО",Название);
                                                                 bundle.putLong("oneNewMaterialUUID",UUID);
                                                          }
-
+                                                         if (materialTextТекущийВыбранныйСправочник.getId()==  holder.valueavtomobil.getId()) {
+                                                             bundle.putString("NewMaterialAvto",Название);
+                                                             bundle.putLong("NewMaterialAvtoUUID",UUID);
+                                                         }
 
 
 
@@ -2206,6 +2163,14 @@ private  void методСозданиеNewImage(@NonNull MyViewHolder holder){
                                             NewMaterialЦФО=   bundle.getString("oneNewMaterialЦФО","");
                                             NewMaterialUUID =   bundle.getLong("oneNewMaterialUUID",0l);
                                         }
+
+                                        if (materialTextТекущийВыбранныйСправочник.getId()==  holder.valueavtomobil.getId()) {
+                                            NewMaterialЦФО=   bundle.getString("NewMaterialAvto","");
+                                            NewMaterialUUID =   bundle.getLong("NewMaterialAvtoUUID",0l);
+                                        }
+
+
+
 
 
                                         Log.d(getContext().getClass().getName(), "\n"
