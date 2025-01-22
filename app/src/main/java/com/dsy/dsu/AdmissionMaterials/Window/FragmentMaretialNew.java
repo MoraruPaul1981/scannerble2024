@@ -485,13 +485,13 @@ void методCallsBackFromCameraX(@NonNull  Bitmap bitmapNewCompleteImage, @No
         return CursorДляГруппаМатериалов;
     }
 
-    private Cursor МетоПолучениеДанныхДляОдногоМатериала(Intent intentДляПолучениеСправочкинов, @NonNull Integer ФильтрВесовых) {
+    private Cursor МетоПолучениеДанныхДляОдногоМатериала(Intent intentДляПолучениеСправочкинов, @NonNull Long ФильтрВесовых) {
         CursorДляОдногоМатериалаБышВесов=null;
         try {
         Bundle bundle=new Bundle();
         bundle.putString("ТаблицаОбработкиСпинера","материал");
         bundle.putString("ФильтрКолонок","nomen_vesov");
-        bundle.putInt("ФильтрДляПоискаДляОдногоМатериалаВесовые",ФильтрВесовых);
+        bundle.putLong("ФильтрДляПоискаДляОдногоМатериалаВесовые",ФильтрВесовых);
         intentДляПолучениеСправочкинов.putExtras(bundle);
         CursorДляОдногоМатериалаБышВесов=          МетодДляПолучениеДанныхИзСлужбыДляСозданияНовогоМатериала("nomen_vesov",intentДляПолучениеСправочкинов,
                 "ПолучениеМатериалоСозданиеНового");
@@ -1931,9 +1931,15 @@ private  void методСозданиеNewImage(@NonNull MyViewHolder holder){
                                  if (materialTextТекущийВыбранныйСправочник.getId()==  holder.materialtext_onematerial_ves.getId()) {
                                      // TODO: 22.01.2025
                                      if (holder. marerialtextgroupmaterial.getText().length()>0) {
-
                                          // TODO: 01.08.2023 Когда есть данных и СТраший Компонет ВЫбрал Группу Материалов
-                                         cursor = методПолучениеДанныхЕслиУжеЗаполеныПоляВсахроненииВНАстройкахтелефона(holder,materialTextТекущийВыбранныйСправочник);
+
+                                         Intent intentДляПолучениеСправочкинов=new Intent("НовыеМатериалыПолучениеСправочников");
+                                         Bundle bundle= (Bundle)  holder. marerialtextgroupmaterial.getTag();
+                                         Long ФильтрВесовых=bundle.getLong("oneNewMaterialUUID");
+
+                                         CursorДляОдногоМатериалаБышВесов=       МетоПолучениеДанныхДляОдногоМатериала(intentДляПолучениеСправочкинов,ФильтрВесовых);
+                                      cursor=CursorДляОдногоМатериалаБышВесов;
+
                                          КакойИмменоВидЗагружатьДляНовогоПосика =R.layout.simple_for_new_spinner_searchview;
                                          // TODO: 01.08.2023 метод с Полынми Данными
                                          методКогдаДАнныеВыбраныСправочникиSimpleCursor(searchViewДляНовогоЦФО);
@@ -1978,29 +1984,47 @@ private  void методСозданиеNewImage(@NonNull MyViewHolder holder){
                                                  if (cursor.getCount()>0) {
                                                      try{
                                                          MaterialTextView materialTextViewЭлементСписка=(MaterialTextView) view;
-                                                         Integer ИндексНазваниеЦФО = cursor.getColumnIndex(КакойСтолбикЗагружатьВSimpleAdapter);///user_update  --old/// uuid
-                                                         String  НазваниеЦФО = cursor.getString(ИндексНазваниеЦФО);
+                                                         Integer ИндексНазвание = cursor.getColumnIndex(КакойСтолбикЗагружатьВSimpleAdapter);///user_update  --old/// uuid
+                                                         String  Название = cursor.getString(ИндексНазвание);
                                                          // TODO: 13.12.2022  производим состыковку
 
-                                                             Integer UUIDНазваниеЦФО = cursor.getColumnIndex("uuid");///user_update  --old/// uuid
-                                                             Long UUIDЦФО = cursor.getLong(UUIDНазваниеЦФО);
+                                                             Integer UUIDНазвание = cursor.getColumnIndex("uuid");///user_update  --old/// uuid
+                                                             Long UUID = cursor.getLong(UUIDНазвание);
                                                              Bundle bundle=new Bundle();
-                                                             bundle.putString("NewMaterialЦФО",НазваниеЦФО);
-                                                             bundle.putLong("NewMaterialUUID",UUIDЦФО);
+
+                                                         if (materialTextТекущийВыбранныйСправочник.getId()==  holder.textViewcfo.getId()) {
+                                                                bundle.putString("NewMaterialЦФО",Название);
+                                                                bundle.putLong("NewMaterialUUID",UUID);
+                                                         }
+                                                         if (materialTextТекущийВыбранныйСправочник.getId()==  holder. marerialtextgroupmaterial.getId()) {
+                                                                 bundle.putString("groupNewMaterialЦФО",Название);
+                                                                bundle.putLong("oneNewMaterialUUID",UUID);
+                                                         }
+                                                         if (materialTextТекущийВыбранныйСправочник.getId()==  holder.materialtext_onematerial_ves.getId()) {
+                                                                bundle.putString("oneNewMaterialЦФО",Название);
+                                                                bundle.putLong("oneNewMaterialUUID",UUID);
+                                                         }
+
+
+
+
+
+
+// TODO: 22.01.2025
                                                              materialTextViewЭлементСписка.setTag(bundle);
 
-                                                         Log.d(this.getClass().getName()," НазваниеЦФО"+ НазваниеЦФО+
-                                                                 " UUIDЦФО "+UUIDЦФО);
+                                                         Log.d(this.getClass().getName()," НазваниеЦФО"+ Название+
+                                                                 " UUID "+UUID);
                                                          // TODO: 20.01.2022
-                                                         Log.d(this.getClass().getName()," НазваниеЦФО "+НазваниеЦФО);
-                                                         boolean ДлинаСтрокивСпиноре = НазваниеЦФО.length() >40;
+                                                         Log.d(this.getClass().getName()," НазваниеЦФО "+Название);
+                                                         boolean ДлинаСтрокивСпиноре = Название.length() >40;
                                                          if (ДлинаСтрокивСпиноре==true) {
-                                                             StringBuffer sb = new StringBuffer(НазваниеЦФО);
+                                                             StringBuffer sb = new StringBuffer(Название);
                                                              sb.insert(40, System.lineSeparator());
-                                                             НазваниеЦФО = sb.toString();
-                                                             Log.d(v.getContext().getClass().getName(), " НазваниеЦФО " + "--" + НазваниеЦФО);/////
+                                                             Название = sb.toString();
+                                                             Log.d(v.getContext().getClass().getName(), " Название " + "--" + Название);/////
                                                          }
-                                                         ((MaterialTextView)view).setText(НазваниеЦФО);
+                                                         ((MaterialTextView)view).setText(Название);
 
                                                          materialTextViewЭлементСписка.startAnimation(animation);
                                                          // TODO: 13.12.2022 слушатель
@@ -2315,35 +2339,8 @@ private  void методСозданиеNewImage(@NonNull MyViewHolder holder){
             }
 
             // TODO: 19.12.2022  курсор текущий операйции  какой Спинер
-            @SuppressLint("SuspiciousIndentation")
-            protected Cursor методПолучениеДанныхЕслиУжеЗаполеныПоляВсахроненииВНАстройкахтелефона(@NonNull MyViewHolder holder,@NonNull MaterialTextView gettextView) {
-                Cursor cursorОдногоВыбраногоТИпаМатериала=null;
-                try{
-                    Intent intentДляПолучениеСправочкинов=new Intent("НовыеМатериалыПолучениеСправочников");
-                       Bundle bundle= (Bundle)  gettextView.getTag();
-                        Integer ФильтрВесовых=bundle.getInt("ПолучаемIDЦфо");
-
-                    cursorОдногоВыбраногоТИпаМатериала=       МетоПолучениеДанныхДляОдногоМатериала(intentДляПолучениеСправочкинов,ФильтрВесовых);
-
-                        Log.d(this.getClass().getName(),"    holder.cursorДляВсехМатериалов"+   holder.cursorДляВсехМатериалов
-                                +  "holder.marerialtextgroupmaterial.getTag() "+ holder. marerialtextgroupmaterial.getTag()
-                                + "  binderДляПолучениеМатериалов.getService() " +binderДляПолучениеМатериалов.getService()
-                                + " cursorОдногоВыбраногоТИпаМатериала  " +cursorОдногоВыбраногоТИпаМатериала);
-                } catch (Exception e) {
-                    e.printStackTrace();
-                    Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
-                            " Линия  :" + Thread.currentThread().getStackTrace()[2].getLineNumber());
-                    new RecordNewErros(getContext()).recordnewerror(e.toString(), this.getClass().getName(),
-                            Thread.currentThread().getStackTrace()[2].getMethodName(), Thread.currentThread().getStackTrace()[2].getLineNumber());
-                }
-
-                return  cursorОдногоВыбраногоТИпаМатериала;
-            }
-
             // TODO: 16.12.2022  для Второго Компонета ГРУППА МАТЕРИАЛОВ, после ВЫБЫБОРА ГУРППЫ МАТЕРИАЛОВ ДАЛЕЕ ИНИЦИАЛИЗУЕМ ОДИН МАТЕРИАЛОВ
-
             // TODO: 16.12.2022  третий вариант для ВЫбора Материала
-
             // TODO: 19.12.2022 Конец КЛАССА    SubClassNewFilterSFOНовыйФильтДанных  , НОВЫЙ ФИЛЬТР
         }
 
@@ -2898,6 +2895,9 @@ private  void методСозданиеNewImage(@NonNull MyViewHolder holder){
                             CursorДляЦФО=   МетодПолучениеДанныхДляЦФО(intentДляПолучениеСправочкинов);
                             // TODO: 20.10.2022 #3
                             CursorДляГруппаМатериалов=      МетодПолучениеДляГруппыМатериалов(intentДляПолучениеСправочкинов);
+
+
+                            CursorДляОдногоМатериалаБышВесов=       МетоПолучениеДанныхДляОдногоМатериала(intentДляПолучениеСправочкинов,0l);
 
                             // TODO: 20.10.2022 #5 автомобили
                             CursorДляАвтомобиля=        МетоПолучениеДанныхДляАвтомобилей(intentДляПолучениеСправочкинов, "");

@@ -796,9 +796,7 @@ public class Service_for_AdminissionMaterial extends IntentService {
                 this.intent=intent;
                 Log.w(this.getClass().getName(), "   Таблица  " +Таблица);
                 Bundle data=intent.getExtras();
-                Integer  ПубличныйIDДляФрагмента=data.getInt("ПубличныйIDДляФрагмента",0);
-                String  ФильтрДляПоиска=data.getString("ФильтрДляПоиска","");
-                Integer  ФильтрДляПоискаДляОдногоМатериалаВесовые=data.getInt("ФильтрДляПоискаДляОдногоМатериалаВесовые",0);
+                Long  ФильтрДляПоискаДляОдногоМатериалаВесовые=data.getLong("ФильтрДляПоискаДляОдногоМатериалаВесовые",0);
                 Uri uri = Uri.parse("content://com.dsy.dsu.providerdatabase/" + Таблица.trim() + "");
                 ContentResolver resolver = context.getContentResolver();
                 switch (Таблица.trim()){
@@ -818,7 +816,11 @@ public class Service_for_AdminissionMaterial extends IntentService {
                 }
                 // TODO: 16.12.2022 ПОЛУЧАЕМ ДАННЫЕ
                 курсор = resolver.query(uri,new String[]{"*"},data,null);// TODO: 13.10.2022 ,"Удаленная"
-                Log.d(this.getClass().getName(), "курсор   " + курсор);
+                Log.d(context.getClass().getName(), "\n"
+                        + " BootCompletedReceiver sous .... bremy: " + new Date()+"\n+" +
+                        " Класс в процессе... " +  this.getClass().getName()+"\n"+
+                        " метод в процессе... " + Thread.currentThread().getStackTrace()[2].getMethodName()+
+                        " intent.getAction() " +intent.getAction()+"курсор   " + курсор);
             } catch (Exception e) {
                 e.printStackTrace();
                 Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
