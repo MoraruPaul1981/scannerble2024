@@ -88,7 +88,7 @@ public class CompleteRemoteSyncService {
 
 
 
-
+ Integer permissibledaysofwork=240;
 
 
 
@@ -275,7 +275,7 @@ public class CompleteRemoteSyncService {
         try {
             // TODO: 23.01.2024
             if (      date_update != null && success_users != null && success_login != null
-                    && ФиналПолучаемРазницуМеждуДатами < 40 ) {
+                    && ФиналПолучаемРазницуМеждуДатами < permissibledaysofwork  ) {
 
                 // TODO: 01.04.2024
                 new GetEndingAsyn().   metoEndingAsynsDashboard(context,localBinderОбновлениеПО);
@@ -286,7 +286,8 @@ public class CompleteRemoteSyncService {
                 startFirstApp();
 
                 Log.d(this.getClass().getName(), "  ФиналПолучаемРазницуМеждуДатами  " + ФиналПолучаемРазницуМеждуДатами
-                        + " date_update " + date_update + " СтатусРаботыСервера " + СтатусРаботыСервера);
+                        + " date_update " + date_update + " СтатусРаботыСервера " + СтатусРаботыСервера +"\n"+
+                         " permissibledaysofwork " +permissibledaysofwork);
 
             }
 

@@ -1081,12 +1081,7 @@ public class FragmentAdmissionMaterials extends Fragment {
         return   cursorНомерЦФО;
     }
 
-    private void МетодДизайнПрограссБара() {
-        progressBarСканирование.postDelayed(()->{
-            progressBarСканирование.setVisibility(View.INVISIBLE);
-            progressBarСканирование.setIndeterminate(true);
-        },1000);
-    }
+
 
     private void МетодСлушательКурсора() {
         // TODO: 15.10.2022  слушатиель для курсора

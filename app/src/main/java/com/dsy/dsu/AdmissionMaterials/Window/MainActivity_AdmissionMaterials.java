@@ -5,6 +5,7 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.ComponentName;
 import android.content.Context;
@@ -121,6 +122,7 @@ public class MainActivity_AdmissionMaterials extends AppCompatActivity implement
         return  bitmapNewPhotoFromCameraX;
     }
 
+    @SuppressLint("SuspiciousIndentation")
     @Override
     public void onSEtFinishEditDialogNewPhotos(@NonNull Bitmap bitmap) {
         try{

@@ -72,6 +72,7 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.bottomnavigation.LabelVisibilityMode;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
+import com.google.android.material.navigation.NavigationBarView;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textview.MaterialTextView;
@@ -98,8 +99,11 @@ import java.util.concurrent.ExecutionException;
 public class FragmentMaretialNew extends Fragment implements CameraXInterface{
     private RecyclerView recyclerView;
     private BottomNavigationView bottomNavigationView;
+    @SuppressLint("RestrictedApi")
     private BottomNavigationItemView bottomNavigationItemViewвыход;
+    @SuppressLint("RestrictedApi")
     private BottomNavigationItemView bottomNavigationItemView2создать;
+    @SuppressLint("RestrictedApi")
     private BottomNavigationItemView bottomNavigationItemView3обновить;
     private ProgressBar progressBarСозданиеМатерила;
     private Handler handler;
@@ -110,11 +114,12 @@ public class FragmentMaretialNew extends Fragment implements CameraXInterface{
     private Animation animation;
     private Animation animationscroll;
     private  Integer ПубличныйIDДляФрагмента;
+
+
     private Cursor CursorДляОдногоМатериалаБышВесов;
     private Cursor CursorДляАвтомобиля;
     private Cursor CursorДляКонтрагента;
     private    Cursor CursorДляГруппаМатериалов;
-
       private   Cursor CursorДляЦФО;
 
     private  Object ВытаскиваемIDМатериаловИзСправочника;
@@ -236,7 +241,7 @@ public class FragmentMaretialNew extends Fragment implements CameraXInterface{
         return view;
     }
 
-    @SuppressLint("RestrictedApi")
+    @SuppressLint({"RestrictedApi", "WrongConstant"})
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
@@ -244,7 +249,7 @@ public class FragmentMaretialNew extends Fragment implements CameraXInterface{
             recyclerView = view.findViewById(R.id.RecyclerView);
             recyclerView.setVisibility(View.VISIBLE);
             bottomNavigationView = view.findViewById(R.id.BottomNavigationView);
-            bottomNavigationView.setLabelVisibilityMode(LabelVisibilityMode.LABEL_VISIBILITY_UNLABELED);
+            bottomNavigationView.setLabelVisibilityMode(NavigationBarView.LABEL_VISIBILITY_UNLABELED);
             bottomNavigationItemViewвыход = bottomNavigationView.findViewById(R.id.id_lback);
             bottomNavigationItemViewвыход.setShifting(false);
             bottomNavigationItemViewвыход.setIconSize(70);
@@ -289,7 +294,7 @@ public class FragmentMaretialNew extends Fragment implements CameraXInterface{
     public void onStart() {
         super.onStart();
         try {
-            if (  asyncTaskLoaderForNewMaterial.isAbandoned()) {
+            if (  CursorДляЦФО!=null) {
                 myRecycleViewAdapter.cursorДляЦФО=CursorДляЦФО;
                 myRecycleViewAdapter.notifyDataSetChanged();
 
@@ -301,8 +306,7 @@ public class FragmentMaretialNew extends Fragment implements CameraXInterface{
             // TODO: 17.04.2023
             Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                     " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                    " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"
-                    + " asyncTaskLoaderForNewMaterial.isAbandoned() " +asyncTaskLoaderForNewMaterial.isAbandoned());
+                    " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n");
             // TODO: 19.10.2022  слушатель после получение даннных в Курсом
         } catch (Exception e) {
             e.printStackTrace();
@@ -447,11 +451,10 @@ void методCallsBackFromCameraX(@NonNull  Bitmap bitmapNewCompleteImage, @No
 
 
     private Cursor МетодПолучениеДанныхДляЦФО(Intent intentДляПолучениеСправочкинов) {
-        Cursor cursorЦФО=null;
         try{
         Intent intent=new Intent();
         intent.putExtras(new Bundle());
-            cursorЦФО=     МетодДляПолучениеДанныхИзСлужбыДляСозданияНовогоМатериала("cfo",intent ,"ПолучениеМатериалоСозданиеНового");
+            CursorДляЦФО=     МетодДляПолучениеДанныхИзСлужбыДляСозданияНовогоМатериала("cfo",intent ,"ПолучениеМатериалоСозданиеНового");
         Log.d(this.getClass().getName(), " CursorДляЦФО " + CursorДляЦФО);
     } catch (Exception e) {
         e.printStackTrace();
@@ -462,10 +465,10 @@ void методCallsBackFromCameraX(@NonNull  Bitmap bitmapNewCompleteImage, @No
                 this.getClass().getName().toString(), Thread.currentThread().getStackTrace()[2].getMethodName().toString(),
                 Thread.currentThread().getStackTrace()[2].getLineNumber());
     }
-        return cursorЦФО;
+        return CursorДляЦФО;
     }
 
-    private void МетодПолучениеДляГруппыМатериалов(Intent intentДляПолучениеСправочкинов) {
+    private Cursor МетодПолучениеДляГруппыМатериалов(Intent intentДляПолучениеСправочкинов) {
         try{
         Intent intent=new Intent();
         intent.putExtras(new Bundle());
@@ -480,6 +483,7 @@ void методCallsBackFromCameraX(@NonNull  Bitmap bitmapNewCompleteImage, @No
                 this.getClass().getName().toString(), Thread.currentThread().getStackTrace()[2].getMethodName().toString(),
                 Thread.currentThread().getStackTrace()[2].getLineNumber());
     }
+        return CursorДляГруппаМатериалов;
     }
 
     private Cursor МетоПолучениеДанныхДляОдногоМатериала(Intent intentДляПолучениеСправочкинов, @NonNull Integer ФильтрВесовых) {
@@ -506,7 +510,7 @@ void методCallsBackFromCameraX(@NonNull  Bitmap bitmapNewCompleteImage, @No
     }
 
     // TODO: 26.12.2022  автомобили
-    private void МетоПолучениеДанныхДляАвтомобилей(@NonNull Intent intentДляПолучениеСправочкинов,
+    private Cursor МетоПолучениеДанныхДляАвтомобилей(@NonNull Intent intentДляПолучениеСправочкинов,
                                                    @NonNull String ФильтрВесовых) {
         try{
         Bundle bundle=new Bundle();
@@ -524,9 +528,10 @@ void методCallsBackFromCameraX(@NonNull  Bitmap bitmapNewCompleteImage, @No
                 this.getClass().getName().toString(), Thread.currentThread().getStackTrace()[2].getMethodName().toString(),
                 Thread.currentThread().getStackTrace()[2].getLineNumber());
     }
+        return  CursorДляАвтомобиля;
     }
     // TODO: 26.12.2022  Контрагент
-    private void МетоПолучениеДанныхДляКонтрагент(Intent intentДляПолучениеСправочкинов,
+    private Cursor МетоПолучениеДанныхДляКонтрагент(Intent intentДляПолучениеСправочкинов,
                                                   @NonNull String ФильтрВесовых) {
         try{
         Bundle bundle=new Bundle();
@@ -546,6 +551,7 @@ void методCallsBackFromCameraX(@NonNull  Bitmap bitmapNewCompleteImage, @No
                 this.getClass().getName().toString(), Thread.currentThread().getStackTrace()[2].getMethodName().toString(),
                 Thread.currentThread().getStackTrace()[2].getLineNumber());
     }
+        return  CursorДляКонтрагента;
     }
 
 
@@ -740,10 +746,12 @@ void методCallsBackFromCameraX(@NonNull  Bitmap bitmapNewCompleteImage, @No
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
             try {
-                if( asyncTaskLoaderForNewMaterial.isAbandoned()  && CursorДляЦФО!=null && CursorДляЦФО.getCount()>0  ) {
-                    // TODO: 26.07.2023  заполяем ИНициализируем Данными 
-                    МетодИнициализацииНовогоМатериалаCardView(itemView);
-                    Log.d(this.getClass().getName(), "   itemView   " + itemView);
+                if (CursorДляЦФО!=null) {
+                    if(     CursorДляЦФО.getCount()>0  ) {
+                        // TODO: 26.07.2023  заполяем ИНициализируем Данными
+                        МетодИнициализацииНовогоМатериалаCardView(itemView);
+                        Log.d(this.getClass().getName(), "   itemView   " + itemView);
+                    }
                 }
                 Log.d(this.getClass().getName(), "   itemView   " + itemView  + " CursorДляЦФО " +CursorДляЦФО);
             } catch (Exception e) {
@@ -983,12 +991,12 @@ void методCallsBackFromCameraX(@NonNull  Bitmap bitmapNewCompleteImage, @No
         public MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
             View viewПолучениеМатериалов = null;
             try {
-                    if(   !asyncTaskLoaderForNewMaterial.isAbandoned()  ){
+                    if(   CursorДляЦФО==null  ){
                         viewПолучениеМатериалов = LayoutInflater.from(parent.getContext()).inflate(R.layout.simple_load_actimavmaretialov_new, parent, false);//todo old simple_for_takst_cardview1
                         Log.i(this.getClass().getName(), "   viewГлавныйВидДляRecyclleViewДляСогласования" + viewПолучениеМатериалов + " binderДляПолучениеМатериалов " +binderДляПолучениеМатериалов);
                     }else {
-                        if( asyncTaskLoaderForNewMaterial.isAbandoned() ){
-                            if(  cursorДляЦФО!=null && cursorДляЦФО.getCount()>0){
+                        if(cursorДляЦФО.getCount()>0){
+
                                 // TODO: 26.07.2023  Data
                                 viewПолучениеМатериалов = LayoutInflater.from(parent.getContext()).inflate(R.layout.simple_for_new_assitionmaterial_cardview_new2, parent, false);//todo simple_for_new_assitionmaterial_cardview1_test
                                 Log.i(this.getClass().getName(), "   viewГлавныйВидДляRecyclleViewДляСогласования" + viewПолучениеМатериалов + " binderДляПолучениеМатериалов " +binderДляПолучениеМатериалов);
@@ -996,7 +1004,7 @@ void методCallsBackFromCameraX(@NonNull  Bitmap bitmapNewCompleteImage, @No
                                 // TODO: 26.07.2023 is null
                                 viewПолучениеМатериалов = LayoutInflater.from(parent.getContext()).inflate(R.layout.simple_isnull_actimavmaretisl_sprachnikov, parent, false);//todo old simple_for_takst_cardview1
                                 Log.i(this.getClass().getName(), "   viewГлавныйВидДляRecyclleViewДляСогласования" + viewПолучениеМатериалов+ "  cursorДляЦФО " + cursorДляЦФО);
-                            }
+
                         }
                     }
                 // TODO: 13.10.2022  добавляем новый компонент в Нащ RecycreView
@@ -1023,10 +1031,12 @@ void методCallsBackFromCameraX(@NonNull  Bitmap bitmapNewCompleteImage, @No
         public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
             try {
                 Log.i(this.getClass().getName(), "   создание согласования" + myViewHolder + " binderДляПолучениеМатериалов " + binderДляПолучениеМатериалов);
-                if (  asyncTaskLoaderForNewMaterial.isAbandoned() && cursorДляЦФО!=null && cursorДляЦФО.getCount()>0 ) {
-                    // TODO: 26.07.2023 Второй Шаг ЗаполняемДЫнними
-                    МетодЗаполняемДаннымиПолучениеМАтериалов(holder);
-                    МетодАнимации(holder);
+                if (cursorДляЦФО!=null) {
+                    if (    cursorДляЦФО.getCount()>0 ) {
+                        // TODO: 26.07.2023 Второй Шаг ЗаполняемДЫнними
+                        МетодЗаполняемДаннымиПолучениеМАтериалов(holder);
+                        МетодАнимации(holder);
+                    }
                 }
                 Log.i(this.getClass().getName(), "   создание согласования" + myViewHolder + " binderДляПолучениеМатериалов " + binderДляПолучениеМатериалов);
             } catch (Exception e) {
@@ -1076,8 +1086,7 @@ void методCallsBackFromCameraX(@NonNull  Bitmap bitmapNewCompleteImage, @No
 
                     // TODO: 16.12.2022  указываем флаг что мы один раз прошли по строчкем
                     ФлагЧтоУжепервыйПрогоУжеПрошул=true;
-                    Log.i(this.getClass().getName(), "    holder. ФдагЧтоУжеОдинРАзБылПервыйПроход "+  ФлагЧтоУжепервыйПрогоУжеПрошул+
-                             " asyncTaskLoaderForNewMaterial.isStarted() " );
+                    Log.i(this.getClass().getName(), "    holder. ФдагЧтоУжеОдинРАзБылПервыйПроход "+  ФлагЧтоУжепервыйПрогоУжеПрошул);
             } catch (Exception e) {
                 e.printStackTrace();
                 Log.e(getContext().getClass().getName(),
@@ -2198,7 +2207,6 @@ private  void методСозданиеNewImage(@NonNull MyViewHolder holder){
                                         //MaterialTextView materialTextViewЭлементСписка=(MaterialTextView) view;
                                         materialTextViewЭлементСписка.startAnimation(animation);
                                         Bundle bundle=(Bundle)   ((MaterialTextView)view).getTag();
-                                        Integer IDЦфоДЛяПередачи=      bundle.getInt("ПолучаемIDЦфо",0);
                                         String НазваниеЦФО=   bundle.getString("НазваниеЦФО","");
                                         Long UUIDНазваниеЦФО =   bundle.getLong("UUIDНазваниеЦФО",0l);
                                         materialTextТекущийВыбранныйСправочник.setTag(bundle);
@@ -2321,16 +2329,20 @@ private  void методСозданиеNewImage(@NonNull MyViewHolder holder){
             }
 
             // TODO: 19.12.2022  курсор текущий операйции  какой Спинер
+            @SuppressLint("SuspiciousIndentation")
             protected Cursor методПолучениеДанныхЕслиУжеЗаполеныПоляВсахроненииВНАстройкахтелефона(@NonNull MyViewHolder holder) {
-                Cursor cursor1ОдногоМатериала=null;
+                Cursor cursorОдногоВыбраногоТИпаМатериала=null;
                 try{
                     Intent intentДляПолучениеСправочкинов=new Intent("НовыеМатериалыПолучениеСправочников");
                         Bundle bundle= (Bundle)  holder. marerialtextgroupmaterial.getTag();
-                        Integer ПолученеиеID=bundle.getInt("ПолучаемIDЦфо");
-                  cursor1ОдногоМатериала=       МетоПолучениеДанныхДляОдногоМатериала(intentДляПолучениеСправочкинов,ПолученеиеID);
+                        Integer ФильтрВесовых=bundle.getInt("ПолучаемIDЦфо");
+
+                    cursorОдногоВыбраногоТИпаМатериала=       МетоПолучениеДанныхДляОдногоМатериала(intentДляПолучениеСправочкинов,ФильтрВесовых);
+
                         Log.d(this.getClass().getName(),"    holder.cursorДляВсехМатериалов"+   holder.cursorДляВсехМатериалов
                                 +  "holder.marerialtextgroupmaterial.getTag() "+ holder. marerialtextgroupmaterial.getTag()
-                                + "  binderДляПолучениеМатериалов.getService() " +binderДляПолучениеМатериалов.getService() + " cursor1ОдногоМатериала  " +cursor1ОдногоМатериала);
+                                + "  binderДляПолучениеМатериалов.getService() " +binderДляПолучениеМатериалов.getService()
+                                + " cursorОдногоВыбраногоТИпаМатериала  " +cursorОдногоВыбраногоТИпаМатериала);
                 } catch (Exception e) {
                     e.printStackTrace();
                     Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
@@ -2339,7 +2351,7 @@ private  void методСозданиеNewImage(@NonNull MyViewHolder holder){
                             Thread.currentThread().getStackTrace()[2].getMethodName(), Thread.currentThread().getStackTrace()[2].getLineNumber());
                 }
 
-                return  cursor1ОдногоМатериала;
+                return  cursorОдногоВыбраногоТИпаМатериала;
             }
 
             // TODO: 16.12.2022  для Второго Компонета ГРУППА МАТЕРИАЛОВ, после ВЫБЫБОРА ГУРППЫ МАТЕРИАЛОВ ДАЛЕЕ ИНИЦИАЛИЗУЕМ ОДИН МАТЕРИАЛОВ
@@ -2365,15 +2377,19 @@ private  void методСозданиеNewImage(@NonNull MyViewHolder holder){
             }
             }
             // TODO: 16.12.2022  третий вариант для ВЫбора Материала
-            protected void МетодПереопределенияСпинераВесовой(@NonNull  Integer ВытаскиваемЗначениеIDдляФильтра, @NonNull MyViewHolder holder) {
+            protected void МетодПереопределенияСпинераВесовой(@NonNull  Integer ФильтрВесовых, @NonNull MyViewHolder holder) {
                 try{
                     Intent intentДляПолучениеСправочкинов=new Intent("НовыеМатериалыПолучениеСправочников");
-                    МетоПолучениеДанныхДляОдногоМатериала(intentДляПолучениеСправочкинов,ВытаскиваемЗначениеIDдляФильтра);
+                    МетоПолучениеДанныхДляОдногоМатериала(intentДляПолучениеСправочкинов,ФильтрВесовых);
                     Log.d(this.getClass().getName(), " cursor  " + cursor);
                     // TODO: 24.10.2022 перезапускаем Метод Спинера
                     holder.  materialtext_onematerial_ves.setText("");
                     holder.  materialtext_onematerial_ves.forceLayout();
                  ///   МетодДанныеОдинМатериалВесовые(holder);
+                    Log.d(this.getClass().getName()," materialTextView.getId() "+materialTextView.getId()+
+                            " holder.marerialtextgroupmaterial.getId()   "+  holder. marerialtextgroupmaterial.getId()+
+                            "  ФильтрВесовых " + ФильтрВесовых);
+
                 } catch (Exception e) {
                     e.printStackTrace();
                     Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
@@ -2816,7 +2832,6 @@ private  void методСозданиеNewImage(@NonNull MyViewHolder holder){
       void методUploadImetImage(){
     try{
         // TODO: 24.07.2023  Поднимаем файл из Image уже созданого
-        asyncTaskLoaderForNewMaterial.startLoading();
         //Intent intentUpgetImage=new Intent(Intent.ACTION_GET_CONTENT);
         Intent intentUpgetImage = new Intent(Intent.ACTION_PICK,
                 android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
@@ -2851,8 +2866,6 @@ private  void методСозданиеNewImage(@NonNull MyViewHolder holder){
            void методSimpleCreateImage(){
                 try{
                     // TODO Создание НОвой ФОтографии Image
-                    asyncTaskLoaderForNewMaterial.startLoading();
-
                     DialogFragment fragmentCamera= FragmentCameraNewPhoto.newInstance();
                     Bundle data=new Bundle();
                     data.putBinder("binder",binderДляПолучениеМатериалов);
@@ -2938,18 +2951,20 @@ private  void методСозданиеNewImage(@NonNull MyViewHolder holder){
                             // TODO: 20.10.2022 #1
                             CursorДляЦФО=   МетодПолучениеДанныхДляЦФО(intentДляПолучениеСправочкинов);
                             // TODO: 20.10.2022 #3
-                            МетодПолучениеДляГруппыМатериалов(intentДляПолучениеСправочкинов);
-                            // TODO: 20.10.2022 #4
-                            МетоПолучениеДанныхДляОдногоМатериала(intentДляПолучениеСправочкинов, 0);
+                            CursorДляГруппаМатериалов=      МетодПолучениеДляГруппыМатериалов(intentДляПолучениеСправочкинов);
+
                             // TODO: 20.10.2022 #5 автомобили
-                            МетоПолучениеДанныхДляАвтомобилей(intentДляПолучениеСправочкинов, "");
+                            CursorДляАвтомобиля=        МетоПолучениеДанныхДляАвтомобилей(intentДляПолучениеСправочкинов, "");
                             // TODO: 20.10.2022 #6 контргаенты
-                            МетоПолучениеДанныхДляКонтрагент(intentДляПолучениеСправочкинов, "");
+                            CursorДляКонтрагента=        МетоПолучениеДанныхДляКонтрагент(intentДляПолучениеСправочкинов, "");
 
                             Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                                     " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
                                     " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"
-                                    + " CursorДляЦФО " +CursorДляЦФО );
+                                    + " CursorДляЦФО " +CursorДляЦФО
+                                    + " CursorДляГруппаМатериалов " +CursorДляГруппаМатериалов+
+                                    " CursorДляАвтомобиля " +CursorДляАвтомобиля+
+                                    " CursorДляКонтрагента " +CursorДляКонтрагента);
 
                         } catch (Exception e) {
                             e.printStackTrace();
@@ -2965,14 +2980,12 @@ private  void методСозданиеNewImage(@NonNull MyViewHolder holder){
 
                 };
                 asyncTaskLoaderForNewMaterial.deliverResult(CursorДляЦФО);
-                asyncTaskLoaderForNewMaterial.startLoading();
                 asyncTaskLoaderForNewMaterial.forceLoad();
                 asyncTaskLoaderForNewMaterial.registerListener(new Random().nextInt(), new Loader.OnLoadCompleteListener() {
                     @Override
                     public void onLoadComplete(@NonNull Loader loader, @Nullable Object data) {
                         try{
                             // TODO: 26.07.2023  после получение данных
-                            asyncTaskLoaderForNewMaterial.abandon();
                             CursorДляЦФО= (Cursor) data;
                             onStart();
                             progressBarСозданиеМатерила.setVisibility(View.GONE);
