@@ -812,43 +812,17 @@ void методCallsBackFromCameraX(@NonNull  Bitmap bitmapNewCompleteImage, @No
                 textipputmaretialttdata  = itemView.findViewById(R.id.textipputmaretialttdata);
                 textviewmaterialttn  = itemView.findViewById(R.id.textviewmaterialttn);
                 textviewmaterialttndata = itemView.findViewById(R.id.textviewmaterialttndata);
-                Boolean     ФлагДляСкрытыхМатериалов = preferencesМатериалы.getBoolean("ФлагДляСкрытыхМатериалов",false);
-                RelativeLayout.LayoutParams params= null;
-                if (textviewnamecfo!=null) {
-                    params = (RelativeLayout.LayoutParams)textviewnamecfo.getLayoutParams();
-                }
-                if (ФлагДляСкрытыхМатериалов==true) {
-                    if (textipputmaretialttn!=null) {
-                        textipputmaretialttn.setVisibility(View.VISIBLE);
-                        textipputmaretialttdata .setVisibility(View.VISIBLE);
-                        textviewmaterialttndata.setVisibility(View.VISIBLE);
-                        textviewmaterialttn.setVisibility(View.VISIBLE);
-                    }
-                    if (params!=null) {
-                        params.setMargins(0,5,0,0);
-                    }
-                    if (textviewnamecfo!=null) {
-                        textviewnamecfo.setLayoutParams(params);
-                    }
-                } else {
-                    if (textipputmaretialttn!=null) {
-                        textipputmaretialttn.setVisibility(View.GONE);
-                        textipputmaretialttdata .setVisibility(View.GONE);
-                        textviewmaterialttndata.setVisibility(View.GONE);
-                        textviewmaterialttn.setVisibility(View.GONE);
-                    }
-                    if (params!=null) {
-                        params.setMargins(0,50,0,0);
-                    }
-                    if (textviewnamecfo!=null) {
-                        textviewnamecfo.setLayoutParams(params);
-                    }
-                }
-                // TODO: 30.06.2023  слушатель
-                if (textipputmaretialttdata!=null) {
+
+
+                   // TODO: 30.06.2023  слушатель
                     методДатаКликаДляНовогоМатериала(textipputmaretialttdata);
-                }
-                Log.d(this.getClass().getName(), " cardViewМатериал   " + bottomcreateassionmaterial);
+
+                Log.d(this.getClass().getName(), "\n" + " class " +
+                        Thread.currentThread().getStackTrace()[2].getClassName()
+                        + "\n" +
+                        " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                        " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"
+                        + "   textipputmaretialttdata " +textipputmaretialttdata);
             } catch (Exception e) {
                 e.printStackTrace();
                 Log.e(getContext().getClass().getName(),
@@ -905,6 +879,7 @@ void методCallsBackFromCameraX(@NonNull  Bitmap bitmapNewCompleteImage, @No
 
     class MyRecycleViewAdapter extends RecyclerView.Adapter<MyViewHolder> {
         private  Cursor  cursorДляЦФО ;
+        @SuppressLint("SuspiciousIndentation")
         public MyRecycleViewAdapter(@NotNull  Cursor cursorRecyclerView) {
             this.cursorДляЦФО = cursorRecyclerView;
                 Log.i(this.getClass().getName(), " cursorДляЦФО  " + cursorRecyclerView);
@@ -997,7 +972,8 @@ void методCallsBackFromCameraX(@NonNull  Bitmap bitmapNewCompleteImage, @No
                         if(cursorДляЦФО.getCount()>0){
 
                                 // TODO: 26.07.2023  Data
-                                viewПолучениеМатериалов = LayoutInflater.from(parent.getContext()).inflate(R.layout.simple_for_new_assitionmaterial_cardview_new2, parent, false);//todo simple_for_new_assitionmaterial_cardview1_test
+                               // viewПолучениеМатериалов = LayoutInflater.from(parent.getContext()).inflate(R.layout.simple_for_new_assitionmaterial_cardview_new2, parent, false);//todo simple_for_new_assitionmaterial_cardview1_test
+                                viewПолучениеМатериалов = LayoutInflater.from(parent.getContext()).inflate(R.layout.simple_for_new_assitionmaterial_cardview_new3, parent, false);//todo simple_for_new_assitionmaterial_cardview1_test
                                 Log.i(this.getClass().getName(), "   viewГлавныйВидДляRecyclleViewДляСогласования" + viewПолучениеМатериалов + " binderДляПолучениеМатериалов " +binderДляПолучениеМатериалов);
                             }else{
                                 // TODO: 26.07.2023 is null
