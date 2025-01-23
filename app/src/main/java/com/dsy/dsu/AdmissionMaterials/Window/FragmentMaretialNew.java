@@ -1049,8 +1049,12 @@ void методCallsBackFromCameraX(@NonNull  Bitmap bitmapNewCompleteImage, @No
                     МетодДанныеЦФО(holder);
                     МетодДанныеГруппаМатериалов(holder);
                     МетодДанныеОдинМатериалВесовые(holder);
-                // TODO: 22.01.2025
+                // TODO: 22.01.2025 Автомобили
                     МетодДанныеАвтомобили(holder);
+                // TODO: 22.01.2025  Контрагенты
+                    МетодДанныеКонтрагент(holder);
+
+
                     МетоднажатиеСозданиеМатериалов(holder);
                     методСозданиеNewImage(holder);
                 // TODO: 22.01.2025
@@ -1392,7 +1396,7 @@ void методCallsBackFromCameraX(@NonNull  Bitmap bitmapNewCompleteImage, @No
                 Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                         " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
                         " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"
-                        + " CursorДляГруппаМатериалов " +CursorДляГруппаМатериалов);
+                        + " holder.marerialtextgroupmateria " +holder.marerialtextgroupmaterial);
 
             } catch (Exception e) {
                 e.printStackTrace();
@@ -1406,20 +1410,20 @@ void методCallsBackFromCameraX(@NonNull  Bitmap bitmapNewCompleteImage, @No
         }
 
 
-        // TODO: 19.10.2022 ГРУППА МАТЕРИАЛОВ
+        // TODO: 19.10.2022 Создание Автомобили
         private void МетодДанныеАвтомобили(@NonNull MyViewHolder holder) {
             try {
                 // TODO: 17.11.2022  если пользователь уже выбирал
 
-                SubClassNewFilterSFOНовыйФильтДанных sfoНовыйФильтДанныхГруппаМатериалов=       new SubClassNewFilterSFOНовыйФильтДанных(CursorДляАвтомобиля);
-                sfoНовыйФильтДанныхГруппаМатериалов   .МетодЗапускаНовогоФильтра( holder.valueavtomobil, holder,"Автомобили",
+                SubClassNewFilterSFOНовыйФильтДанных НовыйФильтДанныхАвтомобили=       new SubClassNewFilterSFOНовыйФильтДанных(CursorДляАвтомобиля);
+                НовыйФильтДанныхАвтомобили   .МетодЗапускаНовогоФильтра( holder.valueavtomobil, holder,"Автомобили",
                         "track","fullname" );
 
 
                 Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                         " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
                         " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"
-                        + " CursorДляГруппаМатериалов " +CursorДляГруппаМатериалов);
+                        + " holder.valueavtomobil " +holder.valueavtomobil);
 
             } catch (Exception e) {
                 e.printStackTrace();
@@ -1432,6 +1436,31 @@ void методCallsBackFromCameraX(@NonNull  Bitmap bitmapNewCompleteImage, @No
             }
         }
 
+        // TODO: 19.10.2022 Создание котррагента
+        private void МетодДанныеКонтрагент(@NonNull MyViewHolder holder) {
+            try {
+                // TODO: 17.11.2022  если пользователь уже выбирал
+
+                SubClassNewFilterSFOНовыйФильтДанных НовыйФильтДанныхКонтрагенты=       new SubClassNewFilterSFOНовыйФильтДанных(CursorДляКонтрагента);
+                НовыйФильтДанныхКонтрагенты   .МетодЗапускаНовогоФильтра( holder.valuekontragent, holder,"Контрагент",
+                        "company","name" );
+
+
+                Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                        " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                        " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"
+                        + " holder.valuekontragent " +holder.valuekontragent);
+
+            } catch (Exception e) {
+                e.printStackTrace();
+                Log.e(getContext().getClass().getName(),
+                        "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
+                                " Линия  :" + Thread.currentThread().getStackTrace()[2].getLineNumber());
+                new RecordNewErros(getContext()).recordnewerror(e.toString(),
+                        this.getClass().getName().toString(), Thread.currentThread().getStackTrace()[2].getMethodName().toString(),
+                        Thread.currentThread().getStackTrace()[2].getLineNumber());
+            }
+        }
 
 
 
@@ -1939,7 +1968,10 @@ private  void методСозданиеNewImage(@NonNull MyViewHolder holder){
                                                              bundle.putLong("NewMaterialAvtoUUID",UUID);
                                                          }
 
-
+                                                         if (materialTextТекущийВыбранныйСправочник.getId()==  holder.valuekontragent.getId()) {
+                                                             bundle.putString("NewMaterialKontragent",Название);
+                                                             bundle.putLong("NewMaterialKontragentUUID",UUID);
+                                                         }
 
 
 
@@ -2145,7 +2177,10 @@ private  void методСозданиеNewImage(@NonNull MyViewHolder holder){
                                             NewMaterialUUID =   bundle.getLong("NewMaterialAvtoUUID",0l);
                                         }
 
-
+                                        if (materialTextТекущийВыбранныйСправочник.getId()==  holder.valuekontragent.getId()) {
+                                            NewMaterialЦФО=   bundle.getString("NewMaterialKontragent","");
+                                            NewMaterialUUID =   bundle.getLong("NewMaterialKontragentUUID",0l);
+                                        }
 
 
 
@@ -2153,7 +2188,8 @@ private  void методСозданиеNewImage(@NonNull MyViewHolder holder){
                                                 + " BootCompletedReceiver sous .... bremy: " + new Date()+"\n+" +
                                                 " Класс в процессе... " +  this.getClass().getName()+"\n"+
                                                 " метод в процессе... " + Thread.currentThread().getStackTrace()[2].getMethodName()+
-                                                " NewMaterialЦФО" +NewMaterialЦФО  + " NewMaterialUUID " +NewMaterialUUID);
+                                                " NewMaterialЦФО" +NewMaterialЦФО  + " NewMaterialUUID " +NewMaterialUUID+"\n"
+                                                + " materialTextТекущийВыбранныйСправочник.getId()  " +materialTextТекущийВыбранныйСправочник.getId());
 
 
                                         if (NewMaterialUUID>0) {
