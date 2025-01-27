@@ -2,6 +2,7 @@ package com.dsy.dsu.CoreApp;
 
 
 import android.app.Application;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 
@@ -32,8 +33,8 @@ public class CoreApp extends Application {
     public StartingModuleBackAsync startingModuleBackAsync;
 
 
-
-
+    @Inject
+    CopyOnWriteArrayList<String> getWorkerTablesALl;
 
 
     @Override
@@ -61,9 +62,9 @@ public class CoreApp extends Application {
             CopyOnWriteArrayList<String> getWorkerTablesALlBarckAync=     EntryPoints.get(getApplicationContext(), HiltWorkerTableBarckAync.class).getWorkerTablesALl();
 */
 
-           /*startingModuleBackAsync.backasyncQueryandWhere("errordsu1",
+            Cursor getbackasyncQueryandWhere=   startingModuleBackAsync.backasyncQueryandWhere("errordsu1",
                    " SELECT  *   FROM errordsu1 AS er  WHERE er.ERROR IS  NOT NULL  ORDER BY er.id DESC  "
-                   ,null);*/
+                   ,null);
 
 
 // TODO: 13.01.2025  Запускаем  
