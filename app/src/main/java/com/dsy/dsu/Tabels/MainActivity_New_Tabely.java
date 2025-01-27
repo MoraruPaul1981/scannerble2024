@@ -682,15 +682,43 @@ public class MainActivity_New_Tabely extends AppCompatActivity {
                                 try {
                                     CursorДляСпиноровЦФО = МетодДляНовогоТабеляПолучаемДанныеИзНовогоПоиска("cfo", constraint.toString());
                                     handler.post(() -> {
-                                        simpleCursorAdapterЦФО.swapCursor(CursorДляСпиноровЦФО);
-                                        simpleCursorAdapterЦФО.notifyDataSetChanged();
-                                        listViewДляЦФО.setSelection(0);
-                                        if (CursorДляСпиноровЦФО.getCount() == 0) {
-                                            searchViewДляНовогоЦФО.setBackgroundColor(Color.RED);
-                                            handler.postDelayed(() -> {
+                                        if (CursorДляСпиноровЦФО.getCount()>0 && constraint!=null) {
+
+                                                simpleCursorAdapterЦФО.swapCursor(CursorДляСпиноровЦФО);
+                                                simpleCursorAdapterЦФО.notifyDataSetChanged();
+                                                listViewДляЦФО.setSelection(0);
                                                 searchViewДляНовогоЦФО.setBackgroundColor(Color.parseColor("#F2F5F5"));
-                                            }, 500);
+                                                Log.d(this.getClass().getName(), "\n" + " class " +
+                                                        Thread.currentThread().getStackTrace()[2].getClassName()
+                                                        + "\n" +
+                                                        " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                                                        " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"
+                                                        + "    CursorДляСпиноровЦФО " +CursorДляСпиноровЦФО);
+
+                                        }else {
+                                            searchViewДляНовогоЦФО.setBackgroundColor(Color.RED);
+                                        handler.postDelayed(() -> {
+                                            searchViewДляНовогоЦФО.setBackgroundColor(Color.parseColor("#F2F5F5"));
+                                            CursorДляСпиноровЦФО=            МетодДляНовогоТабеляПолучаемДанные("cfo","");
+
+                                            simpleCursorAdapterЦФО.swapCursor(CursorДляСпиноровЦФО);
+                                            simpleCursorAdapterЦФО.notifyDataSetChanged();
+                                            listViewДляЦФО.setSelection(0);
+
+                                            Log.d(this.getClass().getName(), "\n" + " class " +
+                                                    Thread.currentThread().getStackTrace()[2].getClassName()
+                                                    + "\n" +
+                                                    " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                                                    " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"
+                                                    + "    CursorДляСпиноровЦФО " +CursorДляСпиноровЦФО);
+                                        }, 500);
                                         }
+                                        Log.d(this.getClass().getName(), "\n" + " class " +
+                                                Thread.currentThread().getStackTrace()[2].getClassName()
+                                                + "\n" +
+                                                " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                                                " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"
+                                                + "    CursorДляСпиноровЦФО " +CursorДляСпиноровЦФО);
                                     });
                                 } catch (Exception e) {
                                     e.printStackTrace();
