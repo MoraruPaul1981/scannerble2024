@@ -26,7 +26,7 @@ import androidx.loader.content.AsyncTaskLoader;
 import com.dsy.dsu.Errors.controller.RecordNewErros;
 import com.dsy.dsu.BusinessLogicAll.DATE.Class_Generation_Data;
 import com.dsy.dsu.CnangeServers.PUBLIC_CONTENT;
-import com.dsy.dsu.BusinessLogicAll.SubClassCreatingMainAllTables;
+import com.dsy.dsu.BusinessLogicAll.WorkerTables.SubClassCreatingMainAllTables;
 import com.dsy.dsu.BusinessLogicAll.SubClassUpVersionDATA;
 import com.dsy.dsu.Hilt.Sqlitehilt.HiltInterfacesqlite;
 
@@ -55,8 +55,7 @@ public class ContentProviderSynsUpdateChangeDeleting extends ContentProvider {
     public ContentProviderSynsUpdateChangeDeleting() throws InterruptedException {
         try{
         CopyOnWriteArrayList<String> ИменаТаблицыОтАндройда=
-                new SubClassCreatingMainAllTables(getContext()).
-                        методCreatingMainTabels(getContext());
+                new SubClassCreatingMainAllTables().getWorkerTablesALl(getContext());
         Log.d(this.getClass().getName(), " ИменаТаблицыОтАндройда "+ИменаТаблицыОтАндройда );
      uriMatcherДЛяПровайдераКонтентБазаДанных=new UriMatcher(ИменаТаблицыОтАндройда.size());
             ИменаТаблицыОтАндройда.forEach(new Stream.Builder() {

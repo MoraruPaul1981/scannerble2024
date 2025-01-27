@@ -4,7 +4,7 @@ package com.dsy.dsu.CnangeServers;
 import android.content.Context;
 import android.os.Handler;
 
-import com.dsy.dsu.BusinessLogicAll.SubClassCreatingMainAllTables;
+import com.dsy.dsu.BusinessLogicAll.WorkerTables.SubClassCreatingMainAllTables;
 
 
 import java.util.LinkedHashMap;
@@ -29,7 +29,6 @@ public  class PUBLIC_CONTENT extends SubClassCreatingMainAllTables {
     private   LinkedHashMap<Integer,String> МассивПортовСервера= new LinkedHashMap();
     // TODO: 10.11.2022
     public PUBLIC_CONTENT(Context context) {
-        super(context);
         this.context=context;
       //////////todo  ГЛАВНЫЙ МЕНЕДЖЕР ПОТОКОВ ПРОЕКТА
         if (МенеджерПотоков==null) {

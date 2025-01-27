@@ -6,11 +6,18 @@ import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 
 
+import com.dsy.dsu.BusinessLogicAll.WorkerTables.HiltWorkerTable;
+import com.dsy.dsu.BusinessLogicAll.WorkerTables.QualifierWorkerTable;
+import com.dsy.dsu.BusinessLogicAll.WorkerTables.SubClassCreatingMainAllTables;
 import com.dsy.dsu.Errors.controller.RecordNewErros;
+import com.sous.backasync.hill.HiltWorkerTableBarckAync;
 import com.sous.backasync.startingbackasync.StartingModuleBackAsync;
+
+import java.util.concurrent.CopyOnWriteArrayList;
 
 import javax.inject.Inject;
 
+import dagger.hilt.EntryPoints;
 import dagger.hilt.android.HiltAndroidApp;
 
 
@@ -23,6 +30,10 @@ public class CoreApp extends Application {
 
     @Inject
     public StartingModuleBackAsync startingModuleBackAsync;
+
+
+
+
 
 
     @Override
@@ -45,6 +56,14 @@ public class CoreApp extends Application {
     // TODO: 13.01.2025  Запускаем
     //  startingBackAsync.startingBackAsync(getApplicationContext(), getSqlLiteCoreApp);
 
+            // TODO: 17.01.2025
+            CopyOnWriteArrayList<String> getWorkerTablesALl=     EntryPoints.get(getApplicationContext(), HiltWorkerTable.class).getWorkerTablesALl();
+            CopyOnWriteArrayList<String> getWorkerTablesALlBarckAync=     EntryPoints.get(getApplicationContext(), HiltWorkerTableBarckAync.class).getWorkerTablesALl();
+
+
+           startingModuleBackAsync.backasyncQueryandWhere("errordsu1",
+                   " SELECT  *   FROM errordsu1 AS er  WHERE er.ERROR IS  NOT NULL  ORDER BY er.id DESC  "
+                   ,null);
 
 
 // TODO: 13.01.2025  Запускаем  

@@ -1,14 +1,20 @@
 package com.sous.backasync.startingbackasync;
 
+import android.content.ContentProvider;
+import android.content.ContentResolver;
 import android.content.Context;
 import android.database.Cursor;
+import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 
 import androidx.annotation.NonNull;
 
 import com.sous.backasync.operationsprovider.GetQuery.LoaderBackSync;
+import com.sous.backasync.provider.ProviderBackAsync;
 import com.sous.backasync.startingbackasync.intarfece.StartingBackAsyncIntarface;
+
+import java.util.concurrent.CopyOnWriteArrayList;
 
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -43,11 +49,20 @@ public class StartingModuleBackAsync implements StartingBackAsyncIntarface {
     }
 
 
+    // TODO: 27.01.2025  init ContwbProveder
+
+
+
+
+
+
     // TODO: 17.01.2025 Курсор получение данных   сусловиями WHERE
 
 
     @Override
-    public   Cursor backasyncQueryandWhere(@NonNull String Таблица, @NonNull  String   СамЗапрос , @NonNull   String[]УсловияЗапроса){
+    public   Cursor backasyncQueryandWhere(@NonNull String Таблица,
+                                           @NonNull  String   СамЗапрос ,
+                                           @NonNull   String[]УсловияЗапроса){
         // TODO: 17.01.2025
         Cursor getbackasyncQueryandWhere=null;
         try {

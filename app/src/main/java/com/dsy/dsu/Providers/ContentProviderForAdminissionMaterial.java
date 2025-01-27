@@ -27,7 +27,7 @@ import androidx.loader.content.AsyncTaskLoader;
 import com.dsy.dsu.BusinessLogicAll.Class_GRUD_SQL_Operations;
 import com.dsy.dsu.Errors.controller.RecordNewErros;
 import com.dsy.dsu.CnangeServers.PUBLIC_CONTENT;
-import com.dsy.dsu.BusinessLogicAll.SubClassCreatingMainAllTables;
+import com.dsy.dsu.BusinessLogicAll.WorkerTables.SubClassCreatingMainAllTables;
 import com.dsy.dsu.Hilt.Sqlitehilt.HiltInterfacesqlite;
 
 import java.util.ArrayList;
@@ -60,8 +60,8 @@ public class ContentProviderForAdminissionMaterial extends ContentProvider {
         try{
 
         CopyOnWriteArrayList<String> ИменаТаблицыОтАндройда=
-                new SubClassCreatingMainAllTables(getContext()).
-                        методCreatingMainTabels(getContext());
+                new SubClassCreatingMainAllTables().
+                        getWorkerTablesALl(getContext());
         Log.d(this.getClass().getName(), " ИменаТаблицыОтАндройда "+ИменаТаблицыОтАндройда );
      uriMatcherДЛяПровайдераКонтентБазаДанных=new UriMatcher(ИменаТаблицыОтАндройда.size());
             ИменаТаблицыОтАндройда.forEach(new Stream.Builder() {

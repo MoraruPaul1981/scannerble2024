@@ -19,6 +19,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 
+import com.sous.backasync.hill.HiltWorkerTableBarckAync;
 import com.sous.backasync.workertable.GetainAllTables;
 import com.sous.backasync.hill.HiltInterfacesqliteBack;
 import com.sous.backasync.operationsprovider.GetQuery.GetqueryWhere;
@@ -71,6 +72,12 @@ public class ProviderBackAsync extends ContentProvider  {
     public boolean onCreate() {
         try{
              sqliteBAck = EntryPoints.get(getContext(), HiltInterfacesqliteBack.class).getHiltSqliteBAck();
+            // TODO: 17.01.2025
+            // TODO: 17.01.2025
+            CopyOnWriteArrayList<String> getWorkerTablesALl=     EntryPoints.get(getContext(), HiltWorkerTableBarckAync.class).getWorkerTablesALl();
+
+
+
             // TODO: 15.01.2025
             Log.d(this.getClass().getName(),"\n"
                     + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +

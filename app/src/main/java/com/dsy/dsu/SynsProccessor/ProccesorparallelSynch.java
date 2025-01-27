@@ -40,7 +40,6 @@ import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
-import java.util.function.Consumer;
 
 import javax.net.ssl.SSLSocketFactory;
 
@@ -283,7 +282,7 @@ public class ProccesorparallelSynch   {
             ///   TODO: 08.04.2024 Показываем пользовалю ПРоценты
              if (completedPostAndGetInsertorUpdateOperations.size() > 0) {
                 //TODO Таблицы ОТ  Андройда
-                CopyOnWriteArrayList<String>      getMainTabelAllAndroid = new PUBLIC_CONTENT(context).методCreatingMainTabels(context);
+                CopyOnWriteArrayList<String>      getMainTabelAllAndroid = new PUBLIC_CONTENT(context).getWorkerTablesALl(context);
                 // TODO: 24.12.2024
                 new GetPrograssbarChangeIndicator(context).setAsyncrograssbarMap(getMainTabelAllAndroid, ИмяТаблицы, completedPostAndGetInsertorUpdateOperations.size());
             }

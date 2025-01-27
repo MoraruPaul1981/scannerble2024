@@ -250,7 +250,7 @@ public class AsynsProccessor extends Class_MODEL_synchronized {
 
 
                     //TODO Таблицы ОТ  Андройда
-                    CopyOnWriteArrayList<String>      getMainTabelAllAndroid = new PUBLIC_CONTENT(context).методCreatingMainTabels(context);
+                    CopyOnWriteArrayList<String>      getMainTabelAllAndroid = new PUBLIC_CONTENT(context).getWorkerTablesALl(context);
 
                     Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                             " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +

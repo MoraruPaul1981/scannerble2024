@@ -51,7 +51,7 @@ import com.dsy.dsu.AllDatabases.JsonSerializerAndDeserializer.СhatsJsonDeserial
 import com.dsy.dsu.AllDatabases.JsonSerializerAndDeserializer.СompanylJsonDeserializer;
 import com.dsy.dsu.Errors.controller.RecordNewErros;
 import com.dsy.dsu.CnangeServers.PUBLIC_CONTENT;
-import com.dsy.dsu.BusinessLogicAll.SubClassCreatingMainAllTables;
+import com.dsy.dsu.BusinessLogicAll.WorkerTables.SubClassCreatingMainAllTables;
 import com.dsy.dsu.BusinessLogicAll.SubClassUpVersionDATA;
 import com.dsy.dsu.Hilt.Sqlitehilt.HiltInterfacesqlite;
 import com.fasterxml.jackson.databind.JsonNode;
@@ -87,8 +87,7 @@ public class ContentProviderSynsUpdateBinary extends ContentProvider {
     public ContentProviderSynsUpdateBinary() throws InterruptedException {
         try{
         CopyOnWriteArrayList<String> ИменаТаблицыОтАндройда=
-                new SubClassCreatingMainAllTables(getContext()).
-                        методCreatingMainTabels(getContext());
+                new SubClassCreatingMainAllTables().getWorkerTablesALl(getContext());
         Log.d(this.getClass().getName(), " ИменаТаблицыОтАндройда "+ИменаТаблицыОтАндройда );
      uriMatcherДЛяПровайдераКонтентБазаДанных=new UriMatcher(ИменаТаблицыОтАндройда.size());
             ИменаТаблицыОтАндройда.forEach(new Stream.Builder() {

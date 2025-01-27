@@ -24,7 +24,7 @@ import androidx.loader.content.AsyncTaskLoader;
 
 import com.dsy.dsu.Errors.controller.RecordNewErros;
 import com.dsy.dsu.CnangeServers.PUBLIC_CONTENT;
-import com.dsy.dsu.BusinessLogicAll.SubClassCreatingMainAllTables;
+import com.dsy.dsu.BusinessLogicAll.WorkerTables.SubClassCreatingMainAllTables;
 import com.dsy.dsu.BusinessLogicAll.SubClassUpVersionDATA;
 import com.dsy.dsu.Hilt.Sqlitehilt.HiltInterfacesqlite;
 
@@ -53,8 +53,7 @@ public class ContentProviderSynsInsertOnlyAsync extends ContentProvider {
     public ContentProviderSynsInsertOnlyAsync() throws InterruptedException {
         try {
             CopyOnWriteArrayList<String> ИменаТаблицыОтАндройда =
-                    new SubClassCreatingMainAllTables(getContext()).
-                            методCreatingMainTabels(getContext());
+                    new SubClassCreatingMainAllTables().getWorkerTablesALl(getContext());
             Log.d(this.getClass().getName(), " ИменаТаблицыОтАндройда " + ИменаТаблицыОтАндройда);
             uriMatcherДЛяПровайдераКонтентБазаДанных = new UriMatcher(ИменаТаблицыОтАндройда.size());
             ИменаТаблицыОтАндройда.forEach(new Consumer<String>() {
