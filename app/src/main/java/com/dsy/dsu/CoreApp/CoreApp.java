@@ -57,13 +57,13 @@ public class CoreApp extends Application {
     //  startingBackAsync.startingBackAsync(getApplicationContext(), getSqlLiteCoreApp);
 
             // TODO: 17.01.2025
-            CopyOnWriteArrayList<String> getWorkerTablesALl=     EntryPoints.get(getApplicationContext(), HiltWorkerTable.class).getWorkerTablesALl();
+     /*       CopyOnWriteArrayList<String> getWorkerTablesALl=     EntryPoints.get(getApplicationContext(), HiltWorkerTable.class).getWorkerTablesALl();
             CopyOnWriteArrayList<String> getWorkerTablesALlBarckAync=     EntryPoints.get(getApplicationContext(), HiltWorkerTableBarckAync.class).getWorkerTablesALl();
+*/
 
-
-           startingModuleBackAsync.backasyncQueryandWhere("errordsu1",
+           /*startingModuleBackAsync.backasyncQueryandWhere("errordsu1",
                    " SELECT  *   FROM errordsu1 AS er  WHERE er.ERROR IS  NOT NULL  ORDER BY er.id DESC  "
-                   ,null);
+                   ,null);*/
 
 
 // TODO: 13.01.2025  Запускаем  

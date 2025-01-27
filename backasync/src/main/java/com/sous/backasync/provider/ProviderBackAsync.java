@@ -43,21 +43,6 @@ public class ProviderBackAsync extends ContentProvider  {
 
     public ProviderBackAsync() throws InterruptedException {
         try{
-
-            CopyOnWriteArrayList<String> ИменаТаблицыОтАндройда= new GetainAllTables(getContext()).
-                            методCreatingMainTabels(getContext());
-            Log.d(this.getClass().getName(), " ИменаТаблицыОтАндройда "+ИменаТаблицыОтАндройда );
-            uriMatcherДЛяПровайдераКонтентБазаДанных=new UriMatcher(ИменаТаблицыОтАндройда.size());
-            ИменаТаблицыОтАндройда.forEach(new Consumer<String>() {
-                @Override
-                public void accept(String ЭлементТаблица) {
-                    uriMatcherДЛяПровайдераКонтентБазаДанных.addURI(getNameProvider,ЭлементТаблица.toString(),ТекущаяСтрокаПриДОбавлениииURL);
-
-                    Log.d(this.getClass().getName(), " ЭлементТаблица "+ЭлементТаблица + " ТекущаяСтрокаПриДОбавлениииURL " +ТекущаяСтрокаПриДОбавлениииURL);
-
-                    ТекущаяСтрокаПриДОбавлениииURL++;
-                }
-            });
             Log.d(this.getClass().getName(),  " uriMatcherДЛяПровайдераКонтентБазаДанных" +uriMatcherДЛяПровайдераКонтентБазаДанных
                     + " sqliteBAck "+ sqliteBAck );
             // TODO: 04.10.2022
@@ -77,7 +62,26 @@ public class ProviderBackAsync extends ContentProvider  {
             CopyOnWriteArrayList<String> getWorkerTablesALl=     EntryPoints.get(getContext(), HiltWorkerTableBarckAync.class).getWorkerTablesALl();
 
 
+            uriMatcherДЛяПровайдераКонтентБазаДанных=new UriMatcher(getWorkerTablesALl.size());
+            getWorkerTablesALl.forEach(new Consumer<String>() {
+                @Override
+                public void accept(String ЭлементТаблица) {
+                    uriMatcherДЛяПровайдераКонтентБазаДанных.addURI(getNameProvider,ЭлементТаблица.toString(),ТекущаяСтрокаПриДОбавлениииURL);
 
+                    Log.d(this.getClass().getName(), " ЭлементТаблица "+ЭлементТаблица + " ТекущаяСтрокаПриДОбавлениииURL " +ТекущаяСтрокаПриДОбавлениииURL);
+
+                    ТекущаяСтрокаПриДОбавлениииURL++;
+                }
+            });
+            if (sqliteBAck!=null) {
+                Log.d(this.getClass().getName(),"\n"
+                        + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                        " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                        " line " + Thread.currentThread().getStackTrace()[2].getLineNumber()  + " sqliteBAck "  +sqliteBAck  +
+                        " sqliteBAck " +sqliteBAck);
+                return  true;
+
+            }
             // TODO: 15.01.2025
             Log.d(this.getClass().getName(),"\n"
                     + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
@@ -89,7 +93,7 @@ public class ProviderBackAsync extends ContentProvider  {
             Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() + " Линия  :"
                     + Thread.currentThread().getStackTrace()[2].getLineNumber());
         }
-        return  true;
+        return  false;
     }
 
 
