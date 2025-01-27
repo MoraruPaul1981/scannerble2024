@@ -19,9 +19,9 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 
-import com.sous.backasync.alltables.GetainAllTables;
+import com.sous.backasync.workertable.GetainAllTables;
 import com.sous.backasync.hill.HiltInterfacesqliteBack;
-import com.sous.backasync.operationsprovider.GetqueryWhere;
+import com.sous.backasync.operationsprovider.GetQuery.GetqueryWhere;
 
 import java.util.ArrayList;
 import java.util.Optional;

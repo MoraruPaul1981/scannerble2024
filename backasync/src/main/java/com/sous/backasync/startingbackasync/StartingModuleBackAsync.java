@@ -7,7 +7,7 @@ import android.util.Log;
 
 import androidx.annotation.NonNull;
 
-import com.sous.backasync.cursor.LoaderBackSync;
+import com.sous.backasync.operationsprovider.GetQuery.LoaderBackSync;
 import com.sous.backasync.startingbackasync.intarfece.StartingBackAsyncIntarface;
 
 import javax.inject.Inject;
