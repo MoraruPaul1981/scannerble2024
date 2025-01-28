@@ -32,13 +32,15 @@ import com.dsy.dsu.BusinessLogicAll.Class_Sendiing_Errors;
 import com.dsy.dsu.BusinessLogicAll.Permissions.ClassPermissions;
 import com.dsy.dsu.Dashboard.View.MainActivity_Dashboard;
 import com.dsy.dsu.Errors.controller.BiccessLogicActivityError;
+
 import com.dsy.dsu.Errors.controller.GettingErrorsIsFileOrIsCursor;
 import com.dsy.dsu.Errors.controller.RecordNewErros;
 import com.dsy.dsu.Hilt.Sqlitehilt.HiltInterfacesqlite;
 import com.dsy.dsu.R;
 import com.dsy.dsu.Services.ServiceUpdatePoОбновлениеПО;
 import com.google.android.material.button.MaterialButton;
-import com.sous.backasync.startingbackasync.StartingModuleBackAsync;
+import com.sous.backasync.start.ModuleQueryBackAsync;
+
 
 import org.jetbrains.annotations.NotNull;
 
@@ -70,13 +72,10 @@ public class MainActivity_Errors extends AppCompatActivity  {
 
   private  String СтатусЗадачи;
     private  ServiceUpdatePoОбновлениеПО.localBinderОбновлениеПО localBinderОбновлениеПО;
-
-    @Inject
-    public StartingModuleBackAsync startingModuleBackAsync;
     SQLiteDatabase sqLiteDatabase_error;
 
-
-
+    @Inject
+    ModuleQueryBackAsync moduleQueryBackAsync;
 
     @SuppressLint("MissingInflatedId")
     @Override
@@ -136,7 +135,7 @@ public class MainActivity_Errors extends AppCompatActivity  {
             методBackInError();
 
             // TODO: 12.12.2023  staring biscce logic
-            biccessLogicActivityError=new BiccessLogicActivityError(  startingModuleBackAsync,getApplicationContext(),sqLiteDatabase_error);
+            biccessLogicActivityError=new BiccessLogicActivityError( getApplicationContext(),sqLiteDatabase_error);
 
 
             // TODO: 17.04.2023
@@ -159,14 +158,14 @@ public class MainActivity_Errors extends AppCompatActivity  {
         super.onStart();
         try{
 
-            // TODO: 17.01.2025  Получаем Ошибку двумя разными способами из файла и из курсора 
-
+           // TODO: 17.01.2025  Получаем Ошибку двумя разными способами из файла и из курсора
            //StringBuffer БуерДляОшибокИзФайла =     new GettingErrorsIsFileOrIsCursor(getApplicationContext()).gettingErrorsIsFile();
-           StringBuffer БуерДляОшибокИзКурсора =     new GettingErrorsIsFileOrIsCursor(getApplicationContext(),startingModuleBackAsync).gettingErrorsIsCursor();
+           StringBuffer БуерДляОшибокИзКурсора =     new GettingErrorsIsFileOrIsCursor(getApplicationContext(), moduleQueryBackAsync).gettingErrorsIsCursor();
 
             // TODO: 17.01.2025  полученные ошибку отправляем на экран ПОльзователю
               metodProssecingErrorsAll(БуерДляОшибокИзКурсора);
-            // TODO: 12.12.2023  Данные ОШибки
+            // TODO: 12.12.2023  Данные ОШибки*/
+
 
         // TODO: 17.04.2023
         Log.d(this.getClass().getName(),"\n" + " class FaceAPp " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +

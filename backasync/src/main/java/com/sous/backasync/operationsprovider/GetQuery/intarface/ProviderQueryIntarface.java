@@ -6,12 +6,9 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 
-public interface LoaderBackSyncInterface {
+public interface ProviderQueryIntarface {
 
 
-      final String getNameProvider = "com.sous.backasync.provider";
-
-
-    Cursor getBackasyncCursor(@NonNull Bundle bundle) throws SQLException ;
+    Cursor getQuery(@NonNull String table, @NonNull String selection, @NonNull  String[] selectionArgs);
 
 }

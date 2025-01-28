@@ -6,31 +6,24 @@ package com.dsy.dsu.Errors.controller;
 
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
-import android.net.Uri;
 import android.os.Environment;
 import android.util.Log;
 
-import androidx.core.content.FileProvider;
 
-import com.sous.backasync.startingbackasync.StartingModuleBackAsync;
+import com.sous.backasync.start.ModuleQueryBackAsync;
 
-import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.nio.file.StandardOpenOption;
-import java.util.Date;
 import java.util.concurrent.CompletableFuture;
 import java.util.function.Supplier;
 
 
 public class  BiccessLogicActivityError{
-    private  StartingModuleBackAsync startingModuleBackAsync;
+    private ModuleQueryBackAsync moduleQueryBackAsync;
     private Context context;
 
     private SQLiteDatabase sqLiteDatabase_error;
@@ -40,10 +33,10 @@ public class  BiccessLogicActivityError{
 
 
 
-    public BiccessLogicActivityError(StartingModuleBackAsync startingModuleBackAsync,
+    public BiccessLogicActivityError(
                                      Context context,
                                      SQLiteDatabase sqLiteDatabase_error) {
-        this.startingModuleBackAsync = startingModuleBackAsync;
+        this.moduleQueryBackAsync = moduleQueryBackAsync;
         this.context = context;
         this.sqLiteDatabase_error = sqLiteDatabase_error;
     }
@@ -52,6 +45,8 @@ public class  BiccessLogicActivityError{
     // TODO: 28.06.2023 Запись Ошибков
     public void МетодУдаланиеОшибок()   {
         try {
+
+
 
             CompletableFuture.supplyAsync(new Supplier<Object>() {
                         @Override
@@ -131,15 +126,6 @@ public class  BiccessLogicActivityError{
                     Thread.currentThread().getStackTrace()[2].getLineNumber());
         }
     }
-
-
-
-
-
-
-
-
-
 
 
 }

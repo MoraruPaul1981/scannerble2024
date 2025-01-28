@@ -7,7 +7,9 @@ import android.util.Log;
 
 import androidx.annotation.NonNull;
 
-public class GetqueryWhere {
+import com.sous.backasync.operationsprovider.GetQuery.intarface.ProviderQueryIntarface;
+
+public class ProviderQuery implements ProviderQueryIntarface {
 
 
     private Context context;
@@ -15,12 +17,15 @@ public class GetqueryWhere {
     private SQLiteDatabase getsqLiteDatabase;
 
 
-    public GetqueryWhere(Context context, SQLiteDatabase getsqLiteDatabase) {
+    public ProviderQuery(Context context, SQLiteDatabase getsqLiteDatabase) {
         this.context = context;
         this.getsqLiteDatabase = getsqLiteDatabase;
     }
 
 
+
+
+    @Override
     public Cursor getQuery(@NonNull String table, @NonNull String selection, @NonNull  String[] selectionArgs){
         Cursor cursor = null;
         try{

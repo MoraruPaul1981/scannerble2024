@@ -1,0 +1,120 @@
+package com.sous.backasync.start;
+
+
+import android.content.Context;
+import android.database.Cursor;
+import android.net.Uri;
+import android.os.Bundle;
+import android.util.Log;
+
+import androidx.annotation.NonNull;
+import androidx.loader.content.CursorLoader;
+
+import com.sous.backasync.start.interfaces.ModuleQueryBackAsyncInterface;
+
+import javax.inject.Inject;
+
+import dagger.Module;
+import dagger.hilt.InstallIn;
+import dagger.hilt.android.qualifiers.ApplicationContext;
+import dagger.hilt.components.SingletonComponent;
+
+
+@Module
+@InstallIn(SingletonComponent.class)
+public class ModuleQueryBackAsync  implements ModuleQueryBackAsyncInterface {
+
+    Context context;
+
+    public @Inject ModuleQueryBackAsync(@ApplicationContext Context context) {
+
+        this.context=context;
+
+        Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n");
+    }
+
+    // TODO: 28.01.2025   Querty
+
+
+
+@Override
+public Cursor getModuleQuery(@NonNull Bundle bundleModuleBack){
+        Cursor cursor=null;
+        try{
+            if (bundleModuleBack!=null) {
+                CursorLoader  cursorLoader=new CursorLoader(context);
+                String[] УсловияВыборки=      bundleModuleBack.getStringArray("УсловияВыборки");
+                String  СамЗапрос=      bundleModuleBack.getString("СамЗапрос");
+                String  Таблица=      bundleModuleBack.getString("Таблица");
+                Uri uri = Uri.parse("content://"+getNameProvider+"/" + Таблица + "");
+                cursorLoader.setUri(uri);
+                cursorLoader.setSelection(СамЗапрос);
+                cursorLoader.setSelectionArgs(УсловияВыборки);//МесяцПростоАнализа
+                cursorLoader.forceLoad();
+                cursor=    cursorLoader.loadInBackground();
+                if (cursor.getCount() > 0 && cursor!=null) {
+                    cursor.moveToFirst();
+                    Log.d(this.getClass().getName(), "cursor.getCount() "
+                            + cursor.getCount());
+                }
+                cursorLoader.commitContentChanged();
+            }
+
+            Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                    " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                    " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" + "cursor "
+                    +cursor + " bundleModuleBack " +bundleModuleBack );
+
+        } catch ( Exception e) {
+            e.printStackTrace();
+            Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
+                    " Линия  :" + Thread.currentThread().getStackTrace()[2].getLineNumber());
+/*            new RecordNewErros(context).recordnewerror(e.toString(), this.getClass().getName(),
+                    Thread.currentThread().getStackTrace()[2].getMethodName(), Thread.currentThread().getStackTrace()[2].getLineNumber());*/
+            Log.e(context.getClass().getName(), " Ошибка СЛУЖБА Service_ДляЗапускаодноразовойСинхронизации   ");
+        }
+        return  cursor;
+    }
+
+
+    @Override
+    public Cursor getModuleQuery(@NonNull String СамЗапрос,@NonNull String Таблица,@NonNull String []УсловияВыборки){
+        Cursor cursor=null;
+        try{
+            if (Таблица!=null) {
+                CursorLoader  cursorLoader=new CursorLoader(context);
+                Uri uri = Uri.parse("content://"+getNameProvider+"/" + Таблица + "");
+                cursorLoader.setUri(uri);
+                cursorLoader.setSelection(СамЗапрос);
+                cursorLoader.setSelectionArgs(УсловияВыборки);//МесяцПростоАнализа
+                cursorLoader.forceLoad();
+                cursor=    cursorLoader.loadInBackground();
+                if (cursor.getCount() > 0 && cursor!=null) {
+                    cursor.moveToFirst();
+                    Log.d(this.getClass().getName(), "cursor.getCount() "
+                            + cursor.getCount());
+                }
+                cursorLoader.commitContentChanged();
+            }
+
+            Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                    " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                    " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" + "cursor "
+                    +cursor + " СамЗапрос " +СамЗапрос );
+
+        } catch ( Exception e) {
+            e.printStackTrace();
+            Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
+                    " Линия  :" + Thread.currentThread().getStackTrace()[2].getLineNumber());
+/*            new RecordNewErros(context).recordnewerror(e.toString(), this.getClass().getName(),
+                    Thread.currentThread().getStackTrace()[2].getMethodName(), Thread.currentThread().getStackTrace()[2].getLineNumber());*/
+            Log.e(context.getClass().getName(), " Ошибка СЛУЖБА Service_ДляЗапускаодноразовойСинхронизации   ");
+        }
+        return  cursor;
+    }
+
+
+
+}

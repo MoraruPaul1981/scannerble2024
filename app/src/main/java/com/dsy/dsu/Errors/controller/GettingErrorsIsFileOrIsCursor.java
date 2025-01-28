@@ -10,7 +10,8 @@ import android.util.Log;
 import androidx.core.content.FileProvider;
 
 import com.dsy.dsu.Errors.controller.interfaces.GettingErrorsIsFileInterface;
-import com.sous.backasync.startingbackasync.StartingModuleBackAsync;
+import com.sous.backasync.start.ModuleQueryBackAsync;
+
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -22,17 +23,22 @@ import java.nio.file.Paths;
 import java.util.Date;
 import java.util.function.Consumer;
 
+import javax.inject.Inject;
+
 import io.reactivex.rxjava3.core.Flowable;
 
 public class GettingErrorsIsFileOrIsCursor implements GettingErrorsIsFileInterface {
 
-
     Context context;
-    StartingModuleBackAsync startingModuleBackAsync;
-    public GettingErrorsIsFileOrIsCursor(Context context, StartingModuleBackAsync startingModuleBackAsync) {
+
+    @Inject
+    ModuleQueryBackAsync moduleQueryBackAsync;
+
+    public GettingErrorsIsFileOrIsCursor(Context context, ModuleQueryBackAsync moduleQueryBackAsync) {
         this.context = context;
-        this.startingModuleBackAsync = startingModuleBackAsync;
+        this.moduleQueryBackAsync = moduleQueryBackAsync;
     }
+
 
     public StringBuffer gettingErrorsIsFile()   {
         StringBuffer БуерДляОшибок =new StringBuffer();
@@ -108,18 +114,11 @@ public class GettingErrorsIsFileOrIsCursor implements GettingErrorsIsFileInterfa
         // TODO: 14.01.2025
         try{
 
-            Cursor getbackasyncQueryandWhere=      startingModuleBackAsync.backasyncQueryandWhere("errordsu1",
+           Cursor getbackasyncQueryandWhere=   moduleQueryBackAsync.getModuleQuery("errordsu1",
                     " SELECT  *   FROM errordsu1 AS er  WHERE er.ERROR IS  NOT NULL  ORDER BY er.id DESC  " ,
                     null);
 
-            Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
-                    " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                    " line " + Thread.currentThread().getStackTrace()[2].getLineNumber()
-                    + "\n" + "getbackasyncQueryandWhere " +getbackasyncQueryandWhere );
-
-
-
-              БуерДляОшибок=    rowAppendBufferErrors(getbackasyncQueryandWhere);
+           БуерДляОшибок=    rowAppendBufferErrors(getbackasyncQueryandWhere);
 
             Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                     " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +

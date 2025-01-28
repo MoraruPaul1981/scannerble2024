@@ -7,18 +7,14 @@ import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 
 
-import com.dsy.dsu.BusinessLogicAll.WorkerTables.HiltWorkerTable;
-import com.dsy.dsu.BusinessLogicAll.WorkerTables.QualifierWorkerTable;
-import com.dsy.dsu.BusinessLogicAll.WorkerTables.SubClassCreatingMainAllTables;
 import com.dsy.dsu.Errors.controller.RecordNewErros;
-import com.sous.backasync.hill.HiltWorkerTableBarckAync;
-import com.sous.backasync.startingbackasync.StartingModuleBackAsync;
+import com.sous.backasync.start.ModuleQueryBackAsync;
+
 
 import java.util.concurrent.CopyOnWriteArrayList;
 
 import javax.inject.Inject;
 
-import dagger.hilt.EntryPoints;
 import dagger.hilt.android.HiltAndroidApp;
 
 
@@ -29,13 +25,15 @@ public class CoreApp extends Application {
   public   SQLiteDatabase getSqlLiteCoreApp;
 
 
-    @Inject
-    public StartingModuleBackAsync startingModuleBackAsync;
+
 
 
     @Inject
     CopyOnWriteArrayList<String> getWorkerTablesALl;
 
+
+    @Inject
+    ModuleQueryBackAsync moduleQueryBackAsync;
 
     @Override
     public void onCreate() {
@@ -62,9 +60,9 @@ public class CoreApp extends Application {
             CopyOnWriteArrayList<String> getWorkerTablesALlBarckAync=     EntryPoints.get(getApplicationContext(), HiltWorkerTableBarckAync.class).getWorkerTablesALl();
 */
 
-            Cursor getbackasyncQueryandWhere=   startingModuleBackAsync.backasyncQueryandWhere("errordsu1",
+            /*Cursor getbackasyncQueryandWhere=   moduleQueryBackAsync.backasyncQueryandWhere("errordsu1",
                    " SELECT  *   FROM errordsu1 AS er  WHERE er.ERROR IS  NOT NULL  ORDER BY er.id DESC  "
-                   ,null);
+                   ,null);*/
 
 
 // TODO: 13.01.2025  Запускаем  
@@ -73,7 +71,7 @@ public class CoreApp extends Application {
         //   startingBackAsync.backasyncQueryandWhere("errordsu1"," SELECT  *   FROM errordsu1 WHERE  id=? AND ERROR IS  NOT NULL  ORDER BY id DESC  " ,new String[]{"3"});
           /* startingBackAsync.backasyncQueryandWhere("errordsu1"," SELECT  *   FROM errordsu1  WHERE ERROR IS  NOT NULL  ORDER BY id DESC  " ,null);*/
           //  startingBackAsync.backasyncQueryandWhere("errordsu1"," SELECT  *   FROM errordsu1 AS er  WHERE er.ERROR IS  NOT NULL  ORDER BY er.id DESC  " ,null);
-            //startingModuleBackAsync.backasyncQueryandWhere("errordsu1"," SELECT  *   FROM errordsu1 AS er  WHERE er.ERROR IS  NOT NULL  ORDER BY er.id DESC  " ,null);
+            //moduleQueryBackAsync.backasyncQueryandWhere("errordsu1"," SELECT  *   FROM errordsu1 AS er  WHERE er.ERROR IS  NOT NULL  ORDER BY er.id DESC  " ,null);
         // TODO: 17.04.2023
         Log.d(this.getClass().getName(),"\n" + " class CoreApp    " + Thread.currentThread().getStackTrace()[2].getClassName()
                 + "\n" +

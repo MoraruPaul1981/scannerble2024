@@ -20,9 +20,9 @@ import androidx.annotation.Nullable;
 
 
 import com.sous.backasync.hill.HiltWorkerTableBarckAync;
-import com.sous.backasync.workertable.GetainAllTables;
+
 import com.sous.backasync.hill.HiltInterfacesqliteBack;
-import com.sous.backasync.operationsprovider.GetQuery.GetqueryWhere;
+import com.sous.backasync.operationsprovider.GetQuery.ProviderQuery;
 
 import java.util.ArrayList;
 import java.util.Optional;
@@ -108,9 +108,10 @@ public class ProviderBackAsync extends ContentProvider  {
             String table = МетодОпределяемТаблицу(uri);
 
            // Getquery getError=new Getquery(getContext(),sqliteBAck);
-            GetqueryWhere getError=new GetqueryWhere(getContext(),sqliteBAck);
+            ProviderQuery getproviderQuery=new ProviderQuery(getContext(),sqliteBAck);
 // TODO: 15.01.2025 et Cursor with Data
-             cursor =   getError.getQuery( table,selection,  selectionArgs);
+             cursor =   getproviderQuery.getQuery( table,selection,  selectionArgs);
+
             Log.d(this.getClass().getName(),"\n" + " class FaceAPp " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                     " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
                     " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"+
