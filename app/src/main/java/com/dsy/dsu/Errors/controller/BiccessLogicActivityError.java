@@ -10,7 +10,7 @@ import android.os.Environment;
 import android.util.Log;
 
 
-import com.sous.backasync.start.ModuleQueryBackAsync;
+import com.sous.backasync.start.ModuleQuety;
 
 import java.io.BufferedWriter;
 import java.io.File;
@@ -23,7 +23,7 @@ import java.util.function.Supplier;
 
 
 public class  BiccessLogicActivityError{
-    private ModuleQueryBackAsync moduleQueryBackAsync;
+    private ModuleQuety moduleQuety;
     private Context context;
 
     private SQLiteDatabase sqLiteDatabase_error;
@@ -36,7 +36,7 @@ public class  BiccessLogicActivityError{
     public BiccessLogicActivityError(
                                      Context context,
                                      SQLiteDatabase sqLiteDatabase_error) {
-        this.moduleQueryBackAsync = moduleQueryBackAsync;
+        this.moduleQuety = moduleQuety;
         this.context = context;
         this.sqLiteDatabase_error = sqLiteDatabase_error;
     }

@@ -13,5 +13,5 @@ public interface ModuleQueryBackAsyncInterface {
 
     Cursor getModuleQuery(@NonNull Bundle bundleModuleBack);
     // TODO: 28.01.2025
-    Cursor getModuleQuery(@NonNull String СамЗапрос,@NonNull String Таблица,@NonNull String []УсловияВыборки);
+      Cursor getModuleQuery(@NonNull String Таблица,@NonNull String СамЗапрос, @NonNull String []УсловияВыборки);
 }

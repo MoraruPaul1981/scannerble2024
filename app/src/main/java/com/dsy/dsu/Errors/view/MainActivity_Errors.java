@@ -39,7 +39,7 @@ import com.dsy.dsu.Hilt.Sqlitehilt.HiltInterfacesqlite;
 import com.dsy.dsu.R;
 import com.dsy.dsu.Services.ServiceUpdatePoОбновлениеПО;
 import com.google.android.material.button.MaterialButton;
-import com.sous.backasync.start.ModuleQueryBackAsync;
+import com.sous.backasync.start.ModuleQuety;
 
 
 import org.jetbrains.annotations.NotNull;
@@ -75,7 +75,7 @@ public class MainActivity_Errors extends AppCompatActivity  {
     SQLiteDatabase sqLiteDatabase_error;
 
     @Inject
-    ModuleQueryBackAsync moduleQueryBackAsync;
+    ModuleQuety moduleQuety;
 
     @SuppressLint("MissingInflatedId")
     @Override
@@ -160,7 +160,7 @@ public class MainActivity_Errors extends AppCompatActivity  {
 
            // TODO: 17.01.2025  Получаем Ошибку двумя разными способами из файла и из курсора
            //StringBuffer БуерДляОшибокИзФайла =     new GettingErrorsIsFileOrIsCursor(getApplicationContext()).gettingErrorsIsFile();
-           StringBuffer БуерДляОшибокИзКурсора =     new GettingErrorsIsFileOrIsCursor(getApplicationContext(), moduleQueryBackAsync).gettingErrorsIsCursor();
+           StringBuffer БуерДляОшибокИзКурсора =     new GettingErrorsIsFileOrIsCursor(getApplicationContext(), moduleQuety).gettingErrorsIsCursor();
 
             // TODO: 17.01.2025  полученные ошибку отправляем на экран ПОльзователю
               metodProssecingErrorsAll(БуерДляОшибокИзКурсора);

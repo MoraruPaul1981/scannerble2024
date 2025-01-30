@@ -10,7 +10,7 @@ import android.util.Log;
 import androidx.core.content.FileProvider;
 
 import com.dsy.dsu.Errors.controller.interfaces.GettingErrorsIsFileInterface;
-import com.sous.backasync.start.ModuleQueryBackAsync;
+import com.sous.backasync.start.ModuleQuety;
 
 
 import java.io.BufferedReader;
@@ -32,11 +32,11 @@ public class GettingErrorsIsFileOrIsCursor implements GettingErrorsIsFileInterfa
     Context context;
 
     @Inject
-    ModuleQueryBackAsync moduleQueryBackAsync;
+    ModuleQuety moduleQuety;
 
-    public GettingErrorsIsFileOrIsCursor(Context context, ModuleQueryBackAsync moduleQueryBackAsync) {
+    public GettingErrorsIsFileOrIsCursor(Context context, ModuleQuety moduleQuety) {
         this.context = context;
-        this.moduleQueryBackAsync = moduleQueryBackAsync;
+        this.moduleQuety = moduleQuety;
     }
 
 
@@ -114,7 +114,7 @@ public class GettingErrorsIsFileOrIsCursor implements GettingErrorsIsFileInterfa
         // TODO: 14.01.2025
         try{
 
-           Cursor getbackasyncQueryandWhere=   moduleQueryBackAsync.getModuleQuery("errordsu1",
+           Cursor getbackasyncQueryandWhere=   moduleQuety.getModuleQuery("errordsu1",
                     " SELECT  *   FROM errordsu1 AS er  WHERE er.ERROR IS  NOT NULL  ORDER BY er.id DESC  " ,
                     null);
 

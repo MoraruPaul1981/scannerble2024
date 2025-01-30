@@ -1,16 +1,22 @@
 package com.sous.backasync.start;
 
 
+import android.annotation.SuppressLint;
+import android.content.ContentProviderOperation;
+import android.content.ContentResolver;
+import android.content.ContentValues;
 import android.content.Context;
-import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 
 import androidx.annotation.NonNull;
-import androidx.loader.content.CursorLoader;
 
-import com.sous.backasync.start.interfaces.ModuleQueryBackAsyncInterface;
+import com.sous.backasync.start.interfaces.ModuleInsertBackAsyncInterface;
+
+import java.util.ArrayList;
+import java.util.Optional;
+import java.util.stream.LongStream;
 
 import javax.inject.Inject;
 
@@ -22,11 +28,11 @@ import dagger.hilt.components.SingletonComponent;
 
 @Module
 @InstallIn(SingletonComponent.class)
-public class ModuleQueryBackAsync  implements ModuleQueryBackAsyncInterface {
+public class ModuleInserting implements ModuleInsertBackAsyncInterface {
 
     Context context;
 
-    public @Inject ModuleQueryBackAsync(@ApplicationContext Context context) {
+    public @Inject ModuleInserting(@ApplicationContext Context context) {
 
         this.context=context;
 
@@ -40,32 +46,28 @@ public class ModuleQueryBackAsync  implements ModuleQueryBackAsyncInterface {
 
 
 @Override
-public Cursor getModuleQuery(@NonNull Bundle bundleModuleBack){
-        Cursor cursor=null;
+public Integer getModuleInsert(@NonNull Bundle bundleModuleBack){
+    Integer getInsert=0;
         try{
             if (bundleModuleBack!=null) {
-                CursorLoader  cursorLoader=new CursorLoader(context);
                 String[] УсловияВыборки=      bundleModuleBack.getStringArray("УсловияВыборки");
                 String  СамЗапрос=      bundleModuleBack.getString("СамЗапрос");
                 String  Таблица=      bundleModuleBack.getString("Таблица");
                 Uri uri = Uri.parse("content://"+getNameProvider+"/" + Таблица + "");
-                cursorLoader.setUri(uri);
-                cursorLoader.setSelection(СамЗапрос);
-                cursorLoader.setSelectionArgs(УсловияВыборки);//МесяцПростоАнализа
-                cursorLoader.forceLoad();
-                cursor=    cursorLoader.loadInBackground();
-                if (cursor.getCount() > 0 && cursor!=null) {
-                    cursor.moveToFirst();
-                    Log.d(this.getClass().getName(), "cursor.getCount() "
-                            + cursor.getCount());
-                }
-                cursorLoader.commitContentChanged();
+                // TODO: 28.01.2025
+                ContentResolver contentProviderInsert=context.getContentResolver();
+                ContentValues contentValuesModuleBackAsync=new ContentValues();
+                Uri InsertingBack= contentProviderInsert.insert(uri,contentValuesModuleBackAsync);
+
+
+                Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                        " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                        " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" + "getInsert " +getInsert  );
             }
 
             Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                     " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                    " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" + "cursor "
-                    +cursor + " bundleModuleBack " +bundleModuleBack );
+                    " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" + "getInsert " +getInsert  );
 
         } catch ( Exception e) {
             e.printStackTrace();
@@ -75,34 +77,38 @@ public Cursor getModuleQuery(@NonNull Bundle bundleModuleBack){
                     Thread.currentThread().getStackTrace()[2].getMethodName(), Thread.currentThread().getStackTrace()[2].getLineNumber());*/
             Log.e(context.getClass().getName(), " Ошибка СЛУЖБА Service_ДляЗапускаодноразовойСинхронизации   ");
         }
-        return  cursor;
+        return  getInsert;
     }
 
-
+    @SuppressLint("NewApi")
     @Override
-    public Cursor getModuleQuery(@NonNull String СамЗапрос,@NonNull String Таблица,@NonNull String []УсловияВыборки){
-        Cursor cursor=null;
+    public Integer getModuleInsert(@NonNull String Таблица,@NonNull ContentValues contentValuesModuleBackAsync ){
+        Integer getInsert=0;
         try{
-            if (Таблица!=null) {
-                CursorLoader  cursorLoader=new CursorLoader(context);
+            if (contentValuesModuleBackAsync!=null) {
                 Uri uri = Uri.parse("content://"+getNameProvider+"/" + Таблица + "");
-                cursorLoader.setUri(uri);
-                cursorLoader.setSelection(СамЗапрос);
-                cursorLoader.setSelectionArgs(УсловияВыборки);//МесяцПростоАнализа
-                cursorLoader.forceLoad();
-                cursor=    cursorLoader.loadInBackground();
-                if (cursor.getCount() > 0 && cursor!=null) {
-                    cursor.moveToFirst();
-                    Log.d(this.getClass().getName(), "cursor.getCount() "
-                            + cursor.getCount());
-                }
-                cursorLoader.commitContentChanged();
+                ContentResolver contentProviderInsert=context.getContentResolver();
+
+         Uri InsertingBackUri=contentProviderInsert.acquireContentProviderClient(uri).insert(uri,contentValuesModuleBackAsync);
+
+                 long InsertingBack=
+                         Optional.ofNullable(InsertingBackUri)
+                                 .stream()
+                                 .filter(f->f!=null)
+                                 .filter(f->f.getHost()!=null)
+                                 .filter(f->f.getHost().chars().allMatch( Character::isDigit ))
+                                 .mapToInt(tran-> Integer.parseInt(tran.getHost()))
+                                 .asLongStream().findAny().orElse(0);
+
+                Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                        " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                        " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" + "getInsert " +getInsert  );
             }
+
 
             Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                     " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                    " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" + "cursor "
-                    +cursor + " СамЗапрос " +СамЗапрос );
+                    " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" + "getInsert " +getInsert  );
 
         } catch ( Exception e) {
             e.printStackTrace();
@@ -112,7 +118,7 @@ public Cursor getModuleQuery(@NonNull Bundle bundleModuleBack){
                     Thread.currentThread().getStackTrace()[2].getMethodName(), Thread.currentThread().getStackTrace()[2].getLineNumber());*/
             Log.e(context.getClass().getName(), " Ошибка СЛУЖБА Service_ДляЗапускаодноразовойСинхронизации   ");
         }
-        return  cursor;
+        return  getInsert;
     }
 
 

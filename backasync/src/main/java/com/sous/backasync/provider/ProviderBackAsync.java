@@ -199,7 +199,7 @@ public class ProviderBackAsync extends ContentProvider  {
     @Override
     public Uri insert(Uri uri, ContentValues values) {
         // TODO: Implement this to handle requests to insert a new row.
-        final Uri[] ОтветВставкиДанных = {null};
+          Uri ОтветВставкиДанных = null;
         try {
                     if (!sqliteBAck.inTransaction()) {
                         sqliteBAck.beginTransaction();
@@ -213,7 +213,7 @@ public class ProviderBackAsync extends ContentProvider  {
                     // TODO: 30.10.2021
                     Log.w(getContext().getClass().getName(), " РезультатВставкиДанных  " + РезультатВставкиДанных);/////
 
-                    ОтветВставкиДанных[0] = Uri.parse("content://"+РезультатВставкиДанных.toString());
+                    ОтветВставкиДанных = Uri.parse("content://"+РезультатВставкиДанных.toString());
                     if (РезультатВставкиДанных> 0) {
 
                         if (sqliteBAck.inTransaction()) {
@@ -232,7 +232,7 @@ public class ProviderBackAsync extends ContentProvider  {
             Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() + " Линия  :"
                     + Thread.currentThread().getStackTrace()[2].getLineNumber());
         }
-        return ОтветВставкиДанных[0];
+        return ОтветВставкиДанных;
     }
 
     // TODO: 22.11.2022 INSERT

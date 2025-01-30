@@ -2,13 +2,14 @@ package com.dsy.dsu.CoreApp;
 
 
 import android.app.Application;
-import android.database.Cursor;
+import android.content.ContentValues;
 import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 
 
 import com.dsy.dsu.Errors.controller.RecordNewErros;
-import com.sous.backasync.start.ModuleQueryBackAsync;
+import com.sous.backasync.start.ModuleInserting;
+import com.sous.backasync.start.ModuleQuety;
 
 
 import java.util.concurrent.CopyOnWriteArrayList;
@@ -33,7 +34,10 @@ public class CoreApp extends Application {
 
 
     @Inject
-    ModuleQueryBackAsync moduleQueryBackAsync;
+    ModuleQuety moduleQuety;
+
+    @Inject
+    ModuleInserting moduleInserting;
 
     @Override
     public void onCreate() {
@@ -60,7 +64,7 @@ public class CoreApp extends Application {
             CopyOnWriteArrayList<String> getWorkerTablesALlBarckAync=     EntryPoints.get(getApplicationContext(), HiltWorkerTableBarckAync.class).getWorkerTablesALl();
 */
 
-            /*Cursor getbackasyncQueryandWhere=   moduleQueryBackAsync.backasyncQueryandWhere("errordsu1",
+            /*Cursor getbackasyncQueryandWhere=   moduleQuety.backasyncQueryandWhere("errordsu1",
                    " SELECT  *   FROM errordsu1 AS er  WHERE er.ERROR IS  NOT NULL  ORDER BY er.id DESC  "
                    ,null);*/
 
@@ -71,8 +75,13 @@ public class CoreApp extends Application {
         //   startingBackAsync.backasyncQueryandWhere("errordsu1"," SELECT  *   FROM errordsu1 WHERE  id=? AND ERROR IS  NOT NULL  ORDER BY id DESC  " ,new String[]{"3"});
           /* startingBackAsync.backasyncQueryandWhere("errordsu1"," SELECT  *   FROM errordsu1  WHERE ERROR IS  NOT NULL  ORDER BY id DESC  " ,null);*/
           //  startingBackAsync.backasyncQueryandWhere("errordsu1"," SELECT  *   FROM errordsu1 AS er  WHERE er.ERROR IS  NOT NULL  ORDER BY er.id DESC  " ,null);
-            //moduleQueryBackAsync.backasyncQueryandWhere("errordsu1"," SELECT  *   FROM errordsu1 AS er  WHERE er.ERROR IS  NOT NULL  ORDER BY er.id DESC  " ,null);
+            //moduleQuety.backasyncQueryandWhere("errordsu1"," SELECT  *   FROM errordsu1 AS er  WHERE er.ERROR IS  NOT NULL  ORDER BY er.id DESC  " ,null);
         // TODO: 17.04.2023
+
+            // TODO: 29.01.2025 insert
+
+            moduleInserting.getModuleInsert("error",new ContentValues());
+
         Log.d(this.getClass().getName(),"\n" + " class CoreApp    " + Thread.currentThread().getStackTrace()[2].getClassName()
                 + "\n" +
                 " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
