@@ -1,5 +1,6 @@
 package com.dsy.dsu.Errors.controller;
 
+import android.content.ContentValues;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Environment;
@@ -16,6 +17,8 @@ import com.dsy.dsu.BusinessLogicAll.Class_Generations_PUBLIC_CURRENT_ID;
 import com.dsy.dsu.BusinessLogicAll.DATE.Class_Generation_Data;
 import com.dsy.dsu.BusinessLogicAll.SubClassUpVersionDATA;
 import com.dsy.dsu.CnangeServers.PUBLIC_CONTENT;
+import com.dsy.dsu.Errors.controller.interfaces.RecordNewErrorsInterface;
+import com.sous.backasync.start.ModuleInserting;
 
 import java.io.BufferedWriter;
 import java.io.File;
@@ -25,78 +28,79 @@ import java.nio.file.Paths;
 import java.nio.file.StandardOpenOption;
 import java.util.ArrayList;
 
-public class RecordNewErros {
+import javax.inject.Inject;
+
+import io.reactivex.rxjava3.core.Maybe;
+import io.reactivex.rxjava3.core.Scheduler;
+import io.reactivex.rxjava3.functions.Action;
+import io.reactivex.rxjava3.functions.Consumer;
+import io.reactivex.rxjava3.schedulers.Schedulers;
+
+public class RecordNewErros  implements RecordNewErrorsInterface {
 
     private Context context;
-    private Class_GRUD_SQL_Operations classGrudSqlOperationsОшибки;
+    /*private String fileName = "Sous-Avtodor-ERROR.txt";
 
-    private String fileName = "Sous-Avtodor-ERROR.txt";
+    private   String patchFileName="SousAvtoFile";*/
 
-    private   String patchFileName="SousAvtoFile";
-    private SQLiteDatabase sqLiteDatabase ;
+
+      ModuleInserting moduleInserting;
+
+
     public RecordNewErros(@NonNull Context context) {
-
+// TODO: 30.01.2025
         this.context = context;
-        sqLiteDatabase=    GetSQLiteDatabase.SqliteDatabase();
     }
 
+
+
+    @Override
     public void recordnewerror(@NonNull String ТекстОшибки,
                                               @NonNull String КлассГнерацииОшибки,
                                               @NonNull String МетодаОшибки,
                                               @NonNull Integer ЛинияОшибки) {
 
-        Long PезультатВставкиНовойОшибки = 0l;
         try {
             if (context != null) {
-                Long ВерсияДанных = new SubClassUpVersionDATA().upVersionCurentTable("errordsu1"
-                        , context );
-                Long UUID = (Long)
-                        new Class_Generation_UUID(context).МетодГенерацииUUID();
-                Integer ПубличныйIDДляАсих = new Class_Generations_PUBLIC_CURRENT_ID().
-                        getPublicIDAllApp(context);
-                classGrudSqlOperationsОшибки = new Class_GRUD_SQL_Operations(context);
-                classGrudSqlOperationsОшибки.concurrentHashMapНабор.clear();
-                classGrudSqlOperationsОшибки = new Class_GRUD_SQL_Operations(context);
-                classGrudSqlOperationsОшибки.concurrentHashMapНабор.put("НазваниеОбрабоатываемойТаблицы", "ErrorDSU1");
-                classGrudSqlOperationsОшибки.contentValuesДляSQLBuilder_Для_GRUD_Операций.put("Error", ТекстОшибки.toLowerCase());
-                Log.d(this.getClass().getName(), " ТекстОшибки.toLowerCase()  " + ТекстОшибки.toLowerCase());
-                classGrudSqlOperationsОшибки.contentValuesДляSQLBuilder_Для_GRUD_Операций.put("Klass", КлассГнерацииОшибки.toUpperCase());
-                classGrudSqlOperationsОшибки.contentValuesДляSQLBuilder_Для_GRUD_Операций.put("Metod", МетодаОшибки.toUpperCase());
-                classGrudSqlOperationsОшибки.contentValuesДляSQLBuilder_Для_GRUD_Операций.put("LineError", ЛинияОшибки);
-                classGrudSqlOperationsОшибки.contentValuesДляSQLBuilder_Для_GRUD_Операций.put("user_update", ПубличныйIDДляАсих);
-                classGrudSqlOperationsОшибки.contentValuesДляSQLBuilder_Для_GRUD_Операций.put("UUID", UUID);
-                classGrudSqlOperationsОшибки.contentValuesДляSQLBuilder_Для_GRUD_Операций.put("current_table", ВерсияДанных);
-                final Object ТекущаяВерсияПрограммы = BuildConfig.VERSION_CODE;
-                Integer ЛокальнаяВерсияПОСравнение = Integer.parseInt(ТекущаяВерсияПрограммы.toString());
-                classGrudSqlOperationsОшибки.contentValuesДляSQLBuilder_Для_GRUD_Операций.put("whose_error", ЛокальнаяВерсияПОСравнение);
-                String СгенерированованныйДатаДляВставки = new Class_Generation_Data(context).ГлавнаяДатаИВремяОперацийСБазойДанных();
-                classGrudSqlOperationsОшибки.contentValuesДляSQLBuilder_Для_GRUD_Операций.put("date_update", СгенерированованныйДатаДляВставки);
-
                 ///TODO Записываем ошибки только определного сорта
                 if (!ТекстОшибки.trim().matches("(.*)UnknownHostException(.*)")
                         && !ТекстОшибки.trim().matches("(.*)SocketTimeoutException(.*)")
                         && !ТекстОшибки.trim().matches("(.*)ConnectException(.*)")) {
 
-                    // TODO: 21.12.2022  главная  файл ErrorDSU1
-                   getWriteNewError( );
+
+                    // TODO: 30.01.2025
+                    getWriteNewError(  ТекстОшибки, КлассГнерацииОшибки,МетодаОшибки, ЛинияОшибки );
+
+                    Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                            " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                            " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" + "\n" +" ТекстОшибки " +ТекстОшибки);;
 
                     // TODO: 20.12.2022  дополнительный механизм записи ошибкок
                     getWriteNewErrorNotePad(ТекстОшибки, КлассГнерацииОшибки, МетодаОшибки, ЛинияОшибки);
 
+                    Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                            " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                            " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" + "\n" +" ТекстОшибки " +ТекстОшибки);;
+                    // TODO: 21.12.2022  главная  файл ErrorDSU1 в ТАблицу
+
+
+
 
                 }
-                Log.d(this.getClass().getName(), "PезультатВставкиНовойОшибки " + PезультатВставкиНовойОшибки);
+                Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                        " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                        " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"+ "\n" +" ТекстОшибки " +ТекстОшибки);
 
             } else {
-                System.err.println("  Ошибка в самом классе записи ошибок нет КОНТЕКСТА RecordNewErros");
+                Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                        " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                        " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"+ "\n" +" ТекстОшибки " +ТекстОшибки);
             }
             // TODO: 17.04.2023
             Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                     " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                    " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n");
+                    " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"+ "\n" +" ТекстОшибки " +ТекстОшибки);
             // TODO: 09.07.2023 clear
-            classGrudSqlOperationsОшибки.concurrentHashMapНабор.clear();
-
         } catch (Exception e) {
             e.printStackTrace();
             System.err.println("  Ошибка в самом классе записи ошибок нет КОНТЕКСТА RecordNewErros");
@@ -107,7 +111,10 @@ public class RecordNewErros {
 
     }
 
-    private void getWriteNewErrorNotePad(@NonNull String ТекстОшибки, @NonNull String КлассГнерацииОшибки, @NonNull String МетодаОшибки, @NonNull Integer ЛинияОшибки) {
+
+
+    @Override
+      public void getWriteNewErrorNotePad(@NonNull String ТекстОшибки, @NonNull String КлассГнерацииОшибки, @NonNull String МетодаОшибки, @NonNull Integer ЛинияОшибки) {
         try{
         ArrayList<String> arrayListОшибкиДляЗаписивФайл = new ArrayList();
         arrayListОшибкиДляЗаписивФайл.add(ТекстОшибки);
@@ -117,7 +124,7 @@ public class RecordNewErros {
 
         // TODO: 09.07.2023 запись ошибки в файл  .txt
 
-        new SubClassWriteErrorFile(context, arrayListОшибкиДляЗаписивФайл).writeDownAnewErrorFile();
+         writeDownAnewErrorFile(arrayListОшибкиДляЗаписивФайл);
 
             Log.d(this.getClass().getName(),"\n" + " class CoreApp    " + Thread.currentThread().getStackTrace()[2].getClassName()
                     + "\n" +
@@ -133,18 +140,55 @@ public class RecordNewErros {
     }
     }
 
-    private void getWriteNewError( ) {
+
+
+
+    @Override
+     public Integer getWriteNewError(@NonNull String ТекстОшибки,
+                                  @NonNull String КлассГнерацииОшибки,
+                                  @NonNull String МетодаОшибки,
+                                  @NonNull Integer ЛинияОшибки ) {
+        // TODO: 30.01.2025
+        Integer InsertingNewErorr = null;
         try{
-     Long   pезультатВставкиНовойОшибки = (Long) classGrudSqlOperationsОшибки.
+
+           moduleInserting=new ModuleInserting(context);
+            // TODO: 30.01.2025
+            ContentValues contentValuesNewError=new ContentValues();
+
+            Long getVersionForError  = new SubClassUpVersionDATA().upVersionCurentTable("errordsu1"
+                    , context );
+            Long UUIDForError = (Long)
+                    new Class_Generation_UUID(context).МетодГенерацииUUID();
+            Integer getPublicIdForError = new Class_Generations_PUBLIC_CURRENT_ID().
+                    getPublicIDAllApp(context);
+            String getNewDateForError = new Class_Generation_Data(context).ГлавнаяДатаИВремяОперацийСБазойДанных();
+
+            final Object VersionPC = BuildConfig.VERSION_CODE;
+            Integer getVersionPCForError = Integer.parseInt(VersionPC.toString());
+            // TODO: 30.01.2025 ВСТАВКА  новой ошибки
+
+            contentValuesNewError.put("Error", ТекстОшибки.toLowerCase());
+            contentValuesNewError.put("Klass", КлассГнерацииОшибки.toUpperCase());
+            contentValuesNewError.put("Metod", МетодаОшибки.toUpperCase());
+            contentValuesNewError.put("LineError", ЛинияОшибки);
+            contentValuesNewError.put("user_update", getPublicIdForError.toString());
+            contentValuesNewError.put("UUID", UUIDForError.toString());
+            contentValuesNewError.put("current_table", getVersionForError);
+            contentValuesNewError.put("whose_error", getVersionPCForError);
+            contentValuesNewError.put("date_update", getNewDateForError);
+
+              InsertingNewErorr =    moduleInserting.getModuleInsert("errordsu1",contentValuesNewError);
+
+/*     Long   pезультатВставкиНовойОшибки = (Long) classGrudSqlOperationsОшибки.
                 new InsertData(context).insertdata(classGrudSqlOperationsОшибки.concurrentHashMapНабор,
                 classGrudSqlOperationsОшибки.contentValuesДляSQLBuilder_Для_GRUD_Операций,
                 new PUBLIC_CONTENT(context).МенеджерПотоков,
-                sqLiteDatabase);
+                sqLiteDatabase);*/
             Log.d(this.getClass().getName(),"\n" + " class CoreApp    " + Thread.currentThread().getStackTrace()[2].getClassName()
                     + "\n" +
                     " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                    " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"+
-                    " pезультатВставкиНовойОшибки " + pезультатВставкиНовойОшибки);
+                    " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"+" InsertingNewErorr " +InsertingNewErorr);
     } catch (Exception e) {
         e.printStackTrace();
         System.err.println("  Ошибка в самом классе записи ошибок нет КОНТЕКСТА RecordNewErros");
@@ -152,21 +196,17 @@ public class RecordNewErros {
                 + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
                 " Линия  :" + Thread.currentThread().getStackTrace()[2].getLineNumber());
     }
+        return  InsertingNewErorr;
     }
 
 
+
+
+
     // TODO: 20.12.2022  дополнительный клас Заппси ОШИБКИВ ФАЙЛ
-    private class SubClassWriteErrorFile {
-        // TODO: 14.12.2022 тест метод
-        Context context;
-        ArrayList<String> linkedBlockingQueueВскеОшибкиДляЗаписи;
 
-        public SubClassWriteErrorFile(@NonNull Context context, @NonNull ArrayList linkedBlockingQueueВскеОшибкиДляЗаписи) {
-            this.context = context;
-            this.linkedBlockingQueueВскеОшибкиДляЗаписи = linkedBlockingQueueВскеОшибкиДляЗаписи;
-        }
-
-        void writeDownAnewErrorFile() {
+    @Override
+       public void writeDownAnewErrorFile(@NonNull ArrayList<String> linkedBlockingQueueВскеОшибкиДляЗаписи) {
             try {
                 writeDownAnewErrorNotePad(linkedBlockingQueueВскеОшибкиДляЗаписи);
 
@@ -181,9 +221,9 @@ public class RecordNewErros {
             }
         }
 
-    }
 
 
+    @Override
     public void writeDownAnewErrorNotePad(@NonNull  ArrayList<String> linkedBlockingQueueВскеОшибкиДляЗаписи) {
         try {
             //File file = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS), File.separator + fileName);

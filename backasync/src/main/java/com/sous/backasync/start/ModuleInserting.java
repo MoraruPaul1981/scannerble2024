@@ -83,7 +83,7 @@ public Integer getModuleInsert(@NonNull Bundle bundleModuleBack){
     @SuppressLint("NewApi")
     @Override
     public Integer getModuleInsert(@NonNull String Таблица,@NonNull ContentValues contentValuesModuleBackAsync ){
-        Integer getInsert=0;
+        Long InsertingBack = null;
         try{
             if (contentValuesModuleBackAsync!=null) {
                 Uri uri = Uri.parse("content://"+getNameProvider+"/" + Таблица + "");
@@ -91,7 +91,7 @@ public Integer getModuleInsert(@NonNull Bundle bundleModuleBack){
 
          Uri InsertingBackUri=contentProviderInsert.acquireContentProviderClient(uri).insert(uri,contentValuesModuleBackAsync);
 
-                 long InsertingBack=
+                InsertingBack=
                          Optional.ofNullable(InsertingBackUri)
                                  .stream()
                                  .filter(f->f!=null)
@@ -102,13 +102,14 @@ public Integer getModuleInsert(@NonNull Bundle bundleModuleBack){
 
                 Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                         " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                        " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" + "getInsert " +getInsert  );
+                        " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" + "InsertingBack " +InsertingBack +"\n"+
+                        " InsertingBackUri "+InsertingBackUri);
             }
 
 
             Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                     " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                    " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" + "getInsert " +getInsert  );
+                    " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" + "\n" + "InsertingBack " +InsertingBack +"\n");
 
         } catch ( Exception e) {
             e.printStackTrace();
@@ -118,7 +119,7 @@ public Integer getModuleInsert(@NonNull Bundle bundleModuleBack){
                     Thread.currentThread().getStackTrace()[2].getMethodName(), Thread.currentThread().getStackTrace()[2].getLineNumber());*/
             Log.e(context.getClass().getName(), " Ошибка СЛУЖБА Service_ДляЗапускаодноразовойСинхронизации   ");
         }
-        return  getInsert;
+        return  InsertingBack.intValue();
     }
 
 

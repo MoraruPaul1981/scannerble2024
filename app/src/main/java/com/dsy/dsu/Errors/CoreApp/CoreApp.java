@@ -1,4 +1,4 @@
-package com.dsy.dsu.CoreApp;
+package com.dsy.dsu.Errors.CoreApp;
 
 
 import android.app.Application;
@@ -25,13 +25,8 @@ public class CoreApp extends Application {
     @Inject
   public   SQLiteDatabase getSqlLiteCoreApp;
 
-
-
-
-
     @Inject
     CopyOnWriteArrayList<String> getWorkerTablesALl;
-
 
     @Inject
     ModuleQuety moduleQuety;
@@ -80,8 +75,10 @@ public class CoreApp extends Application {
 
             // TODO: 29.01.2025 insert
 
-            moduleInserting.getModuleInsert("error",new ContentValues());
+        //    moduleInserting.getModuleInsert("error",new ContentValues());
 
+            String s=null;
+            s.length();
         Log.d(this.getClass().getName(),"\n" + " class CoreApp    " + Thread.currentThread().getStackTrace()[2].getClassName()
                 + "\n" +
                 " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
