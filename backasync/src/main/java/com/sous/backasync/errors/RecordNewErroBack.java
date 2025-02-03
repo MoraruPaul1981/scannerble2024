@@ -25,8 +25,14 @@ import java.util.ArrayList;
 
 import javax.inject.Inject;
 
+import dagger.Module;
+import dagger.hilt.InstallIn;
 import dagger.hilt.android.qualifiers.ApplicationContext;
+import dagger.hilt.components.SingletonComponent;
 
+
+@Module
+@InstallIn(SingletonComponent.class)
 public class RecordNewErroBack   implements RecordNewErrorsBackInterface {
 
     private Context context;
@@ -49,7 +55,7 @@ public class RecordNewErroBack   implements RecordNewErrorsBackInterface {
 
 
     @Override
-    public void recordnewerror(@NonNull String ТекстОшибки,
+    public void recordnewerrorBack(@NonNull String ТекстОшибки,
                                @NonNull String КлассГнерацииОшибки,
                                @NonNull String МетодаОшибки,
                                @NonNull Integer ЛинияОшибки) {
@@ -63,14 +69,14 @@ public class RecordNewErroBack   implements RecordNewErrorsBackInterface {
 
 
                     // TODO: 30.01.2025
-                    getWriteNewError(  ТекстОшибки, КлассГнерацииОшибки,МетодаОшибки, ЛинияОшибки );
+                    getWriteNewErrorBack(  ТекстОшибки, КлассГнерацииОшибки,МетодаОшибки, ЛинияОшибки );
 
                     Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                             " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
                             " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" + "\n" +" ТекстОшибки " +ТекстОшибки);;
 
                     // TODO: 20.12.2022  дополнительный механизм записи ошибкок
-                    getWriteNewErrorNotePad(ТекстОшибки, КлассГнерацииОшибки, МетодаОшибки, ЛинияОшибки);
+                    getWriteNewErrorNotePadBack(ТекстОшибки, КлассГнерацииОшибки, МетодаОшибки, ЛинияОшибки);
 
                     Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                             " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
@@ -108,7 +114,10 @@ public class RecordNewErroBack   implements RecordNewErrorsBackInterface {
 
 
     @Override
-    public void getWriteNewErrorNotePad(@NonNull String ТекстОшибки, @NonNull String КлассГнерацииОшибки, @NonNull String МетодаОшибки, @NonNull Integer ЛинияОшибки) {
+    public void getWriteNewErrorNotePadBack(@NonNull String ТекстОшибки,
+                                            @NonNull String КлассГнерацииОшибки,
+                                            @NonNull String МетодаОшибки,
+                                            @NonNull Integer ЛинияОшибки) {
         try{
             ArrayList<String> arrayListОшибкиДляЗаписивФайл = new ArrayList();
             arrayListОшибкиДляЗаписивФайл.add(ТекстОшибки);
@@ -118,7 +127,7 @@ public class RecordNewErroBack   implements RecordNewErrorsBackInterface {
 
             // TODO: 09.07.2023 запись ошибки в файл  .txt
 
-            writeDownAnewErrorFile(arrayListОшибкиДляЗаписивФайл);
+            writeDownAnewErrorFileBack(arrayListОшибкиДляЗаписивФайл);
 
             Log.d(this.getClass().getName(),"\n" + " class CoreApp    " + Thread.currentThread().getStackTrace()[2].getClassName()
                     + "\n" +
@@ -138,7 +147,7 @@ public class RecordNewErroBack   implements RecordNewErrorsBackInterface {
 
 
     @Override
-    public Integer getWriteNewError(@NonNull String ТекстОшибки,
+    public Integer getWriteNewErrorBack(@NonNull String ТекстОшибки,
                                     @NonNull String КлассГнерацииОшибки,
                                     @NonNull String МетодаОшибки,
                                     @NonNull Integer ЛинияОшибки ) {
@@ -150,7 +159,7 @@ public class RecordNewErroBack   implements RecordNewErrorsBackInterface {
             // TODO: 30.01.2025
             ContentValues contentValuesNewError=new ContentValues();
 
-            Long getVersionForError  = new SubClassVersionDATABack().upVersionCurentTable("errordsu1"
+            Long getVersionForError  = new SubClassVersionDATABack(context).upVersionCurentTable("errordsu1"
                     , context );
             Long UUIDForError = (Long)
                     new Class_Generation_UUIDBack(context).МетодГенерацииUUID();
@@ -172,11 +181,6 @@ public class RecordNewErroBack   implements RecordNewErrorsBackInterface {
 
             InsertingNewErorr =    moduleInserting.getModuleInsert("errordsu1",contentValuesNewError);
 
-/*     Long   pезультатВставкиНовойОшибки = (Long) classGrudSqlOperationsОшибки.
-                new InsertData(context).insertdata(classGrudSqlOperationsОшибки.concurrentHashMapНабор,
-                classGrudSqlOperationsОшибки.contentValuesДляSQLBuilder_Для_GRUD_Операций,
-                new PUBLIC_CONTENT(context).МенеджерПотоков,
-                sqLiteDatabase);*/
             Log.d(this.getClass().getName(),"\n" + " class CoreApp    " + Thread.currentThread().getStackTrace()[2].getClassName()
                     + "\n" +
                     " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
@@ -198,9 +202,9 @@ public class RecordNewErroBack   implements RecordNewErrorsBackInterface {
     // TODO: 20.12.2022  дополнительный клас Заппси ОШИБКИВ ФАЙЛ
 
     @Override
-    public void writeDownAnewErrorFile(@NonNull ArrayList<String> linkedBlockingQueueВскеОшибкиДляЗаписи) {
+    public void writeDownAnewErrorFileBack(@NonNull ArrayList<String> linkedBlockingQueueВскеОшибкиДляЗаписи) {
         try {
-            writeDownAnewErrorNotePad(linkedBlockingQueueВскеОшибкиДляЗаписи);
+            writeDownAnewErrorNotePadBack(linkedBlockingQueueВскеОшибкиДляЗаписи);
 
             Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                     " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
@@ -216,7 +220,7 @@ public class RecordNewErroBack   implements RecordNewErrorsBackInterface {
 
 
     @Override
-    public void writeDownAnewErrorNotePad(@NonNull  ArrayList<String> linkedBlockingQueueВскеОшибкиДляЗаписи) {
+    public void writeDownAnewErrorNotePadBack(@NonNull  ArrayList<String> linkedBlockingQueueВскеОшибкиДляЗаписи) {
         try {
 
             String СгенерированованныйДатаВремениСейчаcДляУдаления=     new Class_GenerationBack_Data(context).ГлавнаяДатаИВремяОперацийСБазойДанных();

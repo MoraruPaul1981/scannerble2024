@@ -12,20 +12,20 @@ public interface RecordNewErrorsBackInterface {
     String patchFileName="SousAvtoFile";
 
     // SQLiteDatabase sqLiteDatabase =    GetSQLiteDatabase.SqliteDatabase();
-    void recordnewerror(@NonNull String ТекстОшибки,
+    void recordnewerrorBack(@NonNull String ТекстОшибки,
                         @NonNull String КлассГнерацииОшибки,
                         @NonNull String МетодаОшибки,
                         @NonNull Integer ЛинияОшибки);
 
 
-    void getWriteNewErrorNotePad(@NonNull String ТекстОшибки, @NonNull String КлассГнерацииОшибки, @NonNull String МетодаОшибки, @NonNull Integer ЛинияОшибки);
+    void getWriteNewErrorNotePadBack(@NonNull String ТекстОшибки, @NonNull String КлассГнерацииОшибки, @NonNull String МетодаОшибки, @NonNull Integer ЛинияОшибки);
 
-    Integer getWriteNewError(@NonNull String ТекстОшибки,
+    Integer getWriteNewErrorBack(@NonNull String ТекстОшибки,
                              @NonNull String КлассГнерацииОшибки,
                              @NonNull String МетодаОшибки,
                              @NonNull Integer ЛинияОшибки );
 
-    void writeDownAnewErrorFile(@NonNull ArrayList<String> linkedBlockingQueueВскеОшибкиДляЗаписи);
+    void writeDownAnewErrorFileBack(@NonNull ArrayList<String> linkedBlockingQueueВскеОшибкиДляЗаписи);
 
-    void writeDownAnewErrorNotePad(@NonNull  ArrayList<String> linkedBlockingQueueВскеОшибкиДляЗаписи);
+    void writeDownAnewErrorNotePadBack(@NonNull  ArrayList<String> linkedBlockingQueueВскеОшибкиДляЗаписи);
 }

@@ -11,27 +11,34 @@ import android.os.Build;
 import android.util.Log;
 
 import com.sous.backasync.dates.Class_GenerationBack_Data;
+import com.sous.backasync.start.ModuleQuety;
+import com.sous.backasync.start.ModuleUpdating;
 
 import org.jetbrains.annotations.NotNull;
 
+import java.util.concurrent.atomic.AtomicInteger;
+import java.util.concurrent.atomic.AtomicLong;
+
+import javax.inject.Inject;
+
 public class SubClassVersionDATABack {
-    SQLiteDatabase sqLiteDatabase ;
+    // TODO: 03.02.2025
+    private  Context context;
 
-    public SubClassVersionDATABack( ) {
 
-       // sqLiteDatabase=    GetSQLiteDatabase.SqliteDatabase();
+    public SubClassVersionDATABack( @NotNull Context context ) {
+        this.context=context;
     }
 
     // TODO: 19.11.2022  МЕТОДД ЗАПИСЫВАЕМ ВЕРСИЮ ДАННЫХ В СИСТЕМНЦЮ ТАБЛИЦ ИЗ ТЕКУЩЕЙ ТАБЛИЦЫ
     public Integer upVersionMODIFITATION_ClientRemote(@NotNull String Таблица, @NotNull Context context ) {
         Integer Результат_ПовышенаяВерсия = 0;
         try {
+            ModuleUpdating moduleUpdating = new ModuleUpdating(context);
+
             String ТаблицаСистемная = "MODIFITATION_Client";
-            SQLiteQueryBuilder SQLBuilderВерсияДанныхСистемнаяТАблицы = new SQLiteQueryBuilder();
             Long ВерсияДанныхПослеСинхрониазацииДляЗаписи = МетодАнализаВерсииCurrentTable(Таблица, context );
             // TODO: 22.11.2021  ПОСЛЕ УСПЕШНОЙ ОПЕРАЦИИ ПОДТВЕРЖДАЕМ ТРАНЗАУЙИЮ
-            Log.d(this.getClass().getName(), "  ВерсияДанныхПослеСинхрониазацииДляЗаписи   " + ВерсияДанныхПослеСинхрониазацииДляЗаписи + " Таблица " + Таблица);
-
             String СгенерированованныйДата = new Class_GenerationBack_Data(context).ГлавнаяДатаИВремяОперацийСБазойДанных();
             ContentValues contentValuesДляПоднятияВерсии = new ContentValues();
 
@@ -41,25 +48,13 @@ public class SubClassVersionDATABack {
                 contentValuesДляПоднятияВерсии.put("versionserveraandroid", СгенерированованныйДата);
                 contentValuesДляПоднятияВерсии.put("versionserveraandroid_version", ВерсияДанныхПослеСинхрониазацииДляЗаписи);
 
-                // TODO: 01.07.2023  после выравниванию ДЛЯ ЛОКАЛЬНАЯ
-                //  contentValuesДляПоднятияВерсии.put("localversionandroid_version", ВерсияДанныхПослеСинхрониазацииДляЗаписи);
+                // TODO: 03.02.2025 update new back
+                moduleUpdating.getModuleUpdate(ТаблицаСистемная,contentValuesДляПоднятияВерсии);
 
-                //  contentValuesДляПоднятияВерсии.put("localversionandroid", СгенерированованныйДата);
-
-                SQLBuilderВерсияДанныхСистемнаяТАблицы.setTables(ТаблицаСистемная);
-
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
-                    Результат_ПовышенаяВерсия = SQLBuilderВерсияДанныхСистемнаяТАблицы.
-                            update(sqLiteDatabase, contentValuesДляПоднятияВерсии, "name=?", new String[]{Таблица.toLowerCase()});
-                } else {
-                    Результат_ПовышенаяВерсия = sqLiteDatabase.update(ТаблицаСистемная, contentValuesДляПоднятияВерсии,
-                            "name=?", new String[]{Таблица.toLowerCase()});
-                }
                 Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                         " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
                         " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" +
                         "  Результат_ПовышенаяВерсия   " + Результат_ПовышенаяВерсия);
-
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -79,14 +74,12 @@ public class SubClassVersionDATABack {
             ,@NotNull Long ВерсияДанныхПослеСинхронизацииОтСервера) {
         Integer Результат_ПовышенаяВерсия = 0;
         try {
+            ModuleUpdating moduleUpdating = new ModuleUpdating(context);
+
             String ТаблицаСистемная = "MODIFITATION_Client";
-            SQLiteQueryBuilder      SQLBuilderВерсияДанныхСистемнаяТАблицы = new SQLiteQueryBuilder();
-            // TODO: 22.11.2021  ПОСЛЕ УСПЕШНОЙ ОПЕРАЦИИ ПОДТВЕРЖДАЕМ ТРАНЗАУЙИЮ
-            Log.d(this.getClass().getName(), "  ВерсияДанныхПослеСинхронизацииОтСервера   " + ВерсияДанныхПослеСинхронизацииОтСервера + " Таблица " + Таблица);
             String СгенерированованныйДата = new Class_GenerationBack_Data(context).ГлавнаяДатаИВремяОперацийСБазойДанных();
+
             ContentValues contentValuesДляПоднятияВерсии = new ContentValues();
-
-
             if (ВерсияДанныхПослеСинхронизацииОтСервера>0) {
                 // TODO: 01.07.2023  после выравниванию ДЛЯ СЕРВЕРА
                 contentValuesДляПоднятияВерсии.put("versionserveraandroid", СгенерированованныйДата);
@@ -97,15 +90,11 @@ public class SubClassVersionDATABack {
 
                 contentValuesДляПоднятияВерсии.put("localversionandroid", СгенерированованныйДата);
 
-                SQLBuilderВерсияДанныхСистемнаяТАблицы.setTables(ТаблицаСистемная);
+                // TODO: 03.02.2025 update new back
 
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
-                    Результат_ПовышенаяВерсия = SQLBuilderВерсияДанныхСистемнаяТАблицы.
-                            update(sqLiteDatabase, contentValuesДляПоднятияВерсии, "name=?", new String[]{Таблица.toLowerCase()});
-                } else {
-                    Результат_ПовышенаяВерсия = sqLiteDatabase.update(ТаблицаСистемная, contentValuesДляПоднятияВерсии,
-                            "name=?", new String[]{Таблица.toLowerCase()});
-                }
+                moduleUpdating.getModuleUpdate(ТаблицаСистемная,contentValuesДляПоднятияВерсии);
+
+
                 Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                         " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
                         " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" +
@@ -130,16 +119,16 @@ public class SubClassVersionDATABack {
     public Long МетодАнализаВерсииCurrentTable( @NotNull String Текущаятаблицы,
                                                 @NotNull Context context) {
         Long  АнализВерсииMAXCurrentTable=0l;
-        try   ( SQLiteCursor КурсоАнализVersionCurrentTable=
-                        (SQLiteCursor) sqLiteDatabase.rawQuery(" SELECT MAX ( current_table  ) " +
-                                "AS MAX_R  FROM " +  Текущаятаблицы.trim()+"" , null);) {
-    /*         Курсор_КоторыйПолучаетМаксимальюнуВерсиюДанных= (SQLiteCursor)
-                            getБазаДанныхДЛяОперацийВнутри.rawQuery(" SELECT MAX ( " +ТекущаяяКолонкаТаблицы.trim() + "  ) AS MAX_MODIFITATION_Client  FROM " + уже запомнитовано провренно
-                                    "  MODIFITATION_Client  WHERE  name = '" + Текущаятаблицы.trim().toLowerCase() +"'  ;", null);*/
-            if(КурсоАнализVersionCurrentTable.getCount()>0){
-                КурсоАнализVersionCurrentTable.moveToFirst();
-                Integer  ИндексГдеСтолбикМах=КурсоАнализVersionCurrentTable.getColumnIndex("MAX_R");
-                АнализВерсииMAXCurrentTable=КурсоАнализVersionCurrentTable.getLong(ИндексГдеСтолбикМах);
+        try  {
+            ModuleQuety  moduleQuety=new ModuleQuety(context);
+            Cursor getbackasyncQueryVersionTable   =moduleQuety.getModuleQuery(Текущаятаблицы,
+                    " SELECT MAX ( current_table  ) " +
+                            "AS MAX_R  FROM " +  Текущаятаблицы.trim()+"" , null);
+
+            if(getbackasyncQueryVersionTable.getCount()>0){
+                getbackasyncQueryVersionTable.moveToFirst();
+                Integer  ИндексГдеСтолбикМах=getbackasyncQueryVersionTable.getColumnIndex("MAX_R");
+                АнализВерсииMAXCurrentTable=getbackasyncQueryVersionTable.getLong(ИндексГдеСтолбикМах);
             }
             Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                     " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
@@ -163,14 +152,18 @@ public class SubClassVersionDATABack {
     public Long upVersionCurentTable(@NotNull String Текущаятаблицы,
                                      @NotNull Context context) {
 
-        Long  ПовышенняВерсия=0l;
-        try  ( Cursor Курсор_АнализMODIFITATION_Client= ( Cursor) sqLiteDatabase.rawQuery(" SELECT *  FROM " +
-                "  MODIFITATION_Client  WHERE  name = '"+Текущаятаблицы+"' ", null);)    {
+        AtomicLong ПовышенняВерсия=new AtomicLong(0l);
+        try     {
+            ModuleQuety  moduleQuety=new ModuleQuety(context);
+            Cursor getbackasyncQueryUPVersionTable   =moduleQuety.getModuleQuery(Текущаятаблицы,
+                    " SELECT *  FROM " +
+                            "  MODIFITATION_Client  WHERE  name = '"+Текущаятаблицы+"' " , null);
 
-            if(Курсор_АнализMODIFITATION_Client.getCount()>0 && Курсор_АнализMODIFITATION_Client!=null){
-                Курсор_АнализMODIFITATION_Client.moveToFirst();
-                String  ПовышенняВерсияMAXCurrddentTable=Курсор_АнализMODIFITATION_Client.getString(0);
-                Long ПовышенняВерсияMODIFITATION_Client=(Long) Курсор_АнализMODIFITATION_Client.getLong(3);
+
+            if(getbackasyncQueryUPVersionTable.getCount()>0 && getbackasyncQueryUPVersionTable!=null){
+                getbackasyncQueryUPVersionTable.moveToFirst();
+                String  ПовышенняВерсияMAXCurrddentTable=getbackasyncQueryUPVersionTable.getString(0);
+                Long ПовышенняВерсияMODIFITATION_Client=(Long) getbackasyncQueryUPVersionTable.getLong(3);
 
                 Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                         " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
@@ -182,16 +175,16 @@ public class SubClassVersionDATABack {
 
                 if(ПовышенняВерсияMODIFITATION_Client>ПовышенняВерсияMAXCurrentTable){
 
-                    ПовышенняВерсияMODIFITATION_Client++;
-                    ПовышенняВерсия=ПовышенняВерсияMODIFITATION_Client;
+                    ПовышенняВерсия.set(ПовышенняВерсияMODIFITATION_Client.longValue());
+                    ПовышенняВерсия.incrementAndGet();
                 }else {
 
-                    ПовышенняВерсияMAXCurrentTable++;
-                    ПовышенняВерсия=ПовышенняВерсияMAXCurrentTable;
+                    ПовышенняВерсия.set(ПовышенняВерсияMAXCurrentTable.longValue());
+                    ПовышенняВерсия.incrementAndGet();
                 }
 
             }else {
-                ПовышенняВерсия=1l;
+                ПовышенняВерсия.set(1);
             }
             Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                     " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
@@ -204,7 +197,7 @@ public class SubClassVersionDATABack {
            /* new RecordNewErros(context).recordnewerror(e.toString(), this.getClass().getName(),
                     Thread.currentThread().getStackTrace()[2].getMethodName(), Thread.currentThread().getStackTrace()[2].getLineNumber());*/
         }
-        return  ПовышенняВерсия;
+        return  ПовышенняВерсия.get();
     }
 
 }

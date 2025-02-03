@@ -8,6 +8,7 @@ import android.util.Log;
 
 
 import com.dsy.dsu.Errors.controller.RecordNewErros;
+import com.sous.backasync.errors.RecordNewErroBack;
 import com.sous.backasync.start.ModuleInserting;
 import com.sous.backasync.start.ModuleQuety;
 import com.sous.backasync.start.ModuleUpdating;
@@ -40,6 +41,10 @@ public class CoreApp extends Application {
 
     @Inject
     RecordNewErros recordNewErros;
+
+
+    @Inject
+    RecordNewErroBack recordNewErroBack;
 
 
     @Override
