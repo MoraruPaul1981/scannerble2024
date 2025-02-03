@@ -19,6 +19,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 
+import com.sous.backasync.errors.RecordNewErroBack;
 import com.sous.backasync.hill.HiltWorkerTableBarckAync;
 
 import com.sous.backasync.hill.HiltInterfacesqliteBack;
@@ -92,6 +93,9 @@ public class ProviderBackAsync extends ContentProvider  {
             e.printStackTrace();
             Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() + " Линия  :"
                     + Thread.currentThread().getStackTrace()[2].getLineNumber());
+            new RecordNewErroBack(getContext()).recordnewerrorBack(e.toString(),
+                    this.getClass().getName(), Thread.currentThread().getStackTrace()[2].getMethodName(),
+                    Thread.currentThread().getStackTrace()[2].getLineNumber());
         }
         return  false;
     }
@@ -120,6 +124,9 @@ public class ProviderBackAsync extends ContentProvider  {
             e.printStackTrace();
             Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() + " Линия  :"
                     + Thread.currentThread().getStackTrace()[2].getLineNumber());
+            new RecordNewErroBack(getContext()).recordnewerrorBack(e.toString(),
+                    this.getClass().getName(), Thread.currentThread().getStackTrace()[2].getMethodName(),
+                    Thread.currentThread().getStackTrace()[2].getLineNumber());
         }
         return cursor;
     }
@@ -167,6 +174,9 @@ public class ProviderBackAsync extends ContentProvider  {
             e.printStackTrace();
             Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() + " Линия  :"
                     + Thread.currentThread().getStackTrace()[2].getLineNumber());
+            new RecordNewErroBack(getContext()).recordnewerrorBack(e.toString(),
+                    this.getClass().getName(), Thread.currentThread().getStackTrace()[2].getMethodName(),
+                    Thread.currentThread().getStackTrace()[2].getLineNumber());
         }
         return РезультатУдаления;
     }
@@ -185,6 +195,9 @@ public class ProviderBackAsync extends ContentProvider  {
             e.printStackTrace();
             Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() + " Линия  :"
                     + Thread.currentThread().getStackTrace()[2].getLineNumber());
+            new RecordNewErroBack(getContext()).recordnewerrorBack(e.toString(),
+                    this.getClass().getName(), Thread.currentThread().getStackTrace()[2].getMethodName(),
+                    Thread.currentThread().getStackTrace()[2].getLineNumber());
         }
         return table;
     }
@@ -231,6 +244,9 @@ public class ProviderBackAsync extends ContentProvider  {
             e.printStackTrace();
             Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() + " Линия  :"
                     + Thread.currentThread().getStackTrace()[2].getLineNumber());
+            new RecordNewErroBack(getContext()).recordnewerrorBack(e.toString(),
+                    this.getClass().getName(), Thread.currentThread().getStackTrace()[2].getMethodName(),
+                    Thread.currentThread().getStackTrace()[2].getLineNumber());
         }
         return ОтветВставкиДанных;
     }
@@ -291,6 +307,9 @@ public class ProviderBackAsync extends ContentProvider  {
             e.printStackTrace();
             Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() + " Линия  :"
                     + Thread.currentThread().getStackTrace()[2].getLineNumber());
+            new RecordNewErroBack(getContext()).recordnewerrorBack(e.toString(),
+                    this.getClass().getName(), Thread.currentThread().getStackTrace()[2].getMethodName(),
+                    Thread.currentThread().getStackTrace()[2].getLineNumber());
         }
         return    РезультатМассовогоВсатвкиДанныхФинал;
     }
@@ -344,6 +363,9 @@ public class ProviderBackAsync extends ContentProvider  {
             e.printStackTrace();
             Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() + " Линия  :"
                     + Thread.currentThread().getStackTrace()[2].getLineNumber());
+            new RecordNewErroBack(getContext()).recordnewerrorBack(e.toString(),
+                    this.getClass().getName(), Thread.currentThread().getStackTrace()[2].getMethodName(),
+                    Thread.currentThread().getStackTrace()[2].getLineNumber());
         }
         return extras;
     }
@@ -392,6 +414,9 @@ public class ProviderBackAsync extends ContentProvider  {
             e.printStackTrace();
             Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() + " Линия  :"
                     + Thread.currentThread().getStackTrace()[2].getLineNumber());
+            new RecordNewErroBack(getContext()).recordnewerrorBack(e.toString(),
+                    this.getClass().getName(), Thread.currentThread().getStackTrace()[2].getMethodName(),
+                    Thread.currentThread().getStackTrace()[2].getLineNumber());
         }
         return UpdateBAck;
     }

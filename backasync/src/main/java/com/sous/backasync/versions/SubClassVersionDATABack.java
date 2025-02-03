@@ -11,6 +11,7 @@ import android.os.Build;
 import android.util.Log;
 
 import com.sous.backasync.dates.Class_GenerationBack_Data;
+import com.sous.backasync.errors.RecordNewErroBack;
 import com.sous.backasync.start.ModuleQuety;
 import com.sous.backasync.start.ModuleUpdating;
 
@@ -138,8 +139,9 @@ public class SubClassVersionDATABack {
             e.printStackTrace();
             Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
                     " Линия  :" + Thread.currentThread().getStackTrace()[2].getLineNumber());
-           /* new RecordNewErros(context).recordnewerror(e.toString(), this.getClass().getName(),
-                    Thread.currentThread().getStackTrace()[2].getMethodName(), Thread.currentThread().getStackTrace()[2].getLineNumber());*/
+            new RecordNewErroBack(context).recordnewerrorBack(e.toString(),
+                    this.getClass().getName(), Thread.currentThread().getStackTrace()[2].getMethodName(),
+                    Thread.currentThread().getStackTrace()[2].getLineNumber());
         }
 
         return  АнализВерсииMAXCurrentTable;
@@ -194,8 +196,9 @@ public class SubClassVersionDATABack {
             e.printStackTrace();
             Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
                     " Линия  :" + Thread.currentThread().getStackTrace()[2].getLineNumber());
-           /* new RecordNewErros(context).recordnewerror(e.toString(), this.getClass().getName(),
-                    Thread.currentThread().getStackTrace()[2].getMethodName(), Thread.currentThread().getStackTrace()[2].getLineNumber());*/
+            new RecordNewErroBack(context).recordnewerrorBack(e.toString(),
+                    this.getClass().getName(), Thread.currentThread().getStackTrace()[2].getMethodName(),
+                    Thread.currentThread().getStackTrace()[2].getLineNumber());
         }
         return  ПовышенняВерсия.get();
     }

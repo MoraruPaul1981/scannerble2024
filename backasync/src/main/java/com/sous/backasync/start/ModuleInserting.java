@@ -11,6 +11,7 @@ import android.util.Log;
 
 import androidx.annotation.NonNull;
 
+import com.sous.backasync.errors.RecordNewErroBack;
 import com.sous.backasync.start.interfaces.ModuleInsertingBackAsyncInterface;
 
 import java.util.Optional;
@@ -26,7 +27,7 @@ import dagger.hilt.components.SingletonComponent;
 @Module
 @InstallIn(SingletonComponent.class)
 public class ModuleInserting implements ModuleInsertingBackAsyncInterface {
-    Context context;
+    private  Context context;
 
     public @Inject ModuleInserting(@ApplicationContext Context context) {
         this.context=context;
@@ -67,9 +68,9 @@ public Integer getModuleInsert(@NonNull Bundle bundleModuleBack ){
             e.printStackTrace();
             Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
                     " Линия  :" + Thread.currentThread().getStackTrace()[2].getLineNumber());
-/*            new RecordNewBackErros(context).recordnewerror(e.toString(), this.getClass().getName(),
-                    Thread.currentThread().getStackTrace()[2].getMethodName(), Thread.currentThread().getStackTrace()[2].getLineNumber());*/
-            Log.e(context.getClass().getName(), " Ошибка СЛУЖБА Service_ДляЗапускаодноразовойСинхронизации   ");
+            new RecordNewErroBack(context).recordnewerrorBack(e.toString(),
+                    this.getClass().getName(), Thread.currentThread().getStackTrace()[2].getMethodName(),
+                    Thread.currentThread().getStackTrace()[2].getLineNumber());
         }
         return  getInsert;
     }
@@ -109,8 +110,9 @@ public Integer getModuleInsert(@NonNull Bundle bundleModuleBack ){
             e.printStackTrace();
             Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
                     " Линия  :" + Thread.currentThread().getStackTrace()[2].getLineNumber());
-/*            new RecordNewBackErros(context).recordnewerror(e.toString(), this.getClass().getName(),
-                    Thread.currentThread().getStackTrace()[2].getMethodName(), Thread.currentThread().getStackTrace()[2].getLineNumber());*/
+            new RecordNewErroBack(context).recordnewerrorBack(e.toString(),
+                    this.getClass().getName(), Thread.currentThread().getStackTrace()[2].getMethodName(),
+                    Thread.currentThread().getStackTrace()[2].getLineNumber());
             Log.e(context.getClass().getName(), " Ошибка СЛУЖБА Service_ДляЗапускаодноразовойСинхронизации   ");
         }
         return  InsertingBack.intValue();

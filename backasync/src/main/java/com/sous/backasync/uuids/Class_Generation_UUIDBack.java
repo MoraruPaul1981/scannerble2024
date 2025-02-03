@@ -8,6 +8,7 @@ import android.database.sqlite.SQLiteCursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 
+import com.sous.backasync.errors.RecordNewErroBack;
 import com.sous.backasync.start.ModuleQuety;
 
 import java.math.BigInteger;
@@ -75,9 +76,9 @@ public class Class_Generation_UUIDBack {
             Log.e(context.getClass().getName(),
                     "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
                             " Линия  :" + Thread.currentThread().getStackTrace()[2].getLineNumber());
-          /*  new RecordNewErros(context).recordnewerror(e.toString(),
-                    this.getClass().getName().toString(), Thread.currentThread().getStackTrace()[2].getMethodName().toString(),
-                    Thread.currentThread().getStackTrace()[2].getLineNumber());*/
+            new RecordNewErroBack(context).recordnewerrorBack(e.toString(),
+                    this.getClass().getName(), Thread.currentThread().getStackTrace()[2].getMethodName(),
+                    Thread.currentThread().getStackTrace()[2].getLineNumber());
         }
         // TODO: 06.09.2021  новый UUID
         return UUID;
