@@ -873,7 +873,7 @@ class SubClassJsonTwoParserOtServer{
                                     " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
                                     " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n");
 
-                            // TODO: 28.04.2023 start Insert Update
+                            // TODO: 28.04.2023 launch Insert Update
                         }
                     })
                     .doOnError(new Consumer<Throwable>() {

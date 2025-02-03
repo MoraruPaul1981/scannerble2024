@@ -1,4 +1,4 @@
-package com.sous.backasync.hill;
+package com.sous.backasync.businesslogic.hill;
 
 
 import android.database.sqlite.SQLiteDatabase;

@@ -2240,7 +2240,7 @@ public class Fragment1_One_Tasks extends Fragment {
                 // TODO: 11.05.2021 запись ошибок
             }
         }
-        // TODO: 02.08.2022  metod start bing async
+        // TODO: 02.08.2022  metod launch bing async
     }   // TODO: 28.02.2022 конец класса бизнес логики   // TODO: 28.02.2022 конец класса бизнес логики
 
     // TODO: 02.03.2022

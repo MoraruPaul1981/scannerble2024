@@ -1,4 +1,4 @@
-package com.sous.backasync.publicid;
+package com.sous.backasync.businesslogic.publicid;
 
 import android.content.ContentResolver;
 import android.content.Context;

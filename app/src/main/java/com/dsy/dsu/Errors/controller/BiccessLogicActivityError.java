@@ -10,7 +10,7 @@ import android.os.Environment;
 import android.util.Log;
 
 
-import com.sous.backasync.start.ModuleQuety;
+import com.sous.backasync.launch.ModuleQuety;
 
 import java.io.BufferedWriter;
 import java.io.File;

@@ -584,7 +584,7 @@ public class ProccesorparallelSynch   {
 
 
 
-            // TODO: 08.04.2024 start  post
+            // TODO: 08.04.2024 launch  post
             if (CooserGetandPost.equalsIgnoreCase("POST")) {
                 // TODO: 05.04.2024 post() sending
                 // TODO: 05.10.2021  POST()-->
@@ -643,7 +643,7 @@ public class ProccesorparallelSynch   {
             }
 
 
-            // TODO: 08.04.2024 start get
+            // TODO: 08.04.2024 launch get
             if (CooserGetandPost.equalsIgnoreCase("GET")) {
 
                 // TODO: 19.10.2021   GET()->
@@ -666,7 +666,7 @@ public class ProccesorparallelSynch   {
                     }
                 }
             }
-            // TODO: 08.04.2024 start get
+            // TODO: 08.04.2024 launch get
 
 
             // TODO: 05.04.2024  после обработки обоих методов post and get

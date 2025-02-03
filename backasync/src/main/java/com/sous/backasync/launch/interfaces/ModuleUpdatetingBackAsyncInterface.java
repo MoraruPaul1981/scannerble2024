@@ -1,11 +1,9 @@
-package com.sous.backasync.start.interfaces;
+package com.sous.backasync.launch.interfaces;
 
 import android.annotation.SuppressLint;
 import android.content.ContentValues;
-import android.os.Bundle;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 
 public interface ModuleUpdatetingBackAsyncInterface {
 

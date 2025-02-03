@@ -413,7 +413,7 @@ try{
 
 
 
-        // TODO: 02.08.2023  class start CAMERAX
+        // TODO: 02.08.2023  class launch CAMERAX
         class ClassCameraX {
             private void методЗапускаКамерыX() {
                 ListenableFuture<ProcessCameraProvider> providerListenableFuture = ProcessCameraProvider.getInstance(getContext());

@@ -1,4 +1,4 @@
-package com.sous.backasync.errors.interfaces;
+package com.sous.backasync.businesslogic.errors.interfaces;
 
 import androidx.annotation.NonNull;
 

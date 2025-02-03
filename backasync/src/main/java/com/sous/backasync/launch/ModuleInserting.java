@@ -1,17 +1,20 @@
-package com.sous.backasync.start;
+package com.sous.backasync.launch;
 
 
+import android.annotation.SuppressLint;
+import android.content.ContentResolver;
+import android.content.ContentValues;
 import android.content.Context;
-import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 
 import androidx.annotation.NonNull;
-import androidx.loader.content.CursorLoader;
 
-import com.sous.backasync.errors.RecordNewErroBack;
-import com.sous.backasync.start.interfaces.ModuleQueryBackAsyncInterface;
+import com.sous.backasync.businesslogic.errors.RecordNewErroBack;
+import com.sous.backasync.launch.interfaces.ModuleInsertingBackAsyncInterface;
+
+import java.util.Optional;
 
 import javax.inject.Inject;
 
@@ -23,16 +26,11 @@ import dagger.hilt.components.SingletonComponent;
 
 @Module
 @InstallIn(SingletonComponent.class)
-public class ModuleQuety implements ModuleQueryBackAsyncInterface {
+public class ModuleInserting implements ModuleInsertingBackAsyncInterface {
+    private  Context context;
 
-
-
-    Context context;
-
-    public @Inject ModuleQuety(@ApplicationContext Context context) {
-
+    public @Inject ModuleInserting(@ApplicationContext Context context) {
         this.context=context;
-
         Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                 " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
                 " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n");
@@ -43,32 +41,28 @@ public class ModuleQuety implements ModuleQueryBackAsyncInterface {
 
 
 @Override
-public Cursor getModuleQuery(@NonNull Bundle bundleModuleBack){
-        Cursor cursor=null;
+public Integer getModuleInsert(@NonNull Bundle bundleModuleBack ){
+    Integer getInsert=0;
         try{
             if (bundleModuleBack!=null) {
-                CursorLoader  cursorLoader=new CursorLoader(context);
                 String[] УсловияВыборки=      bundleModuleBack.getStringArray("УсловияВыборки");
                 String  СамЗапрос=      bundleModuleBack.getString("СамЗапрос");
                 String  Таблица=      bundleModuleBack.getString("Таблица");
                 Uri uri = Uri.parse("content://"+getNameProvider+"/" + Таблица + "");
-                cursorLoader.setUri(uri);
-                cursorLoader.setSelection(СамЗапрос);
-                cursorLoader.setSelectionArgs(УсловияВыборки);//МесяцПростоАнализа
-                cursorLoader.forceLoad();
-                cursor=    cursorLoader.loadInBackground();
-                if (cursor.getCount() > 0 && cursor!=null) {
-                    cursor.moveToFirst();
-                    Log.d(this.getClass().getName(), "cursor.getCount() "
-                            + cursor.getCount());
-                }
-                cursorLoader.commitContentChanged();
+                // TODO: 28.01.2025
+                ContentResolver contentProviderInsert=context.getContentResolver();
+                ContentValues contentValuesModuleBackAsync=new ContentValues();
+                Uri InsertingBack= contentProviderInsert.insert(uri,contentValuesModuleBackAsync);
+
+
+                Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                        " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                        " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" + "getInsert " +getInsert  );
             }
 
             Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                     " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                    " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" + "cursor "
-                    +cursor + " bundleModuleBack " +bundleModuleBack );
+                    " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" + "getInsert " +getInsert  );
 
         } catch ( Exception e) {
             e.printStackTrace();
@@ -77,38 +71,40 @@ public Cursor getModuleQuery(@NonNull Bundle bundleModuleBack){
             new RecordNewErroBack(context).recordnewerrorBack(e.toString(),
                     this.getClass().getName(), Thread.currentThread().getStackTrace()[2].getMethodName(),
                     Thread.currentThread().getStackTrace()[2].getLineNumber());
-            Log.e(context.getClass().getName(), " Ошибка СЛУЖБА Service_ДляЗапускаодноразовойСинхронизации   ");
         }
-        return  cursor;
+        return  getInsert;
     }
 
-
+    @SuppressLint("NewApi")
     @Override
-    public Cursor getModuleQuery(@NonNull String Таблица,@NonNull String СамЗапрос, @NonNull String []УсловияВыборки){
-        Cursor cursor=null;
+    public Integer getModuleInsert(@NonNull String Таблица,@NonNull ContentValues contentValuesModuleBackAsync ){
+        Long InsertingBack = null;
         try{
-            if (СамЗапрос!=null) {
-                CursorLoader  cursorLoader=new CursorLoader(context);
+            if (contentValuesModuleBackAsync!=null) {
                 Uri uri = Uri.parse("content://"+getNameProvider+"/" + Таблица + "");
-                cursorLoader.setUri(uri);
-                cursorLoader.setSelection(СамЗапрос);
-                cursorLoader.setSelectionArgs(УсловияВыборки);//МесяцПростоАнализа
-                cursorLoader.forceLoad();
-                cursor=    cursorLoader.loadInBackground();
-                if (cursor!=null) {
-                    if (cursor.getCount() > 0  ) {
-                        cursor.moveToFirst();
-                        Log.d(this.getClass().getName(), "cursor.getCount() "
-                                + cursor.getCount());
-                    }
-                }
-                cursorLoader.commitContentChanged();
+                ContentResolver contentProviderInsert=context.getContentResolver();
+
+         Uri InsertingBackUri=contentProviderInsert.acquireContentProviderClient(uri).insert(uri,contentValuesModuleBackAsync);
+
+                InsertingBack=
+                         Optional.ofNullable(InsertingBackUri)
+                                 .stream()
+                                 .filter(f->f!=null)
+                                 .filter(f->f.getHost()!=null)
+                                 .filter(f->f.getHost().chars().allMatch( Character::isDigit ))
+                                 .mapToInt(tran-> Integer.parseInt(tran.getHost()))
+                                 .asLongStream().findAny().orElse(0);
+
+                Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                        " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                        " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" + "InsertingBack " +InsertingBack +"\n"+
+                        " InsertingBackUri "+InsertingBackUri);
             }
+
 
             Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                     " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                    " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" + "cursor "
-                    +cursor + " СамЗапрос " +СамЗапрос );
+                    " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" + "\n" + "InsertingBack " +InsertingBack +"\n");
 
         } catch ( Exception e) {
             e.printStackTrace();
@@ -119,7 +115,7 @@ public Cursor getModuleQuery(@NonNull Bundle bundleModuleBack){
                     Thread.currentThread().getStackTrace()[2].getLineNumber());
             Log.e(context.getClass().getName(), " Ошибка СЛУЖБА Service_ДляЗапускаодноразовойСинхронизации   ");
         }
-        return  cursor;
+        return  InsertingBack.intValue();
     }
 
 

@@ -273,7 +273,7 @@
 
 
 
-<!-- TODO новые три поля    start-->
+<!-- TODO новые три поля    launch-->
         <!-- todo ДАННЫЕ первые строчки  #1 Контрагента-->
         <TableRow
             android:layout_width="match_parent"

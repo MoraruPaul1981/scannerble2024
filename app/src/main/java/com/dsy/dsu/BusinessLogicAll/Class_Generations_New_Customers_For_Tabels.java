@@ -26,7 +26,7 @@ public class Class_Generations_New_Customers_For_Tabels {
     }
 
 
-    // TODO: 22.09.2021   ---start   fio
+    // TODO: 22.09.2021   ---launch   fio
 
 
     // TODO: 26.03.2021 финальная вствка данных новго сотружника

@@ -2,16 +2,16 @@ package com.dsy.dsu.CoreApp;
 
 
 import android.app.Application;
-import android.content.ContentValues;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 
 
 import com.dsy.dsu.Errors.controller.RecordNewErros;
-import com.sous.backasync.errors.RecordNewErroBack;
-import com.sous.backasync.start.ModuleInserting;
-import com.sous.backasync.start.ModuleQuety;
-import com.sous.backasync.start.ModuleUpdating;
+import com.sous.backasync.businesslogic.errors.RecordNewErroBack;
+import com.sous.backasync.launch.ModuleInserting;
+import com.sous.backasync.launch.ModuleQuety;
+import com.sous.backasync.launch.ModuleUpdating;
 
 
 import java.util.concurrent.CopyOnWriteArrayList;
@@ -99,7 +99,8 @@ public class CoreApp extends Application {
              /*    String s=null;
             s.length();
 */
-
+     //Cursor cursor= moduleQuety.getModuleQuery("errordsu1"," SELECT  *   FROM errordsu1 AS er  WHERE er.ERROR IS  NOT NULL  ORDER BY er.id DESC  " ,null);
+            // TODO: 17.04.2023
         Log.d(this.getClass().getName(),"\n" + " class CoreApp    " + Thread.currentThread().getStackTrace()[2].getClassName()
                 + "\n" +
                 " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +

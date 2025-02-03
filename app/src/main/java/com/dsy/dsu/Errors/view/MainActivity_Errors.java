@@ -39,7 +39,7 @@ import com.dsy.dsu.Hilt.Sqlitehilt.HiltInterfacesqlite;
 import com.dsy.dsu.R;
 import com.dsy.dsu.Services.ServiceUpdatePoОбновлениеПО;
 import com.google.android.material.button.MaterialButton;
-import com.sous.backasync.start.ModuleQuety;
+import com.sous.backasync.launch.ModuleQuety;
 
 
 import org.jetbrains.annotations.NotNull;

@@ -1,4 +1,4 @@
-package com.sous.backasync.dates;
+package com.sous.backasync.businesslogic.dates;
 
 import android.content.Context;
 import android.util.Log;

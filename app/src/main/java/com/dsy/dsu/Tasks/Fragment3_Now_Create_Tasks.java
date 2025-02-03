@@ -1747,7 +1747,7 @@ public class Fragment3_Now_Create_Tasks extends Fragment {
                                                     Log.d(this.getClass().getName(), "  ОперациСозданияНовойЗадания" + ОперациСозданияНовойЗадания);
                                                     if (ОперациСозданияНовойЗадания>0) {
 
-                                                        // TODO: 26.03.2023  start Async
+                                                        // TODO: 26.03.2023  launch Async
                                                         new CreateSingleWorkManager(getContext()).getcreateSingleWorkManager(getContext() , Uri.EMPTY);
                                                         // TODO: 26.06.2022
                                                         Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +

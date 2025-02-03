@@ -1690,7 +1690,7 @@ public class Fragment5_ViewcreatedTasks extends Fragment {
         public void МетодЗапускаетБиндингСлужбыДляЗапускаОдноразовойСинхронизаци() {
 
             try {
-                //TODO start broad caset receiver
+                //TODO launch broad caset receiver
                 service_for_task_для_задания_сменаСатуса=new Service_For_Task_Для_Задания_СменаСатуса();
 
                 Intent intentЗапускСлужыСменаСтатусаБиндинг = new Intent(getContext(), Service_For_Task_Для_Задания_СменаСатуса.class);

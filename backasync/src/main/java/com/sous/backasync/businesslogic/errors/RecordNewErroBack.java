@@ -1,4 +1,4 @@
-package com.sous.backasync.errors;
+package com.sous.backasync.businesslogic.errors;
 
 import android.content.ContentValues;
 import android.content.Context;
@@ -6,15 +6,13 @@ import android.os.Environment;
 import android.util.Log;
 
 import androidx.annotation.NonNull;
-import androidx.core.os.BundleCompat;
 
-import com.sous.backasync.dates.Class_GenerationBack_Data;
-import com.sous.backasync.errors.interfaces.RecordNewErrorsBackInterface;
-import com.sous.backasync.publicid.Class_GenerationsBack_PUBLIC_CURRENT_ID;
-import com.sous.backasync.start.ModuleInserting;
-import com.sous.backasync.start.ModuleUpdating;
-import com.sous.backasync.uuids.Class_Generation_UUIDBack;
-import com.sous.backasync.versions.SubClassVersionDATABack;
+import com.sous.backasync.businesslogic.dates.Class_GenerationBack_Data;
+import com.sous.backasync.businesslogic.errors.interfaces.RecordNewErrorsBackInterface;
+import com.sous.backasync.businesslogic.publicid.Class_GenerationsBack_PUBLIC_CURRENT_ID;
+import com.sous.backasync.launch.ModuleInserting;
+import com.sous.backasync.businesslogic.uuids.Class_Generation_UUIDBack;
+import com.sous.backasync.businesslogic.versions.SubClassVersionDATABack;
 
 import java.io.BufferedWriter;
 import java.io.File;
@@ -40,9 +38,6 @@ public class RecordNewErroBack   implements RecordNewErrorsBackInterface {
     /*private String fileName = "Sous-Avtodor-ERROR.txt";
 
     private   String patchFileName="SousAvtoFile";*/
-
-
-    ModuleInserting moduleInserting;
 
 
     public @Inject RecordNewErroBack(@ApplicationContext Context context) {
@@ -156,7 +151,7 @@ public class RecordNewErroBack   implements RecordNewErrorsBackInterface {
         Integer InsertingNewErorr = null;
         try{
 
-            moduleInserting=new ModuleInserting(context);
+            ModuleInserting     moduleInserting=new ModuleInserting(context);
             // TODO: 30.01.2025
             ContentValues contentValuesNewError=new ContentValues();
 

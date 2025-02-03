@@ -734,7 +734,7 @@ public class MyWork_Notifocations_Уведомления_Для_Задачи ext
 
             mNotificationManagerДляЧАТА = (NotificationManager) getApplicationContext().getSystemService(NOTIFICATION_SERVICE);
 
-            // TODO: 17.11.2021  start
+            // TODO: 17.11.2021  launch
             // === Removed some obsoletes
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
                 NotificationChannel channel = new NotificationChannel(
@@ -1317,7 +1317,7 @@ public class MyWork_Notifocations_Уведомления_Для_Задачи ext
             Log.d(this.getClass().getName(), "   Курсор_ДляСлужбыУведомлений_ТолькоДляЧата "+Курсор_ДляСлужбыУведомлений_ТолькоДляЧата);
 
 
-            ////TODO start do
+            ////TODO launch do
             //TODO перед созданеим
 
             БуферСамиУведомленияЛинкСамиУведомления=new ArrayList();

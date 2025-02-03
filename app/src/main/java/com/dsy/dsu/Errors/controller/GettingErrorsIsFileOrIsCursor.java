@@ -10,7 +10,7 @@ import android.util.Log;
 import androidx.core.content.FileProvider;
 
 import com.dsy.dsu.Errors.controller.interfaces.GettingErrorsIsFileInterface;
-import com.sous.backasync.start.ModuleQuety;
+import com.sous.backasync.launch.ModuleQuety;
 
 
 import java.io.BufferedReader;

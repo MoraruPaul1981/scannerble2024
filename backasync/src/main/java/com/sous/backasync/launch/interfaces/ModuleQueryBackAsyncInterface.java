@@ -1,4 +1,4 @@
-package com.sous.backasync.start.interfaces;
+package com.sous.backasync.launch.interfaces;
 
 import android.database.Cursor;
 import android.os.Bundle;

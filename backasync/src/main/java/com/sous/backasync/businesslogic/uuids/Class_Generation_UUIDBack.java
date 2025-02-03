@@ -1,15 +1,13 @@
-package com.sous.backasync.uuids;
+package com.sous.backasync.businesslogic.uuids;
 
 import static java.util.Calendar.getInstance;
 
 import android.content.Context;
 import android.database.Cursor;
-import android.database.sqlite.SQLiteCursor;
-import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 
-import com.sous.backasync.errors.RecordNewErroBack;
-import com.sous.backasync.start.ModuleQuety;
+import com.sous.backasync.businesslogic.errors.RecordNewErroBack;
+import com.sous.backasync.launch.ModuleQuety;
 
 import java.math.BigInteger;
 import java.text.DateFormat;

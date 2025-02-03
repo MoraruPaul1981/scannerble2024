@@ -149,7 +149,7 @@ public class MainActivity_Tasks extends FragmentActivity {
             // TODO: 11.05.2021 запись ошибок
         }
         }
-        // TODO: 02.08.2022  metod start bing async
+        // TODO: 02.08.2022  metod launch bing async
     }
 }
 

@@ -1,26 +1,19 @@
-package com.sous.backasync.versions;
+package com.sous.backasync.businesslogic.versions;
 
 import android.annotation.SuppressLint;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
-import android.database.sqlite.SQLiteCursor;
-import android.database.sqlite.SQLiteDatabase;
-import android.database.sqlite.SQLiteQueryBuilder;
-import android.os.Build;
 import android.util.Log;
 
-import com.sous.backasync.dates.Class_GenerationBack_Data;
-import com.sous.backasync.errors.RecordNewErroBack;
-import com.sous.backasync.start.ModuleQuety;
-import com.sous.backasync.start.ModuleUpdating;
+import com.sous.backasync.businesslogic.errors.RecordNewErroBack;
+import com.sous.backasync.businesslogic.dates.Class_GenerationBack_Data;
+import com.sous.backasync.launch.ModuleQuety;
+import com.sous.backasync.launch.ModuleUpdating;
 
 import org.jetbrains.annotations.NotNull;
 
-import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.atomic.AtomicLong;
-
-import javax.inject.Inject;
 
 public class SubClassVersionDATABack {
     // TODO: 03.02.2025

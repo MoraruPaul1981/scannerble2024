@@ -2132,7 +2132,7 @@ public class Fragment4_Now_Views_Task_For_Complete extends Fragment {
        public void МетодЗапускаетБиндингСлужбыДляЗапускаОдноразовойСинхронизаци() {
 
            try {
-               //TODO start broad caset receiver
+               //TODO launch broad caset receiver
                service_for_task_для_задания_сменаСатуса=new Service_For_Task_Для_Задания_СменаСатуса();
                Intent intentЗапускСлужыСменаСтатусаБиндинг = new Intent(getContext(), Service_For_Task_Для_Задания_СменаСатуса.class);
                // TODO: 26.06.2022 созадем биндинг службыы

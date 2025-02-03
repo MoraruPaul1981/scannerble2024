@@ -2,7 +2,6 @@ package com.dsy.dsu.Errors.controller;
 
 import android.content.ContentValues;
 import android.content.Context;
-import android.database.sqlite.SQLiteDatabase;
 import android.os.Environment;
 import android.util.Log;
 
@@ -10,15 +9,12 @@ import androidx.annotation.NonNull;
 import androidx.multidex.BuildConfig;
 
 
-import com.dsy.dsu.AllDatabases.SQLTE.GetSQLiteDatabase;
-import com.dsy.dsu.BusinessLogicAll.Class_GRUD_SQL_Operations;
 import com.dsy.dsu.BusinessLogicAll.Class_Generation_UUID;
 import com.dsy.dsu.BusinessLogicAll.Class_Generations_PUBLIC_CURRENT_ID;
 import com.dsy.dsu.BusinessLogicAll.DATE.Class_Generation_Data;
 import com.dsy.dsu.BusinessLogicAll.SubClassUpVersionDATA;
-import com.dsy.dsu.CnangeServers.PUBLIC_CONTENT;
 import com.dsy.dsu.Errors.controller.interfaces.RecordNewErrorsInterface;
-import com.sous.backasync.start.ModuleInserting;
+import com.sous.backasync.launch.ModuleInserting;
 
 import java.io.BufferedWriter;
 import java.io.File;
@@ -34,11 +30,6 @@ import dagger.Module;
 import dagger.hilt.InstallIn;
 import dagger.hilt.android.qualifiers.ApplicationContext;
 import dagger.hilt.components.SingletonComponent;
-import io.reactivex.rxjava3.core.Maybe;
-import io.reactivex.rxjava3.core.Scheduler;
-import io.reactivex.rxjava3.functions.Action;
-import io.reactivex.rxjava3.functions.Consumer;
-import io.reactivex.rxjava3.schedulers.Schedulers;
 
 
 @Module

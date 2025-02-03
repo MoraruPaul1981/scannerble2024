@@ -13,17 +13,18 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.CancellationSignal;
 import android.util.Log;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 
-import com.sous.backasync.errors.RecordNewErroBack;
-import com.sous.backasync.hill.HiltWorkerTableBarckAync;
+import com.sous.backasync.businesslogic.errors.RecordNewErroBack;
+import com.sous.backasync.businesslogic.hill.HiltWorkerTableBarckAync;
 
-import com.sous.backasync.hill.HiltInterfacesqliteBack;
-import com.sous.backasync.operationsprovider.GetQuery.ProviderQuery;
+import com.sous.backasync.businesslogic.hill.HiltInterfacesqliteBack;
+
 
 import java.util.ArrayList;
 import java.util.Optional;
@@ -44,7 +45,8 @@ public class ProviderBackAsync extends ContentProvider  {
 
     public ProviderBackAsync() throws InterruptedException {
         try{
-            Log.d(this.getClass().getName(),  " uriMatcherДЛяПровайдераКонтентБазаДанных" +uriMatcherДЛяПровайдераКонтентБазаДанных
+            Log.d(this.getClass().getName(),  " uriMatcherДЛяПровайдераКонтентБазаДанных"
+                    +uriMatcherДЛяПровайдераКонтентБазаДанных
                     + " sqliteBAck "+ sqliteBAck );
             // TODO: 04.10.2022
         } catch (Exception e) {
@@ -111,11 +113,7 @@ public class ProviderBackAsync extends ContentProvider  {
             Log.d(this.getClass().getName(), " uri"+uri  + "selection "+selection );
             String table = МетодОпределяемТаблицу(uri);
 
-           // Getquery getError=new Getquery(getContext(),sqliteBAck);
-            ProviderQuery getproviderQuery=new ProviderQuery(getContext(),sqliteBAck);
-// TODO: 15.01.2025 et Cursor with Data
-             cursor =   getproviderQuery.getQuery( table,selection,  selectionArgs);
-
+            cursor=   sqliteBAck.rawQuery( selection,  selectionArgs);
             Log.d(this.getClass().getName(),"\n" + " class FaceAPp " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                     " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
                     " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"+
@@ -132,10 +130,23 @@ public class ProviderBackAsync extends ContentProvider  {
     }
 
 
-
-
-
-
+    @Nullable
+    @Override
+    public Cursor query(@NonNull Uri uri, @Nullable String[] projection, @Nullable Bundle queryArgs, @Nullable CancellationSignal cancellationSignal) {
+        try{
+        Log.d(this.getClass().getName(),"\n" + " class FaceAPp " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n");
+    } catch (Exception e) {
+        e.printStackTrace();
+        Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() + " Линия  :"
+                + Thread.currentThread().getStackTrace()[2].getLineNumber());
+        new RecordNewErroBack(getContext()).recordnewerrorBack(e.toString(),
+                this.getClass().getName(), Thread.currentThread().getStackTrace()[2].getMethodName(),
+                Thread.currentThread().getStackTrace()[2].getLineNumber());
+    }
+        return super.query(uri, projection, queryArgs, cancellationSignal);
+    }
 
     @Override
     public int delete(Uri uri, String selection, String[] selectionArgs) {

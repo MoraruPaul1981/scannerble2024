@@ -3373,7 +3373,7 @@ Class_GRUD_SQL_Operations classGrudSqlOperationsУдалениеДанныхЧе
                 }
 
             }
-// stop when we reach the start of the next month
+// stop when we reach the launch of the next month
 
 
             Log.d(this.getClass().getName(), "   РезультатВычисленияВыходныхДней  " + РезультатВычисленияВыходныхДней.valueSet() + " daysInMonth " + daysInMonth);
