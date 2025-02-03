@@ -1,4 +1,4 @@
-package com.dsy.dsu.Errors.CoreApp;
+package com.dsy.dsu.CoreApp;
 
 
 import android.app.Application;
@@ -33,6 +33,10 @@ public class CoreApp extends Application {
 
     @Inject
     ModuleInserting moduleInserting;
+
+    @Inject
+    RecordNewErros recordNewErros;
+
 
     @Override
     public void onCreate() {
@@ -75,10 +79,14 @@ public class CoreApp extends Application {
 
             // TODO: 29.01.2025 insert
 
-        //    moduleInserting.getModuleInsert("error",new ContentValues());
+     // moduleInserting.getModuleInsert("error",new ContentValues());
 
-            String s=null;
-            s.length();
+      /*      String s=null;
+            s.length();*/
+
+
+        ///    recordNewErros.hashCode();
+
         Log.d(this.getClass().getName(),"\n" + " class CoreApp    " + Thread.currentThread().getStackTrace()[2].getClassName()
                 + "\n" +
                 " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +

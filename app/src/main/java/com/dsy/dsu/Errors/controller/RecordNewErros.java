@@ -30,12 +30,19 @@ import java.util.ArrayList;
 
 import javax.inject.Inject;
 
+import dagger.Module;
+import dagger.hilt.InstallIn;
+import dagger.hilt.android.qualifiers.ApplicationContext;
+import dagger.hilt.components.SingletonComponent;
 import io.reactivex.rxjava3.core.Maybe;
 import io.reactivex.rxjava3.core.Scheduler;
 import io.reactivex.rxjava3.functions.Action;
 import io.reactivex.rxjava3.functions.Consumer;
 import io.reactivex.rxjava3.schedulers.Schedulers;
 
+
+@Module
+@InstallIn(SingletonComponent.class)
 public class RecordNewErros  implements RecordNewErrorsInterface {
 
     private Context context;
@@ -47,11 +54,14 @@ public class RecordNewErros  implements RecordNewErrorsInterface {
       ModuleInserting moduleInserting;
 
 
-    public RecordNewErros(@NonNull Context context) {
-// TODO: 30.01.2025
-        this.context = context;
-    }
+    public @Inject RecordNewErros(@ApplicationContext Context context) {
 
+        this.context=context;
+
+        Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n");
+    }
 
 
     @Override
@@ -103,7 +113,7 @@ public class RecordNewErros  implements RecordNewErrorsInterface {
             // TODO: 09.07.2023 clear
         } catch (Exception e) {
             e.printStackTrace();
-            System.err.println("  Ошибка в самом классе записи ошибок нет КОНТЕКСТА RecordNewErros");
+            System.err.println("  Ошибка в самом классе записи ошибок нет КОНТЕКСТА RecordNewBackErros");
             Log.e(context.getClass().getName(), "Ошибка в самом классе создание ОШИБКИ (записи новой ошибки) ERROR  inse ERROR" + e
                     + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
                     " Линия  :" + Thread.currentThread().getStackTrace()[2].getLineNumber());
@@ -133,7 +143,7 @@ public class RecordNewErros  implements RecordNewErrorsInterface {
                     " arrayListОшибкиДляЗаписивФайл " + arrayListОшибкиДляЗаписивФайл);
     } catch (Exception e) {
         e.printStackTrace();
-        System.err.println("  Ошибка в самом классе записи ошибок нет КОНТЕКСТА RecordNewErros");
+        System.err.println("  Ошибка в самом классе записи ошибок нет КОНТЕКСТА RecordNewBackErros");
         Log.e(context.getClass().getName(), "Ошибка в самом классе создание ОШИБКИ (записи новой ошибки) ERROR  inse ERROR" + e
                 + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
                 " Линия  :" + Thread.currentThread().getStackTrace()[2].getLineNumber());
@@ -191,7 +201,7 @@ public class RecordNewErros  implements RecordNewErrorsInterface {
                     " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"+" InsertingNewErorr " +InsertingNewErorr);
     } catch (Exception e) {
         e.printStackTrace();
-        System.err.println("  Ошибка в самом классе записи ошибок нет КОНТЕКСТА RecordNewErros");
+        System.err.println("  Ошибка в самом классе записи ошибок нет КОНТЕКСТА RecordNewBackErros");
         Log.e(context.getClass().getName(), "Ошибка в самом классе создание ОШИБКИ (записи новой ошибки) ERROR  inse ERROR" + e
                 + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
                 " Линия  :" + Thread.currentThread().getStackTrace()[2].getLineNumber());

@@ -159,7 +159,7 @@ public class MainActivity_Errors extends AppCompatActivity  {
         try{
 
            // TODO: 17.01.2025  Получаем Ошибку двумя разными способами из файла и из курсора
-           //StringBuffer БуерДляОшибокИзФайла =     new GettingErrorsIsFileOrIsCursor(getApplicationContext()).gettingErrorsIsFile();
+           //StringBuffer БуерДляОшибокИзФайла =     new GettingBackErrorsIsFileOrIsCursor(getApplicationContext()).gettingErrorsIsFile();
            StringBuffer БуерДляОшибокИзКурсора =     new GettingErrorsIsFileOrIsCursor(getApplicationContext(), moduleQuety).gettingErrorsIsCursor();
 
             // TODO: 17.01.2025  полученные ошибку отправляем на экран ПОльзователю

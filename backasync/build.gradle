@@ -18,11 +18,23 @@ android {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
+        debug {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
     }
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_17
         targetCompatibility JavaVersion.VERSION_17
     }
+
+    buildFeatures {
+        compose true
+    }
+
+
+
+
 }
 
 dependencies {
@@ -40,4 +52,16 @@ dependencies {
     androidTestAnnotationProcessor 'com.google.dagger:hilt-compiler:2.44'
     testImplementation 'com.google.dagger:hilt-android-testing:2.44'
     testAnnotationProcessor 'com.google.dagger:hilt-compiler:2.44'
+
+//TODO new MOdules
+/*    implementation project(':back')
+    implementation project(':backasync')*/
+
+/*    implementation project(path: ':back')
+    implementation project(path: ':backasync')*/
+    //TODO new MOdules
+/*    implementation project(':app') // 'app' depends on 'app' !!!*/
+    // ...
+    api project(path: ':back')
+
 }

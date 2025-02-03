@@ -73,7 +73,7 @@ public class ContentProviderForDataBaseCurrentOperations extends ContentProvider
                         Log.d(this.getClass().getName(), " bundle  "+bundle);
                     } catch (Exception e) {
                         e.printStackTrace();
-                        System.err.println("  Ошибка в самом классе записи ошибок нет КОНТЕКСТА RecordNewErros");
+                        System.err.println("  Ошибка в самом классе записи ошибок нет КОНТЕКСТА RecordNewBackErros");
                         ///метод запись ошибок в таблицу
                         Log.e(getContext().getClass().getName(),
                                 "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
@@ -128,7 +128,7 @@ public class ContentProviderForDataBaseCurrentOperations extends ContentProvider
             sqLiteDatabase.endTransaction();
             Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() + " Линия  :"
                     + Thread.currentThread().getStackTrace()[2].getLineNumber());
-            new RecordNewErros(getContext()).recordnewerror(e.toString(), this.getClass().getName(), Thread.currentThread().getStackTrace()[2].getMethodName(),
+            new RecordNewBackErros(getContext()).recordnewerror(e.toString(), this.getClass().getName(), Thread.currentThread().getStackTrace()[2].getMethodName(),
                     Thread.currentThread().getStackTrace()[2].getLineNumber());
         }
         return РезультатУдалениеСтатуса;
@@ -522,7 +522,7 @@ public class ContentProviderForDataBaseCurrentOperations extends ContentProvider
         sqLiteDatabase.endTransaction();
         Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName()
                 + " Линия  :" + Thread.currentThread().getStackTrace()[2].getLineNumber());
-        new RecordNewErros(getContext()).recordnewerror(e.toString(),
+        new RecordNewBackErros(getContext()).recordnewerror(e.toString(),
                 this.getClass().getName(), Thread.currentThread().getStackTrace()[2].getMethodName(),
                 Thread.currentThread().getStackTrace()[2].getLineNumber());
     }

@@ -8,18 +8,15 @@ plugins {
     id 'com.google.gms.google-services'
     id 'com.google.dagger.hilt.android'
 
+
 }
 
 
 
-
-
-
-
-
-
-
 android {
+
+
+
     signingConfigs {
         debug {
             storeFile file('C:\\Users\\moraru_pi\\AndroidStudioProjectsTabel\\DSU\\certificates\\dsu1_keys.jks')
@@ -42,7 +39,7 @@ android {
     defaultConfig {
         applicationId "com.dsy.dsu"
         minSdk 29
-        targetSdk 33
+        targetSdk 34
         versionCode 1024
         versionName 'SousAvtodor Track 2025'
 
@@ -63,10 +60,27 @@ android {
         targetCompatibility  = JavaVersion.VERSION_17
     }
 
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+        debug {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+
+
 
     buildFeatures {
         compose true
     }
+
+
+
+
+
 
 
     dynamicFeatures = []
@@ -90,6 +104,10 @@ android {
 
     buildFeatures {
         compose true
+    }
+
+    dataBinding {
+        enabled = true
     }
 
     packagingOptions {
@@ -271,9 +289,15 @@ dependencies {
 
 
 //TODO new MOdules
-    implementation project(':back')
-    implementation project(':backasync')
+/*    implementation project(':back')
+    implementation project(':backasync')*/
 
+/*    implementation project(path: ':back')
+    implementation project(path: ':backasync')*/
+    //TODO new MOdules
+/*    implementation project(':app') // 'app' depends on 'app' !!!*/
+    // ...
+    api project(path: ':backasync')
 
 
 }

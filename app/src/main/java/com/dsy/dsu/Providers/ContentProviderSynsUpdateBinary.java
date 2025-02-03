@@ -119,7 +119,7 @@ public class ContentProviderSynsUpdateBinary extends ContentProvider {
                     Log.d(this.getClass().getName(), " bundle  "+bundle);
                 } catch (Exception e) {
                     e.printStackTrace();
-                    System.err.println("  Ошибка в самом классе записи ошибок нет КОНТЕКСТА RecordNewErros");
+                    System.err.println("  Ошибка в самом классе записи ошибок нет КОНТЕКСТА RecordNewBackErros");
                     ///метод запись ошибок в таблицу
                     Log.e(getContext().getClass().getName(),
                             "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +

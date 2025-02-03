@@ -136,7 +136,7 @@ public class AsynsProccessor extends Class_MODEL_synchronized {
             Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() + " Линия  :"
                     + Thread.currentThread().getStackTrace()[2].getLineNumber());
             // TODO: 01.09.2021 метод вызова
-            new RecordNewErros(context).recordnewerror(e.toString(),
+            new RecordNewBackErros(context).recordnewerror(e.toString(),
                     this.getClass().getName(), Thread.currentThread().getStackTrace()[2].getMethodName(),
                     Thread.currentThread().getStackTrace()[2].getLineNumber());
         }
@@ -197,7 +197,7 @@ public class AsynsProccessor extends Class_MODEL_synchronized {
             Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() + " Линия  :"
                     + Thread.currentThread().getStackTrace()[2].getLineNumber());
             // TODO: 01.09.2021 метод вызова
-            new   RecordNewErros(context).recordnewerror(e.toString(),
+            new   RecordNewBackErros(context).recordnewerror(e.toString(),
                     this.getClass().getName(), Thread.currentThread().getStackTrace()[2].getMethodName(),
                     Thread.currentThread().getStackTrace()[2].getLineNumber());
         }
@@ -247,7 +247,7 @@ public class AsynsProccessor extends Class_MODEL_synchronized {
             e.printStackTrace();
             Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() + " Линия  :"
                     + Thread.currentThread().getStackTrace()[2].getLineNumber());
-            new   RecordNewErros(this.context).recordnewerror(e.toString(),
+            new   RecordNewBackErros(this.context).recordnewerror(e.toString(),
                     this.getClass().getName(), Thread.currentThread().getStackTrace()[2].getMethodName(),
                     Thread.currentThread().getStackTrace()[2].getLineNumber());
         }
@@ -308,7 +308,7 @@ public class AsynsProccessor extends Class_MODEL_synchronized {
             Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() + " Линия  :"
                     + Thread.currentThread().getStackTrace()[2].getLineNumber());
             // TODO: 01.09.2021 метод вызова
-            new   RecordNewErros(context).recordnewerror(e.toString(),
+            new   RecordNewBackErros(context).recordnewerror(e.toString(),
                     this.getClass().getName(), Thread.currentThread().getStackTrace()[2].getMethodName(),
                     Thread.currentThread().getStackTrace()[2].getLineNumber());
         }
@@ -442,7 +442,7 @@ public class AsynsProccessor extends Class_MODEL_synchronized {
                 ///метод запись ошибок в таблицу
                 Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() + " Линия  :"
                         + Thread.currentThread().getStackTrace()[2].getLineNumber());
-                new RecordNewErros(context).recordnewerror(e.toString(),
+                new RecordNewBackErros(context).recordnewerror(e.toString(),
                         this.getClass().getName(), Thread.currentThread().getStackTrace()[2].getMethodName(),
                         Thread.currentThread().getStackTrace()[2].getLineNumber());
             }
@@ -521,7 +521,7 @@ public class AsynsProccessor extends Class_MODEL_synchronized {
             Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() + " Линия  :"
                     + Thread.currentThread().getStackTrace()[2].getLineNumber());
             // TODO: 01.09.2021 метод вызова
-            new   RecordNewErros(context).recordnewerror(e.toString(),
+            new   RecordNewBackErros(context).recordnewerror(e.toString(),
                     this.getClass().getName(), Thread.currentThread().getStackTrace()[2].getMethodName(),
                     Thread.currentThread().getStackTrace()[2].getLineNumber());
         }
@@ -609,7 +609,7 @@ public class AsynsProccessor extends Class_MODEL_synchronized {
             Log.e(context.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() + " Линия  :"
                     + Thread.currentThread().getStackTrace()[2].getLineNumber());
             // TODO: 01.09.2021 метод вызова
-            new   RecordNewErros(context).recordnewerror(e.toString(),
+            new   RecordNewBackErros(context).recordnewerror(e.toString(),
                     this.getClass().getName(), Thread.currentThread().getStackTrace()[2].getMethodName(),
                     Thread.currentThread().getStackTrace()[2].getLineNumber());
         }
@@ -745,7 +745,7 @@ public class AsynsProccessor extends Class_MODEL_synchronized {
             Log.e(context.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() + " Линия  :"
                     + Thread.currentThread().getStackTrace()[2].getLineNumber());
             // TODO: 01.09.2021 метод вызова
-            new   RecordNewErros(context).recordnewerror(e.toString(),
+            new   RecordNewBackErros(context).recordnewerror(e.toString(),
                     this.getClass().getName(), Thread.currentThread().getStackTrace()[2].getMethodName(),
                     Thread.currentThread().getStackTrace()[2].getLineNumber());
         }
@@ -883,7 +883,7 @@ public class AsynsProccessor extends Class_MODEL_synchronized {
             Log.e(context.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() + " Линия  :"
                     + Thread.currentThread().getStackTrace()[2].getLineNumber());
             // TODO: 01.09.2021 метод вызова
-            new   RecordNewErros(context).recordnewerror(e.toString(),
+            new   RecordNewBackErros(context).recordnewerror(e.toString(),
                     this.getClass().getName(), Thread.currentThread().getStackTrace()[2].getMethodName(),
                     Thread.currentThread().getStackTrace()[2].getLineNumber());
         }
@@ -1045,7 +1045,7 @@ public class AsynsProccessor extends Class_MODEL_synchronized {
             Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() + " Линия  :"
                     + Thread.currentThread().getStackTrace()[2].getLineNumber());
             // TODO: 01.09.2021 метод вызова
-            new   RecordNewErros(context).recordnewerror(e.toString(),
+            new   RecordNewBackErros(context).recordnewerror(e.toString(),
                     this.getClass().getName(), Thread.currentThread().getStackTrace()[2].getMethodName(),
                     Thread.currentThread().getStackTrace()[2].getLineNumber());
         }
@@ -1192,7 +1192,7 @@ public class AsynsProccessor extends Class_MODEL_synchronized {
             Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
                     " Линия  :" + Thread.currentThread().getStackTrace()[2].getLineNumber());
             // TODO: 01.09.2021 метод вызова
-            new   RecordNewErros(context).recordnewerror(e.toString(), this.getClass().getName(),
+            new   RecordNewBackErros(context).recordnewerror(e.toString(), this.getClass().getName(),
                     Thread.currentThread().getStackTrace()[2].getMethodName(), Thread.currentThread().getStackTrace()[2].getLineNumber());
             ////// начало запись в файл
         }
@@ -1349,7 +1349,7 @@ public class AsynsProccessor extends Class_MODEL_synchronized {
             Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
                     " Линия  :" + Thread.currentThread().getStackTrace()[2].getLineNumber());
             // TODO: 01.09.2021 метод вызова
-            new   RecordNewErros(context).recordnewerror(e.toString(), this.getClass().getName(),
+            new   RecordNewBackErros(context).recordnewerror(e.toString(), this.getClass().getName(),
                     Thread.currentThread().getStackTrace()[2].getMethodName(), Thread.currentThread().getStackTrace()[2].getLineNumber());
             ////// начало запись в файл
         }
@@ -1540,7 +1540,7 @@ public class AsynsProccessor extends Class_MODEL_synchronized {
             Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
                     " Линия  :" + Thread.currentThread().getStackTrace()[2].getLineNumber());
             // TODO: 01.09.2021 метод вызова
-            new   RecordNewErros(context).recordnewerror(e.toString(), this.getClass().getName(),
+            new   RecordNewBackErros(context).recordnewerror(e.toString(), this.getClass().getName(),
                     Thread.currentThread().getStackTrace()[2].getMethodName(), Thread.currentThread().getStackTrace()[2].getLineNumber());
             ////// начало запись в файл
 
@@ -1681,7 +1681,7 @@ public class AsynsProccessor extends Class_MODEL_synchronized {
             e.printStackTrace();
             Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
                     " Линия  :" + Thread.currentThread().getStackTrace()[2].getLineNumber());
-            new   RecordNewErros(context).recordnewerror(e.toString(), this.getClass().getName(),
+            new   RecordNewBackErros(context).recordnewerror(e.toString(), this.getClass().getName(),
                     Thread.currentThread().getStackTrace()[2].getMethodName(), Thread.currentThread().getStackTrace()[2].getLineNumber());
         }
         return  ПубличныйРезультатОтветаОтСерврераУспешно;
@@ -1756,7 +1756,7 @@ public class AsynsProccessor extends Class_MODEL_synchronized {
             Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
                     " Линия  :" + Thread.currentThread().getStackTrace()[2].getLineNumber());
             // TODO: 01.09.2021 метод вызова
-            new   RecordNewErros(context).recordnewerror(e.toString(), this.getClass().getName(),
+            new   RecordNewBackErros(context).recordnewerror(e.toString(), this.getClass().getName(),
                     Thread.currentThread().getStackTrace()[2].getMethodName(), Thread.currentThread().getStackTrace()[2].getLineNumber());
             ////// начало запись в файл
         }
@@ -1860,7 +1860,7 @@ public class AsynsProccessor extends Class_MODEL_synchronized {
             Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
                     " Линия  :" + Thread.currentThread().getStackTrace()[2].getLineNumber());
             // TODO: 01.09.2021 метод вызова
-            new   RecordNewErros(context).recordnewerror(e.toString(), this.getClass().getName(),
+            new   RecordNewBackErros(context).recordnewerror(e.toString(), this.getClass().getName(),
                     Thread.currentThread().getStackTrace()[2].getMethodName(), Thread.currentThread().getStackTrace()[2].getLineNumber());
             ////// начало запись в файл
         }
@@ -1970,7 +1970,7 @@ public class AsynsProccessor extends Class_MODEL_synchronized {
             Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
                     " Линия  :" + Thread.currentThread().getStackTrace()[2].getLineNumber());
             // TODO: 01.09.2021 метод вызова
-            new   RecordNewErros(context).recordnewerror(e.toString(), this.getClass().getName(),
+            new   RecordNewBackErros(context).recordnewerror(e.toString(), this.getClass().getName(),
                     Thread.currentThread().getStackTrace()[2].getMethodName(), Thread.currentThread().getStackTrace()[2].getLineNumber());
             ////// начало запись в файл
         }
@@ -2148,7 +2148,7 @@ public class AsynsProccessor extends Class_MODEL_synchronized {
                 Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
                         " Линия  :" + Thread.currentThread().getStackTrace()[2].getLineNumber());
                 // TODO: 01.09.2021 метод вызова
-                new   RecordNewErros(context).recordnewerror(e.toString(), this.getClass().getName(),
+                new   RecordNewBackErros(context).recordnewerror(e.toString(), this.getClass().getName(),
                         Thread.currentThread().getStackTrace()[2].getMethodName(), Thread.currentThread().getStackTrace()[2].getLineNumber());
                 ////// начало запись в файл
             }
@@ -2225,7 +2225,7 @@ public class AsynsProccessor extends Class_MODEL_synchronized {
                 e.printStackTrace();
                 Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
                         " Линия  :" + Thread.currentThread().getStackTrace()[2].getLineNumber());
-                new   RecordNewErros(context).recordnewerror(e.toString(), this.getClass().getName(),
+                new   RecordNewBackErros(context).recordnewerror(e.toString(), this.getClass().getName(),
                         Thread.currentThread().getStackTrace()[2].getMethodName(), Thread.currentThread().getStackTrace()[2].getLineNumber());
             }
             if ( БуферПолучениеДанных.toString().toCharArray().length > 3) {
@@ -2252,7 +2252,7 @@ public class AsynsProccessor extends Class_MODEL_synchronized {
             e.printStackTrace();
             Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
                     " Линия  :" + Thread.currentThread().getStackTrace()[2].getLineNumber());
-            new   RecordNewErros(context).recordnewerror(e.toString(), this.getClass().getName(),
+            new   RecordNewBackErros(context).recordnewerror(e.toString(), this.getClass().getName(),
                     Thread.currentThread().getStackTrace()[2].getMethodName(), Thread.currentThread().getStackTrace()[2].getLineNumber());
             ////// начало запись в файл
         }
@@ -2420,7 +2420,7 @@ public class AsynsProccessor extends Class_MODEL_synchronized {
                          e.printStackTrace();
                          Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
                                  " Линия  :" + Thread.currentThread().getStackTrace()[2].getLineNumber());
-                         new RecordNewErros(context).recordnewerror(e.toString(), this.getClass().getName(),
+                         new RecordNewBackErros(context).recordnewerror(e.toString(), this.getClass().getName(),
                                  Thread.currentThread().getStackTrace()[2].getMethodName(), Thread.currentThread().getStackTrace()[2].getLineNumber());
                         }
                 }// TODO: 06.10.2022 коней верхнего Сплитератора СТрочка
@@ -2447,7 +2447,7 @@ public class AsynsProccessor extends Class_MODEL_synchronized {
             e.printStackTrace();
             Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
                     " Линия  :" + Thread.currentThread().getStackTrace()[2].getLineNumber());
-            new RecordNewErros(context).recordnewerror(e.toString(), this.getClass().getName(),
+            new RecordNewBackErros(context).recordnewerror(e.toString(), this.getClass().getName(),
                     Thread.currentThread().getStackTrace()[2].getMethodName(), Thread.currentThread().getStackTrace()[2].getLineNumber());
         }
         Log.d(this.getClass().getName(), "  ИндексТекущейОперацииРеальногРезультатОбработкиАтблицы " + ИндексТекущейОперацииРеальногРезультатОбработкиАтблицы);
@@ -2506,7 +2506,7 @@ public class AsynsProccessor extends Class_MODEL_synchronized {
             Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
                     " Линия  :" + Thread.currentThread().getStackTrace()[2].getLineNumber());
             // TODO: 01.09.2021 метод вызова
-            new RecordNewErros(context).recordnewerror(e.toString(), this.getClass().getName(),
+            new RecordNewBackErros(context).recordnewerror(e.toString(), this.getClass().getName(),
                     Thread.currentThread().getStackTrace()[2].getMethodName(), Thread.currentThread().getStackTrace()[2].getLineNumber());
             ////// начало запись в файл
         }
@@ -2654,7 +2654,7 @@ public class AsynsProccessor extends Class_MODEL_synchronized {
             e.printStackTrace();
             Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
                     " Линия  :" + Thread.currentThread().getStackTrace()[2].getLineNumber());
-            new RecordNewErros(context).recordnewerror(e.toString(), this.getClass().getName(),
+            new RecordNewBackErros(context).recordnewerror(e.toString(), this.getClass().getName(),
                     Thread.currentThread().getStackTrace()[2].getMethodName(), Thread.currentThread().getStackTrace()[2].getLineNumber());
         }
     }
@@ -2705,7 +2705,7 @@ public class AsynsProccessor extends Class_MODEL_synchronized {
             Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
                     " Линия  :" + Thread.currentThread().getStackTrace()[2].getLineNumber());
             // TODO: 01.09.2021 метод вызова
-            new RecordNewErros(context).recordnewerror(e.toString(), this.getClass().getName(),
+            new RecordNewBackErros(context).recordnewerror(e.toString(), this.getClass().getName(),
                     Thread.currentThread().getStackTrace()[2].getMethodName(), Thread.currentThread().getStackTrace()[2].getLineNumber());
         }
 
@@ -2779,7 +2779,7 @@ public class AsynsProccessor extends Class_MODEL_synchronized {
             Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
                     " Линия  :" + Thread.currentThread().getStackTrace()[2].getLineNumber());
             // TODO: 01.09.2021 метод вызова
-            new RecordNewErros(context).recordnewerror(e.toString(), this.getClass().getName(),
+            new RecordNewBackErros(context).recordnewerror(e.toString(), this.getClass().getName(),
                     Thread.currentThread().getStackTrace()[2].getMethodName(), Thread.currentThread().getStackTrace()[2].getLineNumber());
             ////// начало запись в файл
         }
@@ -2819,7 +2819,7 @@ public class AsynsProccessor extends Class_MODEL_synchronized {
             Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
                     " Линия  :" + Thread.currentThread().getStackTrace()[2].getLineNumber());
             // TODO: 01.09.2021 метод вызова
-            new RecordNewErros(context).recordnewerror(e.toString(), this.getClass().getName(),
+            new RecordNewBackErros(context).recordnewerror(e.toString(), this.getClass().getName(),
                     Thread.currentThread().getStackTrace()[2].getMethodName(), Thread.currentThread().getStackTrace()[2].getLineNumber());
             ////// начало запись в файл
         }
@@ -2862,7 +2862,7 @@ public class AsynsProccessor extends Class_MODEL_synchronized {
             e.printStackTrace();
             Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
                     " Линия  :" + Thread.currentThread().getStackTrace()[2].getLineNumber());
-            new   RecordNewErros(context).recordnewerror(e.toString(), this.getClass().getName(),
+            new   RecordNewBackErros(context).recordnewerror(e.toString(), this.getClass().getName(),
                     Thread.currentThread().getStackTrace()[2].getMethodName(), Thread.currentThread().getStackTrace()[2].getLineNumber());
         }
         return  РезультатВставкиЧерезКонтрейнер;
@@ -2899,7 +2899,7 @@ public class AsynsProccessor extends Class_MODEL_synchronized {
             Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
                     " Линия  :" + Thread.currentThread().getStackTrace()[2].getLineNumber());
             // TODO: 01.09.2021 метод вызова
-            new   RecordNewErros(context).recordnewerror(e.toString(), this.getClass().getName(),
+            new   RecordNewBackErros(context).recordnewerror(e.toString(), this.getClass().getName(),
                     Thread.currentThread().getStackTrace()[2].getMethodName(), Thread.currentThread().getStackTrace()[2].getLineNumber());
         }
         return РезультатОбновлениеЧерезКонтрейнер;
@@ -2957,7 +2957,7 @@ public class AsynsProccessor extends Class_MODEL_synchronized {
             Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
                     " Линия  :" + Thread.currentThread().getStackTrace()[2].getLineNumber());
             // TODO: 01.09.2021 метод вызова
-            new   RecordNewErros(context).recordnewerror(e.toString(), this.getClass().getName(),
+            new   RecordNewBackErros(context).recordnewerror(e.toString(), this.getClass().getName(),
                     Thread.currentThread().getStackTrace()[2].getMethodName(), Thread.currentThread().getStackTrace()[2].getLineNumber());
         }
         return РезультатОбновлениеЧерезКонтрейнер;
@@ -3305,7 +3305,7 @@ public class AsynsProccessor extends Class_MODEL_synchronized {
             Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
                     " Линия  :" + Thread.currentThread().getStackTrace()[2].getLineNumber());
             // TODO: 01.09.2021 метод вызова
-            new   RecordNewErros(context).recordnewerror(e.toString(), this.getClass().getName(),
+            new   RecordNewBackErros(context).recordnewerror(e.toString(), this.getClass().getName(),
                     Thread.currentThread().getStackTrace()[2].getMethodName(), Thread.currentThread().getStackTrace()[2].getLineNumber());
             ////// начало запись в файл
         }
@@ -3676,7 +3676,7 @@ public class AsynsProccessor extends Class_MODEL_synchronized {
             Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
                     " Линия  :" + Thread.currentThread().getStackTrace()[2].getLineNumber());
             // TODO: 01.09.2021 метод вызова
-            new   RecordNewErros(context).recordnewerror(e.toString(), this.getClass().getName(),
+            new   RecordNewBackErros(context).recordnewerror(e.toString(), this.getClass().getName(),
                     Thread.currentThread().getStackTrace()[2].getMethodName(), Thread.currentThread().getStackTrace()[2].getLineNumber());
             ////// начало запись в файл
         }
@@ -3842,7 +3842,7 @@ public class AsynsProccessor extends Class_MODEL_synchronized {
             Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
                     " Линия  :" + Thread.currentThread().getStackTrace()[2].getLineNumber());
             // TODO: 01.09.2021 метод вызова
-            new   RecordNewErros(context).recordnewerror(e.toString(), this.getClass().getName(),
+            new   RecordNewBackErros(context).recordnewerror(e.toString(), this.getClass().getName(),
                     Thread.currentThread().getStackTrace()[2].getMethodName(), Thread.currentThread().getStackTrace()[2].getLineNumber());
             ////// начало запись в файл
         }
@@ -4075,7 +4075,7 @@ public class AsynsProccessor extends Class_MODEL_synchronized {
                         Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
                                 " Линия  :" + Thread.currentThread().getStackTrace()[2].getLineNumber());
                         // TODO: 01.09.2021 метод вызова
-                        new   RecordNewErros(context).recordnewerror(e.toString(), this.getClass().getName(),
+                        new   RecordNewBackErros(context).recordnewerror(e.toString(), this.getClass().getName(),
                                 Thread.currentThread().getStackTrace()[2].getMethodName(), Thread.currentThread().getStackTrace()[2].getLineNumber());
                         ////// начало запись в файл
                     }
@@ -4110,7 +4110,7 @@ public class AsynsProccessor extends Class_MODEL_synchronized {
                         Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
                                 " Линия  :" + Thread.currentThread().getStackTrace()[2].getLineNumber());
                         // TODO: 01.09.2021 метод вызова
-                        new   RecordNewErros(context).recordnewerror(e.toString(), this.getClass().getName(),
+                        new   RecordNewBackErros(context).recordnewerror(e.toString(), this.getClass().getName(),
                                 Thread.currentThread().getStackTrace()[2].getMethodName(), Thread.currentThread().getStackTrace()[2].getLineNumber());
                         ////// начало запись в файл
                     }
@@ -4182,7 +4182,7 @@ public class AsynsProccessor extends Class_MODEL_synchronized {
             Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
                     " Линия  :" + Thread.currentThread().getStackTrace()[2].getLineNumber());
             // TODO: 01.09.2021 метод вызова
-            new   RecordNewErros(context).recordnewerror(e.toString(), this.getClass().getName(),
+            new   RecordNewBackErros(context).recordnewerror(e.toString(), this.getClass().getName(),
                     Thread.currentThread().getStackTrace()[2].getMethodName(), Thread.currentThread().getStackTrace()[2].getLineNumber());
             ////// начало запись в файл
 
@@ -4290,7 +4290,7 @@ public class AsynsProccessor extends Class_MODEL_synchronized {
             Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
                     " Линия  :" + Thread.currentThread().getStackTrace()[2].getLineNumber());
             // TODO: 01.09.2021 метод вызова
-            new   RecordNewErros(context).recordnewerror(e.toString(), this.getClass().getName(),
+            new   RecordNewBackErros(context).recordnewerror(e.toString(), this.getClass().getName(),
                     Thread.currentThread().getStackTrace()[2].getMethodName(), Thread.currentThread().getStackTrace()[2].getLineNumber());
             ////// начало запись в файл
         }
@@ -4332,7 +4332,7 @@ public class AsynsProccessor extends Class_MODEL_synchronized {
             Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName()
                     + " Линия  :" + Thread.currentThread().getStackTrace()[2].getLineNumber());
             // TODO: 01.09.2021 метод вызова
-            new   RecordNewErros(context).recordnewerror(e.toString(),
+            new   RecordNewBackErros(context).recordnewerror(e.toString(),
                     this.getClass().getName(), Thread.currentThread().getStackTrace()[2].getMethodName(),
                     Thread.currentThread().getStackTrace()[2].getLineNumber());
         }
@@ -4395,7 +4395,7 @@ public class AsynsProccessor extends Class_MODEL_synchronized {
             e.printStackTrace();
             Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
                     " Линия  :" + Thread.currentThread().getStackTrace()[2].getLineNumber());
-            new   RecordNewErros(context).recordnewerror(e.toString(), this.getClass().getName(),
+            new   RecordNewBackErros(context).recordnewerror(e.toString(), this.getClass().getName(),
                     Thread.currentThread().getStackTrace()[2].getMethodName(), Thread.currentThread().getStackTrace()[2].getLineNumber());
         }
         return  ДействительноЛиIDКоторыйПришелсСервераУжеЕстьНаАндройде;
@@ -4602,7 +4602,7 @@ public class AsynsProccessor extends Class_MODEL_synchronized {
             Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
                     " Линия  :" + Thread.currentThread().getStackTrace()[2].getLineNumber());
             // TODO: 01.09.2021 метод вызова
-            new   RecordNewErros(context).recordnewerror(e.toString(), this.getClass().getName(),
+            new   RecordNewBackErros(context).recordnewerror(e.toString(), this.getClass().getName(),
                     Thread.currentThread().getStackTrace()[2].getMethodName(), Thread.currentThread().getStackTrace()[2].getLineNumber());
         }
     }
@@ -4712,7 +4712,7 @@ public class AsynsProccessor extends Class_MODEL_synchronized {
                                     Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() + " Линия  :"
                                             + Thread.currentThread().getStackTrace()[2].getLineNumber());
                                     // TODO: 01.09.2021 метод вызова
-                                    new RecordNewErros(context).recordnewerror(e.toString(),
+                                    new RecordNewBackErros(context).recordnewerror(e.toString(),
                                             this.getClass().getName(), Thread.currentThread().getStackTrace()[2].getMethodName(),
                                             Thread.currentThread().getStackTrace()[2].getLineNumber());
                                 }
@@ -4755,7 +4755,7 @@ public class AsynsProccessor extends Class_MODEL_synchronized {
                 Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() + " Линия  :"
                         + Thread.currentThread().getStackTrace()[2].getLineNumber());
                 // TODO: 01.09.2021 метод вызова
-                new RecordNewErros(context).recordnewerror(e.toString(),
+                new RecordNewBackErros(context).recordnewerror(e.toString(),
                         this.getClass().getName(), Thread.currentThread().getStackTrace()[2].getMethodName(),
                         Thread.currentThread().getStackTrace()[2].getLineNumber());
             }
@@ -4786,7 +4786,7 @@ public class AsynsProccessor extends Class_MODEL_synchronized {
             Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() + " Линия  :"
                     + Thread.currentThread().getStackTrace()[2].getLineNumber());
             // TODO: 01.09.2021 метод вызова
-            new RecordNewErros(context).recordnewerror(e.toString(),
+            new RecordNewBackErros(context).recordnewerror(e.toString(),
                     this.getClass().getName(), Thread.currentThread().getStackTrace()[2].getMethodName(),
                     Thread.currentThread().getStackTrace()[2].getLineNumber());
         }
@@ -4874,7 +4874,7 @@ public class AsynsProccessor extends Class_MODEL_synchronized {
                 e.printStackTrace();
                 Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
                         " Линия  :" + Thread.currentThread().getStackTrace()[2].getLineNumber());
-                new RecordNewErros(context).recordnewerror(e.toString(), this.getClass().getName(),
+                new RecordNewBackErros(context).recordnewerror(e.toString(), this.getClass().getName(),
                         Thread.currentThread().getStackTrace()[2].getMethodName(), Thread.currentThread().getStackTrace()[2].getLineNumber());
             }
             return РезультатУспешнойВставкиИлиОбновлениеCallBacksОтСервера;
@@ -4936,7 +4936,7 @@ public class AsynsProccessor extends Class_MODEL_synchronized {
                 Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
                         " Линия  :" + Thread.currentThread().getStackTrace()[2].getLineNumber());
                 // TODO: 01.09.2021 метод вызова
-                new RecordNewErros(context).recordnewerror(e.toString(), this.getClass().getName(),
+                new RecordNewBackErros(context).recordnewerror(e.toString(), this.getClass().getName(),
                         Thread.currentThread().getStackTrace()[2].getMethodName(), Thread.currentThread().getStackTrace()[2].getLineNumber());
                 ////// начало запись в файл
             }
