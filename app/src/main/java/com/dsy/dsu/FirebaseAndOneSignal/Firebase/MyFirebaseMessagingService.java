@@ -72,7 +72,7 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
          if (entry.getValue().trim().matches("(.*)android(.*)")) {
                     Log.d(this.getClass().getName(),  " value ЕСЛИ ЕСТЬ СООБЩЕНИ НАПИСАННО ДРУГИМ ПОЛЬОВАТЛЕМ ТО УДАЛЯЕМ УВЕДОМЛЕНИ И СОЗАДЕМ НОВЫЙ СЛУЖЮА BRODCAST"+value+"\n"+ " key " +key);
              // TODO: 01.02.2022 заПУСКАЕМ сИНХРОНИАЗАЦИЮ С ВСЕХ ЛИСТ ТАБЕЛЕЙ
-           /*  Integer  ПубличныйIDДляАсих=   new Class_Generations_PUBLIC_CURRENT_ID().getPublicIDAllApp(getApplicationContext());
+           /*  Integer  ПубличныйIDДляАсих=   new Class_GenerationsBack_PUBLIC_CURRENT_ID().getPublicIDAllApp(getApplicationContext());
 
              Data myDataSingleWorker = new Data.Builder()
                      .putInt("ПубличныйID", ПубличныйIDДляАсих)

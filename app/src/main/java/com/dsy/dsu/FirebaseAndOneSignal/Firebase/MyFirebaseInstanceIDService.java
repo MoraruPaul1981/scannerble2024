@@ -75,7 +75,7 @@ public class MyFirebaseInstanceIDService extends FirebaseMessagingService {
              // TODO: 01.02.2022 заПУСКАЕМ сИНХРОНИАЗАЦИЮ С ВСЕХ ЛИСТ ТАБЕЛЕЙ
 
 
-           /*  Integer  ПубличныйIDДляАсих=   new Class_Generations_PUBLIC_CURRENT_ID().getPublicIDAllApp(getApplicationContext());
+           /*  Integer  ПубличныйIDДляАсих=   new Class_GenerationsBack_PUBLIC_CURRENT_ID().getPublicIDAllApp(getApplicationContext());
 
              Data myDataSingleWorker = new Data.Builder()
                      .putInt("ПубличныйID", ПубличныйIDДляАсих)

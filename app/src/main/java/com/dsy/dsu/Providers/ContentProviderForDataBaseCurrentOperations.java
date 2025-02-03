@@ -508,7 +508,7 @@ public class ContentProviderForDataBaseCurrentOperations extends ContentProvider
             Long CurrenrsСhildUUID =   extras.getLong("CurrenrsСhildUUID",0l);
             Long ВерсияДанныхUp = new SubClassUpVersionDATA().МетодПовышаемВерсииCurrentTable(table,getContext(),sqLiteDatabase);
             values.put("current_table",ВерсияДанныхUp);
-            String ДатаОбновления=     new Class_Generation_Data(getContext()).ГлавнаяДатаИВремяОперацийСБазойДанных();
+            String ДатаОбновления=     new Class_GenerationBack_Data(getContext()).ГлавнаяДатаИВремяОперацийСБазойДанных();
             values.put("date_update",ДатаОбновления);
             // TODO: 28.03.2023 Само Обновление Профессии
             РезультатСменыПрофесии  = sqLiteDatabase.update(table,values, "uuid=?", new String[]{CurrenrsСhildUUID.toString()});

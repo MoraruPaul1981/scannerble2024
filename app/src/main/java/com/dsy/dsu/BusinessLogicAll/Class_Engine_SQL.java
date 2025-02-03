@@ -3409,7 +3409,7 @@ public class AsynsProccessor extends Class_MODEL_synchronized {
                     class_grud_sql_operationsПосылаемДанныеНаСервервФоне = new Class_GRUD_SQL_Operations(context);
 
 
-                    ПубличныйIDДляФрагмента = new Class_Generations_PUBLIC_CURRENT_ID().getPublicIDAllApp(context);
+                    ПубличныйIDДляФрагмента = new Class_GenerationsBack_PUBLIC_CURRENT_ID().getPublicIDAllApp(context);
 
                     Log.d(this.getClass().getName(), " имяТаблицыОтАндройда_локальноая  Для Чата с _id " + имяТаблицыОтАндройда_локальноая);
 
@@ -3483,7 +3483,7 @@ public class AsynsProccessor extends Class_MODEL_synchronized {
                     //////TODO dверсия данных для ВСЕХ ТАБЛИЦ КРОМЕ , ТАБЛИЦ ЧАТА  old version
 
            */
-/*     ПубличныйIDДляФрагмента = new Class_Generations_PUBLIC_CURRENT_ID(contextСозданиеБАзы).getPublicIDAllApp();
+/*     ПубличныйIDДляФрагмента = new Class_GenerationsBack_PUBLIC_CURRENT_ID(contextСозданиеБАзы).getPublicIDAllApp();
 
                 Log.d(this.getClass().getName(), " имяТаблицыОтАндройда_локальноая  Для Чата с _id " + имяТаблицыОтАндройда_локальноая);
 
@@ -3711,7 +3711,7 @@ public class AsynsProccessor extends Class_MODEL_synchronized {
 
         //////TODO dверсия данных для ВСЕХ ТАБЛИЦ КРОМЕ , ТАБЛИЦ ЧАТА  old version
 
-        ПубличныйIDДляФрагмента = new Class_Generations_PUBLIC_CURRENT_ID().getPublicIDAllApp(context);
+        ПубличныйIDДляФрагмента = new Class_GenerationsBack_PUBLIC_CURRENT_ID().getPublicIDAllApp(context);
 
         Log.d(this.getClass().getName(), " имяТаблицыОтАндройда_локальноая  Для Чата с _id " + имяТаблицыОтАндройда_локальноая);
 

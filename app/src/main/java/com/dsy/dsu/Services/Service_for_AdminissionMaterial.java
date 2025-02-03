@@ -438,7 +438,7 @@ public class Service_for_AdminissionMaterial extends IntentService {
                 Long UUIDРОДИТЕЛЬСКАЯУжеСозданогоТАбеля = bundleПолучаемДанных.getLong("UUIDРОДИТЕЛЬСКАЯУжеСозданогоТАбеля", 0l);
                 Integer СФОУжеСозданогоТАбеля = bundleПолучаемДанных.getInt("СФО", 0);
                 ПолученныйПоследнийМесяцДляСортировкиЕгоВСпиноре = bundleПолучаемДанных.getString("ДепартаментТабеляПослеПодбораBACK", "");
-                //  Long ГенерироватьUUIDРОДИТЕЛЬСКАЯ = (Long) new Class_Generation_UUID(getApplicationContext()).МетодГенерацииUUID(getApplicationContext());
+                //  Long ГенерироватьUUIDРОДИТЕЛЬСКАЯ = (Long) new Class_Generation_UUIDBack(getApplicationContext()).МетодГенерацииUUID(getApplicationContext());
                 // TODO: 21.09.2022
                 String ПолученяМесяцПростоАнализа = new SubClassMONTHONLY_ТолькоАнализ(getApplicationContext()).ГлавнаяДатаИВремяОперацийСБазойДанных();
                 Integer МесяцПростоАнализа = Optional.ofNullable(ПолученяМесяцПростоАнализа).map(Integer::new).orElse(0);

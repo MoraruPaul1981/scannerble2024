@@ -1055,7 +1055,7 @@ public class ProccesorparallelSynch   {
                                                 @NonNull Integer PublicId) {
         Cursor  cursor=null;
         try{
-          //  ПубличныйIDДляФрагмента = new Class_Generations_PUBLIC_CURRENT_ID().getPublicIDAllApp(context);
+          //  ПубличныйIDДляФрагмента = new Class_GenerationsBack_PUBLIC_CURRENT_ID().getPublicIDAllApp(context);
 
             Uri uri = Uri.parse("content://com.dsy.dsu.providerdatabaseonlyasync/" + Таблица.trim() + "");
             ContentResolver resolver = context.getContentResolver();

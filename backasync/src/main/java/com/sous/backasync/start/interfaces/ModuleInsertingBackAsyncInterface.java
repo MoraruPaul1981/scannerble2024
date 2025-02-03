@@ -1,12 +1,11 @@
 package com.sous.backasync.start.interfaces;
 
 import android.content.ContentValues;
-import android.database.Cursor;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 
-public interface ModuleInsertBackAsyncInterface {
+public interface ModuleInsertingBackAsyncInterface {
 
     // TODO: 28.01.2025
 

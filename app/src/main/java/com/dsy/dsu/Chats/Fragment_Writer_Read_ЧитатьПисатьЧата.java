@@ -631,7 +631,7 @@ public class Fragment_Writer_Read_ЧитатьПисатьЧата extends Fragm
                 }
             } else {
                 Long НовыйUUIDДляОбеихТаблицЧАТиДАТАЧАТдляПоляPARENT_UUID =
-                        (Long) new Class_Generation_UUID(getContext()).МетодГенерацииUUID(getContext());
+                        (Long) new Class_Generation_UUIDBack(getContext()).МетодГенерацииUUID(getContext());
                 Long МетодОперацииВставкиТолькоРодительскуюТаблицу_ЧАТ_КогдаУжесуществуетПерепискаМеждуПользователями =
                         МетодЗаписиНовогоСообщенияТольковТаблицу_CHAT_КогдаЕщеМеждуПользователямиНетПереписки(
                                 ПубличныйIDДляФрагмента, НовыйUUIDДляОбеихТаблицЧАТиДАТАЧАТдляПоляPARENT_UUID);

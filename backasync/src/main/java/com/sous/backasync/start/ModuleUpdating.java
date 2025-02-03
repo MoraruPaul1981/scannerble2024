@@ -12,7 +12,9 @@ import android.util.Log;
 import androidx.annotation.NonNull;
 
 import com.sous.backasync.start.interfaces.ModuleInsertingBackAsyncInterface;
+import com.sous.backasync.start.interfaces.ModuleUpdatetingBackAsyncInterface;
 
+import java.io.Serializable;
 import java.util.Optional;
 
 import javax.inject.Inject;
@@ -25,85 +27,38 @@ import dagger.hilt.components.SingletonComponent;
 
 @Module
 @InstallIn(SingletonComponent.class)
-public class ModuleInserting implements ModuleInsertingBackAsyncInterface {
-    Context context;
+public class ModuleUpdating implements ModuleUpdatetingBackAsyncInterface {
 
-    public @Inject ModuleInserting(@ApplicationContext Context context) {
+    Context context;
+    public @Inject ModuleUpdating(@ApplicationContext Context context) {
         this.context=context;
         Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                 " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
                 " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n");
     }
 
-    // TODO: 28.01.2025   Querty
-
-
-
-@Override
-public Integer getModuleInsert(@NonNull Bundle bundleModuleBack ){
-    Integer getInsert=0;
-        try{
-            if (bundleModuleBack!=null) {
-                String[] УсловияВыборки=      bundleModuleBack.getStringArray("УсловияВыборки");
-                String  СамЗапрос=      bundleModuleBack.getString("СамЗапрос");
-                String  Таблица=      bundleModuleBack.getString("Таблица");
-                Uri uri = Uri.parse("content://"+getNameProvider+"/" + Таблица + "");
-                // TODO: 28.01.2025
-                ContentResolver contentProviderInsert=context.getContentResolver();
-                ContentValues contentValuesModuleBackAsync=new ContentValues();
-                Uri InsertingBack= contentProviderInsert.insert(uri,contentValuesModuleBackAsync);
-
-
-                Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
-                        " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                        " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" + "getInsert " +getInsert  );
-            }
-
-            Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
-                    " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                    " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" + "getInsert " +getInsert  );
-
-        } catch ( Exception e) {
-            e.printStackTrace();
-            Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
-                    " Линия  :" + Thread.currentThread().getStackTrace()[2].getLineNumber());
-/*            new RecordNewBackErros(context).recordnewerror(e.toString(), this.getClass().getName(),
-                    Thread.currentThread().getStackTrace()[2].getMethodName(), Thread.currentThread().getStackTrace()[2].getLineNumber());*/
-            Log.e(context.getClass().getName(), " Ошибка СЛУЖБА Service_ДляЗапускаодноразовойСинхронизации   ");
-        }
-        return  getInsert;
-    }
 
     @SuppressLint("NewApi")
     @Override
-    public Integer getModuleInsert(@NonNull String Таблица,@NonNull ContentValues contentValuesModuleBackAsync ){
-        Long InsertingBack = null;
+    public Integer getModuleUpdate(@NonNull String Таблица, @NonNull Bundle bundleModuleBack) {
+        Integer UpdatingBack=0;
         try{
-            if (contentValuesModuleBackAsync!=null) {
+            if (bundleModuleBack!=null) {
+          ContentValues contentValuesModuleBack=    bundleModuleBack.getParcelable("updateback");
                 Uri uri = Uri.parse("content://"+getNameProvider+"/" + Таблица + "");
+                // TODO: 28.01.2025
                 ContentResolver contentProviderInsert=context.getContentResolver();
+                  UpdatingBack= contentProviderInsert.update(uri,contentValuesModuleBack,bundleModuleBack);
 
-         Uri InsertingBackUri=contentProviderInsert.acquireContentProviderClient(uri).insert(uri,contentValuesModuleBackAsync);
-
-                InsertingBack=
-                         Optional.ofNullable(InsertingBackUri)
-                                 .stream()
-                                 .filter(f->f!=null)
-                                 .filter(f->f.getHost()!=null)
-                                 .filter(f->f.getHost().chars().allMatch( Character::isDigit ))
-                                 .mapToInt(tran-> Integer.parseInt(tran.getHost()))
-                                 .asLongStream().findAny().orElse(0);
 
                 Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                         " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                        " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" + "InsertingBack " +InsertingBack +"\n"+
-                        " InsertingBackUri "+InsertingBackUri);
+                        " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" + "UpdatingBack " +UpdatingBack  );
             }
-
 
             Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                     " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                    " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" + "\n" + "InsertingBack " +InsertingBack +"\n");
+                    " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" + "UpdatingBack " +UpdatingBack  );
 
         } catch ( Exception e) {
             e.printStackTrace();
@@ -113,9 +68,58 @@ public Integer getModuleInsert(@NonNull Bundle bundleModuleBack ){
                     Thread.currentThread().getStackTrace()[2].getMethodName(), Thread.currentThread().getStackTrace()[2].getLineNumber());*/
             Log.e(context.getClass().getName(), " Ошибка СЛУЖБА Service_ДляЗапускаодноразовойСинхронизации   ");
         }
-        return  InsertingBack.intValue();
+        return  UpdatingBack;
+    }
+
+
+    @SuppressLint("NewApi")
+    @Override
+    public Integer getModuleUpdate(@NonNull String Таблица, @NonNull ContentValues contentValuesModuleBack) {
+        int UpdatingBack = 0;
+        try{
+            if (contentValuesModuleBack!=null) {
+                Uri uri = Uri.parse("content://"+getNameProvider+"/" + Таблица + "");
+                // TODO: 28.01.2025
+                ContentResolver contentProviderInsert=context.getContentResolver();
+                UpdatingBack= contentProviderInsert.acquireContentProviderClient(uri).update(uri,contentValuesModuleBack,null);
+
+                Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                        " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                        " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"  +
+                        " UpdatingBack "+UpdatingBack);
+            }
+
+
+            Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                    " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                    " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" + "\n" + "UpdatingBack " +UpdatingBack +"\n");
+
+        } catch ( Exception e) {
+            e.printStackTrace();
+            Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
+                    " Линия  :" + Thread.currentThread().getStackTrace()[2].getLineNumber());
+/*            new RecordNewBackErros(context).recordnewerror(e.toString(), this.getClass().getName(),
+                    Thread.currentThread().getStackTrace()[2].getMethodName(), Thread.currentThread().getStackTrace()[2].getLineNumber());*/
+            Log.e(context.getClass().getName(), " Ошибка СЛУЖБА Service_ДляЗапускаодноразовойСинхронизации   ");
+        }
+        return  UpdatingBack;
     }
 
 
 
-}
+
+
+
+
+
+
+
+
+    // TODO: 28.01.2025   END CLASS
+    }
+
+// TODO: 28.01.2025   END CLASS
+
+
+
+

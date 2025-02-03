@@ -10,6 +10,7 @@ import android.util.Log;
 import com.dsy.dsu.Errors.controller.RecordNewErros;
 import com.sous.backasync.start.ModuleInserting;
 import com.sous.backasync.start.ModuleQuety;
+import com.sous.backasync.start.ModuleUpdating;
 
 
 import java.util.concurrent.CopyOnWriteArrayList;
@@ -33,6 +34,9 @@ public class CoreApp extends Application {
 
     @Inject
     ModuleInserting moduleInserting;
+
+    @Inject
+    ModuleUpdating moduleUpdating;
 
     @Inject
     RecordNewErros recordNewErros;

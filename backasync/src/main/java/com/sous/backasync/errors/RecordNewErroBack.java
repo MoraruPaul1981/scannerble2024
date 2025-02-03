@@ -1,24 +1,19 @@
-package com.dsy.dsu.Errors.controller;
+package com.sous.backasync.errors;
 
 import android.content.ContentValues;
 import android.content.Context;
-import android.database.sqlite.SQLiteDatabase;
 import android.os.Environment;
 import android.util.Log;
 
 import androidx.annotation.NonNull;
-import androidx.multidex.BuildConfig;
+import androidx.core.os.BundleCompat;
 
-
-import com.dsy.dsu.AllDatabases.SQLTE.GetSQLiteDatabase;
-import com.dsy.dsu.BusinessLogicAll.Class_GRUD_SQL_Operations;
-import com.dsy.dsu.BusinessLogicAll.Class_Generation_UUID;
-import com.dsy.dsu.BusinessLogicAll.Class_Generations_PUBLIC_CURRENT_ID;
-import com.dsy.dsu.BusinessLogicAll.DATE.Class_Generation_Data;
-import com.dsy.dsu.BusinessLogicAll.SubClassUpVersionDATA;
-import com.dsy.dsu.CnangeServers.PUBLIC_CONTENT;
-import com.dsy.dsu.Errors.controller.interfaces.RecordNewErrorsInterface;
+import com.sous.backasync.dates.Class_GenerationBack_Data;
+import com.sous.backasync.errors.interfaces.RecordNewErrorsBackInterface;
+import com.sous.backasync.publicid.Class_GenerationsBack_PUBLIC_CURRENT_ID;
 import com.sous.backasync.start.ModuleInserting;
+import com.sous.backasync.uuids.Class_Generation_UUIDBack;
+import com.sous.backasync.versions.SubClassVersionDATABack;
 
 import java.io.BufferedWriter;
 import java.io.File;
@@ -30,20 +25,9 @@ import java.util.ArrayList;
 
 import javax.inject.Inject;
 
-import dagger.Module;
-import dagger.hilt.InstallIn;
 import dagger.hilt.android.qualifiers.ApplicationContext;
-import dagger.hilt.components.SingletonComponent;
-import io.reactivex.rxjava3.core.Maybe;
-import io.reactivex.rxjava3.core.Scheduler;
-import io.reactivex.rxjava3.functions.Action;
-import io.reactivex.rxjava3.functions.Consumer;
-import io.reactivex.rxjava3.schedulers.Schedulers;
 
-
-@Module
-@InstallIn(SingletonComponent.class)
-public class RecordNewErros  implements RecordNewErrorsInterface {
+public class RecordNewErroBack   implements RecordNewErrorsBackInterface {
 
     private Context context;
     /*private String fileName = "Sous-Avtodor-ERROR.txt";
@@ -51,10 +35,10 @@ public class RecordNewErros  implements RecordNewErrorsInterface {
     private   String patchFileName="SousAvtoFile";*/
 
 
-      ModuleInserting moduleInserting;
+    ModuleInserting moduleInserting;
 
 
-    public @Inject RecordNewErros(@ApplicationContext Context context) {
+    public @Inject RecordNewErroBack(@ApplicationContext Context context) {
 
         this.context=context;
 
@@ -66,9 +50,9 @@ public class RecordNewErros  implements RecordNewErrorsInterface {
 
     @Override
     public void recordnewerror(@NonNull String ТекстОшибки,
-                                              @NonNull String КлассГнерацииОшибки,
-                                              @NonNull String МетодаОшибки,
-                                              @NonNull Integer ЛинияОшибки) {
+                               @NonNull String КлассГнерацииОшибки,
+                               @NonNull String МетодаОшибки,
+                               @NonNull Integer ЛинияОшибки) {
 
         try {
             if (context != null) {
@@ -124,58 +108,56 @@ public class RecordNewErros  implements RecordNewErrorsInterface {
 
 
     @Override
-      public void getWriteNewErrorNotePad(@NonNull String ТекстОшибки, @NonNull String КлассГнерацииОшибки, @NonNull String МетодаОшибки, @NonNull Integer ЛинияОшибки) {
+    public void getWriteNewErrorNotePad(@NonNull String ТекстОшибки, @NonNull String КлассГнерацииОшибки, @NonNull String МетодаОшибки, @NonNull Integer ЛинияОшибки) {
         try{
-        ArrayList<String> arrayListОшибкиДляЗаписивФайл = new ArrayList();
-        arrayListОшибкиДляЗаписивФайл.add(ТекстОшибки);
-        arrayListОшибкиДляЗаписивФайл.add(КлассГнерацииОшибки);
-        arrayListОшибкиДляЗаписивФайл.add(МетодаОшибки);
-        arrayListОшибкиДляЗаписивФайл.add(String.valueOf(ЛинияОшибки));
+            ArrayList<String> arrayListОшибкиДляЗаписивФайл = new ArrayList();
+            arrayListОшибкиДляЗаписивФайл.add(ТекстОшибки);
+            arrayListОшибкиДляЗаписивФайл.add(КлассГнерацииОшибки);
+            arrayListОшибкиДляЗаписивФайл.add(МетодаОшибки);
+            arrayListОшибкиДляЗаписивФайл.add(String.valueOf(ЛинияОшибки));
 
-        // TODO: 09.07.2023 запись ошибки в файл  .txt
+            // TODO: 09.07.2023 запись ошибки в файл  .txt
 
-         writeDownAnewErrorFile(arrayListОшибкиДляЗаписивФайл);
+            writeDownAnewErrorFile(arrayListОшибкиДляЗаписивФайл);
 
             Log.d(this.getClass().getName(),"\n" + " class CoreApp    " + Thread.currentThread().getStackTrace()[2].getClassName()
                     + "\n" +
                     " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
                     " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"+
                     " arrayListОшибкиДляЗаписивФайл " + arrayListОшибкиДляЗаписивФайл);
-    } catch (Exception e) {
-        e.printStackTrace();
-        System.err.println("  Ошибка в самом классе записи ошибок нет КОНТЕКСТА RecordNewBackErros");
-        Log.e(context.getClass().getName(), "Ошибка в самом классе создание ОШИБКИ (записи новой ошибки) ERROR  inse ERROR" + e
-                + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
-                " Линия  :" + Thread.currentThread().getStackTrace()[2].getLineNumber());
-    }
+        } catch (Exception e) {
+            e.printStackTrace();
+            System.err.println("  Ошибка в самом классе записи ошибок нет КОНТЕКСТА RecordNewBackErros");
+            Log.e(context.getClass().getName(), "Ошибка в самом классе создание ОШИБКИ (записи новой ошибки) ERROR  inse ERROR" + e
+                    + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
+                    " Линия  :" + Thread.currentThread().getStackTrace()[2].getLineNumber());
+        }
     }
 
 
 
 
     @Override
-     public Integer getWriteNewError(@NonNull String ТекстОшибки,
-                                  @NonNull String КлассГнерацииОшибки,
-                                  @NonNull String МетодаОшибки,
-                                  @NonNull Integer ЛинияОшибки ) {
+    public Integer getWriteNewError(@NonNull String ТекстОшибки,
+                                    @NonNull String КлассГнерацииОшибки,
+                                    @NonNull String МетодаОшибки,
+                                    @NonNull Integer ЛинияОшибки ) {
         // TODO: 30.01.2025
         Integer InsertingNewErorr = null;
         try{
 
-           moduleInserting=new ModuleInserting(context);
+            moduleInserting=new ModuleInserting(context);
             // TODO: 30.01.2025
             ContentValues contentValuesNewError=new ContentValues();
 
-            Long getVersionForError  = new SubClassUpVersionDATA().upVersionCurentTable("errordsu1"
+            Long getVersionForError  = new SubClassVersionDATABack().upVersionCurentTable("errordsu1"
                     , context );
             Long UUIDForError = (Long)
-                    new Class_Generation_UUID(context).МетодГенерацииUUID();
-            Integer getPublicIdForError = new Class_Generations_PUBLIC_CURRENT_ID().
+                    new Class_Generation_UUIDBack(context).МетодГенерацииUUID();
+            Integer getPublicIdForError = new Class_GenerationsBack_PUBLIC_CURRENT_ID().
                     getPublicIDAllApp(context);
-            String getNewDateForError = new Class_Generation_Data(context).ГлавнаяДатаИВремяОперацийСБазойДанных();
+            String getNewDateForError = new Class_GenerationBack_Data(context).ГлавнаяДатаИВремяОперацийСБазойДанных();
 
-            final Object VersionPC = BuildConfig.VERSION_CODE;
-            Integer getVersionPCForError = Integer.parseInt(VersionPC.toString());
             // TODO: 30.01.2025 ВСТАВКА  новой ошибки
 
             contentValuesNewError.put("Error", ТекстОшибки.toLowerCase());
@@ -185,10 +167,10 @@ public class RecordNewErros  implements RecordNewErrorsInterface {
             contentValuesNewError.put("user_update", getPublicIdForError.toString());
             contentValuesNewError.put("UUID", UUIDForError.toString());
             contentValuesNewError.put("current_table", getVersionForError);
-            contentValuesNewError.put("whose_error", getVersionPCForError);
+            contentValuesNewError.put("whose_error", 0);
             contentValuesNewError.put("date_update", getNewDateForError);
 
-              InsertingNewErorr =    moduleInserting.getModuleInsert("errordsu1",contentValuesNewError);
+            InsertingNewErorr =    moduleInserting.getModuleInsert("errordsu1",contentValuesNewError);
 
 /*     Long   pезультатВставкиНовойОшибки = (Long) classGrudSqlOperationsОшибки.
                 new InsertData(context).insertdata(classGrudSqlOperationsОшибки.concurrentHashMapНабор,
@@ -199,13 +181,13 @@ public class RecordNewErros  implements RecordNewErrorsInterface {
                     + "\n" +
                     " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
                     " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"+" InsertingNewErorr " +InsertingNewErorr);
-    } catch (Exception e) {
-        e.printStackTrace();
-        System.err.println("  Ошибка в самом классе записи ошибок нет КОНТЕКСТА RecordNewBackErros");
-        Log.e(context.getClass().getName(), "Ошибка в самом классе создание ОШИБКИ (записи новой ошибки) ERROR  inse ERROR" + e
-                + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
-                " Линия  :" + Thread.currentThread().getStackTrace()[2].getLineNumber());
-    }
+        } catch (Exception e) {
+            e.printStackTrace();
+            System.err.println("  Ошибка в самом классе записи ошибок нет КОНТЕКСТА RecordNewBackErros");
+            Log.e(context.getClass().getName(), "Ошибка в самом классе создание ОШИБКИ (записи новой ошибки) ERROR  inse ERROR" + e
+                    + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
+                    " Линия  :" + Thread.currentThread().getStackTrace()[2].getLineNumber());
+        }
         return  InsertingNewErorr;
     }
 
@@ -216,20 +198,20 @@ public class RecordNewErros  implements RecordNewErrorsInterface {
     // TODO: 20.12.2022  дополнительный клас Заппси ОШИБКИВ ФАЙЛ
 
     @Override
-       public void writeDownAnewErrorFile(@NonNull ArrayList<String> linkedBlockingQueueВскеОшибкиДляЗаписи) {
-            try {
-                writeDownAnewErrorNotePad(linkedBlockingQueueВскеОшибкиДляЗаписи);
+    public void writeDownAnewErrorFile(@NonNull ArrayList<String> linkedBlockingQueueВскеОшибкиДляЗаписи) {
+        try {
+            writeDownAnewErrorNotePad(linkedBlockingQueueВскеОшибкиДляЗаписи);
 
-                Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
-                        " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                        " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"  );
-            } catch (Exception e) {
-                e.printStackTrace();
-                System.err.println("  Ошибка в    дополнительном модуле записи ошиьки в файл SubClassWriteErrorFile ");
-                Log.e(context.getClass().getName(), "Ошибка в самом классе создание ОШИБКИ (записи новой ошибки) ERROR  inse ERROR" + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
-                        " Линия  :" + Thread.currentThread().getStackTrace()[2].getLineNumber());
-            }
+            Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                    " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                    " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"  );
+        } catch (Exception e) {
+            e.printStackTrace();
+            System.err.println("  Ошибка в    дополнительном модуле записи ошиьки в файл SubClassWriteErrorFile ");
+            Log.e(context.getClass().getName(), "Ошибка в самом классе создание ОШИБКИ (записи новой ошибки) ERROR  inse ERROR" + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
+                    " Линия  :" + Thread.currentThread().getStackTrace()[2].getLineNumber());
         }
+    }
 
 
 
@@ -237,7 +219,7 @@ public class RecordNewErros  implements RecordNewErrorsInterface {
     public void writeDownAnewErrorNotePad(@NonNull  ArrayList<String> linkedBlockingQueueВскеОшибкиДляЗаписи) {
         try {
 
-            String СгенерированованныйДатаВремениСейчаcДляУдаления=     new Class_Generation_Data(context).ГлавнаяДатаИВремяОперацийСБазойДанных();
+            String СгенерированованныйДатаВремениСейчаcДляУдаления=     new Class_GenerationBack_Data(context).ГлавнаяДатаИВремяОперацийСБазойДанных();
 
             //File file = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS), File.separator + fileName);
             File file = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS), File.separator+patchFileName +File.separator+ fileName);
@@ -252,7 +234,7 @@ public class RecordNewErros  implements RecordNewErrorsInterface {
                 if (ДлинаСтрокивСпиноре) {
                     StringBuffer sb = new StringBuffer(linkedBlockingQueueВскеОшибкиДляЗаписи.get(0).toString());
                     sb.insert(40, System.lineSeparator());
-                 СамаОшибка = sb.toString();
+                    СамаОшибка = sb.toString();
                 }else {
                     СамаОшибка =linkedBlockingQueueВскеОшибкиДляЗаписи.get(0).toString();
                 }
@@ -325,7 +307,3 @@ public class RecordNewErros  implements RecordNewErrorsInterface {
         }
     }
 }
-
-// TODO: 07.10.2023  class Create FILE for Error
-
-

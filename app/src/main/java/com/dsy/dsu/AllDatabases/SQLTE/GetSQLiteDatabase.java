@@ -459,7 +459,7 @@ public class GetSQLiteDatabase extends SQLiteOpenHelper{ ///SQLiteOpenHelper
                 public void accept(Object НазваниеТаблицыДляТригера) {
                     String ФиналНазваниеТаблицыДляЗаполения =
                             new StringBuffer().append("'").append(НазваниеТаблицыДляТригера).append("'").toString();
-                    //    String ДАТА = new Class_Generation_Data(context).ГлавнаяДатаИВремяОперацийСБазойДанных();
+                    //    String ДАТА = new Class_GenerationBack_Data(context).ГлавнаяДатаИВремяОперацийСБазойДанных();
 
                     //TODO INSERT
                     ССылкаНаСозданнуюБазу.execSQL("  drop TRIGGER  if exists Inserts" + НазваниеТаблицыДляТригера + "");

@@ -105,7 +105,7 @@ public class ViewModelCommitDocuments  extends ViewModel {
                             if(!validadress.isEmpty()) {
                                 // TODO: 25.12.2023  get PUBLIC id
                               /*  Integer ПубличныйID =
-                                        new Class_Generations_PUBLIC_CURRENT_ID().getPublicIDAllApp(context);*/
+                                        new Class_GenerationsBack_PUBLIC_CURRENT_ID().getPublicIDAllApp(context);*/
                                 // TODO: 09.01.2024
                                 //   PublicId=8l;
                                 // TODO: 25.12.2023  Запускаем получее данных на сервеи 1с  byte

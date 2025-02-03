@@ -352,9 +352,8 @@ public class ProviderBackAsync extends ContentProvider  {
 
     @Override
     public int update(@NonNull Uri uri, @Nullable ContentValues values, @Nullable String selection, @Nullable String[] selectionArgs) {
-        Integer РезультатUpdateCurrentPro=0;
+        Integer  UpdateBAck=0;
         try{
-
                             if (!sqliteBAck.inTransaction()) {
                                 sqliteBAck.beginTransaction();
                             }
@@ -369,7 +368,7 @@ public class ProviderBackAsync extends ContentProvider  {
                                 Uri ОтветВставкиДанных  = Uri.parse("content://"+РезультатУдаления.toString());
                                 String ответОперцииВставки=    Optional.ofNullable(ОтветВставкиДанных).map(Emmeter->Emmeter
                                         .toString().replace("content://","")).get();
-                                РезультатUpdateCurrentPro= Integer.parseInt(ответОперцииВставки);
+                                UpdateBAck= Integer.parseInt(ответОперцииВставки);
                                 if (РезультатУдаления> 0) {
                                     getContext().getContentResolver().notifyChange(uri, null);
                                 }
@@ -386,14 +385,15 @@ public class ProviderBackAsync extends ContentProvider  {
 
                             Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                                     " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                                    " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" + " РезультатUpdateCurrentPro " +РезультатUpdateCurrentPro);
+                                    " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"
+                                    + " UpdateBAck " +UpdateBAck);
 
         } catch (Exception e) {
             e.printStackTrace();
             Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() + " Линия  :"
                     + Thread.currentThread().getStackTrace()[2].getLineNumber());
         }
-        return РезультатUpdateCurrentPro;
+        return UpdateBAck;
     }
 
 
