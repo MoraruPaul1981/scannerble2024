@@ -12,6 +12,7 @@ import com.sous.backasync.dates.Class_GenerationBack_Data;
 import com.sous.backasync.errors.interfaces.RecordNewErrorsBackInterface;
 import com.sous.backasync.publicid.Class_GenerationsBack_PUBLIC_CURRENT_ID;
 import com.sous.backasync.start.ModuleInserting;
+import com.sous.backasync.start.ModuleUpdating;
 import com.sous.backasync.uuids.Class_Generation_UUIDBack;
 import com.sous.backasync.versions.SubClassVersionDATABack;
 

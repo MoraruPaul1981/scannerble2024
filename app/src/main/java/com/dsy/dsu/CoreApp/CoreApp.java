@@ -96,6 +96,10 @@ public class CoreApp extends Application {
 
         ///    recordNewErros.hashCode();
 
+             /*    String s=null;
+            s.length();
+*/
+
         Log.d(this.getClass().getName(),"\n" + " class CoreApp    " + Thread.currentThread().getStackTrace()[2].getClassName()
                 + "\n" +
                 " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +

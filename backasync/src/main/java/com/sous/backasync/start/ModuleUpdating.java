@@ -40,15 +40,21 @@ public class ModuleUpdating implements ModuleUpdatetingBackAsyncInterface {
 
     @SuppressLint("NewApi")
     @Override
-    public Integer getModuleUpdate(@NonNull String Таблица, @NonNull Bundle bundleModuleBack) {
+    public Integer getModuleUpdate(@NonNull String Таблица, @NonNull  ContentValues contentValuesModuleBack ,
+                                   @NonNull String selection,  @NonNull String[] selectionArgs) {
         Integer UpdatingBack=0;
         try{
-            if (bundleModuleBack!=null) {
-          ContentValues contentValuesModuleBack=    bundleModuleBack.getParcelable("updateback");
+            if (contentValuesModuleBack!=null) {
                 Uri uri = Uri.parse("content://"+getNameProvider+"/" + Таблица + "");
                 // TODO: 28.01.2025
                 ContentResolver contentProviderInsert=context.getContentResolver();
-                  UpdatingBack= contentProviderInsert.update(uri,contentValuesModuleBack,bundleModuleBack);
+                  UpdatingBack= contentProviderInsert.acquireContentProviderClient(uri).update(uri,contentValuesModuleBack,selection,selectionArgs);
+
+
+                UpdatingBack=
+                        Optional.ofNullable(UpdatingBack)
+                                .stream()
+                                .filter(f->f!=null).mapToInt(Integer::new).findAny().orElse(0);
 
 
                 Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
