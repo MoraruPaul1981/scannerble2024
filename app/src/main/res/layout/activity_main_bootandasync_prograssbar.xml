@@ -38,7 +38,9 @@
             app:mwhStartColor="@color/colorPrimary"
             app:mwhCloseColor="@color/color_beliyi"
             app:mwhWaves="MultiWave"
-            android:layout_height="50dp"/>
+            app:mwhWaveHeight="50dp"
+            app:mwhColorAlpha="0.45"
+            android:layout_height="90dp"/>
 
 
 
@@ -143,19 +145,20 @@
 
     <com.google.android.material.navigation.NavigationView
         android:id="@+id/navigator_asyncapp"
-        android:layout_width="80dp"
+        android:layout_width="70dp"
         android:background="@drawable/dialog_bg_dashbord_bokobvay_panel_up_grey"
         android:layout_gravity="left|center"
-        android:layout_height="match_parent"
-        android:layout_margin="10dp"
-        android:layout_marginRight="10dp"
+        android:layout_height="600dp"
+        android:layout_margin="5dp"
+        android:layout_marginRight="5dp"
         android:fitsSystemWindows="true"
-        app:itemIconSize="30dp"
+        app:itemIconSize="25dp"
         app:itemIconTint="#E7EDED"
         android:visibility="visible"
         app:cardElevation="20dp"
         app:cardMaxElevation="10dp"
-        android:translationZ="100dp"
+        android:translationZ="50dp"
+        android:foregroundGravity="center"
         app:itemBackground="@drawable/dialog_bg_dashbord_bokobvay_panel_grey_navigarotbar"
         app:itemTextColor="@color/cardview_dark_background"
         app:menu="@menu/menu_for_asynsapp_navigationview"
