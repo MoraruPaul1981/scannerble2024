@@ -45,7 +45,6 @@ public class ServiceBootBinessLogic {
               intentstartServiceOneSignal.addFlags(Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
                 intentstartServiceOneSignal.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
                 intentstartServiceOneSignal.addFlags(Intent.FLAG_GRANT_PERSISTABLE_URI_PERMISSION);
-              intentstartServiceOneSignal.addFlags(Intent.FLAG_FROM_BACKGROUND);
 
             ContextCompat.startForegroundService(context, intentstartServiceOneSignal);
 

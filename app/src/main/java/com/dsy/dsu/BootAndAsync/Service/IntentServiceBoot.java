@@ -4,11 +4,17 @@ import android.app.IntentService;
 import android.app.Notification;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
+import android.content.ComponentName;
 import android.content.ContentResolver;
 import android.content.Intent;
+import android.content.pm.ServiceInfo;
+import android.os.Build;
 import android.util.Log;
 
+import androidx.annotation.Nullable;
 import androidx.core.app.NotificationCompat;
+import androidx.core.app.ServiceCompat;
+import androidx.work.ForegroundInfo;
 
 import com.dsy.dsu.BootAndAsync.BlBootAsync.CompleteRemoteSyncService;
 import com.dsy.dsu.Errors.controller.RecordNewErros;
@@ -56,7 +62,7 @@ public class IntentServiceBoot extends IntentService {
     @QualifierJbossServer3
     public LinkedHashMap<Integer,String> getHiltPortJboss;
 
-
+    Notification notification;
 
 
     public IntentServiceBoot() {
@@ -75,19 +81,20 @@ public class IntentServiceBoot extends IntentService {
         super.onCreate();
         // TODO: 24.09.2024
         try{
-        String CHANNEL_ID = "my_channel_01";
+        String CHANNEL_ID = this.getClass().getName();
         NotificationChannel channel = new NotificationChannel(CHANNEL_ID,
-                "Channel human readable title",
-                NotificationManager.IMPORTANCE_NONE);
+                CHANNEL_ID,
+                NotificationManager.IMPORTANCE_HIGH);
 
         ((NotificationManager) getSystemService(getApplicationContext().NOTIFICATION_SERVICE)).createNotificationChannel(channel);
 
-        Notification notification = new NotificationCompat.Builder(this, CHANNEL_ID)
-                .setContentTitle("")
-                .setContentText("").build();
+          notification = new NotificationCompat.Builder(this, CHANNEL_ID)
+                .setContentTitle("Обмен данными...")
+                .setContentText("Обмен данными...").build();
 
-        startForeground(17, notification);
-
+            ServiceCompat.startForeground(this,17,notification,ServiceCompat.STOP_FOREGROUND_REMOVE);
+            //ServiceCompat.startForeground(this,17,notification,ServiceCompat.STOP_FOREGROUND_REMOVE);
+            //startForeground(17,notification,ServiceInfo.FOREGROUND_SERVICE_TYPE_DATA_SYNC);
         Log.d(getApplicationContext().getClass().getName(), "\n"
                 + " время: " + new Date() + "\n+" +
                 " Класс в процессе... " + this.getClass().getName() + "\n" +
@@ -102,10 +109,19 @@ public class IntentServiceBoot extends IntentService {
 
 }
 
+
+    @Nullable
+    @Override
+    public ComponentName startForegroundService(Intent service) {
+        return super.startForegroundService(service);
+    }
+
     @Override
     public void onDestroy() {
         super.onDestroy();
         try {
+            // TODO: 25.12.2024
+            desibleServiceForeground();
             // TODO: 10.10.2024 записываем статус службы ка в менякем статус как отработал
         Log.d(getApplicationContext().getClass().getName(), "\n"
                 + " время: " + new Date() + "\n+" +
@@ -187,10 +203,6 @@ public class IntentServiceBoot extends IntentService {
                     break;
 
             }
-
-            // TODO: 25.12.2024
-            desibleServiceForeground();
-
             Log.d(getApplicationContext().getClass().getName(), "\n"
                     + " время: " + new Date() + "\n+" +
                     " Класс в процессе... " + this.getClass().getName() + "\n" +
@@ -208,7 +220,21 @@ public class IntentServiceBoot extends IntentService {
     }
 
     private void desibleServiceForeground() {
+        try{
         stopForeground(true);
+        //stopSelf();
+        Log.d(getApplicationContext().getClass().getName(), "\n"
+                + " время: " + new Date() + "\n+" +
+                " Класс в процессе... " + this.getClass().getName() + "\n" +
+                " метод в процессе... " + Thread.currentThread().getStackTrace()[2].getMethodName());
+
+    } catch (Exception e) {
+        e.printStackTrace();
+        Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
+                " Линия  :" + Thread.currentThread().getStackTrace()[2].getLineNumber());
+        new RecordNewErros(getApplicationContext()).recordnewerror(e.toString(), this.getClass().getName(),
+                Thread.currentThread().getStackTrace()[2].getMethodName(), Thread.currentThread().getStackTrace()[2].getLineNumber());
+    }
     }
 
 
