@@ -430,9 +430,7 @@ import okio.BufferedSink;
                                             Integer IdUser,
                                             String ИмяСервера,
                                             Integer ИмяПорта,
-                                         @NotNull SSLSocketFactory getsslSocketFactory2) throws IOException,
-            ExecutionException, InterruptedException, TimeoutException, NoSuchAlgorithmException,
-            KeyManagementException, InvalidKeyException, NoSuchPaddingException {
+                                         @NotNull SSLSocketFactory getsslSocketFactory2)  {
         final Long[] РазмерПришедшегоПотока = {0l};
         try {
             String enableSSl = preferencesJboss.getString("enablesll","http");
@@ -569,7 +567,7 @@ import okio.BufferedSink;
             dispatcherПинг.executorService().awaitTermination(1,TimeUnit.DAYS);
             dispatcherПинг.cancelAll();
             Log.i(context.getClass().getName(), "БуферРезультатПингасСервером" + БуферРезультатПингасСервером);
-        } catch (IOException ex) {
+        } catch (IOException | InterruptedException ex) {
             ex.printStackTrace();
             String ОшибкаТекущегоМетода = ex.toString();
             if (!ОшибкаТекущегоМетода.toString().trim().matches("(.*)java.io.EOFException(.*)") &&

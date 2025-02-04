@@ -224,6 +224,13 @@ public class CompleteRemoteSyncService {
 
             // TODO: 22.01.2024  если false значит сервер выключен
 
+            // TODO: 26.12.2022  конец основгого кода
+            Log.d(context.getClass().getName(), "\n" + " class "
+                    + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                    " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                    " line " + Thread.currentThread().getStackTrace()[2].getLineNumber()
+                    + "\n"+ " СтатусРаботыСервера " +СтатусРаботыСервера);
+
             // TODO: 22.01.2024 сеть включена
             metodDontNetwork();
             // TODO: 22.01.2024 сеть выключена

@@ -1,5 +1,6 @@
 package com.dsy.dsu.BootAndAsync.Service;
 
+import android.annotation.SuppressLint;
 import android.app.IntentService;
 import android.app.Notification;
 import android.app.NotificationChannel;
@@ -76,6 +77,7 @@ public class IntentServiceBoot extends IntentService {
         return super.getContentResolver();
     }
 
+    @SuppressLint("ForegroundServiceType")
     @Override
     public void onCreate() {
         super.onCreate();

@@ -2,7 +2,9 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:dist="http://schemas.android.com/apk/distribution"
     xmlns:tools="http://schemas.android.com/tools">
+
     <dist:module dist:instant="true" />
+
     <uses-permission
         android:name="android.permission.INTERACT_ACROSS_USERS"
         tools:ignore="ProtectedPermissions" />
@@ -26,8 +28,8 @@
     <uses-permission android:name="android.permission.READ_CALENDAR" />
     <uses-permission android:name="android.permission.WRITE_CALENDAR" />
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
-    <uses-permission android:name="android.permission.ACCESS_MEDIA " />
-    <uses-permission android:name="android.permission.ACCESS _EXTRA_COMMANDS" />
+    <uses-permission android:name="android.permission.ACCESS_MEDIA_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_LOCATION_EXTRA_COMMANDS" />
     <uses-permission android:name="android.permission.REQUEST_INSTALL_PACKAGES" />
     <uses-permission android:name="android.permission.VIBRATE" />
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
@@ -46,8 +48,9 @@
     <uses-permission android:name="android.intent.action.ACTION_EXTERNAL_APPLICATIONS_AVAILABLE" />
     <uses-permission android:name="android.intent.action.BOOT_COMPLETED" />
     <uses-permission android:name="android.intent.action.SEND" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.intent.action.SENDTO" />
-
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
@@ -91,26 +94,22 @@
     <uses-permission android:name="android.media.action.IMAGE_CAPTURE" />
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE_MEDIA_PLAYBACK" />
+    <uses-permission
+        android:name="android.permission.READ_PRIVILEGED_PHONE_STATE"
+        tools:ignore="ProtectedPermissions" />
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.RECORD_AUDIO" />
+    <uses-permission android:name="android.permission.CAMERAX" />
+    <uses-permission android:name="com.mycoolcam.USE_COOL_CAMERA" />
+    <uses-permission android:name="android.media.action.IMAGE_CAPTURE" />
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE_MEDIA_PLAYBACK" />
     <!-- permissions -->
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE "/>
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE"/>
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE_DATA_SYNC"/>
     <uses-permission android:name="android.permission.POST_NOTIFICATIONS"/>
-    <uses-permission android:name="android.permission.ACCESS_BACKGROUND_LOCATION"/>
 
-
-
-    <uses-permission
-        android:name="android.permission.READ_PRIVILEGED_PHONE_STATE"
-        tools:ignore="ProtectedPermissions" />
-
-
-    <uses-feature
-        android:name="android.hardware.bluetooth_le"
-        android:required="true" />
-    <uses-feature
-        android:name="android.hardware.bluetooth"
-        android:required="true" />
     <uses-feature
         android:glEsVersion="0x00020000"
         android:required="false" />
@@ -141,7 +140,9 @@
     <uses-feature android:name="android.hardware.camera.autofocus" />
     <uses-feature android:name="android.hardware.camera2.full" />
 
-
+    <uses-permission
+        android:name="android.permission.WRITE_EXTERNAL_STORAGE"
+        tools:node="replace" />
 
 
     <application
@@ -230,65 +231,50 @@
             android:directBootAware="true"
             android:enabled="true"
             android:exported="true"
-            android:foregroundServiceType="dataSync"
             android:permission="android.permission.BIND_JOB_SERVICE"
-            android:requestLegacyExternalStorage="true"
+   
             android:showOnLockScreen="true"
             android:stopWithTask="false">
-        </service>
 
+        </service>
         <service
             android:name=".BootAndAsync.Service.IntentServiceBoot"
             android:directBootAware="true"
             android:enabled="true"
             android:exported="true"
+            android:stopWithTask="false"
             android:foregroundServiceType="dataSync"
             android:permission="android.permission.BIND_JOB_SERVICE"
+   
             android:showOnLockScreen="true">
         </service>
-
-
-
         <service
             android:name=".AdmissionMaterials.Service.ServiceCameraTake"
             android:directBootAware="true"
             android:enabled="true"
             android:exported="true"
-            android:foregroundServiceType="dataSync"
             android:permission="android.permission.BIND_JOB_SERVICE"
             android:showOnLockScreen="true">
+
         </service>
         <service
             android:name=".Services.Service_For_Public"
             android:directBootAware="true"
             android:enabled="true"
             android:exported="true"
-            android:foregroundServiceType="dataSync"
             android:permission="android.permission.BIND_JOB_SERVICE"
             android:showOnLockScreen="true">
-        </service>
-        <service
-            android:name=".Services.ServiceForCommitPay"
-            android:directBootAware="true"
-            android:enabled="true"
-            android:exported="true"
-            android:foregroundServiceType="dataSync"
-            android:permission="android.permission.BIND_JOB_SERVICE"
-            android:showOnLockScreen="true">
+
         </service>
         <service
             android:name=".OrdersTransports.Background.ServiceOrserTransportService"
             android:directBootAware="true"
             android:enabled="true"
             android:exported="true"
-            android:foregroundServiceType="dataSync"
             android:permission="android.permission.BIND_JOB_SERVICE"
             android:showOnLockScreen="true">
+
         </service>
-
-
-
-
 
         <activity
             android:name=".AdmissionMaterials.Window.MainActivity_AdmissionMaterials"
@@ -354,21 +340,21 @@
             android:directBootAware="true"
             android:enabled="true"
             android:exported="true"
-            android:foregroundServiceType="dataSync"
             android:permission="android.permission.BIND_JOB_SERVICE"
             android:showOnLockScreen="true">
+
         </service>
         <service
             android:name=".Services.Service_for_AdminissionMaterial"
             android:directBootAware="true"
             android:enabled="true"
             android:exported="true"
-            android:foregroundServiceType="dataSync"
             android:permission="android.permission.BIND_JOB_SERVICE"
             android:showOnLockScreen="true">
+
         </service>
 
-<!--//TODO  Start Бродкаст Ресиверы -->
+        <!--//TODO  Start Бродкаст Ресиверы -->
         <receiver
             android:name=".BroadcastRecievers.BroadCastMyReceiverPublic"
             android:enabled="true"
@@ -675,22 +661,22 @@
             android:directBootAware="true"
             android:enabled="true"
             android:exported="true"
-            android:requestLegacyExternalStorage="true"
-            android:showOnLockScreen="true"
-            android:foregroundServiceType="dataSync"
             android:permission="android.permission.BIND_JOB_SERVICE"
+   
+            android:showOnLockScreen="true"
             android:stopWithTask="false">
+
         </service> <!-- android:permission="android.intent.action.BOOT_COMPLETED" -->
         <service
             android:name=".Services.Service_For_Task_Для_Задания_СменаСатуса"
             android:directBootAware="true"
             android:enabled="true"
             android:exported="true"
-            android:foregroundServiceType="dataSync"
             android:permission="android.permission.BIND_JOB_SERVICE"
-            android:requestLegacyExternalStorage="true"
+   
             android:showOnLockScreen="true"
             android:stopWithTask="false">
+
         </service> <!-- android:permission="android.intent.action.BOOT_COMPLETED" -->
         <!-- todo JOBintenservice -->
         <service
@@ -698,11 +684,11 @@
             android:directBootAware="true"
             android:enabled="true"
             android:exported="true"
-            android:foregroundServiceType="dataSync"
             android:permission="android.permission.BIND_JOB_SERVICE"
-            android:requestLegacyExternalStorage="true"
+   
             android:showOnLockScreen="true"
             android:stopWithTask="false">
+
         </service> <!-- android:permission="android.intent.action.BOOT_COMPLETED" -->
         <!-- android:permission="android.intent.action.BOOT_COMPLETED" -->
         <service
@@ -710,7 +696,6 @@
             android:directBootAware="true"
             android:enabled="true"
             android:exported="true"
-            android:foregroundServiceType="dataSync"
             android:permission="android.permission.BIND_JOB_SERVICE"
             android:showOnLockScreen="true">
 
@@ -720,37 +705,33 @@
             android:directBootAware="true"
             android:enabled="true"
             android:exported="true"
-            android:foregroundServiceType="dataSync"
             android:permission="android.permission.BIND_JOB_SERVICE"
-            android:requestLegacyExternalStorage="true"
+   
             android:showOnLockScreen="true"
             android:stopWithTask="false">
+
         </service>
-
-
         <service
             android:name=".Services.Service_Async_1C"
             android:directBootAware="true"
             android:enabled="true"
             android:exported="true"
-            android:foregroundServiceType="dataSync"
             android:permission="android.permission.BIND_JOB_SERVICE"
-            android:requestLegacyExternalStorage="true"
+   
             android:showOnLockScreen="true"
             android:stopWithTask="false">
+
         </service>
-
-
         <service
             android:name=".Services.ServiceUpdatePoОбновлениеПО"
             android:directBootAware="true"
             android:enabled="true"
             android:exported="true"
-            android:requestLegacyExternalStorage="true"
-            android:showOnLockScreen="true"
-            android:foregroundServiceType="dataSync"
             android:permission="android.permission.BIND_JOB_SERVICE"
+   
+            android:showOnLockScreen="true"
             android:stopWithTask="false">
+
         </service> <!-- ПРОВАЙДЕР ДЛЯ БАЗЫ ДАННЫХ  ${applicationId}.file  content://com.dsy.dsu/Database DSU-1.db  content://com.example.app.provider/table2/dataset1  content://com.example.app.provider/table1    uriMatcher.addURI("com.example.app.provider", "table3/#", 2); -->
         <!-- WORK MANAGER default provider -->
         <provider
@@ -904,7 +885,7 @@
             android:grantUriPermissions="true"
             android:label="@string/name_dsu"
             android:launchMode="singleTask"
-            android:requestLegacyExternalStorage="true"
+   
             android:showOnLockScreen="true"
             android:theme="@style/Theme.MaterialComponents.DayNight.DarkActionBar">
             <intent-filter>
@@ -1170,7 +1151,7 @@
             android:grantUriPermissions="true"
             android:label="Ошибки приложения ДСУ-1"
             android:launchMode="singleTop"
-            android:requestLegacyExternalStorage="true"
+   
             android:theme="@style/Theme.MaterialComponents.DayNight.DarkActionBar">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
@@ -1201,7 +1182,7 @@
             android:grantUriPermissions="true"
             android:label="Союз-Автодор"
             android:launchMode="standard"
-            android:requestLegacyExternalStorage="true"
+   
             android:showOnLockScreen="true"
             android:theme="@style/Theme.MaterialComponents.DayNight.DarkActionBar">
             <meta-data
