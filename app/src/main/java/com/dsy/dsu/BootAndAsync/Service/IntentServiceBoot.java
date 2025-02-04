@@ -84,21 +84,8 @@ public class IntentServiceBoot extends IntentService {
         super.onCreate();
         // TODO: 24.09.2024
         try{
-        String CHANNEL_ID = this.getClass().getName();
-        NotificationChannel channel = new NotificationChannel(CHANNEL_ID,
-                CHANNEL_ID,
-                NotificationManager.IMPORTANCE_HIGH);
-
-        ((NotificationManager) getSystemService(getApplicationContext().NOTIFICATION_SERVICE)).createNotificationChannel(channel);
-
-          notification = new NotificationCompat.Builder(this, CHANNEL_ID)
-                .setContentTitle("Обмен данными...")
-                .setContentText("Обмен данными...").build();
-
-            ServiceCompat.startForeground(this,new Random().nextInt(2),notification,ServiceCompat.STOP_FOREGROUND_REMOVE);
-            //ServiceCompat.startForeground(this,17,notification,ServiceCompat.STOP_FOREGROUND_REMOVE);
-        // startForeground(17,notification,ServiceInfo.FOREGROUND_SERVICE_TYPE_DATA_SYNC);
-        Log.d(getApplicationContext().getClass().getName(), "\n"
+            startingNotificationService();
+            Log.d(getApplicationContext().getClass().getName(), "\n"
                 + " время: " + new Date() + "\n+" +
                 " Класс в процессе... " + this.getClass().getName() + "\n" +
                 " метод в процессе... " + Thread.currentThread().getStackTrace()[2].getMethodName());
@@ -111,6 +98,8 @@ public class IntentServiceBoot extends IntentService {
     }
 
 }
+
+
 
 
     @Nullable
@@ -240,6 +229,33 @@ public class IntentServiceBoot extends IntentService {
     }
     }
 
+    private void startingNotificationService() {
+        try{
+            String CHANNEL_ID = this.getClass().getName();
+            NotificationChannel channel = new NotificationChannel(CHANNEL_ID,
+                    CHANNEL_ID,
+                    NotificationManager.IMPORTANCE_HIGH);
 
+            ((NotificationManager) getSystemService(getApplicationContext().NOTIFICATION_SERVICE)).createNotificationChannel(channel);
+
+            notification = new NotificationCompat.Builder(this, CHANNEL_ID)
+                    .setContentTitle("Обмен данными...")
+                    .setContentText("Обмен данными...").build();
+
+            ServiceCompat.startForeground(this,17,notification,ServiceCompat.STOP_FOREGROUND_REMOVE);
+            //ServiceCompat.startForeground(this,17,notification,ServiceCompat.STOP_FOREGROUND_REMOVE);
+            // startForeground(17,notification,ServiceInfo.FOREGROUND_SERVICE_TYPE_DATA_SYNC);
+            Log.d(getApplicationContext().getClass().getName(), "\n"
+                    + " время: " + new Date() + "\n+" +
+                    " Класс в процессе... " + this.getClass().getName() + "\n" +
+                    " метод в процессе... " + Thread.currentThread().getStackTrace()[2].getMethodName());
+        } catch (Exception e) {
+            e.printStackTrace();
+            Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
+                    " Линия  :" + Thread.currentThread().getStackTrace()[2].getLineNumber());
+            new RecordNewErros(getApplicationContext()).recordnewerror(e.toString(), this.getClass().getName(),
+                    Thread.currentThread().getStackTrace()[2].getMethodName(), Thread.currentThread().getStackTrace()[2].getLineNumber());
+        }
+    }
     // TODO: 10.10.2024 end class
 }
