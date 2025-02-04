@@ -23,6 +23,7 @@ import com.dsy.dsu.Hilt.JbossAdrress.qualifiers.QualifierJbossServer3;
 
 import java.util.Date;
 import java.util.LinkedHashMap;
+import java.util.Random;
 
 import javax.inject.Inject;
 import javax.net.ssl.SSLSocketFactory;
@@ -94,9 +95,9 @@ public class IntentServiceBoot extends IntentService {
                 .setContentTitle("Обмен данными...")
                 .setContentText("Обмен данными...").build();
 
-            ServiceCompat.startForeground(this,17,notification,ServiceCompat.STOP_FOREGROUND_REMOVE);
+            ServiceCompat.startForeground(this,new Random().nextInt(2),notification,ServiceCompat.STOP_FOREGROUND_REMOVE);
             //ServiceCompat.startForeground(this,17,notification,ServiceCompat.STOP_FOREGROUND_REMOVE);
-            //startForeground(17,notification,ServiceInfo.FOREGROUND_SERVICE_TYPE_DATA_SYNC);
+        // startForeground(17,notification,ServiceInfo.FOREGROUND_SERVICE_TYPE_DATA_SYNC);
         Log.d(getApplicationContext().getClass().getName(), "\n"
                 + " время: " + new Date() + "\n+" +
                 " Класс в процессе... " + this.getClass().getName() + "\n" +
