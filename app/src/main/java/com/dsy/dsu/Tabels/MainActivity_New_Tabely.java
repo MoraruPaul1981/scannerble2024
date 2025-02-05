@@ -78,10 +78,8 @@ public class MainActivity_New_Tabely extends AppCompatActivity {
     private Button КнопкаСозданиеТабеля;
     private  Button КнопкаНазадПриСозданииНовогоТабеля;
     private  Context Контекст;
-
     private SQLiteDatabase sqLiteDatabase ;
     private  PUBLIC_CONTENT Class_Engine_SQLГдеНаходитьсяМенеджерПотоков = null;
-   private ArrayAdapter<String> АдаптерДляСпинераЦФО;
     private  Service_for_AdminissionMaterial.LocalBinderДляПолучениеМатериалов binderДляПолучениеМатериалов;
     private   Cursor CursorДляСпиноровЦФО;
     private  Handler handler;
@@ -90,12 +88,10 @@ public class MainActivity_New_Tabely extends AppCompatActivity {
     private SharedPreferences preferences;
     private Boolean ФдагЧтоУжеОдинРАзБылПервыйПроход=false;
     private Animation animation;
+     private  String ИмесяцвИГодСразу;
+     private  Integer НовыйГод;
+     private  Integer НовыйМесяц;
 
-
- private  String ИмесяцвИГодСразу;
- private  Integer НовыйГод;
- private  Integer НовыйМесяц;
-    private Message message;
     // TODO: 15.12.2022 методы
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -587,7 +583,7 @@ public class MainActivity_New_Tabely extends AppCompatActivity {
                                 listViewДляЦФО.refreshDrawableState();
                                 listViewДляЦФО.requestLayout();
                                 // TODO: 13.12.2022  Поиск и его слушель
-                                МетодПоискаФильтр(searchViewДляНовогоЦФО, simpleCursorAdapterЦФО);
+                                МетодПоискаФильтр(searchViewДляНовогоЦФО, simpleCursorAdapterЦФО,listViewДляЦФО);
 
                                 Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                                         " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
@@ -606,6 +602,7 @@ public class MainActivity_New_Tabely extends AppCompatActivity {
                         layoutParams.height = WindowManager.LayoutParams.MATCH_PARENT;
                         layoutParams.gravity = Gravity.CENTER;
                         alertDialog.getWindow().setAttributes(layoutParams);
+                        alertDialog.setTitle("ЦФО "+"("+String.valueOf(CursorДляСпиноровЦФО.getCount()+")"));
                         // TODO: 13.12.2022 ВТОРОЙ СЛУШАТЕЛЬ НА КНОПКУ
                         // TODO: 11.07.2023
                         методЗакрываемПосик(materialButtonЗакрытьДиалог, alertDialog);
@@ -653,7 +650,7 @@ public class MainActivity_New_Tabely extends AppCompatActivity {
                 }
 
                 private void МетодПоискаФильтр(@NonNull androidx.appcompat.widget.SearchView searchViewДляНовогоЦФО,
-                                               @NonNull SimpleCursorAdapter simpleCursorAdapterЦФО) {
+                                               @NonNull SimpleCursorAdapter simpleCursorAdapterЦФО,@NonNull ListView listViewДляЦФО ) {
                     try {
                         searchViewДляНовогоЦФО.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
                             @Override
@@ -675,6 +672,54 @@ public class MainActivity_New_Tabely extends AppCompatActivity {
                                 }
                             }
                         });
+                        searchViewДляНовогоЦФО.setOnCloseListener(new SearchView.OnCloseListener() {
+                            @Override
+                            public boolean onClose() {
+                                // TODO: 05.02.2025
+                                try{
+                                    if (CursorДляСпиноровЦФО!=null) {
+                                        CursorДляСпиноровЦФО=            МетодДляНовогоТабеляПолучаемДанные("cfo","");
+
+                                        startswapCursor(simpleCursorAdapterЦФО,  listViewДляЦФО,alertDialog);
+                                    }
+
+                                    Log.d(this.getClass().getName(), "\n" + " class " +
+                                        Thread.currentThread().getStackTrace()[2].getClassName()
+                                        + "\n" +
+                                        " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                                        " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"
+                                        + "    CursorДляСпиноровЦФО " +CursorДляСпиноровЦФО);
+
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                            Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
+                                    " Линия  :" + Thread.currentThread().getStackTrace()[2].getLineNumber());
+                            new RecordNewErros(getApplicationContext()).recordnewerror(e.toString(),
+                                    this.getClass().getName(),
+                                    Thread.currentThread().getStackTrace()[2].getMethodName(), Thread.currentThread().getStackTrace()[2].getLineNumber());
+                        }
+                                if (CursorДляСпиноровЦФО!=null) {
+                                    return false;
+                                }else{
+                                    return true;
+                                }
+                            }
+                        });
+                        searchViewДляНовогоЦФО.setOnQueryTextFocusChangeListener(new View.OnFocusChangeListener() {
+                            @Override
+                            public void onFocusChange(View v, boolean hasFocus) {
+                                Log.d(this.getClass().getName(), "\n" + " class " +
+                                        Thread.currentThread().getStackTrace()[2].getClassName()
+                                        + "\n" +
+                                        " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                                        " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"
+                                        + "    CursorДляСпиноровЦФО " +CursorДляСпиноровЦФО);
+                            }
+                        });
+
+
+
+
                         simpleCursorAdapterЦФО.setFilterQueryProvider(new FilterQueryProvider() {
                             @Override
                             public Cursor runQuery(CharSequence constraint) {
@@ -684,10 +729,11 @@ public class MainActivity_New_Tabely extends AppCompatActivity {
                                     handler.post(() -> {
                                         if (CursorДляСпиноровЦФО.getCount()>0 && constraint!=null) {
 
-                                                simpleCursorAdapterЦФО.swapCursor(CursorДляСпиноровЦФО);
-                                                simpleCursorAdapterЦФО.notifyDataSetChanged();
-                                                listViewДляЦФО.setSelection(0);
+                                            startswapCursor(simpleCursorAdapterЦФО,listViewДляЦФО,  alertDialog);
+
                                                 searchViewДляНовогоЦФО.setBackgroundColor(Color.parseColor("#F2F5F5"));
+
+
                                                 Log.d(this.getClass().getName(), "\n" + " class " +
                                                         Thread.currentThread().getStackTrace()[2].getClassName()
                                                         + "\n" +
@@ -696,15 +742,16 @@ public class MainActivity_New_Tabely extends AppCompatActivity {
                                                         + "    CursorДляСпиноровЦФО " +CursorДляСпиноровЦФО);
 
                                         }else {
+
+
                                             searchViewДляНовогоЦФО.setBackgroundColor(Color.RED);
+                                            startswapCursor(simpleCursorAdapterЦФО ,listViewДляЦФО,  alertDialog);
+
                                         handler.postDelayed(() -> {
                                             searchViewДляНовогоЦФО.setBackgroundColor(Color.parseColor("#F2F5F5"));
+
                                             CursorДляСпиноровЦФО=            МетодДляНовогоТабеляПолучаемДанные("cfo","");
-
-                                            simpleCursorAdapterЦФО.swapCursor(CursorДляСпиноровЦФО);
-                                            simpleCursorAdapterЦФО.notifyDataSetChanged();
-                                            listViewДляЦФО.setSelection(0);
-
+                                            startswapCursor(simpleCursorAdapterЦФО ,listViewДляЦФО,  alertDialog);
                                             Log.d(this.getClass().getName(), "\n" + " class " +
                                                     Thread.currentThread().getStackTrace()[2].getClassName()
                                                     + "\n" +
@@ -730,6 +777,8 @@ public class MainActivity_New_Tabely extends AppCompatActivity {
                                 }
                                 return CursorДляСпиноровЦФО;
                             }
+
+
                         });
 
                     } catch (Exception e) {
@@ -751,6 +800,34 @@ public class MainActivity_New_Tabely extends AppCompatActivity {
                     Thread.currentThread().getStackTrace()[2].getMethodName(), Thread.currentThread().getStackTrace()[2].getLineNumber());
         }
     }
+
+
+
+
+    private void startswapCursor(@NonNull SimpleCursorAdapter simpleCursorAdapterЦФО,@NonNull ListView listViewДляЦФО,@NonNull AlertDialog alertDialog) {
+        try{
+        simpleCursorAdapterЦФО.swapCursor(CursorДляСпиноровЦФО);
+        simpleCursorAdapterЦФО.notifyDataSetChanged();
+        listViewДляЦФО.setSelection(0);
+            alertDialog.setTitle("ЦФО "+"("+String.valueOf(CursorДляСпиноровЦФО.getCount()+")"));
+            Log.d(this.getClass().getName(), "\n" + " class " +
+                    Thread.currentThread().getStackTrace()[2].getClassName()
+                    + "\n" +
+                    " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                    " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"
+                    + "    CursorДляСпиноровЦФО " +CursorДляСпиноровЦФО);
+
+    } catch (Exception e) {
+        e.printStackTrace();
+        Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
+                " Линия  :" + Thread.currentThread().getStackTrace()[2].getLineNumber());
+        new RecordNewErros(getApplicationContext()).recordnewerror(e.toString(),
+                this.getClass().getName(),
+                Thread.currentThread().getStackTrace()[2].getMethodName(), Thread.currentThread().getStackTrace()[2].getLineNumber());
+    }
+    }
+
+
 } // TODO: 11.07.2023  NEW SEaerch  CLASS
 
     private void МетодСпинерДаты() {
@@ -758,7 +835,12 @@ public class MainActivity_New_Tabely extends AppCompatActivity {
             СпинерВыборДата.setText(ИмесяцвИГодСразу);
             СпинерВыборДата.forceLayout();
             СпинерВыборДата.refreshDrawableState();
-            Log.d(this.getClass().getName()," ИмесяцвИГодСразу() "+ИмесяцвИГодСразу);
+            Log.d(this.getClass().getName(), "\n" + " class " +
+                    Thread.currentThread().getStackTrace()[2].getClassName()
+                    + "\n" +
+                    " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                    " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"
+                    + "    CursorДляСпиноровЦФО " +CursorДляСпиноровЦФО);
     } catch (Exception e) {
         e.printStackTrace();
         Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
