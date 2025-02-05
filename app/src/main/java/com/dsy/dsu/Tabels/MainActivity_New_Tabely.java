@@ -16,14 +16,12 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.IBinder;
 import android.os.Looper;
-import android.os.Message;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.view.WindowManager;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.Filter;
 import android.widget.FilterQueryProvider;
@@ -430,7 +428,7 @@ public class MainActivity_New_Tabely extends AppCompatActivity {
 
         try {
             СпинерВыборЦФО.setOnClickListener(new View.OnClickListener() {
-                private AlertDialog alertDialog = null;
+                private AlertDialog alertDialogNewTabel = null;
                 private ListView listViewДляЦФО = null;
                 private MaterialButton materialButtonЗакрытьДиалог = null;
                 private androidx.appcompat.widget.SearchView searchViewДляНовогоЦФО = null;
@@ -440,7 +438,7 @@ public class MainActivity_New_Tabely extends AppCompatActivity {
                 public void onClick(View v) {
                     try {
                         // onStart();
-                        alertDialog = new MaterialAlertDialogBuilder(v.getContext()) {
+                        alertDialogNewTabel = new MaterialAlertDialogBuilder(v.getContext()) {
                             @NonNull
                             @Override
                             public MaterialAlertDialogBuilder setView(View view) {
@@ -546,8 +544,8 @@ public class MainActivity_New_Tabely extends AppCompatActivity {
                                             searchViewДляНовогоЦФО.setQuery(НазваниеЦФО,true);*/
 
                                                     СпинерВыборЦФО.startAnimation(animation);
-                                                    alertDialog.dismiss();
-                                                    alertDialog.cancel();
+                                                    alertDialogNewTabel.dismiss();
+                                                    alertDialogNewTabel.cancel();
 
                                                     if (СпинерВыборЦФО.getText().toString().length() == 0) {
                                                         Snackbar.make(view, " Вы не выбрали цфо !!! "
@@ -597,15 +595,15 @@ public class MainActivity_New_Tabely extends AppCompatActivity {
                                 .setView(getLayoutInflater().inflate(R.layout.simple_for_new_spinner_searchview, null))
                                 .show();
                         WindowManager.LayoutParams layoutParams = new WindowManager.LayoutParams();
-                        layoutParams.copyFrom(alertDialog.getWindow().getAttributes());
+                        layoutParams.copyFrom(alertDialogNewTabel.getWindow().getAttributes());
                         layoutParams.width = WindowManager.LayoutParams.MATCH_PARENT;
                         layoutParams.height = WindowManager.LayoutParams.MATCH_PARENT;
                         layoutParams.gravity = Gravity.CENTER;
-                        alertDialog.getWindow().setAttributes(layoutParams);
-                        alertDialog.setTitle("ЦФО "+"("+String.valueOf(CursorДляСпиноровЦФО.getCount()+")"));
+                        alertDialogNewTabel.getWindow().setAttributes(layoutParams);
+                        alertDialogNewTabel.setTitle("ЦФО "+"("+String.valueOf(CursorДляСпиноровЦФО.getCount()+")"));
                         // TODO: 13.12.2022 ВТОРОЙ СЛУШАТЕЛЬ НА КНОПКУ
                         // TODO: 11.07.2023
-                        методЗакрываемПосик(materialButtonЗакрытьДиалог, alertDialog);
+                        методЗакрываемПосик(materialButtonЗакрытьДиалог, alertDialogNewTabel);
 
                         Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                                 " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
@@ -680,8 +678,10 @@ public class MainActivity_New_Tabely extends AppCompatActivity {
                                     if (CursorДляСпиноровЦФО!=null) {
                                         CursorДляСпиноровЦФО=            МетодДляНовогоТабеляПолучаемДанные("cfo","");
 
-                                        startswapCursor(simpleCursorAdapterЦФО,  listViewДляЦФО,alertDialog);
+                                        startswapCursor(simpleCursorAdapterЦФО,  listViewДляЦФО, alertDialogNewTabel);
                                     }
+
+                                    alertDialogNewTabel.cancel();
 
                                     Log.d(this.getClass().getName(), "\n" + " class " +
                                         Thread.currentThread().getStackTrace()[2].getClassName()
@@ -698,11 +698,8 @@ public class MainActivity_New_Tabely extends AppCompatActivity {
                                     this.getClass().getName(),
                                     Thread.currentThread().getStackTrace()[2].getMethodName(), Thread.currentThread().getStackTrace()[2].getLineNumber());
                         }
-                                if (CursorДляСпиноровЦФО!=null) {
                                     return false;
-                                }else{
-                                    return true;
-                                }
+
                             }
                         });
                         searchViewДляНовогоЦФО.setOnQueryTextFocusChangeListener(new View.OnFocusChangeListener() {
@@ -729,7 +726,7 @@ public class MainActivity_New_Tabely extends AppCompatActivity {
                                     handler.post(() -> {
                                         if (CursorДляСпиноровЦФО.getCount()>0 && constraint!=null) {
 
-                                            startswapCursor(simpleCursorAdapterЦФО,listViewДляЦФО,  alertDialog);
+                                            startswapCursor(simpleCursorAdapterЦФО,listViewДляЦФО, alertDialogNewTabel);
 
                                                 searchViewДляНовогоЦФО.setBackgroundColor(Color.parseColor("#F2F5F5"));
 
@@ -745,13 +742,13 @@ public class MainActivity_New_Tabely extends AppCompatActivity {
 
 
                                             searchViewДляНовогоЦФО.setBackgroundColor(Color.RED);
-                                            startswapCursor(simpleCursorAdapterЦФО ,listViewДляЦФО,  alertDialog);
+                                            startswapCursor(simpleCursorAdapterЦФО ,listViewДляЦФО, alertDialogNewTabel);
 
                                         handler.postDelayed(() -> {
                                             searchViewДляНовогоЦФО.setBackgroundColor(Color.parseColor("#F2F5F5"));
 
                                             CursorДляСпиноровЦФО=            МетодДляНовогоТабеляПолучаемДанные("cfo","");
-                                            startswapCursor(simpleCursorAdapterЦФО ,listViewДляЦФО,  alertDialog);
+                                            startswapCursor(simpleCursorAdapterЦФО ,listViewДляЦФО, alertDialogNewTabel);
                                             Log.d(this.getClass().getName(), "\n" + " class " +
                                                     Thread.currentThread().getStackTrace()[2].getClassName()
                                                     + "\n" +

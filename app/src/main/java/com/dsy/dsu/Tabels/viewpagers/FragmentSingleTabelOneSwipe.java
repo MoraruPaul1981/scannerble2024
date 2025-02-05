@@ -2458,13 +2458,10 @@ public class FragmentSingleTabelOneSwipe extends Fragment {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
                                 try {
+
+
                                     materialTextViewprofession.setBackgroundColor(Color.WHITE);
-                                    Bundle bundleПрофесии=new Bundle();
-                                    bundleПрофесии.putString("СамЗапрос","  SELECT * FROM  prof WHERE uuid!=? ");
-                                    bundleПрофесии.putStringArray("УсловияВыборки" ,new String[]{"0"});
-                                    bundleПрофесии.putString("Таблица","prof");
-                                    Cursor    КурсорТаблицаПрофесии=      (Cursor)    new SubClassCursorLoader(). CursorLoaders(getContext(), bundleПрофесии);
-                                    Log.d(this.getClass().getName(), " КурсорТаблицаПрофесии" + КурсорТаблицаПрофесии);
+                                    Cursor КурсорТаблицаПрофесии = МетодКурсорДляПрофессииБезФильтра();
                                     // TODO: 27.03.2023 Новый ПОсик
                                     new SubClassSearchProfessia().МетодСообщениеНовыйПоиска(getActivity(),КурсорТаблицаПрофесии ,message,"prof", CurrenrsСhildUUID);
                                     Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
@@ -2480,6 +2477,7 @@ public class FragmentSingleTabelOneSwipe extends Fragment {
                                             Thread.currentThread().getStackTrace()[2].getLineNumber());
                                 }
                             }
+
                         })
                         .setIcon(R.drawable.icon_dsu1_info_customer)
                         .setCancelable(true)
@@ -2764,6 +2762,8 @@ public class FragmentSingleTabelOneSwipe extends Fragment {
                     layoutParams.height =WindowManager.LayoutParams.MATCH_PARENT;
                     layoutParams.gravity = Gravity.CENTER;
                     alertDialogНовыйПосик.getWindow().setAttributes(layoutParams);
+                    alertDialogНовыйПосик.setTitle("Профессии "+"("+String.valueOf(cursorДанные.getCount()+")"));
+
                     Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                             " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
                             " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"
@@ -2831,6 +2831,42 @@ public class FragmentSingleTabelOneSwipe extends Fragment {
                             return true;
                         }
                     });
+
+                    searchViewДляНовогоЦФО.setOnCloseListener(new SearchView.OnCloseListener() {
+                        @Override
+                        public boolean onClose() {
+                            // TODO: 05.02.2025
+                            try{
+                                if (cursorДанные!=null) {
+                                    cursorДанные=      МетодКурсорДляНовогоПосика(ТаблицаПосика,null);
+
+                                    startswapCursor(simpleCursorAdapterЦФО,  listViewДляНовыйПосик,alertDialogНовыйПосик);
+                                }
+
+                                alertDialogНовыйПосик.cancel();
+
+                                Log.d(this.getClass().getName(), "\n" + " class " +
+                                        Thread.currentThread().getStackTrace()[2].getClassName()
+                                        + "\n" +
+                                        " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                                        " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"
+                                        + "    cursorДанные " +cursorДанные);
+
+                            } catch (Exception e) {
+                                e.printStackTrace();
+                                Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
+                                        " Линия  :" + Thread.currentThread().getStackTrace()[2].getLineNumber());
+                                new RecordNewErros(getContext()).recordnewerror(e.toString(),
+                                        this.getClass().getName(),
+                                        Thread.currentThread().getStackTrace()[2].getMethodName(), Thread.currentThread().getStackTrace()[2].getLineNumber());
+                            }
+                                return false;
+                        }
+                    });
+
+
+
+
                     simpleCursorAdapterЦФО.setFilterQueryProvider(new FilterQueryProvider() {
                         @Override
                         public Cursor runQuery(CharSequence constraint) {
@@ -2839,19 +2875,35 @@ public class FragmentSingleTabelOneSwipe extends Fragment {
                                 cursorДанные=      МетодКурсорДляНовогоПосика(ТаблицаПосика,constraint.toString());
                                 message.getTarget().post(()->{
                                     if (cursorДанные.getCount()>0 && constraint.length()>0) {
-                                        simpleCursorAdapterЦФО.swapCursor(cursorДанные);
-                                        listViewДляНовыйПосик.setSelection(0);
+                                        // TODO: 05.02.2025
+                                        startswapCursor(simpleCursorAdapterЦФО,  listViewДляНовыйПосик,alertDialogНовыйПосик);
+
+
+                                        Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                                                " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                                                " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"+" cursorДанные " +cursorДанные+"\n" +" constraint"  +constraint);
+
                                     }else {
-                                        if (cursorДанные.getCount()==0) {
+
                                             searchViewДляНовогоЦФО.setBackgroundColor(Color.RED);
+                                        startswapCursor(simpleCursorAdapterЦФО,  listViewДляНовыйПосик,alertDialogНовыйПосик);
+                                        Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                                                " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                                                " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"+" cursorДанные " +cursorДанные+"\n" +" constraint"  +constraint);
+
                                             message.getTarget().postDelayed(() -> {
                                                 searchViewДляНовогоЦФО.setBackgroundColor(Color.parseColor("#F2F5F5"));
+                                                // TODO: 05.02.2025
+
+                                                cursorДанные=      МетодКурсорДляПрофессииБезФильтра( );
+                                                // TODO: 05.02.2025
+                                                startswapCursor(simpleCursorAdapterЦФО,  listViewДляНовыйПосик,alertDialogНовыйПосик);
+
+                                                Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                                                        " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                                                        " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"+" cursorДанные " +cursorДанные+"\n" +" constraint"  +constraint);
                                             }, 500);
-                                        }
-                                    }
-                                    if ( constraint.length()==0) {
-                                        simpleCursorAdapterЦФО.swapCursor(cursorДанные);
-                                        listViewДляНовыйПосик.setSelection(0);
+
                                     }
 
 
@@ -2884,6 +2936,35 @@ public class FragmentSingleTabelOneSwipe extends Fragment {
                             Thread.currentThread().getStackTrace()[2].getMethodName(), Thread.currentThread().getStackTrace()[2].getLineNumber());
                 }
             }
+
+
+
+
+
+            private void startswapCursor(@NonNull SimpleCursorAdapter simpleCursorAdapterЦФО,@NonNull ListView listViewДляЦФО,@NonNull AlertDialog alertDialog) {
+                try{
+                    simpleCursorAdapterЦФО.swapCursor(cursorДанные);
+                    simpleCursorAdapterЦФО.notifyDataSetChanged();
+                    listViewДляЦФО.setSelection(0);
+                    alertDialog.setTitle("ЦФО "+"("+String.valueOf(cursorДанные.getCount()+")"));
+                    Log.d(this.getClass().getName(), "\n" + " class " +
+                            Thread.currentThread().getStackTrace()[2].getClassName()
+                            + "\n" +
+                            " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                            " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"
+                            + "    cursorДанные " +cursorДанные);
+
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
+                            " Линия  :" + Thread.currentThread().getStackTrace()[2].getLineNumber());
+                    new RecordNewErros(getContext()).recordnewerror(e.toString(),
+                            this.getClass().getName(),
+                            Thread.currentThread().getStackTrace()[2].getMethodName(), Thread.currentThread().getStackTrace()[2].getLineNumber());
+                }
+            }
+
+
             // TODO: 02.08.2022
             protected  Cursor МетодКурсорДляНовогоПосика(@NonNull String  ФлагКакаяТаблицаОбработки, @NotNull String Фильтр){
                 Cursor КурсорТаблицаПрофесииLike = null;
@@ -2909,6 +2990,12 @@ public class FragmentSingleTabelOneSwipe extends Fragment {
                 return  КурсорТаблицаПрофесииLike;
             }
             // TODO: 12.04.2023 смена професси
+
+
+
+
+
+
 
 
             Integer МетодЗаписиСменыПрофесии(@NonNull View searchViewДляНовогоПоиска, @NonNull Context context){ //TODO метод записи СМЕНЫ ПРОФЕСИИ
@@ -3367,6 +3454,50 @@ public class FragmentSingleTabelOneSwipe extends Fragment {
 
     // TODO: 20.11.2023 END KLASS get DAY
 }
+
+
+
+
+
+
+
+
+
+
+
+
+    protected   Cursor МетодКурсорДляПрофессииБезФильтра() {
+        Cursor КурсорТаблицаПрофесии =null;
+        try{
+            Bundle bundleПрофесии=new Bundle();
+            bundleПрофесии.putString("СамЗапрос","  SELECT * FROM  prof WHERE uuid!=? ");
+            bundleПрофесии.putStringArray("УсловияВыборки" ,new String[]{"0"});
+            bundleПрофесии.putString("Таблица","prof");
+
+            КурсорТаблицаПрофесии=      (Cursor)    new SubClassCursorLoader(). CursorLoaders(getContext(), bundleПрофесии);
+            Log.d(this.getClass().getName(), " КурсорТаблицаПрофесии" + КурсорТаблицаПрофесии);
+
+            Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                    " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                    " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"+
+                    " materialTextViewprofession  " + materialTextViewprofession);
+        } catch (Exception e) {
+            e.printStackTrace();
+            Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() + " Линия  :"
+                    + Thread.currentThread().getStackTrace()[2].getLineNumber());
+            new RecordNewErros(getContext()).recordnewerror(e.toString(),
+                    this.getClass().getName(), Thread.currentThread().getStackTrace()[2].getMethodName(),
+                    Thread.currentThread().getStackTrace()[2].getLineNumber());
+        }
+
+        return КурсорТаблицаПрофесии;
+    }
+
+
+
+
+
+
 
 // TODO: 30.11.2023  класс SWIPE
 
