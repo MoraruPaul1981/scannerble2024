@@ -26,24 +26,15 @@
         <TableRow
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="2dp"
-            android:padding="2dp"
             android:gravity="center">
-
-
             <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_margin="2dp"
-                android:padding="2dp"
                 android:layout_height="wrap_content">
-
-
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/imageViewСтрелкаВнутриТабеля"
-                android:layout_width="43dp"
-                android:layout_height="55dp"
-                android:layout_marginStart="10dp"
-                android:layout_marginEnd="5dp"
+                android:layout_width="45dp"
+                android:layout_height="57dp"
+                android:layout_margin="5dp"
                 android:padding="2dp"
                 android:layout_column="0"
                 android:layout_alignParentLeft="true"
@@ -108,14 +99,10 @@
         <TableRow
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="2dp"
-            android:padding="2dp"
             android:gravity="center">
 
             <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_margin="2dp"
-                android:padding="2dp"
                 android:layout_height="wrap_content">
 
                 <Spinner
@@ -123,16 +110,16 @@
                     style="@android:style/Widget.Holo.TextView.SpinnerItem"
                     android:layout_width="wrap_content"
                     android:layout_height="45dp"
-                    android:layout_margin="2dp"
+                    android:layout_margin="5dp"
                     android:minWidth="250dp"
                     android:padding="2dp"
+                    android:foregroundGravity="center"
+                    android:gravity="center_horizontal"
                     android:background="@drawable/style_forpolymaterialb_cycle_createspinner2"
                     android:layout_centerHorizontal="true"
                     android:layout_centerVertical="true"
                     android:backgroundTintMode="multiply"
                     android:dropDownWidth="match_parent"
-                    android:foregroundGravity="center"
-                    android:gravity="center"
                     android:spinnerMode="dropdown"
                     android:textSize="12sp"
                     android:textStyle="bold" />
@@ -155,15 +142,7 @@
 
 
 
-        <TableRow
-            android:layout_width="match_parent"
-            android:layout_height="5dp"
-            android:padding="1dp"
-            android:layout_marginEnd="10dp"
-            android:layout_marginStart="10dp"
-            android:background="@drawable/style_forpolymaterialb_cycle_createspinner3"
-            android:gravity="center_vertical|center_horizontal">
-        </TableRow>
+
 
 
 
@@ -192,7 +171,7 @@
             <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:minHeight="450dp"
+                android:minHeight="500dp"
                 android:background="@color/actionbar_text_color"
                 android:fillViewport="true" >
                 <ListView
