@@ -322,6 +322,7 @@ import okio.BufferedSink;
                                 ПубличноеЛогин =         Курсор_ПолучаемИмяСотрудникаИзТаблицыФИО.getString(0).trim();
                                 ПубличноеПароль =           Курсор_ПолучаемИмяСотрудникаИзТаблицыФИО.getString(1).trim();
                             }
+                            Курсор_ПолучаемИмяСотрудникаИзТаблицыФИО.close();
                             Log.d(this.getClass().getName(), "  PUBLIC_CONTENT.ПубличноеИмяПользовательДлСервлета  " + ПубличноеЛогин +
                                     " PUBLIC_CONTENT.ПубличноеПарольДлСервлета " + ПубличноеПароль);
                             String ANDROID_ID = Settings.Secure.getString(context.getContentResolver(), Settings.Secure.ANDROID_ID);
@@ -3191,12 +3192,7 @@ Class_GRUD_SQL_Operations classGrudSqlOperationsУдалениеДанныхЧе
                                 } else {
                                     ПутькФайлу = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS+ File.separator + PatchDeleteJsonAnalitic);
                                 }
-
-                                if( !ПутькФайлу.getParentFile().isDirectory()){
-
                                     ПутькФайлу.getParentFile().mkdirs();
-                                }
-
                                 // TODO: 12.02.2025 удаление
                                 // TODO: 12.02.2025  второе удаление файла самого
 
@@ -3207,14 +3203,11 @@ Class_GRUD_SQL_Operations classGrudSqlOperationsУдалениеДанныхЧе
                                     СамкФайлу = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS+ File.separator + PatchDeleteJsonAnalitic+File.separator + ИмяФайлаЗагрузки);
                                 }
 
-
-                                if (СамкФайлу.isFile() || СамкФайлу.exists() ||СамкФайлу.mkdirs() ) {
-                                    //TODO :
                                     СамкФайлу.delete();
                                     Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                                             " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
                                             " line " + Thread.currentThread().getStackTrace()[2].getLineNumber());
-                                }
+
 
 
                                 СамФайлJsonandApk[0] =new File(String.valueOf(СамкФайлу)) ;

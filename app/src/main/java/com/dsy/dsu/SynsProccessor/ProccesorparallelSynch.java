@@ -47,6 +47,7 @@ import io.reactivex.rxjava3.core.Flowable;
 import io.reactivex.rxjava3.core.Observable;
 import io.reactivex.rxjava3.functions.Action;
 import io.reactivex.rxjava3.functions.Predicate;
+import io.reactivex.rxjava3.parallel.ParallelFlowable;
 import io.reactivex.rxjava3.schedulers.Schedulers;
 
 public class ProccesorparallelSynch   {
@@ -99,8 +100,8 @@ public class ProccesorparallelSynch   {
                  // TODO: 07.10.2024
                  case "СамыйПервыйЗапускСинхронизации":
                  // TODO: 27.12.2024
-                     ///executorServiceAsync= Executors.newSingleThreadExecutor();
-                    executorServiceAsync= Executors.newCachedThreadPool();
+                     executorServiceAsync= Executors.newSingleThreadExecutor();
+                   // executorServiceAsync= Executors.newFixedThreadPool(3);
                  Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                          " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
                          " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"+ "\n"+ " РежимЗапускаСинхронизации " +РежимЗапускаСинхронизации);
@@ -121,6 +122,7 @@ public class ProccesorparallelSynch   {
             Flowable.fromIterable(getBufferFromJbossServerAllTables)
                     .parallel()
                     .runOn(Schedulers.from(executorServiceAsync))
+                    .filter(f->f.values().contains("fio"))
                     .doOnNext(new io.reactivex.rxjava3.functions.Consumer<Map<String, String>>() {
                         @Override
                         public void accept(Map<String, String> stringStringMapMultiPotoks) throws Throwable {
@@ -628,7 +630,6 @@ public class ProccesorparallelSynch   {
                 // TODO: 19.10.2021   GET()->
                 if (ВерсияДанныхсSqlServer > ВерсииНаАндройдеСерверная ) {
                     // TODO: 05.04.2024
-                    if ( ВремяОтSqlServer.compareTo(ВремяДанныхНаАндройде)>0) {
                         // TODO: 05.04.2024
                         if (!ИмяТаблицы.trim().equalsIgnoreCase("errordsu1")
                                 && !ИмяТаблицы.trim().equalsIgnoreCase("settings_tabels")) {
@@ -659,7 +660,6 @@ public class ProccesorparallelSynch   {
                                     + concurrentSkipListSetResultatOtServerIsertOrUpdate.size()+
                                     "\n"+ " ВремяДанныхНаАндройде " +ВремяДанныхНаАндройде+" ВремяДанныхНаАндройде " +ВремяДанныхНаАндройде);
                         }
-                    }
                 }
             }
             // TODO: 08.04.2024 launch get
@@ -822,17 +822,17 @@ public class ProccesorparallelSynch   {
 // TODO: 07.04.2024
 
     @NonNull
-    private Long МетодОбменаЗаданиеСервера_сервераПолучаем_Сервер(@NonNull  Long ВерсияДанных,
+    private Long МетодОбменаЗаданиеСервера_сервераПолучаем_Сервер(@NonNull  Long ВерсииНаАндройдеСерверная,
                                                                   @NonNull String ИмяТаблицы,
                                                                   @NonNull  Integer ID) {
         Long  РезультатДанныесСервера=0l;
         try{
-            Log.d(this.getClass().getName(), " ВерсияДанных" + ВерсияДанных+" ID "   + ID + "ИмяТаблицы"  + ИмяТаблицы);
+            Log.d(this.getClass().getName(), " ВерсииНаАндройдеСерверная" + ВерсииНаАндройдеСерверная+" ID "   + ID + "ИмяТаблицы"  + ИмяТаблицы);
             //////////TODO МЕТОД get
             РезультатДанныесСервера =
                     МетодПолучаемДаннныесСервера(ИмяТаблицы,
                             ID,
-                            ВерсияДанных );
+                            ВерсииНаАндройдеСерверная );
 
             Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                     " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
@@ -858,7 +858,7 @@ public class ProccesorparallelSynch   {
     @SuppressLint("SuspiciousIndentation")
     Long МетодПолучаемДаннныесСервера( @NonNull String ИмяТаблицы,
                                        @NonNull Integer ID
-            , @NonNull Long  ВерсияДанных) {
+            , @NonNull Long  ВерсииНаАндройдеСерверная) {
 
         Long РезультатФоновнойСинхронизации=0l;
         try {
@@ -872,13 +872,13 @@ public class ProccesorparallelSynch   {
                     " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
                     " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"
                     + " ИмяСерверИзХранилица " + ИмяСерверИзХранилица+
-                    " ПортСерверИзХранилица " +ПортСерверИзХранилица );
+                    " ПортСерверИзХранилица " +ПортСерверИзХранилица+"\n"+ " ВерсииНаАндройдеСерверная " +ВерсииНаАндройдеСерверная );
             // TODO: 10.11.2022  Получение JSON-потока
             InputStream BufferGetData =new Class_MODEL_synchronized(context). методGetByteFromServerAsync(
                     ИмяТаблицы,
                     "application/gzip",
                     "Хотим Получить  JSON"
-                    ,ВерсияДанных,
+                    ,ВерсииНаАндройдеСерверная,
                     ID,
                     ИмяСерверИзХранилица
                     ,ПортСерверИзХранилица,getsslSocketFactory2);
