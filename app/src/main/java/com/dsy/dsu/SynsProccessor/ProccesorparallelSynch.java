@@ -47,7 +47,6 @@ import io.reactivex.rxjava3.core.Flowable;
 import io.reactivex.rxjava3.core.Observable;
 import io.reactivex.rxjava3.functions.Action;
 import io.reactivex.rxjava3.functions.Predicate;
-import io.reactivex.rxjava3.parallel.ParallelFlowable;
 import io.reactivex.rxjava3.schedulers.Schedulers;
 
 public class ProccesorparallelSynch   {
@@ -100,8 +99,8 @@ public class ProccesorparallelSynch   {
                  // TODO: 07.10.2024
                  case "СамыйПервыйЗапускСинхронизации":
                  // TODO: 27.12.2024
-                     executorServiceAsync= Executors.newSingleThreadExecutor();
-                   // executorServiceAsync= Executors.newFixedThreadPool(3);
+                     //executorServiceAsync= Executors.newSingleThreadExecutor();
+                     executorServiceAsync= Executors.newCachedThreadPool();
                  Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                          " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
                          " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"+ "\n"+ " РежимЗапускаСинхронизации " +РежимЗапускаСинхронизации);
@@ -122,7 +121,6 @@ public class ProccesorparallelSynch   {
             Flowable.fromIterable(getBufferFromJbossServerAllTables)
                     .parallel()
                     .runOn(Schedulers.from(executorServiceAsync))
-                    .filter(f->f.values().contains("fio"))
                     .doOnNext(new io.reactivex.rxjava3.functions.Consumer<Map<String, String>>() {
                         @Override
                         public void accept(Map<String, String> stringStringMapMultiPotoks) throws Throwable {
@@ -270,7 +268,7 @@ public class ProccesorparallelSynch   {
 
 
             // TODO: 08.04.2024 через Retry Obsever множественое ображение  к серверу GET
-            completedPostAndGetInsertorUpdateOperations.add(completedInsertorUpdateOperations(ИмяТаблицы,
+            completedPostAndGetInsertorUpdateOperations.add(completedInsertorUpdateOperationsForEachWhile(ИмяТаблицы,
                     ВерсияДанныхсSqlServer,
                     PublicID,
                     ВремяОтSqlServer, "GET"));
@@ -321,11 +319,11 @@ public class ProccesorparallelSynch   {
     // TODO: 07.04.2024
 
     @SuppressLint("SuspiciousIndentation")
-    private   Long completedInsertorUpdateOperations(@NonNull String ИмяТаблицы,
-                                                     @NonNull Long ВерсияДанныхсSqlServer,
-                                                     @NonNull  Integer  PublicID,
-                                                     @NonNull Date   ВремяОтSqlServer,
-                                                     @NonNull String CooserGetandPost) {
+    private   Long completedInsertorUpdateOperationsForEachWhile(@NonNull String ИмяТаблицы,
+                                                                 @NonNull Long ВерсияДанныхсSqlServer,
+                                                                 @NonNull  Integer  PublicID,
+                                                                 @NonNull Date   ВремяОтSqlServer,
+                                                                 @NonNull String CooserGetandPost) {
 
 
         ConcurrentSkipListSet<Long> completedGetInsertorUpdateOperations=new ConcurrentSkipListSet<>();

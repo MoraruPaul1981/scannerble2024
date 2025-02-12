@@ -306,7 +306,7 @@ this.context=context;
             sqLiteStatementInsert.bindLong(9,jsonNodeParentMAP.get("uuid").longValue());//"uuid"
 
             // TODO: 07.07.2023 Для Состыковки
-            sqLiteStatementInsert.bindLong(11,jsonNodeParentMAP.get("uuid").longValue());//"uuid уже для UUID"
+            sqLiteStatementInsert.bindLong(10,jsonNodeParentMAP.get("uuid").longValue());//"uuid уже для UUID"
             Log.d(this.getClass().getName(), "\n" + " class " +
                     Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                     " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
