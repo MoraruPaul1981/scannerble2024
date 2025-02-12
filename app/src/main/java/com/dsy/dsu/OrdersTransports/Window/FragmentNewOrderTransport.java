@@ -49,7 +49,7 @@ import com.dsy.dsu.BusinessLogicAll.Class_Generations_PUBLIC_CURRENT_ID;
 
 import com.dsy.dsu.BusinessLogicAll.DATE.Class_Generation_Data;
 import com.dsy.dsu.BusinessLogicAll.DATE.SubClassCursorLoader;
-import com.dsy.dsu.BusinessLogicAll.SubClassUpVersionDATA;
+import com.dsy.dsu.BusinessLogicAll.VersionCurentTable;
 import com.dsy.dsu.OrdersTransports.Background.ServiceOrserTransportService;
 import com.dsy.dsu.R;
 import com.dsy.dsu.WorkManagers.BL_WorkMangers.CreateSingleWorkManager;
@@ -849,7 +849,7 @@ public class FragmentNewOrderTransport extends Fragment {
                                         Uri uri = Uri.parse("content://com.dsy.dsu.providerdatabasecurrentoperations/" + table + "");
                                         ContentValues valuesNewOrderTransport = new ContentValues();
                                         valuesNewOrderTransport.put("user_update", ПубличныйID);
-                                        Long ВерсияДанныхUp = new SubClassUpVersionDATA().upVersionCurentTable(table, getContext());
+                                        Long ВерсияДанныхUp = new VersionCurentTable(getContext()).upVersionCurentTable(table );
                                         valuesNewOrderTransport.put("current_table", ВерсияДанныхUp);
                                         String ДатаОбновления = new Class_Generation_Data(getContext()).ГлавнаяДатаИВремяОперацийСБазойДанных();
                                         valuesNewOrderTransport.put("date_update", ДатаОбновления);

@@ -21,11 +21,11 @@ import androidx.annotation.Nullable;
 import com.dsy.dsu.AllDatabases.SQLTE.GetSQLiteDatabase;
 import com.dsy.dsu.BusinessLogicAll.Class_GRUD_SQL_Operations;
 import com.dsy.dsu.BusinessLogicAll.DATE.Class_Generation_Data;
+import com.dsy.dsu.BusinessLogicAll.VersionCurentTable;
 import com.dsy.dsu.Errors.controller.RecordNewErros;
 import com.dsy.dsu.BusinessLogicAll.Class_Generation_UUID;
 import com.dsy.dsu.BusinessLogicAll.Class_MODEL_synchronized;
 import com.dsy.dsu.CnangeServers.PUBLIC_CONTENT;
-import com.dsy.dsu.BusinessLogicAll.SubClassUpVersionDATA;
 import com.google.android.material.button.MaterialButton;
 
 import java.io.FileDescriptor;
@@ -224,8 +224,7 @@ public class Service_Для_ЧатаСменаСтатусаПрочитаноИ
 
             // TODO: 18.03.2023  получаем ВЕСИЮ ДАННЫХ
           РезультатУвеличинаяВерсияДАныхЧата =
-                    new SubClassUpVersionDATA().upVersionCurentTable(    ТаблицаОбработкиВнутриЧтатаПриУвеличсенииВерсииДаннвъКоглаПрочинаноСообещния
-                            ,getApplicationContext() );
+                    new VersionCurentTable(context).upVersionCurentTable(    ТаблицаОбработкиВнутриЧтатаПриУвеличсенииВерсииДаннвъКоглаПрочинаноСообещния);
             Log.d(this.getClass().getName(), " РезультатУвеличинаяВерсияДАныхЧата  " + РезультатУвеличинаяВерсияДАныхЧата);
 
             contentValuesОбновленниВТАблицеКакПрочитанныйМеняемСтатусЗаписисВчатеПостлеПросмотра.put("current_table", РезультатУвеличинаяВерсияДАныхЧата);
@@ -357,7 +356,7 @@ private Long МетодЗаписиНовогоСообщенияТольков�
 
        // TODO: 18.03.2023  получаем ВЕСИЮ ДАННЫХ
        Long РезультатУвеличинаяВерсияДАныхЧата=
-               new SubClassUpVersionDATA().upVersionCurentTable(    ПерваяТаблицыОбработкиТаблицаЧат,getApplicationContext());
+               new VersionCurentTable(context).upVersionCurentTable(    ПерваяТаблицыОбработкиТаблицаЧат);
        Log.d(this.getClass().getName(), " РезультатУвеличинаяВерсияДАныхЧата  " + РезультатУвеличинаяВерсияДАныхЧата);
 
 
@@ -431,7 +430,7 @@ private Long МетодЗаписиНовогоСообщенияТольков�
 
                 // TODO: 18.03.2023  получаем ВЕСИЮ ДАННЫХ
                 Long РезультатУвеличинаяВерсияДАныхДатЧата=
-                        new SubClassUpVersionDATA().upVersionCurentTable(    ТаблицаВторойОбработкиДляТаблицыДата_Табеля,context);
+                        new VersionCurentTable(context).upVersionCurentTable(    ТаблицаВторойОбработкиДляТаблицыДата_Табеля);
                 Log.d(this.getClass().getName(), " РезультатУвеличинаяВерсияДАныхДатЧата  " + РезультатУвеличинаяВерсияДАныхДатЧата);
 
                 // TODO: 18.11.2022
@@ -596,8 +595,7 @@ private Long МетодЗаписиНовогоСообщенияТольков�
 
             // TODO: 18.03.2023  получаем ВЕСИЮ ДАННЫХ
             Long РезультатУвеличинаяВерсияДАныхЧата=
-                    new SubClassUpVersionDATA().upVersionCurentTable(
-                            ТаблицаОбработкиВнутриЧтатаПриУвеличсенииВерсииДаннвъКоглаПрочинаноСообещния,context);
+                    new VersionCurentTable(context).upVersionCurentTable(ТаблицаОбработкиВнутриЧтатаПриУвеличсенииВерсииДаннвъКоглаПрочинаноСообещния);
             Log.d(this.getClass().getName(), " РезультатУвеличинаяВерсияДАныхЧата  " + РезультатУвеличинаяВерсияДАныхЧата);
 
 // TODO: 18.11.2022

@@ -21,10 +21,10 @@ import androidx.annotation.Nullable;
 
 
 import com.dsy.dsu.AllDatabases.SQLTE.GetSQLiteDatabase;
+import com.dsy.dsu.BusinessLogicAll.VersionCurentTable;
 import com.dsy.dsu.Errors.controller.RecordNewErros;
 import com.dsy.dsu.BusinessLogicAll.DATE.Class_Generation_Data;
 import com.dsy.dsu.BusinessLogicAll.DATE.SubClassCursorLoader;
-import com.dsy.dsu.BusinessLogicAll.SubClassUpVersionDATA;
 import com.google.firebase.annotations.concurrent.Background;
 
 import java.text.SimpleDateFormat;
@@ -550,8 +550,7 @@ public class ServiceOrserTransportService extends IntentService {
                 contentValuesУданиеЗаказаТраспорта.put("status",5);
                 String Дата =     new Class_Generation_Data(getApplicationContext()).ГлавнаяДатаИВремяОперацийСБазойДанныхДОП();
                 contentValuesУданиеЗаказаТраспорта.put("date_update", Дата);
-                Long Версия = new SubClassUpVersionDATA().upVersionCurentTable(    ТаблицаОбработки
-                        ,getApplicationContext() );
+                Long Версия = new VersionCurentTable(getApplicationContext()).upVersionCurentTable(    ТаблицаОбработки);
                 contentValuesУданиеЗаказаТраспорта.put("current_table", Версия);
                 // TODO: 12.04.2023 удаление ЗАказа Траспрта
                 ContentResolver contentResolver=getApplicationContext().getContentResolver();

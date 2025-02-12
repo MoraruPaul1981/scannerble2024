@@ -24,13 +24,13 @@ import androidx.annotation.Nullable;
 
 import com.dsy.dsu.AllDatabases.SQLTE.GetSQLiteDatabase;
 import com.dsy.dsu.BusinessLogicAll.Class_GRUD_SQL_Operations;
+import com.dsy.dsu.BusinessLogicAll.VersionCurentTable;
 import com.dsy.dsu.Errors.controller.RecordNewErros;
 import com.dsy.dsu.BusinessLogicAll.Class_Generation_UUID;
 import com.dsy.dsu.BusinessLogicAll.Class_Generation_Weekend_For_Tabels;
 import com.dsy.dsu.BusinessLogicAll.Class_Generations_PUBLIC_CURRENT_ID;
 import com.dsy.dsu.BusinessLogicAll.DATE.Class_Generation_Data;
 import com.dsy.dsu.BusinessLogicAll.DATE.SubClassCursorLoader;
-import com.dsy.dsu.BusinessLogicAll.SubClassUpVersionDATA;
 import com.dsy.dsu.Tabels.MainActivity_List_Tabels;
 
 import java.util.ArrayList;
@@ -587,8 +587,8 @@ public Cursor МетодПолучениеДанныхЧерезCursorLoader(@No
                 // TODO: 22.09.2022 дополнительные параменты ДатаТабель
                 // TODO: 18.03.2023  получаем ВЕСИЮ ДАННЫХ
                 Long РезультатУвеличиваемВерсияДатаТАбель =
-                        new SubClassUpVersionDATA()
-                                .upVersionCurentTable(    НазваниеОбрабоатываемойТаблицы,getApplicationContext());
+                        new VersionCurentTable(getApplicationContext())
+                                .upVersionCurentTable(    НазваниеОбрабоатываемойТаблицы );
                 Log.d(this.getClass().getName(), " РезультатУвеличиваемВерсияДатаТАбель  " + РезультатУвеличиваемВерсияДатаТАбель);
                 contentValuesДляДатаТабель.put("current_table", РезультатУвеличиваемВерсияДатаТАбель);
                 Uri uri = Uri.parse("content://com.dsy.dsu.providerdatabasecurrentoperations/" + НазваниеОбрабоатываемойТаблицы + "");
@@ -648,7 +648,7 @@ public Cursor МетодПолучениеДанныхЧерезCursorLoader(@No
                 // TODO: 22.09.2022 дополнительные параменты ДатаТабель
                 // TODO: 18.03.2023  получаем ВЕСИЮ ДАННЫХ
                 Long РезультатУвеличиваемВерсияДатаТАбель =
-                        new SubClassUpVersionDATA().upVersionCurentTable(    НазваниеОбрабоатываемойТаблицы,getApplicationContext());
+                        new VersionCurentTable(getApplicationContext()).upVersionCurentTable(    НазваниеОбрабоатываемойТаблицы );
                 Log.d(this.getClass().getName(), " РезультатУвеличиваемВерсияДатаТАбель  " + РезультатУвеличиваемВерсияДатаТАбель);
                 contentValuesДляТабель.put("current_table", РезультатУвеличиваемВерсияДатаТАбель);
                 // TODO: 21.09.2023 TABEL

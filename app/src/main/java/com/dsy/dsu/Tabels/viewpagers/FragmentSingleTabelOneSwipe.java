@@ -66,12 +66,12 @@ import androidx.work.WorkInfo;
 import androidx.work.WorkManager;
 
 import com.dsy.dsu.BusinessLogicAll.CELLUPDATE.SubClassUpdatesCELL;
+import com.dsy.dsu.BusinessLogicAll.VersionCurentTable;
 import com.dsy.dsu.Errors.controller.RecordNewErros;
 import com.dsy.dsu.BusinessLogicAll.Class_Generations_PUBLIC_CURRENT_ID;
 import com.dsy.dsu.BusinessLogicAll.Class_MODEL_synchronized;
 import com.dsy.dsu.BusinessLogicAll.DATE.Class_Generation_Data;
 import com.dsy.dsu.BusinessLogicAll.DATE.SubClassCursorLoader;
-import com.dsy.dsu.BusinessLogicAll.SubClassUpVersionDATA;
 import com.dsy.dsu.Tabels.MainActivity_List_Peoples;
 import com.dsy.dsu.Tabels.MainActivity_Metki_Tabel;
 import com.dsy.dsu.R;
@@ -103,6 +103,7 @@ import java.util.function.Consumer;
 import java.util.function.IntConsumer;
 import java.util.stream.IntStream;
 
+import dagger.hilt.android.AndroidEntryPoint;
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
 import io.reactivex.rxjava3.core.Flowable;
 import io.reactivex.rxjava3.disposables.Disposable;
@@ -114,6 +115,9 @@ import io.reactivex.rxjava3.schedulers.Schedulers;
  * Use the {@link FragmentSingleTabelOneSwipe#newInstance} factory method to
  * create an instance of this fragment.
  */
+
+
+@AndroidEntryPoint
 public class FragmentSingleTabelOneSwipe extends Fragment {
 
     private MaterialTextView spinnerchasy,spinnermesazyear,spinnerdepartament;/////спинеры для создание табеля
@@ -3011,7 +3015,7 @@ public class FragmentSingleTabelOneSwipe extends Fragment {
                     ContentValues valuesСменаПрофесси=new ContentValues();
                     Integer ПолучаемIDПрофессии=      bundleСменаПрофессии.getInt("ПолучаемIDПрофессии",0);
                     valuesСменаПрофесси.put("prof",ПолучаемIDПрофессии);
-                    Long ВерсияДанныхUp = new SubClassUpVersionDATA().upVersionCurentTable(ТаблицаОбработки,getContext());
+                    Long ВерсияДанныхUp = new VersionCurentTable(getContext()).upVersionCurentTable(ТаблицаОбработки );
                     valuesСменаПрофесси.put("current_table",ВерсияДанныхUp);
                     String ДатаОбновления=     new Class_Generation_Data(getContext()).ГлавнаяДатаИВремяОперацийСБазойДанных();
                     valuesСменаПрофесси.put("date_update",ДатаОбновления);

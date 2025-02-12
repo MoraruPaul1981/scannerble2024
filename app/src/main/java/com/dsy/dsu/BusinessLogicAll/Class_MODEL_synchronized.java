@@ -39,7 +39,6 @@ import java.io.InputStreamReader;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
 import java.security.InvalidKeyException;
-import java.security.KeyManagementException;
 import java.security.NoSuchAlgorithmException;
 import java.text.SimpleDateFormat;
 import java.time.YearMonth;
@@ -2023,7 +2022,7 @@ Class_GRUD_SQL_Operations classGrudSqlOperationsУдалениеДанныхЧе
                 // TODO: 30.01.2022
 
                 // TODO: 19.11.2022 ПОДНИМАЕМ ВЕРИСЮ ДАННЫХ
-                Long РезультатУвеличинаяВерсияДАныхЧата = new SubClassUpVersionDATA().upVersionCurentTable(ТаблицаОткудаУдлаяемЗапись,context );
+                Long РезультатУвеличинаяВерсияДАныхЧата = new VersionCurentTable(context).upVersionCurentTable(ТаблицаОткудаУдлаяемЗапись );
                 Log.d(this.getClass().getName(), " РезультатУвеличинаяВерсияДАныхЧата  " + РезультатУвеличинаяВерсияДАныхЧата);
 
                 classGrudSqlOperationsУдалениеДанныхЧерезКонтейнерУниверсальная.contentValuesДляSQLBuilder_Для_GRUD_Операций.put("current_table",
@@ -2122,7 +2121,7 @@ Class_GRUD_SQL_Operations classGrudSqlOperationsУдалениеДанныхЧе
 
 
                 // TODO: 18.03.2023  получаем ВЕСИЮ ДАННЫХ
-                Long РезультатУвеличинаяВерсияПриудалениеСотрудника = new SubClassUpVersionDATA().upVersionCurentTable(ТаблицаОткудаУдлаяемЗапись,context );
+                Long РезультатУвеличинаяВерсияПриудалениеСотрудника = new VersionCurentTable(context).upVersionCurentTable(ТаблицаОткудаУдлаяемЗапись );
                 Log.d(this.getClass().getName(), " РезультатУвеличинаяВерсияПриудалениеСотрудника  " + РезультатУвеличинаяВерсияПриудалениеСотрудника);
 
                 //TODO  конец курант ча
@@ -2231,7 +2230,7 @@ Class_GRUD_SQL_Operations classGrudSqlOperationsУдалениеДанныхЧе
 
 
                 // TODO: 18.03.2023  получаем ВЕСИЮ ДАННЫХ
-                Long РезультатУвеличинаяВерсияДАныхЧата = new SubClassUpVersionDATA().upVersionCurentTable(ТаблицаОткудаУдлаяемЗапись,context);
+                Long РезультатУвеличинаяВерсияДАныхЧата = new VersionCurentTable(context).upVersionCurentTable(ТаблицаОткудаУдлаяемЗапись);
                 Log.d(this.getClass().getName(), " РезультатУвеличинаяВерсияДАныхЧата  " + РезультатУвеличинаяВерсияДАныхЧата);
 
                 //TODO  конец курант ча
@@ -3072,7 +3071,7 @@ Class_GRUD_SQL_Operations classGrudSqlOperationsУдалениеДанныхЧе
                                                   @NonNull  Integer ВремяНАReadFile,
                                                   @NonNull SSLSocketFactory getsslSocketFactory2) {
         // TODO: 24.09.2024
-        AtomicReference<File> СамФайлJsonandApk = new AtomicReference<>();
+        final File[] СамФайлJsonandApk = {null};
         try {
             String enableSSl = preferencesJboss.getString("enablesll","http");
 
@@ -3193,48 +3192,48 @@ Class_GRUD_SQL_Operations classGrudSqlOperationsУдалениеДанныхЧе
                                     ПутькФайлу = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS+ File.separator + PatchDeleteJsonAnalitic);
                                 }
 
+                                if( !ПутькФайлу.getParentFile().isDirectory()){
 
-                                if (ПутькФайлу.isFile() || ПутькФайлу.exists()) {
+                                    ПутькФайлу.getParentFile().mkdirs();
+                                }
+
+                                // TODO: 12.02.2025 удаление
+                                // TODO: 12.02.2025  второе удаление файла самого
+
+                                File СамкФайлу = null;
+                                if (Build.VERSION.SDK_INT >= 30) {
+                                    СамкФайлу = context.getExternalFilesDir( Environment.DIRECTORY_DOWNLOADS+ File.separator + PatchDeleteJsonAnalitic+File.separator + ИмяФайлаЗагрузки);
+                                } else {
+                                    СамкФайлу = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS+ File.separator + PatchDeleteJsonAnalitic+File.separator + ИмяФайлаЗагрузки);
+                                }
+
+
+                                if (СамкФайлу.isFile() || СамкФайлу.exists() ||СамкФайлу.mkdirs() ) {
                                     //TODO :
-                                    ПутькФайлу.delete();
+                                    СамкФайлу.delete();
                                     Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                                             " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
                                             " line " + Thread.currentThread().getStackTrace()[2].getLineNumber());
                                 }
 
 
-
-
-
-
-
-                                СамФайлJsonandApk.set(new File(ПутькФайлу, "/" + ИмяФайлаЗагрузки )) ;
-                                СамФайлJsonandApk.get().setWritable(true);
-                                СамФайлJsonandApk.get().setExecutable(true);
-
-
-                                if (! СамФайлJsonandApk.get().getParentFile().mkdirs() ) {
-                                    // TODO: 24.09.2024
-                                    СамФайлJsonandApk.get().getParentFile().mkdirs();
-
-                                }
-
+                                СамФайлJsonandApk[0] =new File(String.valueOf(СамкФайлу)) ;
+                                СамФайлJsonandApk[0].setWritable(true);
+                                СамФайлJsonandApk[0].setExecutable(true);
 
                                 // TODO: 24.09.2024
                                 Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                                         " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                                        " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + " СамФайлJsonandApk[0] " +   СамФайлJsonandApk.get());
+                                        " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + " СамФайлJsonandApk[0] " +    СамФайлJsonandApk[0]);
 
-
-                                if ( !СамФайлJsonandApk.get().exists()) {
                                     // TODO: 20.03.2023 само создание файла
-                                    if ( СамФайлJsonandApk.get().createNewFile()) {
+                                    if ( СамФайлJsonandApk[0].createNewFile()) {
                                         Log.d(context.getClass().getName(), "Будущий файл успешно создалься , далее запись на диск новго APk файла ");
 
                                         // TODO: 21.09.2023  GET NEW BINATY FILE OT SERVER
                                         BufferedOutputStream buffer =
                                                 new BufferedOutputStream(
-                                                        new FileOutputStream( СамФайлJsonandApk.get()),2048);//8192  ,2048
+                                                        new FileOutputStream(  СамФайлJsonandApk[0]),2048);//8192  ,2048
                                         //todo #2
                                         byte[] bufferfile = new byte[2048];//8192
                                         int rows= 0;
@@ -3244,13 +3243,11 @@ Class_GRUD_SQL_Operations classGrudSqlOperationsУдалениеДанныхЧе
                                         buffer.flush();
                                         buffer.close();
                                         inputStreamОтПинга.close();
-                                        Log.d(context.getClass().getName(), "FileUtils.copyInputStreamToFile СамФайлJsonandApk"+ СамФайлJsonandApk.get());
+                                        Log.d(context.getClass().getName(), "FileUtils.copyInputStreamToFile  СамФайлJsonandApk[0]"+  СамФайлJsonandApk[0]);
                                     } else {
                                         Log.e(context.getClass().getName(), "Ошибка не создалься Будущий файл успешно создалься , далее запись на диск новго APk файла  СЛУЖБА ");
                                     }
-                                }else {
-                                    Log.e(context.getClass().getName(), "Ошибка не создалься Будущий файл успешно создалься , далее запись на диск новго APk файла  СЛУЖБА ");
-                                }
+
 
 
                                 // TODO: 20.03.2023 ответ от сервреа если нет цифры значит не и файла
@@ -3277,7 +3274,7 @@ Class_GRUD_SQL_Operations classGrudSqlOperationsУдалениеДанныхЧе
             });
             dispatcherЗагрузкаПО.executorService().awaitTermination(1,TimeUnit.DAYS);
             dispatcherЗагрузкаПО.cancelAll();
-            Log.i(context.getClass().getName(), "   СамФайлJsonandApk.get()" +    СамФайлJsonandApk.get());
+            Log.i(context.getClass().getName(), "   СамФайлJsonandApk[0] " +     СамФайлJsonandApk[0]);
             // TODO: 13.03.2023  конец загрузки файла по новому FILE
         } catch (IOException | InterruptedException ex) {
             ex.printStackTrace();
@@ -3295,7 +3292,7 @@ Class_GRUD_SQL_Operations classGrudSqlOperationsУдалениеДанныхЧе
 
             }
         }
-        return    СамФайлJsonandApk.get();
+        return    СамФайлJsonandApk[0];
 
     }
 

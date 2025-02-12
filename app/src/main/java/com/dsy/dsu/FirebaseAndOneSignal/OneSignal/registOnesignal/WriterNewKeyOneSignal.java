@@ -6,7 +6,7 @@ import android.util.Log;
 
 import com.dsy.dsu.BusinessLogicAll.Class_GRUD_SQL_Operations;
 import com.dsy.dsu.BusinessLogicAll.Class_Generations_PUBLIC_CURRENT_ID;
-import com.dsy.dsu.BusinessLogicAll.SubClassUpVersionDATA;
+import com.dsy.dsu.BusinessLogicAll.VersionCurentTable;
 import com.dsy.dsu.CnangeServers.PUBLIC_CONTENT;
 import com.dsy.dsu.Errors.controller.RecordNewErros;
 import com.dsy.dsu.Settings.Model.bl_SettingsActivity.GetSettingTableSaves;
@@ -134,8 +134,8 @@ class WriterNewKeyOneSignal {
             Class_GRUD_SQL_Operations class_grud_sql_operationsПовышаемВерсиюДанныхПриПолученииНовогоКлючаONESINGLE = new Class_GRUD_SQL_Operations(context);
             // TODO: 18.03.2023  получаем ВЕСИЮ ДАННЫХ
             Long РезультатУвеличинаяВерсияПриУвеличенияПриПолученияКлючаONESINGLE =
-                    new SubClassUpVersionDATA().upVersionCurentTable(
-                            ТаблицаКоторуюнадоИзменитьВерсиюДанныхТАюдицы_VIEW_ONESIGNAL, context);
+                    new VersionCurentTable(context).upVersionCurentTable(
+                            ТаблицаКоторуюнадоИзменитьВерсиюДанныхТАюдицы_VIEW_ONESIGNAL);
             Log.d(this.getClass().getName(), " РезультатУвеличинаяВерсияПриУвеличенияПриПолученияКлючаONESINGLE  " +
                     РезультатУвеличинаяВерсияПриУвеличенияПриПолученияКлючаONESINGLE);
 

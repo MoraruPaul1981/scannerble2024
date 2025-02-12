@@ -24,7 +24,7 @@ import androidx.loader.content.AsyncTaskLoader;
 import com.dsy.dsu.Errors.controller.RecordNewErros;
 import com.dsy.dsu.CnangeServers.PUBLIC_CONTENT;
 import com.dsy.dsu.BusinessLogicAll.WorkerTables.SubClassCreatingMainAllTables;
-import com.dsy.dsu.BusinessLogicAll.SubClassUpVersionDATA;
+import com.dsy.dsu.BusinessLogicAll.VersionCurentTable;
 import com.dsy.dsu.Hilt.Sqlitehilt.HiltInterfacesqlite;
 
 
@@ -282,7 +282,7 @@ public class ContentProviderSynsInsert extends ContentProvider {
                             Integer РезультатПовышенииВерсииДанных=0;
                             if(РезультатОперацииBulkInsert.size()>0 ){
                                РезультатПовышенииВерсииДанных =
-                                       new SubClassUpVersionDATA().upVersionMODIFITATION_ClientRemote(table,getContext());
+                                       new VersionCurentTable(getContext()).writingDataVersionAfterLocalInsertOrUpdate(table );
                                 Log.d(this.getClass().getName(), " РезультатПовышенииВерсииДанных  " + РезультатПовышенииВерсииДанных);
                             }
 

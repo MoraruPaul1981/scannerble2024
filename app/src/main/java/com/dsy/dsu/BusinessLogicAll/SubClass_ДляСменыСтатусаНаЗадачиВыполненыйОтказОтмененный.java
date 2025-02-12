@@ -46,7 +46,7 @@ public class SubClass_ДляСменыСтатусаНаЗадачиВыполн
 // TODO: 07.02.2022  увеличиваем верисю данных
             // TODO: 18.03.2023  получаем ВЕСИЮ ДАННЫХ
             Long РезультатУвеличинаяВерсияДАныхЧата =
-                    new SubClassUpVersionDATA().upVersionCurentTable(    НазваниеТаблицыобработки,context);
+                    new VersionCurentTable(context).upVersionCurentTable(    НазваниеТаблицыобработки);
             Log.d(this.getClass().getName(), " РезультатУвеличинаяВерсияДАныхЧата  " + РезультатУвеличинаяВерсияДАныхЧата);
 
             //TODO  конец курант ча

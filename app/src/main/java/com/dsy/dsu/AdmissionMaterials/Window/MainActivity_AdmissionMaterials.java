@@ -28,6 +28,9 @@ import com.dsy.dsu.R;
 
 import java.util.Date;
 
+import dagger.hilt.android.AndroidEntryPoint;
+
+@AndroidEntryPoint
 public class MainActivity_AdmissionMaterials extends AppCompatActivity implements CameraXInterface {
     private Activity activity;
     private FragmentManager fragmentManager;

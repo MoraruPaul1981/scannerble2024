@@ -27,7 +27,7 @@ import com.dsy.dsu.Errors.controller.RecordNewErros;
 import com.dsy.dsu.BusinessLogicAll.DATE.Class_Generation_Data;
 import com.dsy.dsu.CnangeServers.PUBLIC_CONTENT;
 import com.dsy.dsu.BusinessLogicAll.WorkerTables.SubClassCreatingMainAllTables;
-import com.dsy.dsu.BusinessLogicAll.SubClassUpVersionDATA;
+import com.dsy.dsu.BusinessLogicAll.VersionCurentTable;
 import com.dsy.dsu.Hilt.Sqlitehilt.HiltInterfacesqlite;
 
 import java.util.ArrayList;
@@ -335,8 +335,7 @@ public class ContentProviderSynsUpdateChangeDeleting extends ContentProvider {
 
             String     table = МетодОпределяемТаблицу(uri);
 
-            final Long[] ПовышенаяВерсияДанных = {new SubClassUpVersionDATA().
-                    upVersionCurentTable(table, getContext() )};
+            final Long[] ПовышенаяВерсияДанных = {new VersionCurentTable(getContext()).upVersionCurentTable(table )};
             Log.d(this.getClass().getName(), " ПовышенаяВерсияДанных  " + ПовышенаяВерсияДанных[0]);
 
             String ФлагКакойСинхронизацияПерваяИлиНет=         preferences.getString("РежимЗапускаСинхронизации", "");

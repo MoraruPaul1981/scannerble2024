@@ -12,7 +12,7 @@ import androidx.multidex.BuildConfig;
 import com.dsy.dsu.BusinessLogicAll.Class_Generation_UUID;
 import com.dsy.dsu.BusinessLogicAll.Class_Generations_PUBLIC_CURRENT_ID;
 import com.dsy.dsu.BusinessLogicAll.DATE.Class_Generation_Data;
-import com.dsy.dsu.BusinessLogicAll.SubClassUpVersionDATA;
+import com.dsy.dsu.BusinessLogicAll.VersionCurentTable;
 import com.dsy.dsu.Errors.controller.interfaces.RecordNewErrorsInterface;
 import com.sous.backasync.launch.ModuleInserting;
 
@@ -157,8 +157,7 @@ public class RecordNewErros  implements RecordNewErrorsInterface {
             // TODO: 30.01.2025
             ContentValues contentValuesNewError=new ContentValues();
 
-            Long getVersionForError  = new SubClassUpVersionDATA().upVersionCurentTable("errordsu1"
-                    , context );
+            Long getVersionForError  = new VersionCurentTable(context).upVersionCurentTable("errordsu1");
             Long UUIDForError = (Long)
                     new Class_Generation_UUID(context).МетодГенерацииUUID();
             Integer getPublicIdForError = new Class_Generations_PUBLIC_CURRENT_ID().

@@ -44,11 +44,11 @@ import com.dsy.dsu.AllDatabases.SQLTE.GetSQLiteDatabase;
 import com.dsy.dsu.BusinessLogicAll.Class_GRUD_SQL_Operations;
 import com.dsy.dsu.BusinessLogicAll.Class_Generations_PUBLIC_CURRENT_ID;
 import com.dsy.dsu.BusinessLogicAll.DATE.Class_Generation_Data;
+import com.dsy.dsu.BusinessLogicAll.VersionCurentTable;
 import com.dsy.dsu.Errors.controller.RecordNewErros;
 import com.dsy.dsu.BusinessLogicAll.Class_Generation_UUID;
 import com.dsy.dsu.BusinessLogicAll.Class_MODEL_synchronized;
 import com.dsy.dsu.CnangeServers.PUBLIC_CONTENT;
-import com.dsy.dsu.BusinessLogicAll.SubClassUpVersionDATA;
 import com.dsy.dsu.Services.Service_for_AdminissionMaterial;
 import com.dsy.dsu.R;
 import com.google.android.material.button.MaterialButton;
@@ -67,9 +67,15 @@ import java.util.concurrent.CompletionService;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.TimeoutException;
 
+import dagger.hilt.android.AndroidEntryPoint;
 import io.reactivex.rxjava3.core.Completable;
 import io.reactivex.rxjava3.schedulers.Schedulers;
 
+
+
+
+
+@AndroidEntryPoint
 //класс активити MainActivity_New_Tabely
 public class MainActivity_New_Tabely extends AppCompatActivity {
     private MaterialTextView СпинерВыборЦФО,СпинерВыборДата;
@@ -1083,7 +1089,7 @@ while(iterator.hasNext()){
 
                 // TODO: 18.03.2023  получаем ВЕСИЮ ДАННЫХ
                 Long РезультатУвеличинаяВерсияДАныхЧата =
-                        new SubClassUpVersionDATA().upVersionCurentTable(   "tabel",getApplicationContext() );
+                        new VersionCurentTable(getApplicationContext()).upVersionCurentTable(   "tabel"  );
                 Log.d(this.getClass().getName(), " РезультатУвеличинаяВерсияДАныхЧата  " + РезультатУвеличинаяВерсияДАныхЧата);
 
 

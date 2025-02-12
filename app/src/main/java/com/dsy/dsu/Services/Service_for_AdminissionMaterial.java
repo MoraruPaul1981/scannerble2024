@@ -28,6 +28,7 @@ import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
 import com.dsy.dsu.AllDatabases.SQLTE.GetSQLiteDatabase;
 import com.dsy.dsu.BusinessLogicAll.Class_GRUD_SQL_Operations;
+import com.dsy.dsu.BusinessLogicAll.VersionCurentTable;
 import com.dsy.dsu.Errors.controller.RecordNewErros;
 import com.dsy.dsu.BusinessLogicAll.Class_Generation_UUID;
 import com.dsy.dsu.BusinessLogicAll.Class_Generations_PUBLIC_CURRENT_ID;
@@ -37,7 +38,6 @@ import com.dsy.dsu.BusinessLogicAll.DATE.SubClassYEARONLY;
 import com.dsy.dsu.BusinessLogicAll.DATE.SubClassYearHONLY_ТолькоАнализ;
 import com.dsy.dsu.CnangeServers.PUBLIC_CONTENT;
 import com.dsy.dsu.BusinessLogicAll.DATE.SubClassMONTHONLY;
-import com.dsy.dsu.BusinessLogicAll.SubClassUpVersionDATA;
 import com.dsy.dsu.WorkManagers.BL_WorkMangers.CreateSingleWorkManager;
 
 
@@ -551,7 +551,7 @@ public class Service_for_AdminissionMaterial extends IntentService {
 
                 // TODO: 22.09.2022 ПОЛУЧЕМ ПОВЫШЕНУЮ ВЕРИСЮ ДАННЫХ
                 Long РезультатУвеличиваемВерсияДатаТАбель =
-                        new SubClassUpVersionDATA().upVersionCurentTable(НазваниеОбрабоатываемойТаблицы,context);
+                        new VersionCurentTable(context).upVersionCurentTable(НазваниеОбрабоатываемойТаблицы);
                 Log.d(this.getClass().getName(), " РезультатУвеличиваемВерсияДатаТАбель  " + РезультатУвеличиваемВерсияДатаТАбель);
                 // TODO: 18.11.2022
                 contentValuesДляДатаТабель.put("current_table", РезультатУвеличиваемВерсияДатаТАбель);
@@ -869,7 +869,7 @@ public class Service_for_AdminissionMaterial extends IntentService {
 
                         // TODO: 18.03.2023  получаем ВЕСИЮ ДАННЫХ
                         Long РезультатУвеличиваемВерсияПолучениеНовогоМатериала =
-                                new SubClassUpVersionDATA().upVersionCurentTable(НазваниеОбрабоатываемойТаблицы,getApplicationContext());
+                                new VersionCurentTable(context).upVersionCurentTable(НазваниеОбрабоатываемойТаблицы );
                         Log.d(this.getClass().getName(), " РезультатУвеличиваемВерсияПолучениеНовогоМатериала  " + РезультатУвеличиваемВерсияПолучениеНовогоМатериала);
 
                         contentValuesСозданиеНовогоМатериала.put("current_table", РезультатУвеличиваемВерсияПолучениеНовогоМатериала);
@@ -957,8 +957,8 @@ public class Service_for_AdminissionMaterial extends IntentService {
 
                                     // TODO: 18.03.2023  получаем ВЕСИЮ ДАННЫХ
                                     Long РезультатУвеличиваемВерсияПолучениеНовогоМатериала =
-                                            new SubClassUpVersionDATA()
-                                                    .upVersionCurentTable(НазваниеОбрабоатываемойТаблицы,getApplicationContext());
+                                            new VersionCurentTable(context)
+                                                    .upVersionCurentTable(НазваниеОбрабоатываемойТаблицы );
                                     Log.d(this.getClass().getName(), " РезультатУвеличиваемВерсияПолучениеНовогоМатериала  " + РезультатУвеличиваемВерсияПолучениеНовогоМатериала);
 
                                     contentValuesСозданиеНовогоМатериала.put("current_table", РезультатУвеличиваемВерсияПолучениеНовогоМатериала);
@@ -1268,7 +1268,7 @@ public class Service_for_AdminissionMaterial extends IntentService {
 
                         // TODO: 18.03.2023  получаем ВЕСИЮ ДАННЫХ
                         Long РезультатУвеличиваемВерсияПолучениеНовогоМатериала =
-                                new SubClassUpVersionDATA().upVersionCurentTable(НазваниеОбрабоатываемойТаблицы,getApplicationContext());
+                                new VersionCurentTable(context).upVersionCurentTable(НазваниеОбрабоатываемойТаблицы );
                         Log.d(this.getClass().getName(), " РезультатУвеличиваемВерсияПолучениеНовогоМатериала  " + РезультатУвеличиваемВерсияПолучениеНовогоМатериала);
 
                         // TODO: 18.11.2022

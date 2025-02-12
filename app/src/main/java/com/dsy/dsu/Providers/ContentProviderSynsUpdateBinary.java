@@ -49,10 +49,10 @@ import com.dsy.dsu.AllDatabases.JsonSerializerAndDeserializer.View_onesignalJson
 import com.dsy.dsu.AllDatabases.JsonSerializerAndDeserializer.Сhat_usersJsonDeserializer;
 import com.dsy.dsu.AllDatabases.JsonSerializerAndDeserializer.СhatsJsonDeserializer;
 import com.dsy.dsu.AllDatabases.JsonSerializerAndDeserializer.СompanylJsonDeserializer;
+import com.dsy.dsu.BusinessLogicAll.VersionCurentTable;
 import com.dsy.dsu.Errors.controller.RecordNewErros;
 import com.dsy.dsu.CnangeServers.PUBLIC_CONTENT;
 import com.dsy.dsu.BusinessLogicAll.WorkerTables.SubClassCreatingMainAllTables;
-import com.dsy.dsu.BusinessLogicAll.SubClassUpVersionDATA;
 import com.dsy.dsu.Hilt.Sqlitehilt.HiltInterfacesqlite;
 import com.fasterxml.jackson.databind.JsonNode;
 
@@ -660,7 +660,7 @@ public class ContentProviderSynsUpdateBinary extends ContentProvider {
                                 Integer РезультатПовышенииВерсииДанных=0;
                                 if(РезультатОперацииBurkUPDATE.size()>0 ){
                                     РезультатПовышенииВерсииДанных =
-                                            new SubClassUpVersionDATA().upVersionMODIFITATION_ClientRemote(table,getContext());
+                                            new VersionCurentTable(getContext()).writingDataVersionAfterLocalInsertOrUpdate(table );
                                     Log.d(this.getClass().getName(), " РезультатПовышенииВерсииДанных  " + РезультатПовышенииВерсииДанных);
                                 }
                                     // TODO: 09.11.2022 закрывает ТРАНЗАКЦИИ ВНУТРИ
@@ -877,7 +877,7 @@ class SubClassJsonParserOtServer{
                                                         },jsonNodesBuffer500.size());
                                                 if (РезультатОперацииBurkUPDATE.size() > 0) {
                                                     Integer РезультатПовышенииВерсииДанных =
-                                                            new SubClassUpVersionDATA().upVersionMODIFITATION_ClientRemote(имяТаблицаAsync, getContext() );
+                                                            new VersionCurentTable(getContext()).writingDataVersionAfterLocalInsertOrUpdate(имяТаблицаAsync  );
                                                     Log.d(this.getClass().getName(), " РезультатПовышенииВерсииДанных  " + РезультатПовышенииВерсииДанных);
                                                 }
                                                 Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
@@ -893,7 +893,7 @@ class SubClassJsonParserOtServer{
                 // TODO: 11.10.2022 ПОСЛЕ ОПЕРАЦИИ ВИЗАУЛИЗИРУЕМ КОНЕЦ ОПЕРАЦИИ ПОЛЬЗОВАТЕЛЮ
                 if (РезультатОперацииBurkUPDATE.size() > 0) {
                     Integer РезультатПовышенииВерсииДанных =
-                            new SubClassUpVersionDATA().upVersionMODIFITATION_ClientRemote(имяТаблицаAsync, getContext() );
+                            new VersionCurentTable(getContext()).writingDataVersionAfterLocalInsertOrUpdate(имяТаблицаAsync  );
                     Log.d(this.getClass().getName(), " РезультатПовышенииВерсииДанных  " + РезультатПовышенииВерсииДанных);
                 }
                 // TODO: 27.04.2023  сохраняем количество операций

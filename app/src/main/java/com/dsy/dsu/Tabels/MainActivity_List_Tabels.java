@@ -82,6 +82,7 @@ import java.util.Optional;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.TimeUnit;
 
+import dagger.hilt.android.AndroidEntryPoint;
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
 import io.reactivex.rxjava3.core.Observable;
 import io.reactivex.rxjava3.functions.Action;
@@ -90,6 +91,10 @@ import io.reactivex.rxjava3.functions.Consumer;
 import io.reactivex.rxjava3.functions.Predicate;
 import io.reactivex.rxjava3.schedulers.Schedulers;
 
+
+
+
+@AndroidEntryPoint
 public class MainActivity_List_Tabels extends AppCompatActivity  {
     private  Spinner СпинерВыборДату;/////спинеры для создание табеляСпинерТабельДепратамент
 

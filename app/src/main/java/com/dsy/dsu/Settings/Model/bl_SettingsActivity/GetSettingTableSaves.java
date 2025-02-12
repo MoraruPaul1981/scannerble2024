@@ -10,7 +10,7 @@ import androidx.annotation.NonNull;
 import com.dsy.dsu.BusinessLogicAll.Class_Generations_PUBLIC_CURRENT_ID;
 import com.dsy.dsu.BusinessLogicAll.Class_MODEL_synchronized;
 import com.dsy.dsu.BusinessLogicAll.DATE.Class_Generation_Data;
-import com.dsy.dsu.BusinessLogicAll.SubClassUpVersionDATA;
+import com.dsy.dsu.BusinessLogicAll.VersionCurentTable;
 import com.dsy.dsu.Errors.controller.RecordNewErros;
 
 import java.util.Date;
@@ -43,7 +43,7 @@ public class GetSettingTableSaves implements  INSetttingTabels {
                 АдаптерВставкиПолученогоПубличногоID.put("date_update", NewUUIDForSettingYable);
 
                 // TODO: 18.03.2023  получаем ВЕСИЮ ДАННЫХ
-                Long NewLongVrsion = new SubClassUpVersionDATA().upVersionCurentTable("settings_tabels",context);
+                Long NewLongVrsion = new VersionCurentTable(context).upVersionCurentTable("settings_tabels");
                 АдаптерВставкиПолученогоПубличногоID.put("current_table", NewLongVrsion);
 
 
@@ -96,7 +96,7 @@ public class GetSettingTableSaves implements  INSetttingTabels {
             АдаптерВставкиПолученогоПубличногоID.put("date_update", NewUUIDForSettingYable);
 
             // TODO: 18.03.2023  получаем ВЕСИЮ ДАННЫХ
-            Long NewLongVrsion = new SubClassUpVersionDATA().upVersionCurentTable("settings_tabels",context);
+            Long NewLongVrsion = new VersionCurentTable(context).upVersionCurentTable("settings_tabels");
             АдаптерВставкиПолученогоПубличногоID.put("current_table", NewLongVrsion);
 
             // TODO: 12.04.2024 new ONeSignal NEw KEY

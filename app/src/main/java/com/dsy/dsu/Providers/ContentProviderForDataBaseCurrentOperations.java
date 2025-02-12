@@ -506,7 +506,7 @@ public class ContentProviderForDataBaseCurrentOperations extends ContentProvider
             values.put("prof",ПолучаемIDПрофессии);
             String НазваниеПрофесии=   extras.getString("НазваниеПрофесии","");
             Long CurrenrsСhildUUID =   extras.getLong("CurrenrsСhildUUID",0l);
-            Long ВерсияДанныхUp = new SubClassUpVersionDATA().МетодПовышаемВерсииCurrentTable(table,getContext(),sqLiteDatabase);
+            Long ВерсияДанныхUp = new VersionCurentTable().МетодПовышаемВерсииCurrentTable(table,getContext(),sqLiteDatabase);
             values.put("current_table",ВерсияДанныхUp);
             String ДатаОбновления=     new Class_GenerationBack_Data(getContext()).ГлавнаяДатаИВремяОперацийСБазойДанных();
             values.put("date_update",ДатаОбновления);

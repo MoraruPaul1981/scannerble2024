@@ -20,7 +20,12 @@ import com.dsy.dsu.R;
 
 import java.util.Locale;
 
+import dagger.hilt.android.AndroidEntryPoint;
 
+
+
+
+@AndroidEntryPoint
 public class MainActivity_Tabel_Single_PeopleOneSwipe extends AppCompatActivity  {
     private  SubClassBissnessLogicTableSingleWithViewPager singleWithViewPager;
     private  Integer    ГодТабелей=  0;

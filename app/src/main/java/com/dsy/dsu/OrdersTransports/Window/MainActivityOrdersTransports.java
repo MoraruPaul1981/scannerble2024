@@ -20,6 +20,9 @@ import com.dsy.dsu.Services.ServiceUpdatePoОбновлениеПО;
 
 import java.util.Date;
 
+import dagger.hilt.android.AndroidEntryPoint;
+
+@AndroidEntryPoint
 public class MainActivityOrdersTransports extends AppCompatActivity {
     // TODO: 25.04.2023 Переменные
     private Activity activity;

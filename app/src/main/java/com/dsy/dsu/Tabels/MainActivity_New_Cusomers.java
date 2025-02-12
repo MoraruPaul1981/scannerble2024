@@ -36,12 +36,12 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 import com.dsy.dsu.AllDatabases.SQLTE.GetSQLiteDatabase;
 import com.dsy.dsu.BusinessLogicAll.Class_GRUD_SQL_Operations;
 import com.dsy.dsu.BusinessLogicAll.DATE.Class_Generation_Data;
+import com.dsy.dsu.BusinessLogicAll.VersionCurentTable;
 import com.dsy.dsu.Errors.controller.RecordNewErros;
 import com.dsy.dsu.BusinessLogicAll.Class_Generation_UUID;
 import com.dsy.dsu.BusinessLogicAll.Class_Generations_New_Customers_For_Tabels;
 import com.dsy.dsu.CnangeServers.PUBLIC_CONTENT;
 import com.dsy.dsu.BusinessLogicAll.SubClassGetPublicId;
-import com.dsy.dsu.BusinessLogicAll.SubClassUpVersionDATA;
 import com.dsy.dsu.R;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.android.material.snackbar.Snackbar;
@@ -61,12 +61,16 @@ import java.util.concurrent.locks.Condition;
 import java.util.concurrent.locks.ReentrantLock;
 
 
+import dagger.hilt.android.AndroidEntryPoint;
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
 import io.reactivex.rxjava3.core.Completable;
 import io.reactivex.rxjava3.functions.Action;
 import io.reactivex.rxjava3.functions.Consumer;
 import io.reactivex.rxjava3.schedulers.Schedulers;
 
+
+
+@AndroidEntryPoint
 public class MainActivity_New_Cusomers extends AppCompatActivity implements DatePickerDialog.OnDateSetListener  {
     ////todo переменные для новго сотрдуника при создание на  активтик
     private Button КнопкаСозданиеНовогоСотрудника;
@@ -1036,7 +1040,7 @@ private void МетодВозврещениеНаПредыдущуюАктив�
                 }
                 Log.d(this.getClass().getName(), "  АдаптерДляСозданиеНовогоСотрудаТАблицаФИО " + АдаптерДляСозданиеНовогоСотрудаТАблицаФИО);
                 Long РезультатВычисляемВреисюДанных =
-                        new SubClassUpVersionDATA().upVersionCurentTable(    "fio",getApplicationContext() );
+                        new VersionCurentTable(getApplicationContext()).upVersionCurentTable(    "fio"  );
                 АдаптерДляСозданиеНовогоСотрудаТАблицаФИО.put("current_table",РезультатВычисляемВреисюДанных);
                 АдаптерДляСозданиеНовогоСотрудаТАблицаФИО.put("BirthDate",ЗначениеДеньРождения);
                 АдаптерДляСозданиеНовогоСотрудаТАблицаФИО.put("snils",ПолученныйСНИЛСНовогоСотрудника);
@@ -1233,7 +1237,7 @@ private void МетодВозврещениеНаПредыдущуюАктив�
         //    АдаптерДляСозданиеНовогоСотрудаТАблицаТабель.putNull("_id");
             АдаптерДляСозданиеНовогоСотрудаТАблицаТабель.put("status_carried_out", "False");
             Long РезультатПовышаемВреисюДанныхТаблицы_Дата_Табеля =
-                    new SubClassUpVersionDATA().upVersionCurentTable(    "data_tabels",getApplicationContext() );
+                    new VersionCurentTable(getApplicationContext()).upVersionCurentTable(    "data_tabels" );
             // TODO: 23.09.2021  повышаем верисю таблицы фио
             АдаптерДляСозданиеНовогоСотрудаТАблицаТабель.put("current_table",РезультатПовышаемВреисюДанныхТаблицы_Дата_Табеля);
 

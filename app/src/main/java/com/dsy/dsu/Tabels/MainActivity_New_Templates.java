@@ -42,6 +42,7 @@ import androidx.fragment.app.FragmentTransaction;
 import com.dsy.dsu.AllDatabases.SQLTE.GetSQLiteDatabase;
 import com.dsy.dsu.BusinessLogicAll.Class_GRUD_SQL_Operations;
 import com.dsy.dsu.BusinessLogicAll.DATE.Class_Generation_Data;
+import com.dsy.dsu.BusinessLogicAll.VersionCurentTable;
 import com.dsy.dsu.Errors.controller.RecordNewErros;
 import com.dsy.dsu.BusinessLogicAll.Class_Generation_UUID;
 import com.dsy.dsu.BusinessLogicAll.Class_Generation_Weekend_For_Tabels;
@@ -49,7 +50,6 @@ import com.dsy.dsu.BusinessLogicAll.Class_MODEL_synchronized;
 import com.dsy.dsu.BusinessLogicAll.DATE.SubClassCursorLoader;
 import com.dsy.dsu.CnangeServers.PUBLIC_CONTENT;
 import com.dsy.dsu.BusinessLogicAll.SubClassGetPublicId;
-import com.dsy.dsu.BusinessLogicAll.SubClassUpVersionDATA;
 import com.dsy.dsu.Dashboard.View.Fragments.DashboardFragmentSettings;
 import com.dsy.dsu.R;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
@@ -83,6 +83,10 @@ import io.reactivex.rxjava3.functions.BiFunction;
 import io.reactivex.rxjava3.functions.Consumer;
 import io.reactivex.rxjava3.functions.Predicate;
 import io.reactivex.rxjava3.schedulers.Schedulers;
+
+
+
+
 @AndroidEntryPoint
 public class MainActivity_New_Templates extends AppCompatActivity implements DatePickerDialog.OnDateSetListener {
     private Spinner СпинерВыборДату;/////спинеры для создание табеляСпинерТабельДепратамент
@@ -2393,7 +2397,7 @@ public class MainActivity_New_Templates extends AppCompatActivity implements Dat
                     = new Class_GRUD_SQL_Operations(getApplicationContext());
             // TODO: 18.03.2023  получаем ВЕСИЮ ДАННЫХ
             Long РезультатУвеличинаяВерсияДАныхЧата =
-                    new SubClassUpVersionDATA().upVersionCurentTable(    "data_tabels",getApplicationContext());
+                    new VersionCurentTable(getApplicationContext()).upVersionCurentTable(    "data_tabels" );
             Log.d(this.getClass().getName(), " РезультатУвеличинаяВерсияДАныхЧата  " + РезультатУвеличинаяВерсияДАныхЧата);
 
             АдаптерДляВставкиИзГотоваШаблонаВТаблицуТабель.put("current_table", РезультатУвеличинаяВерсияДАныхЧата);

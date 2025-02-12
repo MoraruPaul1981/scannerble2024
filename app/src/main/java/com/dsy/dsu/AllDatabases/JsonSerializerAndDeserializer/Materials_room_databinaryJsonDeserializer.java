@@ -8,7 +8,7 @@ import androidx.sqlite.db.SupportSQLiteStatement;
 
 import com.dsy.dsu.AllDatabases.ROOM.ROOMDatabase;
 import com.dsy.dsu.Errors.controller.RecordNewErros;
-import com.dsy.dsu.BusinessLogicAll.SubClassUpVersionDATA;
+import com.dsy.dsu.BusinessLogicAll.VersionCurentTable;
 import com.fasterxml.jackson.databind.JsonNode;
 
 import java.io.IOException;
@@ -112,7 +112,7 @@ this.context=context;
                      if ( РезультатОперацииBurkUPDATE.size()>0) {
                          // TODO: 04.07.2023 После Успешной Операции Повышаем Версию ДАнных Для Данной Тваблицы  
                          Integer РезультатПовышенииВерсииДанных =
-                                 new SubClassUpVersionDATA().upVersionMODIFITATION_ClientRemote(имяТаблицаAsync, context);
+                                 new VersionCurentTable(context).writingDataVersionAfterLocalInsertOrUpdate(имяТаблицаAsync);
                          Log.d(this.getClass().getName(), " РезультатПовышенииВерсииДанных  " + РезультатПовышенииВерсииДанных);
                          // TODO: 04.07.2023 ЗАВЕРШАЕТ ТРНЗАКЦИЮ НА 50 СТРОЧКЕ
                      }

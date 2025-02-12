@@ -14,7 +14,7 @@ import androidx.annotation.NonNull;
 import com.dsy.dsu.BusinessLogicAll.Class_MODEL_synchronized;
 import com.dsy.dsu.BusinessLogicAll.Jakson.GeneratorBinarySONSerializer;
 import com.dsy.dsu.BusinessLogicAll.Jakson.GeneratorJSONSerializer;
-import com.dsy.dsu.BusinessLogicAll.SubClassUpVersionDATA;
+import com.dsy.dsu.BusinessLogicAll.VersionCurentTable;
 import com.dsy.dsu.CnangeServers.PUBLIC_CONTENT;
 import com.dsy.dsu.Errors.controller.RecordNewErros;
 import com.dsy.dsu.SynsProccessor.PrograsBarAsync.GetPrograssbarChangeIndicator;
@@ -23,6 +23,7 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.module.SimpleModule;
 
+import org.jetbrains.annotations.NotNull;
 import org.json.JSONException;
 
 import java.io.InputStream;
@@ -36,7 +37,6 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.concurrent.ConcurrentSkipListSet;
 import java.util.concurrent.CopyOnWriteArrayList;
-import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
@@ -99,7 +99,8 @@ public class ProccesorparallelSynch   {
                  // TODO: 07.10.2024
                  case "СамыйПервыйЗапускСинхронизации":
                  // TODO: 27.12.2024
-                     executorServiceAsync= Executors.newFixedThreadPool(3);
+                     ///executorServiceAsync= Executors.newSingleThreadExecutor();
+                    executorServiceAsync= Executors.newCachedThreadPool();
                  Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                          " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
                          " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"+ "\n"+ " РежимЗапускаСинхронизации " +РежимЗапускаСинхронизации);
@@ -456,7 +457,7 @@ public class ProccesorparallelSynch   {
                                       @NonNull String CooserGetandPost) {
         // TODO: 08.04.2024 get and post
         Long ResultatAndGETANDPOST=0l;
-     try (        Cursor КурсорДляАнализаВерсииДанныхАндройда = getCurcorForAllVersionDataAndroid(ИмяТаблицы); ){
+     try (Cursor КурсорДляАнализаВерсииДанныхАндройда = new VersionCurentTable(context).getVersionMODIFITATION_ClientTable(ИмяТаблицы); ){
         // TODO: 07.04.2024  получаем данные локалные лдля сравенния
 
         // TODO: 05.04.2024  получаем верисю данных андройд версия всехданныхс
@@ -520,30 +521,7 @@ public class ProccesorparallelSynch   {
 
 
 
-    // TODO: 05.04.2024 курсор получчаем весрию всех жанных на андройде для дальншего сопоствалвения
-    private Cursor getCurcorForAllVersionDataAndroid(@NonNull String ИмяТаблицыОтАндройда_Локальноая) throws ExecutionException, InterruptedException {
-        Cursor AllVersionAndroidLocalSQlite = null;
-        try{
-            Uri uri = Uri.parse("content://com.dsy.dsu.providerdatabasecurrentoperations/" + "MODIFITATION_Client" + "");
-            ContentResolver contentResolver=context. getContentResolver();
-            // TODO: 05.04.2024 get Curcour all  version local Android Sqlite
-            AllVersionAndroidLocalSQlite =      contentResolver.query(uri,new String[]{},
-                    new String(" SELECT *  FROM    MODIFITATION_Client   where name = ?    "),
-                    new String[]{String.valueOf(ИмяТаблицыОтАндройда_Локальноая)},null);///   "  //// SELECT * FROM  viewtabel WHERE year_tabels=?  AND month_tabels=?  AND cfo=?  AND status_send!=?
-            Log.d(this.getClass().getName(), "\n"
-                    + " время: " + new Date() + "\n+" +
-                    " Класс в процессе... " + this.getClass().getName() + "\n" +
-                    " метод в процессе... " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n"+
-                    " AllVersionAndroidLocalSQlite " +AllVersionAndroidLocalSQlite);
-        } catch (Exception e) {
-            e.printStackTrace();
-            Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
-                    " Линия  :" + Thread.currentThread().getStackTrace()[2].getLineNumber());
-            new RecordNewErros(context).recordnewerror(e.toString(), this.getClass().getName(),
-                    Thread.currentThread().getStackTrace()[2].getMethodName(), Thread.currentThread().getStackTrace()[2].getLineNumber());
-        }
-        return AllVersionAndroidLocalSQlite;
-    }
+
 // TODO: 07.04.2024
 
 
@@ -618,9 +596,10 @@ public class ProccesorparallelSynch   {
 
 
                     final Long ResultSendDataANSqlServerJboss=   concurrentSkipListSetResultatOtServerIsertOrUpdate.stream().reduce(0l, (a, b) -> a + b);
+                        // TODO: 11.02.2025  
                         if (ResultSendDataANSqlServerJboss>0) {
                             // TODO: 01.07.2023 После Успешно Посылании Данных На Сервер Повышаем Верисю Данных
-                            методПослеУспешногоПолученияПовышаемВерсию(ИмяТаблицы );
+                            методПослеУспешногоПолученияПовышаемВерсиюPOST(ИмяТаблицы ,ResultSendDataANSqlServerJboss );
 
                             // TODO: 09.10.2024
 
@@ -649,13 +628,30 @@ public class ProccesorparallelSynch   {
                 // TODO: 19.10.2021   GET()->
                 if (ВерсияДанныхсSqlServer > ВерсииНаАндройдеСерверная ) {
                     // TODO: 05.04.2024
-                    if ( ВремяОтSqlServer.compareTo(ВремяДанныхНаАндройде)!=0) {
+                    if ( ВремяОтSqlServer.compareTo(ВремяДанныхНаАндройде)>0) {
                         // TODO: 05.04.2024
                         if (!ИмяТаблицы.trim().equalsIgnoreCase("errordsu1")
                                 && !ИмяТаблицы.trim().equalsIgnoreCase("settings_tabels")) {
 
                             ////// todo МЕТОД GET() в фоне    ////// todo МЕТОД GET
                             concurrentSkipListSetResultatOtServerIsertOrUpdate.add( МетодДанныеПолучаемНаСервервФоне(ИмяТаблицы, ВерсииНаАндройдеСерверная, PublicID));
+
+                            // TODO: 12.02.2025
+
+                            final Long ResultGetDataANSqlServerJboss=   concurrentSkipListSetResultatOtServerIsertOrUpdate.stream().reduce(0l, (a, b) -> a + b);
+                            // TODO: 11.02.2025
+                            if (ResultGetDataANSqlServerJboss>0) {
+                                // TODO: 01.07.2023 После Успешно Посылании Данных На Сервер Повышаем Верисю Данных
+                                методПослеУспешногоПолученияПовышаемВерсиюGET(ИмяТаблицы  );
+
+                                // TODO: 09.10.2024
+
+                                Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                                        " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                                        " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"+
+                                        " ResultGetDataANSqlServerJboss "+ResultGetDataANSqlServerJboss);
+                            }
+
 
                             Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                                     " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
@@ -772,11 +768,11 @@ public class ProccesorparallelSynch   {
 
     // TODO: 07.09.2023 После Успешного ПОлучение и Успешной Отправки Выравниваем Версию  Данных AFTER
 
-    private void методПослеУспешногоПолученияПовышаемВерсию(@NonNull String ИмяТаблицыОтАндройда_Локальноая) {
+    private void методПослеУспешногоПолученияПовышаемВерсиюPOST(@NonNull String ИмяТаблицыОтАндройда_Локальноая, @NotNull   Long VersionFromSqlServer) {
         try{
             // TODO: 19.11.2022 ПОДНИМАЕМ ВЕРИСЮ ДАННЫХ
             Integer РезультатПовышенииВерсииДанных =
-                    new SubClassUpVersionDATA().upVersionMODIFITATION_ClientRemote(ИмяТаблицыОтАндройда_Локальноая,context);
+                    new VersionCurentTable(context).writingDataVersionAfterPost(ИмяТаблицыОтАндройда_Локальноая,  VersionFromSqlServer);
 
 
             Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
@@ -792,6 +788,37 @@ public class ProccesorparallelSynch   {
                     Thread.currentThread().getStackTrace()[2].getMethodName(), Thread.currentThread().getStackTrace()[2].getLineNumber());
         }
     }
+
+
+
+
+    // TODO: 07.09.2023 После Успешного ПОлучение и Успешной Отправки Выравниваем Версию  Данных AFTER
+
+    private void методПослеУспешногоПолученияПовышаемВерсиюGET(@NonNull String ИмяТаблицыОтАндройда_Локальноая) {
+        try{
+            // TODO: 19.11.2022 ПОДНИМАЕМ ВЕРИСЮ ДАННЫХ
+            Integer РезультатПовышенииВерсииДанных =
+                    new VersionCurentTable(context).writingDataVersionAfterGet(ИмяТаблицыОтАндройда_Локальноая);
+
+
+            Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                    " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                    " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"+
+                    " ВерсияДанныхсСамогоSqlServer  "+
+                    " РезультатПовышенииВерсииДанных  " + РезультатПовышенииВерсииДанных);
+        } catch (Exception e) {
+            e.printStackTrace();
+            Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
+                    " Линия  :" + Thread.currentThread().getStackTrace()[2].getLineNumber());
+            new RecordNewErros(context).recordnewerror(e.toString(), this.getClass().getName(),
+                    Thread.currentThread().getStackTrace()[2].getMethodName(), Thread.currentThread().getStackTrace()[2].getLineNumber());
+        }
+    }
+
+
+
+
+
 // TODO: 07.04.2024
 
     @NonNull
