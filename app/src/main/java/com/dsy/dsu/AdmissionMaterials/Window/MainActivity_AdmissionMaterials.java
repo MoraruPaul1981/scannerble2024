@@ -75,7 +75,7 @@ public class MainActivity_AdmissionMaterials extends AppCompatActivity implement
             businessLogic. методБиндингСлужбы();
             // TODO: 04.10.2023 разрешения для всего
             // TODO: 04.10.2023 разрешения для всего
-            new ClassPermissions(this,ALL_PERSSION_CODE,CAMERA_PERSSION_CODE);
+            new ClassPermissions(this,ALL_PERSSION_CODE);
 
 
 

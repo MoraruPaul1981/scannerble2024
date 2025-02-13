@@ -89,7 +89,7 @@ public class MainActivity_Errors extends AppCompatActivity  {
             getSupportActionBar().hide(); ///скрывать тул бар
 
             // TODO: 04.10.2023 разрешения для всего
-            new ClassPermissions(this,ALL_PERSSION_CODE,CAMERA_PERSSION_CODE);
+            new ClassPermissions(this,ALL_PERSSION_CODE);
 
             cameBoundServiceUpdatePO();
 

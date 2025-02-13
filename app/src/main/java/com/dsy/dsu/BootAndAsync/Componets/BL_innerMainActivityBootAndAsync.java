@@ -57,7 +57,7 @@ public class BL_innerMainActivityBootAndAsync extends MainActivityBootAndAsync {
     private  Context context;
 
 
-
+    public static final int ALL_PERSSION_CODE=1;
 
     @NonNull LinkedHashMap<Integer,String> getHiltPortJboss;
 
@@ -423,7 +423,7 @@ public class BL_innerMainActivityBootAndAsync extends MainActivityBootAndAsync {
 
         try{
 
-            new ClassPermissions(activity,ALL_PERSSION_CODE,CAMERA_PERSSION_CODE);
+            new ClassPermissions(activity,ALL_PERSSION_CODE);
 
             Log.d(context.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                     " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +

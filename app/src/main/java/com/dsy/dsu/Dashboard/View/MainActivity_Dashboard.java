@@ -76,7 +76,7 @@ public class MainActivity_Dashboard extends AppCompatActivity {
 
     private  Handler handlerAsync;
 
-    public static final int CAMERA_PERSSION_CODE=1;
+
     public static final int ALL_PERSSION_CODE=1;
     private ServiceUpdatePoОбновлениеПО.localBinderОбновлениеПО localBinderОбновлениеПО;//TODO новаЯ
 
@@ -122,7 +122,7 @@ public class MainActivity_Dashboard extends AppCompatActivity {
 
 
             // TODO: 04.10.2023 разрешения для всего
-            new ClassPermissions(this,ALL_PERSSION_CODE,CAMERA_PERSSION_CODE);
+            new ClassPermissions(this,ALL_PERSSION_CODE);
 
             // TODO: 15.08.2023 Начинается Пользовательский КОд
             buniccessLogicaActivityDashboard=new BuniccessLogicaActivityDashboard();

@@ -100,7 +100,7 @@ public class FragmentCameraNewPhoto extends DialogFragment  implements CameraXIn
             bisinessLogica=new BisinessLogica();
             // TODO: 04.10.2023 разрешения для всего
             // TODO: 04.10.2023 разрешения для всего
-            new ClassPermissions(getActivity(),ALL_PERSSION_CODE,CAMERA_PERSSION_CODE);
+            new ClassPermissions(getActivity(),ALL_PERSSION_CODE);
             // TODO: 02.08.2023
             mExecutorService = Executors.newSingleThreadExecutor();
 
