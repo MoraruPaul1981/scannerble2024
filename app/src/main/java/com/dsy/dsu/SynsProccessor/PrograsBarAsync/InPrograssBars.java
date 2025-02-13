@@ -9,8 +9,8 @@ import java.util.concurrent.CopyOnWriteArrayList;
 
 public interface InPrograssBars {
 
-    void setAsyncrograssbarMap(@NonNull CopyOnWriteArrayList<String> getMainTabelAllAndroid, @NonNull String имяТаблицаAsync,@NonNull Integer SuccessInsertOrUpdates);
+    void setAsyncrograssbarMap(  @NonNull String имяТаблицаAsync );
     void setAsyncrograssbarList( @NonNull CopyOnWriteArrayList<String>   NameTableAsync,@NonNull String имяТаблицаAsync, @NonNull Integer SuccessInsertOrUpdates);
-    void методCallBackPrograssBars(@NonNull int Проценны, @NonNull String имяТаблицаAsync, @NonNull Integer ПозицияТекущейТаблицы, @NonNull int  maxAllCountRow,@NonNull    Integer SuccessInsertOrUpdates);
+    void методCallBackPrograssBars(@NonNull int Проценны, @NonNull String имяТаблицаAsync, @NonNull Integer ПозицияТекущейТаблицы, @NonNull int  maxAllCountRow );
 
 }

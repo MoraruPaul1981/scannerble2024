@@ -8,6 +8,7 @@ import androidx.annotation.NonNull;
 import com.dsy.dsu.BootAndAsync.BlBootAsync.SendMainActivity;
 import com.dsy.dsu.BootAndAsync.EventsBus.MessageEvensBusPrograssBar;
 import com.dsy.dsu.BusinessLogicAll.Class_Visible_Processing_Async;
+import com.dsy.dsu.CnangeServers.PUBLIC_CONTENT;
 import com.dsy.dsu.Errors.controller.RecordNewErros;
 
 import org.greenrobot.eventbus.EventBus;
@@ -22,10 +23,12 @@ Context context;
     }
 
     @Override
-    public void setAsyncrograssbarMap(@NonNull CopyOnWriteArrayList<String> getMainTabelAllAndroid,
-                                      @NonNull String имяТаблицаAsync,
-                                      @NonNull Integer SuccessInsertOrUpdates) {
+    public void setAsyncrograssbarMap(@NonNull String имяТаблицаAsync) {
         try {
+
+            //TODO Таблицы ОТ  Андройда
+            CopyOnWriteArrayList<String>      getMainTabelAllAndroid = new PUBLIC_CONTENT(context).getWorkerTablesALl(context);
+
             int Проценты;
             Integer ПозицияТекущейТаблицы=      getMainTabelAllAndroid.indexOf(имяТаблицаAsync)+1;
             Проценты = new Class_Visible_Processing_Async(context).
@@ -33,7 +36,7 @@ Context context;
 
 
             // TODO: 22.01.2024 текущее отобраение процентов
-            методCallBackPrograssBars(  Проценты,имяТаблицаAsync, ПозицияТекущейТаблицы,getMainTabelAllAndroid.size(),SuccessInsertOrUpdates );
+            методCallBackPrograssBars(  Проценты,имяТаблицаAsync, ПозицияТекущейТаблицы,getMainTabelAllAndroid.size()  );
 
             Log.d(this.getClass().getName(),"\n" + " class " +
                     Thread.currentThread().getStackTrace()[2].getClassName()
@@ -61,7 +64,7 @@ Context context;
                     ГенерируемПРОЦЕНТЫДляAsync(ПозицияТекущейТаблицы, NameTableAsync.size());
 
             // TODO: 22.01.2024 текущее отобраение процентов
-            методCallBackPrograssBars(  Проценты,имяТаблицаAsync, ПозицияТекущейТаблицы,NameTableAsync.size(),  SuccessInsertOrUpdates );
+            методCallBackPrograssBars(  Проценты,имяТаблицаAsync, ПозицияТекущейТаблицы,NameTableAsync.size()  );
 
             Log.d(this.getClass().getName(),"\n" + " class " +
                     Thread.currentThread().getStackTrace()[2].getClassName()
@@ -82,8 +85,7 @@ Context context;
     public void методCallBackPrograssBars(@NonNull int Проценны,
                                           @NonNull String имяТаблицаAsync,
                                           @NonNull Integer ПозицияТекущейТаблицы,
-                                          @NonNull int  maxAllCountRow,
-                                          @NonNull Integer SuccessInsertOrUpdates) {
+                                          @NonNull int  maxAllCountRow) {
 
 
         try {
@@ -99,7 +101,6 @@ Context context;
                     intentComunications.setAction("Broad_messageAsyncPrograssBar");
                     bundleComunications.putString("Статус" ,"AsyncPrograssBar");
                     bundleComunications.putInt("Проценны" ,Проценны);
-                    bundleComunications.putInt("currentEventTable" ,SuccessInsertOrUpdates);
                     bundleComunications.putString("имятаблицы" ,имяТаблицаAsync);
                     bundleComunications.putInt("maxtables" ,  maxAllCountRow );
                     bundleComunications.putInt("currentposition" ,ПозицияТекущейТаблицы);
