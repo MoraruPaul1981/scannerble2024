@@ -3192,6 +3192,8 @@ Class_GRUD_SQL_Operations classGrudSqlOperationsУдалениеДанныхЧе
                                 } else {
                                     ПутькФайлу = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS+ File.separator + PatchDeleteJsonAnalitic);
                                 }
+
+                                   ПутькФайлу.mkdirs();
                                     ПутькФайлу.getParentFile().mkdirs();
                                 // TODO: 12.02.2025 удаление
                                 // TODO: 12.02.2025  второе удаление файла самого
