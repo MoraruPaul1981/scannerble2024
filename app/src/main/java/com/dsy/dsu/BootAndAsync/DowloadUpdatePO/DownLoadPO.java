@@ -95,7 +95,7 @@ public     void МетодСообщениеАнализПО( ) {
                               new GetDeletingFilesJsonAndApk(context).startingDeletingFileApk();
 
                                 // TODO: 29.07.2023 ЗАгрузки  ПО
-                               FileAPK =    МетодЗагрузкиAPK(getHiltPortJboss) ;
+                               FileAPK =    МетодЗагрузкиAPK(getHiltPortJboss,  getsslSocketFactory2) ;
 
                                 Log.w(context.getClass().getName(), Thread.currentThread().getStackTrace()[2].getMethodName() + " СервернаяВерсияПОВнутри  "
                                         + СервернаяВерсияПОВнутри + " POOLS"+ " FileAPK "+ FileAPK);
@@ -327,7 +327,7 @@ public     void МетодСообщениеАнализПО( ) {
 
 
 
-    private File МетодЗагрузкиAPK(@NonNull LinkedHashMap<Integer,String> getHiltPortJboss)  {
+    private File МетодЗагрузкиAPK(@NonNull LinkedHashMap<Integer,String> getHiltPortJboss,@NonNull SSLSocketFactory getsslSocketFactory2)  {
         try {
             Log.d(this.getClass().getName(), Thread.currentThread().getStackTrace()[2].getMethodName()+"Загружаем Файл APK."+new Date());
 

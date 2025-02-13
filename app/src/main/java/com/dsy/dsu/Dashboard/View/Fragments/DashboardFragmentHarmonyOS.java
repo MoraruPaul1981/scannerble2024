@@ -26,11 +26,15 @@ import com.dsy.dsu.R;
 import com.google.android.material.card.MaterialCardView;
 import com.google.android.material.textview.MaterialTextView;
 
+import dagger.hilt.android.AndroidEntryPoint;
+
 /**
  * AHilt simple {@link Fragment} subclass.
  * Use the {@link DashboardFragmentHarmonyOS#newInstance} factory method to
  * create an instance of this fragment.
  */
+
+@AndroidEntryPoint
 public class DashboardFragmentHarmonyOS extends DialogFragment {
     // TODO: Rename parameter arguments, choose names that match
 

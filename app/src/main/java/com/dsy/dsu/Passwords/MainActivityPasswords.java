@@ -190,7 +190,7 @@ public class MainActivityPasswords extends AppCompatActivity {
             // TODO: 14.08.2023 создаем папку для BinaryFile CommitPay1C Соласования
             new ClassCreateFolderCommitPays1C(getApplicationContext()).МетодCreateFoldersBinaty();
 
-            eventBuss=new EventBuss(activity,getApplicationContext());
+            eventBuss=new EventBuss(activity,getApplicationContext(),getHiltPortJboss,  getsslSocketFactory2);
 
 
             Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +

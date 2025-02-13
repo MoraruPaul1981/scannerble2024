@@ -145,8 +145,9 @@ public class GettingErrorsIsFileOrIsCursor implements GettingErrorsIsFileInterfa
         StringBuffer БуерДляОшибок=new StringBuffer();
         try {
         Flowable.range(0, getbackasyncQueryandWhere.getCount())
-                .filter(kol-> getbackasyncQueryandWhere.getCount()>0)
                 .filter(kol-> getbackasyncQueryandWhere!=null)
+                .filter(kol-> getbackasyncQueryandWhere.getCount()>0)
+
                         .onBackpressureBuffer().blockingIterable().forEach(new Consumer<Integer>() {
                     @Override
                     public void accept(Integer step) {// TODO: 17.01.2025
@@ -183,7 +184,7 @@ public class GettingErrorsIsFileOrIsCursor implements GettingErrorsIsFileInterfa
                                     БуерДляОшибок.append("\n").append(LineError);
 
                         // TODO: 17.01.2025   СТЕП
-                        getbackasyncQueryandWhere.move(step);
+                        getbackasyncQueryandWhere.moveToNext();
                         // TODO: 17.01.2025
 
                         Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +

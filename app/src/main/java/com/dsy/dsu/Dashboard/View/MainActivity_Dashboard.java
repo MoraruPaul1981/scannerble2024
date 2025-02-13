@@ -35,6 +35,7 @@ import com.dsy.dsu.Dashboard.View.Fragments.DashboardFragmentSettings;
 import com.dsy.dsu.Errors.controller.RecordNewErros;
 import com.dsy.dsu.EventBus.EventBuss;
 import com.dsy.dsu.FirebaseAndOneSignal.OneSignal.StartigOneSignal.GetStartingRegistraziyOneSIgnalAndFireBase;
+import com.dsy.dsu.Hilt.JbossAdrress.qualifiers.QualifierJbossServer3;
 import com.dsy.dsu.Services.ServiceUpdatePoОбновлениеПО;
 import com.dsy.dsu.Dashboard.View.Fragments.DashboardFragmentMaterialDesign;
 import com.dsy.dsu.R;
@@ -45,8 +46,10 @@ import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.Date;
+import java.util.LinkedHashMap;
 
 import javax.inject.Inject;
+import javax.net.ssl.SSLSocketFactory;
 
 import dagger.hilt.android.AndroidEntryPoint;
 
@@ -88,8 +91,15 @@ public class MainActivity_Dashboard extends AppCompatActivity {
     private ServiceConnection   connectionОбновлениеПО;
 
 
-
+    @Inject
+    @QualifierJbossServer3
+    public LinkedHashMap<Integer,String> getHiltPortJboss;
     EventBuss eventBuss;
+
+
+    @Inject
+    SSLSocketFactory getsslSocketFactory2;
+
 
     // TODO: 03.11.2022 FaceApp
     @SuppressLint("MissingInflatedId")
@@ -117,7 +127,7 @@ public class MainActivity_Dashboard extends AppCompatActivity {
             // TODO: 15.08.2023 Начинается Пользовательский КОд
             buniccessLogicaActivityDashboard=new BuniccessLogicaActivityDashboard();
 
-            eventBuss=new EventBuss(activity,getApplicationContext());
+            eventBuss=new EventBuss(activity,getApplicationContext() ,getHiltPortJboss,   getsslSocketFactory2);
 
             buniccessLogicaActivityDashboard.     МетодИнициализацияHandler();
             buniccessLogicaActivityDashboard.     МетодБиндингаОбновлениеПО();

@@ -13,6 +13,7 @@ import com.dsy.dsu.BusinessLogicAll.Class_Generations_PUBLIC_CURRENT_ID;
 import com.dsy.dsu.BusinessLogicAll.Class_MODEL_synchronized;
 import com.dsy.dsu.CnangeServers.PUBLIC_CONTENT;
 import com.dsy.dsu.Errors.controller.RecordNewErros;
+import com.dsy.dsu.Hilt.JbossAdrress.qualifiers.QualifierJbossServer3;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -26,6 +27,7 @@ import java.util.concurrent.ExecutionException;
 import java.util.concurrent.TimeoutException;
 import java.util.concurrent.atomic.AtomicReference;
 
+import javax.inject.Inject;
 import javax.net.ssl.SSLSocketFactory;
 
 public class AsynsProccessor extends Class_MODEL_synchronized {
@@ -46,6 +48,8 @@ public class AsynsProccessor extends Class_MODEL_synchronized {
 
     public SSLSocketFactory getsslSocketFactory2;
 
+    @Inject
+    @QualifierJbossServer3
     public LinkedHashMap<Integer,String> getHiltPortJboss;
 
 

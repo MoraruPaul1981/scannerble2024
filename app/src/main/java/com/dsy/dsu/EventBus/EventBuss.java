@@ -4,6 +4,8 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.VibrationEffect;
+import android.os.Vibrator;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -22,26 +24,23 @@ import java.util.LinkedHashMap;
 import javax.inject.Inject;
 import javax.net.ssl.SSLSocketFactory;
 
-public class EventBuss extends MainActivityBootAndAsync {
+public class EventBuss   {
 
 Activity  activity;
 
     Context context;
 
-    @Inject
+
     SSLSocketFactory getsslSocketFactory2;
 
-
-    @Inject
-    @QualifierJbossServer3
-    public LinkedHashMap<Integer,String> getHiltPortJboss;
+      LinkedHashMap<Integer,String> getHiltPortJboss;
 
 
-
-
-    public   EventBuss(@NonNull Activity activity, @NonNull Context context) {
+    public   EventBuss(@NonNull Activity activity, @NonNull Context context,@NonNull LinkedHashMap<Integer,String> getHiltPortJboss,@NonNull SSLSocketFactory getsslSocketFactory2) {
         this.activity = activity;
         this.context = context;
+        this.getHiltPortJboss = getHiltPortJboss;
+        this.getsslSocketFactory2 = getsslSocketFactory2;
     }
 
 
@@ -57,7 +56,7 @@ Activity  activity;
 
 
                 Toast.makeText(context,
-                        "Последная версия ПО !!! "+ СервернаяВерсия    , Toast.LENGTH_LONG).show();
+                        "Уже установлена !!! "+ СервернаяВерсия    , Toast.LENGTH_LONG).show();
 
 // TODO: 26.12.2022  конец основгого кода
                 Log.d(context.getClass().getName(), "\n" + " class "
@@ -68,6 +67,12 @@ Activity  activity;
 
             }else {
                 if(Статус.contains( "Запускаем Обновление ПО !!!!")) {
+
+
+
+                    Vibrator v2 = (Vibrator) context.getSystemService(Context.VIBRATOR_SERVICE);
+                    v2.vibrate(VibrationEffect.createOneShot(150, VibrationEffect.DEFAULT_AMPLITUDE));
+
                     // TODO: 22.01.2024
                     DownLoadPO downLoadPO=new DownLoadPO(activity,context,СервернаяВерсия,getsslSocketFactory2, getHiltPortJboss);
 
