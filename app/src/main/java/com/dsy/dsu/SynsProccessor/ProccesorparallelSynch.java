@@ -101,7 +101,7 @@ public class ProccesorparallelSynch   {
                  // TODO: 27.12.2024
                     // executorServiceAsync= Executors.newSingleThreadExecutor();
                      //executorServiceAsync= Executors.newFixedThreadPool(getBufferFromJbossServerAllTables.size());
-                     executorServiceAsync= Executors.newCachedThreadPool();
+                     executorServiceAsync= Executors.newFixedThreadPool(3);
                  Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                          " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
                          " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"+ "\n"+ " РежимЗапускаСинхронизации " +РежимЗапускаСинхронизации);
