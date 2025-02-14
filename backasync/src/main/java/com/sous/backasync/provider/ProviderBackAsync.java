@@ -11,6 +11,7 @@ import android.content.UriMatcher;
 import android.database.Cursor;
 
 import android.database.sqlite.SQLiteDatabase;
+import android.database.sqlite.SQLiteQueryBuilder;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.CancellationSignal;
@@ -231,8 +232,6 @@ public class ProviderBackAsync extends ContentProvider  {
                     Log.d(this.getClass().getName(), " uri"+uri );
                     // TODO: 14.10.2022 метод определения текущней таблицы
                     String table = МетодОпределяемТаблицу(uri);
-
-
                     Long   РезультатВставкиДанных  = sqliteBAck.insert(table, null, values);
                     // TODO: 30.10.2021
                     Log.w(getContext().getClass().getName(), " РезультатВставкиДанных  " + РезультатВставкиДанных);/////
@@ -415,7 +414,6 @@ public class ProviderBackAsync extends ContentProvider  {
                             if (sqliteBAck.inTransaction()) {
                                 sqliteBAck.endTransaction();
                             }
-
                             Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                                     " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
                                     " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"
