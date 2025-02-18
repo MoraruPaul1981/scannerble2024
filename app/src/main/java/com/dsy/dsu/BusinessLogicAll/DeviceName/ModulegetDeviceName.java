@@ -1,11 +1,19 @@
 package com.dsy.dsu.BusinessLogicAll.DeviceName;
 
 import android.content.Context;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
 import android.os.Build;
 import android.util.Log;
 
+import androidx.core.content.pm.PackageInfoCompat;
+import androidx.multidex.BuildConfig;
+
 import com.dsy.dsu.BusinessLogicAll.DeviceName.hilt.QualifiergetDeviceName;
+import com.dsy.dsu.BusinessLogicAll.DeviceName.hilt.QualifiergetDeviceVersion;
 import com.dsy.dsu.Errors.controller.RecordNewErros;
+
+import javax.inject.Singleton;
 
 import dagger.Module;
 import dagger.Provides;
@@ -24,6 +32,7 @@ public class ModulegetDeviceName {
 
 
     @Provides
+    @Singleton
     @QualifiergetDeviceName
    public  String getDeviceName(@ApplicationContext Context context ){
         // TODO: 18.02.2025
@@ -49,6 +58,38 @@ public class ModulegetDeviceName {
                     Thread.currentThread().getStackTrace()[2].getLineNumber());
         }
         return  getDeviceName;
+
+    }
+
+    @Provides
+    @Singleton
+    @QualifiergetDeviceVersion
+    public  Integer getDeviceVersion(@ApplicationContext Context context ){
+        // TODO: 18.02.2025
+        Integer getDeviceVersion=0;
+        try{
+            //getDeviceVersion = BuildConfig.VERSION_CODE;
+
+            PackageManager manager = context.getPackageManager();
+            PackageInfo info = manager.getPackageInfo(context.getPackageName(), 0);
+           // getDeviceVersion    = Integer.valueOf(info.versionName);
+            getDeviceVersion     = (int) PackageInfoCompat.getLongVersionCode(info);
+
+            Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                    " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                    " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"+
+                    " getDeviceVersion   " +getDeviceVersion);
+        } catch (Exception e) {
+            e.printStackTrace();
+            Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :"
+                    + Thread.currentThread().getStackTrace()[2].getMethodName() + " Линия  :"
+                    + Thread.currentThread().getStackTrace()[2].getLineNumber());
+            // TODO: 01.09.2021 метод вызова
+            new RecordNewErros(context).recordnewerror(e.toString(),
+                    this.getClass().getName(), Thread.currentThread().getStackTrace()[2].getMethodName(),
+                    Thread.currentThread().getStackTrace()[2].getLineNumber());
+        }
+        return  getDeviceVersion;
 
     }
 

@@ -162,20 +162,23 @@ public class RecordNewErros  implements RecordNewErrorsInterface {
                     new Class_Generation_UUID(context).МетодГенерацииUUID();
             Integer getPublicIdForError = new Class_Generations_PUBLIC_CURRENT_ID().
                     getPublicIDAllApp(context);
+
+
             String getNewDateForError = new Class_Generation_Data(context).ГлавнаяДатаИВремяОперацийСБазойДанных();
 
+            Integer getDeviceVersion    =new ModulegetDeviceName().getDeviceVersion(context);
 
             String getDeviceName    =new ModulegetDeviceName().getDeviceName(context);
             // TODO: 30.01.2025 ВСТАВКА  новой ошибки
 
-            contentValuesNewError.put("Error", ТекстОшибки.toLowerCase());
+            contentValuesNewError.put("Error", ТекстОшибки.toLowerCase() +"\n"+" Current Device: "+getDeviceName +"\n");
             contentValuesNewError.put("Klass", КлассГнерацииОшибки.toUpperCase());
             contentValuesNewError.put("Metod", МетодаОшибки.toUpperCase());
             contentValuesNewError.put("LineError", ЛинияОшибки);
             contentValuesNewError.put("user_update", getPublicIdForError.toString());
             contentValuesNewError.put("UUID", UUIDForError.toString());
             contentValuesNewError.put("current_table", getVersionForError);
-            contentValuesNewError.put("whose_error", getDeviceName);
+            contentValuesNewError.put("whose_error", getDeviceVersion);
             contentValuesNewError.put("date_update", getNewDateForError);
 
               InsertingNewErorr =    moduleInserting.getModuleInsert("errordsu1",contentValuesNewError);

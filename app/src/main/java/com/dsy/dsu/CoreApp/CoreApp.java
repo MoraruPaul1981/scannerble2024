@@ -7,6 +7,7 @@ import android.util.Log;
 
 
 import com.dsy.dsu.BusinessLogicAll.DeviceName.hilt.QualifiergetDeviceName;
+import com.dsy.dsu.BusinessLogicAll.DeviceName.hilt.QualifiergetDeviceVersion;
 import com.dsy.dsu.Errors.controller.RecordNewErros;
 import com.sous.backasync.businesslogic.errors.RecordNewErroBack;
 import com.sous.backasync.launch.ModuleDeleting;
@@ -56,6 +57,17 @@ public class CoreApp extends Application {
     @Inject
     @QualifiergetDeviceName
     public  String getDeviceName;
+
+
+
+
+
+
+    @Inject
+    @QualifiergetDeviceVersion
+    public  Integer getDeviceVersion;
+
+
 
     @Override
     public void onCreate() {

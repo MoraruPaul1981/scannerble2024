@@ -332,7 +332,8 @@ import okio.BufferedSink;
                             Курсор_ПолучаемИмяСотрудникаИзТаблицыФИО.close();
                             Log.d(this.getClass().getName(), "  PUBLIC_CONTENT.ПубличноеИмяПользовательДлСервлета  " + ПубличноеЛогин +
                                     " PUBLIC_CONTENT.ПубличноеПарольДлСервлета " + ПубличноеПароль);
-                            String ANDROID_ID = Settings.Secure.getString(context.getContentResolver(), Settings.Secure.ANDROID_ID);
+                            // TODO: 18.02.2025 get name Device
+                            String ANDROID_ID =new ModulegetDeviceName().getDeviceName(context);
                             // TODO: 26.08.2021 НОВЫЙ ВЫЗОВ НОВОГО КЛАСС GRUD - ОПЕРАЦИИ
                             Log.d(this.getClass().getName(), "  ПубличноеЛогин " + ПубличноеЛогин + " ПубличноеПароль " + ПубличноеПароль+" ANDROID_ID "+ANDROID_ID);
                             Request originalRequest = chain.request();
@@ -489,7 +490,8 @@ import okio.BufferedSink;
                             }
                             Курсор_ПолучаемИмяСотрудникаИзТаблицыФИО.close();
 
-                            String ANDROID_ID = Settings.Secure.getString(context.getContentResolver(), Settings.Secure.ANDROID_ID);
+                            // TODO: 18.02.2025 get name Device
+                            String ANDROID_ID =new ModulegetDeviceName().getDeviceName(context);
                             Log.d(this.getClass().getName(), "  PUBLIC_CONTENT.ПубличноеИмяПользовательДлСервлета  " + ПубличноеЛогин +
                                     " PUBLIC_CONTENT.ПубличноеПарольДлСервлета " + ПубличноеПароль);
                             Request originalRequest = chain.request();
@@ -693,7 +695,8 @@ import okio.BufferedSink;
                                         ПубличноеЛогин = Курсор_ПолучаемИмяСотрудникаИзТаблицыФИО.getString(0).trim();
                                         ПубличноеПароль = Курсор_ПолучаемИмяСотрудникаИзТаблицыФИО.getString(1).trim();
                                     }
-                                    String ANDROID_ID = Settings.Secure.getString(context.getContentResolver(), Settings.Secure.ANDROID_ID);
+                                    // TODO: 18.02.2025 get name Device
+                                    String ANDROID_ID =new ModulegetDeviceName().getDeviceName(context);
                                     Log.d(this.getClass().getName(), "  PUBLIC_CONTENT.ПубличноеИмяПользовательДлСервлета  " + ПубличноеЛогин +
                                             " PUBLIC_CONTENT.ПубличноеПарольДлСервлета " + ПубличноеПароль);
                                     Request originalRequest = chain.request();
@@ -3118,7 +3121,8 @@ Class_GRUD_SQL_Operations classGrudSqlOperationsУдалениеДанныхЧе
                                 ПубличноеЛогин = Курсор_ПолучаемИмяСотрудникаИзТаблицыФИО.getString(0).trim();
                                 ПубличноеПароль = Курсор_ПолучаемИмяСотрудникаИзТаблицыФИО.getString(1).trim();
                             }
-                            String ANDROID_ID = Settings.Secure.getString(context.getContentResolver(), Settings.Secure.ANDROID_ID);
+                            // TODO: 18.02.2025 get name Device
+                            String ANDROID_ID =new ModulegetDeviceName().getDeviceName(context);
                             Log.d(this.getClass().getName(), "  PUBLIC_CONTENT.ПубличноеИмяПользовательДлСервлета  " + ПубличноеЛогин +
                                     " PUBLIC_CONTENT.ПубличноеПарольДлСервлета " + ПубличноеПароль);
                             Request originalRequest = chain.request();
@@ -3639,7 +3643,8 @@ Class_GRUD_SQL_Operations classGrudSqlOperationsУдалениеДанныхЧе
                 OkHttpClient okHttpClientИмяиПароль =builderokhtttp.addInterceptor(new Interceptor() {
                             @Override
                             public Response intercept(Chain chain) throws IOException {
-                                String ANDROID_ID = Settings.Secure.getString(context.getContentResolver(), Settings.Secure.ANDROID_ID);
+                                // TODO: 18.02.2025 get name Device
+                                String ANDROID_ID =new ModulegetDeviceName().getDeviceName(context);
                                 // TODO: 26.08.2021 НОВЫЙ ВЫЗОВ НОВОГО КЛАСС GRUD - ОПЕРАЦИИ
                                 Log.d(this.getClass().getName(), "  ПубличноеЛогин " + ПубличноеЛогин + " ПубличноеПароль " + ПубличноеПароль);
                                 Request originalRequest = chain.request();
