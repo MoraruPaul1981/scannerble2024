@@ -1698,23 +1698,33 @@ public class FragmentAdmissionMaterials extends Fragment {
         try{
             if (cursorНомерЦФО!=null) {
                 if (!cursorНомерЦФО.isFirst()) {
-
+                }
                     if (!cursorНомерЦФО.isClosed()) {
                         cursorНомерЦФО.moveToFirst();
                     }
+
+
+
+
+                if (cursorНомерМатериала!=null) {
                     if (!cursorНомерМатериала.isClosed()) {
-                        cursorНомерМатериала.moveToFirst();
-                    }
+                            cursorНомерМатериала.moveToFirst();
+                        }
+                }
+
+
+                if (cursorСамиДанныеGroupBy!=null) {
                     if (!cursorСамиДанныеGroupBy.isClosed()) {
-                        cursorСамиДанныеGroupBy.moveToFirst();
-                    }
-                    // TODO: 17.04.2023 LOG
+                            cursorСамиДанныеGroupBy.moveToFirst();
+                        }
+                }
+                // TODO: 17.04.2023 LOG
                     Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                             " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
                             " line " + Thread.currentThread().getStackTrace()[2].getLineNumber()
                             + "\n" + " cursorНомерЦФО " +cursorНомерЦФО);
                 }
-            }
+
         } catch (Exception e) {
         e.printStackTrace();
         Log.e(getContext().getClass().getName(),
