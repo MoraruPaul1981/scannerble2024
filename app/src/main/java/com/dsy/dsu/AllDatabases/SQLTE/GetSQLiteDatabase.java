@@ -930,7 +930,7 @@ public class GetSQLiteDatabase extends SQLiteOpenHelper{ ///SQLiteOpenHelper
                     "date_update NUMERIC NOT NULL ,"+
                     "user_update   INTEGER ,"+
                     "current_table   NUMERIC ,"+
-                    "whose_error TEXT NOT NULL ," +
+                    "whose_error INTEGER NOT NULL ," +
                    "  uuid NUMERIC  )");
             Log.d(this.getClass().getName(), " сработала ...  создание таблицы ErrorDSU1 ");
 
