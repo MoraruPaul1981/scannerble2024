@@ -4,12 +4,8 @@ import android.content.Context;
 import android.os.Build;
 import android.util.Log;
 
-import androidx.annotation.NonNull;
-
-import com.dsy.dsu.BusinessLogicAll.DeviceName.hilt.QualifiergetnameIntarface;
+import com.dsy.dsu.BusinessLogicAll.DeviceName.hilt.QualifiergetDeviceName;
 import com.dsy.dsu.Errors.controller.RecordNewErros;
-
-import javax.inject.Named;
 
 import dagger.Module;
 import dagger.Provides;
@@ -28,10 +24,10 @@ public class ModulegetDeviceName {
 
 
     @Provides
-    @QualifiergetnameIntarface
+    @QualifiergetDeviceName
    public  String getDeviceName(@ApplicationContext Context context ){
         // TODO: 18.02.2025
-        String getDeviceName=null;
+        String getDeviceName=new String();
         try{
             getDeviceName = Build.MANUFACTURER
                     + " " + Build.MODEL + " " + Build.VERSION.RELEASE

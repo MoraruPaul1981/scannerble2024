@@ -6,7 +6,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 
 
-import com.dsy.dsu.BusinessLogicAll.DeviceName.hilt.QualifiergetnameIntarface;
+import com.dsy.dsu.BusinessLogicAll.DeviceName.hilt.QualifiergetDeviceName;
 import com.dsy.dsu.Errors.controller.RecordNewErros;
 import com.sous.backasync.businesslogic.errors.RecordNewErroBack;
 import com.sous.backasync.launch.ModuleDeleting;
@@ -53,9 +53,9 @@ public class CoreApp extends Application {
 
 
 
-  /*  @Inject
-    @QualifiergetnameIntarface
-    String getDeviceName;*/
+    @Inject
+    @QualifiergetDeviceName
+    public  String getDeviceName;
 
     @Override
     public void onCreate() {

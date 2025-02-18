@@ -11,4 +11,4 @@ import javax.inject.Qualifier;
 @Qualifier
 @Retention(RetentionPolicy.RUNTIME)
 @Target({ElementType.FIELD, ElementType.METHOD, ElementType.TYPE, ElementType.PARAMETER})
-public @interface QualifiergetnameIntarface {}
+public @interface QualifiergetDeviceName {}
