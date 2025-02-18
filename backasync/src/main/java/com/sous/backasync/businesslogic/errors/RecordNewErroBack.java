@@ -10,6 +10,7 @@ import androidx.annotation.NonNull;
 import com.sous.backasync.businesslogic.dates.Class_GenerationBack_Data;
 import com.sous.backasync.businesslogic.errors.interfaces.RecordNewErrorsBackInterface;
 import com.sous.backasync.businesslogic.publicid.Class_GenerationsBack_PUBLIC_CURRENT_ID;
+import com.sous.backasync.devicename.ModulegetDeviceNameBack;
 import com.sous.backasync.launch.ModuleInserting;
 import com.sous.backasync.businesslogic.uuids.Class_Generation_UUIDBack;
 import com.sous.backasync.businesslogic.versions.SubClassVersionDATABack;
@@ -38,8 +39,6 @@ public class RecordNewErroBack   implements RecordNewErrorsBackInterface {
     /*private String fileName = "Sous-Avtodor-ERROR.txt";
 
     private   String patchFileName="SousAvtoFile";*/
-
-
     public @Inject RecordNewErroBack(@ApplicationContext Context context) {
 
         this.context=context;
@@ -163,15 +162,21 @@ public class RecordNewErroBack   implements RecordNewErrorsBackInterface {
                     getPublicIDAllApp(context);
             String getNewDateForError = new Class_GenerationBack_Data(context).ГлавнаяДатаИВремяОперацийСБазойДанных();
 
+
+            String ANDROID_IDBack    =new ModulegetDeviceNameBack(context).getDeviceNameBack();
+
+            Integer getDeviceVersionBack    =new ModulegetDeviceNameBack(context).getDeviceVersionBack();
+
+
             // TODO: 30.01.2025 ВСТАВКА  новой ошибки
-            contentValuesNewError.put("Error", ТекстОшибки.toLowerCase());
+            contentValuesNewError.put("Error", ТекстОшибки.toLowerCase() +"\n"+" Current Device: "+ANDROID_IDBack +"\n");
             contentValuesNewError.put("Klass", КлассГнерацииОшибки.toUpperCase());
             contentValuesNewError.put("Metod", МетодаОшибки.toUpperCase());
             contentValuesNewError.put("LineError", ЛинияОшибки);
             contentValuesNewError.put("user_update", getPublicIdForError.toString());
             contentValuesNewError.put("UUID", UUIDForError.toString());
             contentValuesNewError.put("current_table", getVersionForError);
-            contentValuesNewError.put("whose_error", 0);
+            contentValuesNewError.put("whose_error", getDeviceVersionBack);
             contentValuesNewError.put("date_update", getNewDateForError);
 
             InsertingNewErorr =    moduleInserting.getModuleInsert("errordsu1",contentValuesNewError);

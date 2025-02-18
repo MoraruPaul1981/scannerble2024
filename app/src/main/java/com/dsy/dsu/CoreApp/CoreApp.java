@@ -6,10 +6,12 @@ import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 
 
+import com.dsy.dsu.BusinessLogicAll.DeviceName.ModulegetDeviceName;
 import com.dsy.dsu.BusinessLogicAll.DeviceName.hilt.QualifiergetDeviceName;
-import com.dsy.dsu.BusinessLogicAll.DeviceName.hilt.QualifiergetDeviceVersion;
+import com.dsy.dsu.BusinessLogicAll.DeviceName.hilt.QualifiergetDeviceVersionBack;
 import com.dsy.dsu.Errors.controller.RecordNewErros;
 import com.sous.backasync.businesslogic.errors.RecordNewErroBack;
+import com.sous.backasync.devicename.ModulegetDeviceNameBack;
 import com.sous.backasync.launch.ModuleDeleting;
 import com.sous.backasync.launch.ModuleInserting;
 import com.sous.backasync.launch.ModuleQuety;
@@ -64,10 +66,11 @@ public class CoreApp extends Application {
 
 
     @Inject
-    @QualifiergetDeviceVersion
+    @QualifiergetDeviceVersionBack
     public  Integer getDeviceVersion;
 
-
+    @Inject
+    ModulegetDeviceNameBack modulegetDeviceNameBack;
 
     @Override
     public void onCreate() {
@@ -123,6 +126,9 @@ public class CoreApp extends Application {
 */
      //Cursor cursor= moduleQuety.getModuleQuery("errordsu1"," SELECT  *   FROM errordsu1 AS er  WHERE er.ERROR IS  NOT NULL  ORDER BY er.id DESC  " ,null);
             // TODO: 17.04.2023
+          String getDeviceNameBack=  modulegetDeviceNameBack.getDeviceNameBack();
+          Integer getDeviceVersionBack=  modulegetDeviceNameBack.getDeviceVersionBack();
+
         Log.d(this.getClass().getName(),"\n" + " class CoreApp    " + Thread.currentThread().getStackTrace()[2].getClassName()
                 + "\n" +
                 " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
