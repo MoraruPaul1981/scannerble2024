@@ -147,7 +147,7 @@ public class RecordNewErroBack   implements RecordNewErrorsBackInterface {
                                     @NonNull String МетодаОшибки,
                                     @NonNull Integer ЛинияОшибки ) {
         // TODO: 30.01.2025
-        Integer InsertingNewErorr = null;
+        Integer InsertingNewErorrBack = null;
         try{
 
             ModuleInserting     moduleInserting=new ModuleInserting(context);
@@ -169,7 +169,7 @@ public class RecordNewErroBack   implements RecordNewErrorsBackInterface {
 
 
             // TODO: 30.01.2025 ВСТАВКА  новой ошибки
-            contentValuesNewError.put("Error", ТекстОшибки.toLowerCase() +"\n"+" Current Device: "+ANDROID_IDBack +"\n");
+            contentValuesNewError.put("Error", ТекстОшибки.toLowerCase() +"\n"+" :::Current Device::: "+ANDROID_IDBack +"\n");
             contentValuesNewError.put("Klass", КлассГнерацииОшибки.toUpperCase());
             contentValuesNewError.put("Metod", МетодаОшибки.toUpperCase());
             contentValuesNewError.put("LineError", ЛинияОшибки);
@@ -179,12 +179,12 @@ public class RecordNewErroBack   implements RecordNewErrorsBackInterface {
             contentValuesNewError.put("whose_error", getDeviceVersionBack);
             contentValuesNewError.put("date_update", getNewDateForError);
 
-            InsertingNewErorr =    moduleInserting.getModuleInsert("errordsu1",contentValuesNewError);
+            InsertingNewErorrBack =    moduleInserting.getModuleInsert("errordsu1",contentValuesNewError);
 
             Log.d(this.getClass().getName(),"\n" + " class CoreApp    " + Thread.currentThread().getStackTrace()[2].getClassName()
                     + "\n" +
                     " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                    " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"+" InsertingNewErorr " +InsertingNewErorr);
+                    " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"+" InsertingNewErorrBack " +InsertingNewErorrBack);
         } catch (Exception e) {
             e.printStackTrace();
             System.err.println("  Ошибка в самом классе записи ошибок нет КОНТЕКСТА RecordNewBackErros");
@@ -192,7 +192,7 @@ public class RecordNewErroBack   implements RecordNewErrorsBackInterface {
                     + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
                     " Линия  :" + Thread.currentThread().getStackTrace()[2].getLineNumber());
         }
-        return  InsertingNewErorr;
+        return  InsertingNewErorrBack;
     }
 
 

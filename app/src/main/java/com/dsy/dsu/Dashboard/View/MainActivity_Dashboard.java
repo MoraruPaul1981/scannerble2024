@@ -142,8 +142,7 @@ public class MainActivity_Dashboard extends AppCompatActivity {
                     " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"  );
 
             // TODO: 07.04.2024 test
-        /*    String s=null;
-            s.length();*/
+
         } catch (Exception e) {
             e.printStackTrace();
             Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() + " Линия  :"

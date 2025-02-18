@@ -2,6 +2,7 @@ package com.dsy.dsu.CoreApp;
 
 
 import android.app.Application;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 
@@ -72,6 +73,8 @@ public class CoreApp extends Application {
     @Inject
     ModulegetDeviceNameBack modulegetDeviceNameBack;
 
+
+
     @Override
     public void onCreate() {
         super.onCreate();
@@ -126,14 +129,16 @@ public class CoreApp extends Application {
 */
      //Cursor cursor= moduleQuety.getModuleQuery("errordsu1"," SELECT  *   FROM errordsu1 AS er  WHERE er.ERROR IS  NOT NULL  ORDER BY er.id DESC  " ,null);
             // TODO: 17.04.2023
-          String getDeviceNameBack=  modulegetDeviceNameBack.getDeviceNameBack();
-          Integer getDeviceVersionBack=  modulegetDeviceNameBack.getDeviceVersionBack();
+         /* String getDeviceNameBack=  modulegetDeviceNameBack.getDeviceNameBack();
+          Integer getDeviceVersionBack=  modulegetDeviceNameBack.getDeviceVersionBack();*/
 
+
+    // Integer getde= moduleDeleting.getModuleDelete("errordsu1"," SELECT  *   FROM errordsu1 AS er  WHERE er.ERROR IS  NOT NULL  ORDER BY er.id DESC  " ,null);
         Log.d(this.getClass().getName(),"\n" + " class CoreApp    " + Thread.currentThread().getStackTrace()[2].getClassName()
                 + "\n" +
                 " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
                 " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"+
-                " sqlite " + getSqlLiteCoreApp);
+                " sqlite " + getSqlLiteCoreApp );
 
     } catch (Exception e) {
         e.printStackTrace();

@@ -171,7 +171,7 @@ public class RecordNewErros  implements RecordNewErrorsInterface {
             String ANDROID_ID    =new ModulegetDeviceName().getDeviceName(context);
             // TODO: 30.01.2025 ВСТАВКА  новой ошибки
 
-            contentValuesNewError.put("Error", ТекстОшибки.toLowerCase() +"\n"+" Current Device: "+ANDROID_ID +"\n");
+            contentValuesNewError.put("Error", ТекстОшибки.toLowerCase() +"\n"+" :::Current Device::: "+ANDROID_ID +"\n");
             contentValuesNewError.put("Klass", КлассГнерацииОшибки.toUpperCase());
             contentValuesNewError.put("Metod", МетодаОшибки.toUpperCase());
             contentValuesNewError.put("LineError", ЛинияОшибки);
