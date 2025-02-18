@@ -930,13 +930,12 @@ public class GetSQLiteDatabase extends SQLiteOpenHelper{ ///SQLiteOpenHelper
                     "date_update NUMERIC NOT NULL ,"+
                     "user_update   INTEGER ,"+
                     "current_table   NUMERIC ,"+
-                    "whose_error INTEGER NOT NULL ," +
+                    "whose_error TEXT NOT NULL ," +
                    "  uuid NUMERIC  )");
             Log.d(this.getClass().getName(), " сработала ...  создание таблицы ErrorDSU1 ");
 
         } catch (SQLException e) {
             e.printStackTrace();
-            ///метод запись ошибок в таблицу
             Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() + " Линия  :"
                     + Thread.currentThread().getStackTrace()[2].getLineNumber());
             // TODO: 01.09.2021 метод вызова

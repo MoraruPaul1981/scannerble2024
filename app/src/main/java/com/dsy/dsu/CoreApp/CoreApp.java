@@ -2,13 +2,14 @@ package com.dsy.dsu.CoreApp;
 
 
 import android.app.Application;
-import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 
 
+import com.dsy.dsu.BusinessLogicAll.DeviceName.hilt.QualifiergetnameIntarface;
 import com.dsy.dsu.Errors.controller.RecordNewErros;
 import com.sous.backasync.businesslogic.errors.RecordNewErroBack;
+import com.sous.backasync.launch.ModuleDeleting;
 import com.sous.backasync.launch.ModuleInserting;
 import com.sous.backasync.launch.ModuleQuety;
 import com.sous.backasync.launch.ModuleUpdating;
@@ -46,6 +47,15 @@ public class CoreApp extends Application {
     @Inject
     RecordNewErroBack recordNewErroBack;
 
+
+    @Inject
+    ModuleDeleting moduleDeleting;
+
+
+
+  /*  @Inject
+    @QualifiergetnameIntarface
+    String getDeviceName;*/
 
     @Override
     public void onCreate() {

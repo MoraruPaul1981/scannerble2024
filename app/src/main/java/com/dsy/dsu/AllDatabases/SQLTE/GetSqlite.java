@@ -1,5 +1,6 @@
 package com.dsy.dsu.AllDatabases.SQLTE;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
@@ -12,6 +13,7 @@ import com.dsy.dsu.Errors.controller.RecordNewErros;
 
 public class GetSqlite {
     private Context context;
+    @SuppressLint("SuspiciousIndentation")
     public SQLiteDatabase методGetSqlite(@NonNull Context context) {
         // TODO: 13.01.2025
         SQLiteDatabase getSQLites = null;

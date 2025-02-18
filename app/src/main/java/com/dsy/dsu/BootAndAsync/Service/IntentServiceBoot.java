@@ -20,6 +20,7 @@ import androidx.work.ForegroundInfo;
 import com.dsy.dsu.BootAndAsync.BlBootAsync.CompleteRemoteSyncService;
 import com.dsy.dsu.Errors.controller.RecordNewErros;
 import com.dsy.dsu.Hilt.JbossAdrress.qualifiers.QualifierJbossServer3;
+import com.dsy.dsu.Hilt.PublicId.QualifierPublicId;
 
 import java.util.Date;
 import java.util.LinkedHashMap;
@@ -56,6 +57,7 @@ public class IntentServiceBoot extends IntentService {
 
 
     @Inject
+    @QualifierPublicId
     Integer getHiltPublicId;
 
 

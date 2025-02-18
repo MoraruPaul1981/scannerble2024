@@ -1696,24 +1696,26 @@ public class FragmentAdmissionMaterials extends Fragment {
 
     private void metodBackPostionFiestCursors() {
         try{
-        if (!cursorНомерЦФО.isFirst()) {
+            if (cursorНомерЦФО!=null) {
+                if (!cursorНомерЦФО.isFirst()) {
 
-            if (!cursorНомерЦФО.isClosed()) {
-                cursorНомерЦФО.moveToFirst();
+                    if (!cursorНомерЦФО.isClosed()) {
+                        cursorНомерЦФО.moveToFirst();
+                    }
+                    if (!cursorНомерМатериала.isClosed()) {
+                        cursorНомерМатериала.moveToFirst();
+                    }
+                    if (!cursorСамиДанныеGroupBy.isClosed()) {
+                        cursorСамиДанныеGroupBy.moveToFirst();
+                    }
+                    // TODO: 17.04.2023 LOG
+                    Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                            " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                            " line " + Thread.currentThread().getStackTrace()[2].getLineNumber()
+                            + "\n" + " cursorНомерЦФО " +cursorНомерЦФО);
+                }
             }
-            if (!cursorНомерМатериала.isClosed()) {
-                cursorНомерМатериала.moveToFirst();
-            }
-            if (!cursorСамиДанныеGroupBy.isClosed()) {
-                cursorСамиДанныеGroupBy.moveToFirst();
-            }
-            // TODO: 17.04.2023 LOG
-            Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
-                    " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                    " line " + Thread.currentThread().getStackTrace()[2].getLineNumber()
-                    + "\n" + " cursorНомерЦФО " +cursorНомерЦФО);
-        }
-    } catch (Exception e) {
+        } catch (Exception e) {
         e.printStackTrace();
         Log.e(getContext().getClass().getName(),
                 "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +

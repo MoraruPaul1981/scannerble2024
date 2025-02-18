@@ -18,9 +18,10 @@ import dagger.hilt.components.SingletonComponent;
 
 @Module
 @InstallIn(SingletonComponent.class)
-@QualifierPublicId
 public class ModulePublicId {
 
+
+    @QualifierPublicId
     @Provides
     public Integer getHiltPublicId(@ApplicationContext Context context) {
         Integer ПубличныйID = 0;

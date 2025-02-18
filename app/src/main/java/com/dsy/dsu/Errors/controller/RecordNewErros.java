@@ -6,12 +6,12 @@ import android.os.Environment;
 import android.util.Log;
 
 import androidx.annotation.NonNull;
-import androidx.multidex.BuildConfig;
 
 
 import com.dsy.dsu.BusinessLogicAll.Class_Generation_UUID;
 import com.dsy.dsu.BusinessLogicAll.Class_Generations_PUBLIC_CURRENT_ID;
 import com.dsy.dsu.BusinessLogicAll.DATE.Class_Generation_Data;
+import com.dsy.dsu.BusinessLogicAll.DeviceName.ModulegetDeviceName;
 import com.dsy.dsu.BusinessLogicAll.VersionCurentTable;
 import com.dsy.dsu.Errors.controller.interfaces.RecordNewErrorsInterface;
 import com.sous.backasync.launch.ModuleInserting;
@@ -164,8 +164,8 @@ public class RecordNewErros  implements RecordNewErrorsInterface {
                     getPublicIDAllApp(context);
             String getNewDateForError = new Class_Generation_Data(context).ГлавнаяДатаИВремяОперацийСБазойДанных();
 
-            final Object VersionPC = BuildConfig.VERSION_CODE;
-            Integer getVersionPCForError = Integer.parseInt(VersionPC.toString());
+
+            String getDeviceName    =new ModulegetDeviceName().getDeviceName(context);
             // TODO: 30.01.2025 ВСТАВКА  новой ошибки
 
             contentValuesNewError.put("Error", ТекстОшибки.toLowerCase());
@@ -175,7 +175,7 @@ public class RecordNewErros  implements RecordNewErrorsInterface {
             contentValuesNewError.put("user_update", getPublicIdForError.toString());
             contentValuesNewError.put("UUID", UUIDForError.toString());
             contentValuesNewError.put("current_table", getVersionForError);
-            contentValuesNewError.put("whose_error", getVersionPCForError);
+            contentValuesNewError.put("whose_error", getDeviceName);
             contentValuesNewError.put("date_update", getNewDateForError);
 
               InsertingNewErorr =    moduleInserting.getModuleInsert("errordsu1",contentValuesNewError);

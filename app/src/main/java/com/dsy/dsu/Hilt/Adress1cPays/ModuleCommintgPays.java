@@ -19,12 +19,11 @@ import dagger.hilt.components.SingletonComponent;
 
 @Module
 @InstallIn(SingletonComponent.class)
-@QualifierCommintgPays
-@SuppressLint("SuspiciousIndentation")
 public class ModuleCommintgPays {
 
 
     @Provides
+    @QualifierCommintgPays
     public StringBuilder  getHiltCommintgPays(@ApplicationContext Context context ) {
         String АдресСеврера1сДляgetFile=new String();
         try {

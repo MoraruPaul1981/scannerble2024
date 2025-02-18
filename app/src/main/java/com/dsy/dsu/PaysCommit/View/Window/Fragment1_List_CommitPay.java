@@ -25,6 +25,10 @@ import androidx.lifecycle.Observer;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.dsy.dsu.Errors.controller.RecordNewErros;
+import com.dsy.dsu.Hilt.Adress1cPays.QualifierCommintgPays;
+import com.dsy.dsu.Hilt.Adress1cPays.QualifierCommintgPays2;
+import com.dsy.dsu.Hilt.Adress1cPays.QualifierCommintgPays4;
+import com.dsy.dsu.Hilt.PublicId.QualifierPublicId;
 import com.dsy.dsu.PaysCommit.Model.BI_RecyreView.Bl_CommintigPay;
 import com.dsy.dsu.PaysCommit.Model.BI_RecyreView.LiveData.GetLiveDataForrecyreViewPay;
 import com.dsy.dsu.PaysCommit.Model.BinderService1cCommitPay;
@@ -85,11 +89,14 @@ public class Fragment1_List_CommitPay extends Fragment   {
      private        Intent intentsendJsonNodeToService= null;
 
      @Inject
+     @QualifierCommintgPays
      StringBuilder getHiltCommintgPays;
 
     @Inject
+    @QualifierCommintgPays2
     StringBuilder getHiltCommintgPays3;
     @Inject
+    @QualifierCommintgPays4
     StringBuilder getHiltCommintgPays4;
 
 
@@ -104,7 +111,8 @@ public class Fragment1_List_CommitPay extends Fragment   {
 
     @Inject
     ObjectMapper getHiltJaksonObjectMapper;
-@Inject
+    @Inject
+    @QualifierPublicId
     Integer getHiltPublicId;
 
 

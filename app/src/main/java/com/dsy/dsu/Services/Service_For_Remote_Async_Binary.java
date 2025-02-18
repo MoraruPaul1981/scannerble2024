@@ -21,6 +21,7 @@ import androidx.annotation.Nullable;
 import com.dsy.dsu.Dashboard.Model.endingasynsdashboard.GetEndingAsyn;
 import com.dsy.dsu.Errors.controller.RecordNewErros;
 import com.dsy.dsu.Hilt.JbossAdrress.qualifiers.QualifierJbossServer3;
+import com.dsy.dsu.Hilt.PublicId.QualifierPublicId;
 import com.dsy.dsu.SynsProccessor.AsynsProccessor;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.firebase.annotations.concurrent.Background;
@@ -66,6 +67,7 @@ public class Service_For_Remote_Async_Binary extends IntentService {
 
 
     @Inject
+    @QualifierPublicId
     Integer getHiltPublicId;
 
     public Service_For_Remote_Async_Binary() {

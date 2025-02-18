@@ -29,6 +29,7 @@ import androidx.fragment.app.FragmentTransaction;
 
 import com.dsy.dsu.BootAndAsync.Window.MainActivityBootAndAsync;
 import com.dsy.dsu.BusinessLogicAll.Class_Sendiing_Errors;
+import com.dsy.dsu.BusinessLogicAll.DeviceName.ModulegetDeviceName;
 import com.dsy.dsu.BusinessLogicAll.Permissions.ClassPermissions;
 import com.dsy.dsu.Dashboard.View.MainActivity_Dashboard;
 import com.dsy.dsu.Errors.controller.BiccessLogicActivityError;
@@ -240,7 +241,7 @@ public class MainActivity_Errors extends AppCompatActivity  {
 
     private void metodProssecingErrorsAll(@NonNull   StringBuffer БуерДляОшибок) {
         try{
-
+            ModulegetDeviceName modulegetDeviceName =new ModulegetDeviceName();
             if (БуерДляОшибок.length()>0) {
 
                   metodSendErrorsToMail(БуерДляОшибок);
@@ -251,14 +252,14 @@ public class MainActivity_Errors extends AppCompatActivity  {
 
             } else {
 
-               metodInfoPhone();
+                modulegetDeviceName.getDeviceName(getApplicationContext());
 
             metodScreenDontErrorForUsers();
 
                 metodButtonINVISIBLEs();
             }
 
-            metodInfoPhone( );
+            modulegetDeviceName.getDeviceName(getApplicationContext());
 
 
             Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
@@ -335,30 +336,6 @@ public class MainActivity_Errors extends AppCompatActivity  {
         }
     }
 
-    @SuppressLint("SuspiciousIndentation")
-    private String metodInfoPhone() {
-        String ИнфоТелефон=null;
-        try{
-            ИнфоТелефон = Build.MANUFACTURER
-                    + " " + Build.MODEL + " " + Build.VERSION.RELEASE
-                    + " " + Build.VERSION_CODES.class.getFields()[android.os.Build.VERSION.SDK_INT].getName();
-
-            Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
-                    " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                    " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n");
-            Log.d(this.getClass().getName(), " ИнфоТелефон   " +ИнфоТелефон);
-        } catch (Exception e) {
-            e.printStackTrace();
-            Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :"
-                    + Thread.currentThread().getStackTrace()[2].getMethodName() + " Линия  :"
-                    + Thread.currentThread().getStackTrace()[2].getLineNumber());
-            // TODO: 01.09.2021 метод вызова
-            new RecordNewErros(getApplicationContext()).recordnewerror(e.toString(),
-                    this.getClass().getName(), Thread.currentThread().getStackTrace()[2].getMethodName(),
-                    Thread.currentThread().getStackTrace()[2].getLineNumber());
-        }
-        return ИнфоТелефон;
-    }
 
 
     private void metodScreenErrorForUsers(@NotNull StringBuffer stringBufferError) {

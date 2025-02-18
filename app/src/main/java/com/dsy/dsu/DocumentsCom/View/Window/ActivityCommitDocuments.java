@@ -11,6 +11,7 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
 import com.dsy.dsu.Errors.controller.RecordNewErros;
+import com.dsy.dsu.Hilt.PublicId.QualifierPublicId;
 import com.dsy.dsu.R;
 
 import javax.inject.Inject;
@@ -21,6 +22,7 @@ import dagger.hilt.android.AndroidEntryPoint;
 @AndroidEntryPoint
 public class ActivityCommitDocuments extends AppCompatActivity {
     @Inject
+    @QualifierPublicId
     Integer getHiltPublicId;
 
     private FragmentManager fragmentManager;

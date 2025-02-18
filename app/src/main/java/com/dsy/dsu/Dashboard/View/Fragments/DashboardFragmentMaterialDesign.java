@@ -28,6 +28,7 @@ import com.dsy.dsu.CommitPrices.View.Window.MainActivityCommitingPrices;
 
 import com.dsy.dsu.Dashboard.Model.changeaccessrights.DashboardGRANTorREVOKE;
 import com.dsy.dsu.Errors.controller.RecordNewErros;
+import com.dsy.dsu.Hilt.PublicId.QualifierPublicId;
 import com.dsy.dsu.OrdersTransports.Window.MainActivityOrdersTransports;
 import com.dsy.dsu.PaysCommit.View.Window.MainActivity_CommitPay;
 import com.dsy.dsu.R;
@@ -70,6 +71,7 @@ public class DashboardFragmentMaterialDesign extends  DialogFragment  {
         DashboardGRANTorREVOKE dashboardGRANTorREVOKE;
 
     @Inject
+    @QualifierPublicId
         Integer getHiltPublicId;
 
     private androidx.appcompat.widget.Toolbar toolbarcamera_dashbord;

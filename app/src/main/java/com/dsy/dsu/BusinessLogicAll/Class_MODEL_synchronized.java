@@ -19,6 +19,7 @@ import androidx.annotation.NonNull;
 import com.dsy.dsu.AllDatabases.SQLTE.GetSQLiteDatabase;
 import com.dsy.dsu.BusinessLogicAll.DATE.Class_Generation_Data;
 
+import com.dsy.dsu.BusinessLogicAll.DeviceName.ModulegetDeviceName;
 import com.dsy.dsu.CnangeServers.PUBLIC_CONTENT;
 import com.dsy.dsu.Errors.controller.RecordNewErros;
 import com.dsy.dsu.Hilt.OkhhtpBuilder.GetOkhhtpBuilderSSL;
@@ -161,9 +162,15 @@ import okio.BufferedSink;
                             }
                             Log.d(this.getClass().getName(), "  PUBLIC_CONTENT.ПубличноеИмяПользовательДлСервлета  " + ПубличноеЛогин +
                                     " PUBLIC_CONTENT.ПубличноеПарольДлСервлета " + ПубличноеПароль);
-                            String ANDROID_ID = Settings.Secure.getString(context.getContentResolver(), Settings.Secure.ANDROID_ID);
-                            // TODO: 26.08.2021 НОВЫЙ ВЫЗОВ НОВОГО КЛАСС GRUD - ОПЕРАЦИИ
+
+                            // TODO: 18.02.2025 get name Device
+                            String ANDROID_ID =new ModulegetDeviceName().getDeviceName(context);
+                            
+                            Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                                    " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                                    " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n");
                             Log.d(this.getClass().getName(), "  ПубличноеЛогин " + ПубличноеЛогин + " ПубличноеПароль " + ПубличноеПароль+" ANDROID_ID "+ANDROID_ID);
+                            
                             Request originalRequest = chain.request();
                             Request.Builder builder = originalRequest.newBuilder()
                                     .header("Content-Type", Тип + " ;charset=UTF-8")

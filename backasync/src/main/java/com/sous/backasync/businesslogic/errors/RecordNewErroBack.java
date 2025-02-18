@@ -164,7 +164,6 @@ public class RecordNewErroBack   implements RecordNewErrorsBackInterface {
             String getNewDateForError = new Class_GenerationBack_Data(context).ГлавнаяДатаИВремяОперацийСБазойДанных();
 
             // TODO: 30.01.2025 ВСТАВКА  новой ошибки
-
             contentValuesNewError.put("Error", ТекстОшибки.toLowerCase());
             contentValuesNewError.put("Klass", КлассГнерацииОшибки.toUpperCase());
             contentValuesNewError.put("Metod", МетодаОшибки.toUpperCase());

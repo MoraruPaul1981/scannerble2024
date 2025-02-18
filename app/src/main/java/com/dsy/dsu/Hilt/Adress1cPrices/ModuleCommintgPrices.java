@@ -7,6 +7,9 @@ import android.util.Log;
 
 import com.dsy.dsu.Errors.controller.RecordNewErros;
 
+import javax.inject.Inject;
+import javax.inject.Named;
+
 import dagger.Module;
 import dagger.Provides;
 import dagger.hilt.InstallIn;
@@ -18,12 +21,13 @@ import dagger.hilt.components.SingletonComponent;
 
 @Module
 @InstallIn(SingletonComponent.class)
-@QualifierCommintgPrices
 public class ModuleCommintgPrices {
 
 
 
+
     @Provides
+    @QualifierCommintgPrices
     public String  getHiltCommintgPrices(@ApplicationContext Context context) {
         String  АдресСеврера1сДляgetFilePrices=new String() ;
         try {
