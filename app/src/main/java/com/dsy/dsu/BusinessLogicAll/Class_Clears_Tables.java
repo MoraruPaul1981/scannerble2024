@@ -18,6 +18,7 @@ import androidx.annotation.NonNull;
 import com.dsy.dsu.AllDatabases.SQLTE.GetSQLiteDatabase;
 import com.dsy.dsu.BusinessLogicAll.DATE.Class_Generation_Data;
 
+import com.dsy.dsu.BusinessLogicAll.SharedPreferences.GetSharedPreferences;
 import com.dsy.dsu.CnangeServers.PUBLIC_CONTENT;
 import com.dsy.dsu.Errors.controller.RecordNewErros;
 import com.dsy.dsu.Passwords.MainActivityPasswords;
@@ -85,10 +86,10 @@ public class Class_Clears_Tables {
                           .filter(e->!e.equalsIgnoreCase("nomen_vesov"))
                           .filter(e->!e.equalsIgnoreCase("view_onesignal"))
                           .filter(e->!e.equalsIgnoreCase("vid_tc"))
-                          .concatMap(i -> Observable.just(i).delay(250, TimeUnit.MILLISECONDS))
-                          .blockingIterable().forEach(new java.util.function.Consumer<String>() {
+                          .concatMap(i -> Observable.just(i).delay(500, TimeUnit.MILLISECONDS))
+                          .doOnNext(new Consumer<String>() {
                               @Override
-                              public void accept(String текущаяТаблицаДляУдваления) {
+                              public void accept(String текущаяТаблицаДляУдваления) throws Throwable {
                                   // TODO: 09.09.2021 DELETE УДАЛЕНИЕ ТАБЛИЦ ПЕРЕД УМЕНЫ ПОЛЬЗОВАТЕЛЯ
                                   Integer РезультатУдалениеДанных=
                                           методСменыДанныхПользователя( текущаяТаблицаДляУдваления.toString().trim(),
@@ -97,22 +98,49 @@ public class Class_Clears_Tables {
                                           +текущаяТаблицаДляУдваления);
                                   // TODO: 09.09.2021  действие второе добалянеим дату
                                   РезультатСменыДанных.add(РезультатУдалениеДанных);
-                                  activity.runOnUiThread(()->{
-                                      progressDialogДляУдалениеТаблиц.setMessage("Удаление таблицы ..."+текущаяТаблицаДляУдваления);
-                                  });
+
                                   Integer РезультатУдалениеMODIFITATION_Client=
                                           методСменыДанныхMODIFITATION_Client( текущаяТаблицаДляУдваления.toString().trim(),
                                                   context);
+
+                                  Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                                          " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                                          " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n");
                               }
-                          });
-                  // TODO: 24.04.2023 Конец Цикла
-                  activity.runOnUiThread(()->{
-                      if (РезультатСменыДанных.size()>0) {
-                          методПослеСменыДанныхЗапускаемСНАчала(activity);
-                      }
-                      progressDialogДляУдалениеТаблиц.dismiss();
-                      progressDialogДляУдалениеТаблиц.cancel();
-                  });
+                          }).doAfterNext(new Consumer<String>() {
+                              @Override
+                              public void accept(String string) throws Throwable {
+                                  // TODO: 24.04.2023 Конец Цикла
+                                  activity.runOnUiThread(()->{
+                                      progressDialogДляУдалениеТаблиц.setMessage("Удаление таблицы ..."+string + " ("+РезультатСменыДанных.size()+")");
+                                  });
+
+                                  Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                                          " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                                          " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n");
+                              }
+                          }).doOnComplete(new Action() {
+                              @Override
+                              public void run() throws Throwable {
+                                  // TODO: 19.02.2025
+                                  activity.runOnUiThread(()->{
+                                      if (РезультатСменыДанных.size()>0) {
+                                          методПослеСменыДанныхЗапускаемСНАчала(activity);
+                                      }
+                                      progressDialogДляУдалениеТаблиц.dismiss();
+                                      progressDialogДляУдалениеТаблиц.cancel();
+                                  });
+
+                                      wretingNewVaueSuccess(РезультатСменыДанных.size());
+
+                                  Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                                          " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                                          " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n");
+                              }
+                          }).subscribeOn(Schedulers.single())
+                          .observeOn(AndroidSchedulers.mainThread())
+                          .subscribe();
+
           } catch (Exception e) {
                 e.printStackTrace();
                 Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() + " Линия  :"
@@ -288,5 +316,26 @@ public class Class_Clears_Tables {
         return ДобавлениеДатыПослеУдалниеТаблиц;
     }
 
+    void wretingNewVaueSuccess(Integer РезультатОчистикТАблицИДобалениеДаты) {
+        try {
+            if (РезультатОчистикТАблицИДобалениеДаты >0) {
 
+                new GetSharedPreferences(context).writinganewvaluePreferences();
+            }
+            Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                    " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                    " line " + Thread.currentThread().getStackTrace()[2].getLineNumber()
+                    + "\n" +" РезультатОчистикТАблицИДобалениеДаты " +РезультатОчистикТАблицИДобалениеДаты
+            );
+        } catch (Exception e) {
+            e.printStackTrace();
+            Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName()
+                    + " Линия  :"
+                    + Thread.currentThread().getStackTrace()[2].getLineNumber());
+            new RecordNewErros(context).recordnewerror(e.toString(),
+                    this.getClass().getName(), Thread.currentThread().getStackTrace()[2].getMethodName(),
+                    Thread.currentThread().getStackTrace()[2].getLineNumber());
+        }
+
+    }
 }

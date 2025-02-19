@@ -901,24 +901,22 @@ try{
                                             prograssbarСменаДанныхПользователя.show();
 
                                             try{
+
+
+
+
                                                 PUBLIC_CONTENT Class_Engine_SQLГдеНаходитьсяМенеджерПотоков = new PUBLIC_CONTENT(getActivity());
                                                 Class_Clears_Tables class_clears_tables=     new Class_Clears_Tables(getActivity(),
                                                         handlerAsync,
                                                         prograssbarСменаДанныхПользователя);
 
-                                                Integer    РезультатОчистикТАблицИДобалениеДаты = class_clears_tables
-                                                        .методСменаДанныхПользователя(getActivity(),
-                                                                Class_Engine_SQLГдеНаходитьсяМенеджерПотоков.МенеджерПотоков,
-                                                                getActivity());
+                                                  class_clears_tables.методСменаДанныхПользователя(getActivity(), Class_Engine_SQLГдеНаходитьсяМенеджерПотоков.МенеджерПотоков, getActivity());
 
-
-                                                wretingNewVaueSuccess(РезультатОчистикТАблицИДобалениеДаты);
 
 
                                                 Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                                                         " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                                                        " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"
-                                                        + " результатСинхрониазции " + РезультатОчистикТАблицИДобалениеДаты+ " getPublicID "+РезультатОчистикТАблицИДобалениеДаты);
+                                                        " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n");
 
 
                                             } catch (Exception e) {
@@ -995,28 +993,7 @@ try{
 
                 }
 
-                private   void wretingNewVaueSuccess(Integer РезультатОчистикТАблицИДобалениеДаты) {
-                    try {
-                    if (РезультатОчистикТАблицИДобалениеДаты >0) {
 
-                        new GetSharedPreferences(getContext()).writinganewvaluePreferences();
-                    }
-                        Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
-                                " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                                " line " + Thread.currentThread().getStackTrace()[2].getLineNumber()
-                                + "\n" +" РезультатОчистикТАблицИДобалениеДаты " +РезультатОчистикТАблицИДобалениеДаты
-                        );
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                        Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName()
-                                + " Линия  :"
-                                + Thread.currentThread().getStackTrace()[2].getLineNumber());
-                        new RecordNewErros(getContext()).recordnewerror(e.toString(),
-                                this.getClass().getName(), Thread.currentThread().getStackTrace()[2].getMethodName(),
-                                Thread.currentThread().getStackTrace()[2].getLineNumber());
-                    }
-
-                }
 
 //TODO END CLASS SubClassChangeDataUsers//TODO END CLASS SubClassChangeDataUsers//TODO END CLASS SubClassChangeDataUsers
             }//TODO END CLASS SubClassChangeDataUsers//TODO END CLASS SubClassChangeDataUsers
