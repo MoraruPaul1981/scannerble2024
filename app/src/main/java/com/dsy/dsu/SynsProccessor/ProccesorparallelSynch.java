@@ -202,9 +202,7 @@ public class ProccesorparallelSynch   {
                     " getVersionserver " +getVersionserver+ " getNameTable "
                     + getNameTable);
 
-            ///   TODO: 08.04.2024 Показываем пользовалю ПРоценты{
-            // TODO: 24.12.2024
-            new GetPrograssbarChangeIndicator(context).setAsyncrograssbarMap( getNameTable );
+
 
 
 
@@ -223,7 +221,9 @@ public class ProccesorparallelSynch   {
 
 
 
-
+            ///   TODO: 08.04.2024 Показываем пользовалю ПРоценты{
+            // TODO: 24.12.2024
+            new GetPrograssbarChangeIndicator(context).setAsyncrograssbarMap( getNameTable );
 
 
                 Log.d(this.getClass().getName(), "\n"
