@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.ServiceConnection;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.IBinder;
@@ -42,6 +43,7 @@ import com.dsy.dsu.BootAndAsync.EventsBus.MessageEvensBusUpdatePO;
 import com.dsy.dsu.BusinessLogicAll.Class_Clears_Tables;
 import com.dsy.dsu.BusinessLogicAll.Class_Connections_Server;
 import com.dsy.dsu.BusinessLogicAll.GetConnectivityManagerAndroid;
+import com.dsy.dsu.BusinessLogicAll.SharedPreferences.GetSharedPreferences;
 import com.dsy.dsu.Errors.controller.RecordNewErros;
 
 import com.dsy.dsu.BusinessLogicAll.Class_MODEL_synchronized;
@@ -93,9 +95,6 @@ public class DashboardFragmentSettings extends  DialogFragment {
 
     private FragmentManager fragmentManager;
     private FragmentTransaction fragmentTransaction;
-    private          View ViewDashboart=null;
-
-    private RelativeLayout relativelayout_settings;
 
     private AlertDialog DialogBox=null;
     private  Handler handlerAsync;
@@ -122,6 +121,7 @@ public class DashboardFragmentSettings extends  DialogFragment {
 
 
     protected BL_innerMainActivityBootAndAsync blInnerMainActivityBootAndAsync;
+
 
     public DashboardFragmentSettings() {
         // Required empty public constructor
@@ -221,6 +221,16 @@ public class DashboardFragmentSettings extends  DialogFragment {
            // ViewDashboart= inflater.inflate(R.layout.simple_dashbord_fragment_blue, container, false);
           //  view= inflater.inflate(R.layout.simple_dashbord_fragment_grey, container, false);
             view= inflater.inflate(R.layout.simple_dashbord_fragment_grey_materialdisign_4, container, false);
+         // TODO: 19.02.2025
+            MaterialCardView  materialcardview_settings         = (MaterialCardView) view.findViewById(R.id.materialcardview_settings); /////КНОПКА ТАБЕЛЬНОГО УЧЕТА
+            КнопкаоСистеме   = (MaterialButton) materialcardview_settings.findViewById(R.id.КнопкаоСистеме); /////КНОПКА ТАБЕЛЬНОГО УЧЕТА
+            КнопкаПользователи         = (MaterialButton) materialcardview_settings.findViewById(R.id.КнопкаПользователи); /////КНОПКА ТАБЕЛЬНОГО УЧЕТА
+            КнопкаОбменДанными         = (MaterialButton) materialcardview_settings.findViewById(R.id.КнопкаОбменДанными); /////КНОПКА ТАБЕЛЬНОГО УЧЕТА
+            КнопкаОбновление = (MaterialButton) materialcardview_settings.findViewById(R.id.Кнопкаобновление); /////КНОПКА ТАБЕЛЬНОГО УЧЕТА
+            КнопкаОшибки          = (MaterialButton) materialcardview_settings.findViewById(R.id.КнопкаОшибки); /////КНОПКА ТАБЕЛЬНОГО УЧЕТА
+            КнопкаШаблоны          = (MaterialButton) materialcardview_settings.findViewById(R.id.КнопкаШаблоны); /////КНОПКА ТАБЕЛЬНОГО УЧЕТА
+            TextViewLogo      = (TextView) materialcardview_settings.findViewById(R.id.TextViewLogo); /////КНОПКА ТАБЕЛЬНОГО УЧЕТА
+            imageButton_back_in_settings      = (AppCompatImageButton) materialcardview_settings.findViewById(R.id.imageButton_back_in_settings); /////КНОПКА ТАБЕЛЬНОГО УЧЕТА
 
            // view= inflater.inflate(R.layout.simple_dashbord_fragment_green, container, false);
             // TODO: 21.06.2023
@@ -243,20 +253,6 @@ public class DashboardFragmentSettings extends  DialogFragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         try{
             super.onViewCreated(view, savedInstanceState);
-            ViewDashboart=view;
-
-            relativelayout_settings         = (RelativeLayout) view.findViewById(R.id.relativelayout_settings); /////КНОПКА ТАБЕЛЬНОГО УЧЕТА
-
-            КнопкаоСистеме   = (MaterialButton) view.findViewById(R.id.КнопкаоСистеме); /////КНОПКА ТАБЕЛЬНОГО УЧЕТА
-            КнопкаПользователи         = (MaterialButton) view.findViewById(R.id.КнопкаПользователи); /////КНОПКА ТАБЕЛЬНОГО УЧЕТА
-            КнопкаОбменДанными         = (MaterialButton) view.findViewById(R.id.КнопкаОбменДанными); /////КНОПКА ТАБЕЛЬНОГО УЧЕТА
-            КнопкаОбновление = (MaterialButton) view.findViewById(R.id.Кнопкаобновление); /////КНОПКА ТАБЕЛЬНОГО УЧЕТА
-            КнопкаОшибки          = (MaterialButton) view.findViewById(R.id.КнопкаОшибки); /////КНОПКА ТАБЕЛЬНОГО УЧЕТА
-            КнопкаШаблоны          = (MaterialButton) view.findViewById(R.id.КнопкаШаблоны); /////КНОПКА ТАБЕЛЬНОГО УЧЕТА
-
-
-            TextViewLogo      = (TextView) view.findViewById(R.id.TextViewLogo); /////КНОПКА ТАБЕЛЬНОГО УЧЕТА
-            imageButton_back_in_settings      = (AppCompatImageButton) view.findViewById(R.id.imageButton_back_in_settings); /////КНОПКА ТАБЕЛЬНОГО УЧЕТА
 
             // TODO: 22.08.2023 код после ИНИЦИАЛИЗАЦИИ КНОПОК
             classBiznesLogikaSettings.методНастройкиВнешнегоВида();
@@ -914,8 +910,17 @@ try{
                                                         .методСменаДанныхПользователя(getActivity(),
                                                                 Class_Engine_SQLГдеНаходитьсяМенеджерПотоков.МенеджерПотоков,
                                                                 getActivity());
-                                                Log.d(this.getClass().getName(), "   ЗАПУСК ФОНРезультатОчистикТАблицИДобалениеДаты " +
-                                                        РезультатОчистикТАблицИДобалениеДаты);
+
+
+                                                wretingNewVaueSuccess(РезультатОчистикТАблицИДобалениеДаты);
+
+
+                                                Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                                                        " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                                                        " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"
+                                                        + " результатСинхрониазции " + РезультатОчистикТАблицИДобалениеДаты+ " getPublicID "+РезультатОчистикТАблицИДобалениеДаты);
+
+
                                             } catch (Exception e) {
                                                 e.printStackTrace();
                                                 Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName()
@@ -987,6 +992,29 @@ try{
                         }
                     });
 
+
+                }
+
+                private   void wretingNewVaueSuccess(Integer РезультатОчистикТАблицИДобалениеДаты) {
+                    try {
+                    if (РезультатОчистикТАблицИДобалениеДаты >0) {
+
+                        new GetSharedPreferences(getContext()).writinganewvaluePreferences();
+                    }
+                        Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                                " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                                " line " + Thread.currentThread().getStackTrace()[2].getLineNumber()
+                                + "\n" +" РезультатОчистикТАблицИДобалениеДаты " +РезультатОчистикТАблицИДобалениеДаты
+                        );
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                        Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName()
+                                + " Линия  :"
+                                + Thread.currentThread().getStackTrace()[2].getLineNumber());
+                        new RecordNewErros(getContext()).recordnewerror(e.toString(),
+                                this.getClass().getName(), Thread.currentThread().getStackTrace()[2].getMethodName(),
+                                Thread.currentThread().getStackTrace()[2].getLineNumber());
+                    }
 
                 }
 
@@ -1266,7 +1294,6 @@ try{
         }//TODO end class ClassAllTaskButtons
 
     }//TODO end Buniceess Lofic for Activity
-
 
 
 }

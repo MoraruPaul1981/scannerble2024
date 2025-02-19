@@ -19,6 +19,7 @@ import com.dsy.dsu.CnangeServers.PUBLIC_CONTENT;
 import com.dsy.dsu.Errors.controller.RecordNewErros;
 import com.dsy.dsu.SynsProccessor.PrograsBarAsync.GetPrograssbarChangeIndicator;
 import com.fasterxml.jackson.core.JsonParser;
+import com.fasterxml.jackson.databind.DatabindException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.module.SimpleModule;
@@ -92,6 +93,7 @@ public class ProccesorparallelSynch   {
             // TODO: 30.09.2024
             preferences =context. getSharedPreferences("sharedPreferencesХранилище", Context.MODE_MULTI_PROCESS);
              РежимЗапускаСинхронизации = preferences.getString("РежимЗапускаСинхронизации","СамыйПервыйЗапускСинхронизации");
+         String   РежимЗапускаПереполучение = preferences.getString("РежимЗапускаПереполучение","СамыйПервыйЗапускСинхронизации");
              ExecutorService executorServiceAsync= null;
 
             // TODO: 07.04.2024  Г
@@ -99,12 +101,20 @@ public class ProccesorparallelSynch   {
                  // TODO: 07.10.2024
                  case "СамыйПервыйЗапускСинхронизации":
                  // TODO: 27.12.2024
-                    // executorServiceAsync= Executors.newSingleThreadExecutor();
-                     //executorServiceAsync= Executors.newFixedThreadPool(getBufferFromJbossServerAllTables.size());
-                     executorServiceAsync= Executors.newFixedThreadPool(3);
+                 switch (РежимЗапускаПереполучение){
+                     case    "ПовторныйЗапускСинхронизации":
+                         executorServiceAsync= Executors.newSingleThreadExecutor();
+                         break;
+                     default:{
+                         executorServiceAsync= Executors.newFixedThreadPool(3);
+                     }
+                 }
+
                  Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                          " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                         " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"+ "\n"+ " РежимЗапускаСинхронизации " +РежимЗапускаСинхронизации);
+                         " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"+
+                         "\n"+ " РежимЗапускаСинхронизации " +РежимЗапускаСинхронизации+
+                          " РежимЗапускаПереполучение " +РежимЗапускаПереполучение);
                  break;
                  // TODO: 07.10.2024
                  case "ПовторныйЗапускСинхронизации":
@@ -487,10 +497,11 @@ try{
 
 
 //todo  оправляем  даннеы на СЕРВЕР POST
+    @SuppressLint("SuspiciousIndentation")
     private   Long startSendingDatatoTheServerOnjboss(@NonNull String ИмяТаблицы,
-                                                           @NonNull Long ВерсияДанныхсSqlServer,
-                                                           @NonNull  Integer  PublicID,
-                                                           @NonNull Date   ВремяОтSqlServer) {
+                                                      @NonNull Long ВерсияДанныхсSqlServer,
+                                                      @NonNull  Integer  PublicID,
+                                                      @NonNull Date   ВремяОтSqlServer) {
 
 
       Long startSendingDatatoTheServerOnjboss=0l;

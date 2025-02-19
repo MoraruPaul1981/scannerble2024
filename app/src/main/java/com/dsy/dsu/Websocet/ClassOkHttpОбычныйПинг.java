@@ -54,8 +54,8 @@ public class  ClassOkHttpОбычныйПинг {
                             return chain.proceed(newRequest);
                         }
                     }).connectTimeout(5, TimeUnit.SECONDS)
-                    .writeTimeout(1, TimeUnit.MINUTES)
-                    .readTimeout(1, TimeUnit.MINUTES)
+                    .writeTimeout(2, TimeUnit.MINUTES)
+                    .readTimeout(2, TimeUnit.MINUTES)
                     .build();
             Request requestGET = new Request.Builder().get().url("http://192.168.254.40:8080/websocet/gEt").build();////"http://192.168.254.40:8080/websocet/gEt"
             Log.d(this.getClass().getName(), "  request  " + requestGET);

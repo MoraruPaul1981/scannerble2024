@@ -85,10 +85,10 @@ public class Class_Clears_Tables {
                           .filter(e->!e.equalsIgnoreCase("nomen_vesov"))
                           .filter(e->!e.equalsIgnoreCase("view_onesignal"))
                           .filter(e->!e.equalsIgnoreCase("vid_tc"))
-                          .concatMap(i -> Observable.just(i).delay(500, TimeUnit.MILLISECONDS))
-                          .doOnNext(new Consumer<String>() {
+                          .concatMap(i -> Observable.just(i).delay(250, TimeUnit.MILLISECONDS))
+                          .blockingIterable().forEach(new java.util.function.Consumer<String>() {
                               @Override
-                              public void accept(String текущаяТаблицаДляУдваления) throws Throwable {
+                              public void accept(String текущаяТаблицаДляУдваления) {
                                   // TODO: 09.09.2021 DELETE УДАЛЕНИЕ ТАБЛИЦ ПЕРЕД УМЕНЫ ПОЛЬЗОВАТЕЛЯ
                                   Integer РезультатУдалениеДанных=
                                           методСменыДанныхПользователя( текущаяТаблицаДляУдваления.toString().trim(),
@@ -104,35 +104,15 @@ public class Class_Clears_Tables {
                                           методСменыДанныхMODIFITATION_Client( текущаяТаблицаДляУдваления.toString().trim(),
                                                   context);
                               }
-                          })
-                          .doOnError(new Consumer<Throwable>() {
-                              @Override
-                              public void accept(Throwable throwable) throws Throwable {
-                                  throwable.printStackTrace();
-                                  Log.e(this.getClass().getName(), "Ошибка " +throwable + " Метод :" +
-                                          Thread.currentThread().getStackTrace()[2].getMethodName() + " Линия  :"
-                                          + Thread.currentThread().getStackTrace()[2].getLineNumber());
-                                  // TODO: 01.09.2021 метод вызова
-                                  new RecordNewErros(context).recordnewerror(throwable.toString(),
-                                          this.getClass().getName(), Thread.currentThread().getStackTrace()[2].getMethodName(),
-                                          Thread.currentThread().getStackTrace()[2].getLineNumber());
-                              }
-                          })
-                          .observeOn(AndroidSchedulers.mainThread())
-                          .doOnComplete(new Action() {
-                              @Override
-                              public void run() throws Throwable {
-                                  // TODO: 24.04.2023 Конец Цикла
-                             activity.runOnUiThread(()->{
-                                 if (РезультатСменыДанных.size()>0) {
-                                     методПослеСменыДанныхЗапускаемСНАчала(activity);
-                                 }
-                                 progressDialogДляУдалениеТаблиц.dismiss();
-                                 progressDialogДляУдалениеТаблиц.cancel();
-                             });
-                              }
-                          })
-                          .subscribe();
+                          });
+                  // TODO: 24.04.2023 Конец Цикла
+                  activity.runOnUiThread(()->{
+                      if (РезультатСменыДанных.size()>0) {
+                          методПослеСменыДанныхЗапускаемСНАчала(activity);
+                      }
+                      progressDialogДляУдалениеТаблиц.dismiss();
+                      progressDialogДляУдалениеТаблиц.cancel();
+                  });
           } catch (Exception e) {
                 e.printStackTrace();
                 Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() + " Линия  :"
@@ -169,7 +149,7 @@ public class Class_Clears_Tables {
 
 
     // TODO: 09.09.2021 delete data for tabels
-    protected Integer методСменыДанныхПользователя(String ИмяТаблицы, Context context) throws ExecutionException, InterruptedException, NoSuchPaddingException, NoSuchAlgorithmException, InvalidKeyException {
+    protected Integer методСменыДанныхПользователя(String ИмяТаблицы, Context context) {
 //
         Integer СменаДанных = 0;
         try {
@@ -228,7 +208,7 @@ public class Class_Clears_Tables {
     }
 
     // TODO: 09.09.2021 delete data for tabels
-    protected Integer методСменыДанныхMODIFITATION_Client(String ИмяТаблицы, Context context) throws ExecutionException, InterruptedException, NoSuchPaddingException, NoSuchAlgorithmException, InvalidKeyException {
+    protected Integer методСменыДанныхMODIFITATION_Client(String ИмяТаблицы, Context context) {
 //
         Integer РезультатУдалениеОчисткиТаблиц = 0;
         try {

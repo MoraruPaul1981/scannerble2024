@@ -63,7 +63,7 @@
                 android:textColor="#0A0A09"
                 android:background="#FFFFFF"
                 android:visibility="visible"
-                android:textSize="11sp" />
+                android:textSize="15sp" />
 
         </androidx.appcompat.widget.Toolbar>
         </TableRow>

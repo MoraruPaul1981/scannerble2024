@@ -84,8 +84,8 @@ public InputStream   МетодПолучемJSONОт1СДляСогласова
                         return chain.proceed(newRequest);
                     }
                 }).connectTimeout(5, TimeUnit.SECONDS)
-            .writeTimeout(1, TimeUnit.MINUTES)
-            .readTimeout(1, TimeUnit.MINUTES)
+            .writeTimeout(2, TimeUnit.MINUTES)
+            .readTimeout(2, TimeUnit.MINUTES)
             .build();
         // TODO: 25.10.2022 Диспечер
         Dispatcher dispatcher=  okHttpClientПолучаемДанныеОт1С.dispatcher();
@@ -189,8 +189,8 @@ public InputStream   МетодПолучемJSONОт1СДляСогласова
                             return chain.proceed(newRequest);
                         }
                     }).connectTimeout(5, TimeUnit.SECONDS)
-              .writeTimeout(1, TimeUnit.MINUTES)
-              .readTimeout(1, TimeUnit.MINUTES)
+              .writeTimeout(2, TimeUnit.MINUTES)
+              .readTimeout(2, TimeUnit.MINUTES)
               .build();
             //
             ///  MediaType JSON = MediaType.parse("application/json; charset=utf-16");
@@ -280,8 +280,8 @@ public InputStream   МетодПолучемJSONОт1СДляСогласова
                             return chain.proceed(newRequest);
                         }
                     }).connectTimeout(5, TimeUnit.SECONDS)
-                 .writeTimeout(1, TimeUnit.MINUTES)
-                 .readTimeout(1, TimeUnit.MINUTES)
+                 .writeTimeout(2, TimeUnit.MINUTES)
+                 .readTimeout(2, TimeUnit.MINUTES)
                  .build();
             //
             ///  MediaType JSON = MediaType.parse("application/json; charset=utf-16");
@@ -407,8 +407,8 @@ public InputStream   МетодПолучемJSONОт1СДляСогласова
                             return chain.proceed(newRequest);
                         }
                     }).connectTimeout(5, TimeUnit.SECONDS)
-                 .writeTimeout(1, TimeUnit.MINUTES)
-                 .readTimeout(1, TimeUnit.MINUTES)
+                 .writeTimeout(2, TimeUnit.MINUTES)
+                 .readTimeout(2, TimeUnit.MINUTES)
                  .build();
 
             Dispatcher      dispatcher= okHttpClientОтправкаСоглоавания.dispatcher();
@@ -517,8 +517,8 @@ public InputStream   МетодПолучемJSONОт1СДляСогласова
                             return chain.proceed(newRequest);
                         }
                     }).connectTimeout(5, TimeUnit.SECONDS)
-                    .writeTimeout(1, TimeUnit.MINUTES)
-                    .readTimeout(1, TimeUnit.MINUTES)
+                    .writeTimeout(2, TimeUnit.MINUTES)
+                    .readTimeout(2, TimeUnit.MINUTES)
                     .build();
 
             Dispatcher      dispatcher= okHttpClientОтправкаСоглоавания.dispatcher();
