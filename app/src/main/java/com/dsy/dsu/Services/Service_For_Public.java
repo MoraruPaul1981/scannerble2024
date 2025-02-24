@@ -32,18 +32,27 @@ import com.dsy.dsu.BusinessLogicAll.DATE.Class_Generation_Data;
 import com.dsy.dsu.BusinessLogicAll.DATE.SubClassCursorLoader;
 import com.dsy.dsu.Tabels.MainActivity_List_Tabels;
 
+import org.reactivestreams.Subscriber;
+import org.reactivestreams.Subscription;
+
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
 import java.util.Optional;
 import java.util.concurrent.TimeUnit;
 import java.util.stream.Stream;
 
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
+import io.reactivex.rxjava3.core.Flowable;
 import io.reactivex.rxjava3.core.Observable;
 import io.reactivex.rxjava3.core.Observer;
 import io.reactivex.rxjava3.core.Single;
 import io.reactivex.rxjava3.core.SingleObserver;
 import io.reactivex.rxjava3.disposables.Disposable;
+import io.reactivex.rxjava3.functions.Action;
+import io.reactivex.rxjava3.functions.Consumer;
+import io.reactivex.rxjava3.functions.Function;
+import io.reactivex.rxjava3.functions.Predicate;
 import io.reactivex.rxjava3.schedulers.Schedulers;
 
 /**
@@ -178,8 +187,7 @@ public class Service_For_Public extends IntentService {
             switch (intent.getAction()) {
                 case "ЗапускЗаполенеияИзПрошлыхМесяцев":
                     // TODO: 28.09.2022 Запуск Само Заполенеия Данных из Прошлого Месяца
-                    РезультатОперации=         sibClassApplyFromBackPeriodof_заполененияТабеляИзПрошлогоМесяца.
-                            МетодЗапускЗаполенеияИзПрошлыхМесяцев(context, intent,progressDialog);
+                sibClassApplyFromBackPeriodof_заполененияТабеляИзПрошлогоМесяца.МетодЗапускЗаполенеияИзПрошлыхМесяцев(context, intent,progressDialog);
                     Log.w(this.getClass().getName(), "   intent.getAction()  " + intent.getAction());
                     break;
                 // TODO: 25.09.2022 удаление статуса удаленных строк
@@ -238,99 +246,134 @@ public Cursor МетодПолучениеДанныхЧерезCursorLoader(@No
         private      Long     MainParentUUID;
         Integer   DigitalNameCFO;
 
-        private  Integer РезультатВставкиИзПрошлогоМесяца=0;
-        private Integer МетодЗапускЗаполенеияИзПрошлыхМесяцев(@NonNull Context context, @NonNull Intent intent,@NonNull ProgressDialog progressDialog) {
+
+        private void МетодЗапускЗаполенеияИзПрошлыхМесяцев(@NonNull Context context, @NonNull Intent intent,@NonNull ProgressDialog progressDialog) {
             try {
-                final Disposable[] disposable = new Disposable[1];
-                // TODO: 21.04.2023
-                Single.fromCallable(()->{
-                    // TODO: 22.09.2022
+                final Integer[] РезультатВставкиИзПрошлогоМесяца = new Integer[1];
+                    // TODO: 22.09.2025
+                    String getCurrentTabel="viewtabel";
                             //TODO ВЫЧИСЛЯЕМ ДАННЫЕ КОТОРЫЕ НА ВСТАВИТЬ
-                    Uri uri = Uri.parse("content://com.dsy.dsu.providerdatabasecurrentoperations/" + "viewtabel" + "");
+                    Uri uri = Uri.parse("content://com.dsy.dsu.providerdatabasecurrentoperations/" + getCurrentTabel + "");
                     ContentResolver contentResolver=context.getContentResolver();
-                    Cursor  Курсор_ВытаскиваемПоследнийМесяцТабеля =      contentResolver.query(uri,new String[]{},
-                            new String("  SELECT * FROM  tabel WHERE year_tabels=?  AND month_tabels=?  AND cfo=?  AND status_send!=?"),
-                            new String[]{String.valueOf(ГодТабелейИзТабеля),
-                                    String.valueOf( МЕсяцТабелейИзТабеля),String.valueOf(DigitalNameCFO),"Удаленная"},null);
+                            // TODO: 24.02.2025 внтрений
+                            final Cursor[] Курсор_ВытаскиваемПоследнийМесяцТабеля = {null};
+                            Flowable.range(1,12)
+                                    .filter(f->f.intValue()<МЕсяцТабелейИзТабеля)
+                            .sorted(Collections.reverseOrder()).delay(1000,TimeUnit.MILLISECONDS)
+                            .onBackpressureBuffer().doOnNext(new Consumer<Integer>() {
+                                        @Override
+                                        public void accept(Integer getmonthagofordatasearch) throws Throwable {
+                                            Курсор_ВытаскиваемПоследнийМесяцТабеля[0] =      contentResolver.query(uri,new String[]{},
+                                                    new String("  SELECT * FROM  "+getCurrentTabel+" WHERE year_tabels=?  AND month_tabels=?  AND cfo=?  AND status_send!=?"),
+                                                    new String[]{String.valueOf(ГодТабелейИзТабеля),
+                                                            String.valueOf( getmonthagofordatasearch),String.valueOf(DigitalNameCFO),"Удаленная"},null);
+
+                                            Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                                                    " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                                                    " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"
+                                                    + " getmonthagofordatasearch  " +getmonthagofordatasearch);
+
+                                        }
+                                    })
+                            .takeWhile(new Predicate<Integer>() {
+                                @Override
+                                public boolean test(Integer getmonthagofordatasearch) throws Throwable {
+                                    // TODO: 24.02.2025
+                                    Integer  getmonthagofordatasearchtakeWhile=0;
+                                    if (Курсор_ВытаскиваемПоследнийМесяцТабеля[0]!=null) {
+                                        getmonthagofordatasearchtakeWhile=   Курсор_ВытаскиваемПоследнийМесяцТабеля[0].getCount();
+                                    }
+                                    Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                                            " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                                            " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"
+                                            + " getmonthagofordatasearchtakeWhile  " +getmonthagofordatasearchtakeWhile);
+                                    if (getmonthagofordatasearchtakeWhile>0) {
+                                        return false; //TODO false  это продолжение обработуки
+                                    } else {
+                                        return true;
+                                    }
+                                }
+                            }).doOnError(new Consumer<Throwable>() {
+                                        @Override
+                                        public void accept(Throwable throwable) throws Throwable {
+                                            throwable.printStackTrace();
+                                            Log.e(this.getClass().getName(), "Ошибка " +throwable + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
+                                                    " Линия  :" + Thread.currentThread().getStackTrace()[2].getLineNumber());
+                                            new RecordNewErros(context).recordnewerror(throwable.toString(), this.getClass().getName(),
+                                                    Thread.currentThread().getStackTrace()[2].getMethodName(), Thread.currentThread().getStackTrace()[2].getLineNumber());
+                                        }
+                                    })
+                                    .doOnComplete(new Action() {
+                                                @Override
+                                                public void run() throws Throwable {
+
+                                                    if (Курсор_ВытаскиваемПоследнийМесяцТабеля[0]!=null) {
+                                                        if (Курсор_ВытаскиваемПоследнийМесяцТабеля[0].getCount()>0) {
+                                                            // TODO: 16.02.2023 сама вставка
+                                                           РезультатВставкиИзПрошлогоМесяца[0] = copyDataTabelwithNewTabel(context, ГодТабелейИзТабеля, МЕсяцТабелейИзТабеля,
+                                                                            Курсор_ВытаскиваемПоследнийМесяцТабеля[0],
+                                                                            progressDialog,MainParentUUID);
+                                                            Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                                                                    " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                                                                    " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"
+                                                                    + " РезультатВставкиИзПрошлогоМесяца  " + РезультатВставкиИзПрошлогоМесяца[0]);
 
 
-                    if (Курсор_ВытаскиваемПоследнийМесяцТабеля.getCount()==0) {
-                        // TODO: 16.02.2023 сама вставка
-                        РезультатВставкиИзПрошлогоМесяца =
-                                copyDataTabelwithNewTabel(context, ГодТабелейИзТабеля, МЕсяцТабелейИзТабеля,
-                                        Курсор_ВытаскиваемПоследнийМесяцТабеля,
-                                        progressDialog,MainParentUUID);
+                                                        }
+                                                        // TODO: 21.09.2023
+                                                        if (              РезультатВставкиИзПрошлогоМесяца[0] >0) {
+                                                            // TODO: 21.09.2023
+                                                            // TODO: 21.04.2023 после операции возврящемся на Activity List Peoples
+                                                            МетодПереходMainActivity_List_Peoples(intentОтActivityListPeoples);
+
+                                                            Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                                                                    " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                                                                    " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"
+                                                                    + "  РезультатВставкиИзПрошлогоМесяца " +             РезультатВставкиИзПрошлогоМесяца[0] );
+
+                                                        }else{
+                                                            // TODO: 24.02.2025
+                                                            context.getMainExecutor().execute(()->{
+                                                                Toast.makeText(context, "Табель не скопирован!!!", Toast.LENGTH_SHORT).show();
+                                                            });
+
+                                                            Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                                                                    " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                                                                    " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"
+                                                                    + "  РезультатВставкиИзПрошлогоМесяца " + РезультатВставкиИзПрошлогоМесяца[0]);
+                                                        }
+
+                                                        progressDialog.dismiss();
+                                                        progressDialog.cancel();                                                    }
 
 
-                        Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
-                                " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                                " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"
-                                + " РезультатВставкиИзПрошлогоМесяца  " +РезультатВставкиИзПрошлогоМесяца);
+
+                                                    Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                                                            " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                                                            " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n");
+                                                }
+                                            })
+                                    .doOnSubscribe(new Consumer<Subscription>() {
+                                        @Override
+                                        public void accept(Subscription subscription) throws Throwable {
+                                            // TODO: 24.02.2025
+                                            Bundle bundleПолучаемДанных =(Bundle)  intent.getExtras();
+                                            MainParentUUID=    bundleПолучаемДанных.getLong("MainParentUUID", 0l);
+                                            ГодТабелейИзТабеля=  bundleПолучаемДанных.getInt("ГодТабелей", 0);
+                                            МЕсяцТабелейИзТабеля=  bundleПолучаемДанных.getInt("МЕсяцТабелей",0);
+                                            DigitalNameCFO=   bundleПолучаемДанных.getInt("DigitalNameCFO", 0);
+
+                                            Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                                                    " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                                                    " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" + " DigitalNameCFO " +DigitalNameCFO);
+                                        }
+                                    }).subscribeOn(Schedulers.single()).observeOn(AndroidSchedulers.mainThread()).subscribe();
 
 
-                    }else {
-                        Toast.makeText(context, "Нет сотрудников для копирования!!!"
-                                +"\n"+" (Табель может быть уже создан)  ", Toast.LENGTH_SHORT).show();
-                    }
-
-                    Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
-                            " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                            " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n");
-
-                    return  Курсор_ВытаскиваемПоследнийМесяцТабеля;
-                }).subscribeOn(Schedulers.single()).observeOn(AndroidSchedulers.mainThread())
-                        .subscribe(new SingleObserver<Object>() {
-                    @Override
-                    public void onSubscribe(@io.reactivex.rxjava3.annotations.NonNull Disposable d) {
-                        // TODO: 24.02.2025
-                        // TODO: 24.02.2025
-                        disposable[0] =d;
-                        // TODO: 24.02.2025
-                        Bundle bundleПолучаемДанных =(Bundle)  intent.getExtras();
-                        MainParentUUID=    bundleПолучаемДанных.getLong("MainParentUUID", 0l);
-                        ГодТабелейИзТабеля=  bundleПолучаемДанных.getInt("ГодТабелей", 0);
-                        МЕсяцТабелейИзТабеля=  bundleПолучаемДанных.getInt("МЕсяцТабелей",0);
-                            DigitalNameCFO=   bundleПолучаемДанных.getInt("DigitalNameCFO", 0);
-                        Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
-                                " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                                " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" + " DigitalNameCFO " +DigitalNameCFO);
-                    }
-
-                    @Override
-                    public void onSuccess(@io.reactivex.rxjava3.annotations.NonNull Object o) {
-                        progressDialog.dismiss();
-                        progressDialog.cancel();
-                        // TODO: 21.09.2023
-                        if ( РезультатВставкиИзПрошлогоМесяца>0) {
-                            // TODO: 21.09.2023
-                            РезультатВставкиИзПрошлогоМесяца=0;
-                            // TODO: 21.04.2023 после операции возврящемся на Activity List Peoples
-                            МетодПереходMainActivity_List_Peoples(intentОтActivityListPeoples);
-                            Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                            //todo  конец
+                            Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                                     " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                                    " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"
-                                    + "  РезультатВставкиИзПрошлогоМесяца " + РезультатВставкиИзПрошлогоМесяца);
-
-                        }else{
-                            Toast.makeText(context, "Нет создание!!!", Toast.LENGTH_SHORT).show();
-
-                            Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
-                                    " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                                    " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"
-                                    + "  РезультатВставкиИзПрошлогоМесяца " +РезультатВставкиИзПрошлогоМесяца);
-                        }
-
-                    }
-
-                    @Override
-                    public void onError(@io.reactivex.rxjava3.annotations.NonNull Throwable e) {
-                        e.printStackTrace();
-                        Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
-                                " Линия  :" + Thread.currentThread().getStackTrace()[2].getLineNumber());
-                        new RecordNewErros(context).recordnewerror(e.toString(), this.getClass().getName(),
-                                Thread.currentThread().getStackTrace()[2].getMethodName(), Thread.currentThread().getStackTrace()[2].getLineNumber());
-                    }
-                });
+                                    " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n");
 
 
                 Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
@@ -343,8 +386,11 @@ public Cursor МетодПолучениеДанныхЧерезCursorLoader(@No
                 new RecordNewErros(context).recordnewerror(e.toString(), this.getClass().getName(),
                         Thread.currentThread().getStackTrace()[2].getMethodName(), Thread.currentThread().getStackTrace()[2].getLineNumber());
             }
-            return РезультатВставкиИзПрошлогоМесяца;
         }
+
+
+
+
 
 
 
@@ -393,8 +439,7 @@ public Cursor МетодПолучениеДанныхЧерезCursorLoader(@No
                                 disposable1[0] =d;
                                 Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                                         " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                                        " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"+
-                                        "РезультатВставкиИзПрошлогоМесяца  " + РезультатВставкиИзПрошлогоМесяца);
+                                        " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n");
                             }
 
                             @Override
