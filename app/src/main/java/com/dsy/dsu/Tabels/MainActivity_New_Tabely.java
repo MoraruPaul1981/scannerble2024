@@ -1010,13 +1010,12 @@ while(iterator.hasNext()){
 
 
                         // TODO: 07.10.2024  Созадем нОВЫЙ ТАБЕЛЬ
+                        /////TODO создаем НОВЫЙ ТАБЕЛЬ
+                        МетодФиналСоздаемТабельСПолученнымиДанными(bundle);
 
-                        Completable.fromAction(()->{
-                                    /////TODO создаем НОВЫЙ ТАБЕЛЬ
-                                    МетодФиналСоздаемТабельСПолученнымиДанными(bundle);
-                                    
-                        }).subscribeOn(Schedulers.single())
-                                .subscribe();
+                        Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                                " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                                " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n");
                       
                     }
                 }

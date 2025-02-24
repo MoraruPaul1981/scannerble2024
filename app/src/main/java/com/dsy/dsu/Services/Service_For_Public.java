@@ -32,9 +32,9 @@ import com.dsy.dsu.BusinessLogicAll.DATE.Class_Generation_Data;
 import com.dsy.dsu.BusinessLogicAll.DATE.SubClassCursorLoader;
 import com.dsy.dsu.Tabels.MainActivity_List_Tabels;
 
-import org.reactivestreams.Subscriber;
 import org.reactivestreams.Subscription;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
@@ -47,12 +47,9 @@ import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
 import io.reactivex.rxjava3.core.Flowable;
 import io.reactivex.rxjava3.core.Observable;
 import io.reactivex.rxjava3.core.Observer;
-import io.reactivex.rxjava3.core.Single;
-import io.reactivex.rxjava3.core.SingleObserver;
 import io.reactivex.rxjava3.disposables.Disposable;
 import io.reactivex.rxjava3.functions.Action;
 import io.reactivex.rxjava3.functions.Consumer;
-import io.reactivex.rxjava3.functions.Function;
 import io.reactivex.rxjava3.functions.Predicate;
 import io.reactivex.rxjava3.schedulers.Schedulers;
 
@@ -266,14 +263,14 @@ public Cursor МетодПолучениеДанныхЧерезCursorLoader(@No
                                         @Override
                                         public void accept(Integer getmonthagofordatasearch) throws Throwable {
                                             Курсор_ВытаскиваемПоследнийМесяцТабеля[0] =      contentResolver.query(uri,new String[]{},
-                                                    new String("  SELECT * FROM  "+getCurrentTabel+" WHERE year_tabels=?  AND month_tabels=?  AND cfo=?  AND status_send!=?"),
+                                                    new String("  SELECT * FROM  "+getCurrentTabel+" WHERE year_tabels=?  AND month_tabels=?  AND cfo=?  AND status_send!=?  ORDER BY date_update DESC    "),
                                                     new String[]{String.valueOf(ГодТабелейИзТабеля),
                                                             String.valueOf( getmonthagofordatasearch),String.valueOf(DigitalNameCFO),"Удаленная"},null);
 
                                             Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                                                     " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
                                                     " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"
-                                                    + " getmonthagofordatasearch  " +getmonthagofordatasearch);
+                                                    + " getmonthagofordatasearch  " +getmonthagofordatasearch + " Курсор_ВытаскиваемПоследнийМесяцТабеля[0] " +Курсор_ВытаскиваемПоследнийМесяцТабеля[0]);
 
                                         }
                                     })
@@ -362,13 +359,16 @@ public Cursor МетодПолучениеДанныхЧерезCursorLoader(@No
                                             // TODO: 24.02.2025
                                             Bundle bundleПолучаемДанных =(Bundle)  intent.getExtras();
                                             MainParentUUID=    bundleПолучаемДанных.getLong("MainParentUUID", 0l);
-                                            ГодТабелейИзТабеля=  bundleПолучаемДанных.getInt("ГодТабелей", 0);
-                                            МЕсяцТабелейИзТабеля=  bundleПолучаемДанных.getInt("МЕсяцТабелей",0);
                                             DigitalNameCFO=   bundleПолучаемДанных.getInt("DigitalNameCFO", 0);
+                                            ГодТабелейИзТабеля= getYear();
+                                            //ГодТабелейИзТабеля=  bundleПолучаемДанных.getInt("ГодТабелей", 0);
+                                            //    МЕсяцТабелейИзТабеля=  bundleПолучаемДанных.getInt("МЕсяцТабелей",0);
+                                            МЕсяцТабелейИзТабеля=     getMoth();
 
                                             Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                                                     " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                                                    " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" + " DigitalNameCFO " +DigitalNameCFO);
+                                                    " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"
+                                                    + " DigitalNameCFO " +DigitalNameCFO  + "МЕсяцТабелейИзТабеля " +МЕсяцТабелейИзТабеля +" ГодТабелейИзТабеля " +ГодТабелейИзТабеля);
                                         }
                                     }).subscribeOn(Schedulers.single()).observeOn(AndroidSchedulers.mainThread())
                                     .subscribe();
@@ -392,11 +392,24 @@ public Cursor МетодПолучениеДанныхЧерезCursorLoader(@No
             }
         }
 
+        private Integer getMoth() {
+            LocalDate today = LocalDate.now();
+            МЕсяцТабелейИзТабеля = today.getMonthValue();
+            Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                    " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                    " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"  + " intentОтActivityListPeoples " +intentОтActivityListPeoples.getExtras());
+            return  МЕсяцТабелейИзТабеля;
+        }
 
 
-
-
-
+        private Integer getYear() {
+            LocalDate today = LocalDate.now();
+            ГодТабелейИзТабеля = today.getYear();
+            Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                    " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                    " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"  + " intentОтActivityListPeoples " +intentОтActivityListPeoples.getExtras());
+            return  ГодТабелейИзТабеля;
+        }
 
         /////TODO метод запуска кода при однократорм нажатии просто загузка сотрудников табель
         private void МетодПереходMainActivity_List_Peoples( @NonNull Intent intentОтActivityListPeoples) {

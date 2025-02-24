@@ -866,20 +866,22 @@ try{
                 // TODO: 19.10.2021   GET()->
                 if (ВерсияДанныхсSqlServer > ВерсииНаАндройдеСерверная ) {
                     // TODO: 05.04.2024
-                    // TODO: 05.04.2024
-                    if (!ИмяТаблицы.trim().equalsIgnoreCase("errordsu1")
-                            && !ИмяТаблицы.trim().equalsIgnoreCase("settings_tabels")) {
+                   if( ВремяОтSqlServer.after(ВремяДанныхНаАндройде)) {
+                        // TODO: 05.04.2024
+                        if (!ИмяТаблицы.trim().equalsIgnoreCase("errordsu1")
+                                && !ИмяТаблицы.trim().equalsIgnoreCase("settings_tabels")) {
 
-                        ////// todo МЕТОД GET() в фоне    ////// todo МЕТОД GET
-                        workerAsyncBackGET= МетодДанныеПолучаемНаСервервФоне(ИмяТаблицы, ВерсииНаАндройдеСерверная, PublicID);
+                            ////// todo МЕТОД GET() в фоне    ////// todo МЕТОД GET
+                            workerAsyncBackGET = МетодДанныеПолучаемНаСервервФоне(ИмяТаблицы, ВерсииНаАндройдеСерверная, PublicID);
 
-                        // TODO: 12.02.2025
-                        // TODO: 11.02.2025
-                        Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
-                                " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                                " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" + " workerAsyncBackGET  "
-                                +workerAsyncBackGET+
-                                "\n"+ " ВремяДанныхНаАндройде " +ВремяДанныхНаАндройде+" ВремяДанныхНаАндройде " +ВремяДанныхНаАндройде);
+                            // TODO: 12.02.2025
+                            // TODO: 11.02.2025
+                            Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                                    " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                                    " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" + " workerAsyncBackGET  "
+                                    + workerAsyncBackGET +
+                                    "\n" + " ВремяДанныхНаАндройде " + ВремяДанныхНаАндройде + " ВремяДанныхНаАндройде " + ВремяДанныхНаАндройде);
+                        }
                     }
                 }
 
