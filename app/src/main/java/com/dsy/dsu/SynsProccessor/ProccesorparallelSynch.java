@@ -866,7 +866,6 @@ try{
                 // TODO: 19.10.2021   GET()->
                 if (ВерсияДанныхсSqlServer > ВерсииНаАндройдеСерверная ) {
                     // TODO: 05.04.2024
-                   if( ВремяОтSqlServer.after(ВремяДанныхНаАндройде)) {
                         // TODO: 05.04.2024
                         if (!ИмяТаблицы.trim().equalsIgnoreCase("errordsu1")
                                 && !ИмяТаблицы.trim().equalsIgnoreCase("settings_tabels")) {
@@ -882,7 +881,6 @@ try{
                                     + workerAsyncBackGET +
                                     "\n" + " ВремяДанныхНаАндройде " + ВремяДанныхНаАндройде + " ВремяДанныхНаАндройде " + ВремяДанныхНаАндройде);
                         }
-                    }
                 }
 
             // TODO: 08.04.2024 launch get
