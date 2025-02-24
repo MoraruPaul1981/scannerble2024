@@ -40,7 +40,7 @@ android {
         applicationId "com.dsy.dsu"
         minSdk 29
         targetSdk 34
-        versionCode 1028
+        versionCode 1029
         versionName 'SousAvtodor Track 2025'
 
         //TODO настройки уведомлений
