@@ -40,6 +40,7 @@ import java.util.Collections;
 import java.util.Date;
 import java.util.Optional;
 import java.util.concurrent.TimeUnit;
+import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Stream;
 
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
@@ -249,7 +250,7 @@ public Cursor МетодПолучениеДанныхЧерезCursorLoader(@No
 
         private void МетодЗапускЗаполенеияИзПрошлыхМесяцев(@NonNull Context context, @NonNull Intent intent,@NonNull ProgressDialog progressDialog) {
             try {
-                final Integer[] РезультатВставкиИзПрошлогоМесяца = new Integer[1];
+                final AtomicInteger atomicIntegerBeforeMothCopyTabel = new AtomicInteger(0);
                     // TODO: 22.09.2025
                     String getCurrentTabel="viewtabel";
                             //TODO ВЫЧИСЛЯЕМ ДАННЫЕ КОТОРЫЕ НА ВСТАВИТЬ
@@ -259,6 +260,7 @@ public Cursor МетодПолучениеДанныхЧерезCursorLoader(@No
                             final Cursor[] Курсор_ВытаскиваемПоследнийМесяцТабеля = {null};
                             Flowable.range(1,12)
                                     .filter(f->f.intValue()<МЕсяцТабелейИзТабеля)
+                                    //.filter(f->f.intValue()<9)
                             .sorted(Collections.reverseOrder()).delay(1000,TimeUnit.MILLISECONDS)
                             .onBackpressureBuffer().doOnNext(new Consumer<Integer>() {
                                         @Override
@@ -310,43 +312,44 @@ public Cursor МетодПолучениеДанныхЧерезCursorLoader(@No
                                                     if (Курсор_ВытаскиваемПоследнийМесяцТабеля[0]!=null) {
                                                         if (Курсор_ВытаскиваемПоследнийМесяцТабеля[0].getCount()>0) {
                                                             // TODO: 16.02.2023 сама вставка
-                                                           РезультатВставкиИзПрошлогоМесяца[0] = copyDataTabelwithNewTabel(context, ГодТабелейИзТабеля, МЕсяцТабелейИзТабеля,
-                                                                            Курсор_ВытаскиваемПоследнийМесяцТабеля[0],
-                                                                            progressDialog,MainParentUUID);
+                                                            atomicIntegerBeforeMothCopyTabel.set( copyDataTabelwithNewTabel(context, ГодТабелейИзТабеля, МЕсяцТабелейИзТабеля,
+                                                                    Курсор_ВытаскиваемПоследнийМесяцТабеля[0],
+                                                                    progressDialog,MainParentUUID));
                                                             Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                                                                     " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
                                                                     " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"
-                                                                    + " РезультатВставкиИзПрошлогоМесяца  " + РезультатВставкиИзПрошлогоМесяца[0]);
+                                                                    + " atomicIntegerBeforeMothCopyTabel  " + atomicIntegerBeforeMothCopyTabel.get());
 
 
                                                         }
-                                                        // TODO: 21.09.2023
-                                                        if (              РезультатВставкиИзПрошлогоМесяца[0] >0) {
-                                                            // TODO: 21.09.2023
-                                                            // TODO: 21.04.2023 после операции возврящемся на Activity List Peoples
-                                                            МетодПереходMainActivity_List_Peoples(intentОтActivityListPeoples);
-
-                                                            Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
-                                                                    " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                                                                    " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"
-                                                                    + "  РезультатВставкиИзПрошлогоМесяца " +             РезультатВставкиИзПрошлогоМесяца[0] );
-
-                                                        }else{
-                                                            // TODO: 24.02.2025
-                                                            context.getMainExecutor().execute(()->{
-                                                                Toast.makeText(context, "Табель не скопирован!!!", Toast.LENGTH_SHORT).show();
-                                                            });
-
-                                                            Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
-                                                                    " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                                                                    " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"
-                                                                    + "  РезультатВставкиИзПрошлогоМесяца " + РезультатВставкиИзПрошлогоМесяца[0]);
-                                                        }
-
-                                                        progressDialog.dismiss();
-                                                        progressDialog.cancel();                                                    }
+                                                    }
 
 
+// TODO: 24.02.2025
+
+                                                    // TODO: 21.09.2023
+                                                    if (             atomicIntegerBeforeMothCopyTabel.get() >0) {
+                                                        // TODO: 21.04.2023 после операции возврящемся на Activity List Peoples
+                                                        МетодПереходMainActivity_List_Peoples(intentОтActivityListPeoples);
+
+                                                        Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                                                                " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                                                                " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"
+                                                                + "  atomicIntegerBeforeMothCopyTabel.get() " +            atomicIntegerBeforeMothCopyTabel.get() );
+                                                    }else{
+                                                        // TODO: 24.02.2025
+                                                        context.getMainExecutor().execute(()->{
+                                                            Toast.makeText(context, "Табель не скопирован!!!", Toast.LENGTH_SHORT).show();
+                                                        });
+
+                                                        Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                                                                " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                                                                " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"
+                                                                + "  atomicIntegerBeforeMothCopyTabel.get() " + atomicIntegerBeforeMothCopyTabel.get());
+                                                    }
+
+                                                    progressDialog.dismiss();
+                                                    progressDialog.cancel();
 
                                                     Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                                                             " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
@@ -367,7 +370,8 @@ public Cursor МетодПолучениеДанныхЧерезCursorLoader(@No
                                                     " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
                                                     " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" + " DigitalNameCFO " +DigitalNameCFO);
                                         }
-                                    }).subscribeOn(Schedulers.single()).observeOn(AndroidSchedulers.mainThread()).subscribe();
+                                    }).subscribeOn(Schedulers.single()).observeOn(AndroidSchedulers.mainThread())
+                                    .subscribe();
 
 
                             //todo  конец
