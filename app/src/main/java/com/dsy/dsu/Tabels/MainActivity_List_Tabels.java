@@ -1266,7 +1266,7 @@ public class MainActivity_List_Tabels extends AppCompatActivity  {
 
                             if (ИмесяцвИГодСразу != null && СпинерВыборДату !=null) {
                                 // TODO: 03.10.2024
-                                validationDateNewtabel();
+
 
                                 setNewNameMotchCurretntabel();
 
@@ -1327,38 +1327,7 @@ public class MainActivity_List_Tabels extends AppCompatActivity  {
 
     }
 
-    private void validationDateNewtabel() throws ParseException {
 
-      try {
-
-
-            for (int ИндексСуществуюЩимМесяц = 0; ИндексСуществуюЩимМесяц < СпинерВыборДату.getCount(); ИндексСуществуюЩимМесяц++) {
-                ////todo ДА ПРОСТО ЗАПОЛЯНЕМ БУФЕР УЖЕ СОЗДАННЫМИ МЕСЯЦАМИ В СПИНЕРЕ
-           String НазваниеМесяцаИзСпинера=     СпинерВыборДату.getItemAtPosition(ИндексСуществуюЩимМесяц).toString();
-
-              if(  ИмесяцвИГодСразу.trim().equalsIgnoreCase(НазваниеМесяцаИзСпинера.trim()) ){
-                  Toast.makeText(getApplicationContext(), "Табель в этом месяце уже есть !!! ", Toast.LENGTH_LONG).show();
-                  // TODO: 18.03.2024 exit
-                  break;
-                }
-                Log.d(this.getClass().getName(), " ИмесяцвИГодСразу " + ИмесяцвИГодСразу.toString() + "\n");
-
-            }
-
-        ////
-        Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
-                " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n");
-
-    } catch (Exception e) {
-        e.printStackTrace();
-        Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
-                " Линия  :" + Thread.currentThread().getStackTrace()[2].getLineNumber());
-        new RecordNewErros(getApplicationContext()).recordnewerror(e.toString(), this.getClass().getName(),
-                Thread.currentThread().getStackTrace()[2].getMethodName(), Thread.currentThread().getStackTrace()[2].getLineNumber());
-    }
-
-    }
 
 
 

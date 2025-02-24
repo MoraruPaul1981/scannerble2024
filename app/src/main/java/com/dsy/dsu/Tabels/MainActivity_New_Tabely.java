@@ -28,6 +28,7 @@ import android.widget.FilterQueryProvider;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -1046,7 +1047,6 @@ while(iterator.hasNext()){
 
             bundleДляСозданияНовгоТабелч.putString("НазваниеЦФО",НазваниеЦФО);
             bundleДляСозданияНовгоТабелч.putLong("UUIDНазваниеЦФО",UUIDНазваниеЦФО);
-
 
 
 
