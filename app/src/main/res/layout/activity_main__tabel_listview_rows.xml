@@ -351,7 +351,7 @@
                     android:layout_margin="5dp"
                     android:padding="2dp"
                     android:layout_alignParentBottom="true"
-                    android:layout_toLeftOf="@+id/КруглаяКнопкаСамТабель"
+                    android:layout_toLeftOf="@+id/floatingactionbuttoncustomers"
                     android:layout_centerHorizontal="true"
                     android:background="@drawable/style_forpolymaterialb_cycle_createspinner2"
                     android:backgroundTintMode="multiply"
@@ -367,7 +367,7 @@
 
 
                 <com.google.android.material.floatingactionbutton.FloatingActionButton
-                    android:id="@+id/КруглаяКнопкаСамТабель"
+                    android:id="@+id/floatingactionbuttoncustomers"
                     android:layout_width="70dp"
                     android:layout_height="70dp"
                     android:layout_alignParentRight="true"

@@ -35,7 +35,7 @@
         android:gravity="center_vertical|right"
         android:paddingStart="?android:attr/listPreferredItemPaddingStart"
         android:paddingEnd="?android:attr/listPreferredItemPaddingEnd"
-        android:text="ИЗ ПРОШЛОГО МЕСЯЦА  "
+        android:text="СКОПИРОВАТЬ ТАБЕЛЬ"
         android:textAlignment="gravity"
         android:textAppearance="?android:attr/textAppearanceListItemSmall"
         android:textColor="#171515"
