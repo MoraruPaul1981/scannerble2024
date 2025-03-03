@@ -32,7 +32,7 @@ import dagger.hilt.components.SingletonComponent;
 @InstallIn(SingletonComponent.class)
 @Named("startingEventAsyncOrUpdatePOUsers")
 public class ServiceBootBinessLogic {
-
+    IntentServiceBoot.LocalBinderBootSerice getlocalBinderBootSerice;
     private Context context;
 
     public  @Inject ServiceBootBinessLogic(@ApplicationContext  Context context ) {
@@ -91,49 +91,7 @@ public class ServiceBootBinessLogic {
         }
     }
 
-    public Boolean bindingServiceBootAndAsync(@NonNull Activity activity){
-        Boolean bindingServiceBoot = null;
-        try{
-            Intent intentstartServiceOneSignal=new Intent(context, IntentServiceBoot.class);
-            // TODO: 24.01.2024
-            bindingServiceBoot=   activity.bindService(intentstartServiceOneSignal, new ServiceConnection() {
-                @Override
-                public void onServiceConnected(ComponentName name, IBinder service) {
-                    if (service.isBinderAlive()) {
-                      IntentServiceBoot.LocalBinderBootSerice getlocalBinderBootSerice = (IntentServiceBoot.LocalBinderBootSerice) service;
-                        Log.d(context.getClass().getName(), "\n"
-                                + " время: " + new Date() + "\n+" +
-                                " Класс в процессе... " + this.getClass().getName() + "\n" +
-                                " onServiceConnected  метод в процессе... " + Thread.currentThread().getStackTrace()[2].getMethodName() +
-                                "  + getlocalBinderBootService.isBinderAlive()"+
-                                service.isBinderAlive());
 
-                    }
-                }
-
-                @Override
-                public void onServiceDisconnected(ComponentName name) {
-                    Log.d(context.getClass().getName(), "\n"
-                            + " время: " + new Date() + "\n+" +
-                            " Класс в процессе... " + this.getClass().getName() + "\n" +
-                            " onServiceConnected  метод в процессе... " + Thread.currentThread().getStackTrace()[2].getMethodName());
-                }
-            }, Context.BIND_AUTO_CREATE);
-
-
-            Log.d(context.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
-                    " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                    " line " + Thread.currentThread().getStackTrace()[2].getLineNumber()+" bindingServiceBoot " +bindingServiceBoot);
-        } catch (Exception e) {
-            e.printStackTrace();
-            Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() + " Линия  :"
-                    + Thread.currentThread().getStackTrace()[2].getLineNumber());
-            new RecordNewErros(context).recordnewerror(e.toString(),
-                    this.getClass().getName(), Thread.currentThread().getStackTrace()[2].getMethodName(),
-                    Thread.currentThread().getStackTrace()[2].getLineNumber());
-        }
-        return  bindingServiceBoot;
-    }
 
 
 
