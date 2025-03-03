@@ -8,14 +8,13 @@ import android.app.NotificationManager;
 import android.content.ComponentName;
 import android.content.ContentResolver;
 import android.content.Intent;
-import android.content.pm.ServiceInfo;
-import android.os.Build;
+import android.os.Binder;
+import android.os.IBinder;
 import android.util.Log;
 
 import androidx.annotation.Nullable;
 import androidx.core.app.NotificationCompat;
 import androidx.core.app.ServiceCompat;
-import androidx.work.ForegroundInfo;
 
 import com.dsy.dsu.BootAndAsync.BlBootAsync.CompleteRemoteSyncService;
 import com.dsy.dsu.Errors.controller.RecordNewErros;
@@ -24,7 +23,6 @@ import com.dsy.dsu.Hilt.PublicId.QualifierPublicId;
 
 import java.util.Date;
 import java.util.LinkedHashMap;
-import java.util.Random;
 
 import javax.inject.Inject;
 import javax.net.ssl.SSLSocketFactory;
@@ -45,6 +43,9 @@ import dagger.hilt.android.AndroidEntryPoint;
 @AndroidEntryPoint
 public class IntentServiceBoot extends IntentService {
 
+
+    // TODO: 03.03.2025
+    public  LocalBinderBootSerice getlocalBinderBootSerice = new  LocalBinderBootSerice();
 
 
     @Inject
@@ -259,5 +260,30 @@ public class IntentServiceBoot extends IntentService {
                     Thread.currentThread().getStackTrace()[2].getMethodName(), Thread.currentThread().getStackTrace()[2].getLineNumber());
         }
     }
+
+
+
+
+    public class LocalBinderBootSerice extends Binder {
+        public IntentServiceBoot getService() {
+            Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                    " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                    " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n");
+            return IntentServiceBoot.this;
+        }
+    }
+
+
+    @Nullable
+    @Override
+    public IBinder onBind(Intent intent) {
+        Log.d(getApplicationContext().getClass().getName(), "\n"
+                + " время: " + new Date() + "\n+" +
+                " Класс в процессе... " + this.getClass().getName() + "\n" +
+                " метод в процессе... " + Thread.currentThread().getStackTrace()[2].getMethodName());
+        //   return super.onBind(intent);
+        return getlocalBinderBootSerice;
+    }
+
     // TODO: 10.10.2024 end class
 }

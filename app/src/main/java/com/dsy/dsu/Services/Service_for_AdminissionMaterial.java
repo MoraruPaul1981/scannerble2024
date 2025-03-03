@@ -247,6 +247,11 @@ public class Service_for_AdminissionMaterial extends IntentService {
 
 
 
+
+
+
+
+
         @Override
         public void attachInterface(@Nullable IInterface owner, @Nullable String descriptor) {
             super.attachInterface(owner, descriptor);
