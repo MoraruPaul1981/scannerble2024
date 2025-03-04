@@ -35,41 +35,31 @@ public class SubClassUpdatesCELL {
     }
 
 
-    public Integer МетодВалидацияЯчеекSaveCell(@NonNull EditText editTextRowКликПоДАнными,@NonNull String  НовоеЗначениеЯчейки ) {
+    public Integer МетодВалидацияЯчеекSaveCell(@NonNull EditText editTextRowКликПоДАнными,@NonNull Long  getNewValueCell ) {
         Integer ОбновлениеЯчейки=0;
         try{
-
-
-    if(НовоеЗначениеЯчейки.length()>0){
         // TODO: 10.08.2023  ЦИФРА
-        Integer НовоеЗначениеЯчейкиФинал= Stream.of(НовоеЗначениеЯчейки)
-                .filter(f->f.length()<3)
-                .mapToInt(mint->Integer.parseInt(mint))
-                .findFirst().orElse(0);
-        if ( НовоеЗначениеЯчейкиФинал>0 && НовоеЗначениеЯчейкиФинал<=24) {
+        if (   getNewValueCell<=24) {
             // TODO: 11.04.2023 Обновление Ячейки через ПРовайдер
-            ОбновлениеЯчейки=    МетодСохранениеЯчейкиCellТабель(editTextRowКликПоДАнными,НовоеЗначениеЯчейкиФинал,context);
+            ОбновлениеЯчейки=    МетодСохранениеЯчейкиCellТабель(editTextRowКликПоДАнными,getNewValueCell.intValue(),context);
             if (ОбновлениеЯчейки>0) {
                 Bundle bundleперезаписьЯчейки=(Bundle) editTextRowКликПоДАнными.getTag();
-                bundleперезаписьЯчейки.putString("ПослеЗначниеДня"  , String.valueOf(НовоеЗначениеЯчейкиФинал));
+                bundleперезаписьЯчейки.putString("ПослеЗначниеДня"  , String.valueOf(getNewValueCell));
             }
         }
-    }else{
-        // TODO: 11.04.2023 Обновление Ячейки через ПРовайдер
+   // }/*else{
+    /*    // TODO: 11.04.2023 Обновление Ячейки через ПРовайдер
         ОбновлениеЯчейки=    МетодСохранениеЯчейкиCellТабель(editTextRowКликПоДАнными,0,context);
         if (ОбновлениеЯчейки>0) {
             Bundle bundleперезаписьЯчейки=(Bundle) editTextRowКликПоДАнными.getTag();
-            bundleперезаписьЯчейки.putString("ПослеЗначниеДня"  , String.valueOf(НовоеЗначениеЯчейки));
-        }
-    }
-
-
-
+            bundleперезаписьЯчейки.putString("ПослеЗначниеДня"  , String.valueOf(getNewValueCell));*/
+        //}
+    //}
 
             Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                     " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
                     " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"  +
-                    "НовоеЗначениеЯчейки" +  НовоеЗначениеЯчейки + " ОбновлениеЯчейки " +ОбновлениеЯчейки);
+                    "getNewValueCell" +  getNewValueCell + " ОбновлениеЯчейки " +ОбновлениеЯчейки);
         } catch (Exception e) {
             e.printStackTrace();
             Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +

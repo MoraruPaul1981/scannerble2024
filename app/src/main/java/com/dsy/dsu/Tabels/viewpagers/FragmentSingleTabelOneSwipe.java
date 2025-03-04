@@ -100,7 +100,9 @@ import java.util.Optional;
 import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.concurrent.TimeUnit;
 import java.util.function.BiConsumer;
+import java.util.function.Function;
 import java.util.function.IntConsumer;
+import java.util.function.ToIntFunction;
 import java.util.stream.IntStream;
 
 import dagger.hilt.android.AndroidEntryPoint;
@@ -1659,6 +1661,7 @@ public class FragmentSingleTabelOneSwipe extends Fragment {
                                         .observeOn(AndroidSchedulers.mainThread())
                                         .throttleLatest(100,TimeUnit.MILLISECONDS)//из общего время  последних event
                                         .distinct().forEachWhile(new Predicate<TextViewAfterTextChangeEvent>() {
+                                            @SuppressLint("NewApi")
                                             @Override
                                             public boolean test(TextViewAfterTextChangeEvent textViewAfterTextChangeEvent) throws Throwable {
                                                 // TODO: 24.08.2023
@@ -1666,12 +1669,34 @@ public class FragmentSingleTabelOneSwipe extends Fragment {
                                                 if(textViewAfterTextChangeEvent.component1().isInputMethodTarget()){
 
                                                     String   НовоеЗначенияДня   =(String) textViewAfterTextChangeEvent.component1().getText().toString();
-                                                    if (!НовоеЗначенияДня.isEmpty()) {
                                                         НовоеЗначенияДня=   НовоеЗначенияДня.replaceAll("[^0-9]","").trim();
-                                                    }
 
 
-                                               Integer     РезультатОбновлениеЯчейки=        методListerAfterSaveNewDay (editTextRowКликПоДАнными,НовоеЗначенияДня);
+                                                        Long getNewValueCell=     Optional.ofNullable(НовоеЗначенияДня).stream()
+                                                                        .filter(f1->f1!=null)
+                                                                      /*  .filter(f3->f3.chars().allMatch( Character::isDigit ))*/
+                                                                        .mapToInt(new ToIntFunction<String>() {
+                                                                            @Override
+                                                                            public int applyAsInt(String value) {
+                                                                                Integer getNewValue= 0;
+                                                                                if (!value.isEmpty()) {
+                                                                                    getNewValue = Integer.valueOf(value.replaceAll("[^0-9]","").trim());
+                                                                                }
+                                                                                // TODO: 24.08.2023
+                                                                                Log.d(this.getClass().getName(), "\n" + " class " +
+                                                                                        Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                                                                                        " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                                                                                        " line " + Thread.currentThread().getStackTrace()[2].getLineNumber()
+                                                                                        + "\n"+" value " +value );
+                                                                                return getNewValue;
+                                                                            }
+                                                                        }).asLongStream().findAny().orElse(0l);
+
+
+                                               Integer     РезультатОбновлениеЯчейки=        методListerAfterSaveNewDay (editTextRowКликПоДАнными,getNewValueCell );
+
+
+
 
                                                     // TODO: 24.08.2023
                                                     Log.d(this.getClass().getName(), "\n" + " class " +
@@ -1679,6 +1704,7 @@ public class FragmentSingleTabelOneSwipe extends Fragment {
                                                             " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
                                                             " line " + Thread.currentThread().getStackTrace()[2].getLineNumber()
                                                             + "\n"+" РезультатОбновлениеЯчейки " +РезультатОбновлениеЯчейки );
+
 
                                                     return true;
                                                 }
@@ -1719,14 +1745,14 @@ public class FragmentSingleTabelOneSwipe extends Fragment {
             }
 
             // TODO: 24.08.2023 метод слушатель с последующим запись
-            Integer  методListerAfterSaveNewDay (@NonNull EditText editTextRowКликПоДАнными,@NonNull String новоеЗначениеДня){
+            Integer  методListerAfterSaveNewDay (@NonNull EditText editTextRowКликПоДАнными,@NonNull Long getNewValueCell){
                 // TODO: 04.03.2025
                 Integer РезультатОбновлениеЯчейки=0;
                 try{
                         // TODO: 11.04.2023 Оперция Обновлнения ЯЧЕЕК
                         SubClassUpdatesCELL subClassUpdateSingletabel = new SubClassUpdatesCELL(getContext());
                         // TODO: 10.05.2023  ЗАВПИСЫАЕМ НОВЫЕ ДАННЫВЕ В БАЗУ
-                          РезультатОбновлениеЯчейки = subClassUpdateSingletabel.МетодВалидацияЯчеекSaveCell(editTextRowКликПоДАнными,новоеЗначениеДня);
+                          РезультатОбновлениеЯчейки = subClassUpdateSingletabel.МетодВалидацияЯчеекSaveCell(editTextRowКликПоДАнными,getNewValueCell);
                         // TODO: 10.05.2023 После операции Сохранение в Ячкейке
                         if (РезультатОбновлениеЯчейки > 0) {
                             // TODO: 06.07.2023 Считаем ЧАсы
@@ -1734,15 +1760,15 @@ public class FragmentSingleTabelOneSwipe extends Fragment {
                             методСчитаемЧасы(myRecycleViewAdapter.cursor);
                                  message.getTarget().postDelayed(()->{
                                      editTextRowКликПоДАнными.startAnimation(animation1);
-                                 },50);
+                                 },150);
 
                             // TODO: 19.06.2023 код когда данные в ячейке не сохранились
                         } else {
-                            методКогдаДанныеНеСохранились(editTextRowКликПоДАнными, новоеЗначениеДня);
+                            методКогдаДанныеНеСохранились(editTextRowКликПоДАнными, getNewValueCell.toString());
 
                         }
                         // TODO: 24.04.2023  после обновление ячейки Считаем Часы
-                        методИзменяемЦветСодержимоваЦифраИлиБуква((editTextRowКликПоДАнными), новоеЗначениеДня);
+                        методИзменяемЦветСодержимоваЦифраИлиБуква((editTextRowКликПоДАнными), getNewValueCell.toString());
 
                     Log.d(this.getClass().getName(), "\n" + " class " +
                             Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
@@ -1834,7 +1860,7 @@ public class FragmentSingleTabelOneSwipe extends Fragment {
                     editTextRowКликПоДАнными.setError(После);
                     message.getTarget().postDelayed(()->{
                         editTextRowКликПоДАнными.setError(null);
-                },1000);
+                },5000);
                 Log.d(this.getClass().getName(), "\n" + "Start Update D1 class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                         " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
                         " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"  );

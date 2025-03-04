@@ -180,7 +180,7 @@
             android:inputType="number"
             android:textAlignment="center"
             android:textSize="22sp"
-            android:tooltipText="d5"
+            android:tooltipText="d4"
             android:visibility="visible"
             android:textStyle="bold" />
     </TableRow>
