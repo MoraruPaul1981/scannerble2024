@@ -1244,8 +1244,8 @@ public class FragmentSingleTabelOneSwipe extends Fragment {
                                 @Override
                                 public void accept(LinkedHashMap<TableRow, TableRow> tableRowTableRowLinkedHashMap) throws Throwable {
 
-                                    // TODO: 04.03.2025
-                                    Flowable.fromIterable(tableRowTableRowLinkedHashMap.values())
+                                    // TODO: 04.03.2025 vALUE
+                                    Flowable flowable1=  Flowable.fromIterable(tableRowTableRowLinkedHashMap.values())
                                             .onBackpressureBuffer()
                                             .doOnNext(new Consumer<TableRow>() {
                                                 @Override
@@ -1260,34 +1260,42 @@ public class FragmentSingleTabelOneSwipe extends Fragment {
                                                             " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
                                                             " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n");
 
+                                                }
+                                            });
+
+
+                                    // TODO: 04.03.2025 naME
+                               Flowable flowable2=     Flowable.fromIterable(tableRowTableRowLinkedHashMap.keySet())
+                                            .onBackpressureBuffer()
+                                            .doOnNext(new Consumer<TableRow>() {
+                                                @Override
+                                                public void accept(TableRow tableRowДанныеШабка) throws Throwable {
+                                                    // TODO: 04.03.2025
+                                                    //  Integer   ПозицияДляСмещениеДанных =      методСмещенияДляКурсораForTableRow(ПозицияДанныех);
+
                                                     // TODO: 04.04.2023   Name ROW
-                                                    МетодЗаполняеШабкаTableRow(cursor  ,tableRowДанные);
+                                                    МетодЗаполняеШабкаTableRow(cursor  ,tableRowДанныеШабка);
                                                     // TODO: 26.06.2023  поднимае версию
                                                     Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                                                             " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
                                                             " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n");
 
                                                 }
-                                            }).doOnError(new Consumer<Throwable>() {
-                                                @Override
-                                                public void accept(Throwable throwable) throws Throwable {
-                                                    throwable.printStackTrace();
-                                                    Log.e(getContext().getClass().getName(),
-                                                            "Ошибка " +throwable+ " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
-                                                                    " Линия  :" + Thread.currentThread().getStackTrace()[2].getLineNumber());
-                                                    new RecordNewErros(getContext()).recordnewerror(throwable.toString(),
-                                                            this.getClass().getName().toString(), Thread.currentThread().getStackTrace()[2].getMethodName().toString(),
-                                                            Thread.currentThread().getStackTrace()[2].getLineNumber());
-                                                }
-                                            }).doOnComplete(new Action() {
-                                                @Override
-                                                public void run() throws Throwable {
-                                                    // TODO: 26.06.2023  поднимае версию
-                                                    Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
-                                                            " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                                                            " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n");
-                                                }
-                                            }).blockingSubscribe();
+                                            }) ;
+
+
+                                    Flowable.merge(flowable1,flowable2).doOnComplete(new Action() {
+                                                                                         @Override
+                                                                                         public void run() throws Throwable {
+                                                                                             // TODO: 26.06.2023  поднимае версию
+                                                                                             Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                                                                                                     " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                                                                                                     " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n");
+
+                                                                                         }
+                                                                                     }
+                                    ).subscribe();
+
 
 
 
@@ -1663,13 +1671,14 @@ public class FragmentSingleTabelOneSwipe extends Fragment {
                                                     }
 
 
-                                                    методListerAfterSaveNewDay (editTextRowКликПоДАнными,НовоеЗначенияДня);
+                                               Integer     РезультатОбновлениеЯчейки=        методListerAfterSaveNewDay (editTextRowКликПоДАнными,НовоеЗначенияДня);
 
                                                     // TODO: 24.08.2023
                                                     Log.d(this.getClass().getName(), "\n" + " class " +
                                                             Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                                                             " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                                                            " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" );
+                                                            " line " + Thread.currentThread().getStackTrace()[2].getLineNumber()
+                                                            + "\n"+" РезультатОбновлениеЯчейки " +РезультатОбновлениеЯчейки );
 
                                                     return true;
                                                 }
@@ -1710,12 +1719,14 @@ public class FragmentSingleTabelOneSwipe extends Fragment {
             }
 
             // TODO: 24.08.2023 метод слушатель с последующим запись
-            void  методListerAfterSaveNewDay (@NonNull EditText editTextRowКликПоДАнными,@NonNull String новоеЗначениеДня){
+            Integer  методListerAfterSaveNewDay (@NonNull EditText editTextRowКликПоДАнными,@NonNull String новоеЗначениеДня){
+                // TODO: 04.03.2025
+                Integer РезультатОбновлениеЯчейки=0;
                 try{
                         // TODO: 11.04.2023 Оперция Обновлнения ЯЧЕЕК
                         SubClassUpdatesCELL subClassUpdateSingletabel = new SubClassUpdatesCELL(getContext());
                         // TODO: 10.05.2023  ЗАВПИСЫАЕМ НОВЫЕ ДАННЫВЕ В БАЗУ
-                        Integer РезультатОбновлениеЯчейки = subClassUpdateSingletabel.МетодВалидацияЯчеекSaveCell(editTextRowКликПоДАнными,новоеЗначениеДня);
+                          РезультатОбновлениеЯчейки = subClassUpdateSingletabel.МетодВалидацияЯчеекSaveCell(editTextRowКликПоДАнными,новоеЗначениеДня);
                         // TODO: 10.05.2023 После операции Сохранение в Ячкейке
                         if (РезультатОбновлениеЯчейки > 0) {
                             // TODO: 06.07.2023 Считаем ЧАсы
@@ -1736,7 +1747,7 @@ public class FragmentSingleTabelOneSwipe extends Fragment {
                     Log.d(this.getClass().getName(), "\n" + " class " +
                             Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                             " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                            " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n");
+                            " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" + " РезультатОбновлениеЯчейки"+РезультатОбновлениеЯчейки);
                 } catch (Exception e) {
                     e.printStackTrace();
                     Log.e(getContext().getClass().getName(),
@@ -1746,7 +1757,7 @@ public class FragmentSingleTabelOneSwipe extends Fragment {
                             this.getClass().getName().toString(), Thread.currentThread().getStackTrace()[2].getMethodName().toString(),
                             Thread.currentThread().getStackTrace()[2].getLineNumber());
                 }
-
+      return  РезультатОбновлениеЯчейки;
 
 
             }
