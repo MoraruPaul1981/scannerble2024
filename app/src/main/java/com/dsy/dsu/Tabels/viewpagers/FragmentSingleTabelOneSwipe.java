@@ -100,7 +100,6 @@ import java.util.Optional;
 import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.concurrent.TimeUnit;
 import java.util.function.BiConsumer;
-import java.util.function.Consumer;
 import java.util.function.IntConsumer;
 import java.util.stream.IntStream;
 
@@ -110,6 +109,7 @@ import io.reactivex.rxjava3.core.Flowable;
 import io.reactivex.rxjava3.core.FlowableSubscriber;
 import io.reactivex.rxjava3.disposables.Disposable;
 import io.reactivex.rxjava3.functions.Action;
+import io.reactivex.rxjava3.functions.Consumer;
 import io.reactivex.rxjava3.functions.Predicate;
 import io.reactivex.rxjava3.internal.subscribers.BlockingSubscriber;
 import io.reactivex.rxjava3.schedulers.Schedulers;
@@ -1240,31 +1240,87 @@ public class FragmentSingleTabelOneSwipe extends Fragment {
 // TODO: 26.06.2023 Цикл Крутим Нахвание и Данные Экрана
                     Flowable.fromIterable(holder.linkedHashMapsНазваниеиДанные)
                             .onBackpressureBuffer()
-                            .blockingIterable().forEach(new Consumer<LinkedHashMap<TableRow, TableRow>>() {
+                            .doOnNext(new Consumer<LinkedHashMap<TableRow, TableRow>>() {
                                 @Override
-                                public void accept(LinkedHashMap<TableRow, TableRow> tableRowTableRowLinkedHashMap) {
-                                    // TODO: 16.11.2023
-                                    tableRowTableRowLinkedHashMap.forEach(new BiConsumer<TableRow, TableRow>() {
-                                       Integer ПозицияДанныех = 0;
-                                        @Override
-                                        public void accept(TableRow tableRowНазвание, TableRow tableRowДанные) {
-                                            // TODO: 26.06.2023 смешение на данных если TableRow
-                                            Integer   ПозицияДляСмещениеДанных =      методСмещенияДляКурсораForTableRow(ПозицияДанныех);
-                                            // TODO: 04.04.2023   DATA ROW
-                                            МетодЗаполняемДаннымиTableRow(cursor  ,tableRowДанные);
-                                            // TODO: 04.04.2023   Name ROW
-                                            МетодЗаполняеШабкаTableRow(cursor  ,tableRowНазвание);
-                                            // TODO: 26.06.2023  поднимае версию
-                                            ПозицияДанныех = ПозицияДанныех+1;
-                                            Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
-                                                    " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                                                    " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"
-                                                    +  "  ПозицияДляСмещениеДанных   "+ПозицияДляСмещениеДанных);
-                                        }
-                                    });
+                                public void accept(LinkedHashMap<TableRow, TableRow> tableRowTableRowLinkedHashMap) throws Throwable {
+
+                                    // TODO: 04.03.2025
+                                    Flowable.fromIterable(tableRowTableRowLinkedHashMap.values())
+                                            .onBackpressureBuffer()
+                                            .doOnNext(new Consumer<TableRow>() {
+                                                @Override
+                                                public void accept(TableRow tableRowДанные) throws Throwable {
+                                                         // TODO: 04.03.2025
+                                                  //  Integer   ПозицияДляСмещениеДанных =      методСмещенияДляКурсораForTableRow(ПозицияДанныех);
+                                                    // TODO: 04.04.2023   DATA ROW
+                                                    МетодЗаполняемДаннымиTableRow(cursor  ,tableRowДанные);
+
+                                                    // TODO: 26.06.2023  поднимае версию
+                                                    Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                                                            " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                                                            " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n");
+
+                                                    // TODO: 04.04.2023   Name ROW
+                                                    МетодЗаполняеШабкаTableRow(cursor  ,tableRowДанные);
+                                                    // TODO: 26.06.2023  поднимае версию
+                                                    Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                                                            " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                                                            " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n");
+
+                                                }
+                                            }).doOnError(new Consumer<Throwable>() {
+                                                @Override
+                                                public void accept(Throwable throwable) throws Throwable {
+                                                    throwable.printStackTrace();
+                                                    Log.e(getContext().getClass().getName(),
+                                                            "Ошибка " +throwable+ " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
+                                                                    " Линия  :" + Thread.currentThread().getStackTrace()[2].getLineNumber());
+                                                    new RecordNewErros(getContext()).recordnewerror(throwable.toString(),
+                                                            this.getClass().getName().toString(), Thread.currentThread().getStackTrace()[2].getMethodName().toString(),
+                                                            Thread.currentThread().getStackTrace()[2].getLineNumber());
+                                                }
+                                            }).doOnComplete(new Action() {
+                                                @Override
+                                                public void run() throws Throwable {
+                                                    // TODO: 26.06.2023  поднимае версию
+                                                    Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                                                            " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                                                            " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n");
+                                                }
+                                            }).blockingSubscribe();
+
+
+
+
+
+                                    // TODO: 26.06.2023  поднимае версию
+                                    Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                                            " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                                            " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n");
+
 
                                 }
-                            });
+                            }).doOnError(new Consumer<Throwable>() {
+                                @Override
+                                public void accept(Throwable throwable) throws Throwable {
+                                    throwable.printStackTrace();
+                                    Log.e(getContext().getClass().getName(),
+                                            "Ошибка " +throwable+ " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
+                                                    " Линия  :" + Thread.currentThread().getStackTrace()[2].getLineNumber());
+                                    new RecordNewErros(getContext()).recordnewerror(throwable.toString(),
+                                            this.getClass().getName().toString(), Thread.currentThread().getStackTrace()[2].getMethodName().toString(),
+                                            Thread.currentThread().getStackTrace()[2].getLineNumber());
+                                }
+                            }).doOnComplete(new Action() {
+                                @Override
+                                public void run() throws Throwable {
+                                    // TODO: 26.06.2023  поднимае версию
+                                    Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                                            " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                                            " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n");
+                                }
+                            }).blockingSubscribe();
+
 
                     // TODO: 26.06.2023
                     Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
@@ -1281,40 +1337,6 @@ public class FragmentSingleTabelOneSwipe extends Fragment {
                 }
             }
 
-            private Integer методСмещенияДляКурсораForTableRow( @NonNull Integer ПозицияДанныех) {
-                switch (ПозицияДанныех){
-                    case  0:
-                        ПозицияДанныех=1;
-                        break;
-                    case  1:
-                        ПозицияДанныех=5;
-                        break;
-                    case  2:
-                        ПозицияДанныех=9;
-                        break;
-                    case  3:
-                        ПозицияДанныех=13;
-                        break;
-                    case  4:
-                        ПозицияДанныех=17;
-                        break;
-                    case  5:
-                        ПозицияДанныех=21;
-                        break;
-                    case  6:
-                        ПозицияДанныех=25;
-                        break;
-                    case  7:
-                        ПозицияДанныех=29;
-                        break;
-                }
-                Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
-                        " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                        " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"
-                        + " ПозицияДанныех " + ПозицияДанныех);
-                return  ПозицияДанныех;
-            }
-
 
             private void МетодЗаполняемДаннымиTableRow(@NonNull Cursor cursor, @NonNull  TableRow tableRowДанные) {
                 try {
@@ -1323,9 +1345,9 @@ public class FragmentSingleTabelOneSwipe extends Fragment {
                         Flowable.range(0,tableRowДанные.getChildCount())
                                 .doOnNext(new io.reactivex.rxjava3.functions.Consumer<Integer>() {
                                     @Override
-                                    public void accept(Integer ПозицияДня) throws Throwable {
-                                        EditText editTextRowКликПоДАнными = (EditText) tableRowДанные.getChildAt(ПозицияДня);
-                                        String ДнейСодержимое =            "d"+ПозицияДня;
+                                    public void accept(Integer ПозицияДняДаннымиTableRow) throws Throwable {
+                                        EditText editTextRowКликПоДАнными = (EditText) tableRowДанные.getChildAt(ПозицияДняДаннымиTableRow);
+                                        String ДнейСодержимое =            editTextRowКликПоДАнными.getTooltipText().toString();
                                         // TODO: 05.04.2023  ЗАПОЛЯНИЕМ ДНЯМИ ROW 1
                                         if (ДниВыходные.containsKey(ДнейСодержимое.trim())) {
                                             String ВыходныеИлиПразничные = ДниВыходные.get(ДнейСодержимое.trim());
@@ -1347,7 +1369,7 @@ public class FragmentSingleTabelOneSwipe extends Fragment {
                                             // TODO: 10.05.2023
                                             Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                                                     " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                                                    " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" + " ПозицияДня  " + ПозицияДня);
+                                                    " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n");
                                         }
                                     }
                                 }).doOnError(new io.reactivex.rxjava3.functions.Consumer<Throwable>() {
@@ -1402,10 +1424,10 @@ public class FragmentSingleTabelOneSwipe extends Fragment {
                                 .onBackpressureBuffer()
                                 .doOnNext(new io.reactivex.rxjava3.functions.Consumer<Integer>() {
                             @Override
-                            public void accept(Integer ПозицияДня) throws Throwable {
+                            public void accept(Integer ПозицияДняШабкаTableRow) throws Throwable {
                                 // TODO: 04.03.2025
-                                TextView textViewНазвание = (TextView) tableRowНазвания.getChildAt(ПозицияДня);
-                                String ДнейНазвание =            "d"+ПозицияДня;
+                                TextView textViewНазвание = (TextView) tableRowНазвания.getChildAt(ПозицияДняШабкаTableRow);
+                                String ДнейНазвание =            textViewНазвание.getHint().toString();
                                 // TODO: 05.04.2023  ЗАПОЛЯНИЕМ ДНЯМИ ROW 1
                                 if (ДниВыходные.containsKey(ДнейНазвание.trim())) {
                                     String ВыходныеИлиПразничные=    ДниВыходные.get(ДнейНазвание.trim());
