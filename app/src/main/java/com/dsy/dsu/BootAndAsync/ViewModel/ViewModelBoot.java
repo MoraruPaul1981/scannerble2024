@@ -51,7 +51,6 @@ public class ViewModelBoot extends AndroidViewModel {
     public LiveData<IntentServiceBoot.LocalBinderBootSerice> getMutableLiveData() {
         try{
             mutableLiveData = new MutableLiveData<IntentServiceBoot.LocalBinderBootSerice>();
-
             Log.d(context.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                     " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
                     " line " + Thread.currentThread().getStackTrace()[2].getLineNumber());
