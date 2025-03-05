@@ -200,6 +200,9 @@ public class IntentServiceBoot extends IntentService {
                     break;
 
             }
+
+            desibleServiceForeground();
+
             Log.d(getApplicationContext().getClass().getName(), "\n"
                     + " время: " + new Date() + "\n+" +
                     " Класс в процессе... " + this.getClass().getName() + "\n" +
@@ -219,7 +222,7 @@ public class IntentServiceBoot extends IntentService {
     private void desibleServiceForeground() {
         try{
         stopForeground(true);
-        //stopSelf();
+        stopSelf();
         Log.d(getApplicationContext().getClass().getName(), "\n"
                 + " время: " + new Date() + "\n+" +
                 " Класс в процессе... " + this.getClass().getName() + "\n" +

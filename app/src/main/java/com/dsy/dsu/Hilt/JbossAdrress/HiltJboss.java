@@ -15,6 +15,8 @@ import com.dsy.dsu.Settings.Model.bl_SettingsActivity.SLLBenessLogicMode;
 
 import java.util.LinkedHashMap;
 
+import javax.inject.Singleton;
+
 import dagger.Module;
 import dagger.Provides;
 import dagger.hilt.InstallIn;
@@ -31,18 +33,13 @@ public class HiltJboss {
     private SharedPreferences preferencesJboss;
 
     @Provides
-
     @QualifierJbossServer3
     public  LinkedHashMap<Integer,String> getHiltPortJboss(@ApplicationContext Context context) {
         LinkedHashMap<Integer,String> getJbossPort= new LinkedHashMap();
         try {
             HiltJbossBinessLogicIntarface hiltJbossBinessLogicIntarface;
-
             preferencesJboss = context.getSharedPreferences("sharedPreferencesХранилище", Context.MODE_MULTI_PROCESS);
-
          String   getMode_ssl=new SLLBenessLogicMode(context).getModeSLL();
-
-
 
             // TODO: 18.03.2024 РЕЛИЗ  сервер  ЫВбор какой сервер будет работа  с SSL  или без него
             if(getMode_ssl.equalsIgnoreCase("https")){

@@ -174,7 +174,7 @@ import okio.BufferedSink;
                             Request originalRequest = chain.request();
                             Request.Builder builder = originalRequest.newBuilder()
                                     .header("Content-Type", Тип + " ;charset=UTF-8")
-                                    .header("Accept-Encoding", "gzip")
+                                    .header("Accept-Encoding", "gzip,*,compress,identity,deflate,zstd,br")
                                     .header("Connection", "Keep-Alive")
                                     .header("Accept-Language", "ru-RU")
                                     .header("identifier", ПубличноеЛогин)
@@ -340,7 +340,7 @@ import okio.BufferedSink;
                             Request originalRequest = chain.request();
                             Request.Builder builder = originalRequest.newBuilder()
                                     .header("Content-Type", Тип + " ;charset=UTF-8")
-                                    .header("Accept-Encoding", "gzip")
+                                    .header("Accept-Encoding", "gzip,*,compress,identity,deflate,zstd,br")
                                     .header("Connection", "Keep-Alive")
                                     .header("Accept-Language", "ru-RU")
                                     .header("identifier", ПубличноеЛогин)
@@ -498,7 +498,7 @@ import okio.BufferedSink;
                             Request originalRequest = chain.request();
                             Request.Builder builder = originalRequest.newBuilder()
                                     .header("Content-Type", Тип + " ;charset=UTF-8")
-                                    .header("Accept-Encoding", "gzip")
+                                    .header("Accept-Encoding", "gzip,*,compress,identity,deflate,zstd,br")
                                     .header("Connection", "Keep-Alive")
                                     .header("Accept-Language", "ru-RU")
                                     .header("identifier", ПубличноеЛогин)
@@ -703,7 +703,7 @@ import okio.BufferedSink;
                                     Request originalRequest = chain.request();
                                     Request.Builder builder = originalRequest.newBuilder()
                                             .header("Content-Type", "application/octet-stream ;charset=UTF-8")
-                                            .header("Accept-Encoding", "gzip")
+                                            .header("Accept-Encoding", "gzip,*,compress,identity,deflate,zstd,br")
                                             .header("Connection", "Keep-Alive")
                                             .header("Accept-Language", "ru-RU")
                                             .header("identifier", ПубличноеЛогин)
@@ -3129,7 +3129,7 @@ Class_GRUD_SQL_Operations classGrudSqlOperationsУдалениеДанныхЧе
                             Request originalRequest = chain.request();
                             Request.Builder builder = originalRequest.newBuilder()
                                     .header("Content-Type", ВозвращяемыйТип)
-                                    .header("Accept-Encoding", "gzip")
+                                    .header("Accept-Encoding", "gzip,*,compress,identity,deflate,zstd,br")
                                     .header("Connection", "Keep-Alive")
                                     .header("Accept-Language", "ru-RU")
                                     .header("identifier", ПубличноеЛогин)
@@ -3650,7 +3650,7 @@ Class_GRUD_SQL_Operations classGrudSqlOperationsУдалениеДанныхЧе
                                 Request originalRequest = chain.request();
                                 Request.Builder builder = originalRequest.newBuilder()
                                         .header("Content-Type", "application/octet-stream ;charset=UTF-8")
-                                        .header("Accept-Encoding", "gzip")
+                                        .header("Accept-Encoding", "gzip,*,compress,identity,deflate,zstd,br")
                                         .header("Connection", "Keep-Alive")
                                         .header("Accept-Language", "ru-RU")
                                         .header("identifier", ПубличноеЛогин)
