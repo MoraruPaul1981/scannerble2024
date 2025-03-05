@@ -14,6 +14,7 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Typeface;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -52,6 +53,7 @@ import androidx.appcompat.widget.SearchView;
 import androidx.core.widget.NestedScrollView;
 import androidx.cursoradapter.widget.CursorAdapter;
 import androidx.cursoradapter.widget.SimpleCursorAdapter;
+import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Lifecycle;
 import androidx.lifecycle.LifecycleEventObserver;
@@ -86,10 +88,10 @@ import net.yslibrary.android.keyboardvisibilityevent.KeyboardVisibilityEvent;
 import net.yslibrary.android.keyboardvisibilityevent.KeyboardVisibilityEventListener;
 
 import org.jetbrains.annotations.NotNull;
-import org.reactivestreams.Subscription;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.YearMonth;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
@@ -99,8 +101,6 @@ import java.util.Locale;
 import java.util.Optional;
 import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.concurrent.TimeUnit;
-import java.util.function.BiConsumer;
-import java.util.function.Function;
 import java.util.function.IntConsumer;
 import java.util.function.ToIntFunction;
 import java.util.stream.IntStream;
@@ -108,12 +108,10 @@ import java.util.stream.IntStream;
 import dagger.hilt.android.AndroidEntryPoint;
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
 import io.reactivex.rxjava3.core.Flowable;
-import io.reactivex.rxjava3.core.FlowableSubscriber;
 import io.reactivex.rxjava3.disposables.Disposable;
 import io.reactivex.rxjava3.functions.Action;
 import io.reactivex.rxjava3.functions.Consumer;
 import io.reactivex.rxjava3.functions.Predicate;
-import io.reactivex.rxjava3.internal.subscribers.BlockingSubscriber;
 import io.reactivex.rxjava3.schedulers.Schedulers;
 
 /**
@@ -188,8 +186,8 @@ public class FragmentSingleTabelOneSwipe extends Fragment {
 
   private  MaterialTextView  materialTextViewfio,materialTextViewprofession;
 
-    private LinkedHashMap< String,String> ДниВыходные=new LinkedHashMap<>();
-    private LinkedHashMap< String,String> ДниПразничные=new LinkedHashMap<>();
+    private LinkedHashMap< String,String> getWorkerDays =new LinkedHashMap<>();
+    private LinkedHashMap< String,String> getHolidaysDays =new LinkedHashMap<>();
 
 
 
@@ -248,9 +246,14 @@ public class FragmentSingleTabelOneSwipe extends Fragment {
             // TODO: 20.11.2023 Получение Празничных и Выходных Дней  
         GetDayFromKalendary getDayFromKalendary=new GetDayFromKalendary();
 
-        ДниВыходные= getDayFromKalendary.методВыходныеДниИзКалендарь();
+        getWorkerDays = getDayFromKalendary.методВыходныеДниИзКалендарь();
         // TODO: 26.06.2023 Празничные Дни
-        ДниПразничные=getDayFromKalendary. методПразничныеДниИзКалендаря();
+            Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                    " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                    " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"+" cursorForViewPager.getPosition() ");
+
+
+            getHolidaysDays =getDayFromKalendary. методПразничныеДниИзКалендаря();
         // TODO: 16.11.2023
         Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                 " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
@@ -1063,7 +1066,7 @@ public class FragmentSingleTabelOneSwipe extends Fragment {
                         Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                                 " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
                                 " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" + " cursorForViewPager " +cursor +
-                                " ДниПразничные" +ДниПразничные  + "  ДниВыходные " +ДниВыходные);
+                                " getWorkerDays" + getWorkerDays + "getHolidaysDays  " +getHolidaysDays);
 
 
 
@@ -1359,8 +1362,8 @@ public class FragmentSingleTabelOneSwipe extends Fragment {
                                         EditText editTextRowКликПоДАнными = (EditText) tableRowДанные.getChildAt(ПозицияДняДаннымиTableRow);
                                         String ДнейСодержимое =            editTextRowКликПоДАнными.getTooltipText().toString();
                                         // TODO: 05.04.2023  ЗАПОЛЯНИЕМ ДНЯМИ ROW 1
-                                        if (ДниВыходные.containsKey(ДнейСодержимое.trim())) {
-                                            String ВыходныеИлиПразничные = ДниВыходные.get(ДнейСодержимое.trim());
+                                        if (getWorkerDays.containsKey(ДнейСодержимое.trim())) {
+                                            String ВыходныеИлиПразничные = getWorkerDays.get(ДнейСодержимое.trim());
                                             if (ВыходныеИлиПразничные != null) {
                                                 editTextRowКликПоДАнными.setVisibility(View.VISIBLE);
                                             }
@@ -1439,13 +1442,15 @@ public class FragmentSingleTabelOneSwipe extends Fragment {
                                 TextView textViewНазвание = (TextView) tableRowНазвания.getChildAt(ПозицияДняШабкаTableRow);
                                 String ДнейНазвание =            textViewНазвание.getHint().toString();
                                 // TODO: 05.04.2023  ЗАПОЛЯНИЕМ ДНЯМИ ROW 1
-                                if (ДниВыходные.containsKey(ДнейНазвание.trim())) {
-                                    String ВыходныеИлиПразничные=    ДниВыходные.get(ДнейНазвание.trim());
+                                if (getWorkerDays.containsKey(ДнейНазвание.trim())) {
+                                    String ВыходныеИлиПразничные=    getWorkerDays.get(ДнейНазвание.trim());
                                     if (ВыходныеИлиПразничные!=null) {
                                         textViewНазвание.setVisibility(View.VISIBLE);
                                     }
                                     ВыходныеИлиПразничные =          методЗаполениеНазванияRowData(textViewНазвание, ДнейНазвание);
-                                    // TODO: 26.06.2023
+
+
+                                    // TODO: 26.06.2023 Цветом Оформлем
                                     методЗаполениеНазванияЦвет(textViewНазвание,ВыходныеИлиПразничные);
 
                                 }
@@ -1580,13 +1585,13 @@ public class FragmentSingleTabelOneSwipe extends Fragment {
                 String ВыходныеИлиПразничные = null;
                 try {
                     // TODO: 11.04.2023 Ставим Дни
-                    ВыходныеИлиПразничные=    ДниВыходные.get(s.trim());
+                    ВыходныеИлиПразничные=    getWorkerDays.get(s.trim());
                     TextViewRowКликПоНазваниям.setText( ВыходныеИлиПразничные);
                     // TODO: 19.10.2022
                     Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                             " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                            " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"+ " s.trim() " +s.trim() + "  ДниВыходные.get(s.trim()) "
-                            + ДниВыходные.get(s.trim()));
+                            " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"+ " s.trim() " +s.trim() + "  getWorkerDays.get(s.trim()) "
+                            + getWorkerDays.get(s.trim()));
                 } catch (Exception e) {
                     e.printStackTrace();
                     Log.e(getContext().getClass().getName(),
@@ -1601,28 +1606,34 @@ public class FragmentSingleTabelOneSwipe extends Fragment {
             // TODO: 07.06.2023 цвет
             private void методЗаполениеНазванияЦвет(@NonNull  TextView TextViewRowКликПоНазваниям,String ВыходныеИлиПразничные) {
                 try {
-                    // TODO: 11.04.2023 Ставим Дни
-                    if ( ДниПразничные.containsValue(ВыходныеИлиПразничные.trim())==true) {
-                        TextViewRowКликПоНазваниям.setTextColor(Color.parseColor("#DC143C"));
+                    // TODO: 11.04.2023 Ставим Дни Празничные
+                    if ( getHolidaysDays.containsValue(ВыходныеИлиПразничные.trim())==true) {
+
+                        if (TextViewRowКликПоНазваниям.isEnabled()) {
+                            TextViewRowКликПоНазваниям.setTextColor(Color.parseColor("@color/divider"));
+                            Drawable drawableup=getContext().getDrawable(R.drawable.style_for_chat4);
+                            TextViewRowКликПоНазваниям.setBackground(drawableup);
+                            TextViewRowКликПоНазваниям.requestLayout();
+                        }
                         Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                                 " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
                                 " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"+   "  ВыходныеИлиПразничные "
                                 + ВыходныеИлиПразничные);
+
+                        // TODO: 11.04.2023 Ставим Дни Выходные
                     } else {
-                        TextViewRowКликПоНазваниям.setTextColor(Color.parseColor("#008080"));
+                        if (TextViewRowКликПоНазваниям.isEnabled()) {
+                            TextViewRowКликПоНазваниям.setTextColor(Color.parseColor("#008080"));
+                         /*   Drawable drawableup=getContext().getDrawable(R.drawable.stylesingletable25);
+                            TextViewRowКликПоНазваниям.setBackground(drawableup);*/
+                            TextViewRowКликПоНазваниям.requestLayout();
+                        }
+
                         Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                                 " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
                                 " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"+   "  ВыходныеИлиПразничные "
                                 + ВыходныеИлиПразничные);
                     }
-
-
-
-
-
-
-
-
 
 
                     // TODO: 19.10.2022
@@ -1885,7 +1896,7 @@ public class FragmentSingleTabelOneSwipe extends Fragment {
             public int getItemCount() {
                 int КоличесвоСтрок=1;
                 try {
-                    ///КоличесвоСтрок =ДниВыходные.size();
+                    ///КоличесвоСтрок =getWorkerDays.size();
                     Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                             " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
                             " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" + " КоличесвоСтрок "+КоличесвоСтрок);
@@ -3410,9 +3421,9 @@ public class FragmentSingleTabelOneSwipe extends Fragment {
                 public void accept(int ИндексДней) {
                     SimpleDateFormat СозданияВычисляемВыходные = null;
                     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-                        СозданияВычисляемВыходные = new SimpleDateFormat("yyyy-MM-dd", new Locale("rus"));
+                        СозданияВычисляемВыходные = new SimpleDateFormat("yyyy-MM-dd", new Locale("ru"));
                     } else {
-                        СозданияВычисляемВыходные = new SimpleDateFormat("yyyy-MM-dd", new Locale("rus"));
+                        СозданияВычисляемВыходные = new SimpleDateFormat("yyyy-MM-dd", new Locale("ru"));
                     }
                     Date ДатаПосикаВыходныеДней = null;
 
@@ -3461,9 +3472,9 @@ public class FragmentSingleTabelOneSwipe extends Fragment {
                 public void accept(int ИндексДней) {
                     SimpleDateFormat СозданияВычисляемВыходные = null;
                     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-                        СозданияВычисляемВыходные = new SimpleDateFormat("yyyy-MM-dd", new Locale("rus"));
+                        СозданияВычисляемВыходные = new SimpleDateFormat("yyyy-MM-dd", new Locale("ru"));
                     } else {
-                        СозданияВычисляемВыходные = new SimpleDateFormat("yyyy-MM-dd", new Locale("rus"));
+                        СозданияВычисляемВыходные = new SimpleDateFormat("yyyy-MM-dd", new Locale("ru"));
                     }
                     Date ДатаПосикаВыходныеДней = null;
 
@@ -3548,7 +3559,13 @@ public class FragmentSingleTabelOneSwipe extends Fragment {
             // Create a calendar object and set year and month
             Calendar mycal = new GregorianCalendar(Год, Месяц, 0);
             // Get the number of days in that month
-            КоличествоДнейНаВыбраныйМесяц = mycal.getActualMaximum(Calendar.DAY_OF_MONTH); // 28
+           // КоличествоДнейНаВыбраныйМесяц = mycal.getActualMaximum(Calendar.DAY_OF_MONTH); // 28
+
+            КоличествоДнейНаВыбраныйМесяц = YearMonth.of(Год, Месяц).lengthOfMonth();
+            Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                    " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                    " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"
+                    + " КоличествоДнейНаВыбраныйМесяц " + КоличествоДнейНаВыбраныйМесяц);
 
         } catch (Exception e) {
             e.printStackTrace();
