@@ -14,6 +14,7 @@ import java.security.cert.CertificateException;
 import java.security.cert.CertificateFactory;
 import java.security.cert.X509Certificate;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.Date;
 import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
@@ -39,7 +40,7 @@ public class GetOkhhtpBuilderSSL implements  InGetOkhhtpBuilder {
 
     @Override
     public OkHttpClient.Builder getOkhhtpBuilder() {
-        OkHttpClient.Builder builder=null;
+        OkHttpClient.Builder builderSSL=null;
         try{
             // TODO: 06.10.2024 3 вариат
             // Create a trust manager that does not validate certificate chains
@@ -92,18 +93,16 @@ public class GetOkhhtpBuilderSSL implements  InGetOkhhtpBuilder {
                     }
             };
 
-            Dispatcher dispatcher= new Dispatcher(Executors.newCachedThreadPool());
-            builder=     new OkHttpClient().newBuilder().dispatcher(dispatcher);
-            builder.connectionPool(new ConnectionPool(20, 30, TimeUnit.SECONDS));
+
+            builderSSL=     new OkHttpClient().newBuilder();
             // TODO: 09.10.2024
             ConnectionSpec spec = new ConnectionSpec.Builder( ConnectionSpec.MODERN_TLS)
                     .allEnabledTlsVersions()
                     .allEnabledCipherSuites()
                     .build();
-            builder.connectionSpecs(  ( Arrays.asList(spec,ConnectionSpec.CLEARTEXT)));
-            builder.retryOnConnectionFailure(false);
-            builder.sslSocketFactory(getsslSocketFactory2, (X509TrustManager)trustAllCerts[0]);
-            builder.hostnameVerifier(new HostnameVerifier() {
+            builderSSL.connectionSpecs(Collections.singletonList(spec));
+            builderSSL.sslSocketFactory(getsslSocketFactory2, (X509TrustManager)trustAllCerts[0]);
+            builderSSL.hostnameVerifier(new HostnameVerifier() {
                 @Override
                 public boolean verify(String hostname, SSLSession session) {
                     // TODO: 25.12.2024
@@ -127,7 +126,7 @@ public class GetOkhhtpBuilderSSL implements  InGetOkhhtpBuilder {
                     this.getClass().getName(), Thread.currentThread().getStackTrace()[2].getMethodName(),
                     Thread.currentThread().getStackTrace()[2].getLineNumber());
         }
-        return builder;
+        return builderSSL;
     }
     }
 

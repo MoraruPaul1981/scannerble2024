@@ -4,44 +4,51 @@ import android.content.Context;
 import android.util.Log;
 
 import com.dsy.dsu.Errors.controller.RecordNewErros;
+import com.dsy.dsu.R;
 
 import org.jetbrains.annotations.NotNull;
 
+import java.io.InputStream;
+import java.security.KeyStore;
+import java.security.cert.CertificateException;
+import java.security.cert.X509Certificate;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.Date;
 import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
 
 import javax.net.ssl.HostnameVerifier;
 import javax.net.ssl.SSLSession;
+import javax.net.ssl.SSLSocketFactory;
+import javax.net.ssl.TrustManager;
+import javax.net.ssl.X509TrustManager;
 
 import okhttp3.ConnectionPool;
+import okhttp3.ConnectionSpec;
 import okhttp3.Dispatcher;
 import okhttp3.OkHttpClient;
 
 public class GetOkhhtpBuilder implements  InGetOkhhtpBuilder {
-    Context context;
+    private Context context;
+    private SSLSocketFactory getsslSocketFactory2;
 
-    public GetOkhhtpBuilder(@NotNull Context context ) {
+    public GetOkhhtpBuilder(@NotNull Context context, @NotNull SSLSocketFactory getsslSocketFactory2) {
         this.context = context;
+        this.getsslSocketFactory2 = getsslSocketFactory2;
     }
 
     @Override
     public OkHttpClient.Builder getOkhhtpBuilder() {
-        OkHttpClient.Builder builder=null;
+        OkHttpClient.Builder builderDefault=null;
         try{
-            Dispatcher dispatcher= new Dispatcher(Executors.newCachedThreadPool());
-            builder=     new OkHttpClient().newBuilder().dispatcher(dispatcher);
-            builder.connectionPool(new ConnectionPool(20, 30, TimeUnit.SECONDS));
-              builder.hostnameVerifier(new HostnameVerifier() {
-            @Override
-            public boolean verify(String hostname, SSLSession session) {
-
-                return true;
-            }
-        });
-            Log.i(this.getClass().getName(),  " Атоманически установкаОбновление ПО "+
+            // TODO: 05.03.2025
+            builderDefault=     new OkHttpClient().newBuilder();
+            // TODO: 09.10.2024
+            builderDefault.connectionSpecs(Collections.singletonList(ConnectionSpec.CLEARTEXT));
+            Log.i(this.getClass().getName(),  " java.security.cert.X509Certificate  "+
                     Thread.currentThread().getStackTrace()[2].getMethodName()+
-                    " время " +new Date().toLocaleString() );
+                    " время " +new Date().toLocaleString() + "builderDefault " +builderDefault);
         } catch (Exception e) {
             e.printStackTrace();
             Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" +
@@ -51,7 +58,6 @@ public class GetOkhhtpBuilder implements  InGetOkhhtpBuilder {
                     this.getClass().getName(), Thread.currentThread().getStackTrace()[2].getMethodName(),
                     Thread.currentThread().getStackTrace()[2].getLineNumber());
         }
-        return builder;
+        return builderDefault;
     }
-    }
-
+}

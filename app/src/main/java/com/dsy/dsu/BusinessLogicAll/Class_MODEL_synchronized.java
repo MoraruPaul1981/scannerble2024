@@ -22,6 +22,7 @@ import com.dsy.dsu.BusinessLogicAll.DATE.Class_Generation_Data;
 import com.dsy.dsu.BusinessLogicAll.DeviceName.ModulegetDeviceName;
 import com.dsy.dsu.CnangeServers.PUBLIC_CONTENT;
 import com.dsy.dsu.Errors.controller.RecordNewErros;
+import com.dsy.dsu.Hilt.OkhhtpBuilder.GetAsyncOkHttpClientBuilder;
 import com.dsy.dsu.Hilt.OkhhtpBuilder.GetOkhhtpBuilderSSL;
 import com.dsy.dsu.Hilt.OkhhtpBuilder.InGetOkhhtpBuilder;
 import com.google.common.io.ByteSource;
@@ -133,8 +134,7 @@ import okio.BufferedSink;
 
 
 
-            InGetOkhhtpBuilder inGetOkhhtpBuilder=new GetOkhhtpBuilderSSL(context,getsslSocketFactory2);
-            OkHttpClient.Builder builderokhtttp=    inGetOkhhtpBuilder.getOkhhtpBuilder();
+            OkHttpClient.Builder builderokhtttp=   new GetAsyncOkHttpClientBuilder(context,getsslSocketFactory2).GetAsyncOkHttpClientBuilder(enableSSl);
 
             OkHttpClient okHttpClientДанныеОтСервера = builderokhtttp.addInterceptor(new Interceptor() {
                         @Override
@@ -174,7 +174,7 @@ import okio.BufferedSink;
                             Request originalRequest = chain.request();
                             Request.Builder builder = originalRequest.newBuilder()
                                     .header("Content-Type", Тип + " ;charset=UTF-8")
-                                    .header("Accept-Encoding", "gzip,deflate,sdch")
+                                    .header("Accept-Encoding", "gzip")
                                     .header("Connection", "Keep-Alive")
                                     .header("Accept-Language", "ru-RU")
                                     .header("identifier", ПубличноеЛогин)
@@ -303,8 +303,9 @@ import okio.BufferedSink;
 
 
 
-            InGetOkhhtpBuilder inGetOkhhtpBuilder=new GetOkhhtpBuilderSSL(context,getsslSocketFactory2);
-            OkHttpClient.Builder builderokhtttp=    inGetOkhhtpBuilder.getOkhhtpBuilder();
+            OkHttpClient.Builder builderokhtttp=   new GetAsyncOkHttpClientBuilder(context,getsslSocketFactory2).GetAsyncOkHttpClientBuilder(enableSSl);
+
+
             OkHttpClient okHttpClientДанныеОтСервера = builderokhtttp.addInterceptor(new Interceptor() {
                         @Override
                         public Response intercept(Chain chain) throws IOException {
@@ -339,7 +340,7 @@ import okio.BufferedSink;
                             Request originalRequest = chain.request();
                             Request.Builder builder = originalRequest.newBuilder()
                                     .header("Content-Type", Тип + " ;charset=UTF-8")
-                                    .header("Accept-Encoding", "gzip,deflate,sdch")
+                                    .header("Accept-Encoding", "gzip")
                                     .header("Connection", "Keep-Alive")
                                     .header("Accept-Language", "ru-RU")
                                     .header("identifier", ПубличноеЛогин)
@@ -459,8 +460,8 @@ import okio.BufferedSink;
 
             // TODO: 25.12.2024 Какой тип okhhtp подключить
 
-            InGetOkhhtpBuilder inGetOkhhtpBuilder= new GetOkhhtpBuilderSSL(context,getsslSocketFactory2);
-            OkHttpClient.Builder builderokhtttp=    inGetOkhhtpBuilder.getOkhhtpBuilder();
+
+            OkHttpClient.Builder builderokhtttp=   new GetAsyncOkHttpClientBuilder(context,getsslSocketFactory2).GetAsyncOkHttpClientBuilder(enableSSl);
 
             // TODO: 15.12.2023 end test
             OkHttpClient okHttpClientПинг = builderokhtttp.addInterceptor(new Interceptor() {
@@ -497,7 +498,7 @@ import okio.BufferedSink;
                             Request originalRequest = chain.request();
                             Request.Builder builder = originalRequest.newBuilder()
                                     .header("Content-Type", Тип + " ;charset=UTF-8")
-                                    .header("Accept-Encoding", "gzip,deflate,sdch")
+                                    .header("Accept-Encoding", "gzip")
                                     .header("Connection", "Keep-Alive")
                                     .header("Accept-Language", "ru-RU")
                                     .header("identifier", ПубличноеЛогин)
@@ -668,8 +669,8 @@ import okio.BufferedSink;
                     Log.d(this.getClass().getName(), " Adress  " + Adress);
 
 
-                    InGetOkhhtpBuilder inGetOkhhtpBuilder=new GetOkhhtpBuilderSSL(context,getsslSocketFactory2);
-                    OkHttpClient.Builder builderokhtttp=    inGetOkhhtpBuilder.getOkhhtpBuilder();
+                    OkHttpClient.Builder builderokhtttp=   new GetAsyncOkHttpClientBuilder(context,getsslSocketFactory2).GetAsyncOkHttpClientBuilder(enableSSl);
+
                     OkHttpClient okHttpClientОтправкиДанныхНаСервер =builderokhtttp.addInterceptor(new Interceptor() {
                                 @Override
                                 public Response intercept(Chain chain) throws IOException {
@@ -702,7 +703,7 @@ import okio.BufferedSink;
                                     Request originalRequest = chain.request();
                                     Request.Builder builder = originalRequest.newBuilder()
                                             .header("Content-Type", "application/octet-stream ;charset=UTF-8")
-                                            .header("Accept-Encoding", "gzip,deflate,sdch")
+                                            .header("Accept-Encoding", "gzip")
                                             .header("Connection", "Keep-Alive")
                                             .header("Accept-Language", "ru-RU")
                                             .header("identifier", ПубличноеЛогин)
@@ -3094,8 +3095,8 @@ Class_GRUD_SQL_Operations classGrudSqlOperationsУдалениеДанныхЧе
             URL    Adress = new URL(СтрокаСвязиСсервером);
 
 
-            InGetOkhhtpBuilder inGetOkhhtpBuilder=new GetOkhhtpBuilderSSL(context,getsslSocketFactory2);
-            OkHttpClient.Builder builderokhtttp=    inGetOkhhtpBuilder.getOkhhtpBuilder();
+            OkHttpClient.Builder builderokhtttp=   new GetAsyncOkHttpClientBuilder(context,getsslSocketFactory2).GetAsyncOkHttpClientBuilder(enableSSl);
+
             OkHttpClient okHttpClientЗагрузкаНовогоПО = builderokhtttp.addInterceptor(new Interceptor() {
                         @Override
                         public Response intercept(Chain chain) throws IOException {
@@ -3128,7 +3129,7 @@ Class_GRUD_SQL_Operations classGrudSqlOperationsУдалениеДанныхЧе
                             Request originalRequest = chain.request();
                             Request.Builder builder = originalRequest.newBuilder()
                                     .header("Content-Type", ВозвращяемыйТип)
-                                    .header("Accept-Encoding", "gzip,deflate,sdch")
+                                    .header("Accept-Encoding", "gzip")
                                     .header("Connection", "Keep-Alive")
                                     .header("Accept-Language", "ru-RU")
                                     .header("identifier", ПубличноеЛогин)
@@ -3637,9 +3638,8 @@ Class_GRUD_SQL_Operations classGrudSqlOperationsУдалениеДанныхЧе
             // TODO: 11.03.2023  текст код
             if (ПубличноеЛогин.length()>0 && ПубличноеПароль.length()>0 && СтрокаСвязиСсервером.length()>0) {
 
-
-                InGetOkhhtpBuilder inGetOkhhtpBuilder=new GetOkhhtpBuilderSSL(context,getsslSocketFactory2);
-                OkHttpClient.Builder builderokhtttp=    inGetOkhhtpBuilder.getOkhhtpBuilder();
+                OkHttpClient.Builder builderokhtttp=   new GetAsyncOkHttpClientBuilder(context,getsslSocketFactory2).GetAsyncOkHttpClientBuilder(enableSSl);
+                // TODO: 05.03.2025
                 OkHttpClient okHttpClientИмяиПароль =builderokhtttp.addInterceptor(new Interceptor() {
                             @Override
                             public Response intercept(Chain chain) throws IOException {
@@ -3649,8 +3649,8 @@ Class_GRUD_SQL_Operations classGrudSqlOperationsУдалениеДанныхЧе
                                 Log.d(this.getClass().getName(), "  ПубличноеЛогин " + ПубличноеЛогин + " ПубличноеПароль " + ПубличноеПароль);
                                 Request originalRequest = chain.request();
                                 Request.Builder builder = originalRequest.newBuilder()
-                                        .header("Content-Type", "application/text; charset=UTF-8")
-                                        .header("Accept-Encoding", "gzip,deflate,sdch")
+                                        .header("Content-Type", "application/octet-stream ;charset=UTF-8")
+                                        .header("Accept-Encoding", "gzip")
                                         .header("Connection", "Keep-Alive")
                                         .header("Accept-Language", "ru-RU")
                                         .header("identifier", ПубличноеЛогин)
@@ -3734,6 +3734,9 @@ Class_GRUD_SQL_Operations classGrudSqlOperationsУдалениеДанныхЧе
                             response.close();
                             // TODO: 28.12.2024
                             dispatcherПроверкаЛогиниПароль.executorService().shutdown();
+                            Log.i(this.getClass().getName(),  " java.security.cert.X509Certificate  "+
+                                    Thread.currentThread().getStackTrace()[2].getMethodName()+
+                                    " время " +new Date().toLocaleString() );
                         } catch (Exception e) {
                             e.printStackTrace();
                             Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
@@ -3745,8 +3748,10 @@ Class_GRUD_SQL_Operations classGrudSqlOperationsУдалениеДанныхЧе
                 });
                 dispatcherПроверкаЛогиниПароль.executorService().awaitTermination(1,TimeUnit.DAYS);
                 dispatcherПроверкаЛогиниПароль.cancelAll();
-            } else {
             }
+            Log.i(this.getClass().getName(),  " java.security.cert.X509Certificate  "+
+                    Thread.currentThread().getStackTrace()[2].getMethodName()+
+                    " время " +new Date().toLocaleString()  );
         } catch (Exception e) {
             e.printStackTrace();
             Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
