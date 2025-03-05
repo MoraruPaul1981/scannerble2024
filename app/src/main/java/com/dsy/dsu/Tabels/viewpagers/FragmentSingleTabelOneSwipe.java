@@ -39,6 +39,7 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.Filter;
 import android.widget.FilterQueryProvider;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TableLayout;
 import android.widget.TableRow;
@@ -59,9 +60,8 @@ import androidx.lifecycle.LifecycleEventObserver;
 import androidx.lifecycle.LifecycleOwner;
 import androidx.lifecycle.Observer;
 import androidx.recyclerview.widget.DefaultItemAnimator;
-import androidx.recyclerview.widget.DividerItemDecoration;
+import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.ItemTouchHelper;
-import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.work.WorkInfo;
 import androidx.work.WorkManager;
@@ -76,6 +76,7 @@ import com.dsy.dsu.BusinessLogicAll.DATE.SubClassCursorLoader;
 import com.dsy.dsu.Tabels.MainActivity_List_Peoples;
 import com.dsy.dsu.Tabels.MainActivity_Metki_Tabel;
 import com.dsy.dsu.R;
+import com.dsy.dsu.Tabels.viewpagers.binesslogic.GetDividerItemDecorationTabelSingle;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.android.material.snackbar.Snackbar;
@@ -451,22 +452,25 @@ public class FragmentSingleTabelOneSwipe extends Fragment {
         class SubClassNewDataSingleTabel{
             void методВнешнийВидФрагмента(@NonNull View view){
                 try{
-                    spinnermesazyear = (MaterialTextView) view. findViewById(R.id.spinnermesazyear);
-                    spinnerchasy = (MaterialTextView) view.findViewById(R.id.spinnerchasy);
-                    spinnerdepartament = (MaterialTextView) view.findViewById(R.id.spinnerdepartament);
+                    LinearLayout linearLayout_tabel_single=view.findViewById(R.id.linearLayout_tabel_single);
+
+
+                    spinnermesazyear = (MaterialTextView) linearLayout_tabel_single. findViewById(R.id.spinnermesazyear_single);
+                    spinnerchasy = (MaterialTextView) linearLayout_tabel_single.findViewById(R.id.spinnerchasy_single);
+                    spinnerdepartament = (MaterialTextView) linearLayout_tabel_single.findViewById(R.id.spinnerdepartament_single);
 
                     ///TODO на данной КНОПКЕ МЫ МОЖЕМ ДОБАВИТЬ СОТРУДНИКА К ТАБЕЛЮ ИЛИ СОЗДАТЬ НОВОГО СОТРУДНИКА
-                    imageButtonbackotsingletabel =(MaterialButton)view. findViewById(R.id.imageButtonbackotsingletabel);
+                    imageButtonbackotsingletabel =(MaterialButton)linearLayout_tabel_single. findViewById(R.id.imageButtonbackotsingletabel);
 
-                    materialTextViewfio = (MaterialTextView)  view.findViewById(R.id.materialTextViewfio);
-                    materialTextViewprofession = (MaterialTextView)  view.findViewById(R.id.materialTextViewprofession);
+                    materialTextViewfio = (MaterialTextView)  linearLayout_tabel_single.findViewById(R.id.materialTextViewfio);
+                    materialTextViewprofession = (MaterialTextView)  linearLayout_tabel_single.findViewById(R.id.materialTextViewprofession);
 
-                    recycleviewsingletabel = (RecyclerView)  view.findViewById(R.id.recycleviewsingletabel);
+                    recycleviewsingletabel = (RecyclerView)  linearLayout_tabel_single.findViewById(R.id.recycleviewsingletabel);
                     recycleviewsingletabel.scrollToPosition(View.FOCUS_UP);
                     recycleviewsingletabel.setNestedScrollingEnabled(false);
 
                     // TODO: 30.11.2023
-                    nestedScrollView_singlet= (NestedScrollView)  view.findViewById(R.id.nestedScrollView_singlet);
+                    nestedScrollView_singlet= (NestedScrollView)  linearLayout_tabel_single.findViewById(R.id.nestedScrollView_singlet);
 
 
 
@@ -766,20 +770,27 @@ public class FragmentSingleTabelOneSwipe extends Fragment {
         private void metodДизайнRecycreView() {
             try{
 
+
+                recycleviewsingletabel.setHasFixedSize(true);
+                recycleviewsingletabel.addItemDecoration(new GetDividerItemDecorationTabelSingle(getContext()));
+                GridLayoutManager layoutManager = new GridLayoutManager(getContext(), 1,GridLayoutManager.VERTICAL,false);
+                layoutManager.setSpanSizeLookup(new GridLayoutManager.DefaultSpanSizeLookup());
+
                /* DividerItemDecoration dividerItemDecorationVer=
                         new DividerItemDecoration(getActivity(),LinearLayoutManager.VERTICAL);
                 dividerItemDecorationVer.setDrawable(getContext().getDrawable(R.drawable.divider_for_order_transport2));///R.dimen.activity_horizontal_margin
                 recycleviewsingletabel.addItemDecoration(dividerItemDecorationVer);*/
 
-                DividerItemDecoration dividerItemDecorationHor=
-                        new DividerItemDecoration(getActivity(), LinearLayoutManager.HORIZONTAL);
-                dividerItemDecorationHor.setDrawable(getContext().getDrawable(R.drawable.divider_for_order_transport2));///R.dimen.activity_horizontal_margin
-                recycleviewsingletabel.addItemDecoration(dividerItemDecorationHor);
+              /*  GetDividerItemDecorationTabelSingle getDividerItemDecoration=new GetDividerItemDecorationTabelSingle(getContext(), LinearLayoutManager.HORIZONTAL);
 
-                LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity() , LinearLayoutManager.VERTICAL, true);
+               *//* DividerItemDecoration dividerItemDecorationHor=
+                        new DividerItemDecoration(getActivity(), LinearLayoutManager.HORIZONTAL);*//*
+            *//*    dividerItemDecorationHor.setDrawable(getContext().getDrawable(R.drawable.divider_for_order_transport2));///R.dimen.activity_horizontal_margin*//*
+                recycleviewsingletabel.addItemDecoration(getDividerItemDecoration);*/
+
+                //LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity() , LinearLayoutManager.VERTICAL, true);
                 recycleviewsingletabel.setLayoutManager(layoutManager);
                 recycleviewsingletabel.setItemAnimator(new DefaultItemAnimator());
-                recycleviewsingletabel.setHasFixedSize(true);
                 // TODO: 12.05.2023 Клаиатура
                 Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                         " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
