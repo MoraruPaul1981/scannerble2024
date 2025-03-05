@@ -4,10 +4,15 @@ import android.content.Context;
 import android.util.Log;
 
 import com.dsy.dsu.Errors.controller.RecordNewErros;
+import com.dsy.dsu.R;
 
 import org.jetbrains.annotations.NotNull;
 
+import java.io.InputStream;
+import java.security.KeyStore;
 import java.security.cert.CertificateException;
+import java.security.cert.CertificateFactory;
+import java.security.cert.X509Certificate;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.concurrent.Executors;
@@ -59,10 +64,30 @@ public class GetOkhhtpBuilderSSL implements  InGetOkhhtpBuilder {
                         @Override
                         public java.security.cert.X509Certificate[] getAcceptedIssuers() {
                             // TODO: 25.12.2024
+                            // TODO: 25.12.2024
+                            X509Certificate[] getX509Certificate=    new X509Certificate[1];
+                            try {
+                                KeyStore ksTrust = KeyStore.getInstance("BKS");
+                                InputStream instream = context.getResources().openRawResource(R.raw.androidserver);
+                                ksTrust.load(instream, "password".toCharArray());
+                                X509Certificate certificate= (X509Certificate) ksTrust.getCertificate("server");
+                                // TODO: 05.03.2025
+                                getX509Certificate[0]=certificate;
+
+                                Log.i(this.getClass().getName(),  " java.security.cert.X509Certificate  "+
+                                        Thread.currentThread().getStackTrace()[2].getMethodName()+
+                                        " время " +new Date().toLocaleString() + " certificate  "+certificate);
+                            } catch ( Exception e) {
+                                e.printStackTrace();
+                                Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() + " Линия  :"
+                                        + Thread.currentThread().getStackTrace()[2].getLineNumber());
+                                new RecordNewErros(context).recordnewerror(e.toString(), this.getClass().getName(), Thread.currentThread().getStackTrace()[2].getMethodName(),
+                                        Thread.currentThread().getStackTrace()[2].getLineNumber());
+                            }
                             Log.i(this.getClass().getName(),  " java.security.cert.X509Certificate  "+
                                     Thread.currentThread().getStackTrace()[2].getMethodName()+
                                     " время " +new Date().toLocaleString() );
-                            return new java.security.cert.X509Certificate[]{};
+                            return getX509Certificate;
                         }
                     }
             };
