@@ -50,6 +50,7 @@ import com.dsy.dsu.BusinessLogicAll.Class_MODEL_synchronized;
 import com.dsy.dsu.CnangeServers.PUBLIC_CONTENT;
 
 import com.dsy.dsu.Hilt.JbossAdrress.qualifiers.QualifierJbossServer3;
+import com.dsy.dsu.Hilt.getSSLSocketFactory2.QualifiergetsslSocketFactory2;
 import com.dsy.dsu.Tabels.MainActivity_New_Templates;
 import com.dsy.dsu.Services.ServiceUpdatePoОбновлениеПО;
 import com.dsy.dsu.Errors.view.MainActivity_Errors;
@@ -113,8 +114,13 @@ public class DashboardFragmentSettings extends  DialogFragment {
 
     @Inject
     ServiceBootBinessLogic serviceBootBinessLogic;
+
+
     @Inject
+    @QualifiergetsslSocketFactory2
     SSLSocketFactory getsslSocketFactory2;
+
+
     @Inject
     @QualifierJbossServer3
     public LinkedHashMap<Integer,String> getHiltPortJboss;

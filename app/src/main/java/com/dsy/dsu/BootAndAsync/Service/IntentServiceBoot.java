@@ -20,6 +20,7 @@ import com.dsy.dsu.BootAndAsync.BlBootAsync.CompleteRemoteSyncService;
 import com.dsy.dsu.Errors.controller.RecordNewErros;
 import com.dsy.dsu.Hilt.JbossAdrress.qualifiers.QualifierJbossServer3;
 import com.dsy.dsu.Hilt.PublicId.QualifierPublicId;
+import com.dsy.dsu.Hilt.getSSLSocketFactory2.QualifiergetsslSocketFactory2;
 
 import java.util.Date;
 import java.util.LinkedHashMap;
@@ -52,6 +53,7 @@ public class IntentServiceBoot extends IntentService {
     CompleteRemoteSyncService completeRemoteSyncService;
 
     @Inject
+    @QualifiergetsslSocketFactory2
     SSLSocketFactory getsslSocketFactory2;
 
 

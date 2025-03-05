@@ -23,6 +23,7 @@ import com.dsy.dsu.BootAndAsync.EventsBus.MessageEvensBusAyns;
 import com.dsy.dsu.Errors.controller.RecordNewErros;
 import com.dsy.dsu.BusinessLogicAll.Class_MODEL_synchronized;
 import com.dsy.dsu.CnangeServers.PUBLIC_CONTENT;
+import com.dsy.dsu.Hilt.getSSLSocketFactory2.QualifiergetsslSocketFactory2;
 
 import org.greenrobot.eventbus.EventBus;
 
@@ -59,6 +60,7 @@ public class ServiceUpdatePoОбновлениеПО extends IntentService {////
     private   AlertDialog alertDialogУстановкаПО=null;
     private    File FileAPK = null;
     @Inject
+    @QualifiergetsslSocketFactory2
     SSLSocketFactory getsslSocketFactory2;
 
     private   Integer  ВерсияПООтСервере = 0;

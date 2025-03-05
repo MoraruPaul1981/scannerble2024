@@ -21,11 +21,12 @@ import dagger.hilt.android.qualifiers.ApplicationContext;
 import dagger.hilt.components.SingletonComponent;
 
 
-@QualifiergetsslSocketFactory2
+
 @Module
 @InstallIn(SingletonComponent.class)
 public class ModulegetsslSocketFactory2 {
     @SuppressLint("SuspiciousIndentation")
+    @QualifiergetsslSocketFactory2
     @Singleton
     @Provides
     public SSLSocketFactory getsslSocketFactory2(@ApplicationContext Context context) {

@@ -22,6 +22,7 @@ import com.dsy.dsu.Dashboard.Model.endingasynsdashboard.GetEndingAsyn;
 import com.dsy.dsu.Errors.controller.RecordNewErros;
 import com.dsy.dsu.Hilt.JbossAdrress.qualifiers.QualifierJbossServer3;
 import com.dsy.dsu.Hilt.PublicId.QualifierPublicId;
+import com.dsy.dsu.Hilt.getSSLSocketFactory2.QualifiergetsslSocketFactory2;
 import com.dsy.dsu.SynsProccessor.AsynsProccessor;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.firebase.annotations.concurrent.Background;
@@ -53,6 +54,7 @@ public class Service_For_Remote_Async_Binary extends IntentService {
     @Inject
     ObjectMapper getHiltJaksonObjectMapper;
     @Inject
+    @QualifiergetsslSocketFactory2
     SSLSocketFactory getsslSocketFactory2;
     String КлючДляFirebaseNotification = "2a1819db-60c8-4ca3-a752-1b6cd9cadfa1";
 

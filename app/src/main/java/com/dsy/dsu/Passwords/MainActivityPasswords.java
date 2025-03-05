@@ -49,6 +49,7 @@ import com.dsy.dsu.CnangeServers.PUBLIC_CONTENT;
 import com.dsy.dsu.BusinessLogicAll.SubClassWriterPUBLICIDtoDatabase;
 import com.dsy.dsu.EventBus.EventBuss;
 import com.dsy.dsu.Hilt.JbossAdrress.qualifiers.QualifierJbossServer3;
+import com.dsy.dsu.Hilt.getSSLSocketFactory2.QualifiergetsslSocketFactory2;
 import com.dsy.dsu.R;
 import com.dsy.dsu.Settings.Model.bl_SettingsActivity.GetSettingTableSaves;
 import com.google.android.material.snackbar.Snackbar;
@@ -98,7 +99,10 @@ public class MainActivityPasswords extends AppCompatActivity {
     private Message message;
     public static final int ALL_PERSSION_CODE=1;
     public static final int CAMERA_PERSSION_CODE=2;
+
+
     @Inject
+    @QualifiergetsslSocketFactory2
     SSLSocketFactory getsslSocketFactory2;
     EventBuss eventBuss;
 

@@ -13,7 +13,7 @@ import okhttp3.OkHttpClient;
 @InstallIn(SingletonComponent.class)
 public interface HiltInterfacegetsslSocketFactory2 {
 
-
+    @QualifiergetsslSocketFactory2
     SSLSocketFactory getsslSocketFactory2( );
 }
 

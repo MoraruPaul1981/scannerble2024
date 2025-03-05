@@ -36,6 +36,7 @@ import com.dsy.dsu.Errors.controller.RecordNewErros;
 import com.dsy.dsu.EventBus.EventBuss;
 import com.dsy.dsu.FirebaseAndOneSignal.OneSignal.StartigOneSignal.GetStartingRegistraziyOneSIgnalAndFireBase;
 import com.dsy.dsu.Hilt.JbossAdrress.qualifiers.QualifierJbossServer3;
+import com.dsy.dsu.Hilt.getSSLSocketFactory2.QualifiergetsslSocketFactory2;
 import com.dsy.dsu.Services.ServiceUpdatePoОбновлениеПО;
 import com.dsy.dsu.Dashboard.View.Fragments.DashboardFragmentMaterialDesign;
 import com.dsy.dsu.R;
@@ -94,10 +95,13 @@ public class MainActivity_Dashboard extends AppCompatActivity {
     @Inject
     @QualifierJbossServer3
     public LinkedHashMap<Integer,String> getHiltPortJboss;
+
+
     EventBuss eventBuss;
 
 
     @Inject
+    @QualifiergetsslSocketFactory2
     SSLSocketFactory getsslSocketFactory2;
 
 
