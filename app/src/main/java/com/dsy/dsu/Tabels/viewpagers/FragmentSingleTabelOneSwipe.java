@@ -53,7 +53,6 @@ import androidx.appcompat.widget.SearchView;
 import androidx.core.widget.NestedScrollView;
 import androidx.cursoradapter.widget.CursorAdapter;
 import androidx.cursoradapter.widget.SimpleCursorAdapter;
-import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Lifecycle;
 import androidx.lifecycle.LifecycleEventObserver;
@@ -1356,7 +1355,7 @@ public class FragmentSingleTabelOneSwipe extends Fragment {
                     if (tableRowДанные!=null) {
                         // TODO: 06.04.2023  СОДЕРДИМОЕ ROW
                         Flowable.range(0,tableRowДанные.getChildCount())
-                                .doOnNext(new io.reactivex.rxjava3.functions.Consumer<Integer>() {
+                                .doOnNext(new Consumer<Integer>() {
                                     @Override
                                     public void accept(Integer ПозицияДняДаннымиTableRow) throws Throwable {
                                         EditText editTextRowКликПоДАнными = (EditText) tableRowДанные.getChildAt(ПозицияДняДаннымиTableRow);
@@ -1367,12 +1366,18 @@ public class FragmentSingleTabelOneSwipe extends Fragment {
                                             if (ВыходныеИлиПразничные != null) {
                                                 editTextRowКликПоДАнными.setVisibility(View.VISIBLE);
                                             }
+                                            // TODO: 05.03.2025  fill to data
                                             методЗаполениеСодеримомRowData(editTextRowКликПоДАнными, cursor, ДнейСодержимое);
 
                                             Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                                                     " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
                                                     " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"
                                                     + " editTextRowКликПоДАнными " + editTextRowКликПоДАнными + " ДнейСодержимое " + ДнейСодержимое);
+
+
+                                            // TODO: 05.03.2025  Disain
+                                           fillInDesignfordata(  editTextRowКликПоДАнными,ВыходныеИлиПразничные);
+
                                             // TODO: 10.05.2023 Сохранение ДАнных Ячейки
                                             МетодаСохранениеДанныхЯчейкиRow(editTextRowКликПоДАнными);
                                             // TODO: 19.10.2022 Переход на Метки Табеля
@@ -1385,7 +1390,7 @@ public class FragmentSingleTabelOneSwipe extends Fragment {
                                                     " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n");
                                         }
                                     }
-                                }).doOnError(new io.reactivex.rxjava3.functions.Consumer<Throwable>() {
+                                }).doOnError(new Consumer<Throwable>() {
                                     @Override
                                     public void accept(Throwable throwable) throws Throwable {
                                         throwable.printStackTrace();
@@ -1451,7 +1456,7 @@ public class FragmentSingleTabelOneSwipe extends Fragment {
 
 
                                     // TODO: 26.06.2023 Цветом Оформлем
-                                    методЗаполениеНазванияЦвет(textViewНазвание,ВыходныеИлиПразничные);
+                                    fillDatatemplatewithcolor(textViewНазвание,ВыходныеИлиПразничные);
 
                                 }
                                 Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
@@ -1603,14 +1608,20 @@ public class FragmentSingleTabelOneSwipe extends Fragment {
                 }
                 return ВыходныеИлиПразничные;
             }
+
+
+
+
+
+
             // TODO: 07.06.2023 цвет
-            private void методЗаполениеНазванияЦвет(@NonNull  TextView TextViewRowКликПоНазваниям,String ВыходныеИлиПразничные) {
+            private void fillDatatemplatewithcolor(@NonNull  TextView TextViewRowКликПоНазваниям, String ВыходныеИлиПразничные) {
                 try {
                     // TODO: 11.04.2023 Ставим Дни Празничные
                     if ( getHolidaysDays.containsValue(ВыходныеИлиПразничные.trim())==true) {
 
                         if (TextViewRowКликПоНазваниям.isEnabled()) {
-                            TextViewRowКликПоНазваниям.setTextColor(Color.parseColor("@color/divider"));
+                            TextViewRowКликПоНазваниям.setTextColor(Color.parseColor("#FFFFFF"));
                             Drawable drawableup=getContext().getDrawable(R.drawable.style_for_chat4);
                             TextViewRowКликПоНазваниям.setBackground(drawableup);
                             TextViewRowКликПоНазваниям.requestLayout();
@@ -1651,6 +1662,79 @@ public class FragmentSingleTabelOneSwipe extends Fragment {
                             Thread.currentThread().getStackTrace()[2].getLineNumber());
                 }
             }
+
+
+            private void fillInDesignfordata(@NonNull  EditText EditTextRowДанные, String ВыходныеИлиПразничные) {
+                try {
+                    // TODO: 11.04.2023 Ставим Дни Празничные
+                    if ( getWorkerDays.containsValue(ВыходныеИлиПразничные.trim())==true) {
+
+                        if (EditTextRowДанные.isEnabled()) {
+
+                            EditTextRowДанные.setTextSize(22l);
+
+                            EditTextRowДанные.requestLayout();
+                        }
+                        Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                                " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                                " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"+   "  ВыходныеИлиПразничные "
+                                + ВыходныеИлиПразничные);
+
+                        // TODO: 11.04.2023 Ставим Дни Выходные
+                    } else {
+                        if (EditTextRowДанные.isEnabled()) {
+                            EditTextRowДанные.setTextSize(20l);
+                            EditTextRowДанные.requestLayout();
+                        }
+
+                        Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                                " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                                " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"+   "  ВыходныеИлиПразничные "
+                                + ВыходныеИлиПразничные);
+                    }
+
+
+                    // TODO: 19.10.2022
+                    Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                            " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                            " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"+   "  ВыходныеИлиПразничные "
+                            + ВыходныеИлиПразничные);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    Log.e(getContext().getClass().getName(),
+                            "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
+                                    " Линия  :" + Thread.currentThread().getStackTrace()[2].getLineNumber());
+                    new RecordNewErros(getContext()).recordnewerror(e.toString(),
+                            this.getClass().getName().toString(), Thread.currentThread().getStackTrace()[2].getMethodName().toString(),
+                            Thread.currentThread().getStackTrace()[2].getLineNumber());
+                }
+            }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
             // TODO: 08.11.2022 метод КЛИК ПО ДАННЫМ
