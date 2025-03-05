@@ -1655,9 +1655,6 @@ public class FragmentSingleTabelOneSwipe extends Fragment {
                     if ( getWorkerDays.containsValue(ВыходныеИлиПразничные.trim())==true) {
 
                         if (EditTextRowДанные.isEnabled()) {
-
-                            EditTextRowДанные.setTextSize(22l);
-
                             EditTextRowДанные.requestLayout();
                         }
                         Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
@@ -1668,7 +1665,6 @@ public class FragmentSingleTabelOneSwipe extends Fragment {
                         // TODO: 11.04.2023 Ставим Дни Выходные
                     } else {
                         if (EditTextRowДанные.isEnabled()) {
-                            EditTextRowДанные.setTextSize(20l);
                             EditTextRowДанные.requestLayout();
                         }
 
