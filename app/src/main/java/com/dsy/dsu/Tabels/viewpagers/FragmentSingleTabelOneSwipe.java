@@ -60,8 +60,10 @@ import androidx.lifecycle.LifecycleEventObserver;
 import androidx.lifecycle.LifecycleOwner;
 import androidx.lifecycle.Observer;
 import androidx.recyclerview.widget.DefaultItemAnimator;
+import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.ItemTouchHelper;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.work.WorkInfo;
 import androidx.work.WorkManager;
@@ -772,7 +774,10 @@ public class FragmentSingleTabelOneSwipe extends Fragment {
 
 
                 recycleviewsingletabel.setHasFixedSize(true);
-                recycleviewsingletabel.addItemDecoration(new GetDividerItemDecorationTabelSingle(getContext()));
+                DividerItemDecoration dividerItemDecorationVer=
+                        new DividerItemDecoration(getActivity(), GridLayoutManager.VERTICAL);
+                dividerItemDecorationVer.setDrawable(getContext().getDrawable(R.drawable.divider_for_order_transport2));///R.dimen.activity_horizontal_margin
+                recycleviewsingletabel.addItemDecoration(dividerItemDecorationVer);
                 GridLayoutManager layoutManager = new GridLayoutManager(getContext(), 1,GridLayoutManager.VERTICAL,false);
                 layoutManager.setSpanSizeLookup(new GridLayoutManager.DefaultSpanSizeLookup());
 
@@ -787,6 +792,7 @@ public class FragmentSingleTabelOneSwipe extends Fragment {
                         new DividerItemDecoration(getActivity(), LinearLayoutManager.HORIZONTAL);*//*
             *//*    dividerItemDecorationHor.setDrawable(getContext().getDrawable(R.drawable.divider_for_order_transport2));///R.dimen.activity_horizontal_margin*//*
                 recycleviewsingletabel.addItemDecoration(getDividerItemDecoration);*/
+                // recycleviewsingletabel.addItemDecoration(new GetDividerItemDecorationTabelSingle(getContext()));
 
                 //LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity() , LinearLayoutManager.VERTICAL, true);
                 recycleviewsingletabel.setLayoutManager(layoutManager);
@@ -1624,7 +1630,7 @@ public class FragmentSingleTabelOneSwipe extends Fragment {
                             TextViewRowКликПоНазваниям.setBackground(drawableup);*/
                             TextViewRowКликПоНазваниям.requestLayout();
                         }
-
+                        TextViewRowКликПоНазваниям.startAnimation(animationFromRecyReview);
                         Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                                 " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
                                 " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"+   "  ВыходныеИлиПразничные "
