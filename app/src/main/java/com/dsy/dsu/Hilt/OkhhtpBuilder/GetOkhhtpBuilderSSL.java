@@ -102,14 +102,18 @@ public class GetOkhhtpBuilderSSL implements  InGetOkhhtpBuilder {
                     .build();
             builderSSL.connectionSpecs(Collections.singletonList(spec));
             builderSSL.sslSocketFactory(getsslSocketFactory2, (X509TrustManager)trustAllCerts[0]);
-            builderSSL.hostnameVerifier(new HostnameVerifier() {
+      builderSSL.hostnameVerifier(new HostnameVerifier() {
                 @Override
                 public boolean verify(String hostname, SSLSession session) {
                     // TODO: 25.12.2024
+                   switch (hostname){
+                       case "base.dsu1.ru":
+                       return true;
+                   }
                     Log.i(this.getClass().getName(),  " hostname  "+
                             Thread.currentThread().getStackTrace()[2].getMethodName()+
                             " время " +new Date().toLocaleString()  + " hostname " +hostname +" session " +session);
-                    return true;
+                    return false;
                 }
 
             });
