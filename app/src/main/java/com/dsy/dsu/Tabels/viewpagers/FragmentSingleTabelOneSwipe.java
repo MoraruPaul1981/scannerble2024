@@ -300,6 +300,29 @@ public class FragmentSingleTabelOneSwipe extends Fragment {
 
     }
 
+    @Override
+    public void onPause() {
+        super.onPause();
+        try{
+
+            if (myRecycleViewAdapter!=null) {
+                GetPosition=myRecycleViewAdapter.cursor.getPosition();
+            }
+
+            Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"+ " GetPosition " +GetPosition);
+    } catch (Exception e) {
+        e.printStackTrace();
+        Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :"
+                + Thread.currentThread().getStackTrace()[2].getMethodName() + " Линия  :"
+                + Thread.currentThread().getStackTrace()[2].getLineNumber());
+        new RecordNewErros(getContext()).recordnewerror(e.toString(), this.getClass().getName(),
+                Thread.currentThread().getStackTrace()[2].getMethodName(),
+                Thread.currentThread().getStackTrace()[2].getLineNumber());
+    }
+
+    }
 
     @Override
     public void onStart() {
