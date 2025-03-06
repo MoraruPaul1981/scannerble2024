@@ -2153,9 +2153,9 @@ public class FragmentSingleTabelOneSwipe extends Fragment {
 
                                 Paint p = new Paint();
                                 if(dX > 0) {
-                                    p.setColor(Color.parseColor("#FFFFFF"));//828080 /// FCFAFA //F2F8F8
+                                    p.setColor(Color.parseColor("#E0E0E3"));//828080 /// FCFAFA //F2F8F8 887B7B
                                 } else {
-                                    p.setColor(Color.parseColor("#FFFFFF")); /// F2F8F8
+                                    p.setColor(Color.parseColor("#887B7B")); /// F2F8F8  E0E0E3
 
                                 }
                                 c.drawRect(itemView.getLeft(), itemView.getTop(), itemView.getRight(), itemView.getBottom(), p);
