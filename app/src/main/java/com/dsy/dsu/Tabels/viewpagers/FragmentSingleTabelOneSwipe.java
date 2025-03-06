@@ -63,7 +63,6 @@ import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.ItemTouchHelper;
-import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.work.WorkInfo;
 import androidx.work.WorkManager;
@@ -78,7 +77,6 @@ import com.dsy.dsu.BusinessLogicAll.DATE.SubClassCursorLoader;
 import com.dsy.dsu.Tabels.MainActivity_List_Peoples;
 import com.dsy.dsu.Tabels.MainActivity_Metki_Tabel;
 import com.dsy.dsu.R;
-import com.dsy.dsu.Tabels.viewpagers.binesslogic.GetDividerItemDecorationTabelSingle;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.android.material.snackbar.Snackbar;
@@ -846,6 +844,38 @@ public class FragmentSingleTabelOneSwipe extends Fragment {
 
 
 
+        // TODO: 15.06.2023  скоол левый внутри reryvreview
+        private Cursor методScrollsRightRecyreView() {
+            try {
+                // TODO: 20.04.2023 Данные
+                ///cursorForViewPager =    new  SubClassGetCursor().МетодSwipesКурсор();
+                Cursor       cursorSwipeViewPager=   myRecycleViewAdapter.cursor;
+                if (!cursorSwipeViewPager.isFirst()){
+                    cursorSwipeViewPager.moveToPrevious();
+                }
+                myRecycleViewAdapter.cursor= cursorSwipeViewPager;
+                // TODO: 15.06.2023 перегрузка данныех
+                myRecycleViewAdapter.notifyDataSetChanged();
+                // TODO: 18.06.2023
+                recycleviewsingletabel.getAdapter().notifyDataSetChanged();
+
+                Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                        " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                        " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"+"CurrentFragmentMaxItem   " + CurrentFragmentMaxItem + " cursorForViewPager " + cursorForViewPager +
+                        " posio " +myViewHolder.getLayoutPosition()  + " CurrenrsСhildUUID " +CurrenrsСhildUUID + " CurrenrsSelectFio " +CurrenrsSelectFio + "  ФИО " + ФИО
+                        + " cursorSwipeViewPager " + cursorSwipeViewPager.getPosition());
+
+            } catch (Exception e) {
+                e.printStackTrace();
+                Log.e(getContext().getClass().getName(),
+                        "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
+                                " Линия  :" + Thread.currentThread().getStackTrace()[2].getLineNumber());
+                new RecordNewErros(getContext()).recordnewerror(e.toString(),
+                        this.getClass().getName().toString(), Thread.currentThread().getStackTrace()[2].getMethodName().toString(),
+                        Thread.currentThread().getStackTrace()[2].getLineNumber());
+            }
+            return   myRecycleViewAdapter.cursor;
+        }
 
 
 
@@ -857,11 +887,8 @@ public class FragmentSingleTabelOneSwipe extends Fragment {
                 // TODO: 20.04.2023 Данные
                 ///cursorForViewPager =    new  SubClassGetCursor().МетодSwipesКурсор();
                 Cursor       cursorSwipeViewPager=   myRecycleViewAdapter.cursor;
-                if (cursorSwipeViewPager.isLast()){
-                    cursorSwipeViewPager.moveToFirst();
-                }else {
-                    Позиция=Позиция+1;
-                    cursorSwipeViewPager.moveToPosition(Позиция);
+                if (!cursorSwipeViewPager.isLast()){
+                    cursorSwipeViewPager.moveToNext();
                 }
                 myRecycleViewAdapter.cursor= cursorSwipeViewPager;
                 // TODO: 15.06.2023 перегрузка данныех
@@ -2096,9 +2123,22 @@ public class FragmentSingleTabelOneSwipe extends Fragment {
                     @Override
                     public void onSwiped(RecyclerView.ViewHolder viewHolder, int swipeDir) {
                         try {
+
+                            getLeftRecyreVieData getLeftAndRightRecyreVieData =new getLeftRecyreVieData();
                             // TODO: 17.06.2023 сама свайп
-                            SubClassReBornDataRecyreView subClassReBornDataRecyreView=new SubClassReBornDataRecyreView();
-                            subClassReBornDataRecyreView.методПереРоденияRevireViewScroll();
+                            if(swipeDir == ItemTouchHelper.LEFT){
+                                Log.i("Swipe direction : ","Left");
+                                // TODO: 06.03.2025
+                                // TODO: 16.06.2023
+                                Cursor cursorSwipeViewPagerLeft=      singleTabelRecycreView.      методScrollsLeftRecyreView();
+                                getLeftAndRightRecyreVieData.методПереРоденияRevireViewScroll(cursorSwipeViewPagerLeft);
+                            }
+                            else if (swipeDir == ItemTouchHelper.RIGHT){
+                                Log.i("Swipe direction : ","Right");
+                                Cursor cursorSwipeViewPagerRight=      singleTabelRecycreView.      методScrollsRightRecyreView();
+                                getLeftAndRightRecyreVieData.методПереРоденияRevireViewScroll(cursorSwipeViewPagerRight);
+                            }
+
 
                             Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                                     " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
@@ -2687,8 +2727,8 @@ public class FragmentSingleTabelOneSwipe extends Fragment {
 
 
         //TODO Перерождения Данных recycreView Отдельный Класс
-        public   class SubClassReBornDataRecyreView{
-            void методПереРоденияRevireViewScroll () {
+        public   class getLeftRecyreVieData {
+            void методПереРоденияRevireViewScroll (@NonNull     Cursor cursorSwipeViewPager) {
                 try{
                     // TODO: 15.06.2023 Scroll Left RecyreView
                     singleTabelRecycreView. методЗакрываемКлавитатуру();
@@ -2703,9 +2743,6 @@ public class FragmentSingleTabelOneSwipe extends Fragment {
 
                     Vibrator v2 = (Vibrator) getContext().getSystemService(Context.VIBRATOR_SERVICE);
                     v2.vibrate(VibrationEffect.createOneShot(65, VibrationEffect.EFFECT_HEAVY_CLICK));
-
-                        // TODO: 16.06.2023
-                        Cursor cursorSwipeViewPager=      singleTabelRecycreView.      методScrollsLeftRecyreView();
                         // TODO: 22.06.2023
                         fragmentSingleTabel.new SubClassBungleSingle().методGETДанныеRunTimeИзCursor(cursorSwipeViewPager );
                         // TODO: 16.06.2023  после переполуение данныз перегрузка экрана
