@@ -155,7 +155,7 @@ public class DashboardFragmentSettings extends  DialogFragment {
             classBiznesLogikaSettings=new ClassBiznesLogikaSettings();
             // TODO: 17.08.2023 inizial message
             classBiznesLogikaSettings.  МетодИнициализацияHandler();
-            classBiznesLogikaSettings.методGetBinder(getArguments());
+            classBiznesLogikaSettings.gettBinderDashBordFragmentSettings(getArguments());
 
             classBiznesLogikaSettings.    методСлушательФрагментовBinder( );
 
@@ -569,16 +569,19 @@ public class DashboardFragmentSettings extends  DialogFragment {
 
 
         // TODO: 22.08.2023 МЕТОД ПОЛУЧЕНИЕ ДАННЫХ binder
-        void методGetBinder (@NonNull Bundle bundleGetSettings){
+        void gettBinderDashBordFragmentSettings(@NonNull Bundle bundleGetSettings){
 try{
 
     if (localBinderОбновлениеПО==null) {
-        localBinderОбновлениеПО =(ServiceUpdatePoОбновлениеПО.localBinderОбновлениеПО)  bundleGetSettings.getBinder("callbackbinderdashbord");
+        if (bundleGetSettings!=null) {
+            localBinderОбновлениеПО =(ServiceUpdatePoОбновлениеПО.localBinderОбновлениеПО)  bundleGetSettings.getBinder("callbackbinderdashbord");
+        }
     }
+
+
     if (localBinderОбновлениеПО==null) {
         ClassAllTaskButtons classAllTaskButtons=new ClassAllTaskButtons();
-    ClassAllTaskButtons.ClassBinderupdatePO classBinderupdatePO= classAllTaskButtons.new ClassBinderupdatePO();
-
+        ClassAllTaskButtons.ClassBinderupdatePO classBinderupdatePO= classAllTaskButtons.new ClassBinderupdatePO();
         classBinderupdatePO.metodPublifhBiderupdatePO();
         classBinderupdatePO.МетодБиндингаОбновлениеПО();
 

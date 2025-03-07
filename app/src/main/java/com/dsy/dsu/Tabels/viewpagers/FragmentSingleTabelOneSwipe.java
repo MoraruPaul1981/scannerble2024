@@ -2620,31 +2620,33 @@ public class FragmentSingleTabelOneSwipe extends Fragment {
                             // TODO: 27.08.2021  ПОЛУЧЕНИЕ ДАННЫХ ОТ КЛАССА GRUD-ОПЕРАЦИИ
                             try{
                                 TextView TextViewФИОДляУдаление = (TextView) v;
-                                Log.d(this.getClass().getName(), " v " + v.getTag() + " TextViewФИОДляУдаление.getText() " + TextViewФИОДляУдаление.getText() +
-                                        "  TextViewФИОДляУдаление.getTag() " +TextViewФИОДляУдаление.getTag());
+                                Log.d(this.getClass().getName(),   " TextViewФИОДляУдаление.getText() " + TextViewФИОДляУдаление.getText());
                                 //////TODO ГЛАВНЫЙ КУРСОР ДЛЯ НЕПОСРЕДТСВЕНОГО ЗАГРУЗКИ СОТРУДНИКА
                                 Bundle bundleTabelViewПрофессияФИО= (Bundle) TextViewФИОДляУдаление.getTag();
-                                bundleTabelViewПрофессияФИО.putString("ФИО",  ФИО);
-                                bundleTabelViewПрофессияФИО.putString("СамЗапрос","  SELECT * FROM  fio WHERE uuid=? ");
-                                bundleTabelViewПрофессияФИО.putStringArray("УсловияВыборки" ,new String[]{String.valueOf(CurrenrsSelectFio)});
-                                bundleTabelViewПрофессияФИО.putString("Таблица","fio");
-                                Cursor    КурсорТаблицаФИО=      (Cursor)    new SubClassCursorLoader(). CursorLoaders(getContext(), bundleTabelViewПрофессияФИО);
-                                Log.d(this.getClass().getName(), " КурсорТаблицаФИО" + КурсорТаблицаФИО);
-                                if (КурсорТаблицаФИО.getCount()>0) {
-                                  String ФИОИнфо= Optional.ofNullable(КурсорТаблицаФИО.getString(КурсорТаблицаФИО.getColumnIndex("name"))).orElse("");
-                                    String ДеньРОжденияИНФО= Optional.ofNullable(КурсорТаблицаФИО.getString(КурсорТаблицаФИО.getColumnIndex("BirthDate"))).orElse("");
-                                    Long СНИЛСИНфо= КурсорТаблицаФИО.getLong(КурсорТаблицаФИО.getColumnIndex("snils"));
-                                    String ПрофессияИзФИо= Optional.ofNullable(КурсорТаблицаФИО.getString(КурсорТаблицаФИО.getColumnIndex("prof"))).orElse("Должность");
-                                    // TODO: 20.03.2023  ПОказываем Данные Для Обзора
-                                    СообщениеИнформацияОСотруднике("Данные",  "ФИО: " +ФИОИнфо+
-                                            "\n"+"День рождения: " +ДеньРОжденияИНФО+
-                                            "\n"+"СНИЛС: " +СНИЛСИНфо+
-                                            "\n" +"Должость: " + "("+bundleTabelViewПрофессияФИО.getString("Профессия").trim()+ " )");
 
-                                    Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
-                                            " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                                            " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"
-                                            + " КурсорТаблицаФИО "+КурсорТаблицаФИО.getCount() );
+                                if (bundleTabelViewПрофессияФИО!=null) {
+                                    bundleTabelViewПрофессияФИО.putString("ФИО",  ФИО);
+                                    bundleTabelViewПрофессияФИО.putString("СамЗапрос","  SELECT * FROM  fio WHERE uuid=? ");
+                                    bundleTabelViewПрофессияФИО.putStringArray("УсловияВыборки" ,new String[]{String.valueOf(CurrenrsSelectFio)});
+                                    bundleTabelViewПрофессияФИО.putString("Таблица","fio");
+                                    Cursor    КурсорТаблицаФИО=      (Cursor)    new SubClassCursorLoader(). CursorLoaders(getContext(), bundleTabelViewПрофессияФИО);
+                                    Log.d(this.getClass().getName(), " КурсорТаблицаФИО" + КурсорТаблицаФИО);
+                                    if (КурсорТаблицаФИО.getCount()>0) {
+                                      String ФИОИнфо= Optional.ofNullable(КурсорТаблицаФИО.getString(КурсорТаблицаФИО.getColumnIndex("name"))).orElse("");
+                                        String ДеньРОжденияИНФО= Optional.ofNullable(КурсорТаблицаФИО.getString(КурсорТаблицаФИО.getColumnIndex("BirthDate"))).orElse("");
+                                        Long СНИЛСИНфо= КурсорТаблицаФИО.getLong(КурсорТаблицаФИО.getColumnIndex("snils"));
+                                        String ПрофессияИзФИо= Optional.ofNullable(КурсорТаблицаФИО.getString(КурсорТаблицаФИО.getColumnIndex("prof"))).orElse("Должность");
+                                        // TODO: 20.03.2023  ПОказываем Данные Для Обзора
+                                        СообщениеИнформацияОСотруднике("Данные",  "ФИО: " +ФИОИнфо+
+                                                "\n"+"День рождения: " +ДеньРОжденияИНФО+
+                                                "\n"+"СНИЛС: " +СНИЛСИНфо+
+                                                "\n" +"Должость: " + "("+bundleTabelViewПрофессияФИО.getString("Профессия").trim()+ " )");
+
+                                        Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                                                " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                                                " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"
+                                                + " КурсорТаблицаФИО "+КурсорТаблицаФИО.getCount() );
+                                    }
                                 }
                             } catch (Exception e) {
                                 e.printStackTrace();
@@ -2822,7 +2824,7 @@ public class FragmentSingleTabelOneSwipe extends Fragment {
                         public MaterialAlertDialogBuilder setView(View view) {
                             listViewДляНовыйПосик =    (ListView) view.findViewById(R.id.SearchViewList);
                             listViewДляНовыйПосик.setTextFilterEnabled(true);
-                            searchViewДляНовогоПоиска=    (androidx.appcompat.widget.SearchView) view.findViewById(R.id.searchview_newscanner);
+                            searchViewДляНовогоПоиска=    (SearchView) view.findViewById(R.id.searchview_newscanner);
                             searchViewДляНовогоПоиска.setQueryHint("Поиск");
                             // TODO: 14.12.2022
 
@@ -2894,19 +2896,22 @@ public class FragmentSingleTabelOneSwipe extends Fragment {
                                                         public void onClick(View v) {
                                                             try{
                                                                 Bundle bundle=(Bundle)   ((MaterialTextView)view).getTag();
-                                                                Integer ПолучаемIDПрофессии=      bundle.getInt("ПолучаемIDПрофессии",0);
-                                                                String НазваниеПрофесии=   bundle.getString("НазваниеПрофесии","");
-                                                                Long UUIDПрофесиии =   bundle.getLong("UUIDПрофесиии",0l);
-                                                                Long CurrenrsСhildUUID =   bundle.getLong("CurrenrsСhildUUID",0l);
-                                                                Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
-                                                                        " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                                                                        " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"
-                                                                        + " ПолучаемIDПрофессии "+ПолучаемIDПрофессии + " НазваниеЦФО " +НазваниеПрофесии + " UUIDПрофесиии " +UUIDПрофесиии+
-                                                                        " CurrenrsСhildUUID " +РодительскийUUDТаблицыТабель);
-                                                                searchViewДляНовогоПоиска.setTag(bundle);
-                                                                searchViewДляНовогоПоиска.setQueryHint("");
-                                                                searchViewДляНовогоПоиска.setQuery(НазваниеПрофесии,true);
-                                                                ((MaterialTextView)view).setTag(bundle);
+                                                                String НазваниеПрофесии = null;
+                                                                if (bundle!=null) {
+                                                                    Integer ПолучаемIDПрофессии=      bundle.getInt("ПолучаемIDПрофессии",0);
+                                                                    НазваниеПрофесии = bundle.getString("НазваниеПрофесии","");
+                                                                    Long UUIDПрофесиии =   bundle.getLong("UUIDПрофесиии",0l);
+                                                                    Long CurrenrsСhildUUID =   bundle.getLong("CurrenrsСhildUUID",0l);
+                                                                    Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                                                                            " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                                                                            " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"
+                                                                            + " ПолучаемIDПрофессии "+ПолучаемIDПрофессии + " НазваниеЦФО " +НазваниеПрофесии + " UUIDПрофесиии " +UUIDПрофесиии+
+                                                                            " CurrenrsСhildUUID " +РодительскийUUDТаблицыТабель);
+                                                                    searchViewДляНовогоПоиска.setTag(bundle);
+                                                                    searchViewДляНовогоПоиска.setQueryHint("");
+                                                                    searchViewДляНовогоПоиска.setQuery(НазваниеПрофесии,true);
+                                                                    ((MaterialTextView)view).setTag(bundle);
+                                                                }
 
 
                                                                 if (  searchViewДляНовогоПоиска.getQuery().toString().length()==0) {
@@ -2925,7 +2930,7 @@ public class FragmentSingleTabelOneSwipe extends Fragment {
                                                                         searchViewДляНовогоПоиска.refreshDrawableState();
                                                                         // TODO: 21.07.2023  меняем Професию
                                                                         Integer ПровйдерСменаПрофесии=
-                                                                                МетодЗаписиСменыПрофесии( (androidx.appcompat.widget.SearchView)  searchViewДляНовогоПоиска,getActivity());
+                                                                                МетодЗаписиСменыПрофесии( (SearchView)  searchViewДляНовогоПоиска,getActivity());
                                                                         if (ПровйдерСменаПрофесии>0) {
                                                                             // TODO: 21.07.2023  после смены професии
                                                                             методReeoBootCursorRecyreViewAlfterChangeProffesion();
@@ -2951,8 +2956,7 @@ public class FragmentSingleTabelOneSwipe extends Fragment {
 
                                                                 Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                                                                         " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                                                                        " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"
-                                                                        + "  ((MaterialTextView)view) "+ ((MaterialTextView)view).getTag());
+                                                                        " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n");
                                                             } catch (Exception e) {
                                                                 e.printStackTrace();
                                                                 Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
@@ -3259,16 +3263,19 @@ public class FragmentSingleTabelOneSwipe extends Fragment {
                             + " searchViewДляНовогоПоиска "+searchViewДляНовогоПоиска+ " ТаблицаОбработки "+ТаблицаОбработки);
                     Uri uri = Uri.parse("content://com.dsy.dsu.providerdatabasecurrentoperations/" +ТаблицаОбработки + "");
                     Bundle bundleСменаПрофессии= (Bundle)  searchViewДляНовогоПоиска.getTag();
-                    ContentValues valuesСменаПрофесси=new ContentValues();
-                    Integer ПолучаемIDПрофессии=      bundleСменаПрофессии.getInt("ПолучаемIDПрофессии",0);
-                    valuesСменаПрофесси.put("prof",ПолучаемIDПрофессии);
-                    Long ВерсияДанныхUp = new VersionCurentTable(getContext()).upVersionCurentTable(ТаблицаОбработки );
-                    valuesСменаПрофесси.put("current_table",ВерсияДанныхUp);
-                    String ДатаОбновления=     new Class_Generation_Data(getContext()).ГлавнаяДатаИВремяОперацийСБазойДанных();
-                    valuesСменаПрофесси.put("date_update",ДатаОбновления);
-                    Long CurrenrsСhildUUID =   bundleСменаПрофессии.getLong("CurrenrsСhildUUID",0l);
-                    ContentResolver contentResolver=context.getContentResolver();
-                    ОбновлениеПрофесии=  contentResolver.update(uri, valuesСменаПрофесси,"uuid=?",new String[]{String.valueOf(CurrenrsСhildUUID)});
+
+                    if (bundleСменаПрофессии!=null) {
+                        ContentValues valuesСменаПрофесси=new ContentValues();
+                        Integer ПолучаемIDПрофессии=      bundleСменаПрофессии.getInt("ПолучаемIDПрофессии",0);
+                        valuesСменаПрофесси.put("prof",ПолучаемIDПрофессии);
+                        Long ВерсияДанныхUp = new VersionCurentTable(getContext()).upVersionCurentTable(ТаблицаОбработки );
+                        valuesСменаПрофесси.put("current_table",ВерсияДанныхUp);
+                        String ДатаОбновления=     new Class_Generation_Data(getContext()).ГлавнаяДатаИВремяОперацийСБазойДанных();
+                        valuesСменаПрофесси.put("date_update",ДатаОбновления);
+                        Long CurrenrsСhildUUID =   bundleСменаПрофессии.getLong("CurrenrsСhildUUID",0l);
+                        ContentResolver contentResolver=context.getContentResolver();
+                        ОбновлениеПрофесии=  contentResolver.update(uri, valuesСменаПрофесси,"uuid=?",new String[]{String.valueOf(CurrenrsСhildUUID)});
+                    }
 
 
                     Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
@@ -3387,12 +3394,15 @@ public class FragmentSingleTabelOneSwipe extends Fragment {
                 Intent intentПереХодНаМеткиТабеля = new Intent();
                 intentПереХодНаМеткиТабеля.setClass(getContext(), MainActivity_Metki_Tabel.class);
                 Bundle bundleToMainActitivyMetkiTabel= (Bundle) editTextЯчейка.getTag();
-                intentПереХодНаМеткиТабеля.putExtras(bundleToMainActitivyMetkiTabel);
-                message.getTarget().postDelayed(()->{
-                    // TODO: 10.04.2023  переход ИЗ MAINaCTITyTabelSingle Peolpe
-                    // TODO: 10.04.2023  ОТПРАВЛЯЕММ ПЕРЕМЕННЫЕ
-                    startActivity(intentПереХодНаМеткиТабеля);
-                },100);
+
+                if (bundleToMainActitivyMetkiTabel!=null) {
+                    intentПереХодНаМеткиТабеля.putExtras(bundleToMainActitivyMetkiTabel);
+                    message.getTarget().postDelayed(()->{
+                        // TODO: 10.04.2023  переход ИЗ MAINaCTITyTabelSingle Peolpe
+                        // TODO: 10.04.2023  ОТПРАВЛЯЕММ ПЕРЕМЕННЫЕ
+                        startActivity(intentПереХодНаМеткиТабеля);
+                    },100);
+                }
 
                 Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                         " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
