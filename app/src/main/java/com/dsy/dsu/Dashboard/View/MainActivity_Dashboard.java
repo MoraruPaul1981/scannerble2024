@@ -183,7 +183,6 @@ public class MainActivity_Dashboard extends AppCompatActivity {
 
 
 
-            buniccessLogicaActivityDashboard.    методСлушательФрагментов(  );
 
             buniccessLogicaActivityDashboard.  strartigWorkManger();
 
@@ -217,7 +216,12 @@ public class MainActivity_Dashboard extends AppCompatActivity {
                 EventBus.getDefault().unregister(this);
             }
 
-
+            if (localBinderОбновлениеПО!=null) {
+                if (localBinderОбновлениеПО.isBinderAlive()) {
+                    unbindService(connectionОбновлениеПО);
+                    connectionОбновлениеПО.onServiceDisconnected(null);
+                }
+            }
 
 
             Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
@@ -459,56 +463,14 @@ public class MainActivity_Dashboard extends AppCompatActivity {
                 Bundle data = new Bundle();
                 data.putBinder("callbackbinderdashbord", localBinderОбновлениеПО);
                 dashboardFragmentSettings.setArguments(data);
-                fragmentTransaction.remove(dashboardFragmentSettings);
-                String fragmentNewImageNameaddToBackStack = dashboardFragmentSettings.getClass().getName();
-                fragmentTransaction.addToBackStack(fragmentNewImageNameaddToBackStack)
-                        .setPrimaryNavigationFragment(dashboardFragmentSettings)
+                fragmentManager.popBackStack();
+                // TODO: 10.03.2025
+                fragmentTransaction.remove(dashboardFragmentSettings).commit() ;
+                fragmentTransaction.setPrimaryNavigationFragment(dashboardFragmentSettings)
                         .setReorderingAllowed(true);
-                Fragment FragmentУжеЕСтьИлиНЕт = fragmentManager.findFragmentByTag(fragmentNewImageNameaddToBackStack);
-                if (FragmentУжеЕСтьИлиНЕт == null) {
+                // TODO: 10.03.2025
                     dashboardFragmentSettings.show(fragmentManager, "dashboardFragmentHarmonyOS");
                     // TODO: 01.08.2023
-                }
-                Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
-                        " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                        " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"
-                        + " FragmentУжеЕСтьИлиНЕт " + FragmentУжеЕСтьИлиНЕт);
-            } catch (Exception e) {
-                e.printStackTrace();
-                Log.e(getApplicationContext().getClass().getName(),
-                        "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
-                                " Линия  :" + Thread.currentThread().getStackTrace()[2].getLineNumber());
-                new RecordNewErros(getApplicationContext()).recordnewerror(e.toString(),
-                        this.getClass().getName().toString(), Thread.currentThread().getStackTrace()[2].getMethodName().toString(),
-                        Thread.currentThread().getStackTrace()[2].getLineNumber());
-            }
-
-        }
-
-        private void методСлушательФрагментов() {
-            try {
-                fragmentManager.setFragmentResultListener("CallBackDashborndFragment", lifecycleOwner, new FragmentResultListener() {
-                    @Override
-                    public void onFragmentResult(@NonNull String requestKey, @NonNull Bundle result) {
-                        if (requestKey.equalsIgnoreCase("CallBackDashborndFragment")) {
-                            try {
-                                onBackPressed();
-                                Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
-                                        " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                                        " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n");
-                            } catch (Exception e) {
-                                e.printStackTrace();
-                                Log.e(getApplicationContext().getClass().getName(),
-                                        "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
-                                                " Линия  :" + Thread.currentThread().getStackTrace()[2].getLineNumber());
-                                new RecordNewErros(getApplicationContext()).recordnewerror(e.toString(),
-                                        this.getClass().getName().toString(), Thread.currentThread().getStackTrace()[2].getMethodName().toString(),
-                                        Thread.currentThread().getStackTrace()[2].getLineNumber());
-                            }
-
-                        }
-                    }
-                });
                 Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                         " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
                         " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n");
@@ -521,7 +483,10 @@ public class MainActivity_Dashboard extends AppCompatActivity {
                         this.getClass().getName().toString(), Thread.currentThread().getStackTrace()[2].getMethodName().toString(),
                         Thread.currentThread().getStackTrace()[2].getLineNumber());
             }
+
         }
+
+
 
 
         private void МетодИнициализацияHandler() {

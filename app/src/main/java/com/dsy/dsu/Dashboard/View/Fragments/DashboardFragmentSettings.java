@@ -330,10 +330,11 @@ public class DashboardFragmentSettings extends  DialogFragment {
         super.onStop();
         try{
             try{
-                if (connectionОбновлениеПО!=null) {
-                    getActivity().unbindService(connectionОбновлениеПО);
-
-                    connectionОбновлениеПО.onServiceDisconnected(null);
+                if (localBinderОбновлениеПО!=null) {
+                    if (localBinderОбновлениеПО.isBinderAlive()) {
+                        getContext().unbindService(connectionОбновлениеПО);
+                        connectionОбновлениеПО.onServiceDisconnected(null);
+                    }
                 }
                 // TODO: 17.08.2023
                 Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
@@ -549,16 +550,8 @@ public class DashboardFragmentSettings extends  DialogFragment {
                             // TODO: 10.03.2025
                             fragmentTransaction.remove(DashboardFragmentSettings.this).commit() ;
                             // TODO: 03.10.2023
-                            // TODO: 03.10.2023
-                            Fragment FragmentУжеЕСтьИлиНЕт=     fragmentManager.findFragmentByTag(fragmentNewImageNameaddToBackStack);
-                            if (FragmentУжеЕСтьИлиНЕт==null) {
                                 dashboardFragmentHarmonyOS.show(fragmentManager, "dashboardFragmentHarmonyOS");
                                 // TODO: 01.08.2023
-                            }
-
-
-
-
                             Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                                     " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
                                     " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"
