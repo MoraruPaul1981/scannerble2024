@@ -92,7 +92,7 @@ public class DashboardFragmentSettings extends  DialogFragment {
     // TODO: Rename parameter arguments, choose names that match
 
     private  ClassBiznesLogikaSettings classBiznesLogikaSettings;
-    private MaterialCardView materialcardview_dashboard=null;
+
 
     private FragmentManager fragmentManager;
     private FragmentTransaction fragmentTransaction;
@@ -155,9 +155,7 @@ public class DashboardFragmentSettings extends  DialogFragment {
             classBiznesLogikaSettings=new ClassBiznesLogikaSettings();
             // TODO: 17.08.2023 inizial message
             classBiznesLogikaSettings.  МетодИнициализацияHandler();
-            classBiznesLogikaSettings.gettBinderDashBordFragmentSettings(getArguments());
 
-            classBiznesLogikaSettings.    методСлушательФрагментовBinder( );
 
             // TODO: 27.12.2024
 
@@ -277,6 +275,13 @@ public class DashboardFragmentSettings extends  DialogFragment {
 
             classBiznesLogikaSettings.new ClassAllTaskButtons().new ClassTaskShablony( ) .методtaskChablony() ;
 
+
+            // TODO: 10.03.2025  биндинг обновление ПО
+            new BindingSoftwareUpdatePO().getbindingSoftwareUpdatePO();
+
+            // TODO: 10.03.2025  Слушатель
+            new ListerSoftwareUpdatePO().getListerSoftwareUpdatePO();
+
             // TODO: 17.08.2023
             Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                     " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
@@ -317,35 +322,32 @@ public class DashboardFragmentSettings extends  DialogFragment {
     }
     }
 
-    @Override
-    public void onDetach() {
-        super.onDetach();
-        try{
-            if (connectionОбновлениеПО!=null) {
-                getActivity().unbindService(connectionОбновлениеПО);
-            }
 
-            //unregisterEventBusFirst();
-            // TODO: 17.08.2023
-        Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
-                " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n");
-    } catch (Exception e) {
-        e.printStackTrace();
-        Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() + " Линия  :"
-                + Thread.currentThread().getStackTrace()[2].getLineNumber());
-        new RecordNewErros(getContext()).recordnewerror(e.toString(),
-                this.getClass().getName(), Thread.currentThread().getStackTrace()[2].getMethodName(),
-                Thread.currentThread().getStackTrace()[2].getLineNumber());
-        Log.d(this.getClass().getName(), "  Полусаем Ошибку e.toString() " + e.toString());
-    }
-    }
+
 
     @Override
     public void onStop() {
         super.onStop();
         try{
+            try{
+                if (connectionОбновлениеПО!=null) {
+                    getActivity().unbindService(connectionОбновлениеПО);
 
+                    connectionОбновлениеПО.onServiceDisconnected(null);
+                }
+                // TODO: 17.08.2023
+                Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                        " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                        " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n");
+            } catch (Exception e) {
+                e.printStackTrace();
+                Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() + " Линия  :"
+                        + Thread.currentThread().getStackTrace()[2].getLineNumber());
+                new RecordNewErros(getContext()).recordnewerror(e.toString(),
+                        this.getClass().getName(), Thread.currentThread().getStackTrace()[2].getMethodName(),
+                        Thread.currentThread().getStackTrace()[2].getLineNumber());
+                Log.d(this.getClass().getName(), "  Полусаем Ошибку e.toString() " + e.toString());
+            }
             // TODO: 17.08.2023
             Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                     " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
@@ -523,84 +525,9 @@ public class DashboardFragmentSettings extends  DialogFragment {
 
 
 
-        private void методСлушательФрагментовBinder( ) {
-            try{
-                fragmentManager.setFragmentResultListener("callbackbinderdashbord", lifecycleOwner, new FragmentResultListener() {
-                    @Override
-                    public void onFragmentResult(@NonNull String requestKey, @NonNull Bundle result) {
-                        if (requestKey.equalsIgnoreCase("callbackbinderdashbord")) {
-                            try{
-                                localBinderОбновлениеПО=(ServiceUpdatePoОбновлениеПО.localBinderОбновлениеПО)       result.getBinder("callbackbinderdashbord");
-                                // TODO: 21.08.2023
-
-                                Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
-                                        " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                                        " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"  +
-                                        "  localBinderОбновлениеПО " +localBinderОбновлениеПО);
-                            } catch (Exception e) {
-                                e.printStackTrace();
-                                Log.e(getContext().getClass().getName(),
-                                        "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
-                                                " Линия  :" + Thread.currentThread().getStackTrace()[2].getLineNumber());
-                                new RecordNewErros(getContext()).recordnewerror(e.toString(),
-                                        this.getClass().getName().toString(), Thread.currentThread().getStackTrace()[2].getMethodName().toString(),
-                                        Thread.currentThread().getStackTrace()[2].getLineNumber());
-                            }
-
-                        }
-                    }
-                });
-                Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
-                        " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                        " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n");
-            } catch (Exception e) {
-                e.printStackTrace();
-                Log.e(getContext().getClass().getName(),
-                        "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
-                                " Линия  :" + Thread.currentThread().getStackTrace()[2].getLineNumber());
-                new RecordNewErros(getContext()).recordnewerror(e.toString(),
-                        this.getClass().getName().toString(), Thread.currentThread().getStackTrace()[2].getMethodName().toString(),
-                        Thread.currentThread().getStackTrace()[2].getLineNumber());
-            }
-        }
 
 
 
-
-
-        // TODO: 22.08.2023 МЕТОД ПОЛУЧЕНИЕ ДАННЫХ binder
-        void gettBinderDashBordFragmentSettings(@NonNull Bundle bundleGetSettings){
-try{
-
-    if (localBinderОбновлениеПО==null) {
-        if (bundleGetSettings!=null) {
-            localBinderОбновлениеПО =(ServiceUpdatePoОбновлениеПО.localBinderОбновлениеПО)  bundleGetSettings.getBinder("callbackbinderdashbord");
-        }
-    }
-
-
-    if (localBinderОбновлениеПО==null) {
-        ClassAllTaskButtons classAllTaskButtons=new ClassAllTaskButtons();
-        ClassAllTaskButtons.ClassBinderupdatePO classBinderupdatePO= classAllTaskButtons.new ClassBinderupdatePO();
-        classBinderupdatePO.metodPublifhBiderupdatePO();
-        classBinderupdatePO.МетодБиндингаОбновлениеПО();
-
-    }
-
-
-    Log.i(getContext().getClass().getName(),  " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
-                    " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                    " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"  + " bundleGetSettings  " +bundleGetSettings +
-                    " localBinderОбновлениеПО " +localBinderОбновлениеПО);
-        } catch (Exception e) {
-            e.printStackTrace();
-            Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() + " Линия  :"
-                    + Thread.currentThread().getStackTrace()[2].getLineNumber());
-            new RecordNewErros(getContext()).recordnewerror(e.toString(),
-                    this.getClass().getName(), Thread.currentThread().getStackTrace()[2].getMethodName(),
-                    Thread.currentThread().getStackTrace()[2].getLineNumber());
-        }
-        }
 
 
 
@@ -616,9 +543,11 @@ try{
                             Bundle data=new Bundle();
                             data.putBinder("callbackbinderdashbord",localBinderОбновлениеПО);
                             dashboardFragmentHarmonyOS.setArguments(data);
-                            fragmentTransaction.remove(dashboardFragmentHarmonyOS);
                             String fragmentNewImageNameaddToBackStack=   dashboardFragmentHarmonyOS.getClass().getName();
                             fragmentTransaction.addToBackStack(fragmentNewImageNameaddToBackStack);
+                            fragmentManager.popBackStack();
+                            // TODO: 10.03.2025
+                            fragmentTransaction.remove(DashboardFragmentSettings.this).commit() ;
                             // TODO: 03.10.2023
                             // TODO: 03.10.2023
                             Fragment FragmentУжеЕСтьИлиНЕт=     fragmentManager.findFragmentByTag(fragmentNewImageNameaddToBackStack);
@@ -626,6 +555,10 @@ try{
                                 dashboardFragmentHarmonyOS.show(fragmentManager, "dashboardFragmentHarmonyOS");
                                 // TODO: 01.08.2023
                             }
+
+
+
+
                             Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                                     " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
                                     " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"
@@ -1154,132 +1087,141 @@ try{
 
 
 // TODO: 04.10.2023  binder class
-
-            class ClassBinderupdatePO{
-               void МетодБиндингаОбновлениеПО() {
-                    try {
-                    connectionОбновлениеПО = new ServiceConnection() {
-                            @Override
-                            public void onServiceConnected(ComponentName name, IBinder service) {
-                                try {
-                                    if (service.isBinderAlive()) {
-                                        // TODO: 28.07.2023  Update
-                                        localBinderОбновлениеПО = (ServiceUpdatePoОбновлениеПО.localBinderОбновлениеПО) service;
-
-                                        // notify the Observable that the value just change
-                                        UpdatePublish.onNext(localBinderОбновлениеПО);
-
-                                    }
-
-                                    Log.d(getContext().getClass().getName(), "\n"
-                                            + " время: " + new Date() + "\n+" +
-                                            " Класс в процессе... " + this.getClass().getName() + "\n" +
-                                            " метод в процессе... " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n"
-                                            + "localBinderОбновлениеПО " + localBinderОбновлениеПО);
-
-                                } catch (Exception e) {
-                                    e.printStackTrace();
-                                    Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
-                                            " Линия  :" + Thread.currentThread().getStackTrace()[2].getLineNumber());
-                                    new RecordNewErros(getContext()).recordnewerror(e.toString(),
-                                            this.getClass().getName(),
-                                            Thread.currentThread().getStackTrace()[2].getMethodName(), Thread.currentThread().getStackTrace()[2].getLineNumber());
-                                }
-                            }
-
-
-                            @Override
-                            public void onServiceDisconnected(ComponentName name) {
-                                try {
-                                    localBinderОбновлениеПО = null;
-                                    Log.i(getContext().getClass().getName(), "    onServiceDisconnected  binder.isBinderAlive()");
-                                } catch (Exception e) {
-                                    e.printStackTrace();
-                                    Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
-                                            " Линия  :" + Thread.currentThread().getStackTrace()[2].getLineNumber());
-                                    new RecordNewErros(getContext()).recordnewerror(e.toString(),
-                                            this.getClass().getName(),
-                                            Thread.currentThread().getStackTrace()[2].getMethodName(), Thread.currentThread().getStackTrace()[2].getLineNumber());
-                                }
-                            }
-                        };
-                        Intent intentЗапускСлужбыОбновлениеПО = new Intent(getContext(), ServiceUpdatePoОбновлениеПО.class);
-                        intentЗапускСлужбыОбновлениеПО.setAction("com.ServiceUpdatePoОбновлениеПО");
-                        Boolean asBoolenОбновлениеПО =getContext(). bindService(intentЗапускСлужбыОбновлениеПО, connectionОбновлениеПО, Context.BIND_AUTO_CREATE);
-
-                        // TODO: 28.04.2023
-                        Log.d(this.getClass().getName(), "\n" + " class " +
-                                Thread.currentThread().getStackTrace()[2].getClassName()
-                                + "\n" +
-                                " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                                " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" + " asBoolenОбновлениеПО " + asBoolenОбновлениеПО);
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                        Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() + " Линия  :"
-                                + Thread.currentThread().getStackTrace()[2].getLineNumber());
-                        new RecordNewErros(getContext()).
-                                recordnewerror(e.toString(), this.getClass().getName(), Thread.currentThread().getStackTrace()[2].getMethodName(),
-                                Thread.currentThread().getStackTrace()[2].getLineNumber());
-                        Log.d(this.getClass().getName(), "  Полусаем Ошибку e.toString() " + e.toString());
-                    }
-
-                }
-
-                // TODO: 04.10.2023
-
-                void metodPublifhBiderupdatePO(){
-                         try{
-                    UpdatePublish = PublishSubject.create();
-                    UpdatePublish.filter(fil->fil.isBinderAlive()) .publish();
-                             UpdatePublish.map(new Function<ServiceUpdatePoОбновлениеПО.localBinderОбновлениеПО, Object>() {
-                                 @Override
-                                 public Object apply(ServiceUpdatePoОбновлениеПО.localBinderОбновлениеПО localBinderОбновлениеПО) throws Throwable {
-
-                                     Log.d(this.getClass().getName(), "\n" + " class " +
-                                             Thread.currentThread().getStackTrace()[2].getClassName()
-                                             + "\n" +
-                                             " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                                             " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" + " UpdatePublish " + UpdatePublish);
-                                     return localBinderОбновлениеПО;
-                                 }
-                             }).skip(1).filter(fil->fil!=null).subscribe();
-
-                    Log.d(this.getClass().getName(), "\n" + " class " +
-                            Thread.currentThread().getStackTrace()[2].getClassName()
-                            + "\n" +
-                            " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                            " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" + " UpdatePublish " + UpdatePublish);
-                } catch (Exception e) {
-                    e.printStackTrace();
-                    Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() + " Линия  :"
-                            + Thread.currentThread().getStackTrace()[2].getLineNumber());
-                    new RecordNewErros(getContext()).
-                            recordnewerror(e.toString(), this.getClass().getName(), Thread.currentThread().getStackTrace()[2].getMethodName(),
-                                    Thread.currentThread().getStackTrace()[2].getLineNumber());
-                    Log.d(this.getClass().getName(), "  Полусаем Ошибку e.toString() " + e.toString());
-                }
-
-
-
-                }
-
-
-
-
-
-
-            }
-
-
-
-
-
-
-
           //TODO end class ClassAllTaskButtons
         }//TODO end class ClassAllTaskButtons
 
     }//TODO end Buniceess Lofic for Activity
+
+
+
+
+class BindingSoftwareUpdatePO{
+
+
+    // TODO: 03.10.2023  метод когда не биндинга
+     void getbindingSoftwareUpdatePO(         ) {
+        try {
+            Boolean asBoolenОбновлениеПО = null;
+                connectionОбновлениеПО = new ServiceConnection() {
+                    @Override
+                    public void onServiceConnected(ComponentName name, IBinder service) {
+                        try {
+                            if (service.isBinderAlive()) {
+                                // TODO: 28.07.2023  Update
+                                localBinderОбновлениеПО = (ServiceUpdatePoОбновлениеПО.localBinderОбновлениеПО) service;
+                            }
+
+                            Log.d(getContext().getClass().getName(), "\n"
+                                    + " время: " + new Date() + "\n+" +
+                                    " Класс в процессе... " + this.getClass().getName() + "\n" +
+                                    " метод в процессе... " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n"
+                                    + "localBinderОбновлениеПО " + localBinderОбновлениеПО);
+
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                            Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
+                                    " Линия  :" + Thread.currentThread().getStackTrace()[2].getLineNumber());
+                            new RecordNewErros(getContext()).recordnewerror(e.toString(),
+                                    this.getClass().getName(),
+                                    Thread.currentThread().getStackTrace()[2].getMethodName(), Thread.currentThread().getStackTrace()[2].getLineNumber());
+                        }
+                    }
+
+
+                    @Override
+                    public void onServiceDisconnected(ComponentName name) {
+                        try {
+                            localBinderОбновлениеПО = null;
+                            Log.i(getContext().getClass().getName(), "    onServiceDisconnected  binder.isBinderAlive()");
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                            Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
+                                    " Линия  :" + Thread.currentThread().getStackTrace()[2].getLineNumber());
+                            new RecordNewErros(getContext()).recordnewerror(e.toString(),
+                                    this.getClass().getName(),
+                                    Thread.currentThread().getStackTrace()[2].getMethodName(), Thread.currentThread().getStackTrace()[2].getLineNumber());
+                        }
+                    }
+                };
+                Intent intentЗапускСлужбыОбновлениеПО = new Intent(getContext(), ServiceUpdatePoОбновлениеПО.class);
+                intentЗапускСлужбыОбновлениеПО.setAction("com.ServiceUpdatePoОбновлениеПО");
+                asBoolenОбновлениеПО = getContext().bindService(intentЗапускСлужбыОбновлениеПО, connectionОбновлениеПО, Context.BIND_AUTO_CREATE);
+            // TODO: 28.04.2023
+            Log.d(this.getClass().getName(), "\n" + " class " +
+                    Thread.currentThread().getStackTrace()[2].getClassName()
+                    + "\n" +
+                    " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                    " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" + " asBoolenОбновлениеПО " + asBoolenОбновлениеПО);
+        } catch (Exception e) {
+            e.printStackTrace();
+            Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() + " Линия  :"
+                    + Thread.currentThread().getStackTrace()[2].getLineNumber());
+            new RecordNewErros(getContext()).recordnewerror(e.toString(), this.getClass().getName(), Thread.currentThread().getStackTrace()[2].getMethodName(),
+                    Thread.currentThread().getStackTrace()[2].getLineNumber());
+            Log.d(this.getClass().getName(), "  Полусаем Ошибку e.toString() " + e.toString());
+        }
+
+    }
+
+
+
+
+}
+
+// TODO: 10.03.2025  END
+
+
+    class ListerSoftwareUpdatePO{
+
+
+        // TODO: 03.10.2023  метод когда не биндинга
+        void getListerSoftwareUpdatePO( ) {
+            try {
+                fragmentManager.setFragmentResultListener("callbackbinderdashbord", lifecycleOwner, new FragmentResultListener() {
+                    @Override
+                    public void onFragmentResult(@NonNull String requestKey, @NonNull Bundle result) {
+                        if (requestKey.equalsIgnoreCase("callbackbinderdashbord")) {
+                            try{
+                                localBinderОбновлениеПО=(ServiceUpdatePoОбновлениеПО.localBinderОбновлениеПО)       result.getBinder("callbackbinderdashbord");
+                                // TODO: 21.08.2023
+
+                                Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                                        " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                                        " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"  +
+                                        "  localBinderОбновлениеПО " +localBinderОбновлениеПО);
+                            } catch (Exception e) {
+                                e.printStackTrace();
+                                Log.e(getContext().getClass().getName(),
+                                        "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
+                                                " Линия  :" + Thread.currentThread().getStackTrace()[2].getLineNumber());
+                                new RecordNewErros(getContext()).recordnewerror(e.toString(),
+                                        this.getClass().getName().toString(), Thread.currentThread().getStackTrace()[2].getMethodName().toString(),
+                                        Thread.currentThread().getStackTrace()[2].getLineNumber());
+                            }
+
+                        }
+                    }
+                });
+                Log.d(this.getClass().getName(), "\n" + " class " +
+                        Thread.currentThread().getStackTrace()[2].getClassName()
+                        + "\n" +
+                        " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                        " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n");
+            } catch (Exception e) {
+                e.printStackTrace();
+                Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() + " Линия  :"
+                        + Thread.currentThread().getStackTrace()[2].getLineNumber());
+                new RecordNewErros(getContext()).recordnewerror(e.toString(), this.getClass().getName(), Thread.currentThread().getStackTrace()[2].getMethodName(),
+                        Thread.currentThread().getStackTrace()[2].getLineNumber());
+                Log.d(this.getClass().getName(), "  Полусаем Ошибку e.toString() " + e.toString());
+            }
+
+        }
+
+
+
+
+    }
 
 
 }
