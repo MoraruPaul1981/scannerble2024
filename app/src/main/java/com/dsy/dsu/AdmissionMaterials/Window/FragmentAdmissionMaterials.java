@@ -127,14 +127,9 @@ public class FragmentAdmissionMaterials extends Fragment {
             lifecycleOwnerОбщая =this ;
             fragmentManager = getActivity().getSupportFragmentManager();
             fragmentTransaction = fragmentManager.beginTransaction();
-            // TODO: 07.08.2023  методы
-            ClassBizneLogica classBizneLogica=new ClassBizneLogica();
-            classBizneLogica.методСлушательФрагментовBinder();;
 
             методCallBackOnActivitymaterail();
-
             метоГлавныйПолучениеДанныхНаFragmetnMatrial();
-
             МетодСоздаенияСлушателяДляПолучениеМатериалаWorkMAnager();
             // TODO: 17.04.2023
             Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
@@ -1736,49 +1731,5 @@ public class FragmentAdmissionMaterials extends Fragment {
     }
     }
 
-    class ClassBizneLogica{
-
-
-        private void методСлушательФрагментовBinder( ) {
-            try{
-                fragmentManager.setFragmentResultListener("callbackbinderdashbord", lifecycleOwner, new FragmentResultListener() {
-                    @Override
-                    public void onFragmentResult(@NonNull String requestKey, @NonNull Bundle result) {
-                        if (requestKey.equalsIgnoreCase("callbackbinderdashbord")) {
-                            try{
-                                localBinderОбновлениеПО=(ServiceUpdatePoОбновлениеПО.localBinderОбновлениеПО)       result.getBinder("callbackbinderdashbord");
-                                // TODO: 21.08.2023
-
-                                Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
-                                        " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                                        " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"  +
-                                        "  localBinderОбновлениеПО " +localBinderОбновлениеПО);
-                            } catch (Exception e) {
-                                e.printStackTrace();
-                                Log.e(getContext().getClass().getName(),
-                                        "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
-                                                " Линия  :" + Thread.currentThread().getStackTrace()[2].getLineNumber());
-                                new RecordNewErros(getContext()).recordnewerror(e.toString(),
-                                        this.getClass().getName().toString(), Thread.currentThread().getStackTrace()[2].getMethodName().toString(),
-                                        Thread.currentThread().getStackTrace()[2].getLineNumber());
-                            }
-
-                        }
-                    }
-                });
-                Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
-                        " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                        " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n");
-            } catch (Exception e) {
-                e.printStackTrace();
-                Log.e(getContext().getClass().getName(),
-                        "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
-                                " Линия  :" + Thread.currentThread().getStackTrace()[2].getLineNumber());
-                new RecordNewErros(getContext()).recordnewerror(e.toString(),
-                        this.getClass().getName().toString(), Thread.currentThread().getStackTrace()[2].getMethodName().toString(),
-                        Thread.currentThread().getStackTrace()[2].getLineNumber());
-            }
-        }
-    }
 
 }

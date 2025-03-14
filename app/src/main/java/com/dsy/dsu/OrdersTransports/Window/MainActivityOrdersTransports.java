@@ -58,9 +58,6 @@ public class MainActivityOrdersTransports extends AppCompatActivity {
             subClassStartingFragmentOrderTran=new SubClassStartingFragmentOrderTran();
             subClassStartingFragmentOrderTran.методЗапускаФрагментаОрдерТранспорта();
             subClassStartingFragmentOrderTran.  методСлушательCallsBackFragmentManagers();
-            // TODO: 03.10.2023
-
-            subClassStartingFragmentOrderTran.  методПолучениеДанныхBinder();
             // TODO: 11.05.2023 Горизотнтальная Прокрутка
             Log.d(getApplicationContext().getClass().getName(), "\n"
                     + " время: " + new Date()+"\n+" +
@@ -184,29 +181,7 @@ public class MainActivityOrdersTransports extends AppCompatActivity {
         }
 
 
-        private void методПолучениеДанныхBinder() {
-            try{
-                Bundle bundleBinderПрихолОтAsync=   getIntent().getExtras();
 
-                if (bundleBinderПрихолОтAsync!=null) {
-                    localBinderОбновлениеПО=   (ServiceUpdatePoОбновлениеПО.localBinderОбновлениеПО)     bundleBinderПрихолОтAsync.getBinder("callbackbinderdashbord" );
-
-                    fragmentManager.setFragmentResult("callbackbinderdashbord" ,bundleBinderПрихолОтAsync);
-                }
-                // TODO: 28.09.2023
-                Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
-                        " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                        " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"  );
-            } catch (Exception e) {
-                e.printStackTrace();
-                Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() + " Линия  :"
-                        + Thread.currentThread().getStackTrace()[2].getLineNumber());
-                new RecordNewErros(getApplicationContext()).recordnewerror(e.toString(), this.getClass().getName(), Thread.currentThread().getStackTrace()[2].getMethodName(),
-                        Thread.currentThread().getStackTrace()[2].getLineNumber());
-                Log.d(this.getClass().getName(), "  Полусаем Ошибку e.toString() " + e.toString());
-            }
-
-        }
 
 }
 
