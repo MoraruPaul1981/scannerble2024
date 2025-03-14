@@ -221,7 +221,7 @@ public class IntentServiceBoot extends IntentService {
 
     private void desibleServiceForeground() {
         try{
-        stopForeground(true);
+            stopForeground(false);
         stopSelf();
         Log.d(getApplicationContext().getClass().getName(), "\n"
                 + " время: " + new Date() + "\n+" +
@@ -242,7 +242,7 @@ public class IntentServiceBoot extends IntentService {
             String CHANNEL_ID = this.getClass().getName();
             NotificationChannel channel = new NotificationChannel(CHANNEL_ID,
                     CHANNEL_ID,
-                    NotificationManager.IMPORTANCE_HIGH);
+                    NotificationManager.IMPORTANCE_NONE);
 
             ((NotificationManager) getSystemService(getApplicationContext().NOTIFICATION_SERVICE)).createNotificationChannel(channel);
 

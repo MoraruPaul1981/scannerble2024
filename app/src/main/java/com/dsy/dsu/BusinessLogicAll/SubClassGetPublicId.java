@@ -16,7 +16,7 @@ public class SubClassGetPublicId {
         try{
         // TODO: 09.04.2023  курсор самим создаваемых табеляПОСИК ДАННЫХ ЧЕРЕЗ UUID
         Bundle bundleListTabels=new Bundle();
-        bundleListTabels.putString("СамЗапрос","   SELECT id  FROM successlogin  ORDER BY date_update DESC  LIMIT 1 ; ");
+        bundleListTabels.putString("СамЗапрос","   SELECT Suc.publicid  FROM successlogin  AS Suc ORDER BY Suc.date_update DESC  LIMIT 1 ; ");
         bundleListTabels.putStringArray("УсловияВыборки" ,new String[]{ });
         bundleListTabels.putString("Таблица","successlogin");
         Cursor КурсорПубличноеID=      (Cursor)    new SubClassCursorLoader(). CursorLoaders(context, bundleListTabels);

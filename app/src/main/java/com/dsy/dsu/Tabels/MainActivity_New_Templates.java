@@ -2005,9 +2005,9 @@ public class MainActivity_New_Templates extends AppCompatActivity implements Dat
             ///
             class_grud_sql_operationsПолучениеОрганизацииНепосрдственодляДанногоСОтрудника.concurrentHashMapНабор.put("НазваниеОбрабоатываемойТаблицы", "SuccessLogin");
             ///////
-            class_grud_sql_operationsПолучениеОрганизацииНепосрдственодляДанногоСОтрудника.concurrentHashMapНабор.put("СтолбцыОбработки", "id");
+            class_grud_sql_operationsПолучениеОрганизацииНепосрдственодляДанногоСОтрудника.concurrentHashMapНабор.put("СтолбцыОбработки", "publicid");
             //
-            class_grud_sql_operationsПолучениеОрганизацииНепосрдственодляДанногоСОтрудника.concurrentHashMapНабор.put("ФорматПосика", "id IS NOT NULL");
+            class_grud_sql_operationsПолучениеОрганизацииНепосрдственодляДанногоСОтрудника.concurrentHashMapНабор.put("ФорматПосика", "publicid IS NOT NULL");
             ///"_id > ?   AND _id< ?"
           /*          //////
                     class_grud_sql_operations. concurrentHashMapНабор.put("УсловиеПоиска1",finalПолученныйUUID);
