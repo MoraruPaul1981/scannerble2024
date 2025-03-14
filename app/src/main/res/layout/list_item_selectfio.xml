@@ -20,6 +20,8 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:textAlignment="gravity"
+    android:layout_margin="5dp"
+    android:padding="2dp"
     android:checkMark="?android:attr/textCheckMarkInverse"
     android:paddingStart="?android:attr/listPreferredItemPaddingStart"
     android:paddingEnd="?android:attr/listPreferredItemPaddingEnd"
