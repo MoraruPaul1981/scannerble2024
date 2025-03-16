@@ -48,7 +48,7 @@
         <com.google.android.material.card.MaterialCardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:cardCornerRadius="1dp"
+            app:cardCornerRadius="5dp"
             android:layout_margin="5dp"
             android:padding="2dp"
             android:animateLayoutChanges="true"
@@ -61,17 +61,23 @@
             app:strokeWidth="0dp">
 
 
-            <androidx.appcompat.widget.Toolbar
-                android:id="@+id/toolbarcamera_dashbord"
-                android:layout_width="match_parent"
-                android:layout_height="250dp"
-                android:elevation="0dp"
-                app:showAsAction="always"
-                app:theme="@style/AppTheme">
 
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent">
+
+
+
+
+
+                    <androidx.viewpager2.widget.ViewPager2
+                        xmlns:android="http://schemas.android.com/apk/res/android"
+                        android:id="@+id/pagerdachbord"
+                        android:layout_width="match_parent"
+                        android:layout_centerHorizontal="true"
+                        android:layout_alignParentTop="true"
+                        android:background="@color/divider"
+                        android:layout_height="250dp" />
 
 
                     <!--   //TODO   #5 -->
@@ -79,7 +85,6 @@
                         android:id="@+id/imageview_to_settings"
                         android:layout_width="50dp"
                         android:layout_height="50dp"
-
                         android:layout_alignParentRight="true"
                         android:layout_alignParentTop="true"
                         android:layout_margin="5dp"
@@ -100,7 +105,7 @@
 
 
 
-            </androidx.appcompat.widget.Toolbar>
+
 
 
         </com.google.android.material.card.MaterialCardView>

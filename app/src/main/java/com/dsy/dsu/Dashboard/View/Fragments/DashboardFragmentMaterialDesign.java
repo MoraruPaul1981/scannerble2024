@@ -26,10 +26,12 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentResultListener;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.LifecycleOwner;
+import androidx.viewpager2.widget.ViewPager2;
 
 import com.dsy.dsu.AdmissionMaterials.Window.MainActivity_AdmissionMaterials;
 import com.dsy.dsu.CommitPrices.View.Window.MainActivityCommitingPrices;
 
+import com.dsy.dsu.Dashboard.Model.bl_viewpager2.BunesslogicViewPager2;
 import com.dsy.dsu.Dashboard.Model.changeaccessrights.DashboardGRANTorREVOKE;
 import com.dsy.dsu.Errors.controller.RecordNewErros;
 import com.dsy.dsu.Hilt.PublicId.QualifierPublicId;
@@ -65,7 +67,7 @@ public class DashboardFragmentMaterialDesign extends  DialogFragment  {
             КнопкаПоступлениеМатериалов,КнопкаЗаявкаНаТранспорт,
             КнопкаСогласЦен;
 
-    private  TextView TextViewLogo;
+
     private LifecycleOwner lifecycleOwner;
 
     private ServiceUpdatePoОбновлениеПО.localBinderОбновлениеПО localBinderОбновлениеПО;//TODO новаЯ
@@ -80,8 +82,8 @@ public class DashboardFragmentMaterialDesign extends  DialogFragment  {
     @QualifierPublicId
         Integer getHiltPublicId;
 
-    private androidx.appcompat.widget.Toolbar toolbarcamera_dashbord;
-    private  androidx.core.widget.NestedScrollView nestedScrollViewApp;
+  public    ViewPager2 pagerdachbord;
+
 
     // TODO: Rename and change types and number of parameters
     public static DashboardFragmentMaterialDesign newInstance( ) {
@@ -259,14 +261,19 @@ public class DashboardFragmentMaterialDesign extends  DialogFragment  {
 
 
 
-            TextViewLogo      = (TextView) view.findViewById(R.id.TextViewLogo); /////КНОПКА ТАБЕЛЬНОГО УЧЕТА
+
 
             imageview_to_settings      = (AppCompatImageButton) view.findViewById(R.id.imageview_to_settings); /////КНОПКА ТАБЕЛЬНОГО УЧЕТА
 
 
-            toolbarcamera_dashbord = (androidx.appcompat.widget.Toolbar) view.findViewById(R.id.toolbarcamera_dashbord);
+            pagerdachbord = (ViewPager2) view.findViewById(R.id.pagerdachbord);
             /////КНОПКА ТАБЕЛЬНОГО УЧЕТА
-            nestedScrollViewApp = (androidx.core.widget.NestedScrollView) view.findViewById(R.id.nestedScrollViewApp); /////КНОПКА ТАБЕЛЬНОГО УЧЕТА
+
+
+            // TODO: 16.03.2025 ViewPager2
+            new BunesslogicViewPager2(pagerdachbord,getContext(),this).getBunesslogicViewPager2();
+
+
 
             // TODO: 10.03.2025  биндинг обновление ПО
             new  BindingSoftwareUpdatePO().getbindingSoftwareUpdatePO();
@@ -286,15 +293,6 @@ public class DashboardFragmentMaterialDesign extends  DialogFragment  {
                     КнопкаСогласование,КнопкаСогласЦен
                     ,КнопкаПоступлениеМатериалов,
                     КнопкаТабель,getGrantRemote);
-
-
-
-
-
-
-
-            // TODO: 11.01.2024 бизнес код настройки внешнего вида
-            buniccessLogicFra4gmentDashboard.методНастройкиВнешнегоВида();
 
 
 
@@ -358,25 +356,7 @@ public class DashboardFragmentMaterialDesign extends  DialogFragment  {
     class BuniccessLogicFra4gmentDashboard{
 
 
-        private void методНастройкиВнешнегоВида() {
-            try{
-                // TODO: 21.08.2023  ЛОГОТИП
-                TextViewLogo.startAnimation(animation5);
-                TextViewLogo.refreshDrawableState();
-                // TODO: 21.08.2023
-                Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
-                        " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                        " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"  );
-            } catch (Exception e) {
-                e.printStackTrace();
-                Log.e(getContext().getClass().getName(),
-                        "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
-                                " Линия  :" + Thread.currentThread().getStackTrace()[2].getLineNumber());
-                new RecordNewErros(getContext()).recordnewerror(e.toString(),
-                        this.getClass().getName().toString(), Thread.currentThread().getStackTrace()[2].getMethodName().toString(),
-                        Thread.currentThread().getStackTrace()[2].getLineNumber());
-            }
-        }
+
 
 
         // TODO: 17.08.2023  Класс Для Компонента Табель
