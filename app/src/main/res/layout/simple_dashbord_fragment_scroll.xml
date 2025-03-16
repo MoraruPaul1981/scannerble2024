@@ -45,60 +45,82 @@
         android:layout_gravity="center">
 
 
-        <androidx.appcompat.widget.Toolbar
-            android:id="@+id/toolbarcamera_dashbord"
+        <com.google.android.material.card.MaterialCardView
             android:layout_width="match_parent"
-            android:layout_height="250dp"
-            android:elevation="0dp"
-            app:showAsAction="always"
-            app:theme="@style/AppTheme">
+            android:layout_height="wrap_content"
+            app:cardCornerRadius="1dp"
+            android:layout_margin="5dp"
+            android:padding="2dp"
+            android:animateLayoutChanges="true"
+            android:gravity="center"
+            app:cardBackgroundColor="@color/actionbar_text_color"
+            app:strokeColor="@color/icon_dashdornd_tabel2_background"
+            app:cardElevation="2dp"
+            app:cardMaxElevation="12dp"
+            android:translationZ="2dp"
+            app:strokeWidth="0dp">
 
-            <RelativeLayout
+
+            <androidx.appcompat.widget.Toolbar
+                android:id="@+id/toolbarcamera_dashbord"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_height="250dp"
+                android:elevation="0dp"
+                app:showAsAction="always"
+                app:theme="@style/AppTheme">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
 
 
-                <!--   //TODO   #5 -->
-                <androidx.appcompat.widget.AppCompatImageButton
-                    android:id="@+id/imageview_to_settings"
-                    android:layout_width="50dp"
-                    android:layout_height="50dp"
-                    android:layout_alignRight="@+id/TextViewLogo"
-                    android:layout_alignParentRight="true"
-                    android:layout_alignParentTop="true"
-                    android:layout_margin="5dp"
-                    android:padding="2dp"
-                    android:alpha="0.5"
-                    android:backgroundTint="#FFFFFF"
-                    android:visibility="visible"
-                    app:rippleColor="@color/colorPrimaryDark"
-                    android:background="?attr/selectableItemBackgroundBorderless"
-                    android:foreground="?attr/selectableItemBackground"
-                    app:srcCompat="@drawable/icon_new_dashaborad_settings" />
+                    <!--   //TODO   #5 -->
+                    <androidx.appcompat.widget.AppCompatImageButton
+                        android:id="@+id/imageview_to_settings"
+                        android:layout_width="50dp"
+                        android:layout_height="50dp"
+
+                        android:layout_alignParentRight="true"
+                        android:layout_alignParentTop="true"
+                        android:layout_margin="5dp"
+                        android:padding="2dp"
+                        android:alpha="0.5"
+                        android:backgroundTint="#FFFFFF"
+                        android:visibility="visible"
+                        app:rippleColor="@color/colorPrimaryDark"
+                        android:background="?attr/selectableItemBackgroundBorderless"
+                        android:foreground="?attr/selectableItemBackground"
+                        app:srcCompat="@drawable/icon_new_dashaborad_settings" />
 
 
-                <TextView
-                    android:id="@+id/TextViewLogo"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    <TextView
+                        android:id="@+id/TextViewLogo"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
 
-                    android:layout_centerInParent="true"
-                    android:fontFamily="@font/alegreya_sans_sc_thin"
-                    android:gravity="center"
-                    android:hint="КАМЕРА"
-                    android:text="@string/name_dsu"
-                    android:textAlignment="center"
-                    android:textColor="#000000"
-                    android:textSize="36sp"
-                    android:textStyle="bold"
-                    android:visibility="visible" />
-
-
-            </RelativeLayout>
+                        android:layout_centerInParent="true"
+                        android:fontFamily="@font/alegreya_sans_sc_thin"
+                        android:gravity="center"
+                        android:hint="КАМЕРА"
+                        android:text="@string/name_dsu"
+                        android:textAlignment="center"
+                        android:textColor="#000000"
+                        android:textSize="36sp"
+                        android:textStyle="bold"
+                        android:visibility="visible" />
 
 
+                </RelativeLayout>
 
-        </androidx.appcompat.widget.Toolbar>
+
+
+            </androidx.appcompat.widget.Toolbar>
+
+
+        </com.google.android.material.card.MaterialCardView>
+
+
+
 
 
 
