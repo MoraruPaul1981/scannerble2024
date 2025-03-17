@@ -26,13 +26,12 @@ public class BunesslogicViewPager2 {
             demoCollectionAdapter = new DemoCollectionAdapter(dashboardFragmentMaterialDesign);
             dashboardFragmentMaterialDesign.pagerdachbord.setAdapter(demoCollectionAdapter);
             dashboardFragmentMaterialDesign.pagerdachbord.setScrollContainer(true);
-            dashboardFragmentMaterialDesign.pagerdachbord.animate().setDuration(10000).start();
+            dashboardFragmentMaterialDesign.pagerdachbord.animate().start();
             dashboardFragmentMaterialDesign.pagerdachbord.setPageTransformer(new ZoomOutPageTransformerDashBoard());
             dashboardFragmentMaterialDesign.pagerdachbord.registerOnPageChangeCallback(new ViewPager2.OnPageChangeCallback() {
                 @Override
                 public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
                     super.onPageScrolled(position, positionOffset, positionOffsetPixels);
-
                     Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                             " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
                             " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n");
@@ -42,6 +41,8 @@ public class BunesslogicViewPager2 {
                 @Override
                 public void onPageSelected(int position) {
                     super.onPageSelected(position);
+
+
                     Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                                 " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
                                 " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n");

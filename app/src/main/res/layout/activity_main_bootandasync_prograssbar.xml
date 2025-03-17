@@ -46,16 +46,37 @@
 
 
         <TextView
-            android:layout_width="150dp"
-            android:layout_height="50dp"
+            android:id="@+id/organ"
+            android:layout_width="300dp"
+            android:layout_height="wrap_content"
             android:gravity="center"
+            android:layout_margin="5dp"
             android:layout_weight="1"
-            android:text=" Союз-Автодор 2025 г."
+            android:text="ООО «Союз Автодор»"
+            android:textAlignment="center"
+            android:textColor="#0C0A0A"
+            android:layout_above="@+id/organyeaer"
+            android:layout_centerHorizontal="true"
+            android:textStyle="bold"
+            android:textSize="14sp" />
+
+
+        <TextView
+            android:id="@+id/organyeaer"
+            android:layout_width="300dp"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:layout_margin="5dp"
+            android:layout_weight="1"
+            android:text="2025 г."
             android:textAlignment="center"
             android:textColor="#0C0A0A"
             android:layout_alignParentBottom="true"
             android:layout_centerHorizontal="true"
-            android:textSize="12sp" />
+            android:textStyle="bold"
+            android:textSize="13sp" />
+
+
 
         <TableLayout
             android:layout_width="match_parent"
