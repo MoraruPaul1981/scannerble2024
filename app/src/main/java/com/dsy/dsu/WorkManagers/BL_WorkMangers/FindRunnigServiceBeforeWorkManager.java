@@ -1,13 +1,16 @@
 package com.dsy.dsu.WorkManagers.BL_WorkMangers;
 
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.app.ActivityManager;
 import android.content.ComponentName;
 import android.content.Context;
 import android.util.Log;
+import android.widget.Toast;
 
 import com.dsy.dsu.Errors.controller.RecordNewErros;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Predicate;
 
@@ -69,13 +72,15 @@ public class FindRunnigServiceBeforeWorkManager {
             if (activityManager!=null) {
                 tasks = activityManager.getRunningTasks(Integer.MAX_VALUE);
                 // TODO: 14.01.2025
+                List<ActivityManager.RunningTaskInfo> services = activityManager.getRunningTasks(Integer.MAX_VALUE);
                 isMyActivityRunning=    tasks.stream().anyMatch(new Predicate<ActivityManager.RunningTaskInfo>() {
                     @Override
                     public boolean test(ActivityManager.RunningTaskInfo runningTaskInfo) {
                         // TODO: 14.01.2025
                         Boolean  isMyActivityRunning = false;
                         ComponentName currentPackageName =   runningTaskInfo.topActivity;
-                        if(currentPackageName.getClassName().equalsIgnoreCase("com.dsy.dsu.BootAndAsync.Window.MainActivityBootAndAsync")){
+
+                        if(currentPackageName.getClassName().length()>20){
                             if (runningTaskInfo.isRunning) {
                                 isMyActivityRunning =true;
                             }
@@ -83,10 +88,17 @@ public class FindRunnigServiceBeforeWorkManager {
                                     " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
                                     " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"+" isMyActivityRunning "+ isMyActivityRunning);
                         }
+
+
+                        if(currentPackageName.getClassName().length()==0){
+                            isMyActivityRunning =true;
+                            Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                                    " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                                    " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"+" isMyActivityRunning "+ isMyActivityRunning);
+                        }
                         return isMyActivityRunning;
                     }
                 });
-
             }
         Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                 " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +

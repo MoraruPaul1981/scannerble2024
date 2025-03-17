@@ -24,6 +24,7 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Optional;
+import java.util.concurrent.TimeUnit;
 
 import io.reactivex.rxjava3.core.Flowable;
 import io.reactivex.rxjava3.core.Observable;
@@ -44,6 +45,7 @@ public class GeneratorBinarySONSerializer extends JsonSerializer<Cursor> {
             jsonGenerator.writeStartObject();//    .concatMap(i -> Observable.just(i).delay(150, TimeUnit.MILLISECONDS))
             // TODO: 20.07.2023 Строки 
             Observable.range(0,КурсорДляОтправкиДанныхНаСерверОтАндройда.getCount())
+                    .concatMap(i -> Observable.just(i).delay(150, TimeUnit.MILLISECONDS))
                     .doOnNext(new Consumer<Integer>() {
                         @Override
                         public void accept(Integer integer) throws Throwable {

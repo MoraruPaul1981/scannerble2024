@@ -22,14 +22,18 @@ import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.databind.DatabindException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.SequenceWriter;
 import com.fasterxml.jackson.databind.module.SimpleModule;
+import com.google.common.util.concurrent.AtomicDouble;
 
 import org.jetbrains.annotations.NotNull;
 import org.json.JSONException;
 
+import java.io.ByteArrayOutputStream;
 import java.io.InputStream;
 import java.io.Serializable;
 import java.io.StringWriter;
+import java.io.Writer;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -45,8 +49,11 @@ import java.util.concurrent.TimeUnit;
 import javax.net.ssl.SSLSocketFactory;
 
 import io.reactivex.rxjava3.core.Flowable;
+import io.reactivex.rxjava3.core.Maybe;
 import io.reactivex.rxjava3.core.Observable;
+import io.reactivex.rxjava3.core.Single;
 import io.reactivex.rxjava3.functions.Action;
+import io.reactivex.rxjava3.functions.Consumer;
 import io.reactivex.rxjava3.functions.Predicate;
 import io.reactivex.rxjava3.schedulers.Schedulers;
 
@@ -106,7 +113,7 @@ public class ProccesorparallelSynch   {
                          executorServiceAsync= Executors.newSingleThreadExecutor();
                          break;
                      default:{
-                         executorServiceAsync= Executors.newFixedThreadPool(3);
+                         executorServiceAsync= Executors.newFixedThreadPool(2);
                      }
                  }
 
@@ -128,6 +135,7 @@ public class ProccesorparallelSynch   {
                  // TODO: 07.10.2024  chsnage
              }
 
+
 // TODO: 20.01.2025 сама синхрониаиця
             Flowable.fromIterable(getBufferFromJbossServerAllTables)
                     .parallel()
@@ -136,9 +144,6 @@ public class ProccesorparallelSynch   {
                         @Override
                         public void accept(Map<String, String> stringStringMapMultiPotoks) throws Throwable {
                             // TODO: 28.12.2024
-                            // TODO: 27.12.2024
-                            String getNameTableRunning= stringStringMapMultiPotoks.entrySet().stream().filter(e->e.getKey().equalsIgnoreCase("name")).map(Map.Entry::getValue).findFirst().get();
-
                             // TODO: 06.12.2023  запуск синхризуции по таблице конктерной
                             coutSucceessItemAsycnTablesComplete.add(getLooTablesPOSTANDGET(stringStringMapMultiPotoks))      ;
                             // TODO: 30.09.2024
@@ -147,7 +152,7 @@ public class ProccesorparallelSynch   {
                                     " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
                                     " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"
                                     + " getBufferFromJbossServerAllTables.size() " + getBufferFromJbossServerAllTables.size()
-                                    +"\n"+" getNameTableRunning " +getNameTableRunning);
+                                    +"\n");
                         }
                     })
                     .doOnError(new io.reactivex.rxjava3.functions.Consumer<Throwable>() {
@@ -217,9 +222,11 @@ public class ProccesorparallelSynch   {
 
 
             /////////////TODO ИДЕМ ПО ШАГАМ К ЗАПУСКИ СИНХРОГНИАЗЦИИ
-            РезультатТаблицыОбмена=
-                    startSendingDataTotheServerOrReceivingDataFromTheJbossServer(getNameTable,
-                            getVersionserverversion, PublicID,getParserVersionserver);
+
+                РезультатТаблицыОбмена=
+                        startSendingDataTotheServerOrReceivingDataFromTheJbossServer(getNameTable,
+                                getVersionserverversion, PublicID,getParserVersionserver);
+
             // TODO: 12.07.2023
 
             Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
@@ -285,57 +292,75 @@ public class ProccesorparallelSynch   {
                         + "\n"
                         +" ВремяОтSqlServer " +ВремяОтSqlServer);
 
+
+
+
+
+
 // TODO: 24.09.2024 Запускаем Отправление и или ПОлучение данных  сервера JBoss
-
-
             // TODO: 08.04.2024 SEND SERVERR JBOSS POST
-        Long getSendingDatatoTheServerOnjboss =startSendingDatatoTheServerOnjboss(ИмяТаблицы,
+            Long getSendingDatatoTheServerOnjboss =startSendingDatatoTheServerOnjboss(ИмяТаблицы,
                     ВерсияДанныхсSqlServer,
                     PublicID,
                     ВремяОтSqlServer);
 
-// TODO: 24.09.2024
+
+            if (getSendingDatatoTheServerOnjboss>0) {
+                completedPostAndGetInsertorUpdateOperations.add(getSendingDatatoTheServerOnjboss);
+            }
+
+            // TODO: 17.03.2025 Если Положительный ответ POST
+            if (getSendingDatatoTheServerOnjboss>0) {
+                // TODO: 13.02.2025 ПОСЛЕ ПОВЫШАЕМ ВЕРИСЮ ДАННЫХ ТОЛЬКО ДЛЯ POST после всей синхрониахции
+                workerUpVersionDataOnlyPOSTAsyncBack(   getSendingDatatoTheServerOnjboss, ИмяТаблицы);
+            }
+            // TODO: 24.09.2024
             Log.d(this.getClass().getName(), "\n"
                     + " время: " + new Date() + "\n+" +
                     " Класс в процессе... " + this.getClass().getName() + "\n" +
                     " метод в процессе... " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
                     "  + getSendingDatatoTheServerOnjboss) " + getSendingDatatoTheServerOnjboss);
 
-            if (getSendingDatatoTheServerOnjboss>0) {
-                completedPostAndGetInsertorUpdateOperations.add(getSendingDatatoTheServerOnjboss);
-            }
+
+
+
+
+
+
+
+
+
+
+
 
 
             // TODO: 08.04.2024 через Retry Obsever множественое ображение  к серверу GET
-         Long getcompletedInsertorUpdateOperationsForEachWhile=completedInsertorUpdateOperationsForEachWhile(ИмяТаблицы,
+            Long getcompletedInsertorUpdateOperationsForEachWhile=completedInsertorUpdateOperationsForEachWhile(ИмяТаблицы,
                     ВерсияДанныхсSqlServer,
                     PublicID,
                     ВремяОтSqlServer);
 
-
             // TODO: 24.09.2024
             Log.d(this.getClass().getName(), "\n"
                     + " время: " + new Date() + "\n+" +
                     " Класс в процессе... " + this.getClass().getName() + "\n" +
                     " метод в процессе... " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                    "  + getcompletedInsertorUpdateOperationsForEachWhile" + getcompletedInsertorUpdateOperationsForEachWhile);
+                    "  + getcompletedInsertorUpdateOperationsForEachWhile" + getcompletedInsertorUpdateOperationsForEachWhile +"\n"
+                    + " getcompletedInsertorUpdateOperationsForEachWhile "+getcompletedInsertorUpdateOperationsForEachWhile);
 
-
-            // TODO: 13.02.2025 ПОСЛЕ ПОВЫШАЕМ ВЕРИСЮ ДАННЫХ ТОЛЬКО ДЛЯ POST после всей синхрониахции
-              workerUpVersionDataOnlyPOSTAsyncBack(   getSendingDatatoTheServerOnjboss, ИмяТаблицы);
-
-            
-            // TODO: 24.09.2024
-            Log.d(this.getClass().getName(), "\n"
-                    + " время: " + new Date() + "\n+" +
-                    " Класс в процессе... " + this.getClass().getName() + "\n" +
-                    " метод в процессе... " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                    "  + getcompletedInsertorUpdateOperationsForEachWhile" + getcompletedInsertorUpdateOperationsForEachWhile);
-
-
+            // TODO: 17.03.2025 Если Положительный ответ GET
             if (getcompletedInsertorUpdateOperationsForEachWhile>0) {
                 completedPostAndGetInsertorUpdateOperations.add(getcompletedInsertorUpdateOperationsForEachWhile);
             }
+
+
+
+            // TODO: 17.03.2025
+            Log.d(this.getClass().getName(), "\n"
+                    + " время: " + new Date() + "\n+" +
+                    " Класс в процессе... " + this.getClass().getName() + "\n" +
+                    " метод в процессе... " + Thread.currentThread().getStackTrace()[2].getMethodName()
+                    + "\n" + " getcompletedInsertorUpdateOperationsForEachWhile " +getcompletedInsertorUpdateOperationsForEachWhile);
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -1272,7 +1297,7 @@ try{
                             " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"
                             + " КурсорДляОтправкиДанныхНаСерверОтАндройда "+КурсорДляОтправкиДанныхНаСерверОтАндройда.getCount() );
 
-                    StringWriter stringWriterJSONAndroid=    new StringWriter();
+
                     //   ObjectMapper jsonGenerator = new PUBLIC_CONTENT(context).getGeneratorJackson();
                     SimpleModule module = new SimpleModule();
                     // TODO: 11.09.2023  какая текущапя таблица
@@ -1283,18 +1308,32 @@ try{
                         module.addSerializer(Cursor.class, new GeneratorJSONSerializer(context));
                     }
                     jsonGenerator.registerModule(module);
-                    jsonGenerator.getFactory().createGenerator( stringWriterJSONAndroid ).useDefaultPrettyPrinter();
-                    byte[] BufferJsonForSendServer=  jsonGenerator.writeValueAsBytes(КурсорДляОтправкиДанныхНаСерверОтАндройда);
+
+             /*       StringWriter stringWriterJSONAndroid=    new StringWriter();
+                    jsonGenerator.getFactory().createGenerator( stringWriterJSONAndroid ).useDefaultPrettyPrinter();*/
+                    // TODO: 17.03.2025 byte send
+                  //  byte[] BufferJsonForSendServer=  jsonGenerator.writeValueAsBytes(КурсорДляОтправкиДанныхНаСерверОтАндройда);
+                    // TODO: 17.03.2025 string send
+                    //String  JsonForSendServer = jsonGenerator.writeValueAsString(КурсорДляОтправкиДанныхНаСерверОтАндройда);
+
+
+                    ByteArrayOutputStream baos = new ByteArrayOutputStream(2028);
+                    SequenceWriter seqWriter = jsonGenerator.writerWithDefaultPrettyPrinter().writeValues(baos);
+                    seqWriter.write(КурсорДляОтправкиДанныхНаСерверОтАндройда);
+                    seqWriter.flush();
+                    seqWriter.close();
+                    byte[] BufferJsonForSendServer=     baos.toByteArray();
+
                     // TODO: 23.03.2023 ID ПРОФЕСИИ
                     КурсорДляОтправкиДанныхНаСерверОтАндройда.close();
-                    Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                  Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                             " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
                             " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"
                             + " BufferJsonForSendServer"+BufferJsonForSendServer );
 
 
 
-                    // TODO: 14.03.2023 ПОСЫЛАЕМ ДАННЫЕ СГЕНЕРИРОНГО JSON НА СЕРВЕР ---->SERVER
+                   // TODO: 14.03.2023 ПОСЫЛАЕМ ДАННЫЕ СГЕНЕРИРОНГО JSON НА СЕРВЕР ---->SERVER
                     ResultatSendingJsonJboss = new SendJsonCompliteToJboss().sendingJsonCompliteToJboss(context,BufferJsonForSendServer,
                             Таблицы,getHiltPortJboss,PublicID,getsslSocketFactory2 );
 

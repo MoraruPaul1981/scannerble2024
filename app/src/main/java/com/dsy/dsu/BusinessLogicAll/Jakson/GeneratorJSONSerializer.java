@@ -1,6 +1,7 @@
 package com.dsy.dsu.BusinessLogicAll.Jakson;
 
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.database.Cursor;
 import android.util.Log;
@@ -12,6 +13,7 @@ import com.fasterxml.jackson.databind.SerializerProvider;
 
 import java.io.IOException;
 import java.util.Optional;
+import java.util.concurrent.TimeUnit;
 
 import io.reactivex.rxjava3.core.Flowable;
 import io.reactivex.rxjava3.core.Observable;
@@ -32,11 +34,12 @@ public class GeneratorJSONSerializer extends JsonSerializer<Cursor> {
             jsonGenerator.writeStartObject();///      .concatMap(i -> Observable.just(i).delay(150, TimeUnit.MILLISECONDS))
             // TODO: 20.07.2023 Строки 
             Observable.range(0,КурсорДляОтправкиДанныхНаСерверОтАндройда.getCount())
+                    .concatMap(i -> Observable.just(i).delay(150, TimeUnit.MILLISECONDS))
                     .doOnNext(new Consumer<Integer>() {
                         @Override
                         public void accept(Integer integer) throws Throwable {
 
-                            Long Key=   КурсорДляОтправкиДанныхНаСерверОтАндройда.getLong(КурсорДляОтправкиДанныхНаСерверОтАндройда.getColumnIndex("uuid"));
+                            @SuppressLint("Range") Long Key=   КурсорДляОтправкиДанныхНаСерверОтАндройда.getLong(КурсорДляОтправкиДанныхНаСерверОтАндройда.getColumnIndex("uuid"));
                             jsonGenerator.writeFieldId(Key);
                             jsonGenerator.writeStartObject();
 
