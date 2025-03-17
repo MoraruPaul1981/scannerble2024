@@ -305,6 +305,14 @@ public class ProccesorparallelSynch   {
                     ВремяОтSqlServer);
 
 
+            // TODO: 24.09.2024
+            Log.d(this.getClass().getName(), "\n"
+                    + " время: " + new Date() + "\n+" +
+                    " Класс в процессе... " + this.getClass().getName() + "\n" +
+                    " метод в процессе... " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n"
+                    + " getSendingDatatoTheServerOnjboss "+getSendingDatatoTheServerOnjboss);
+
+
             if (getSendingDatatoTheServerOnjboss>0) {
                 completedPostAndGetInsertorUpdateOperations.add(getSendingDatatoTheServerOnjboss);
             }
