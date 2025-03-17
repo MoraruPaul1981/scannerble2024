@@ -6,9 +6,9 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.viewpager2.adapter.FragmentStateAdapter;
 
-import com.dsy.dsu.Dashboard.View.Fragments.DashboardFragmentMaterialDesign;
-import com.dsy.dsu.Dashboard.View.Fragments.LogoFragment;
-import com.dsy.dsu.Dashboard.View.Fragments.LogoFragmentTwo;
+import com.dsy.dsu.Dashboard.View.Fragments.viewpager2.LogoFragment;
+import com.dsy.dsu.Dashboard.View.Fragments.viewpager2.LogoFragmentTree;
+import com.dsy.dsu.Dashboard.View.Fragments.viewpager2.LogoFragmentTwo;
 
 public class DemoCollectionAdapter extends FragmentStateAdapter {
     public DemoCollectionAdapter(Fragment fragment) {
@@ -34,7 +34,15 @@ public class DemoCollectionAdapter extends FragmentStateAdapter {
                 // The object is just an integer.
                 fragment.setArguments(args);
                 break;
-            
+
+
+            case 2:
+                fragment = new LogoFragmentTree();
+                args = new Bundle();
+                // The object is just an integer.
+                fragment.setArguments(args);
+                break;
+
             
         }
 
@@ -44,6 +52,6 @@ public class DemoCollectionAdapter extends FragmentStateAdapter {
 
     @Override
     public int getItemCount() {
-        return 2;
+        return 3;
     }
 }

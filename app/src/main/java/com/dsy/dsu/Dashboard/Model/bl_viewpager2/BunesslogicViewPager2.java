@@ -2,11 +2,16 @@ package com.dsy.dsu.Dashboard.Model.bl_viewpager2;
 
 import android.content.Context;
 import android.util.Log;
+import android.view.View;
 
+import androidx.annotation.NonNull;
+import androidx.viewpager.widget.ViewPager;
 import androidx.viewpager2.widget.ViewPager2;
 
 import com.dsy.dsu.Dashboard.View.Fragments.DashboardFragmentMaterialDesign;
 import com.dsy.dsu.Errors.controller.RecordNewErros;
+
+import java.util.logging.Handler;
 
 public class BunesslogicViewPager2 {
    private ViewPager2 pagerdachbord;
@@ -22,8 +27,37 @@ public class BunesslogicViewPager2 {
    public void getBunesslogicViewPager2(){
         try{
             demoCollectionAdapter = new DemoCollectionAdapter(dashboardFragmentMaterialDesign);
-
             dashboardFragmentMaterialDesign.pagerdachbord.setAdapter(demoCollectionAdapter);
+            dashboardFragmentMaterialDesign.pagerdachbord.setScrollContainer(true);
+            dashboardFragmentMaterialDesign.pagerdachbord.setCurrentItem(0,true);
+            dashboardFragmentMaterialDesign.pagerdachbord.setPageTransformer(new ZoomOutPageTransformer());
+            dashboardFragmentMaterialDesign.pagerdachbord.registerOnPageChangeCallback(new ViewPager2.OnPageChangeCallback() {
+                @Override
+                public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+                    super.onPageScrolled(position, positionOffset, positionOffsetPixels);
+
+                    Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                            " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                            " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n");
+
+                }
+
+                @Override
+                public void onPageSelected(int position) {
+                    super.onPageSelected(position);
+                    Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                                " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                                " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n");
+                }
+
+                @Override
+                public void onPageScrollStateChanged(int state) {
+                    super.onPageScrollStateChanged(state);
+                    Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                            " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                            " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n");
+                }
+            });
         // TODO: 21.06.2023
         Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                 " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +

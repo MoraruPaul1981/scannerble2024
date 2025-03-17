@@ -1,21 +1,20 @@
-package com.dsy.dsu.Dashboard.View.Fragments;
+package com.dsy.dsu.Dashboard.View.Fragments.viewpager2;
 
 import android.os.Bundle;
-
-import androidx.fragment.app.Fragment;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
+import androidx.fragment.app.Fragment;
 
 import com.dsy.dsu.R;
 
 /**
  * A simple {@link Fragment} subclass.
- * Use the {@link LogoFragment#newInstance} factory method to
+ * Use the {@link LogoFragmentTree#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class LogoFragment extends Fragment {
+public class LogoFragmentTree extends Fragment {
 
     // TODO: Rename parameter arguments, choose names that match
 
@@ -29,8 +28,8 @@ public class LogoFragment extends Fragment {
      * @return A new instance of fragment LogoFragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static LogoFragment newInstance(String param1, String param2) {
-        LogoFragment fragment = new LogoFragment();
+    public static LogoFragmentTree newInstance(String param1, String param2) {
+        LogoFragmentTree fragment = new LogoFragmentTree();
         Bundle args = new Bundle();
 
         fragment.setArguments(args);
@@ -49,6 +48,6 @@ public class LogoFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_logo, container, false);
+        return inflater.inflate(R.layout.fragment_logotree, container, false);
     }
 }

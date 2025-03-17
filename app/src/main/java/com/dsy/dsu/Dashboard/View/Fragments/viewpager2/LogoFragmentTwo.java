@@ -1,4 +1,4 @@
-package com.dsy.dsu.Dashboard.View.Fragments;
+package com.dsy.dsu.Dashboard.View.Fragments.viewpager2;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;

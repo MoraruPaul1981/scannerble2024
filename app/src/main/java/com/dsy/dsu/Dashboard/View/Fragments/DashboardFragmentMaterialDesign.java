@@ -258,26 +258,16 @@ public class DashboardFragmentMaterialDesign extends  DialogFragment  {
             КнопкаСогласЦен         = (MaterialButton) view.findViewById(R.id.КнопкаСогласЦен); /////КНОПКА ТАБЕЛЬНОГО УЧЕТА
             КнопкаПоступлениеМатериалов         = (MaterialButton) view.findViewById(R.id.КнопкаПоступлениеМатериалов); /////КНОПКА ТАБЕЛЬНОГО УЧЕТА
             КнопкаТабель          = (MaterialButton) view.findViewById(R.id.КнопкаТабель); /////КНОПКА ТАБЕЛЬНОГО УЧЕТА
-
-
-
-
-
             imageview_to_settings      = (AppCompatImageButton) view.findViewById(R.id.imageview_to_settings); /////КНОПКА ТАБЕЛЬНОГО УЧЕТА
-
-
             pagerdachbord = (ViewPager2) view.findViewById(R.id.pagerdachbord);
-            /////КНОПКА ТАБЕЛЬНОГО УЧЕТА
 
 
+            // TODO: 17.03.2025 Старрт Бизнес ЛОгики
+            
             // TODO: 16.03.2025 ViewPager2
             new BunesslogicViewPager2(pagerdachbord,getContext(),this).getBunesslogicViewPager2();
-
-
-
             // TODO: 10.03.2025  биндинг обновление ПО
             new  BindingSoftwareUpdatePO().getbindingSoftwareUpdatePO();
-
 
             // TODO: 11.01.2024  ПОЛУЧАЕМ Права
             Integer getGrantRemote=    dashboardGRANTorREVOKE.getGrantRemote(getContext() ,getHiltPublicId);
