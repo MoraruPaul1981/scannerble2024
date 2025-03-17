@@ -74,16 +74,17 @@
         <com.google.android.material.card.MaterialCardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:cardCornerRadius="3dp"
+            app:cardCornerRadius="1dp"
             android:layout_margin="5dp"
             android:padding="2dp"
-            android:animateLayoutChanges="true"
             android:gravity="center"
-            app:cardBackgroundColor="@color/icon_dashdornd_tabel2_background"
-            app:strokeColor="@color/actionbar_text_color"
+            android:background="#FFFFFF"
+            app:layout_gravity="center"
             app:cardElevation="2dp"
-            app:cardMaxElevation="1dp"
-            android:translationZ="1dp"
+            app:cardMaxElevation="10dp"
+            android:translationZ="10dp"
+            android:animateLayoutChanges="true"
+            app:strokeColor="#F1ECEC"
             app:strokeWidth="1dp">
 
 
@@ -94,11 +95,12 @@
                     <androidx.viewpager2.widget.ViewPager2
                         xmlns:android="http://schemas.android.com/apk/res/android"
                         android:id="@+id/pagerdachbord"
-                        android:layout_width="350dp"
-                        android:layout_centerHorizontal="true"
-                        android:layout_alignParentTop="true"
-                        android:background="@color/divider"
-                        android:layout_height="250dp" />
+                        android:layout_width="match_parent"
+                        android:layout_height="200dp"
+                        android:layout_margin="2dp"
+                        android:padding="2dp"
+                         android:layout_centerInParent="true"
+                        app:cardBackgroundColor="@color/divider" />
                 </RelativeLayout>
 
         </com.google.android.material.card.MaterialCardView>

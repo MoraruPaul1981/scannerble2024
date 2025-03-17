@@ -1,17 +1,14 @@
 package com.dsy.dsu.Dashboard.Model.bl_viewpager2;
 
+import static androidx.viewpager2.widget.ViewPager2.SCROLL_STATE_SETTLING;
+
 import android.content.Context;
 import android.util.Log;
-import android.view.View;
 
-import androidx.annotation.NonNull;
-import androidx.viewpager.widget.ViewPager;
 import androidx.viewpager2.widget.ViewPager2;
 
 import com.dsy.dsu.Dashboard.View.Fragments.DashboardFragmentMaterialDesign;
 import com.dsy.dsu.Errors.controller.RecordNewErros;
-
-import java.util.logging.Handler;
 
 public class BunesslogicViewPager2 {
    private ViewPager2 pagerdachbord;
@@ -29,8 +26,8 @@ public class BunesslogicViewPager2 {
             demoCollectionAdapter = new DemoCollectionAdapter(dashboardFragmentMaterialDesign);
             dashboardFragmentMaterialDesign.pagerdachbord.setAdapter(demoCollectionAdapter);
             dashboardFragmentMaterialDesign.pagerdachbord.setScrollContainer(true);
-            dashboardFragmentMaterialDesign.pagerdachbord.setCurrentItem(0,true);
-            dashboardFragmentMaterialDesign.pagerdachbord.setPageTransformer(new ZoomOutPageTransformer());
+            dashboardFragmentMaterialDesign.pagerdachbord.animate().setDuration(10000).start();
+            dashboardFragmentMaterialDesign.pagerdachbord.setPageTransformer(new ZoomOutPageTransformerDashBoard());
             dashboardFragmentMaterialDesign.pagerdachbord.registerOnPageChangeCallback(new ViewPager2.OnPageChangeCallback() {
                 @Override
                 public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
@@ -53,6 +50,11 @@ public class BunesslogicViewPager2 {
                 @Override
                 public void onPageScrollStateChanged(int state) {
                     super.onPageScrollStateChanged(state);
+                    if(state==SCROLL_STATE_SETTLING){
+                    /*    dashboardFragmentMaterialDesign.pagerdachbord.getHandler().postDelayed(()->{
+                            dashboardFragmentMaterialDesign.pagerdachbord.setCurrentItem( 0,true);
+                        },5000);*/
+                    }
                     Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                             " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
                             " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n");
