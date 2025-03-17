@@ -195,16 +195,18 @@ public class MyWork_Async_Public extends Worker {
           Boolean isMyActivityRunning=  new FindRunnigServiceBeforeWorkManager(getApplicationContext()).isGetMyActivityRunning( );
 
 
-            if (ВыбранныйРежимСети == true && localBinderAsyncWorkmanager!=null  && isMyActivityRunning==false) {
+            if (localBinderAsyncWorkmanager!=null ) {
+                if (ВыбранныйРежимСети == true && localBinderAsyncWorkmanager.isBinderAlive()  && isMyActivityRunning==false) {
 
-              ФинальныйРезультатAsyncBackgroud = localBinderAsyncWorkmanager.getService().metodStartingSync( getApplicationContext());
+                  ФинальныйРезультатAsyncBackgroud = localBinderAsyncWorkmanager.getService().metodStartingSync( getApplicationContext());
 
-                Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
-                        " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                        " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"
-                        + " ФинальныйРезультатAsyncBackgroud "+ФинальныйРезультатAsyncBackgroud
-                        + " localBinderAsyncWorkmanager.isBinderAlive( " + localBinderAsyncWorkmanager.isBinderAlive()+ "\n"+
-                        "\n" + " isMyActivityRunning " +isMyActivityRunning+ "\n"+ " ВыбранныйРежимСети " +ВыбранныйРежимСети);
+                    Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                            " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                            " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"
+                            + " ФинальныйРезультатAsyncBackgroud "+ФинальныйРезультатAsyncBackgroud
+                            + " localBinderAsyncWorkmanager.isBinderAlive( " + localBinderAsyncWorkmanager.isBinderAlive()+ "\n"+
+                            "\n" + " isMyActivityRunning " +isMyActivityRunning+ "\n"+ " ВыбранныйРежимСети " +ВыбранныйРежимСети);
+                }
             }
 
             Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
