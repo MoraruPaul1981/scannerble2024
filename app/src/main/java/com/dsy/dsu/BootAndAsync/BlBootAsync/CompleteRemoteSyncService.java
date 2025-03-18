@@ -54,47 +54,46 @@ import dagger.hilt.components.SingletonComponent;
 @SuppressLint("Range")
 public class CompleteRemoteSyncService {
 
-
-
     private Service_For_Remote_Async_Binary.LocalBinderAsync localBinderAsync;//TODO нова\
     private ServiceUpdatePoОбновлениеПО.localBinderОбновлениеПО localBinderОбновлениеПО;//TODO нова
 
-
-
     private ServiceConnection connectionОбновлениеПО;
     private ServiceConnection connectionAsync;
-
-
-
     private SharedPreferences preferences;
-
     private String РежимЗапускаСинхронизации = new String();
-
-
-      private  Context context;
-
+    private  Context context;
     private String success_users;
     private String success_login;
     private String date_update;
-
     private  Boolean СтатусРаботыСервера;
     private    Integer getHiltPublicId;
-
-    private  SSLSocketFactory getsslSocketFactory2;
-    private ExecutorService executorService  = Executors.newSingleThreadExecutor();
-    
     @Inject
     RegisterBroadcastForWorkManager registerBroadcastForWorkManager;
-
-
-
- Integer permissibledaysofwork=240;
-
-
+    Integer permissibledaysofwork=240;
 
     public  @Inject CompleteRemoteSyncService(@ApplicationContext Context context) {
         //TODO сомо имя json
         this.context=context;
+        try{
+        // TODO: 14.08.2023 методЗапукска Синхрониазйиии
+           МетодБиндингаОбновлениеПО();
+
+
+            // TODO: 14.08.2023 методЗапукска Синхрониазйиии
+            МетодБиндингаRemoteAsync();
+
+        Log.d(context.getClass().getName(), "\n"
+                + " время: " + new Date() + "\n+" +
+                " Класс в процессе... " + this.getClass().getName() + "\n" +
+                " метод в процессе... " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n");
+    } catch (Exception e) {
+        e.printStackTrace();
+        Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() + " Линия  :"
+                + Thread.currentThread().getStackTrace()[2].getLineNumber());
+        new RecordNewErros(context).recordnewerror(e.toString(), this.getClass().getName(),
+                Thread.currentThread().getStackTrace()[2].getMethodName(),
+                Thread.currentThread().getStackTrace()[2].getLineNumber());
+    }
     }
 
     public void startingBindingAsyncJboss(  @NonNull  String getWhoLaunched) {
@@ -106,14 +105,13 @@ public class CompleteRemoteSyncService {
             РежимЗапускаСинхронизации = preferences.getString("РежимЗапускаСинхронизации","СамыйПервыйЗапускСинхронизации");
 
             // TODO: 22.01.2024
-            // TODO: 14.08.2023 методЗапукска Синхрониазйиии
-          МетодБиндингаRemoteAsync(   getWhoLaunched );
 
+            Long    ФинальныйРезультатAsyncBackgroud = localBinderAsync.getService().metodStartingSync(context,getWhoLaunched);
 
             Log.d(context.getClass().getName(), "\n"
                     + " время: " + new Date() + "\n+" +
                     " Класс в процессе... " + this.getClass().getName() + "\n" +
-                    " метод в процессе... " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n");
+                    " метод в процессе... " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" + " ФинальныйРезультатAsyncBackgroud " +ФинальныйРезультатAsyncBackgroud);
         } catch (Exception e) {
             e.printStackTrace();
             Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() + " Линия  :"
@@ -123,6 +121,9 @@ public class CompleteRemoteSyncService {
                     Thread.currentThread().getStackTrace()[2].getLineNumber());
         }
     }
+
+
+
     public void startServiceUpdatePO(@NonNull Context context,
                                      @NonNull SSLSocketFactory getsslSocketFactory2,
                                   @NonNull Integer getHiltPublicId,
@@ -130,19 +131,14 @@ public class CompleteRemoteSyncService {
                                   @NonNull LinkedHashMap<Integer,String> getHiltPortJboss,
                                         @NonNull  String getWhoLaunched) {
         try {
-            
             // TODO: 14.08.2023 вызов кода ПОльзовательский
             preferences =context. getSharedPreferences("sharedPreferencesХранилище", Context.MODE_MULTI_PROCESS);
-
             РежимЗапускаСинхронизации = preferences.getString("РежимЗапускаСинхронизации","СамыйПервыйЗапускСинхронизации");
-
             // TODO: 22.01.2024
             this. getHiltPublicId=getHiltPublicId;
-            this. getsslSocketFactory2=getsslSocketFactory2;
 
-
-            // TODO: 14.08.2023 методЗапукска Синхрониазйиии
-            МетодБиндингаОбновлениеПО( getHiltPortJboss,getsslSocketFactory2,landingMode,getWhoLaunched);
+            // TODO: 23.01.2024 stating .... Main Code
+            WorkerUpdatePOAndAsync(   getHiltPortJboss,  getsslSocketFactory2,landingMode,getWhoLaunched);
 
 
             Log.d(context.getClass().getName(), "\n"
@@ -167,20 +163,22 @@ public class CompleteRemoteSyncService {
                                      @NonNull LinkedHashMap<Integer,String> getHiltPortJboss
                                      ,@NonNull  String getWhoLaunched) {
         try {
-            
             // TODO: 14.08.2023 вызов кода ПОльзовательский
             preferences =context. getSharedPreferences("sharedPreferencesХранилище", Context.MODE_MULTI_PROCESS);
-
             РежимЗапускаСинхронизации = preferences.getString("РежимЗапускаСинхронизации","СамыйПервыйЗапускСинхронизации");
-
             // TODO: 22.01.2024
             this. getHiltPublicId=getHiltPublicId;
-            this. getsslSocketFactory2=getsslSocketFactory2;
 
 
-            // TODO: 14.08.2023 методЗапукска Синхрониазйиии
-            МетодБиндингаОбновлениеПО( getHiltPortJboss,getsslSocketFactory2, landingMode,getWhoLaunched );
+            // TODO: 23.01.2024 stating .... Main Code
+            WorkerUpdatePOAndAsync(   getHiltPortJboss,  getsslSocketFactory2,landingMode,getWhoLaunched);
 
+
+
+
+            getCloseingBindingUpdate();
+
+            getCloseingBindingAsync();
 
             Log.d(context.getClass().getName(), "\n"
                     + " время: " + new Date() + "\n+" +
@@ -693,7 +691,6 @@ public class CompleteRemoteSyncService {
 
                     startingBindingAsyncJboss(getWhoLaunched);
 
-                   //1 Long      ФинальныйРезультатAsyncBackgroud = localBinderAsync.getService().metodStartingSync(context);
 
                     Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                             " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
@@ -1071,7 +1068,7 @@ public class CompleteRemoteSyncService {
 
 
     @SuppressLint("NewApi")
-    public void МетодБиндингаRemoteAsync(  @NonNull  String getWhoLaunched ) {
+    public void МетодБиндингаRemoteAsync(  ) {
         try {
             // TODO: 28.04.2023  запускаем Гланвную Синхрониазцию
 
@@ -1086,13 +1083,11 @@ public class CompleteRemoteSyncService {
                                 // TODO: 29.09.2023
                                  localBinderAsync = (Service_For_Remote_Async_Binary.LocalBinderAsync) service;
 
-
-                            Long    ФинальныйРезультатAsyncBackgroud = localBinderAsync.getService().metodStartingSync(context,getWhoLaunched);
                                 // TODO: 25.03.2023
                                 Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                                         " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
                                         " line " + Thread.currentThread().getStackTrace()[2].getLineNumber()
-                                        + " ФинальныйРезультатAsyncBackgroud " +ФинальныйРезультатAsyncBackgroud);
+                                        + " localBinderAsync " +localBinderAsync);
 
                             }
                         } catch (Exception e) {
@@ -1123,7 +1118,7 @@ public class CompleteRemoteSyncService {
                     }
                 };
 
-           context. bindService(intentAsync,Context.BIND_AUTO_CREATE,executorService ,connectionAsync );
+           context. bindService(intentAsync ,connectionAsync ,Context.BIND_AUTO_CREATE);
 
 
             // TODO: 28.04.2023
@@ -1148,21 +1143,17 @@ public class CompleteRemoteSyncService {
 
 
     @SuppressLint("NewApi")
-    public void МетодБиндингаОбновлениеПО(  @NonNull LinkedHashMap<Integer,String> getHiltPortJboss,
-                                            @NonNull     SSLSocketFactory getsslSocketFactory2,
-                                            @NonNull String landingMode,
-                                            @NonNull  String getWhoLaunched) {
+    public void МетодБиндингаОбновлениеПО( ) {
         try {
             connectionОбновлениеПО = new ServiceConnection() {
                 @Override
                 public void onServiceConnected(ComponentName name, IBinder service) {
                     try {
                         if (service.isBinderAlive()) {
+
                             // TODO: 28.07.2023  Update
                             localBinderОбновлениеПО = (ServiceUpdatePoОбновлениеПО.localBinderОбновлениеПО) service;
 
-                            // TODO: 23.01.2024 stating .... Main Code
-                                WorkerUpdatePOAndAsync(   getHiltPortJboss,  getsslSocketFactory2,landingMode,getWhoLaunched);
 
                             // TODO: 25.03.2023
                             Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
@@ -1206,7 +1197,7 @@ public class CompleteRemoteSyncService {
             Intent intentЗапускСлужбыОбновлениеПО = new Intent(context, ServiceUpdatePoОбновлениеПО.class);
             intentЗапускСлужбыОбновлениеПО.setAction("com.ServiceUpdatePoОбновлениеПО");
 
-       context. bindService(intentЗапускСлужбыОбновлениеПО,Context.BIND_AUTO_CREATE,executorService ,connectionОбновлениеПО );
+       context. bindService(intentЗапускСлужбыОбновлениеПО,connectionОбновлениеПО,Context.BIND_AUTO_CREATE  );
             // TODO: 28.04.2023
             Log.d(this.getClass().getName(), "\n" + " class " +
                     Thread.currentThread().getStackTrace()[2].getClassName()
@@ -1234,8 +1225,58 @@ public class CompleteRemoteSyncService {
 
 
 
+    @SuppressLint("NewApi")
+    public void getCloseingBindingUpdate( ) {
+        try {
 
+            if(localBinderОбновлениеПО!=null){
+                if (localBinderОбновлениеПО.isBinderAlive()) {
+                    context.unbindService(connectionОбновлениеПО);
+                }
+            }
+            // TODO: 28.04.2023
+            Log.d(this.getClass().getName(), "\n" + " class " +
+                    Thread.currentThread().getStackTrace()[2].getClassName()
+                    + "\n" +
+                    " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                    " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n");
+        } catch (Exception e) {
+            e.printStackTrace();
+            Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() + " Линия  :"
+                    + Thread.currentThread().getStackTrace()[2].getLineNumber());
+            new RecordNewErros(context).recordnewerror(e.toString(), this.getClass().getName(),
+                    Thread.currentThread().getStackTrace()[2].getMethodName(),
+                    Thread.currentThread().getStackTrace()[2].getLineNumber());
+            Log.d(this.getClass().getName(), "  Полусаем Ошибку e.toString() " + e.toString());
+        }
 
+    }
+
+    @SuppressLint("NewApi")
+    public void getCloseingBindingAsync( ) {
+        try {
+            if(localBinderAsync!=null){
+                if (localBinderAsync.isBinderAlive()) {
+                    context.unbindService(connectionAsync);
+                }
+            }
+            // TODO: 28.04.2023
+            Log.d(this.getClass().getName(), "\n" + " class " +
+                    Thread.currentThread().getStackTrace()[2].getClassName()
+                    + "\n" +
+                    " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                    " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n");
+        } catch (Exception e) {
+            e.printStackTrace();
+            Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() + " Линия  :"
+                    + Thread.currentThread().getStackTrace()[2].getLineNumber());
+            new RecordNewErros(context).recordnewerror(e.toString(), this.getClass().getName(),
+                    Thread.currentThread().getStackTrace()[2].getMethodName(),
+                    Thread.currentThread().getStackTrace()[2].getLineNumber());
+            Log.d(this.getClass().getName(), "  Полусаем Ошибку e.toString() " + e.toString());
+        }
+
+    }
 
 
 
