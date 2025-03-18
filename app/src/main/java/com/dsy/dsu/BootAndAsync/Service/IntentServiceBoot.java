@@ -12,6 +12,7 @@ import android.os.Binder;
 import android.os.IBinder;
 import android.util.Log;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.core.app.NotificationCompat;
 import androidx.core.app.ServiceCompat;
@@ -158,7 +159,7 @@ public class IntentServiceBoot extends IntentService {
 
 
 
-            startingServiceBoot(intent);
+            startingServiceBoot(intent,"BootService");
 
 
 
@@ -255,7 +256,7 @@ public class IntentServiceBoot extends IntentService {
 
 
 
-public     void startingServiceBoot(@NotNull Intent intent){
+public     void startingServiceBoot(@NotNull Intent intent,@NonNull String getWhoLaunched){
         try{
             // TODO: 26.12.2024 выди запуска
             switch (intent.getAction().trim()){
@@ -264,7 +265,7 @@ public     void startingServiceBoot(@NotNull Intent intent){
                 case "IntentServiceBootAsync.com" :
 
                     // TODO: 19.01.2024  запуск класса бизнес логики службы Синхроиазции и Обновление ПО
-                    completeRemoteSyncService.startingBindingAsyncJboss("BootService");
+                    completeRemoteSyncService.startingBindingAsyncJboss(getWhoLaunched);///"BootService"
 
                     Log.d(getApplicationContext().getClass().getName(), "\n"
                             + " время: " + new Date() + "\n+" +

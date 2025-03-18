@@ -111,7 +111,7 @@ public class MyWork_AsyncSingle extends Worker {
                 intentSingleWorker.setAction(actionSingleWorker);
                 intentSingleWorker.setData( Uri.parse(actionSingleWorker));
 
-                getlocalBinderBootSerice.getService().startingServiceBoot(intentSingleWorker);
+                getlocalBinderBootSerice.getService().startingServiceBoot(intentSingleWorker,"BootService");
 
             }
         }
