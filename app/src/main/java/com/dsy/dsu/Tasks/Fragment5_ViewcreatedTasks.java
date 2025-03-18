@@ -1647,7 +1647,7 @@ public class Fragment5_ViewcreatedTasks extends Fragment {
                     @Override
                     public boolean handleMessage(@NonNull android.os.Message msg) {
                         // TODO: 01.02.2022 заПУСКАЕМ сИНХРОНИАЗАЦИЮ С ВСЕХ ЛИСТ ТАБЕЛЕЙ
-                        new CreateSingleWorkManager(getContext()).getcreateSingleWorkManager(getContext(), Uri.EMPTY );
+
                         // TODO: 26.06.2022
                         Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                                 " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +

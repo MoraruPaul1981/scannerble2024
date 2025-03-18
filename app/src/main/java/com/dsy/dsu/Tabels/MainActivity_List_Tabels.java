@@ -2139,27 +2139,7 @@ try{
     }
 
 
-    private void МетодЗапускаСинхрониазцииЕслиБыИзмененияВбАзе() {
-        PUBLIC_CONTENT      cachedThreadPoolВизуальнаяСинхронизацияМенеджер=new PUBLIC_CONTENT(getApplicationContext());
-        Integer РезультатЗапускВизуальнойСинхронизации =0;
-        try{
-            // TODO: 01.02.2022 заПУСКАЕМ сИНХРОНИАЗАЦИЮ С ВСЕХ ЛИСТ ТАБЕЛЕЙ
-            // TODO: 14.12.2023 REPLACE
-            new CreateSingleWorkManager(getApplicationContext()).getcreateSingleWorkManager(getApplicationContext() , Uri.EMPTY);
-            // TODO: 26.06.2022
-            Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
-                    " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                    " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n");
-        } catch (Exception e) {
-            e.printStackTrace();
-            Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :"
-                    + Thread.currentThread().getStackTrace()[2].getMethodName() + " Линия  :"
-                    + Thread.currentThread().getStackTrace()[2].getLineNumber());
-            new RecordNewErros(getApplicationContext()).recordnewerror(e.toString(),
-                    this.getClass().getName(), Thread.currentThread().getStackTrace()[2].getMethodName(),
-                    Thread.currentThread().getStackTrace()[2].getLineNumber());
-        }
-    }
+
 
     private void МетодMessage() {
         try {

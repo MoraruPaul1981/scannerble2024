@@ -799,8 +799,7 @@ public class Fragment1_One_Tasks extends Fragment {
                                         if (WorkInfoИнформацияОЗапущенойСлужбеОдноразовая.getState().compareTo(WorkInfo.State.RUNNING)!=0) {
 
                                             // TODO: 01.08.2022
-                                            subClassBuccessLogin_главныйКлассБизнесЛогикиФрагмент1.
-                                                    МетодНепосредственногоЗапускаБиндингаОдноразовойСдлужбы(ПубличныйIDДляФрагмента);
+
                                             Log.d(this.getClass().getName(), " ПубличныйIDДляФрагмента " + ПубличныйIDДляФрагмента);
 
                                         }
@@ -2219,27 +2218,7 @@ public class Fragment1_One_Tasks extends Fragment {
                         Thread.currentThread().getStackTrace()[2].getLineNumber());
             }
         }
-        void МетодНепосредственногоЗапускаБиндингаОдноразовойСдлужбы(@NonNull  Integer ПубличныйIDДляФрагмента ){
-            try{
-                Log.d(getContext().getClass().getName(), "\n"
-                        + " ПубличныйIDДляФрагмента: " + ПубличныйIDДляФрагмента);
-                // TODO: 14.12.2023 REPLACE
-                new CreateSingleWorkManager(getContext()).getcreateSingleWorkManager(getContext(), Uri.EMPTY );
-                // TODO: 26.06.2022
-                Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
-                        " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                        " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"
-                        + " ПубличныйIDДляОдноразовойСинхронПубличныйIDДляФрагментаиазции "+ПубличныйIDДляФрагмента );
-            } catch (Exception e) {
-                e.printStackTrace();
-                Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() + " Линия  :"
-                        + Thread.currentThread().getStackTrace()[2].getLineNumber());
-                new RecordNewErros(getContext()).recordnewerror(e.toString(), this.getClass().getName(), Thread.currentThread().getStackTrace()[2].getMethodName(),
-                        Thread.currentThread().getStackTrace()[2].getLineNumber());
 
-                // TODO: 11.05.2021 запись ошибок
-            }
-        }
         // TODO: 02.08.2022  metod launch bing async
     }   // TODO: 28.02.2022 конец класса бизнес логики   // TODO: 28.02.2022 конец класса бизнес логики
 

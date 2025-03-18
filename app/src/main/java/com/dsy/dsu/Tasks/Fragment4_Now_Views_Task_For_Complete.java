@@ -2065,8 +2065,7 @@ public class Fragment4_Now_Views_Task_For_Complete extends Fragment {
                        Log.d(this.getClass().getName(), " " +
                                " SubClassBuccessLogin_ГлавныйКлассБизнесЛогикиФрагмент1   ПозицияЭлментаVIewCardДополнительно  СтатусПрочтеаУжеЗадачаИлиНет " +
                                msg + " msg.getWhen() " + msg.what);
-                       // TODO: 14.12.2023 REPLACE
-                       new CreateSingleWorkManager(getContext()).getcreateSingleWorkManager(getContext() , Uri.EMPTY);
+
                        // TODO: 26.06.2022
                        Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                                " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +

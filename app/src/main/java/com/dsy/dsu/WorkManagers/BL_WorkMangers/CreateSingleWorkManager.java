@@ -4,6 +4,7 @@ import android.content.Context;
 import android.net.Uri;
 import android.util.Log;
 
+import androidx.annotation.NonNull;
 import androidx.work.Constraints;
 import androidx.work.Data;
 import androidx.work.ExistingWorkPolicy;
@@ -26,8 +27,7 @@ public class CreateSingleWorkManager {
         this.context =context;
     }
     
-    public void getcreateSingleWorkManager(@NotNull Context context,
-                                           @NotNull Uri uri) {
+    public void getcreateSingleWorkManager(@NotNull Context context,@NonNull String getWhoLaunched) {
 
         try{
             // TODO: 08.10.2023
@@ -37,7 +37,7 @@ public class CreateSingleWorkManager {
             Data myDataSingleWorker = new Data.Builder()
                     .putInt("ПубличныйID", PublicId)
                     .putBoolean("StartSingleWorker", true)
-                    .putString("uri",   uri.toString())
+                    .putString("getWhoLaunched",   getWhoLaunched)
                     .build();
 
             Constraints constraintsЗапускСинхОдноразоваяСлужба = new Constraints.Builder()

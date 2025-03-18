@@ -1314,8 +1314,7 @@ public class Service_for_AdminissionMaterial extends IntentService {
                 РезультатУдалениеНовгоМатериала=     asyncTaskLoader.loadInBackground().intValue();
                 asyncTaskLoader.commitContentChanged();
                 if (РезультатУдалениеНовгоМатериала>0) {
-                    // TODO: 01.02.2022 заПУСКАЕМ сИНХРОНИАЗАЦИЮ С ВСЕХ ЛИСТ ТАБЕЛЕЙ
-                    new CreateSingleWorkManager(context).getcreateSingleWorkManager(context,Uri.EMPTY );
+
                     // TODO: 26.06.2022
                     Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                             " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +

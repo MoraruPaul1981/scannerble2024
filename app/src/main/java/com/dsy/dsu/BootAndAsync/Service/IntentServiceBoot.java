@@ -255,7 +255,7 @@ public class IntentServiceBoot extends IntentService {
 
 
 
-    void startingServiceBoot(@NotNull Intent intent){
+public     void startingServiceBoot(@NotNull Intent intent){
         try{
             // TODO: 26.12.2024 выди запуска
             switch (intent.getAction().trim()){

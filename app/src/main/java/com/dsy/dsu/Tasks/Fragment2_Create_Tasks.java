@@ -770,7 +770,7 @@ public class Fragment2_Create_Tasks extends Fragment {
                                   /*          // TODO: 01.08.2022 запускаем синхронищзцию
                                             class_generation_sendBroadcastReceiver_and_firebase_oneSignal.
                                                     МетодЗапускаетОДНОРАЗОВУЮСинхронизациюПослкеУспешнойПроведеннойОперации(ПубличныйIDДляФрагмента, getContext());*/
-                                            subClassBuccessLogin_главныйКлассБизнесЛогикиФрагмент2. МетодНепосредственногоЗапускаБиндингаОдноразовойСдлужбы(ПубличныйIDДляФрагмента);
+
                                             // TODO: 01.08.2022  
                                             handlerTaskFragment2.postDelayed(()->{
                                         /*        Message message = new Message();
@@ -1669,8 +1669,7 @@ public class Fragment2_Create_Tasks extends Fragment {
                                                     if (WorkInfoИнформацияОЗапущенойСлужбеОдноразовая.getState().compareTo(WorkInfo.State.RUNNING)!=0) {
                                                      /*   class_generation_sendBroadcastReceiver_and_firebase_oneSignal.
                                                                 МетодЗапускаетОДНОРАЗОВУЮСинхронизациюПослкеУспешнойПроведеннойОперации(ПубличныйIDДляФрагмента, getContext());*/
-                                                        // TODO: 02.08.2022
-                                                        subClassBuccessLogin_главныйКлассБизнесЛогикиФрагмент2. МетодНепосредственногоЗапускаБиндингаОдноразовойСдлужбы(ПубличныйIDДляФрагмента);
+
                                                     }
 
                                                     // TODO: 28.02.2022
@@ -2287,28 +2286,7 @@ public class Fragment2_Create_Tasks extends Fragment {
 
 
         // TODO: 02.08.2022
-        void МетодНепосредственногоЗапускаБиндингаОдноразовойСдлужбы(@NonNull  Integer ПубличныйIDДляФрагмента ){
-            try{
-                Log.d(getContext().getClass().getName(), "\n"
-                        + " ПубличныйIDДляФрагмента: " + ПубличныйIDДляФрагмента);
-                // TODO: 01.02.2022 заПУСКАЕМ сИНХРОНИАЗАЦИЮ С ВСЕХ ЛИСТ ТАБЕЛЕЙ
-                new CreateSingleWorkManager(getContext()).getcreateSingleWorkManager(getContext() , Uri.EMPTY);
-                // TODO: 26.06.2022
-                Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
-                        " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                        " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"
-                        + " ПубличныйIDДляОдноразовойСинхронПубличныйIDДляФрагментаиазции "+ПубличныйIDДляФрагмента );
 
-            } catch (Exception e) {
-                e.printStackTrace();
-                Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() + " Линия  :"
-                        + Thread.currentThread().getStackTrace()[2].getLineNumber());
-                new RecordNewErros(getContext()).recordnewerror(e.toString(), this.getClass().getName(), Thread.currentThread().getStackTrace()[2].getMethodName(),
-                        Thread.currentThread().getStackTrace()[2].getLineNumber());
-
-                // TODO: 11.05.2021 запись ошибок
-            }
-        }
         // TODO: 02.08.2022  metod launch bing async
 
     }   // TODO: 28.02.2022 конец класса бизнес логики   // TODO: 28.02.2022 конец класса бизнес логики

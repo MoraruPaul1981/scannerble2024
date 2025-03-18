@@ -64,7 +64,7 @@ public class MainActivity_Tasks extends FragmentActivity {
 // TODO: 02.03.2022
                 Integer ПубличныйIDДляФрагмента = class_generations_public_current_id.getPublicIDAllApp(getApplicationContext());
 
-                subClass_only_activyMain_buccess_logic. МетодНепосредственногоЗапускаБиндингаОдноразовойСдлужбы(ПубличныйIDДляФрагмента);
+
 
                // class_generation_sendBroadcastReceiver_and_firebase_oneSignal.МетодЗапускаетОДНОРАЗОВУЮСинхронизациюПослкеУспешнойПроведеннойОперации(ПубличныйIDДляФрагмента, getApplicationContext());
 
@@ -130,25 +130,7 @@ public class MainActivity_Tasks extends FragmentActivity {
 
 
 
-        // TODO: 02.08.2022
-        void МетодНепосредственногоЗапускаБиндингаОдноразовойСдлужбы(@NonNull  Integer ПубличныйIDДляФрагмента ){
-           try{
-               // TODO: 01.02.2022 заПУСКАЕМ сИНХРОНИАЗАЦИЮ С ВСЕХ ЛИСТ ТАБЕЛЕЙ
-               new CreateSingleWorkManager(getApplicationContext()).getcreateSingleWorkManager(getApplicationContext() , Uri.EMPTY);
-               // TODO: 26.06.2022
-               Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
-                       " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                       " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n");
-        } catch (Exception e) {
-            e.printStackTrace();
-            Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() + " Линия  :"
-                    + Thread.currentThread().getStackTrace()[2].getLineNumber());
-            new RecordNewErros(getApplicationContext()).recordnewerror(e.toString(), this.getClass().getName(), Thread.currentThread().getStackTrace()[2].getMethodName(),
-                    Thread.currentThread().getStackTrace()[2].getLineNumber());
 
-            // TODO: 11.05.2021 запись ошибок
-        }
-        }
         // TODO: 02.08.2022  metod launch bing async
     }
 }

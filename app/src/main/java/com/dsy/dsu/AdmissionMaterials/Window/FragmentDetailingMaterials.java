@@ -79,8 +79,11 @@ public class FragmentDetailingMaterials extends Fragment {
     private LinearLayout linearLayou;
     private Fragment fragment_ТекущийФрагментСогласованиеСписок;
     private BottomNavigationView bottomNavigationView;
+    @SuppressLint("RestrictedApi")
     private BottomNavigationItemView bottomNavigationItemViewвыход;
+    @SuppressLint("RestrictedApi")
     private BottomNavigationItemView bottomNavigationItemView2создать;
+    @SuppressLint("RestrictedApi")
     private BottomNavigationItemView bottomNavigationItemView3обновить;
     private ProgressBar progressBarСканирование;
     private LayoutAnimationController layoutAnimationController;
@@ -571,8 +574,7 @@ public class FragmentDetailingMaterials extends Fragment {
                     handler.postDelayed(()->{
                                 Integer ПубличныйIDДляФрагмента =
                                         new Class_Generations_PUBLIC_CURRENT_ID().getPublicIDAllApp(getContext());
-                                // TODO: 16.11.2022  запуск синхронизации однорозовая
-                                МетодНепосредственногоЗапускаБиндингаОдноразовойСдлужбы(ПубличныйIDДляФрагмента);},
+                    },
                             500);
                     Log.d(this.getClass().getName(), " GetNameSingleAsync1c  " + GetNameSingleAsync1c);
                     Log.d(this.getClass().getName(), " GetNameSingleAsync1c  " +GetNameSingleAsync1c);
@@ -593,6 +595,7 @@ public class FragmentDetailingMaterials extends Fragment {
                 .throttleFirst(3, TimeUnit.SECONDS)
                 .filter(s -> !s.toString().isEmpty())
                 .map(new Function<Unit, BottomNavigationItemView>() {
+                    @SuppressLint("RestrictedApi")
                     @Override
                     public BottomNavigationItemView apply(Unit unit) throws Throwable {
                         Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
@@ -644,29 +647,7 @@ public class FragmentDetailingMaterials extends Fragment {
 
     }
 
-    // TODO: 02.08.2022
-    void МетодНепосредственногоЗапускаБиндингаОдноразовойСдлужбы(@NonNull  Integer ПубличныйIDДляФрагмента ){
-        try{
-            Log.d(getContext().getClass().getName(), "\n"
-                    + " ПубличныйIDДляФрагмента: " + ПубличныйIDДляФрагмента);
-            // TODO: 01.02.2022 заПУСКАЕМ сИНХРОНИАЗАЦИЮ С ВСЕХ ЛИСТ ТАБЕЛЕЙ
-            // TODO: 14.12.2023 REPLACE
-            new CreateSingleWorkManager(getContext()).getcreateSingleWorkManager(getContext() ,Uri.EMPTY);
-            // TODO: 26.06.2022
-            Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
-                    " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                    " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"
-                    + " ПубличныйIDДляОдноразовойСинхронПубличныйIDДляФрагментаиазции "+ПубличныйIDДляФрагмента );
 
-        } catch (Exception e) {
-            e.printStackTrace();
-            Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() + " Линия  :"
-                    + Thread.currentThread().getStackTrace()[2].getLineNumber());
-            new RecordNewErros(getContext()).recordnewerror(e.toString(), this.getClass().getName(),
-                    Thread.currentThread().getStackTrace()[2].getMethodName(),
-                    Thread.currentThread().getStackTrace()[2].getLineNumber());
-        }
-    }
     protected void МетодЗапускСозданиНовгоМатериалов() {
         try{
             fragmentTransaction = fragmentManager.beginTransaction();

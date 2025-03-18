@@ -586,7 +586,7 @@ public class FragmentOrderTransportOneChane extends Fragment {
                             Integer ПубличныйIDДляФрагмента =
                                     new Class_Generations_PUBLIC_CURRENT_ID().getPublicIDAllApp(getContext());
                             // TODO: 16.11.2022  запуск синхронизации однорозовая
-                            методЗапускаSingleWorkManager(ПубличныйIDДляФрагмента);
+
 
 
                         });
@@ -924,28 +924,7 @@ public class FragmentOrderTransportOneChane extends Fragment {
             }
         }
         // TODO: 02.08.2022
-        void методЗапускаSingleWorkManager(@NonNull  Integer ПубличныйIDДляФрагмента ){
-            try{
-                Log.d(getContext().getClass().getName(), "\n"
-                        + " ПубличныйID: " + ПубличныйIDДляФрагмента);
-                // TODO: 14.12.2023 REPLACE
-                new CreateSingleWorkManager(getContext()).getcreateSingleWorkManager(getContext(),Uri.EMPTY );
-                // TODO: 26.06.2022
-                Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
-                        " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                        " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"
-                        + " ПубличныйIDДляОдноразовойСинхронПубличныйIDДляФрагментаиазции "+ПубличныйIDДляФрагмента );
 
-            } catch (Exception e) {
-                e.printStackTrace();
-                Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() + " Линия  :"
-                        + Thread.currentThread().getStackTrace()[2].getLineNumber());
-                new RecordNewErros(getContext()).recordnewerror(e.toString(), this.getClass().getName(), Thread.currentThread().getStackTrace()[2].getMethodName(),
-                        Thread.currentThread().getStackTrace()[2].getLineNumber());
-
-                // TODO: 11.05.2021 запись ошибок
-            }
-        }
         // TODO: 28.04.2023
 
 

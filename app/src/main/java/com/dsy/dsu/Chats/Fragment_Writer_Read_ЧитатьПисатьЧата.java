@@ -537,8 +537,7 @@ public class Fragment_Writer_Read_ЧитатьПисатьЧата extends Fragm
                                             WorkManager.getInstance(getContext().getApplicationContext()).getWorkInfosByTag(ИмяСлужбыСинхронизацииОдноразовая).get().get(0);
                                     if (WorkInfoИнформацияОЗапущенойСлужбеОдноразовая.getState().compareTo(WorkInfo.State.RUNNING) != 0) {
 
-                                        // TODO: 26.03.2023 launch asyncc
-                                        new CreateSingleWorkManager(getContext()).getcreateSingleWorkManager(getContext(), Uri.EMPTY );
+
                                         // TODO: 26.06.2022
                                         Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                                                 " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
@@ -566,8 +565,7 @@ public class Fragment_Writer_Read_ЧитатьПисатьЧата extends Fragm
                                         WorkManager.getInstance(getContext().getApplicationContext()).getWorkInfosByTag(ИмяСлужбыСинхронизацииОдноразовая).get().get(0);
                                 if (WorkInfoИнформацияОЗапущенойСлужбеОдноразовая.getState().compareTo(WorkInfo.State.RUNNING) != 0) {
 
-                                    // TODO: 26.03.2023 launch async
-                                    new CreateSingleWorkManager(getContext()).getcreateSingleWorkManager(getContext(),Uri.EMPTY );
+
                                     // TODO: 26.06.2022
                                     Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                                             " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
