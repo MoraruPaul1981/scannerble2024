@@ -1231,7 +1231,7 @@ public class CompleteRemoteSyncService {
 
             if(localBinderОбновлениеПО!=null){
                 if (localBinderОбновлениеПО.isBinderAlive()) {
-                    context.unbindService(connectionОбновлениеПО);
+                    connectionОбновлениеПО.onNullBinding(null);
                 }
             }
             // TODO: 28.04.2023
@@ -1257,7 +1257,7 @@ public class CompleteRemoteSyncService {
         try {
             if(localBinderAsync!=null){
                 if (localBinderAsync.isBinderAlive()) {
-                    context.unbindService(connectionAsync);
+                    connectionAsync.onNullBinding(null);;
                 }
             }
             // TODO: 28.04.2023
