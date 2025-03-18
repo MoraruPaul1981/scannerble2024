@@ -9,7 +9,6 @@ import android.database.sqlite.SQLiteCursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
-import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
@@ -47,7 +46,6 @@ import com.dsy.dsu.CnangeServers.PUBLIC_CONTENT;
 
 
 import com.dsy.dsu.R;
-import com.dsy.dsu.WorkManagers.BL_WorkMangers.CreateSingleWorkManager;
 import com.google.android.material.bottomnavigation.BottomNavigationItemView;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.card.MaterialCardView;

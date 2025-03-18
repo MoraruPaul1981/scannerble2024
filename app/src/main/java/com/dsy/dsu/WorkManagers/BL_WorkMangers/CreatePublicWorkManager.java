@@ -22,8 +22,6 @@ import java.util.List;
 import java.util.Optional;
 import java.util.concurrent.TimeUnit;
 
-import io.reactivex.rxjava3.parallel.ParallelFlowable;
-
 public class CreatePublicWorkManager {
     Context context;
     private    String ИмяСлужбыСинхронизации="WorkManager Synchronizasiy_Data";

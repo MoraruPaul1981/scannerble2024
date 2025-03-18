@@ -38,7 +38,6 @@ import com.dsy.dsu.BusinessLogicAll.DATE.SubClassYEARONLY;
 import com.dsy.dsu.BusinessLogicAll.DATE.SubClassYearHONLY_ТолькоАнализ;
 import com.dsy.dsu.CnangeServers.PUBLIC_CONTENT;
 import com.dsy.dsu.BusinessLogicAll.DATE.SubClassMONTHONLY;
-import com.dsy.dsu.WorkManagers.BL_WorkMangers.CreateSingleWorkManager;
 
 
 import java.io.ByteArrayOutputStream;

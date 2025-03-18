@@ -10,30 +10,21 @@ import android.os.IBinder;
 import android.util.Log;
 
 import androidx.annotation.NonNull;
-import androidx.work.Data;
-import androidx.work.WorkInfo;
-import androidx.work.WorkManager;
 import androidx.work.Worker;
 import androidx.work.WorkerParameters;
 
 import com.dsy.dsu.BootAndAsync.Service.IntentServiceBoot;
 import com.dsy.dsu.BusinessLogicAll.GetConnectivityManagerAndroid;
 import com.dsy.dsu.Errors.controller.RecordNewErros;
-import com.dsy.dsu.Services.ServiceUpdatePoОбновлениеПО;
-import com.dsy.dsu.Services.Service_For_Remote_Async_Binary;
 import com.dsy.dsu.WorkManagers.BL_WorkMangers.FindRunnigServiceBeforeWorkManager;
-import com.dsy.dsu.WorkManagers.BL_WorkMangers.ListenableFutures;
 
 
 import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.concurrent.atomic.AtomicReference;
 
 @SuppressLint("RestrictedApi")
 public class MyWork_AsyncSingle extends Worker {
     protected String ИмяСлужбыWorkManger ="WorkManager Synchronizasiy_Data";
-    protected  String ИмяСлужбыSingleWorkManger ="WorkManager Synchronizasiy_Data Disposable";
+/*    protected  String ИмяСлужбыSingleWorkManger ="WorkManager Synchronizasiy_Data Disposable";*/
 
     IntentServiceBoot.LocalBinderBootSerice          getlocalBinderBootSerice;
 

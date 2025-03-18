@@ -5,13 +5,11 @@ import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.ServiceConnection;
-import android.content.SharedPreferences;
 import android.os.IBinder;
 import android.util.Log;
 
 import androidx.annotation.NonNull;
 import androidx.work.Data;
-import androidx.work.WorkInfo;
 import androidx.work.Worker;
 import androidx.work.WorkerParameters;
 
@@ -20,12 +18,11 @@ import com.dsy.dsu.Errors.controller.RecordNewErros;
 import com.dsy.dsu.Services.Service_For_Remote_Async_Binary;
 
 import com.dsy.dsu.WorkManagers.BL_WorkMangers.FindRunnigServiceBeforeWorkManager;
-import com.dsy.dsu.WorkManagers.BL_WorkMangers.ListenableFutures;
 
 import java.util.Date;
 
 public class MyWork_Async_Public extends Worker {
-    private String ИмяСлужбыWorkManger ="WorkManager Synchronizasiy_Data";
+/*    private String ИмяСлужбыWorkManger ="WorkManager Synchronizasiy_Data";*/
     private  String ИмяСлужбыSingleWorkManger ="WorkManager Synchronizasiy_Data Disposable";
     private ServiceConnection serviceConnectionWorkManager;
     private Service_For_Remote_Async_Binary.LocalBinderAsync localBinderAsyncWorkmanager;
@@ -62,21 +59,14 @@ public class MyWork_Async_Public extends Worker {
         Long     ФинальныйРезультатAsyncBackgroudPublic = 0l;
         Data data = null;
         try {
-            // TODO: 01.04.2024  запускаем Listertable
-            WorkInfo.State stateSingle = new ListenableFutures(getApplicationContext()).listenableFutureWorkManager(ИмяСлужбыSingleWorkManger);
-            WorkInfo.State stateWorkPublic = new ListenableFutures(getApplicationContext()).listenableFutureWorkManager(ИмяСлужбыWorkManger);
-            // TODO: 26.12.2021
-            if ( stateSingle!= WorkInfo.State.RUNNING   ) {
                 // TODO: 01.04.2024
            ФинальныйРезультатAsyncBackgroudPublic= МетодЗапускаОбщей();
-            }
+
             Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName()
                     + "\n" +
                     " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
                     " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"
-                    + " ФинальныйРезультатAsyncBackgroudPublic " +ФинальныйРезультатAsyncBackgroudPublic+"\n"+
-                     " stateSingle " +stateSingle +"\n"+
-                    " stateWorkPublic " +stateWorkPublic);
+                    + " ФинальныйРезультатAsyncBackgroudPublic " +ФинальныйРезультатAsyncBackgroudPublic+"\n");
 
             Data.Builder      myDataОтветОбщейСлужбы = new Data.Builder()
                     .putLong("ReturnWorklong", ФинальныйРезультатAsyncBackgroudPublic)

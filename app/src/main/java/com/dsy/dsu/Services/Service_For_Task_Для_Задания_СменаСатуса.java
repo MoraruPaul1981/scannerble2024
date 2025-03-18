@@ -7,7 +7,6 @@ import android.content.Intent;
 import android.content.res.Configuration;
 import android.database.sqlite.SQLiteCursor;
 import android.database.sqlite.SQLiteDatabase;
-import android.net.Uri;
 import android.os.Binder;
 import android.os.Build;
 import android.os.Bundle;
@@ -29,7 +28,6 @@ import com.dsy.dsu.Errors.controller.RecordNewErros;
 import com.dsy.dsu.CnangeServers.PUBLIC_CONTENT;
 import com.dsy.dsu.BusinessLogicAll.SubClass_ДляСменыСтатусаНаЗадачиВыполненыйОтказОтмененный;
 import com.dsy.dsu.Tasks.MainActivity_Tasks;
-import com.dsy.dsu.WorkManagers.BL_WorkMangers.CreateSingleWorkManager;
 
 import java.io.FileDescriptor;
 import java.io.PrintWriter;

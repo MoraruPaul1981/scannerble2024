@@ -1,7 +1,6 @@
 package com.dsy.dsu.WorkManagers.BL_WorkMangers;
 
 import android.content.Context;
-import android.net.Uri;
 import android.util.Log;
 
 import androidx.annotation.NonNull;
@@ -15,8 +14,6 @@ import androidx.work.WorkManager;
 import com.dsy.dsu.BusinessLogicAll.SubClass_Connection_BroadcastReceiver_Sous_Asyns_Glassfish;
 import com.dsy.dsu.Errors.controller.RecordNewErros;
 import com.dsy.dsu.WorkManagers.MyWork_AsyncSingle;
-
-import org.jetbrains.annotations.NotNull;
 
 import java.util.Date;
 

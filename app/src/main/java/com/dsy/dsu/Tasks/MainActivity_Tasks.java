@@ -3,12 +3,10 @@ package com.dsy.dsu.Tasks;
 import android.app.Activity;
 import android.content.Context;
 import android.content.pm.ActivityInfo;
-import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.WindowManager;
 
-import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
 import androidx.fragment.app.FragmentManager;
@@ -20,7 +18,6 @@ import com.dsy.dsu.Errors.controller.RecordNewErros;
 import com.dsy.dsu.BusinessLogicAll.Class_Generations_PUBLIC_CURRENT_ID;
 
 import com.dsy.dsu.R;
-import com.dsy.dsu.WorkManagers.BL_WorkMangers.CreateSingleWorkManager;
 
 
 public class MainActivity_Tasks extends FragmentActivity {
