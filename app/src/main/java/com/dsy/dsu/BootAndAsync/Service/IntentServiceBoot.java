@@ -304,6 +304,25 @@ public     void startingServiceBoot(@NotNull Intent intent,@NonNull String getWh
 
                     break;
 
+
+                // TODO: 26.12.2024 EXIT
+                case     "ExitBootService" :
+                    // TODO: 19.01.2024  запуск класса бизнес логики службы Синхроиазции и Обновление ПО
+                    completeRemoteSyncService.startServiceUpdatePOAndAsync(getApplicationContext(),getsslSocketFactory2,
+                            getHiltPublicId,"IntentServiceBootUpdatePo.comAndIntentServiceBootAsync.com", getHiltPortJboss,"BootService");
+
+                    Log.d(getApplicationContext().getClass().getName(), "\n"
+                            + " время: " + new Date() + "\n+" +
+                            " Класс в процессе... " + this.getClass().getName() + "\n" +
+                            " метод в процессе... " + Thread.currentThread().getStackTrace()[2].getMethodName()+
+                            " intent.getAction() " +intent.getAction());
+
+                    break;
+
+
+
+
+
             }
         Log.d(getApplicationContext().getClass().getName(), "\n"
                 + " время: " + new Date() + "\n+" +

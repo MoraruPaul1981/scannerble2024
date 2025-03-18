@@ -65,9 +65,8 @@ public class MyWork_AsyncSingle extends Worker {
     public Result doWork() {
         // TODO: 24.09.2024
         try {
-
-
-            startingWorkMangerSingle();
+            // TODO: 18.03.2025
+          startingWorkMangerSingle();
 
             Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                     " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
@@ -94,18 +93,36 @@ public class MyWork_AsyncSingle extends Worker {
         // TODO: 22.12.2022  сама запуска синхронищации из workmanager ОБЩЕГО
         boolean ВыбранныйРежимСети =
                 new GetConnectivityManagerAndroid(getApplicationContext()).сonnectivityManageruserselection();
+            Intent  intentSingleWorker=new Intent();
 
-        if(getlocalBinderBootSerice!=null){
-            if(getlocalBinderBootSerice.isBinderAlive() && ВыбранныйРежимСети && isWorkManagerRunning==false){
-              String  actionSingleWorker=  "IntentServiceBootUpdatePo.comAndIntentServiceBootAsync.com";
-              Intent  intentSingleWorker=new Intent();
-                intentSingleWorker.setAction(actionSingleWorker);
-                intentSingleWorker.setData( Uri.parse(actionSingleWorker));
+            if(getlocalBinderBootSerice!=null) {
+                if (ВыбранныйРежимСети) {
 
-                getlocalBinderBootSerice.getService().startingServiceBoot(intentSingleWorker,"BootService");
+                    if (getlocalBinderBootSerice.isBinderAlive() && isWorkManagerRunning == false) {
+                        String actionSingleWorker = "IntentServiceBootUpdatePo.comAndIntentServiceBootAsync.com";
 
+                        intentSingleWorker.setAction(actionSingleWorker);
+                        intentSingleWorker.setData(Uri.parse(actionSingleWorker));
+
+                        getlocalBinderBootSerice.getService().startingServiceBoot(intentSingleWorker, "BootService");
+
+                    }
+                } else {
+// TODO: 18.03.2025
+                    String exitSingleWorker = "ExitBootService";
+                    intentSingleWorker.setAction(exitSingleWorker);
+                    intentSingleWorker.setData(Uri.parse(exitSingleWorker));
+                    getlocalBinderBootSerice.getService().startingServiceBoot(intentSingleWorker, "BootService");
+
+                    Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                            " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                            " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"
+                            + " isWorkManagerRunning " + isWorkManagerRunning);
+
+
+                }
             }
-        }
+
             Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                     " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
                     " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"
