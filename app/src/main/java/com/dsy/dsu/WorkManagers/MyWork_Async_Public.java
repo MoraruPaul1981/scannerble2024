@@ -180,14 +180,11 @@ public class MyWork_Async_Public extends Worker {
                     " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"
                     + " lВыбранныйРежимСети" + ВыбранныйРежимСети);
 
-
-
-          Boolean isMyActivityRunning=  new FindRunnigServiceBeforeWorkManager(getApplicationContext()).isGetMyActivityRunning( );
-
+            Boolean isWorkManagerRunning=  new FindRunnigServiceBeforeWorkManager(getApplicationContext()).isWorkManagerRunning(ИмяСлужбыSingleWorkManger);
 
             if (localBinderAsyncWorkmanager!=null ) {
                 if (ВыбранныйРежимСети == true && localBinderAsyncWorkmanager.isBinderAlive()
-                        && isMyActivityRunning==false ) {
+                        && isWorkManagerRunning==false ) {
 
                   ФинальныйРезультатAsyncBackgroud = localBinderAsyncWorkmanager.getService().metodStartingSync( getApplicationContext(),"WorkManager");
 
@@ -196,7 +193,7 @@ public class MyWork_Async_Public extends Worker {
                             " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"
                             + " ФинальныйРезультатAsyncBackgroud "+ФинальныйРезультатAsyncBackgroud
                             + " localBinderAsyncWorkmanager.isBinderAlive( " + localBinderAsyncWorkmanager.isBinderAlive()+ "\n"+
-                            "\n" + " isMyActivityRunning " +isMyActivityRunning+ "\n"+ " ВыбранныйРежимСети " +ВыбранныйРежимСети);
+                            "\n" + " isWorkManagerRunning " +isWorkManagerRunning+ "\n"+ " ВыбранныйРежимСети " +ВыбранныйРежимСети);
                 }
             }
 
@@ -204,7 +201,7 @@ public class MyWork_Async_Public extends Worker {
                     " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
                     " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"
                     + " ФинальныйРезультатAsyncBackgroud " + " localBinderAsyncWorkmanager.isBinderAlive( " + localBinderAsyncWorkmanager.isBinderAlive()+
-                    "\n" + " isMyActivityRunning " +isMyActivityRunning);
+                    "\n" + " isWorkManagerRunning " +isWorkManagerRunning);
 
        } catch (Exception e) {
            e.printStackTrace();

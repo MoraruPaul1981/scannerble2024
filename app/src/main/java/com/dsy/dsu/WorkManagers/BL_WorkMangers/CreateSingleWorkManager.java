@@ -27,7 +27,7 @@ public class CreateSingleWorkManager {
         this.context =context;
     }
     
-    public void getcreateSingleWorkManager(@NotNull Context context,@NonNull String getWhoLaunched) {
+    public void getcreateSingleWorkManager( @NonNull String getWhoLaunched) {
 
         try{
             // TODO: 08.10.2023

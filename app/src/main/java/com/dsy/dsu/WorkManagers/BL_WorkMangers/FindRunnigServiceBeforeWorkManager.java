@@ -7,8 +7,13 @@ import android.content.Context;
 import android.database.Cursor;
 import android.util.Log;
 
+import androidx.work.WorkInfo;
+import androidx.work.WorkManager;
+
 import com.dsy.dsu.Errors.controller.RecordNewErros;
 import com.sous.backasync.launch.ModuleQuety;
+
+import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
 import java.util.function.Predicate;
@@ -110,24 +115,24 @@ public class FindRunnigServiceBeforeWorkManager {
 
 
 
-
-    public Integer  getPublicIDWorkManager() {
+    @SuppressLint({"SuspiciousIndentation", "NewApi"})
+    public boolean isWorkManagerRunning(@NotNull String getNameWorkMager) {
         // TODO: 14.01.2025
-        Integer  getPublicIDWorkManager = 0;
+        Boolean  isWorkManagerRunning = false;
         try{
-            //todo гененируем если есть публичный id
-            ModuleQuety   moduleQuety=new ModuleQuety(context);
-            Cursor getbackasyncQueryPulicID   =moduleQuety.getModuleQuery("successlogin",
-                    " SELECT  sus.publicid  FROM successlogin  as sus   ORDER BY sus.id DESC  " ,
-                    null);
+            if (! WorkManager.getInstance(context).getWorkInfosByTag(getNameWorkMager).get().isEmpty()) {
+                WorkInfo workInfo = WorkManager.getInstance(context).getWorkInfosByTag(getNameWorkMager).get().get(0);
+                if (workInfo.getState().compareTo(WorkInfo.State.RUNNING) == 0) {
 
-            if(getbackasyncQueryPulicID.getCount()>0){
-                getbackasyncQueryPulicID.moveToFirst();
-                getPublicIDWorkManager =         getbackasyncQueryPulicID.getInt(0);
-                Log.d(this.getClass().getName(), " ID  " + getPublicIDWorkManager);
+// TODO: 18.03.2025
+                    isWorkManagerRunning = true;
+                    Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                            " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                            " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" +
+                            " isWorkManagerRunning " +isWorkManagerRunning);
+                }
             }
-
-            Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                    Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                     " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
                     " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n");
 
@@ -139,7 +144,7 @@ public class FindRunnigServiceBeforeWorkManager {
                     Thread.currentThread().getStackTrace()[2].getMethodName(),
                     Thread.currentThread().getStackTrace()[2].getLineNumber());
         }
-        return getPublicIDWorkManager;
+        return isWorkManagerRunning;
     }
 
 
