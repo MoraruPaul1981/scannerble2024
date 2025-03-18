@@ -40,7 +40,7 @@ public class Class_Generation_UUIDBack {
 
                 //todo гененируем если есть публичный id
                 moduleQuety=new ModuleQuety(context);
-                Cursor getbackasyncQueryPulicID   =moduleQuety.getModuleQuery("successlogin",
+                Cursor getbackasyncQueryPulicID   =moduleQuety.getModuleQueryForceLoad("successlogin",
                         " SELECT  sus.publicid  FROM successlogin  as sus   ORDER BY sus.id DESC  " ,
                         null);
 

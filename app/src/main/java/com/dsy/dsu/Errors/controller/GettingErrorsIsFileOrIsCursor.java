@@ -114,7 +114,7 @@ public class GettingErrorsIsFileOrIsCursor implements GettingErrorsIsFileInterfa
         // TODO: 14.01.2025
         try{
 
-           Cursor getbackasyncQueryandWhere=   moduleQuety.getModuleQuery("errordsu1",
+           Cursor getbackasyncQueryandWhere=   moduleQuety.getModuleQueryForceLoad("errordsu1",
                     " SELECT  *   FROM errordsu1 AS er  WHERE er.ERROR IS  NOT NULL  ORDER BY er.id DESC  " ,
                     null);
 

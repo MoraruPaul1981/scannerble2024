@@ -115,7 +115,7 @@ public class SubClassVersionDATABack {
         Long  АнализВерсииMAXCurrentTable=0l;
         try  {
             ModuleQuety  moduleQuety=new ModuleQuety(context);
-            Cursor getbackasyncQueryVersionTable   =moduleQuety.getModuleQuery(Текущаятаблицы,
+            Cursor getbackasyncQueryVersionTable   =moduleQuety.getModuleQueryForceLoad(Текущаятаблицы,
                     " SELECT MAX ( current_table  ) " +
                             "AS MAX_R  FROM " +  Текущаятаблицы.trim()+"" , null);
 
@@ -150,7 +150,7 @@ public class SubClassVersionDATABack {
         AtomicLong ПовышенняВерсия=new AtomicLong(0l);
         try     {
             ModuleQuety  moduleQuety=new ModuleQuety(context);
-            Cursor getbackasyncQueryUPVersionTable   =moduleQuety.getModuleQuery(Текущаятаблицы,
+            Cursor getbackasyncQueryUPVersionTable   =moduleQuety.getModuleQueryForceLoad(Текущаятаблицы,
                     " SELECT *  FROM " +
                             "  MODIFITATION_Client  WHERE  name = '"+Текущаятаблицы+"' " , null);
 

@@ -127,7 +127,7 @@ public class CoreApp extends Application {
              /*    String s=null;
             s.length();
 */
-     //Cursor cursor= moduleQuety.getModuleQuery("errordsu1"," SELECT  *   FROM errordsu1 AS er  WHERE er.ERROR IS  NOT NULL  ORDER BY er.id DESC  " ,null);
+     //Cursor cursor= moduleQuety.getModuleQueryForceLoad("errordsu1"," SELECT  *   FROM errordsu1 AS er  WHERE er.ERROR IS  NOT NULL  ORDER BY er.id DESC  " ,null);
             // TODO: 17.04.2023
          /* String getDeviceNameBack=  modulegetDeviceNameBack.getDeviceNameBack();
           Integer getDeviceVersionBack=  modulegetDeviceNameBack.getDeviceVersionBack();*/

@@ -191,12 +191,15 @@ public class MyWork_Async_Public extends Worker {
                     + " lВыбранныйРежимСети" + ВыбранныйРежимСети);
 
 
-          //Boolean isMyActivityRunning=  new FindRunnigServiceBeforeWorkManager(getApplicationContext()).isGetMyActivityRunning( );
+
           Boolean isMyActivityRunning=  new FindRunnigServiceBeforeWorkManager(getApplicationContext()).isGetMyActivityRunning( );
+
+            Integer  getPublicIDWorkManager =  new FindRunnigServiceBeforeWorkManager(getApplicationContext()).getPublicIDWorkManager( );
 
 
             if (localBinderAsyncWorkmanager!=null ) {
-                if (ВыбранныйРежимСети == true && localBinderAsyncWorkmanager.isBinderAlive()  && isMyActivityRunning==false) {
+                if (ВыбранныйРежимСети == true && localBinderAsyncWorkmanager.isBinderAlive()
+                        && isMyActivityRunning==false && getPublicIDWorkManager>0) {
 
                   ФинальныйРезультатAsyncBackgroud = localBinderAsyncWorkmanager.getService().metodStartingSync( getApplicationContext());
 

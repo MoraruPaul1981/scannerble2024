@@ -1,16 +1,15 @@
 package com.dsy.dsu.WorkManagers.BL_WorkMangers;
 
 import android.annotation.SuppressLint;
-import android.app.Activity;
 import android.app.ActivityManager;
 import android.content.ComponentName;
 import android.content.Context;
+import android.database.Cursor;
 import android.util.Log;
-import android.widget.Toast;
 
 import com.dsy.dsu.Errors.controller.RecordNewErros;
+import com.sous.backasync.launch.ModuleQuety;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Predicate;
 
@@ -89,13 +88,6 @@ public class FindRunnigServiceBeforeWorkManager {
                                     " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"+" isMyActivityRunning "+ isMyActivityRunning);
                         }
 
-
-                        if(currentPackageName.getClassName().length()==0){
-                            isMyActivityRunning =true;
-                            Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
-                                    " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                                    " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"+" isMyActivityRunning "+ isMyActivityRunning);
-                        }
                         return isMyActivityRunning;
                     }
                 });
@@ -114,5 +106,45 @@ public class FindRunnigServiceBeforeWorkManager {
     }
         return isMyActivityRunning;
     }
+
+
+
+
+
+    public Integer  getPublicIDWorkManager() {
+        // TODO: 14.01.2025
+        Integer  getPublicIDWorkManager = 0;
+        try{
+            //todo гененируем если есть публичный id
+            ModuleQuety   moduleQuety=new ModuleQuety(context);
+            Cursor getbackasyncQueryPulicID   =moduleQuety.getModuleQuery("successlogin",
+                    " SELECT  sus.publicid  FROM successlogin  as sus   ORDER BY sus.id DESC  " ,
+                    null);
+
+            if(getbackasyncQueryPulicID.getCount()>0){
+                getbackasyncQueryPulicID.moveToFirst();
+                getPublicIDWorkManager =         getbackasyncQueryPulicID.getInt(0);
+                Log.d(this.getClass().getName(), " ID  " + getPublicIDWorkManager);
+            }
+
+            Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                    " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                    " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n");
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
+                    " Линия  :" + Thread.currentThread().getStackTrace()[2].getLineNumber());
+            new RecordNewErros(context).recordnewerror(e.toString(), this.getClass().getName(),
+                    Thread.currentThread().getStackTrace()[2].getMethodName(),
+                    Thread.currentThread().getStackTrace()[2].getLineNumber());
+        }
+        return getPublicIDWorkManager;
+    }
+
+
+
+
+
 
 }

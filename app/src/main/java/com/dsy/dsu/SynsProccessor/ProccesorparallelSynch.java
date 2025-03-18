@@ -138,11 +138,10 @@ public class ProccesorparallelSynch   {
 
 // TODO: 20.01.2025 сама синхрониаиця
             Flowable.fromIterable(getBufferFromJbossServerAllTables)
-                    .parallel()
-                    .runOn(Schedulers.from(executorServiceAsync))
-                    .doOnNext(new io.reactivex.rxjava3.functions.Consumer<Map<String, String>>() {
+                    .onBackpressureBuffer()
+                    .blockingIterable().forEach(new java.util.function.Consumer<Map<String, String>>() {
                         @Override
-                        public void accept(Map<String, String> stringStringMapMultiPotoks) throws Throwable {
+                        public void accept(Map<String, String> stringStringMapMultiPotoks) {
                             // TODO: 28.12.2024
                             // TODO: 06.12.2023  запуск синхризуции по таблице конктерной
                             coutSucceessItemAsycnTablesComplete.add(getLooTablesPOSTANDGET(stringStringMapMultiPotoks))      ;
@@ -154,28 +153,7 @@ public class ProccesorparallelSynch   {
                                     + " getBufferFromJbossServerAllTables.size() " + getBufferFromJbossServerAllTables.size()
                                     +"\n");
                         }
-                    })
-                    .doOnError(new io.reactivex.rxjava3.functions.Consumer<Throwable>() {
-                        @Override
-                        public void accept(Throwable throwable) throws Throwable {
-                            throwable.printStackTrace();
-                            Log.e(this.getClass().getName(), "Ошибка " +throwable + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() + " Линия  :"
-                                    + Thread.currentThread().getStackTrace()[2].getLineNumber());
-                            new RecordNewErros(context).recordnewerror(throwable.toString(),
-                                    this.getClass().getName(), Thread.currentThread().getStackTrace()[2].getMethodName(),
-                                    Thread.currentThread().getStackTrace()[2].getLineNumber());
-                        }
-                    })
-                    .doOnComplete(new Action() {
-                        @Override
-                        public void run() throws Throwable {
-
-                            Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
-                                    " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                                    " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"+ " РежимЗапускаСинхронизации " +РежимЗапускаСинхронизации);
-                        }
-                    }).sequential().blockingSubscribe();
-
+                    });
 
 
 
