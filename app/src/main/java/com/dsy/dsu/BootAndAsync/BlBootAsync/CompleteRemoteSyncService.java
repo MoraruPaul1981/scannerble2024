@@ -97,7 +97,7 @@ public class CompleteRemoteSyncService {
         this.context=context;
     }
 
-    public void startingBindingAsyncJboss( ) {
+    public void startingBindingAsyncJboss(  @NonNull  String getWhoLaunched) {
         try {
             
             // TODO: 14.08.2023 вызов кода ПОльзовательский
@@ -107,7 +107,7 @@ public class CompleteRemoteSyncService {
 
             // TODO: 22.01.2024
             // TODO: 14.08.2023 методЗапукска Синхрониазйиии
-          МетодБиндингаRemoteAsync(    );
+          МетодБиндингаRemoteAsync(   getWhoLaunched );
 
 
             Log.d(context.getClass().getName(), "\n"
@@ -127,7 +127,8 @@ public class CompleteRemoteSyncService {
                                      @NonNull SSLSocketFactory getsslSocketFactory2,
                                   @NonNull Integer getHiltPublicId,
                                      @NonNull String landingMode ,
-                                  @NonNull LinkedHashMap<Integer,String> getHiltPortJboss) {
+                                  @NonNull LinkedHashMap<Integer,String> getHiltPortJboss,
+                                        @NonNull  String getWhoLaunched) {
         try {
             
             // TODO: 14.08.2023 вызов кода ПОльзовательский
@@ -141,7 +142,7 @@ public class CompleteRemoteSyncService {
 
 
             // TODO: 14.08.2023 методЗапукска Синхрониазйиии
-            МетодБиндингаОбновлениеПО( getHiltPortJboss,getsslSocketFactory2,landingMode);
+            МетодБиндингаОбновлениеПО( getHiltPortJboss,getsslSocketFactory2,landingMode,getWhoLaunched);
 
 
             Log.d(context.getClass().getName(), "\n"
@@ -163,7 +164,8 @@ public class CompleteRemoteSyncService {
                                      @NonNull SSLSocketFactory getsslSocketFactory2,
                                      @NonNull Integer getHiltPublicId,
                                      @NonNull String  landingMode  ,
-                                     @NonNull LinkedHashMap<Integer,String> getHiltPortJboss) {
+                                     @NonNull LinkedHashMap<Integer,String> getHiltPortJboss
+                                     ,@NonNull  String getWhoLaunched) {
         try {
             
             // TODO: 14.08.2023 вызов кода ПОльзовательский
@@ -177,7 +179,7 @@ public class CompleteRemoteSyncService {
 
 
             // TODO: 14.08.2023 методЗапукска Синхрониазйиии
-            МетодБиндингаОбновлениеПО( getHiltPortJboss,getsslSocketFactory2, landingMode );
+            МетодБиндингаОбновлениеПО( getHiltPortJboss,getsslSocketFactory2, landingMode,getWhoLaunched );
 
 
             Log.d(context.getClass().getName(), "\n"
@@ -200,7 +202,8 @@ public class CompleteRemoteSyncService {
 
     private void WorkerUpdatePOAndAsync( @NonNull LinkedHashMap<Integer,
             String> getHiltPortJboss,@NonNull      SSLSocketFactory getsslSocketFactory2,
-                                         @NonNull String landingMode) {
+                                         @NonNull String landingMode,
+                                         @NonNull  String getWhoLaunched) {
 
         try{
             // TODO: 22.01.2024  создание журнала ошщибок
@@ -239,7 +242,7 @@ public class CompleteRemoteSyncService {
 
             if (СтатусРаботыСервера) {
                 // TODO: 01.04.2024  запускаем саму синхрониазцию через запуск Work Manamger
-                metodВыполняетсяГлавнаяWork(ФиналПолучаемРазницуМеждуДатами,    getHiltPortJboss ,  landingMode);//todo Main Code Sercice
+                metodВыполняетсяГлавнаяWork(ФиналПолучаемРазницуМеждуДатами,    getHiltPortJboss ,  landingMode,getWhoLaunched);//todo Main Code Sercice
             }else {
 
                 getSendDOntWorkDashBornElseSucceessAyntifica(ФиналПолучаемРазницуМеждуДатами);
@@ -360,13 +363,13 @@ public class CompleteRemoteSyncService {
 
     private void metodВыполняетсяГлавнаяWork(@NonNull Integer ФиналПолучаемРазницуМеждуДатами,
                                              @NonNull LinkedHashMap<Integer,String> getHiltPortJboss,
-                                             @NonNull String landingMode) {
+                                             @NonNull String landingMode,@NonNull  String getWhoLaunched) {
         try{
         if (      date_update != null && success_users != null && success_login != null
                 && ФиналПолучаемРазницуМеждуДатами < 40 ) {
 
             // TODO: 22.01.2024  запускаеми службу обновление ПО
-            new SuccessAsynsStartingUpdatrPO().startingAsyncForUpSoft(   getHiltPortJboss,landingMode);
+            new SuccessAsynsStartingUpdatrPO().startingAsyncForUpSoft(   getHiltPortJboss,landingMode,getWhoLaunched);
 
 
             Log.d(this.getClass().getName(), "\n"
@@ -522,7 +525,7 @@ public class CompleteRemoteSyncService {
 
     //TODO succeess
     class SuccessAsynsStartingUpdatrPO{
-        void  startingAsyncForUpSoft(   @NonNull LinkedHashMap<Integer,String> getHiltPortJboss ,@NonNull String landingMode ){
+        void  startingAsyncForUpSoft(   @NonNull LinkedHashMap<Integer,String> getHiltPortJboss ,@NonNull String landingMode,@NonNull  String getWhoLaunched ){
             try{
                 // TODO: 22.01.2024 true запускаем Анализ По
                     Integer    СервернаяВерсия=        metodAsyncUpdatePO(getHiltPortJboss);
@@ -544,7 +547,7 @@ public class CompleteRemoteSyncService {
                     case    "IntentServiceBootUpdatePo.comAndIntentServiceBootAsync.com" :
 
                         // TODO: 22.01.2024  запускаем Синхронизацию
-                        launchUpdatePOandSync(СервернаяВерсия, ЛокальнаяВерсияПО);
+                        launchUpdatePOandSync(СервернаяВерсия, ЛокальнаяВерсияПО, getWhoLaunched);
 
                         Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                                 " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
@@ -625,7 +628,7 @@ public class CompleteRemoteSyncService {
 
 
 
-        private void launchUpdatePOandSync(Integer СервернаяВерсия, Integer ЛокальнаяВерсияПО) {
+        private void launchUpdatePOandSync(Integer СервернаяВерсия, Integer ЛокальнаяВерсияПО,@NonNull  String getWhoLaunched) {
             // TODO: 22.01.2024  запускаем Синхронизацию
             try{
             if (СервернаяВерсия > ЛокальнаяВерсияПО) {
@@ -641,7 +644,7 @@ public class CompleteRemoteSyncService {
             }else {
 
                 // TODO: 24.09.2024 запускаем Синхронизацию
-                startingJbossAsyncComplete(   );
+                startingJbossAsyncComplete(  getWhoLaunched  );
 
                 // TODO: 03.10.2023
                 Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
@@ -666,7 +669,7 @@ public class CompleteRemoteSyncService {
         }
 
 
-        void startingJbossAsyncComplete( ){
+        void startingJbossAsyncComplete(@NonNull  String getWhoLaunched ){
             try{
                 // TODO: 03.10.2023
                 // TODO: 22.12.2022  сама запуска синхронищации из workmanager ОБЩЕГО
@@ -688,14 +691,14 @@ public class CompleteRemoteSyncService {
 
                 if (ВыбранныйРежимСети == true  ) {
 
-                    startingBindingAsyncJboss();
+                    startingBindingAsyncJboss(getWhoLaunched);
 
                    //1 Long      ФинальныйРезультатAsyncBackgroud = localBinderAsync.getService().metodStartingSync(context);
 
                     Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                             " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
                             " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" +
-                            " ВыбранныйРежимСети "+" ВыбранныйРежимСети ") ;
+                            " ВыбранныйРежимСети "+" ВыбранныйРежимСети " + "getWhoLaunched " +getWhoLaunched) ;
                 }
 
 
@@ -1068,7 +1071,7 @@ public class CompleteRemoteSyncService {
 
 
     @SuppressLint("NewApi")
-    public void МетодБиндингаRemoteAsync(  ) {
+    public void МетодБиндингаRemoteAsync(  @NonNull  String getWhoLaunched ) {
         try {
             // TODO: 28.04.2023  запускаем Гланвную Синхрониазцию
 
@@ -1084,11 +1087,12 @@ public class CompleteRemoteSyncService {
                                  localBinderAsync = (Service_For_Remote_Async_Binary.LocalBinderAsync) service;
 
 
-                            Long    ФинальныйРезультатAsyncBackgroud = localBinderAsync.getService().metodStartingSync(context);
+                            Long    ФинальныйРезультатAsyncBackgroud = localBinderAsync.getService().metodStartingSync(context,getWhoLaunched);
                                 // TODO: 25.03.2023
                                 Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                                         " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                                        " line " + Thread.currentThread().getStackTrace()[2].getLineNumber());
+                                        " line " + Thread.currentThread().getStackTrace()[2].getLineNumber()
+                                        + " ФинальныйРезультатAsyncBackgroud " +ФинальныйРезультатAsyncBackgroud);
 
                             }
                         } catch (Exception e) {
@@ -1119,7 +1123,7 @@ public class CompleteRemoteSyncService {
                     }
                 };
 
-     context. bindService(intentAsync,Context.BIND_AUTO_CREATE,executorService ,connectionAsync );
+           context. bindService(intentAsync,Context.BIND_AUTO_CREATE,executorService ,connectionAsync );
 
 
             // TODO: 28.04.2023
@@ -1146,7 +1150,8 @@ public class CompleteRemoteSyncService {
     @SuppressLint("NewApi")
     public void МетодБиндингаОбновлениеПО(  @NonNull LinkedHashMap<Integer,String> getHiltPortJboss,
                                             @NonNull     SSLSocketFactory getsslSocketFactory2,
-                                            @NonNull String landingMode) {
+                                            @NonNull String landingMode,
+                                            @NonNull  String getWhoLaunched) {
         try {
             connectionОбновлениеПО = new ServiceConnection() {
                 @Override
@@ -1157,7 +1162,7 @@ public class CompleteRemoteSyncService {
                             localBinderОбновлениеПО = (ServiceUpdatePoОбновлениеПО.localBinderОбновлениеПО) service;
 
                             // TODO: 23.01.2024 stating .... Main Code
-                                WorkerUpdatePOAndAsync(   getHiltPortJboss,  getsslSocketFactory2,landingMode);
+                                WorkerUpdatePOAndAsync(   getHiltPortJboss,  getsslSocketFactory2,landingMode,getWhoLaunched);
 
                             // TODO: 25.03.2023
                             Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
@@ -1201,17 +1206,13 @@ public class CompleteRemoteSyncService {
             Intent intentЗапускСлужбыОбновлениеПО = new Intent(context, ServiceUpdatePoОбновлениеПО.class);
             intentЗапускСлужбыОбновлениеПО.setAction("com.ServiceUpdatePoОбновлениеПО");
 
-           // Boolean asBoolenОбновлениеПО = context.bindService(intentЗапускСлужбыОбновлениеПО, connectionОбновлениеПО, Context.BIND_AUTO_CREATE);
-
-        Boolean asBoolenОбновлениеПО =context. bindService(intentЗапускСлужбыОбновлениеПО,Context.BIND_AUTO_CREATE,executorService ,connectionОбновлениеПО );
-       //Boolean asBoolenОбновлениеПО =context. bindService(intentЗапускСлужбыОбновлениеПО,   connectionОбновлениеПО ,Context.BIND_AUTO_CREATE);
-
+       context. bindService(intentЗапускСлужбыОбновлениеПО,Context.BIND_AUTO_CREATE,executorService ,connectionОбновлениеПО );
             // TODO: 28.04.2023
             Log.d(this.getClass().getName(), "\n" + " class " +
                     Thread.currentThread().getStackTrace()[2].getClassName()
                     + "\n" +
                     " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                    " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" + " asBoolenОбновлениеПО " + asBoolenОбновлениеПО);
+                    " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n");
         } catch (Exception e) {
             e.printStackTrace();
             Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() + " Линия  :"

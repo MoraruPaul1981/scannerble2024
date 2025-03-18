@@ -244,12 +244,9 @@ try{
 
     @BinderThread
     @Background
-    public Long metodStartingSync(  @NotNull Context context) {
+    public Long metodStartingSync(  @NotNull Context context,@NonNull  String getWhoLaunched) {
         Long       ФинальныйРезультатAsyncBackgroud=0l;
         try{
-
-
-
 
             // TODO: 25.03.2023 ДОПОЛНИТЕОТНЕ УДЛАНИЕ СТАТУСА УДАЛЕНИЕ ПОСЛЕ СИНХРОНИАЗЦИИ
             ФинальныйРезультатAsyncBackgroud  = new AsynsProccessor(context,getHiltJaksonObjectMapper,
@@ -266,16 +263,9 @@ try{
                     + " ФинальныйРезультатAsyncBackgroud " +ФинальныйРезультатAsyncBackgroud + " getHiltPublicId " +getHiltPublicId);
 
 
-            afterCodeAsyncForfwardActivityAsync(context, ФинальныйРезультатAsyncBackgroud);
+            afterCodeAsyncForfwardActivityAsync(context, ФинальныйРезультатAsyncBackgroud,getWhoLaunched);
 
 
-            // TODO: 10.10.2024 close srvice
-
-            stopSelf();
-
-            stopForeground(true);
-
-            onDestroy();
             // TODO: 10.10.2024 Окночание службы и передаем всем
             Log.d(getApplicationContext().getClass().getName(), "\n"
                     + " время: " + new Date() + "\n+" +
@@ -298,7 +288,7 @@ try{
 
 
 
-    private void afterCodeAsyncForfwardActivityAsync(@NonNull Context context, Long ФинальныйРезультатAsyncBackgroud) {
+    private void afterCodeAsyncForfwardActivityAsync(@NonNull Context context, Long ФинальныйРезультатAsyncBackgroud, String getWhoLaunched) {
         // TODO: 26.03.2023 дополнительное удаление после Удаление статсу удалнеенон
         try{
         if (ФинальныйРезультатAsyncBackgroud >0) {
@@ -307,13 +297,15 @@ try{
 
 
         // TODO: 01.04.2024
-        new GetEndingAsyn().  metoEndingAsynsOtService(context);
+            if (getWhoLaunched.equalsIgnoreCase("BootService")) {
+                new GetEndingAsyn().  metoEndingAsynsOtService(context);
+            }
 
-        Log.d(getApplicationContext().getClass().getName(), "\n"
+            Log.d(getApplicationContext().getClass().getName(), "\n"
                 + " время: " + new Date() + "\n+" +
                 " Класс в процессе... " + this.getClass().getName() + "\n" +
                 " метод в процессе... " + Thread.currentThread().getStackTrace()[2].getMethodName()
-                + " ФинальныйРезультатAsyncBackgroud " +ФинальныйРезультатAsyncBackgroud);
+                + " ФинальныйРезультатAsyncBackgroud " +ФинальныйРезультатAsyncBackgroud + " getWhoLaunched " +getWhoLaunched);
     } catch (Exception e) {
         e.printStackTrace();
         Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +

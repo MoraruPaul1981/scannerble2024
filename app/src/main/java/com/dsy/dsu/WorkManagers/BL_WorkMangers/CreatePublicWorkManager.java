@@ -60,7 +60,7 @@ public class CreatePublicWorkManager {
         Integer RunWorkInfo=  Optional.ofNullable(workInfo).stream().mapToInt(e->e.size()).findAny().orElse(0);
 
 
-            if (RunWorkInfo>=0) {
+            if (RunWorkInfo==0) {
                 // TODO: 20.01.2025  ЗАпускаем Work Manger
                 WorkManager.getInstance(context).enqueueUniquePeriodicWork(ИмяСлужбыСинхронизации,
                         ExistingPeriodicWorkPolicy.UPDATE, periodicWorkRequestСинхронизация);

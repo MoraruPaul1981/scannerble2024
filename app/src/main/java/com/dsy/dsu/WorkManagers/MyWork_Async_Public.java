@@ -29,22 +29,15 @@ public class MyWork_Async_Public extends Worker {
     private  String ИмяСлужбыSingleWorkManger ="WorkManager Synchronizasiy_Data Disposable";
     private ServiceConnection serviceConnectionWorkManager;
     private Service_For_Remote_Async_Binary.LocalBinderAsync localBinderAsyncWorkmanager;
-    private SharedPreferences preferencesJboss;
+
 
     // TODO: 28.09.2022
     @SuppressLint("RestrictedApi")
     public MyWork_Async_Public(@NonNull Context context, @NonNull WorkerParameters workerParams) {
         super(context, workerParams);
         try{
-
-            initSharedPreferences(context);
-
-
             // TODO: 22.12.2022
             МетодБиндингаОбщая();
-
-
-
             Log.d(this.getClass().getName(),"\n"
                     + " bremy: " + new Date()+"\n+"
                     + "  class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
@@ -61,9 +54,6 @@ public class MyWork_Async_Public extends Worker {
     }
     }
 
-    private void initSharedPreferences(@NonNull Context context) {
-        preferencesJboss = context.getSharedPreferences("sharedPreferencesХранилище", Context.MODE_MULTI_PROCESS);
-    }
 
 
     @NonNull
@@ -194,14 +184,12 @@ public class MyWork_Async_Public extends Worker {
 
           Boolean isMyActivityRunning=  new FindRunnigServiceBeforeWorkManager(getApplicationContext()).isGetMyActivityRunning( );
 
-            Integer  getPublicIDWorkManager =  new FindRunnigServiceBeforeWorkManager(getApplicationContext()).getPublicIDWorkManager( );
-
 
             if (localBinderAsyncWorkmanager!=null ) {
                 if (ВыбранныйРежимСети == true && localBinderAsyncWorkmanager.isBinderAlive()
-                        && isMyActivityRunning==false && getPublicIDWorkManager>0) {
+                        && isMyActivityRunning==false ) {
 
-                  ФинальныйРезультатAsyncBackgroud = localBinderAsyncWorkmanager.getService().metodStartingSync( getApplicationContext());
+                  ФинальныйРезультатAsyncBackgroud = localBinderAsyncWorkmanager.getService().metodStartingSync( getApplicationContext(),"WorkManager");
 
                     Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                             " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
