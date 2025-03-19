@@ -1,6 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <network-security-config>
-    <base-config cleartextTrafficPermitted="true">
+    <domain-config cleartextTrafficPermitted="true">
+        <domain includeSubdomains="true">base.dsu1.ru</domain>
+    </domain-config>
+    <base-config >
         <trust-anchors>
             <certificates src="@raw/androidserver"/>
         </trust-anchors>

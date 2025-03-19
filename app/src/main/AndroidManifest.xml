@@ -126,7 +126,6 @@
         android:largeHeap="true"
         android:networkSecurityConfig="@xml/network_security_config"
         android:requestLegacyExternalStorage="true"
-        android:usesCleartextTraffic="true"
         android:roundIcon="@mipmap/deliverytruckcolors"
         android:screenOrientation="portrait"
         android:showOnLockScreen="true"
@@ -324,8 +323,7 @@
             android:name=".FirebaseAndOneSignal.Firebase.MyFirebaseInstanceIDService"
             android:directBootAware="true"
             android:exported="false"
-            android:showOnLockScreen="true"
-            android:usesCleartextTraffic="true">
+            android:showOnLockScreen="true">
             <intent-filter>
                 <action android:name="com.google.firebase.MESSAGING_EVENT" />
                 <action android:name="com.google.android.c2dm.intent.RECEIVE" />

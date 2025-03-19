@@ -6,15 +6,15 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#FFFFFF"
-    android:layout_margin="50dp">
+    android:layout_margin="5dp">
 
 
 
 
     <CheckedTextView
-        android:id="@+id/textView1NewCustomers"
+        android:id="@+id/textView3SapolnitFrrombackmezaz"
         android:layout_width="match_parent"
-        android:layout_height="250dp"
+        android:layout_height="match_parent"
         android:gravity="center|right"
         android:layout_centerInParent="true"
         android:paddingStart="?android:attr/listPreferredItemPaddingStart"

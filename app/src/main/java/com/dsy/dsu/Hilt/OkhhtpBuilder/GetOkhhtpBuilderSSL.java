@@ -16,6 +16,7 @@ import java.security.cert.X509Certificate;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.Date;
+import java.util.List;
 import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
 
@@ -95,12 +96,7 @@ public class GetOkhhtpBuilderSSL implements  InGetOkhhtpBuilder {
 
 
             builderSSL=     new OkHttpClient().newBuilder();
-            // TODO: 09.10.2024
-            ConnectionSpec spec = new ConnectionSpec.Builder( ConnectionSpec.MODERN_TLS)
-                    .allEnabledTlsVersions()
-                    .allEnabledCipherSuites()
-                    .build();
-            builderSSL.connectionSpecs(Collections.singletonList(spec));
+            builderSSL.connectionSpecs(Arrays.asList(ConnectionSpec.CLEARTEXT,ConnectionSpec.MODERN_TLS));
             builderSSL.sslSocketFactory(getsslSocketFactory2, (X509TrustManager)trustAllCerts[0]);
       builderSSL.hostnameVerifier(new HostnameVerifier() {
                 @Override

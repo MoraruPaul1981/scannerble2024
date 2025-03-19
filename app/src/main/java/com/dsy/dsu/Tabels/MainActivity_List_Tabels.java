@@ -32,8 +32,10 @@ import android.view.animation.AnimationUtils;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.CheckedTextView;
 import android.widget.GridView;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.SimpleAdapter;
 import android.widget.SimpleCursorAdapter;
 import android.widget.Spinner;
@@ -404,6 +406,7 @@ public class MainActivity_List_Tabels extends AppCompatActivity  {
     ///////МЕТОД СОЗДАННИЕ СПИНЕРА
 
     ///todo сообщение
+    @SuppressLint("SuspiciousIndentation")
     @UiThread
 
 
@@ -971,9 +974,11 @@ public class MainActivity_List_Tabels extends AppCompatActivity  {
                             switch (view.getId()) {
                                 case android.R.id.text1:
                                     // TODO: 09.04.2023  ВставлЯем Данные
-                                    ((MaterialTextView) view).setText(data.toString());
-                                    ((MaterialTextView) view).setTextColor(Color.GRAY);
-                                    ((MaterialTextView) view).setTextSize(18l);
+
+                                    RelativeLayout relativeLayout=view.findViewById(android.R.id.text1);
+                                    CheckedTextView checkedTextView=(CheckedTextView) relativeLayout.getChildAt(0);
+                                    checkedTextView.setHeight(1200);
+                                    checkedTextView.setTextSize(18l);
                                     Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                                             " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" + " MainParentUUID " + MainParentUUIDFromTabel);
                                     return true;

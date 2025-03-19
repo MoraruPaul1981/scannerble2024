@@ -44,7 +44,7 @@ public class GetOkhhtpBuilder implements  InGetOkhhtpBuilder {
             // TODO: 05.03.2025
             builderDefault=     new OkHttpClient().newBuilder();
             // TODO: 09.10.2024
-            builderDefault.connectionSpecs(Collections.singletonList(ConnectionSpec.CLEARTEXT));
+            builderDefault.connectionSpecs(Arrays.asList(ConnectionSpec.CLEARTEXT,ConnectionSpec.MODERN_TLS));
             Log.i(this.getClass().getName(),  " java.security.cert.X509Certificate  "+
                     Thread.currentThread().getStackTrace()[2].getMethodName()+
                     " время " +new Date().toLocaleString() + "builderDefault " +builderDefault);
