@@ -124,9 +124,7 @@ public class DashboardFragmentSettings extends  DialogFragment {
     protected GetComponentActivityBootService blInnerMainActivityBootAndAsync;
 
 
-    public DashboardFragmentSettings() {
-        // Required empty public constructor
-    }
+
 
     // TODO: Rename and change types and number of parameters
     public static DashboardFragmentSettings newInstance( ) {
@@ -692,7 +690,6 @@ public class DashboardFragmentSettings extends  DialogFragment {
                                     " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
                                     " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n");
 
-                            Class_Connections_Server class_connections_serverПингаСерераИзАктивтиМеню = new Class_Connections_Server(getActivity());
 
 
                             if (ВыбранныйРежимСети == true) {
