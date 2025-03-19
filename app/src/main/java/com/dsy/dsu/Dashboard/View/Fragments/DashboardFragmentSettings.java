@@ -119,9 +119,6 @@ public class DashboardFragmentSettings extends  DialogFragment {
 
 
 
-    @Inject
-    @QualifierJbossServer3
-    public LinkedHashMap<Integer,String> getHiltPortJboss;
 
 
     protected GetComponentActivityBootService blInnerMainActivityBootAndAsync;

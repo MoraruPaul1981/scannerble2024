@@ -78,11 +78,13 @@ public class ProccesorparallelSynch   {
 
     private  CopyOnWriteArrayList<Map<String, String>> getBufferFromJbossServerAllTables;
 
+
     public ProccesorparallelSynch(@NonNull Context context,
                                   @NonNull ObjectMapper jsonGenerator,
                                   @NonNull SSLSocketFactory getsslSocketFactory2,
                                   @NonNull    CopyOnWriteArrayList<Map<String, String>> getBufferFromJbossServerAllTables,
-                                  @NonNull Integer PublicID) {
+                                  @NonNull Integer PublicID,
+                                  @NonNull  LinkedHashMap<Integer,String> getHiltPortJboss) {
 
 
 
@@ -91,7 +93,7 @@ public class ProccesorparallelSynch   {
         this.   getsslSocketFactory2=getsslSocketFactory2;
         this.  PublicID=PublicID;
         this.  getBufferFromJbossServerAllTables=getBufferFromJbossServerAllTables;
-        this.  getHiltPortJboss=   EntryPoints.get(context, getHiltPortJbossInterface.class).getHiltPortJboss();
+        this.  getHiltPortJboss=getHiltPortJboss;
     }
 
     public Long startingAsyncParallels() {
@@ -100,48 +102,17 @@ public class ProccesorparallelSynch   {
             // TODO: 30.09.2024
             preferences =context. getSharedPreferences("sharedPreferencesХранилище", Context.MODE_MULTI_PROCESS);
              РежимЗапускаСинхронизации = preferences.getString("РежимЗапускаСинхронизации","СамыйПервыйЗапускСинхронизации");
-         String   РежимЗапускаПереполучение = preferences.getString("РежимЗапускаПереполучение","СамыйПервыйЗапускСинхронизации");
-             ExecutorService executorServiceAsync= null;
 
-            // TODO: 07.04.2024  Г
-             switch (РежимЗапускаСинхронизации) {
-                 // TODO: 07.10.2024
-                 case "СамыйПервыйЗапускСинхронизации":
-                 // TODO: 27.12.2024
-                 switch (РежимЗапускаПереполучение){
-                     case    "ПовторныйЗапускСинхронизации":
-                         executorServiceAsync= Executors.newSingleThreadExecutor();
-                         break;
-                     default:{
-                         executorServiceAsync= Executors.newFixedThreadPool(2);
-                     }
-                 }
 
-                 Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
-                         " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                         " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"+
-                         "\n"+ " РежимЗапускаСинхронизации " +РежимЗапускаСинхронизации+
-                          " РежимЗапускаПереполучение " +РежимЗапускаПереполучение);
-                 break;
-                 // TODO: 07.10.2024
-                 case "ПовторныйЗапускСинхронизации":
-                     // TODO: 27.12.2024
-                     executorServiceAsync= Executors.newSingleThreadExecutor();
-                     Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
-                             " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                             " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"+ "\n"+ " РежимЗапускаСинхронизации " +РежимЗапускаСинхронизации);
-                     break;
 
-                 // TODO: 07.10.2024  chsnage
-             }
 
 
 // TODO: 20.01.2025 сама синхрониаиця
             Flowable.fromIterable(getBufferFromJbossServerAllTables)
                     .onBackpressureBuffer()
-                    .blockingIterable().forEach(new java.util.function.Consumer<Map<String, String>>() {
+                    .doOnNext(new Consumer<Map<String, String>>() {
                         @Override
-                        public void accept(Map<String, String> stringStringMapMultiPotoks) {
+                        public void accept(Map<String, String> stringStringMapMultiPotoks) throws Throwable {
                             // TODO: 28.12.2024
                             // TODO: 06.12.2023  запуск синхризуции по таблице конктерной
                             coutSucceessItemAsycnTablesComplete.add(getLooTablesPOSTANDGET(stringStringMapMultiPotoks))      ;
@@ -153,7 +124,7 @@ public class ProccesorparallelSynch   {
                                     + " getBufferFromJbossServerAllTables.size() " + getBufferFromJbossServerAllTables.size()
                                     +"\n");
                         }
-                    });
+                    }).blockingSubscribe();
 
 
 

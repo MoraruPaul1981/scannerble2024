@@ -422,6 +422,7 @@ public class AsynsProccessor extends Class_MODEL_synchronized {
                     +  getBufferFromJbossServerAllTables.toString());
 
 
+            LinkedHashMap<Integer,String> getHiltPortJboss=    EntryPoints.get(context, getHiltPortJbossInterface.class).getHiltPortJboss();
             /*
 //TODO :  Реальная Работа
  */
@@ -432,8 +433,7 @@ public class AsynsProccessor extends Class_MODEL_synchronized {
                     jsonGenerator,
                     getsslSocketFactory2,
                     getBufferFromJbossServerAllTables,
-                    PublicID)
-                    .startingAsyncParallels());
+                    PublicID,getHiltPortJboss).startingAsyncParallels());
 
             // TODO: 08.04.2024
             Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
