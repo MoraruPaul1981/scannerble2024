@@ -11,6 +11,7 @@ import com.dsy.dsu.BusinessLogicAll.DeviceName.ModulegetDeviceName;
 import com.dsy.dsu.BusinessLogicAll.DeviceName.hilt.QualifiergetDeviceName;
 import com.dsy.dsu.BusinessLogicAll.DeviceName.hilt.QualifiergetDeviceVersionBack;
 import com.dsy.dsu.Errors.controller.RecordNewErros;
+import com.dsy.dsu.Hilt.JbossAdrress.qualifiers.QualifierJbossServer3;
 import com.sous.backasync.businesslogic.errors.RecordNewErroBack;
 import com.sous.backasync.devicename.ModulegetDeviceNameBack;
 import com.sous.backasync.launch.ModuleDeleting;
@@ -19,6 +20,7 @@ import com.sous.backasync.launch.ModuleQuety;
 import com.sous.backasync.launch.ModuleUpdating;
 
 
+import java.util.LinkedHashMap;
 import java.util.concurrent.CopyOnWriteArrayList;
 
 import javax.inject.Inject;
@@ -73,7 +75,9 @@ public class CoreApp extends Application {
     @Inject
     ModulegetDeviceNameBack modulegetDeviceNameBack;
 
-
+    @Inject
+    @QualifierJbossServer3
+    public LinkedHashMap<Integer,String> getHiltPortJboss;
 
     @Override
     public void onCreate() {

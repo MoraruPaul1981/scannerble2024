@@ -106,9 +106,6 @@ public class MainActivityPasswords extends AppCompatActivity {
     SSLSocketFactory getsslSocketFactory2;
     EventBuss eventBuss;
 
-    @Inject
-    @QualifierJbossServer3
-    public LinkedHashMap<Integer,String> getHiltPortJboss;
 
 
 

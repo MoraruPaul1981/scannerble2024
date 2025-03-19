@@ -75,9 +75,7 @@ public class MainActivity_Dashboard extends AppCompatActivity {
     private FragmentTransaction fragmentTransaction;
     private SharedPreferences preferences;
 
-    @Inject
-    @QualifierJbossServer3
-    public LinkedHashMap<Integer,String> getHiltPortJboss;
+
 
 
     EventBuss eventBuss;

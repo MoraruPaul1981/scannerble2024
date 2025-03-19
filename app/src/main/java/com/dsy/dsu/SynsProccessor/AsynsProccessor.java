@@ -48,9 +48,6 @@ public class AsynsProccessor extends Class_MODEL_synchronized {
 
     public SSLSocketFactory getsslSocketFactory2;
 
-    @Inject
-    @QualifierJbossServer3
-    public LinkedHashMap<Integer,String> getHiltPortJboss;
 
 
     public Integer getHiltPublicId;

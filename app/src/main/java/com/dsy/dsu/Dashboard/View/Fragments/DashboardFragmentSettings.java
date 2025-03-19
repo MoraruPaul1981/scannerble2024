@@ -116,9 +116,7 @@ public class DashboardFragmentSettings extends  DialogFragment {
     SSLSocketFactory getsslSocketFactory2;
 
 
-    @Inject
-    @QualifierJbossServer3
-    public LinkedHashMap<Integer,String> getHiltPortJboss;
+
 
 
     protected GetComponentActivityBootService blInnerMainActivityBootAndAsync;

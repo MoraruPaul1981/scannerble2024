@@ -63,9 +63,6 @@ public class MainActivityBootAndAsync extends AppCompatActivity {
 
 
 
-    @Inject
-    @QualifierJbossServer3
-    public LinkedHashMap<Integer,String> getHiltPortJboss;
 
     private ImageView imageView_faceapp_settings;
 

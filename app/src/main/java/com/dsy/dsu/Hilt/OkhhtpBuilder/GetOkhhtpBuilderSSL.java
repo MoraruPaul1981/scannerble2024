@@ -96,7 +96,7 @@ public class GetOkhhtpBuilderSSL implements  InGetOkhhtpBuilder {
 
 
             builderSSL=     new OkHttpClient().newBuilder();
-            builderSSL.connectionSpecs(Arrays.asList(ConnectionSpec.CLEARTEXT,ConnectionSpec.MODERN_TLS));
+            builderSSL.connectionSpecs(Arrays.asList(ConnectionSpec.CLEARTEXT,ConnectionSpec.MODERN_TLS,ConnectionSpec.COMPATIBLE_TLS ,ConnectionSpec.RESTRICTED_TLS ));
             builderSSL.sslSocketFactory(getsslSocketFactory2, (X509TrustManager)trustAllCerts[0]);
       builderSSL.hostnameVerifier(new HostnameVerifier() {
                 @Override

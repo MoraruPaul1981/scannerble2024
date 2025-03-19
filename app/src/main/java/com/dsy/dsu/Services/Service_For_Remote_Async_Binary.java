@@ -59,9 +59,7 @@ public class Service_For_Remote_Async_Binary extends IntentService {
     String КлючДляFirebaseNotification = "2a1819db-60c8-4ca3-a752-1b6cd9cadfa1";
 
 
-    @Inject
-    @QualifierJbossServer3
-    public LinkedHashMap<Integer,String> getHiltPortJboss;
+
 
 
     private SharedPreferences preferencesJboss;
