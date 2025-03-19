@@ -397,7 +397,7 @@
         </activity> <!-- android:permission="android.intent.action.BOOT_COMPLETED" -->
 
         <activity
-            android:name=".BootAndAsync.Window.MainActivityBootAndAsync"
+            android:name=".BootAndAsync.ViewModelBoot.View.MainActivityBootAndAsync"
             android:configChanges="orientation|screenSize|keyboardHidden|screenSize|screenLayout"
             android:exported="true"
             android:grantUriPermissions="true"
@@ -496,7 +496,7 @@
             android:theme="@style/Theme.MaterialComponents.DayNight.DarkActionBar">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value=".BootAndAsync.Window.MainActivityBootAndAsync" />
+                android:value=".BootAndAsync.ViewModelBoot.View.MainActivityBootAndAsync" />
         </activity>
         <activity
             android:name=".Errors.view.MainActivity_Errors"
@@ -508,7 +508,7 @@
             android:theme="@style/Theme.MaterialComponents.DayNight.DarkActionBar">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value=".BootAndAsync.Window.MainActivityBootAndAsync" />
+                android:value=".BootAndAsync.ViewModelBoot.View.MainActivityBootAndAsync" />
         </activity> <!-- активити прикложения ДСУ-1 -->
         <!-- активити прикложения ДСУ-1 -->
         <!-- активити прикложения ДСУ-1 -->
@@ -525,7 +525,7 @@
             android:theme="@style/Theme.MaterialComponents.DayNight.DarkActionBar">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value=".BootAndAsync.Window.MainActivityBootAndAsync" />
+                android:value=".BootAndAsync.ViewModelBoot.View.MainActivityBootAndAsync" />
         </activity>
         <activity
             android:name=".Tabels.MainActivity_New_Tabely"
@@ -543,7 +543,7 @@
             android:theme="@style/Theme.MaterialComponents.DayNight.DarkActionBar">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value=".BootAndAsync.Window.MainActivityBootAndAsync" />
+                android:value=".BootAndAsync.ViewModelBoot.View.MainActivityBootAndAsync" />
         </activity>
         <activity
             android:name=".OrdersTransports.Window.MainActivityOrdersTransports"

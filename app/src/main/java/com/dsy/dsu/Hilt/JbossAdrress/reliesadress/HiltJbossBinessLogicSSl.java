@@ -27,29 +27,14 @@ public class HiltJbossBinessLogicSSl implements HiltJbossBinessLogicIntarface {
        // TODO: 18.03.2023 московский сервер
          getJbossPort.putIfAbsent(8890,"base.dsu1.ru");// TODO: 10.11.2022
        // getJbossPort.putIfAbsent(8890,"80.70.108.165");// TODO: 10.11.2022
-
        // TODO: 18.03.2023 debug сервер
       // getJbossPort.putIfAbsent( 8080,"192.168.3.4");//
-
-
-
        editor.putString("enablesll","https");
-
-
-
-
-
-
-
-
-       editor.apply();
+       editor.commit();
 
        Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                 " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
                 " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() );
-
-       editor.apply();
-
     } catch (Exception e) {
         e.printStackTrace();
         Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +

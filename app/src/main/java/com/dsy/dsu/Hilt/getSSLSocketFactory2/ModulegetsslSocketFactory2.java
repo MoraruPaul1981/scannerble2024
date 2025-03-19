@@ -32,8 +32,6 @@ public class ModulegetsslSocketFactory2 {
     public SSLSocketFactory getsslSocketFactory2(@ApplicationContext Context context) {
         SSLSocketFactory sslSocketFactory2=null;
        try{
-         //sslSocketFactory2 = new GetssFactoryTLS().getSocketFactorySSL(context);
-
          sslSocketFactory2 = new TLSSocketFactoryTLS().TLSSocketFactoryTLS(context);
 
            Log.i(this.getClass().getName(), " Атоманически установкаОбновление ПО " +

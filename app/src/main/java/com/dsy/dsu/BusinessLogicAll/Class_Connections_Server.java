@@ -47,10 +47,9 @@ public class Class_Connections_Server  extends  Class_GRUD_SQL_Operations {
                                                   @NonNull LinkedHashMap<Integer, String> getHiltPortJboss) {
          Boolean результатПрозвонаСокетом = false;
         try {
-            // TODO: 02.04.2024  цикл пинг  
-            for (Map.Entry<Integer,String> entry : getHiltPortJboss.entrySet()) {
-                Integer   ИмяПорта =    entry.getKey();
-                String     ИмяСервера=     entry.getValue();
+            // TODO: 02.04.2024  цикл пинг
+                Integer   ИмяПорта =    getHiltPortJboss.entrySet().stream().mapToInt(m->m.getKey()).findAny().getAsInt();
+                String     ИмяСервера=       getHiltPortJboss.entrySet().stream().map(m->m.getValue()).findAny().get();
                 Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                         " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
                         " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"+
@@ -99,11 +98,6 @@ public class Class_Connections_Server  extends  Class_GRUD_SQL_Operations {
                             " метод в процессе... " + Thread.currentThread().getStackTrace()[2].getMethodName() +
                             " ИмяСервера" + ИмяСервера+ "ИмяПорта " +ИмяПорта);
 
-
-
-
-                    // TODO: 15.12.2023 ВЫХОД ИЗ ЦИКЛА ВЫХОД ИЗ ЦИКЛА
-                    break;
                 }else{
                     результатПрозвонаСокетом = false;
                     Log.e(Class_MODEL_synchronized.class.getName(), " ОШИБКА НЕТ СВЯЗИ С СЕВРЕРОМ  результатПрозвонаСокетом[0] " + результатПрозвонаСокетом);
@@ -115,7 +109,7 @@ public class Class_Connections_Server  extends  Class_GRUD_SQL_Operations {
                         " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
                         " line " + Thread.currentThread().getStackTrace()[2].getLineNumber()
                         + " БуферПолучениеДанныхРЕальныйСтатусРАботыSQLServer[0] " +БуферПолучениеДанныхРЕальныйСтатусРАботыSQLServer );
-            }
+
         } catch (Exception e) {
             e.printStackTrace();
             Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" +

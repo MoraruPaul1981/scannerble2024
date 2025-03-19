@@ -37,7 +37,7 @@ public class HiltJboss {
     public  LinkedHashMap<Integer,String> getHiltPortJboss(@ApplicationContext Context context) {
         LinkedHashMap<Integer,String> getJbossPort= new LinkedHashMap();
         try {
-            HiltJbossBinessLogicIntarface hiltJbossBinessLogicIntarface;
+            HiltJbossBinessLogicIntarface hiltJbossBinessLogicIntarface = null;
             preferencesJboss = context.getSharedPreferences("sharedPreferencesХранилище", Context.MODE_MULTI_PROCESS);
          String   getMode_ssl=new SLLBenessLogicMode(context).getModeSLL();
 
@@ -45,9 +45,14 @@ public class HiltJboss {
             if(getMode_ssl.equalsIgnoreCase("https")){
                 // TODO: 06.10.2024 SSL enable
                 hiltJbossBinessLogicIntarface=new HiltJbossBinessLogicSSl();
-            }else {
+            }
+
+            if(getMode_ssl.equalsIgnoreCase("http")){
+                // TODO: 06.10.2024 SSL enable
                 hiltJbossBinessLogicIntarface=new HiltJbossBinessLogic();
-         }
+            }
+
+            
 
             // TODO: 06.10.2024 ответ  сам адрес с чем подкбчаться
             getJbossPort=   hiltJbossBinessLogicIntarface.selectenableforSslrequests(preferencesJboss,context);

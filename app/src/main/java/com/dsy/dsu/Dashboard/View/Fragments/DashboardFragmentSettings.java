@@ -6,7 +6,6 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.ServiceConnection;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.IBinder;
@@ -19,7 +18,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -31,19 +29,17 @@ import androidx.appcompat.widget.AppCompatImageButton;
 import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentResultListener;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.LifecycleOwner;
 import androidx.multidex.BuildConfig;
 
 import com.dsy.dsu.BootAndAsync.BlBootAsync.Hilts.ServiceBootBinessLogic;
 
-import com.dsy.dsu.BootAndAsync.Componets.BL_innerMainActivityBootAndAsync;
+import com.dsy.dsu.BootAndAsync.Componets.GetComponentActivityBootService;
 import com.dsy.dsu.BootAndAsync.EventsBus.MessageEvensBusUpdatePO;
 import com.dsy.dsu.BusinessLogicAll.Class_Clears_Tables;
 import com.dsy.dsu.BusinessLogicAll.Class_Connections_Server;
 import com.dsy.dsu.BusinessLogicAll.GetConnectivityManagerAndroid;
-import com.dsy.dsu.BusinessLogicAll.SharedPreferences.GetSharedPreferences;
 import com.dsy.dsu.Errors.controller.RecordNewErros;
 
 import com.dsy.dsu.BusinessLogicAll.Class_MODEL_synchronized;
@@ -77,7 +73,6 @@ import io.reactivex.rxjava3.core.CompletableObserver;
 import io.reactivex.rxjava3.disposables.Disposable;
 import io.reactivex.rxjava3.functions.Function;
 import io.reactivex.rxjava3.functions.Predicate;
-import io.reactivex.rxjava3.subjects.PublishSubject;
 import io.reactivex.rxjava3.subjects.Subject;
 import kotlin.Unit;
 
@@ -126,7 +121,7 @@ public class DashboardFragmentSettings extends  DialogFragment {
     public LinkedHashMap<Integer,String> getHiltPortJboss;
 
 
-    protected BL_innerMainActivityBootAndAsync blInnerMainActivityBootAndAsync;
+    protected GetComponentActivityBootService blInnerMainActivityBootAndAsync;
 
 
     public DashboardFragmentSettings() {
@@ -162,7 +157,7 @@ public class DashboardFragmentSettings extends  DialogFragment {
             //registeEventBusFirst();
 
 // TODO: 27.12.2024 Инициализирукм Конструктор Класса для запуска Обновление ПО
-            blInnerMainActivityBootAndAsync=new BL_innerMainActivityBootAndAsync(getsslSocketFactory2,
+            blInnerMainActivityBootAndAsync=new GetComponentActivityBootService(getsslSocketFactory2,
                    getActivity(),getContext() ,lifecycleOwner, getHiltPortJboss);
 
             //  setStyle(DialogFragment.STYLE_NORMAL,android.R.style.Theme_Material_Dialog_Alert);//Theme_Dialog

@@ -31,12 +31,11 @@ import okhttp3.OkHttpClient;
 
 public class GetOkhhtpBuilder implements  InGetOkhhtpBuilder {
     private Context context;
-    private SSLSocketFactory getsslSocketFactory2;
 
-    public GetOkhhtpBuilder(@NotNull Context context, @NotNull SSLSocketFactory getsslSocketFactory2) {
+
+    public GetOkhhtpBuilder(@NotNull Context context) {
         this.context = context;
-        this.getsslSocketFactory2 = getsslSocketFactory2;
-    }
+     }
 
     @Override
     public OkHttpClient.Builder getOkhhtpBuilder() {

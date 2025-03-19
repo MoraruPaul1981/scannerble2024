@@ -42,7 +42,7 @@ final public class GetAsyncOkHttpClientBuilder {
 
                 case "http":
                     // TODO: 05.03.2025
-                    inGetOkhhtpBuilder=new GetOkhhtpBuilder(context,getsslSocketFactory2);
+                    inGetOkhhtpBuilder=new GetOkhhtpBuilder(context);
                     // TODO: 20.03.2025
                     Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                             " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +

@@ -10,7 +10,7 @@ import androidx.annotation.MainThread;
 import androidx.annotation.NonNull;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
-import com.dsy.dsu.BootAndAsync.Componets.BL_innerMainActivityBootAndAsync;
+import com.dsy.dsu.BootAndAsync.Componets.GetComponentActivityBootService;
 import com.dsy.dsu.Errors.controller.RecordNewErros;
 
 import java.util.Date;
@@ -19,7 +19,7 @@ import java.util.Date;
 public class PrograssBarManagerBloadcastReciever {
 
     @MainThread
-    public void  eventbroadcastManagerPrograssBar(@NonNull Context context,@NonNull BL_innerMainActivityBootAndAsync blInnerMainActivityBootAndAsync){
+    public void  eventbroadcastManagerPrograssBar(@NonNull Context context,@NonNull GetComponentActivityBootService blInnerMainActivityBootAndAsync){
         try{
             LocalBroadcastManager.getInstance(context).registerReceiver(new BroadcastReceiver() {
                 @Override

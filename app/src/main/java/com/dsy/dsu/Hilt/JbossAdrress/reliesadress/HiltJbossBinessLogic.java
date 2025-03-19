@@ -30,21 +30,11 @@ public class HiltJbossBinessLogic implements HiltJbossBinessLogicIntarface {
 
             // TODO: 18.03.2023 debug сервер
         ///   getJbossPort.putIfAbsent( 8080,"192.168.3.4");//
-
-
-
             editor.putString("enablesll","http");
-
-
-
-            editor.apply();
-
-
+            editor.commit();
             Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                     " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
                     " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() );
-
-            editor.apply();
         } catch (Exception e) {
             e.printStackTrace();
             Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
