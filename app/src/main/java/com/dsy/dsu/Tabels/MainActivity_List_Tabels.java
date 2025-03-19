@@ -25,6 +25,7 @@ import android.os.Message;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
+import android.view.ViewTreeObserver;
 import android.view.WindowManager;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
@@ -818,8 +819,8 @@ public class MainActivity_List_Tabels extends AppCompatActivity  {
 
             };
             simpleCursorAdapterAllTAbels.setViewBinder(binding);
-            simpleCursorAdapterAllTAbels.notifyDataSetChanged();
             gridViewAllTabes.setAdapter(simpleCursorAdapterAllTAbels);
+            simpleCursorAdapterAllTAbels.notifyDataSetChanged();
             gridViewAllTabes.refreshDrawableState();
             gridViewAllTabes.requestLayout();
             // TODO: 19.04.2023 слушаелти
@@ -955,37 +956,26 @@ public class MainActivity_List_Tabels extends AppCompatActivity  {
         try {
             ArrayList<HashMap<String, Object>> ЛистНетданных= new ArrayList<HashMap<String, Object>> ();
             HashMap<String, Object> map = new HashMap<>();
-            map.put("alldonttbels", "Нет табелей !!!");
             map.put("allimage", " dont");
             ЛистНетданных.add(map);
             SimpleAdapter АдаптерКогдаНетданных = new SimpleAdapter(getApplicationContext(),
                     ЛистНетданных,
                     R.layout.list_item_all_customer_tabel4dont,
-                    new String[]{"alldonttbels","allimage"},
-                    new int[]{android.R.id.text2,android.R.id.text1});
+                    new String[]{ "allimage"},
+                    new int[]{android.R.id.text1});
 
             SimpleAdapter.ViewBinder БиндингКогдаНетДАнных = new SimpleAdapter.ViewBinder() {
                 @Override
                 public boolean setViewValue(View view, Object data, String textRepresentation) {
                         try{
                             switch (view.getId()) {
-                                case android.R.id.text2:
+                                case android.R.id.text1:
                                     // TODO: 09.04.2023  ВставлЯем Данные
                                     ((MaterialTextView) view).setText(data.toString());
                                     ((MaterialTextView) view).setTextColor(Color.GRAY);
                                     ((MaterialTextView) view).setTextSize(18l);
-                                    ((MaterialTextView) view).setMinimumHeight(1550);
-                                    Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
-                                            " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" + " MainParentUUID "+ MainParentUUIDFromTabel);
-                                    return  true;
-                                case android.R.id.text1:
-                                    Drawable icon2 = getResources().getDrawable(   R.drawable.icon_alltabels5red);
-                                    ((ImageView) view).setImageDrawable(icon2);
-                                    ((ImageView) view).setImageResource(R.drawable.icon_alltabels5red);
-                                    ((ImageView) view).setMinimumHeight(1550);
-                                    Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
-                                            " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                                            " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"+ " MainParentUUID "+ MainParentUUIDFromTabel);
+                                    Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                                            " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" + " MainParentUUID " + MainParentUUIDFromTabel);
                                     return true;
                             }
                             Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
@@ -1001,8 +991,8 @@ public class MainActivity_List_Tabels extends AppCompatActivity  {
                     }
                 };
                 АдаптерКогдаНетданных.setViewBinder(БиндингКогдаНетДАнных);
-              АдаптерКогдаНетданных.notifyDataSetChanged();
                 gridViewAllTabes.setAdapter(АдаптерКогдаНетданных);
+                АдаптерКогдаНетданных.notifyDataSetChanged();
                 gridViewAllTabes.refreshDrawableState();
                 gridViewAllTabes.requestLayout();
                 // TODO: 19.04.2023 слушаелти
