@@ -68,8 +68,7 @@ public class GetComponentActivityBootService {
     public GetComponentActivityBootService(@NonNull SSLSocketFactory getsslSocketFactory2,
                                            @NonNull Activity activity,
                                            @NonNull Context context,
-                                           @NonNull LifecycleOwner lifecycleOwner,
-                                           @NonNull LinkedHashMap<Integer,String> getHiltPortJboss) {
+                                           @NonNull LifecycleOwner lifecycleOwner) {
 
         this.getsslSocketFactory2 = getsslSocketFactory2;
         this.activity = activity;
@@ -94,7 +93,6 @@ public class GetComponentActivityBootService {
                                            @NonNull  NavigationView navigationViewAsyncApp,
                                            @NonNull Context context,
                                            @NonNull LifecycleOwner lifecycleOwner,
-                                           @NonNull LinkedHashMap<Integer,String> getHiltPortJboss ,
                                            @NonNull ImageView imageView_faceapp_settings) {
 
         this.lifecycleOwner = lifecycleOwner;
@@ -111,7 +109,7 @@ public class GetComponentActivityBootService {
     }
 
 
-    public void getEventBusUpdatePo(@NonNull MessageEvensBusUpdatePO messageEvensBusUpdatePO,@NonNull  LinkedHashMap<Integer,String> getHiltPortJboss){
+    public void getEventBusUpdatePo(@NonNull MessageEvensBusUpdatePO messageEvensBusUpdatePO , LinkedHashMap<Integer,String> getHiltPortJboss){
 
         try{
             Bundle bundleGetOtServiceUpdatePO =(Bundle)         messageEvensBusUpdatePO.mess.getExtras();

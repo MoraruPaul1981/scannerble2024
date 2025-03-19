@@ -11,6 +11,7 @@ import com.dsy.dsu.BusinessLogicAll.DeviceName.ModulegetDeviceName;
 import com.dsy.dsu.BusinessLogicAll.DeviceName.hilt.QualifiergetDeviceName;
 import com.dsy.dsu.BusinessLogicAll.DeviceName.hilt.QualifiergetDeviceVersionBack;
 import com.dsy.dsu.Errors.controller.RecordNewErros;
+import com.dsy.dsu.Hilt.JbossAdrress.getHiltPortJbossInterface;
 import com.dsy.dsu.Hilt.JbossAdrress.qualifiers.QualifierJbossServer3;
 import com.sous.backasync.businesslogic.errors.RecordNewErroBack;
 import com.sous.backasync.devicename.ModulegetDeviceNameBack;
@@ -25,6 +26,7 @@ import java.util.concurrent.CopyOnWriteArrayList;
 
 import javax.inject.Inject;
 
+import dagger.hilt.EntryPoints;
 import dagger.hilt.android.HiltAndroidApp;
 
 
@@ -138,6 +140,10 @@ public class CoreApp extends Application {
 
 
     // Integer getde= moduleDeleting.getModuleDelete("errordsu1"," SELECT  *   FROM errordsu1 AS er  WHERE er.ERROR IS  NOT NULL  ORDER BY er.id DESC  " ,null);
+
+          LinkedHashMap<Integer,String> getHiltPortJboss=   EntryPoints.get(getApplicationContext(), getHiltPortJbossInterface.class).getHiltPortJboss();
+
+
         Log.d(this.getClass().getName(),"\n" + " class CoreApp    " + Thread.currentThread().getStackTrace()[2].getClassName()
                 + "\n" +
                 " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +

@@ -30,8 +30,6 @@ import dagger.hilt.components.SingletonComponent;
 @SuppressLint("SuspiciousIndentation")
 public class HiltJboss {
 
-    private SharedPreferences preferencesJboss;
-
     @Provides
     @Singleton
     @QualifierJbossServer3
@@ -39,24 +37,25 @@ public class HiltJboss {
         LinkedHashMap<Integer,String> getJbossPort= new LinkedHashMap();
         try {
             HiltJbossBinessLogicIntarface hiltJbossBinessLogicIntarface = null;
-            preferencesJboss = context.getSharedPreferences("sharedPreferencesХранилище", Context.MODE_MULTI_PROCESS);
+            SharedPreferences     preferencesJboss = context.getSharedPreferences("sharedPreferencesХранилище", Context.MODE_MULTI_PROCESS);
          String   getMode_ssl=new SLLBenessLogicMode(context).getModeSLL();
 
             // TODO: 18.03.2024 РЕЛИЗ  сервер  ЫВбор какой сервер будет работа  с SSL  или без него
             if(getMode_ssl.equalsIgnoreCase("https")){
                 // TODO: 06.10.2024 SSL enable
                 hiltJbossBinessLogicIntarface=new HiltJbossBinessLogicSSl();
+
+                // TODO: 06.10.2024 ответ  сам адрес с чем подкбчаться
+                getJbossPort=   hiltJbossBinessLogicIntarface.selectenableforSslrequests(preferencesJboss,context);
             }
 
             if(getMode_ssl.equalsIgnoreCase("http")){
                 // TODO: 06.10.2024 SSL enable
                 hiltJbossBinessLogicIntarface=new HiltJbossBinessLogic();
+
+                // TODO: 06.10.2024 ответ  сам адрес с чем подкбчаться
+                getJbossPort=   hiltJbossBinessLogicIntarface.selectenableforSslrequests(preferencesJboss,context);
             }
-
-            
-
-            // TODO: 06.10.2024 ответ  сам адрес с чем подкбчаться
-            getJbossPort=   hiltJbossBinessLogicIntarface.selectenableforSslrequests(preferencesJboss,context);
 
             Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                     " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +

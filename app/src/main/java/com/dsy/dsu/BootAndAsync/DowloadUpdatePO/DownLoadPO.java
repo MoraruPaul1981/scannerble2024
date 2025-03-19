@@ -58,7 +58,7 @@ private  Activity activity;
     public DownLoadPO(@NonNull Activity activity,@NonNull  Context context,
                       @NonNull Integer СервернаяВерсияПОВнутри,
                       @NonNull SSLSocketFactory getsslSocketFactory2,
-                      @NonNull  LinkedHashMap<Integer,String> getHiltPortJboss ) {
+                      @NonNull LinkedHashMap<Integer,String> getHiltPortJboss) {
         this.activity = activity;
         this.context = context;
         this.СервернаяВерсияПОВнутри = СервернаяВерсияПОВнутри;

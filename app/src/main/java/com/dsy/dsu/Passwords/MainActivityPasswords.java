@@ -191,7 +191,7 @@ public class MainActivityPasswords extends AppCompatActivity {
             // TODO: 14.08.2023 создаем папку для BinaryFile CommitPay1C Соласования
             new ClassCreateFolderCommitPays1C(getApplicationContext()).МетодCreateFoldersBinaty();
 
-            eventBuss=new EventBuss(activity,getApplicationContext(),getHiltPortJboss,  getsslSocketFactory2);
+            eventBuss=new EventBuss(activity,getApplicationContext(),  getsslSocketFactory2);
 
 
             Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
@@ -299,7 +299,7 @@ public class MainActivityPasswords extends AppCompatActivity {
         Integer PublicID;
         //TODO запукаем метод Афторизаиция по ЛОГИНУ И ПАРОЛЮ
         PublicID = new Class_MODEL_synchronized(getApplicationContext()).
-                методАвторизацииЛогинИПаполь(getApplicationContext(), preferences, ПубличноеЛогин, ПубличноеПароль,getsslSocketFactory2, getHiltPortJboss);
+                методАвторизацииЛогинИПаполь(getApplicationContext(), preferences, ПубличноеЛогин, ПубличноеПароль,getsslSocketFactory2);
         Log.d(this.getClass().getName(), " PublicID " + PublicID);
 
         // TODO: 24.08.2023 УСПЕШНЫЙ КОД ЛОГИРОВАНИЕ И ПАРОЛЬ
@@ -686,7 +686,7 @@ public class MainActivityPasswords extends AppCompatActivity {
                 if (ВыбранныйРежимСети == true) {
                     // TODO: 16.12.2021 НЕПОСРЕДСТВЕННЫЙ ПИНГ СИСТЕНМ ИНТРЕНАТ НА НАЛИЧЕНИ СВАЗИ С БАЗОЙ SQL SERVER
                     Boolean   СтатусРаботыСервера =
-                            new Class_Connections_Server(getApplicationContext()). pingServerJbossSuccessfulOrNot(getApplicationContext(),getsslSocketFactory2,getHiltPortJboss);
+                            new Class_Connections_Server(getApplicationContext()). pingServerJbossSuccessfulOrNot(getApplicationContext(),getsslSocketFactory2 );
 
                     // TODO: 07.10.2023 пинг сервера
                     if (СтатусРаботыСервера == true) {

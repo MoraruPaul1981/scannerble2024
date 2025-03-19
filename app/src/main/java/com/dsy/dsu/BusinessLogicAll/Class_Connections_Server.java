@@ -8,6 +8,7 @@ import androidx.annotation.NonNull;
 import androidx.loader.content.AsyncTaskLoader;
 
 import com.dsy.dsu.Errors.controller.RecordNewErros;
+import com.dsy.dsu.Hilt.JbossAdrress.getHiltPortJbossInterface;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -16,6 +17,8 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 
 import javax.net.ssl.SSLSocketFactory;
+
+import dagger.hilt.EntryPoints;
 
 
 public class Class_Connections_Server  extends  Class_GRUD_SQL_Operations {
@@ -43,10 +46,10 @@ public class Class_Connections_Server  extends  Class_GRUD_SQL_Operations {
 
     ///////// TODO ПРОВЕРЯЕТ ЕСЛИ ПОДКЛЧБЕНИ В ИНТРЕНТУ
     public Boolean pingServerJbossSuccessfulOrNot(@NotNull Context КонтекстКоторыйДляСинхронизации,
-                                                  @NotNull SSLSocketFactory getsslSocketFactory2,
-                                                  @NonNull LinkedHashMap<Integer, String> getHiltPortJboss) {
+                                                  @NotNull SSLSocketFactory getsslSocketFactory2) {
          Boolean результатПрозвонаСокетом = false;
         try {
+            LinkedHashMap<Integer,String> getHiltPortJboss=   EntryPoints.get(context, getHiltPortJbossInterface.class).getHiltPortJboss();
             // TODO: 02.04.2024  цикл пинг
                 Integer   ИмяПорта =    getHiltPortJboss.entrySet().stream().mapToInt(m->m.getKey()).findAny().getAsInt();
                 String     ИмяСервера=       getHiltPortJboss.entrySet().stream().map(m->m.getValue()).findAny().get();

@@ -60,7 +60,9 @@ public class Service_For_Remote_Async_Binary extends IntentService {
 
 
 
-
+    @Inject
+    @QualifierJbossServer3
+    public LinkedHashMap<Integer,String> getHiltPortJboss;
 
     private SharedPreferences preferencesJboss;
 
@@ -249,7 +251,6 @@ try{
             // TODO: 25.03.2023 ДОПОЛНИТЕОТНЕ УДЛАНИЕ СТАТУСА УДАЛЕНИЕ ПОСЛЕ СИНХРОНИАЗЦИИ
             ФинальныйРезультатAsyncBackgroud  = new AsynsProccessor(context,getHiltJaksonObjectMapper,
                     getsslSocketFactory2,
-                    getHiltPortJboss,
                     getHiltPublicId)
                     .МетодНачалоСихронизациивФоне(context  );
 

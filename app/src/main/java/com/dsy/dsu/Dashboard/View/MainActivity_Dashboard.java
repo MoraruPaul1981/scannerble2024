@@ -103,7 +103,7 @@ public class MainActivity_Dashboard extends AppCompatActivity {
             new ClassPermissions(this,ALL_PERSSION_CODE);
             // TODO: 15.08.2023 Начинается Пользовательский КОд
             buniccessLogicaActivityDashboard=new BuniccessLogicaActivityDashboard();
-            eventBuss=new EventBuss(activity,getApplicationContext() ,getHiltPortJboss,   getsslSocketFactory2);
+            eventBuss=new EventBuss(activity,getApplicationContext()  ,  getsslSocketFactory2);
             buniccessLogicaActivityDashboard.     МетодИнициализацияHandler();
             // TODO: 29.09.2023 Статус Повтороной Синхрониазции
             buniccessLogicaActivityDashboard.  методЗаписываемПовторныйЭтапСинхрогниазции( );

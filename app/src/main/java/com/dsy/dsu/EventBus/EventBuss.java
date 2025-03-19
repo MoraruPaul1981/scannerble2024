@@ -15,6 +15,7 @@ import com.dsy.dsu.BootAndAsync.DowloadUpdatePO.DownLoadPO;
 import com.dsy.dsu.BootAndAsync.EventsBus.MessageEvensBusAyns;
 import com.dsy.dsu.BootAndAsync.EventsBus.MessageEvensBusUpdatePO;
 import com.dsy.dsu.Errors.controller.RecordNewErros;
+import com.dsy.dsu.Hilt.JbossAdrress.getHiltPortJbossInterface;
 import com.dsy.dsu.Hilt.JbossAdrress.qualifiers.QualifierJbossServer3;
 import com.dsy.dsu.Passwords.MainActivityPasswords;
 
@@ -22,6 +23,8 @@ import java.util.LinkedHashMap;
 
 import javax.inject.Inject;
 import javax.net.ssl.SSLSocketFactory;
+
+import dagger.hilt.EntryPoints;
 
 public class EventBuss   {
 
@@ -35,11 +38,11 @@ Activity  activity;
       LinkedHashMap<Integer,String> getHiltPortJboss;
 
 
-    public   EventBuss(@NonNull Activity activity, @NonNull Context context,@NonNull LinkedHashMap<Integer,String> getHiltPortJboss,@NonNull SSLSocketFactory getsslSocketFactory2) {
+    public   EventBuss(@NonNull Activity activity, @NonNull Context context, @NonNull SSLSocketFactory getsslSocketFactory2) {
         this.activity = activity;
         this.context = context;
-        this.getHiltPortJboss = getHiltPortJboss;
         this.getsslSocketFactory2 = getsslSocketFactory2;
+        getHiltPortJboss=   EntryPoints.get(context, getHiltPortJbossInterface.class).getHiltPortJboss();
     }
 
 

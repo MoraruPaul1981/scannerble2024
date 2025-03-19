@@ -22,6 +22,7 @@ import com.dsy.dsu.BusinessLogicAll.DATE.Class_Generation_Data;
 import com.dsy.dsu.BusinessLogicAll.DeviceName.ModulegetDeviceName;
 import com.dsy.dsu.CnangeServers.PUBLIC_CONTENT;
 import com.dsy.dsu.Errors.controller.RecordNewErros;
+import com.dsy.dsu.Hilt.JbossAdrress.getHiltPortJbossInterface;
 import com.dsy.dsu.Hilt.OkhhtpBuilder.GetAsyncOkHttpClientBuilder;
 import com.dsy.dsu.Hilt.OkhhtpBuilder.GetOkhhtpBuilderSSL;
 import com.dsy.dsu.Hilt.OkhhtpBuilder.InGetOkhhtpBuilder;
@@ -62,6 +63,7 @@ import java.util.zip.GZIPOutputStream;
 import javax.crypto.NoSuchPaddingException;
 import javax.net.ssl.SSLSocketFactory;
 
+import dagger.hilt.EntryPoints;
 import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.Dispatcher;
@@ -3608,13 +3610,15 @@ Class_GRUD_SQL_Operations classGrudSqlOperationsУдалениеДанныхЧе
                                                      @NonNull SharedPreferences preferences,
                                                      @NonNull String ПубличноеЛогин,
                                                      @NonNull String ПубличноеПароль,
-                                                @NotNull SSLSocketFactory getsslSocketFactory2,
-                                                @NonNull LinkedHashMap<Integer,String> getHiltPortJboss) {
+                                                @NotNull SSLSocketFactory getsslSocketFactory2) {
 
 
         final Integer[] БуферПубличныйIDОтСервера = {0};
         try {
             String enableSSl = preferencesJboss.getString("enablesll","http");
+
+            LinkedHashMap<Integer,String> getHiltPortJboss=   EntryPoints.get(context, getHiltPortJbossInterface.class).getHiltPortJboss();
+
             // TODO: 02.04.2024  Адресс и Порт Сервера Jboss
             String   ИмяСерверИзХранилица = getHiltPortJboss.values().stream().map(m->String.valueOf(m)).findFirst().get();
             Integer    ПортСерверИзХранилица = getHiltPortJboss.keySet().stream().mapToInt(m->m).findFirst().getAsInt();

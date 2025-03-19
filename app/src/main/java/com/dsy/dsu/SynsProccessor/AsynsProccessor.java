@@ -13,6 +13,7 @@ import com.dsy.dsu.BusinessLogicAll.Class_Generations_PUBLIC_CURRENT_ID;
 import com.dsy.dsu.BusinessLogicAll.Class_MODEL_synchronized;
 import com.dsy.dsu.CnangeServers.PUBLIC_CONTENT;
 import com.dsy.dsu.Errors.controller.RecordNewErros;
+import com.dsy.dsu.Hilt.JbossAdrress.getHiltPortJbossInterface;
 import com.dsy.dsu.Hilt.JbossAdrress.qualifiers.QualifierJbossServer3;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -29,6 +30,8 @@ import java.util.concurrent.atomic.AtomicReference;
 
 import javax.inject.Inject;
 import javax.net.ssl.SSLSocketFactory;
+
+import dagger.hilt.EntryPoints;
 
 public class AsynsProccessor extends Class_MODEL_synchronized {
     // TODO: 28.07.2022  переменые
@@ -55,14 +58,12 @@ public class AsynsProccessor extends Class_MODEL_synchronized {
     // TODO: 28.07.2022
     public AsynsProccessor(@NotNull Context context,@NonNull  ObjectMapper jsonGenerator,
                            @NotNull  SSLSocketFactory getsslSocketFactory2,
-                           @NonNull LinkedHashMap<Integer,String> getHiltPortJboss,
                            @NonNull   Integer getHiltPublicId) {
         super(context);
         this.context=context;
         this.   sqLiteDatabase=    GetSQLiteDatabase.SqliteDatabase();
         this.jsonGenerator=    jsonGenerator;
         this.getsslSocketFactory2=    getsslSocketFactory2;
-        this.getHiltPortJboss=    getHiltPortJboss;
         this.getHiltPublicId=    getHiltPublicId;
         // TODO: 12.04.2024  
         Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
@@ -207,7 +208,7 @@ public class AsynsProccessor extends Class_MODEL_synchronized {
 
             preferences=  context .getSharedPreferences("sharedPreferencesХранилище", Context.MODE_MULTI_PROCESS);
 
-
+            LinkedHashMap<Integer,String> getHiltPortJboss=   EntryPoints.get(context, getHiltPortJbossInterface.class).getHiltPortJboss();
 // TODO: 02.04.2024  Адресс и Порт Сервера Jboss 
             String   ИмяСерверИзХранилица = getHiltPortJboss.values().stream().map(m->String.valueOf(m)).findFirst().get();
             Integer    ПортСерверИзХранилица = getHiltPortJboss.keySet().stream().mapToInt(m->m).findFirst().getAsInt();
@@ -430,7 +431,6 @@ public class AsynsProccessor extends Class_MODEL_synchronized {
             ResultatSync.set(       new ProccesorparallelSynch( context,
                     jsonGenerator,
                     getsslSocketFactory2,
-                     getHiltPortJboss,
                     getBufferFromJbossServerAllTables,
                     PublicID)
                     .startingAsyncParallels());

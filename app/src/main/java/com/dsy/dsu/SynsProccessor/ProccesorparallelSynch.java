@@ -17,6 +17,7 @@ import com.dsy.dsu.BusinessLogicAll.Jakson.GeneratorJSONSerializer;
 import com.dsy.dsu.BusinessLogicAll.VersionCurentTable;
 import com.dsy.dsu.CnangeServers.PUBLIC_CONTENT;
 import com.dsy.dsu.Errors.controller.RecordNewErros;
+import com.dsy.dsu.Hilt.JbossAdrress.getHiltPortJbossInterface;
 import com.dsy.dsu.SynsProccessor.PrograsBarAsync.GetPrograssbarChangeIndicator;
 import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.databind.DatabindException;
@@ -48,6 +49,7 @@ import java.util.concurrent.TimeUnit;
 
 import javax.net.ssl.SSLSocketFactory;
 
+import dagger.hilt.EntryPoints;
 import io.reactivex.rxjava3.core.Flowable;
 import io.reactivex.rxjava3.core.Maybe;
 import io.reactivex.rxjava3.core.Observable;
@@ -79,7 +81,6 @@ public class ProccesorparallelSynch   {
     public ProccesorparallelSynch(@NonNull Context context,
                                   @NonNull ObjectMapper jsonGenerator,
                                   @NonNull SSLSocketFactory getsslSocketFactory2,
-                                  @NonNull LinkedHashMap<Integer,String> getHiltPortJboss,
                                   @NonNull    CopyOnWriteArrayList<Map<String, String>> getBufferFromJbossServerAllTables,
                                   @NonNull Integer PublicID) {
 
@@ -88,10 +89,9 @@ public class ProccesorparallelSynch   {
         this. context=context;
         this.   jsonGenerator=jsonGenerator;
         this.   getsslSocketFactory2=getsslSocketFactory2;
-        this.    getHiltPortJboss=getHiltPortJboss;
         this.  PublicID=PublicID;
         this.  getBufferFromJbossServerAllTables=getBufferFromJbossServerAllTables;
-
+        this.  getHiltPortJboss=   EntryPoints.get(context, getHiltPortJbossInterface.class).getHiltPortJboss();
     }
 
     public Long startingAsyncParallels() {

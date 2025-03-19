@@ -953,7 +953,7 @@ public class CompleteRemoteSyncService {
         try {
             // TODO: 16.12.2021 НЕПОСРЕДСТВЕННЫЙ ПИНГ СИСТЕНМ ИНТРЕНАТ НА НАЛИЧЕНИ СВАЗИ С БАЗОЙ SQL SERVER
             СтатусРаботыСервера =
-                    new Class_Connections_Server(context). pingServerJbossSuccessfulOrNot(context,getsslSocketFactory2,getHiltPortJboss);
+                    new Class_Connections_Server(context). pingServerJbossSuccessfulOrNot(context,getsslSocketFactory2);
 
    Log.d(this.getClass().getName(), "\n"
                     + " время: " + new Date() + "\n+" +

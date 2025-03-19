@@ -45,6 +45,7 @@ import com.dsy.dsu.Errors.controller.RecordNewErros;
 import com.dsy.dsu.BusinessLogicAll.Class_MODEL_synchronized;
 import com.dsy.dsu.CnangeServers.PUBLIC_CONTENT;
 
+import com.dsy.dsu.Hilt.JbossAdrress.getHiltPortJbossInterface;
 import com.dsy.dsu.Hilt.JbossAdrress.qualifiers.QualifierJbossServer3;
 import com.dsy.dsu.Hilt.getSSLSocketFactory2.QualifiergetsslSocketFactory2;
 import com.dsy.dsu.Tabels.MainActivity_New_Templates;
@@ -67,6 +68,7 @@ import java.util.concurrent.TimeUnit;
 import javax.inject.Inject;
 import javax.net.ssl.SSLSocketFactory;
 
+import dagger.hilt.EntryPoints;
 import dagger.hilt.android.AndroidEntryPoint;
 import io.reactivex.rxjava3.core.Completable;
 import io.reactivex.rxjava3.core.CompletableObserver;
@@ -117,6 +119,9 @@ public class DashboardFragmentSettings extends  DialogFragment {
 
 
 
+    @Inject
+    @QualifierJbossServer3
+    public LinkedHashMap<Integer,String> getHiltPortJboss;
 
 
     protected GetComponentActivityBootService blInnerMainActivityBootAndAsync;
@@ -155,8 +160,7 @@ public class DashboardFragmentSettings extends  DialogFragment {
             //registeEventBusFirst();
 
 // TODO: 27.12.2024 Инициализирукм Конструктор Класса для запуска Обновление ПО
-            blInnerMainActivityBootAndAsync=new GetComponentActivityBootService(getsslSocketFactory2,
-                   getActivity(),getContext() ,lifecycleOwner, getHiltPortJboss);
+            blInnerMainActivityBootAndAsync=new GetComponentActivityBootService(getsslSocketFactory2,getActivity(),getContext() ,lifecycleOwner);
 
             //  setStyle(DialogFragment.STYLE_NORMAL,android.R.style.Theme_Material_Dialog_Alert);//Theme_Dialog
        // setStyle(DialogFragment.STYLE_NORMAL,android.R.style.Theme_DeviceDefault_Light_NoActionBar_Fullscreen);//Theme_Dialog
@@ -384,8 +388,9 @@ public class DashboardFragmentSettings extends  DialogFragment {
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void EventMessageEvensBusUpdatePO(MessageEvensBusUpdatePO messageEvensBusUpdatePO){
         try{
+            LinkedHashMap<Integer,String> getHiltPortJboss=   EntryPoints.get(getContext(), getHiltPortJbossInterface.class).getHiltPortJboss();
 
-            blInnerMainActivityBootAndAsync   .getEventBusUpdatePo(messageEvensBusUpdatePO, getHiltPortJboss);
+            blInnerMainActivityBootAndAsync   .getEventBusUpdatePo(messageEvensBusUpdatePO,      getHiltPortJboss);
 
             Log.d(getContext().getClass().getName(), "\n"
                     + " время: " + new Date() + "\n+" +
@@ -696,7 +701,7 @@ public class DashboardFragmentSettings extends  DialogFragment {
                             if (ВыбранныйРежимСети == true) {
                                 // TODO: 16.12.2021 НЕПОСРЕДСТВЕННЫЙ ПИНГ СИСТЕНМ ИНТРЕНАТ НА НАЛИЧЕНИ СВАЗИ С БАЗОЙ SQL SERVER
                                 СтатусСервераСоюзаВключенИлиНЕт[0] =
-                                        new Class_Connections_Server(getContext()). pingServerJbossSuccessfulOrNot(getContext(),getsslSocketFactory2,getHiltPortJboss);
+                                        new Class_Connections_Server(getContext()). pingServerJbossSuccessfulOrNot(getContext(),getsslSocketFactory2 );
 
                                 Log.d(this.getClass().getName(), "\n"
                                         + " время: " + new Date() + "\n+" +
@@ -799,7 +804,7 @@ public class DashboardFragmentSettings extends  DialogFragment {
                             try {
                                 // TODO: 16.12.2021 НЕПОСРЕДСТВЕННЫЙ ПИНГ СИСТЕНМ ИНТРЕНАТ НА НАЛИЧЕНИ СВАЗИ С БАЗОЙ SQL SERVER
                              Boolean   СтатусРаботыСервера =
-                                        new Class_Connections_Server(getContext()). pingServerJbossSuccessfulOrNot(getContext(),getsslSocketFactory2,getHiltPortJboss);
+                                        new Class_Connections_Server(getContext()). pingServerJbossSuccessfulOrNot(getContext(),getsslSocketFactory2);
 
                                 if (СтатусРаботыСервера == true) {
                                     String ПолученыйТекущееИмяПользователя = new Class_MODEL_synchronized(getContext())

@@ -26,6 +26,7 @@ import com.dsy.dsu.BootAndAsync.EventsBus.MessageEvensBusPrograssBar;
 import com.dsy.dsu.BootAndAsync.EventsBus.MessageEvensBusUpdatePO;
 import com.dsy.dsu.BootAndAsync.ViewModelBoot.ViewModel.ViewModel;
 import com.dsy.dsu.Errors.controller.RecordNewErros;
+import com.dsy.dsu.Hilt.JbossAdrress.getHiltPortJbossInterface;
 import com.dsy.dsu.Hilt.JbossAdrress.qualifiers.QualifierJbossServer3;
 import com.dsy.dsu.Hilt.getSSLSocketFactory2.QualifiergetsslSocketFactory2;
 import com.dsy.dsu.R;
@@ -42,6 +43,7 @@ import java.util.LinkedHashMap;
 import javax.inject.Inject;
 import javax.net.ssl.SSLSocketFactory;
 
+import dagger.hilt.EntryPoints;
 import dagger.hilt.android.AndroidEntryPoint;
 
 @AndroidEntryPoint
@@ -111,7 +113,7 @@ public class MainActivityBootAndAsync extends AppCompatActivity {
 
             blInnerMainActivityBootAndAsync=new GetComponentActivityBootService(getsslSocketFactory2,
                     progressbarbootandasync, activity, drawerLayoutAsync,
-                    navigationViewAsyncApp,getApplicationContext(),  getlifecycleOwner, getHiltPortJboss,imageView_faceapp_settings);
+                    navigationViewAsyncApp,getApplicationContext(),  getlifecycleOwner,imageView_faceapp_settings);
 
 
             // TODO: 19.01.2024  запускаем бизнес логики автивити boot and async
@@ -340,6 +342,8 @@ public class MainActivityBootAndAsync extends AppCompatActivity {
     @Subscribe (threadMode = ThreadMode.MAIN)
     public void EventMessageEvensBusUpdatePO(MessageEvensBusUpdatePO messageEvensBusUpdatePO){
         try{
+
+            LinkedHashMap<Integer,String> getHiltPortJboss=   EntryPoints.get(getApplicationContext(), getHiltPortJbossInterface.class).getHiltPortJboss();
 
             blInnerMainActivityBootAndAsync   .getEventBusUpdatePo(messageEvensBusUpdatePO, getHiltPortJboss);
 
