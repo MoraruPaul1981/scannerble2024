@@ -19,6 +19,7 @@ import androidx.core.app.ServiceCompat;
 
 import com.dsy.dsu.BootAndAsync.BlBootAsync.CompleteRemoteSyncService;
 import com.dsy.dsu.Errors.controller.RecordNewErros;
+import com.dsy.dsu.Hilt.JbossAdrress.getHiltPortJbossInterface;
 import com.dsy.dsu.Hilt.JbossAdrress.qualifiers.QualifierJbossServer3;
 import com.dsy.dsu.Hilt.PublicId.QualifierPublicId;
 import com.dsy.dsu.Hilt.getSSLSocketFactory2.QualifiergetsslSocketFactory2;
@@ -31,6 +32,7 @@ import java.util.LinkedHashMap;
 import javax.inject.Inject;
 import javax.net.ssl.SSLSocketFactory;
 
+import dagger.hilt.EntryPoints;
 import dagger.hilt.android.AndroidEntryPoint;
 
 /**
@@ -68,9 +70,6 @@ public class IntentServiceBoot extends IntentService {
 
 
 
-    @Inject
-    @QualifierJbossServer3
-    public LinkedHashMap<Integer,String> getHiltPortJboss;
 
     Notification notification;
 
@@ -258,6 +257,8 @@ public class IntentServiceBoot extends IntentService {
 
 public     void startingServiceBoot(@NotNull Intent intent,@NonNull String getWhoLaunched){
         try{
+
+            LinkedHashMap<Integer,String> getHiltPortJboss=   EntryPoints.get(getApplicationContext(), getHiltPortJbossInterface.class).getHiltPortJboss();
             // TODO: 26.12.2024 выди запуска
             switch (intent.getAction().trim()){
 
@@ -327,7 +328,7 @@ public     void startingServiceBoot(@NotNull Intent intent,@NonNull String getWh
         Log.d(getApplicationContext().getClass().getName(), "\n"
                 + " время: " + new Date() + "\n+" +
                 " Класс в процессе... " + this.getClass().getName() + "\n" +
-                " метод в процессе... " + Thread.currentThread().getStackTrace()[2].getMethodName());
+                " метод в процессе... " + Thread.currentThread().getStackTrace()[2].getMethodName() + " getHiltPortJboss " +getHiltPortJboss);
     } catch (Exception e) {
         e.printStackTrace();
         Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +

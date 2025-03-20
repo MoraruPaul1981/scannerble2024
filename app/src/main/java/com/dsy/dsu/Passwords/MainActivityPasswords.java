@@ -686,7 +686,7 @@ public class MainActivityPasswords extends AppCompatActivity {
                 if (ВыбранныйРежимСети == true) {
                     // TODO: 16.12.2021 НЕПОСРЕДСТВЕННЫЙ ПИНГ СИСТЕНМ ИНТРЕНАТ НА НАЛИЧЕНИ СВАЗИ С БАЗОЙ SQL SERVER
                     Boolean   СтатусРаботыСервера =
-                            new Class_Connections_Server(getApplicationContext()). pingServerJbossSuccessfulOrNot(getApplicationContext(),getsslSocketFactory2 );
+                            new Class_Connections_Server(). pingServerJbossSuccessfulOrNot(getApplicationContext(),getsslSocketFactory2 );
 
                     // TODO: 07.10.2023 пинг сервера
                     if (СтатусРаботыСервера == true) {

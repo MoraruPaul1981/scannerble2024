@@ -691,7 +691,7 @@ public class DashboardFragmentSettings extends  DialogFragment {
                         if (ВыбранныйРежимСети == true) {
                             // TODO: 16.12.2021 НЕПОСРЕДСТВЕННЫЙ ПИНГ СИСТЕНМ ИНТРЕНАТ НА НАЛИЧЕНИ СВАЗИ С БАЗОЙ SQL SERVER
                             СтатусСервераСоюзаВключенИлиНЕт =
-                                    new Class_Connections_Server(getContext()). pingServerJbossSuccessfulOrNot(getContext(),getsslSocketFactory2 );
+                                    new Class_Connections_Server( ). pingServerJbossSuccessfulOrNot(getContext(),getsslSocketFactory2 );
 
                             Log.d(this.getClass().getName(), "\n"
                                     + " время: " + new Date() + "\n+" +
@@ -777,7 +777,7 @@ public class DashboardFragmentSettings extends  DialogFragment {
                             try {
                                 // TODO: 16.12.2021 НЕПОСРЕДСТВЕННЫЙ ПИНГ СИСТЕНМ ИНТРЕНАТ НА НАЛИЧЕНИ СВАЗИ С БАЗОЙ SQL SERVER
                              Boolean   СтатусРаботыСервера =
-                                        new Class_Connections_Server(getContext()). pingServerJbossSuccessfulOrNot(getContext(),getsslSocketFactory2);
+                                        new Class_Connections_Server(). pingServerJbossSuccessfulOrNot(getContext(),getsslSocketFactory2);
 
                                 if (СтатусРаботыСервера == true) {
                                     String ПолученыйТекущееИмяПользователя = new Class_MODEL_synchronized(getContext())

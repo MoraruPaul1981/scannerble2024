@@ -21,17 +21,13 @@ import javax.net.ssl.SSLSocketFactory;
 import dagger.hilt.EntryPoints;
 
 
-public class Class_Connections_Server  extends  Class_GRUD_SQL_Operations {
+public class Class_Connections_Server  {
     private Context context1;
     private  Class_GRUD_SQL_Operations class_grud_sql_operations=null;
     private SharedPreferences preferences;
     private AsyncTaskLoader<Boolean> asyncTaskLoader;
-    public Class_Connections_Server(Context context) {
-        super(context);
-        context1 =context;
+    public Class_Connections_Server( ) {
         class_grud_sql_operations=new Class_GRUD_SQL_Operations(context1);
-        //preferences = PreferenceManager.getDefaultSharedPreferences(context);
-        preferences =context.getSharedPreferences("sharedPreferencesХранилище", Context.MODE_MULTI_PROCESS);
     }
     ///////// TODO ПРОВЕРЯЕТ ЕСЛИ ПОДКЛЧБЕНИ В ИНТРЕНТУ
 
@@ -45,7 +41,7 @@ public class Class_Connections_Server  extends  Class_GRUD_SQL_Operations {
 
 
     ///////// TODO ПРОВЕРЯЕТ ЕСЛИ ПОДКЛЧБЕНИ В ИНТРЕНТУ
-    public Boolean pingServerJbossSuccessfulOrNot(@NotNull Context КонтекстКоторыйДляСинхронизации,
+    public Boolean pingServerJbossSuccessfulOrNot(@NotNull Context context,
                                                   @NotNull SSLSocketFactory getsslSocketFactory2) {
          Boolean результатПрозвонаСокетом = false;
         try {
@@ -80,7 +76,7 @@ public class Class_Connections_Server  extends  Class_GRUD_SQL_Operations {
 
                 if (ВыбранныйРежимСети==true) {
                     // TODO: 13.01.2025  
-                    БуферПолучениеДанныхРЕальныйСтатусРАботыSQLServer = pingingJbossServer(КонтекстКоторыйДляСинхронизации, getsslSocketFactory2, ИмяПорта, ИмяСервера);
+                    БуферПолучениеДанныхРЕальныйСтатусРАботыSQLServer = pingingJbossServer(context, getsslSocketFactory2, ИмяПорта, ИмяСервера);
                 }
 
 
@@ -118,7 +114,7 @@ public class Class_Connections_Server  extends  Class_GRUD_SQL_Operations {
             Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" +
                     Thread.currentThread().getStackTrace()[2].getMethodName() +
                     " Линия  :" + Thread.currentThread().getStackTrace()[2].getLineNumber());
-            new RecordNewErros(КонтекстКоторыйДляСинхронизации).recordnewerror(e.toString(),
+            new RecordNewErros(context).recordnewerror(e.toString(),
                     this.getClass().getName(), Thread.currentThread().getStackTrace()[2].getMethodName(),
                     Thread.currentThread().getStackTrace()[2].getLineNumber());
         }

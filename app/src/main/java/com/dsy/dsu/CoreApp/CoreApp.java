@@ -63,9 +63,9 @@ public class CoreApp extends Application {
   @Inject
   CompleteRemoteSyncService completeRemoteSyncService;
 
-//    @Inject
-//    @QualifierJbossServer3
-//    public LinkedHashMap<Integer,String> getHiltPortJboss;
+  @Inject
+   @QualifierJbossServer3
+   public LinkedHashMap<Integer,String> getHiltPortJboss;
 
   @Override
   public void onCreate() {

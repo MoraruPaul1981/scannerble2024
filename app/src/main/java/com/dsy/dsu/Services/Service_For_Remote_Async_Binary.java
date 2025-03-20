@@ -61,9 +61,7 @@ public class Service_For_Remote_Async_Binary extends IntentService {
 
 
 
-    @Inject
-    @QualifierJbossServer3
-    public LinkedHashMap<Integer,String> getHiltPortJboss;
+
 
     private SharedPreferences preferencesJboss;
 
