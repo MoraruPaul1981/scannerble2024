@@ -47,7 +47,7 @@ import com.dsy.dsu.BusinessLogicAll.CreateFolderBinatySave.ClassCreateFolderBina
 import com.dsy.dsu.BusinessLogicAll.Permissions.ClassPermissions;
 import com.dsy.dsu.CnangeServers.PUBLIC_CONTENT;
 import com.dsy.dsu.BusinessLogicAll.SubClassWriterPUBLICIDtoDatabase;
-import com.dsy.dsu.EventBus.EventBuss;
+
 import com.dsy.dsu.Hilt.getSSLSocketFactory2.QualifiergetsslSocketFactory2;
 import com.dsy.dsu.R;
 import com.dsy.dsu.Settings.Model.bl_SettingsActivity.GetSettingTableSaves;
@@ -102,7 +102,7 @@ public class MainActivityPasswords extends AppCompatActivity {
     @Inject
     @QualifiergetsslSocketFactory2
     SSLSocketFactory getsslSocketFactory2;
-    EventBuss eventBuss;
+
 
 
 
@@ -189,7 +189,7 @@ public class MainActivityPasswords extends AppCompatActivity {
             // TODO: 14.08.2023 создаем папку для BinaryFile CommitPay1C Соласования
             new ClassCreateFolderCommitPays1C(getApplicationContext()).МетодCreateFoldersBinaty();
 
-            eventBuss=new EventBuss(activity,getApplicationContext(),  getsslSocketFactory2);
+
 
 
             Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
@@ -773,27 +773,7 @@ public class MainActivityPasswords extends AppCompatActivity {
 
 
     // TODO: 23.01.2024 EventBus for Async
-    @Subscribe(threadMode = ThreadMode.MAIN_ORDERED)
-    public void EventMessageEvensBusAyns(MessageEvensBusNetworkStatuses messageEvensBusNetworkStatuses){
-        try{
 
-            eventBuss  .getEventBusManagerAsync(messageEvensBusNetworkStatuses);
-
-
-
-            Log.d(getApplicationContext().getClass().getName(), "\n"
-                    + " время: " + new Date() + "\n+" +
-                    " Класс в процессе... " + this.getClass().getName() + "\n" +
-                    " метод в процессе... " + Thread.currentThread().getStackTrace()[2].getMethodName()
-                    + "   starting... onRestart" + " starting... onRestart");
-        } catch (Exception e) {
-            e.printStackTrace();
-            Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() + " Линия  :"
-                    + Thread.currentThread().getStackTrace()[2].getLineNumber());
-            new RecordNewErros(getApplicationContext()).recordnewerror(e.toString(), this.getClass().getName(), Thread.currentThread().getStackTrace()[2].getMethodName(),
-                    Thread.currentThread().getStackTrace()[2].getLineNumber());
-        }
-    }
 
 
 
@@ -801,27 +781,7 @@ public class MainActivityPasswords extends AppCompatActivity {
 
 
     // TODO: 23.01.2024 EventBus for Update PO
-    @Subscribe (threadMode = ThreadMode.MAIN_ORDERED)
-    public void EventMessageEvensBusUpdatePO(MessageEvensBusUpdatePO messageEvensBusUpdatePO){
-        try{
 
-            eventBuss. getEventBusUpdatePo(messageEvensBusUpdatePO);
-
-            Log.d(getApplicationContext().getClass().getName(), "\n"
-                    + " время: " + new Date() + "\n+" +
-                    " Класс в процессе... " + this.getClass().getName() + "\n" +
-                    " метод в процессе... " + Thread.currentThread().getStackTrace()[2].getMethodName()
-                    + "   starting... onRestart" + " starting... onRestart");
-        } catch (Exception e) {
-            e.printStackTrace();
-            Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() + " Линия  :"
-                    + Thread.currentThread().getStackTrace()[2].getLineNumber());
-            new RecordNewErros(getApplicationContext()).recordnewerror(e.toString(), this.getClass().getName(), Thread.currentThread().getStackTrace()[2].getMethodName(),
-                    Thread.currentThread().getStackTrace()[2].getLineNumber());
-        }
-
-
-    }
 
 
 

@@ -10,6 +10,8 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
+import android.os.VibrationEffect;
+import android.os.Vibrator;
 import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
@@ -23,13 +25,14 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
 import com.dsy.dsu.BootAndAsync.Componets.GetComponentActivityBootService;
+import com.dsy.dsu.BootAndAsync.DowloadUpdatePO.DownLoadPO;
 import com.dsy.dsu.BootAndAsync.EventsBus.MessageEvensBusNetworkStatuses;
 import com.dsy.dsu.BootAndAsync.EventsBus.MessageEvensBusUpdatePO;
 import com.dsy.dsu.BroadcastRecievers.Bl.RegisterBroadcastForWorkManager;
 import com.dsy.dsu.BusinessLogicAll.Permissions.ClassPermissions;
 import com.dsy.dsu.Dashboard.View.Fragments.DashboardFragmentSettings;
 import com.dsy.dsu.Errors.controller.RecordNewErros;
-import com.dsy.dsu.EventBus.EventBuss;
+
 import com.dsy.dsu.FirebaseAndOneSignal.OneSignal.StartigOneSignal.GetStartingRegistraziyOneSIgnalAndFireBase;
 import com.dsy.dsu.Hilt.getSSLSocketFactory2.QualifiergetsslSocketFactory2;
 import com.dsy.dsu.Dashboard.View.Fragments.DashboardFragmentMaterialDesign;
@@ -71,7 +74,6 @@ public class MainActivity_Dashboard extends AppCompatActivity {
 
 
 
-    EventBuss eventBuss;
 
 
     @Inject
@@ -98,10 +100,8 @@ public class MainActivity_Dashboard extends AppCompatActivity {
             registeEventBusFirst();
 
 
-
             // TODO: 15.08.2023 Начинается Пользовательский КОд
             buniccessLogicaActivityDashboard=new BuniccessLogicaActivityDashboard();
-            eventBuss=new EventBuss(activity,getApplicationContext()  ,  getsslSocketFactory2);
             buniccessLogicaActivityDashboard.     МетодИнициализацияHandler();
             // TODO: 29.09.2023 Статус Повтороной Синхрониазции
             buniccessLogicaActivityDashboard.  методЗаписываемПовторныйЭтапСинхрогниазции( );
@@ -429,6 +429,18 @@ try{
                 if(Статус.contains(    "UpdateProcessorPO")){
                     Toast.makeText(getApplicationContext(),     "Идет Обновление ПО..."    , Toast.LENGTH_LONG).show();
 
+                    Vibrator v2 = (Vibrator) getApplicationContext().getSystemService(Context.VIBRATOR_SERVICE);
+                    v2.vibrate(VibrationEffect.createOneShot(150, VibrationEffect.DEFAULT_AMPLITUDE));
+
+                    // TODO: 22.01.2024
+                    DownLoadPO downLoadPO=new DownLoadPO(activity,getApplicationContext(),СервернаяВерсия,getsslSocketFactory2);
+
+                    downLoadPO.МетодСообщениеАнализПО( );
+                    // TODO: 26.12.2022  конец основгого кода
+                    Log.d(getApplicationContext().getClass().getName(), "\n" + " class "
+                            + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                            " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                            " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n");
                 }
 
 

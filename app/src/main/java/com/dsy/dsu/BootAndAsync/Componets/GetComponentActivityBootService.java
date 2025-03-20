@@ -9,6 +9,8 @@ import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.VibrationEffect;
+import android.os.Vibrator;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.MenuItem;
@@ -22,6 +24,7 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.lifecycle.LifecycleOwner;
 
 import com.dsy.dsu.BootAndAsync.BlBootAsync.Hilts.ServiceBootBinessLogic;
+import com.dsy.dsu.BootAndAsync.DowloadUpdatePO.DownLoadPO;
 import com.dsy.dsu.BootAndAsync.EventsBus.MessageEvensBusNetworkStatuses;
 import com.dsy.dsu.BootAndAsync.EventsBus.MessageEvensBusEndAync;
 import com.dsy.dsu.BootAndAsync.EventsBus.MessageEvensBusUpdatePO;
@@ -120,7 +123,21 @@ public class GetComponentActivityBootService {
 
 
             if(Статус.contains(    "UpdateProcessorPO")){
-                Toast.makeText(context,     "Идет Обновление ПО..."    , Toast.LENGTH_LONG).show();
+          /*      Toast.makeText(context,     "Идет Обновление ПО..."    , Toast.LENGTH_LONG).show();
+                Toast.makeText(context,     "Идет Обновление ПО..."    , Toast.LENGTH_LONG).show();*/
+
+                Vibrator v2 = (Vibrator) context.getSystemService(Context.VIBRATOR_SERVICE);
+                v2.vibrate(VibrationEffect.createOneShot(150, VibrationEffect.DEFAULT_AMPLITUDE));
+
+                // TODO: 22.01.2024
+                DownLoadPO downLoadPO=new DownLoadPO(activity,context,СервернаяВерсия,getsslSocketFactory2);
+
+                downLoadPO.МетодСообщениеАнализПО( );
+                // TODO: 26.12.2022  конец основгого кода
+                Log.d(context.getClass().getName(), "\n" + " class "
+                        + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                        " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                        " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n");
 
             }
 

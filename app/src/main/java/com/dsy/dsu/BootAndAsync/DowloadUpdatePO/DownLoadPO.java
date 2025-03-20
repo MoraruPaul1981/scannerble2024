@@ -26,6 +26,7 @@ import com.dsy.dsu.BootAndAsync.BlBootAsync.DeletingFiles.GetDeletingFilesJsonAn
 import com.dsy.dsu.BusinessLogicAll.Class_MODEL_synchronized;
 import com.dsy.dsu.CnangeServers.PUBLIC_CONTENT;
 import com.dsy.dsu.Errors.controller.RecordNewErros;
+import com.dsy.dsu.Hilt.JbossAdrress.getHiltPortJbossInterface;
 import com.dsy.dsu.R;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
@@ -36,6 +37,7 @@ import java.util.LinkedHashMap;
 
 import javax.net.ssl.SSLSocketFactory;
 
+import dagger.hilt.EntryPoints;
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
 import io.reactivex.rxjava3.core.Maybe;
 import io.reactivex.rxjava3.core.MaybeObserver;
@@ -57,14 +59,11 @@ private  Activity activity;
 
     public DownLoadPO(@NonNull Activity activity,@NonNull  Context context,
                       @NonNull Integer СервернаяВерсияПОВнутри,
-                      @NonNull SSLSocketFactory getsslSocketFactory2,
-                      @NonNull LinkedHashMap<Integer,String> getHiltPortJboss) {
+                      @NonNull SSLSocketFactory getsslSocketFactory2) {
         this.activity = activity;
         this.context = context;
         this.СервернаяВерсияПОВнутри = СервернаяВерсияПОВнутри;
         this.getsslSocketFactory2 = getsslSocketFactory2;
-        this.getHiltPortJboss = getHiltPortJboss;
-
     }
 
     @SuppressLint("NewApi")
@@ -76,11 +75,12 @@ public     void МетодСообщениеАнализПО( ) {
             View promptsViewАнализПО=   методЗагрузкиСвоегоВидаДлAliadDialod(R.layout.activity_insertdata);
             ProgressBar PrograssBarЗагрузкиПО=promptsViewАнализПО.findViewById(R.id.prograssbardownload);
             MaterialButton КнопкаЗАгрузкиПО=promptsViewАнализПО.findViewById(R.id.bottom_alaliz_and_dwonloadupdatepo);
-            // TODO: 19.09.2023
-            PrograssBarЗагрузкиПО.setIndeterminate(false);
-            PrograssBarЗагрузкиПО.setVisibility(View.GONE);
-            PrograssBarЗагрузкиПО.forceLayout();
-            PrograssBarЗагрузкиПО.refreshDrawableState();
+            // TODO: 19.09.2025
+                PrograssBarЗагрузкиПО.setIndeterminate(false);
+                PrograssBarЗагрузкиПО.setVisibility(View.GONE);
+                PrograssBarЗагрузкиПО.forceLayout();
+                PrograssBarЗагрузкиПО.refreshDrawableState();
+
             КнопкаЗАгрузкиПО.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -93,6 +93,8 @@ public     void МетодСообщениеАнализПО( ) {
 
                                 // TODO: 18.02.2023 удаление Файлов перед Обновление ПО или Анализм Версии ПО
                               new GetDeletingFilesJsonAndApk(context).startingDeletingFileApk();
+
+                                LinkedHashMap<Integer,String> getHiltPortJboss=   EntryPoints.get(context, getHiltPortJbossInterface.class).getHiltPortJboss();
 
                                 // TODO: 29.07.2023 ЗАгрузки  ПО
                                FileAPK =    МетодЗагрузкиAPK(getHiltPortJboss,  getsslSocketFactory2) ;
