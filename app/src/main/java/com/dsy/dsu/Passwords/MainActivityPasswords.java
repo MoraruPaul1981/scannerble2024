@@ -167,6 +167,8 @@ public class MainActivityPasswords extends AppCompatActivity {
             ПарольДляВходаСистему = (TextInputEditText) findViewById(R.id.ПарольДляВходавПрограмму); ////програссбар при аунтификации при входе в системму
 
 
+            registeEventBusFirst();
+
             // TODO: 02.08.2023 БИЗНЕС КОД
             методЗаписываемПервыйЭтапСинхрогниазции();
 // TODO: 13.09.2023 очистка ТАБЛИЦ с паролями  
@@ -222,7 +224,8 @@ public class MainActivityPasswords extends AppCompatActivity {
         super.onStop();
         try{
 
-        EventBus.getDefault().unregister(this);
+            unregisterEventBusFirst();
+
     } catch (Exception e) {
         ПрогрессБарДляВходаСистему.setVisibility(View.INVISIBLE);// при нажатии делаем видимый програсссбар
         Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
@@ -237,7 +240,7 @@ public class MainActivityPasswords extends AppCompatActivity {
     protected void onStart() {
         super.onStart();try{
 
-            EventBus.getDefault().register(this);
+
         } catch (Exception e) {
             ПрогрессБарДляВходаСистему.setVisibility(View.INVISIBLE);// при нажатии делаем видимый програсссбар
             Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
@@ -776,8 +779,50 @@ public class MainActivityPasswords extends AppCompatActivity {
 
 
 
+    private void registeEventBusFirst() {
+
+        if (  !EventBus.getDefault().isRegistered(this)) {
+            EventBus.getDefault().register(this);
+        }
+        Log.d(getApplicationContext().getClass().getName(), "\n"
+                + " время: " + new Date() + "\n+" +
+                " Класс в процессе... " + this.getClass().getName() + "\n" +
+                " метод в процессе... " + Thread.currentThread().getStackTrace()[2].getMethodName()
+                + "   starting... onRestart" + " starting... onRestart");
+    }
+
+    private void unregisterEventBusFirst() {
+        if (  EventBus.getDefault().isRegistered(this)) {
+            EventBus.getDefault().unregister(this);
+        }
+        Log.d(getApplicationContext().getClass().getName(), "\n"
+                + " время: " + new Date() + "\n+" +
+                " Класс в процессе... " + this.getClass().getName() + "\n" +
+                " метод в процессе... " + Thread.currentThread().getStackTrace()[2].getMethodName()
+                + "   starting... onRestart" + " starting... onRestart");
+    }
 
 
+    // TODO: 23.01.2024 EventBus for Async
+    @Subscribe (threadMode = ThreadMode.MAIN)
+    public void EventMessageEvensBusAyns(MessageEvensBusNetworkStatuses messageEvensBusNetworkStatuses){
+        try{
+
+
+
+            Log.d(getApplicationContext().getClass().getName(), "\n"
+                    + " время: " + new Date() + "\n+" +
+                    " Класс в процессе... " + this.getClass().getName() + "\n" +
+                    " метод в процессе... " + Thread.currentThread().getStackTrace()[2].getMethodName()
+                    + "   starting... onRestart" + " starting... onRestart");
+        } catch (Exception e) {
+            e.printStackTrace();
+            Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() + " Линия  :"
+                    + Thread.currentThread().getStackTrace()[2].getLineNumber());
+            new RecordNewErros(getApplicationContext()).recordnewerror(e.toString(), this.getClass().getName(), Thread.currentThread().getStackTrace()[2].getMethodName(),
+                    Thread.currentThread().getStackTrace()[2].getLineNumber());
+        }
+    }
 
 
     // TODO: 23.01.2024 EventBus for Update PO
