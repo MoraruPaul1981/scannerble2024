@@ -111,20 +111,18 @@ public class GetComponentActivityBootService {
             Integer СервернаяВерсия=   bundleGetOtServiceUpdatePO.getInt("СервернаяВерсия");
 
 
-                    if(Статус.contains( " ")){
+            if(Статус.contains(    "LastVersionUpdatePO")){
+                Toast.makeText(context,     "Последняя версия ПО !!!"    , Toast.LENGTH_LONG).show();
+
+            }
 
 
-                        Toast.makeText(context,
-                                "Последная версия ПО !!! "+ СервернаяВерсия    , Toast.LENGTH_LONG).show();
-
-// TODO: 26.12.2022  конец основгого кода
-                        Log.d(context.getClass().getName(), "\n" + " class "
-                                + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
-                                " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                                " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n");
 
 
-                    }
+            if(Статус.contains(    "UpdateProcessorPO")){
+                Toast.makeText(context,     "Идет Обновление ПО..."    , Toast.LENGTH_LONG).show();
+
+            }
 
 
 

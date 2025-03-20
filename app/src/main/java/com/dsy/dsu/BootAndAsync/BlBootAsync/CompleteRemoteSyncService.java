@@ -743,7 +743,7 @@ public class CompleteRemoteSyncService {
                          Bundle bundleComunications=new Bundle();
 
                          intentComunicationsUpdatePO.setAction("EventBusUpdatePO");
-                         bundleComunications.putString("Статус",  "Обновление ПО !!!");///"В процесс"
+                         bundleComunications.putString("Статус",  "UpdateProcessorPO");///"В процесс"
                          bundleComunications.putInt("СервернаяВерсия",  СервернаяВерсия);///"В процесс"
                          bundleComunications.putBinder("callbackbinderdashbord",localBinderОбновлениеПО);
                          intentComunicationsUpdatePO.putExtras(bundleComunications);
@@ -784,7 +784,7 @@ public class CompleteRemoteSyncService {
                 }else {
                     bundleComunications.putInt("СервернаяВерсия",  СервернаяВерсия);///"В процесс"
                 }
-                bundleComunications.putString("Статус",   "Последная версия ПО !!!");///"В процесс"
+                bundleComunications.putString("Статус",    "LastVersionUpdatePO");///"В процесс"
                 intentComunicationsUpdatePO.putExtras(bundleComunications);
 
                 // TODO: 20.03.2025

@@ -24,6 +24,7 @@ import androidx.fragment.app.FragmentTransaction;
 
 import com.dsy.dsu.BootAndAsync.Componets.GetComponentActivityBootService;
 import com.dsy.dsu.BootAndAsync.EventsBus.MessageEvensBusNetworkStatuses;
+import com.dsy.dsu.BootAndAsync.EventsBus.MessageEvensBusUpdatePO;
 import com.dsy.dsu.BroadcastRecievers.Bl.RegisterBroadcastForWorkManager;
 import com.dsy.dsu.BusinessLogicAll.Permissions.ClassPermissions;
 import com.dsy.dsu.Dashboard.View.Fragments.DashboardFragmentSettings;
@@ -388,19 +389,6 @@ try{
 
                 }
 
-                if(Статус.contains(    "LastVersionUpdatePO")){
-                    Toast.makeText(context,     "Последняя версия ПО !!!"    , Toast.LENGTH_LONG).show();
-
-                }
-
-
-
-
-                if(Статус.contains(    "UpdateProcessorPO")){
-                    Toast.makeText(context,     "Идет Обновление ПО..."    , Toast.LENGTH_LONG).show();
-
-                }
-
                 // TODO: 26.12.2022  конец основгого кода
                 Log.d(context.getClass().getName(), "\n" + " class "
                         + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
@@ -422,9 +410,44 @@ try{
 
 
 
+        public void getEventBusUpdatePo(@NonNull MessageEvensBusUpdatePO messageEvensBusUpdatePO  ){
+
+            try{
+                Bundle bundleGetOtServiceUpdatePO =(Bundle)         messageEvensBusUpdatePO.mess.getExtras();
+                String Статус=   bundleGetOtServiceUpdatePO.getString("Статус");
+                Integer СервернаяВерсия=   bundleGetOtServiceUpdatePO.getInt("СервернаяВерсия");
+
+
+                if(Статус.contains(    "LastVersionUpdatePO")){
+                    Toast.makeText(getApplicationContext(),     "Последняя версия ПО !!! "+"("+СервернаяВерсия+")"    , Toast.LENGTH_LONG).show();
+
+                }
 
 
 
+
+                if(Статус.contains(    "UpdateProcessorPO")){
+                    Toast.makeText(getApplicationContext(),     "Идет Обновление ПО..."    , Toast.LENGTH_LONG).show();
+
+                }
+
+
+
+                // TODO: 26.12.2022  конец основгого кода
+                Log.d(getApplicationContext().getClass().getName(), "\n" + " class "
+                        + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                        " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                        " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n");
+
+            } catch (Exception e) {
+                e.printStackTrace();
+                Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() + " Линия  :"
+                        + Thread.currentThread().getStackTrace()[2].getLineNumber());
+                new RecordNewErros(getApplicationContext()).recordnewerror(e.toString(),
+                        this.getClass().getName(), Thread.currentThread().getStackTrace()[2].getMethodName(),
+                        Thread.currentThread().getStackTrace()[2].getLineNumber());
+            }
+        }
 
 
 
@@ -481,7 +504,29 @@ try{
                     Thread.currentThread().getStackTrace()[2].getLineNumber());
         }
     }
+    // TODO: 23.01.2024 EventBus for Update PO
+    @Subscribe (threadMode = ThreadMode.MAIN)
+    public void EventMessageEvensBusUpdatePO(MessageEvensBusUpdatePO messageEvensBusUpdatePO){
+        try{
 
+
+            buniccessLogicaActivityDashboard.   getEventBusUpdatePo(messageEvensBusUpdatePO);
+
+            Log.d(getApplicationContext().getClass().getName(), "\n"
+                    + " время: " + new Date() + "\n+" +
+                    " Класс в процессе... " + this.getClass().getName() + "\n" +
+                    " метод в процессе... " + Thread.currentThread().getStackTrace()[2].getMethodName()
+                    + "   starting... onRestart" + " starting... onRestart");
+        } catch (Exception e) {
+            e.printStackTrace();
+            Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() + " Линия  :"
+                    + Thread.currentThread().getStackTrace()[2].getLineNumber());
+            new RecordNewErros(getApplicationContext()).recordnewerror(e.toString(), this.getClass().getName(), Thread.currentThread().getStackTrace()[2].getMethodName(),
+                    Thread.currentThread().getStackTrace()[2].getLineNumber());
+        }
+
+
+    }
 
     // TODO: 20.03.2025 end class
 }
