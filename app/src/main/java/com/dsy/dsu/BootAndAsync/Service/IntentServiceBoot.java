@@ -265,7 +265,7 @@ public     void startingServiceBoot(@NotNull Intent intent,@NonNull String getWh
                 case "IntentServiceBootAsync.com" :
 
                     // TODO: 19.01.2024  запуск класса бизнес логики службы Синхроиазции и Обновление ПО
-                    completeRemoteSyncService.startingBindingAsyncJboss(getWhoLaunched);///"BootService"
+                    completeRemoteSyncService.startingBindingAsyncJboss(getWhoLaunched,getApplicationContext());///"BootService"
 
                     Log.d(getApplicationContext().getClass().getName(), "\n"
                             + " время: " + new Date() + "\n+" +
@@ -279,8 +279,8 @@ public     void startingServiceBoot(@NotNull Intent intent,@NonNull String getWh
                 case "IntentServiceBootUpdatePo.com":
 
                     // TODO: 19.01.2024  запуск класса бизнес логики службы Синхроиазции и Обновление ПО
-                    completeRemoteSyncService.startServiceUpdatePO(getApplicationContext(),getsslSocketFactory2,
-                            getHiltPublicId,"IntentServiceBootUpdatePo.com", getHiltPortJboss,"BootService");
+                    completeRemoteSyncService.startServiceUpdatePO(getsslSocketFactory2, "IntentServiceBootUpdatePo.com", getHiltPortJboss,
+                            "BootService",getApplicationContext());
 
                     Log.d(getApplicationContext().getClass().getName(), "\n"
                             + " время: " + new Date() + "\n+" +
@@ -293,8 +293,8 @@ public     void startingServiceBoot(@NotNull Intent intent,@NonNull String getWh
                 case "IntentServiceBootUpdatePo.comAndIntentServiceBootAsync.com" :
 
                     // TODO: 19.01.2024  запуск класса бизнес логики службы Синхроиазции и Обновление ПО
-                    completeRemoteSyncService.startServiceUpdatePOAndAsync(getApplicationContext(),getsslSocketFactory2,
-                            getHiltPublicId,"IntentServiceBootUpdatePo.comAndIntentServiceBootAsync.com", getHiltPortJboss,"BootService");
+                    completeRemoteSyncService.startServiceUpdatePOAndAsync( getsslSocketFactory2, "IntentServiceBootUpdatePo.comAndIntentServiceBootAsync.com",
+                            getHiltPortJboss,"BootService",getApplicationContext());
 
                     Log.d(getApplicationContext().getClass().getName(), "\n"
                             + " время: " + new Date() + "\n+" +
@@ -308,8 +308,8 @@ public     void startingServiceBoot(@NotNull Intent intent,@NonNull String getWh
                 // TODO: 26.12.2024 EXIT
                 case     "ExitBootService" :
                     // TODO: 19.01.2024  запуск класса бизнес логики службы Синхроиазции и Обновление ПО
-                    completeRemoteSyncService.startServiceUpdatePOAndAsync(getApplicationContext(),getsslSocketFactory2,
-                            getHiltPublicId,"IntentServiceBootUpdatePo.comAndIntentServiceBootAsync.com", getHiltPortJboss,"BootService");
+                    completeRemoteSyncService.startServiceUpdatePOAndAsync(getsslSocketFactory2, "IntentServiceBootUpdatePo.comAndIntentServiceBootAsync.com",
+                            getHiltPortJboss,"BootService",getApplicationContext());
 
                     Log.d(getApplicationContext().getClass().getName(), "\n"
                             + " время: " + new Date() + "\n+" +

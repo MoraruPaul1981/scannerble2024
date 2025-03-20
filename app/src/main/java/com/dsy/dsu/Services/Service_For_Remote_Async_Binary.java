@@ -18,6 +18,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 
+import com.dsy.dsu.BootAndAsync.BlBootAsync.CompleteRemoteSyncService;
 import com.dsy.dsu.Dashboard.Model.endingasynsdashboard.GetEndingAsyn;
 import com.dsy.dsu.Errors.controller.RecordNewErros;
 import com.dsy.dsu.Hilt.JbossAdrress.qualifiers.QualifierJbossServer3;
@@ -71,6 +72,9 @@ public class Service_For_Remote_Async_Binary extends IntentService {
     @Inject
     @QualifierPublicId
     Integer getHiltPublicId;
+
+    @Inject
+    CompleteRemoteSyncService completeRemoteSyncService;
 
     public Service_For_Remote_Async_Binary() {
         super("Service_For_Remote_Async");

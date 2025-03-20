@@ -31,7 +31,6 @@ import dagger.hilt.components.SingletonComponent;
 public class HiltJboss {
 
     @Provides
-    @Singleton
     @QualifierJbossServer3
     public  LinkedHashMap<Integer,String> getHiltPortJboss(@ApplicationContext Context context) {
         LinkedHashMap<Integer,String> getJbossPort= new LinkedHashMap();

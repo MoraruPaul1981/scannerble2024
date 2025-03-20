@@ -73,6 +73,7 @@ import dagger.hilt.android.AndroidEntryPoint;
 import io.reactivex.rxjava3.core.Completable;
 import io.reactivex.rxjava3.core.CompletableObserver;
 import io.reactivex.rxjava3.disposables.Disposable;
+import io.reactivex.rxjava3.functions.Action;
 import io.reactivex.rxjava3.functions.Function;
 import io.reactivex.rxjava3.functions.Predicate;
 import io.reactivex.rxjava3.subjects.Subject;
@@ -121,7 +122,7 @@ public class DashboardFragmentSettings extends  DialogFragment {
 
 
 
-    protected GetComponentActivityBootService blInnerMainActivityBootAndAsync;
+     GetComponentActivityBootService blInnerMainActivityBootAndAsync;
 
 
 
@@ -669,22 +670,62 @@ public class DashboardFragmentSettings extends  DialogFragment {
                     ///todo revboot
                     ProgressDialog  progressDialogДляСинхронизации = new ProgressDialog(getActivity());
 
-                        final Boolean[] СтатусСервераСоюзаВключенИлиНЕт = {false};
+                         Boolean СтатусСервераСоюзаВключенИлиНЕт = false;
 
-                    Completable.complete().blockingSubscribe(new CompletableObserver() {
-                        @Override
-                        public void onSubscribe(@io.reactivex.rxjava3.annotations.NonNull Disposable d) {
-                            // TODO: 13.01.2025
+                        // TODO: 22.12.2022  сама запуска синхронищации из workmanager ОБЩЕГО
+                        boolean ВыбранныйРежимСети =
+                                new GetConnectivityManagerAndroid(getContext()).сonnectivityManageruserselection();
 
-                            // TODO: 22.12.2022  сама запуска синхронищации из workmanager ОБЩЕГО
-                            boolean ВыбранныйРежимСети =
-                                    new GetConnectivityManagerAndroid(getContext()).сonnectivityManageruserselection();
+                        Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                                " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                                " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"
+                                + " lВыбранныйРежимСети" + ВыбранныйРежимСети);
 
+                        // TODO: 26.06.2022
+                        Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                                " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                                " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n");
+
+
+
+                        if (ВыбранныйРежимСети == true) {
+                            // TODO: 16.12.2021 НЕПОСРЕДСТВЕННЫЙ ПИНГ СИСТЕНМ ИНТРЕНАТ НА НАЛИЧЕНИ СВАЗИ С БАЗОЙ SQL SERVER
+                            СтатусСервераСоюзаВключенИлиНЕт =
+                                    new Class_Connections_Server(getContext()). pingServerJbossSuccessfulOrNot(getContext(),getsslSocketFactory2 );
+
+                            Log.d(this.getClass().getName(), "\n"
+                                    + " время: " + new Date() + "\n+" +
+                                    " Класс в процессе... " + this.getClass().getName() + "\n" +
+                                    " метод в процессе... " + Thread.currentThread().getStackTrace()[2].getMethodName() +
+                                    "   СтатусСервераСоюзаВключенИлиНЕт[0] " + СтатусСервераСоюзаВключенИлиНЕт);
+                            // TODO: 26.06.2022
                             Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                                     " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                                    " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"
-                                    + " lВыбранныйРежимСети" + ВыбранныйРежимСети);
+                                    " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n");
 
+                        }
+                        // TODO: 26.06.2022
+                        Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                                " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                                " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"+
+                                " СтатусСервераСоюзаВключенИлиНЕт[0] " +СтатусСервераСоюзаВключенИлиНЕт);
+
+                        if (   СтатусСервераСоюзаВключенИлиНЕт == true) {
+
+
+                            handlerAsync.post(() -> {
+                                progressDialogДляСинхронизации.setTitle("Обмен данными");
+                                progressDialogДляСинхронизации.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+                                progressDialogДляСинхронизации.setProgress(0);
+                                progressDialogДляСинхронизации.setCanceledOnTouchOutside(false);
+                                progressDialogДляСинхронизации.setMessage("В процессе ....");
+                                if (!progressDialogДляСинхронизации.isShowing()) {
+                                    progressDialogДляСинхронизации.show();
+                                }
+                            });
+
+// TODO: 10.07.2023  запуск обновление ПО
+                            serviceBootBinessLogic.startServiceBootAndAsync("IntentServiceBootAsync.com");
                             // TODO: 26.06.2022
                             Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                                     " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
@@ -692,88 +733,26 @@ public class DashboardFragmentSettings extends  DialogFragment {
 
 
 
-                            if (ВыбранныйРежимСети == true) {
-                                // TODO: 16.12.2021 НЕПОСРЕДСТВЕННЫЙ ПИНГ СИСТЕНМ ИНТРЕНАТ НА НАЛИЧЕНИ СВАЗИ С БАЗОЙ SQL SERVER
-                                СтатусСервераСоюзаВключенИлиНЕт[0] =
-                                        new Class_Connections_Server(getContext()). pingServerJbossSuccessfulOrNot(getContext(),getsslSocketFactory2 );
-
-                                Log.d(this.getClass().getName(), "\n"
-                                        + " время: " + new Date() + "\n+" +
-                                        " Класс в процессе... " + this.getClass().getName() + "\n" +
-                                        " метод в процессе... " + Thread.currentThread().getStackTrace()[2].getMethodName() +
-                                        "   СтатусСервераСоюзаВключенИлиНЕт[0] " + СтатусСервераСоюзаВключенИлиНЕт[0]);
-                                // TODO: 26.06.2022
-                                Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
-                                        " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                                        " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n");
-
-                               }
-
-                        }
-
-                        @Override
-                        public void onComplete() {
-
-
-                            // TODO: 26.06.2022
-                            Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
-                                    " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                                    " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"+
-                                    " СтатусСервераСоюзаВключенИлиНЕт[0] " +СтатусСервераСоюзаВключенИлиНЕт[0]);
-
-                                if (   СтатусСервераСоюзаВключенИлиНЕт[0] == true) {
-
-
-                                    handlerAsync.post(() -> {
-                                        progressDialogДляСинхронизации.setTitle("Обмен данными");
-                                        progressDialogДляСинхронизации.setProgressStyle(ProgressDialog.STYLE_SPINNER);
-                                        progressDialogДляСинхронизации.setProgress(0);
-                                        progressDialogДляСинхронизации.setCanceledOnTouchOutside(false);
-                                        progressDialogДляСинхронизации.setMessage("В процессе ....");
-                                        if (!progressDialogДляСинхронизации.isShowing()) {
-                                            progressDialogДляСинхронизации.show();
-                                        }
-                                    });
-
-// TODO: 10.07.2023  запуск обновление ПО
-                                    serviceBootBinessLogic.startServiceBootAndAsync("IntentServiceBootAsync.com");
-                                    // TODO: 26.06.2022
-                                    Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
-                                            " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                                            " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n");
-
-
-
-                                } else {
-                                    getActivity().runOnUiThread(new Runnable() {
-                                        @Override
-                                        public void run() {
-                                            Toast toast = Toast.makeText(getContext(), "Сервер выкл. !!!", Toast.LENGTH_LONG);
-                                            toast.setGravity(Gravity.BOTTOM, 0, 40);
-                                            toast.show();
-                                        }
-                                    });
+                        } else {
+                            getActivity().runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    Toast toast = Toast.makeText(getContext(), "Сервер выкл. !!!", Toast.LENGTH_LONG);
+                                    toast.setGravity(Gravity.BOTTOM, 0, 40);
+                                    toast.show();
                                 }
-                                // TODO: 14.12.2023
-
-                                handlerAsync.postDelayed(() -> {
-                                    progressDialogДляСинхронизации.dismiss();
-                                    progressDialogДляСинхронизации.cancel();
-                                }, 3000);
-
+                            });
                         }
+                        // TODO: 14.12.2023
 
-                        @Override
-                        public void onError(@io.reactivex.rxjava3.annotations.NonNull Throwable e) {
-                            e.printStackTrace();
-                            Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
-                                    " Линия  :" + Thread.currentThread().getStackTrace()[2].getLineNumber());
-                            new RecordNewErros(getContext()).recordnewerror(e.toString(), this.getClass().getName(),
-                                    Thread.currentThread().getStackTrace()[2].getMethodName(), Thread.currentThread().getStackTrace()[2].getLineNumber());
-                        }
-                    });
+                        handlerAsync.postDelayed(() -> {
+                            progressDialogДляСинхронизации.dismiss();
+                            progressDialogДляСинхронизации.cancel();
+                        }, 3000);
 
-                } catch (Exception e) {
+
+
+                    } catch (Exception e) {
             e.printStackTrace();
             Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
                     " Линия  :" + Thread.currentThread().getStackTrace()[2].getLineNumber());

@@ -109,7 +109,7 @@ public class ProccesorparallelSynch   {
 
 // TODO: 20.01.2025 сама синхрониаиця
             Flowable.fromIterable(getBufferFromJbossServerAllTables)
-                    .onBackpressureBuffer()
+                    .onBackpressureBuffer(1)
                     .doOnNext(new Consumer<Map<String, String>>() {
                         @Override
                         public void accept(Map<String, String> stringStringMapMultiPotoks) throws Throwable {
@@ -124,7 +124,18 @@ public class ProccesorparallelSynch   {
                                     + " getBufferFromJbossServerAllTables.size() " + getBufferFromJbossServerAllTables.size()
                                     +"\n");
                         }
-                    }).blockingSubscribe();
+                    }).doOnError(new Consumer<Throwable>() {
+                        @Override
+                        public void accept(Throwable throwable) throws Throwable {
+                            throwable.printStackTrace();
+                            Log.e(this.getClass().getName(), "Ошибка " + throwable + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() + " Линия  :"
+                                    + Thread.currentThread().getStackTrace()[2].getLineNumber());
+                            new RecordNewErros(context).recordnewerror(throwable.toString(),
+                                    this.getClass().getName(), Thread.currentThread().getStackTrace()[2].getMethodName(),
+                                    Thread.currentThread().getStackTrace()[2].getLineNumber()  );
+                        }
+                    })
+                    .blockingSubscribe();
 
 
 

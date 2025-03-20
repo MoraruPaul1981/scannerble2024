@@ -11,7 +11,6 @@ import dagger.hilt.components.SingletonComponent;
 
 @EntryPoint
 @InstallIn(SingletonComponent.class)
-
 public interface getHiltPortJbossInterface {
     @QualifierJbossServer3
     LinkedHashMap<Integer,String> getHiltPortJboss();
