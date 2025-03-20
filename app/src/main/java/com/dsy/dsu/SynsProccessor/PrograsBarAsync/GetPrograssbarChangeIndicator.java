@@ -1,11 +1,13 @@
 package com.dsy.dsu.SynsProccessor.PrograsBarAsync;
 
 import android.content.Context;
+import android.content.Intent;
+import android.os.Bundle;
 import android.util.Log;
 
 import androidx.annotation.NonNull;
 
-import com.dsy.dsu.BootAndAsync.BlBootAsync.SendMainActivity;
+import com.dsy.dsu.BootAndAsync.BlBootAsync.CallBackBusUpdatePO;
 import com.dsy.dsu.BootAndAsync.EventsBus.MessageEvensBusPrograssBar;
 import com.dsy.dsu.BusinessLogicAll.Class_Visible_Processing_Async;
 import com.dsy.dsu.CnangeServers.PUBLIC_CONTENT;
@@ -89,34 +91,19 @@ Context context;
 
 
         try {
-            class SendUserДанныеДляPrograssbar extends SendMainActivity {
+            Intent intentComunicationsBusPrograssBar=new Intent();
+            // TODO: 20.03.2025
+            Bundle bundleComunications=new Bundle();
+            intentComunicationsBusPrograssBar.setAction("Broad_messageAsyncPrograssBar");
+            bundleComunications.putString("Статус" ,"AsyncPrograssBar");
+            bundleComunications.putInt("Проценны" ,Проценны);
+            bundleComunications.putString("имятаблицы" ,имяТаблицаAsync);
+            bundleComunications.putInt("maxtables" ,  maxAllCountRow );
+            bundleComunications.putInt("currentposition" ,ПозицияТекущейТаблицы);
+            intentComunicationsBusPrograssBar.putExtras(bundleComunications);
 
-                public SendUserДанныеДляPrograssbar(Context context) {
-                    super(context);
-                }
-
-                @Override
-                public void startSendBroadSesiver() {
-                    //  super.startSendBroadSesiver();
-                    intentComunications.setAction("Broad_messageAsyncPrograssBar");
-                    bundleComunications.putString("Статус" ,"AsyncPrograssBar");
-                    bundleComunications.putInt("Проценны" ,Проценны);
-                    bundleComunications.putString("имятаблицы" ,имяТаблицаAsync);
-                    bundleComunications.putInt("maxtables" ,  maxAllCountRow );
-                    bundleComunications.putInt("currentposition" ,ПозицияТекущейТаблицы);
-                    intentComunications.putExtras(bundleComunications);
-
-                    // TODO: 25.09.2024 call back AN Screnn User Boot Activity
-                     EventBus.getDefault().post(new MessageEvensBusPrograssBar(intentComunications));
-                   // MessageEvensBusPrograssBar messageEvensBusPrograssBar  =     new MessageEvensBusPrograssBar(intentComunications);
-                    // TODO: 25.09.2024  запускаем слушателя обратного отоброжкнк Prograsbar
-                    //new PrograssBarManagerBloadcastReciever().setBroadcastManagerPrograssBar(context,intentComunications);
-
-                }
-            }
-            // TODO: 22.01.2024 когда режим офлайн
-            new SendUserДанныеДляPrograssbar(context).startSendBroadSesiver();
-
+            // TODO: 25.09.2024 call back AN Screnn User Boot Activity
+            EventBus.getDefault().post(new MessageEvensBusPrograssBar(intentComunicationsBusPrograssBar));
 
             Log.d(this.getClass().getName(), "\n" + " class " +
                     Thread.currentThread().getStackTrace()[2].getClassName()

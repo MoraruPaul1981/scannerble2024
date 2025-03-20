@@ -27,6 +27,7 @@ import androidx.fragment.app.FragmentResultListener;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.LifecycleOwner;
 
+import com.dsy.dsu.BootAndAsync.Componets.GetComponentActivityBootService;
 import com.dsy.dsu.BootAndAsync.EventsBus.MessageEvensBusAyns;
 import com.dsy.dsu.BootAndAsync.EventsBus.MessageEvensBusUpdatePO;
 import com.dsy.dsu.BroadcastRecievers.Bl.RegisterBroadcastForWorkManager;
@@ -35,6 +36,7 @@ import com.dsy.dsu.Dashboard.View.Fragments.DashboardFragmentSettings;
 import com.dsy.dsu.Errors.controller.RecordNewErros;
 import com.dsy.dsu.EventBus.EventBuss;
 import com.dsy.dsu.FirebaseAndOneSignal.OneSignal.StartigOneSignal.GetStartingRegistraziyOneSIgnalAndFireBase;
+import com.dsy.dsu.Hilt.JbossAdrress.getHiltPortJbossInterface;
 import com.dsy.dsu.Hilt.JbossAdrress.qualifiers.QualifierJbossServer3;
 import com.dsy.dsu.Hilt.getSSLSocketFactory2.QualifiergetsslSocketFactory2;
 import com.dsy.dsu.Services.ServiceUpdatePoОбновлениеПО;
@@ -52,6 +54,7 @@ import java.util.LinkedHashMap;
 import javax.inject.Inject;
 import javax.net.ssl.SSLSocketFactory;
 
+import dagger.hilt.EntryPoints;
 import dagger.hilt.android.AndroidEntryPoint;
 
 @AndroidEntryPoint
@@ -85,7 +88,7 @@ public class MainActivity_Dashboard extends AppCompatActivity {
     @QualifiergetsslSocketFactory2
     SSLSocketFactory getsslSocketFactory2;
 
-
+    protected GetComponentActivityBootService blInnerMainActivityBootAndAsync;
     // TODO: 03.11.2022 FaceApp
     @SuppressLint("MissingInflatedId")
     @Override
@@ -101,7 +104,13 @@ public class MainActivity_Dashboard extends AppCompatActivity {
             preferences=   getApplicationContext() .getSharedPreferences("sharedPreferencesХранилище", Context.MODE_MULTI_PROCESS);
             // TODO: 04.10.2023 разрешения для всего
             new ClassPermissions(this,ALL_PERSSION_CODE);
+
+
+
+
+
             // TODO: 15.08.2023 Начинается Пользовательский КОд
+            registeEventBusFirst();
             buniccessLogicaActivityDashboard=new BuniccessLogicaActivityDashboard();
             eventBuss=new EventBuss(activity,getApplicationContext()  ,  getsslSocketFactory2);
             buniccessLogicaActivityDashboard.     МетодИнициализацияHandler();
@@ -128,12 +137,6 @@ public class MainActivity_Dashboard extends AppCompatActivity {
     protected void onStart() {
         super.onStart();
         try {
-            if (  !EventBus.getDefault().isRegistered(this)) {
-                EventBus.getDefault().register(this);
-            }
-
-
-
             // TODO: 27.03.2024 в зависомсти кто вызвает
        Bundle bundleMainActivityDashcBoard=    getIntent().getExtras();
             if (bundleMainActivityDashcBoard.getBoolean("CallBackMainActivityBootAndAsync")) {
@@ -162,12 +165,10 @@ public class MainActivity_Dashboard extends AppCompatActivity {
 
 
     @Override
-    protected void onStop() {
-        super.onStop();
+    protected void onDestroy() {
+        super.onDestroy();
         try{
-            if (  EventBus.getDefault().isRegistered(this)) {
-                EventBus.getDefault().unregister(this);
-            }
+            unregisterEventBusFirst();
             Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                     " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
                     " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"  );
@@ -233,20 +234,6 @@ public class MainActivity_Dashboard extends AppCompatActivity {
 
 
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -510,14 +497,34 @@ try{
             }
         }
 
-
-
 //TODO END BUNIVEESS Logic//TODO END BUNIVEESS Logic//TODO END BUNIVEESS Logic//TODO END BUNIVEESS Logic//TODO END BUNIVEESS Logic//TODO END BUNIVEESS Logic//TODO END BUNIVEESS Logic//TODO END BUNIVEESS Logic
     }//TODO END BUNIVEESS Logic //TODO END BUNIVEESS Logic//TODO END BUNIVEESS Logic//TODO END BUNIVEESS Logic//TODO END BUNIVEESS Logic//TODO END BUNIVEESS Logic//TODO END BUNIVEESS Logic
 
+    private void registeEventBusFirst() {
+
+        if (  !EventBus.getDefault().isRegistered(this)) {
+            EventBus.getDefault().register(this);
+        }
+        Log.d(getApplicationContext().getClass().getName(), "\n"
+                + " время: " + new Date() + "\n+" +
+                " Класс в процессе... " + this.getClass().getName() + "\n" +
+                " метод в процессе... " + Thread.currentThread().getStackTrace()[2].getMethodName()
+                + "   starting... onRestart" + " starting... onRestart");
+    }
+
+    private void unregisterEventBusFirst() {
+        if (  EventBus.getDefault().isRegistered(this)) {
+            EventBus.getDefault().unregister(this);
+        }
+        Log.d(getApplicationContext().getClass().getName(), "\n"
+                + " время: " + new Date() + "\n+" +
+                " Класс в процессе... " + this.getClass().getName() + "\n" +
+                " метод в процессе... " + Thread.currentThread().getStackTrace()[2].getMethodName()
+                + "   starting... onRestart" + " starting... onRestart");
+    }
 
 
-
+    // TODO: 20.03.2025 end class
 }
 
 

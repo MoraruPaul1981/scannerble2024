@@ -9,6 +9,7 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Binder;
 import android.os.Build;
+import android.os.Bundle;
 import android.os.Environment;
 import android.os.IBinder;
 import android.util.Log;
@@ -18,7 +19,7 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 
 import com.dsy.dsu.BootAndAsync.BlBootAsync.DeletingFiles.GetDeletingFilesJsonAndApk;
-import com.dsy.dsu.BootAndAsync.BlBootAsync.SendMainActivity;
+import com.dsy.dsu.BootAndAsync.BlBootAsync.CallBackBusUpdatePO;
 import com.dsy.dsu.BootAndAsync.EventsBus.MessageEvensBusAyns;
 import com.dsy.dsu.Errors.controller.RecordNewErros;
 import com.dsy.dsu.BusinessLogicAll.Class_MODEL_synchronized;
@@ -44,7 +45,6 @@ import javax.net.ssl.SSLSocketFactory;
 import dagger.hilt.android.AndroidEntryPoint;
 
 @AndroidEntryPoint
-
 public class ServiceUpdatePoОбновлениеПО extends IntentService {////Service
 
     public ServiceUpdatePoОбновлениеПО.localBinderОбновлениеПО binder = new ServiceUpdatePoОбновлениеПО.localBinderОбновлениеПО();
@@ -152,27 +152,15 @@ public class ServiceUpdatePoОбновлениеПО extends IntentService {////
     private   void metodNetWorkResimDOnt( ) {
 
         try{
-            class SendUserРежимСетиВыбранПользователем extends SendMainActivity {
+            Intent intentComunicationEvensBusAyns=new Intent();
+            // TODO: 20.03.2025
+            Bundle bundleComunications=new Bundle();
+            intentComunicationEvensBusAyns.setAction("Broad_messageAsyncOrUpdateAsync");
+            bundleComunications.putString("Статус",  "Режим Сети не допустим !!! ");///"В процесс"
+            bundleComunications.putString("Действие",   "Режим Сети не допустим !!! ");///"В процесс"
+            intentComunicationEvensBusAyns.putExtras(bundleComunications);
 
-                public SendUserРежимСетиВыбранПользователем(Context context) {
-                    super(context);
-                }
-
-                @Override
-                public void startSendBroadSesiver() {
-                    //  super.startSendBroadSesiver();
-                    intentComunications.setAction("Broad_messageAsyncOrUpdateAsync");
-                    bundleComunications.putString("Статус",  "Режим Сети не допустим !!! ");///"В процесс"
-                    bundleComunications.putString("Действие",   "Режим Сети не допустим !!! ");///"В процесс"
-                    intentComunications.putExtras(bundleComunications);
-
-                    EventBus.getDefault().post(new MessageEvensBusAyns(intentComunications));
-
-
-                }
-            }
-            // TODO: 22.01.2024 когда режим офлайн
-            new SendUserРежимСетиВыбранПользователем(context).startSendBroadSesiver();
+            EventBus.getDefault().post(new MessageEvensBusAyns(intentComunicationEvensBusAyns));
             // TODO: 03.10.2023
             Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                     " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
