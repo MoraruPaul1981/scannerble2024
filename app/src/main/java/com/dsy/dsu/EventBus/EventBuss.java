@@ -12,17 +12,14 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 
 import com.dsy.dsu.BootAndAsync.DowloadUpdatePO.DownLoadPO;
-import com.dsy.dsu.BootAndAsync.EventsBus.MessageEvensBusAyns;
+import com.dsy.dsu.BootAndAsync.EventsBus.MessageEvensBusNetworkStatuses;
 import com.dsy.dsu.BootAndAsync.EventsBus.MessageEvensBusUpdatePO;
 import com.dsy.dsu.Errors.controller.RecordNewErros;
 import com.dsy.dsu.Hilt.JbossAdrress.getHiltPortJbossInterface;
-import com.dsy.dsu.Hilt.JbossAdrress.qualifiers.QualifierJbossServer3;
 import com.dsy.dsu.Passwords.MainActivityPasswords;
 
 import java.util.LinkedHashMap;
-import java.util.function.ToDoubleBiFunction;
 
-import javax.inject.Inject;
 import javax.net.ssl.SSLSocketFactory;
 
 import dagger.hilt.EntryPoints;
@@ -117,11 +114,11 @@ Activity  activity;
 
 
 
-    public void getEventBusManagerAsync(@NonNull MessageEvensBusAyns messageEvensBusAyns){
+    public void getEventBusManagerAsync(@NonNull MessageEvensBusNetworkStatuses messageEvensBusNetworkStatuses){
 
         try{
 
-            Bundle bundleGetOtServicePrograssBar =(Bundle)         messageEvensBusAyns.mess.getExtras();
+            Bundle bundleGetOtServicePrograssBar =(Bundle)         messageEvensBusNetworkStatuses.mess.getExtras();
             String Статус=   bundleGetOtServicePrograssBar.getString("Статус");
 
 

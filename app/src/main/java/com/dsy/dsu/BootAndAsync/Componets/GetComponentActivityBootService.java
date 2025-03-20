@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
-import android.content.pm.ActivityInfo;
 import android.content.pm.PackageManager;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
@@ -14,7 +13,6 @@ import android.util.Log;
 import android.view.Gravity;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.Toast;
@@ -24,8 +22,7 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.lifecycle.LifecycleOwner;
 
 import com.dsy.dsu.BootAndAsync.BlBootAsync.Hilts.ServiceBootBinessLogic;
-import com.dsy.dsu.BootAndAsync.DowloadUpdatePO.DownLoadPO;
-import com.dsy.dsu.BootAndAsync.EventsBus.MessageEvensBusAyns;
+import com.dsy.dsu.BootAndAsync.EventsBus.MessageEvensBusNetworkStatuses;
 import com.dsy.dsu.BootAndAsync.EventsBus.MessageEvensBusEndAync;
 import com.dsy.dsu.BootAndAsync.EventsBus.MessageEvensBusUpdatePO;
 import com.dsy.dsu.BusinessLogicAll.Permissions.ClassPermissions;
@@ -39,7 +36,6 @@ import com.dsy.dsu.Settings.MainActivity_Settings;
 import com.google.android.material.navigation.NavigationView;
 
 import java.util.Date;
-import java.util.LinkedHashMap;
 
 import javax.net.ssl.SSLSocketFactory;
 
@@ -150,81 +146,6 @@ public class GetComponentActivityBootService {
 
 
 
-
-    public void getEventBusManagerAsync(@NonNull MessageEvensBusAyns messageEvensBusAyns){
-
-        try{
-
-            Bundle bundleGetOtServicePrograssBar =(Bundle)         messageEvensBusAyns.mess.getExtras();
-            String Статус=   bundleGetOtServicePrograssBar.getString("Статус");
-
-
-                    if(Статус.contains("Логин и/или пароль неправильный !!!!")){
-                        методПереходНаActivityPassword();
-                        Toast.makeText(context, "Логин и/или пароль неправильный !!!!"    , Toast.LENGTH_LONG).show();
-                    }
-
-
-
-
-                        if(Статус.contains("Вы заблокирован   !!!!")){
-                            // TODO: 22.01.2024  заблокирован
-                            методПереходНаActivityPassword();
-                            Toast.makeText(context, "Вы заблокирован   !!!! "    , Toast.LENGTH_LONG).show();
-
-                        }
-
-            if(Статус.contains("Первый запуск  !!!!")){
-                // TODO: 22.01.2024  заблокирован
-                методПереходНаActivityPassword();
-              //  Toast.makeText(context, "Вы заблокирован   !!!! "    , Toast.LENGTH_LONG).show();
-
-            }
-
-
-
-
-            if(Статус.contains(    "Сервер выкл.!!!")){
-                Toast.makeText(context,     "Сервер выкл.!!!"    , Toast.LENGTH_LONG).show();
-
-            }
-
-
-
-
-
-
-
-                    // TODO: 26.12.2022  конец основгого кода
-                    Log.d(context.getClass().getName(), "\n" + " class "
-                            + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
-                            " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                            " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" + " Статус " +Статус);
-
-
-        } catch (Exception e) {
-            e.printStackTrace();
-            Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() + " Линия  :"
-                    + Thread.currentThread().getStackTrace()[2].getLineNumber());
-            new RecordNewErros(context).recordnewerror(e.toString(),
-                    this.getClass().getName(), Thread.currentThread().getStackTrace()[2].getMethodName(),
-                    Thread.currentThread().getStackTrace()[2].getLineNumber());
-        }
-    }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
     public void getEventBusEndingAsync(MessageEvensBusEndAync messageEvensBusEndAync){
 
         try{
@@ -306,33 +227,50 @@ public class GetComponentActivityBootService {
 
 
 
-    private void методПереходНаActivityPassword() {
-        try {
-            Intent Интент_ЗапускаетFaceApp=new Intent();
-            Интент_ЗапускаетFaceApp.setClass(context, MainActivityPasswords.class);
-            Интент_ЗапускаетFaceApp.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_SINGLE_TOP);
-            Интент_ЗапускаетFaceApp.setAction("MainActivityPasswords.class");
-           activity.startActivity(Интент_ЗапускаетFaceApp);//tso
-
-
-            Log.d(context.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
-                    " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                    " line " + Thread.currentThread().getStackTrace()[2].getLineNumber());
-        } catch (Exception e) {
-            e.printStackTrace();
-            Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
-                    " Линия  :" + Thread.currentThread().getStackTrace()[2].getLineNumber());
-            new RecordNewErros(context).recordnewerror(e.toString(), this.getClass().getName(),
-                    Thread.currentThread().getStackTrace()[2].getMethodName(), Thread.currentThread().getStackTrace()[2].getLineNumber());
-        }
-
-    }
     // TODO: 19.01.2024
 
 
+    // TODO: 20.03.2025  статусы сети
+    public void getEventBusNetworkStatuses(@NonNull MessageEvensBusNetworkStatuses messageEvensBusNetworkStatuses){
+        try{
+            Bundle bundleGetOtServicePrograssBar =(Bundle)         messageEvensBusNetworkStatuses.mess.getExtras();
+            String Статус=   bundleGetOtServicePrograssBar.getString("Статус");
+
+
+            if(Статус.contains(    "ServerJbosOff")){
+                Toast.makeText(context,     "Сервер выкл.!!!"    , Toast.LENGTH_LONG).show();
+
+            }
+
+            if(Статус.contains(    "LastVersionUpdatePO")){
+                Toast.makeText(context,     "Последняя версия ПО !!!"    , Toast.LENGTH_LONG).show();
+
+            }
 
 
 
+
+            if(Статус.contains(    "UpdateProcessorPO")){
+                Toast.makeText(context,     "Идет Обновление ПО..."    , Toast.LENGTH_LONG).show();
+
+            }
+
+            // TODO: 26.12.2022  конец основгого кода
+            Log.d(context.getClass().getName(), "\n" + " class "
+                    + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                    " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                    " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" + " Статус " +Статус);
+
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() + " Линия  :"
+                    + Thread.currentThread().getStackTrace()[2].getLineNumber());
+            new RecordNewErros(context).recordnewerror(e.toString(),
+                    this.getClass().getName(), Thread.currentThread().getStackTrace()[2].getMethodName(),
+                    Thread.currentThread().getStackTrace()[2].getLineNumber());
+        }
+    }
 
 
 

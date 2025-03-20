@@ -4,12 +4,12 @@ import android.content.Intent;
 
 import androidx.annotation.NonNull;
 
-public class MessageEvensBusAyns {
+public class MessageEvensBusNetworkStatuses {
 
     public Intent mess;
 
 
-    public MessageEvensBusAyns( @NonNull Intent mess) {
+    public MessageEvensBusNetworkStatuses(@NonNull Intent mess) {
         this.mess = mess;
     }
 }

@@ -31,7 +31,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 
 import com.dsy.dsu.AllDatabases.SQLTE.GetSQLiteDatabase;
-import com.dsy.dsu.BootAndAsync.EventsBus.MessageEvensBusAyns;
+import com.dsy.dsu.BootAndAsync.EventsBus.MessageEvensBusNetworkStatuses;
 import com.dsy.dsu.BootAndAsync.EventsBus.MessageEvensBusUpdatePO;
 import com.dsy.dsu.BootAndAsync.ViewModelBoot.View.MainActivityBootAndAsync;
 import com.dsy.dsu.BusinessLogicAll.Class_Clears_Tables;
@@ -48,7 +48,6 @@ import com.dsy.dsu.BusinessLogicAll.Permissions.ClassPermissions;
 import com.dsy.dsu.CnangeServers.PUBLIC_CONTENT;
 import com.dsy.dsu.BusinessLogicAll.SubClassWriterPUBLICIDtoDatabase;
 import com.dsy.dsu.EventBus.EventBuss;
-import com.dsy.dsu.Hilt.JbossAdrress.qualifiers.QualifierJbossServer3;
 import com.dsy.dsu.Hilt.getSSLSocketFactory2.QualifiergetsslSocketFactory2;
 import com.dsy.dsu.R;
 import com.dsy.dsu.Settings.Model.bl_SettingsActivity.GetSettingTableSaves;
@@ -62,7 +61,6 @@ import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.Date;
-import java.util.LinkedHashMap;
 import java.util.Locale;
 import java.util.concurrent.TimeUnit;
 
@@ -776,10 +774,10 @@ public class MainActivityPasswords extends AppCompatActivity {
 
     // TODO: 23.01.2024 EventBus for Async
     @Subscribe(threadMode = ThreadMode.MAIN_ORDERED)
-    public void EventMessageEvensBusAyns(MessageEvensBusAyns messageEvensBusAyns){
+    public void EventMessageEvensBusAyns(MessageEvensBusNetworkStatuses messageEvensBusNetworkStatuses){
         try{
 
-            eventBuss  .getEventBusManagerAsync(messageEvensBusAyns);
+            eventBuss  .getEventBusManagerAsync(messageEvensBusNetworkStatuses);
 
 
 

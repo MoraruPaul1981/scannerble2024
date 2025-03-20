@@ -19,8 +19,7 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 
 import com.dsy.dsu.BootAndAsync.BlBootAsync.DeletingFiles.GetDeletingFilesJsonAndApk;
-import com.dsy.dsu.BootAndAsync.BlBootAsync.CallBackBusUpdatePO;
-import com.dsy.dsu.BootAndAsync.EventsBus.MessageEvensBusAyns;
+import com.dsy.dsu.BootAndAsync.EventsBus.MessageEvensBusNetworkStatuses;
 import com.dsy.dsu.Errors.controller.RecordNewErros;
 import com.dsy.dsu.BusinessLogicAll.Class_MODEL_synchronized;
 import com.dsy.dsu.CnangeServers.PUBLIC_CONTENT;
@@ -159,7 +158,7 @@ public class ServiceUpdatePoОбновлениеПО extends IntentService {////
             bundleComunications.putString("Статус",  "NetworkOff");///"В процесс"
             intentComunicationEvensBusAyns.putExtras(bundleComunications);
 
-            EventBus.getDefault().post(new MessageEvensBusAyns(intentComunicationEvensBusAyns));
+            EventBus.getDefault().post(new MessageEvensBusNetworkStatuses(intentComunicationEvensBusAyns));
             // TODO: 03.10.2023
             Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                     " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +

@@ -250,18 +250,28 @@ try{
         Long       ФинальныйРезультатAsyncBackgroud=0l;
         try{
 
-            // TODO: 25.03.2023 ДОПОЛНИТЕОТНЕ УДЛАНИЕ СТАТУСА УДАЛЕНИЕ ПОСЛЕ СИНХРОНИАЗЦИИ
-            ФинальныйРезультатAsyncBackgroud  = new AsynsProccessor(context,getHiltJaksonObjectMapper,
-                    getsslSocketFactory2,
-                    getHiltPublicId)
-                    .МетодНачалоСихронизациивФоне(context  );
+         Boolean   СтатусРаботыСервера=  new CompleteRemoteSyncService(context).МетодПингаКСереруЗапущенЛиСерерИлиНет(   getsslSocketFactory2,context);
 
 
-            Log.d(getApplicationContext().getClass().getName(), "\n"
-                    + " время: " + new Date() + "\n+" +
-                    " Класс в процессе... " + this.getClass().getName() + "\n" +
-                    " метод в процессе... " + Thread.currentThread().getStackTrace()[2].getMethodName()
-                    + " ФинальныйРезультатAsyncBackgroud " +ФинальныйРезультатAsyncBackgroud + " getHiltPublicId " +getHiltPublicId);
+            if (СтатусРаботыСервера) {
+                // TODO: 25.03.2023 ДОПОЛНИТЕОТНЕ УДЛАНИЕ СТАТУСА УДАЛЕНИЕ ПОСЛЕ СИНХРОНИАЗЦИИ
+                ФинальныйРезультатAsyncBackgroud  = new AsynsProccessor(context,getHiltJaksonObjectMapper,
+                        getsslSocketFactory2,
+                        getHiltPublicId)
+                        .МетодНачалоСихронизациивФоне(context  );
+
+
+                Log.d(getApplicationContext().getClass().getName(), "\n"
+                        + " время: " + new Date() + "\n+" +
+                        " Класс в процессе... " + this.getClass().getName() + "\n" +
+                        " метод в процессе... " + Thread.currentThread().getStackTrace()[2].getMethodName()
+                        + " ФинальныйРезультатAsyncBackgroud " +ФинальныйРезультатAsyncBackgroud + " getHiltPublicId " +getHiltPublicId);
+            }else {
+
+                // TODO: 20.03.2025  отправялем что нет сети
+             new CompleteRemoteSyncService (context).   getDontNetwork(context);
+
+            }
 
 
             afterCodeAsyncForfwardActivityAsync(context, ФинальныйРезультатAsyncBackgroud,getWhoLaunched);

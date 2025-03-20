@@ -16,8 +16,7 @@ import android.util.Log;
 
 import androidx.annotation.NonNull;
 
-import com.dsy.dsu.BootAndAsync.EventsBus.MessageEvensBusAyns;
-import com.dsy.dsu.BootAndAsync.EventsBus.MessageEvensBusPrograssBar;
+import com.dsy.dsu.BootAndAsync.EventsBus.MessageEvensBusNetworkStatuses;
 import com.dsy.dsu.BootAndAsync.EventsBus.MessageEvensBusUpdatePO;
 import com.dsy.dsu.BroadcastRecievers.Bl.RegisterBroadcastForWorkManager;
 import com.dsy.dsu.BusinessLogicAll.Class_Connections_Server;
@@ -29,6 +28,7 @@ import com.dsy.dsu.Dashboard.Model.endingasynsdashboard.GetEndingAsyn;
 import com.dsy.dsu.Errors.controller.RecordNewErros;
 import com.dsy.dsu.Services.ServiceUpdatePoОбновлениеПО;
 import com.dsy.dsu.Services.Service_For_Remote_Async_Binary;
+import com.google.common.util.concurrent.AtomicDouble;
 
 import org.greenrobot.eventbus.EventBus;
 
@@ -49,7 +49,6 @@ import dagger.hilt.components.SingletonComponent;
 
 @Module
 @InstallIn(SingletonComponent.class)
-
 @SuppressLint("Range")
 public class CompleteRemoteSyncService {
 
@@ -100,6 +99,9 @@ public class CompleteRemoteSyncService {
             РежимЗапускаСинхронизации = preferences.getString("РежимЗапускаСинхронизации","СамыйПервыйЗапускСинхронизации");
 
             // TODO: 22.01.2024
+
+
+
 
             Long    ФинальныйРезультатAsyncBackgroud = localBinderAsync.getService().metodStartingSync(context,getWhoLaunched);
 
@@ -231,15 +233,10 @@ public class CompleteRemoteSyncService {
 
                 getSendDOntWorkDashBornElseSucceessAyntifica(ФиналПолучаемРазницуМеждуДатами,  context);
 
+                // TODO: 20.03.2025  отправялем что нет сети
+                  getDontNetwork(context);
+
             }
-
-
-            // TODO: 22.01.2024 сеть включена
-            metodDontSucceessNetwork( context);
-            // TODO: 22.01.2024 сеть выключена
-
-
-
 
 
             // TODO: 26.12.2022  конец основгого кода
@@ -286,7 +283,7 @@ public class CompleteRemoteSyncService {
 
                 // TODO: 28.04.2023 НЕт Анутифтикации Пароль
                 // TODO: 28.04.2023 НЕт Анутифтикации Пароль
-                startFirstApp(  context);
+                new GetEndingAsyn().      veryfirstlaunchActivityPassword(  context);
 
                 Log.d(this.getClass().getName(), "  ФиналПолучаемРазницуМеждуДатами  " + ФиналПолучаемРазницуМеждуДатами
                         + " date_update " + date_update + " СтатусРаботыСервера " + СтатусРаботыСервера +"\n"+
@@ -379,7 +376,7 @@ public class CompleteRemoteSyncService {
 
             // TODO: 28.04.2023 НЕт Анутифтикации Пароль
             // TODO: 28.04.2023 НЕт Анутифтикации Пароль
-            startFirstApp(  context);
+            new GetEndingAsyn().      veryfirstlaunchActivityPassword(  context);
 
             Log.d(this.getClass().getName(), "  ФиналПолучаемРазницуМеждуДатами  " + ФиналПолучаемРазницуМеждуДатами
                     + " date_update " + date_update + " СтатусРаботыСервера " + СтатусРаботыСервера);
@@ -399,56 +396,24 @@ public class CompleteRemoteSyncService {
 
 
 
-    private void startFirstApp(@NonNull Context context) {
-        try{
-            Intent intentComunicationsBusAyns=new Intent();
-            Bundle bundleComunications=new Bundle();
-            intentComunicationsBusAyns.setAction("EventBusAnsyc");
-            bundleComunications.putString("Статус",  "AsyncStart");///"В процесс"
-            intentComunicationsBusAyns.putExtras(bundleComunications);
 
-            // TODO: 23.01.2024 SEND event bus
-            EventBus.getDefault().post(new MessageEvensBusAyns(intentComunicationsBusAyns));
-
-            Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
-                    " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                    " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" +
-                    " localBinderAsync "+ "\n" );
-    } catch (Exception e) {
-        e.printStackTrace();
-        Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() + " Линия  :"
-                + Thread.currentThread().getStackTrace()[2].getLineNumber());
-        new RecordNewErros(context).recordnewerror(e.toString(), this.getClass().getName(),
-                Thread.currentThread().getStackTrace()[2].getMethodName(),
-                Thread.currentThread().getStackTrace()[2].getLineNumber());
-    }
-    }
     
     
     
     
     
-    private void metodDontSucceessNetwork(@NonNull Context context) {
+    public void getSucceessNetwork(@NonNull Context context) {
         try{
             Intent intentComunicationsBusAyns=new Intent();
             Bundle bundleComunications=new Bundle();
 
-            if (СтатусРаботыСервера==false) {
-                intentComunicationsBusAyns.setAction("EventBusAnsyc");
-                bundleComunications.putString("Статус",  "ServerJbosOff");///"В процесс"
-                intentComunicationsBusAyns.putExtras(bundleComunications);
-
-                EventBus.getDefault().post(new MessageEvensBusAyns(intentComunicationsBusAyns));
-                // TODO: 22.01.2024 просто сеть рабоатет  переделаем програсс бару
-            }else {
 
                     intentComunicationsBusAyns.setAction("EventBusAnsyc");
                     bundleComunications.putString("Статус",  "ServerJbosOn");///"В процесс"
                     intentComunicationsBusAyns.putExtras(bundleComunications);
                     // TODO: 25.09.2024 call back AN Screnn User Boot Activity
-                    EventBus.getDefault().post(new MessageEvensBusPrograssBar(intentComunicationsBusAyns));
+                    EventBus.getDefault().post(new MessageEvensBusNetworkStatuses(intentComunicationsBusAyns));
 
-            }
 
             Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                     " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
@@ -465,11 +430,88 @@ public class CompleteRemoteSyncService {
     }
 
 
+    public void getDontNetwork(@NonNull Context context) {
+        try{
+            Intent intentComunicationsBusAyns=new Intent();
+            Bundle bundleComunications=new Bundle();
+
+
+                intentComunicationsBusAyns.setAction("EventBusAnsyc");
+                bundleComunications.putString("Статус",  "ServerJbosOff");///"В процесс"
+                intentComunicationsBusAyns.putExtras(bundleComunications);
+
+                EventBus.getDefault().post(new MessageEvensBusNetworkStatuses(intentComunicationsBusAyns));
+                // TODO: 22.01.2024 просто сеть рабоатет  переделаем програсс бару
+
+            Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                    " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                    " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" +
+                    " localBinderAsync "+ "\n" );
+        } catch (Exception e) {
+            e.printStackTrace();
+            Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() + " Линия  :"
+                    + Thread.currentThread().getStackTrace()[2].getLineNumber());
+            new RecordNewErros(context).recordnewerror(e.toString(), this.getClass().getName(),
+                    Thread.currentThread().getStackTrace()[2].getMethodName(),
+                    Thread.currentThread().getStackTrace()[2].getLineNumber());
+        }
+    }
 
 
 
 
+    public void getLastVersionUpdatePO(@NonNull Context context) {
+        try{
+            Intent intentComunicationsBusAyns=new Intent();
+            Bundle bundleComunications=new Bundle();
 
+
+            intentComunicationsBusAyns.setAction("EventBusAnsyc");
+            bundleComunications.putString("Статус",  "LastVersionUpdatePO");///"В процесс"
+            intentComunicationsBusAyns.putExtras(bundleComunications);
+
+            EventBus.getDefault().post(new MessageEvensBusNetworkStatuses(intentComunicationsBusAyns));
+            // TODO: 22.01.2024 просто сеть рабоатет  переделаем програсс бару
+
+            Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                    " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                    " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" +
+                    " localBinderAsync "+ "\n" );
+        } catch (Exception e) {
+            e.printStackTrace();
+            Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() + " Линия  :"
+                    + Thread.currentThread().getStackTrace()[2].getLineNumber());
+            new RecordNewErros(context).recordnewerror(e.toString(), this.getClass().getName(),
+                    Thread.currentThread().getStackTrace()[2].getMethodName(),
+                    Thread.currentThread().getStackTrace()[2].getLineNumber());
+        }
+    }
+    public void getUpdateProcessorPO(@NonNull Context context) {
+        try{
+            Intent intentComunicationsBusAyns=new Intent();
+            Bundle bundleComunications=new Bundle();
+
+
+            intentComunicationsBusAyns.setAction("EventBusAnsyc");
+            bundleComunications.putString("Статус",  "UpdateProcessorPO");///"В процесс"
+            intentComunicationsBusAyns.putExtras(bundleComunications);
+
+            EventBus.getDefault().post(new MessageEvensBusNetworkStatuses(intentComunicationsBusAyns));
+            // TODO: 22.01.2024 просто сеть рабоатет  переделаем програсс бару
+
+            Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                    " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                    " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" +
+                    " localBinderAsync "+ "\n" );
+        } catch (Exception e) {
+            e.printStackTrace();
+            Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() + " Линия  :"
+                    + Thread.currentThread().getStackTrace()[2].getLineNumber());
+            new RecordNewErros(context).recordnewerror(e.toString(), this.getClass().getName(),
+                    Thread.currentThread().getStackTrace()[2].getMethodName(),
+                    Thread.currentThread().getStackTrace()[2].getLineNumber());
+        }
+    }
 
 
 
@@ -1151,37 +1193,6 @@ public class CompleteRemoteSyncService {
         }
 
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 

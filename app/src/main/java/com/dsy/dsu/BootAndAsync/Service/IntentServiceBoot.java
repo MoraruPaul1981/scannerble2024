@@ -312,6 +312,10 @@ public     void startingServiceBoot(@NotNull Intent intent,@NonNull String getWh
                     completeRemoteSyncService.startServiceUpdatePOAndAsync(getsslSocketFactory2, "IntentServiceBootUpdatePo.comAndIntentServiceBootAsync.com",
                             getHiltPortJboss,"BootService",getApplicationContext());
 
+
+                    completeRemoteSyncService.    getDontNetwork(getApplicationContext());
+
+
                     Log.d(getApplicationContext().getClass().getName(), "\n"
                             + " время: " + new Date() + "\n+" +
                             " Класс в процессе... " + this.getClass().getName() + "\n" +

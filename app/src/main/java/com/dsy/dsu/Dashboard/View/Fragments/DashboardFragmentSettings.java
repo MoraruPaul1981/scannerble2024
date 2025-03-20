@@ -659,9 +659,9 @@ public class DashboardFragmentSettings extends  DialogFragment {
                     ProgressDialog  progressDialogДляСинхронизации = new ProgressDialog(getActivity());
 
                         // TODO: 22.12.2022  сама запуска синхронищации из workmanager ОБЩЕГО
-                        boolean ВыбранныйРежимСети =
+                    /*    boolean ВыбранныйРежимСети =
                                 new GetConnectivityManagerAndroid(getContext()).сonnectivityManageruserselection();
-                        if (ВыбранныйРежимСети == true) {
+                        if (ВыбранныйРежимСети == true) {*/
                             handlerAsync.post(() -> {
                                 progressDialogДляСинхронизации.setTitle("Обмен данными");
                                 progressDialogДляСинхронизации.setProgressStyle(ProgressDialog.STYLE_SPINNER);
@@ -682,7 +682,7 @@ public class DashboardFragmentSettings extends  DialogFragment {
 
 
 
-                        } else {
+                   /*     } else {
                             getActivity().runOnUiThread(new Runnable() {
                                 @Override
                                 public void run() {
@@ -691,7 +691,7 @@ public class DashboardFragmentSettings extends  DialogFragment {
                                     toast.show();
                                 }
                             });
-                        }
+                        }*/
                         // TODO: 14.12.2023
 
                         handlerAsync.postDelayed(() -> {
