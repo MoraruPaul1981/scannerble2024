@@ -14,6 +14,7 @@ import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.ScrollView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -22,6 +23,7 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
 import com.dsy.dsu.BootAndAsync.Componets.GetComponentActivityBootService;
+import com.dsy.dsu.BootAndAsync.EventsBus.MessageEvensBusNetworkStatuses;
 import com.dsy.dsu.BroadcastRecievers.Bl.RegisterBroadcastForWorkManager;
 import com.dsy.dsu.BusinessLogicAll.Permissions.ClassPermissions;
 import com.dsy.dsu.Dashboard.View.Fragments.DashboardFragmentSettings;
@@ -32,6 +34,10 @@ import com.dsy.dsu.Hilt.getSSLSocketFactory2.QualifiergetsslSocketFactory2;
 import com.dsy.dsu.Dashboard.View.Fragments.DashboardFragmentMaterialDesign;
 import com.dsy.dsu.R;
 
+
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.Date;
 
@@ -88,7 +94,7 @@ public class MainActivity_Dashboard extends AppCompatActivity {
             // TODO: 04.10.2023 разрешения для всего
             new ClassPermissions(this,ALL_PERSSION_CODE);
 
-
+            registeEventBusFirst();
 
 
 
@@ -150,6 +156,8 @@ public class MainActivity_Dashboard extends AppCompatActivity {
     protected void onDestroy() {
         super.onDestroy();
         try{
+
+            unregisterEventBusFirst();
             Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                     " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
                     " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"  );
@@ -365,10 +373,114 @@ try{
             }
         }
 
+
+
+        // TODO: 20.03.2025  статусы сети
+        public void getEventBusNetworkStatuses(@NonNull MessageEvensBusNetworkStatuses messageEvensBusNetworkStatuses,
+                                               @NonNull Context context){
+            try{
+                Bundle bundleGetOtServicePrograssBar =(Bundle)         messageEvensBusNetworkStatuses.mess.getExtras();
+                String Статус=   bundleGetOtServicePrograssBar.getString("Статус");
+
+
+                if(Статус.contains(    "ServerJbosOff")){
+                    Toast.makeText(context,     "Сервер выкл.!!!"    , Toast.LENGTH_LONG).show();
+
+                }
+
+                if(Статус.contains(    "LastVersionUpdatePO")){
+                    Toast.makeText(context,     "Последняя версия ПО !!!"    , Toast.LENGTH_LONG).show();
+
+                }
+
+
+
+
+                if(Статус.contains(    "UpdateProcessorPO")){
+                    Toast.makeText(context,     "Идет Обновление ПО..."    , Toast.LENGTH_LONG).show();
+
+                }
+
+                // TODO: 26.12.2022  конец основгого кода
+                Log.d(context.getClass().getName(), "\n" + " class "
+                        + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                        " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                        " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" + " Статус " +Статус);
+
+
+            } catch (Exception e) {
+                e.printStackTrace();
+                Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() + " Линия  :"
+                        + Thread.currentThread().getStackTrace()[2].getLineNumber());
+                new RecordNewErros(context).recordnewerror(e.toString(),
+                        this.getClass().getName(), Thread.currentThread().getStackTrace()[2].getMethodName(),
+                        Thread.currentThread().getStackTrace()[2].getLineNumber());
+            }
+        }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 //TODO END BUNIVEESS Logic//TODO END BUNIVEESS Logic//TODO END BUNIVEESS Logic//TODO END BUNIVEESS Logic//TODO END BUNIVEESS Logic//TODO END BUNIVEESS Logic//TODO END BUNIVEESS Logic//TODO END BUNIVEESS Logic
     }//TODO END BUNIVEESS Logic //TODO END BUNIVEESS Logic//TODO END BUNIVEESS Logic//TODO END BUNIVEESS Logic//TODO END BUNIVEESS Logic//TODO END BUNIVEESS Logic//TODO END BUNIVEESS Logic
 
+    private void registeEventBusFirst() {
 
+        if (  !EventBus.getDefault().isRegistered(this)) {
+            EventBus.getDefault().register(this);
+        }
+        Log.d(getApplicationContext().getClass().getName(), "\n"
+                + " время: " + new Date() + "\n+" +
+                " Класс в процессе... " + this.getClass().getName() + "\n" +
+                " метод в процессе... " + Thread.currentThread().getStackTrace()[2].getMethodName()
+                + "   starting... onRestart" + " starting... onRestart");
+    }
+
+    private void unregisterEventBusFirst() {
+        if (  EventBus.getDefault().isRegistered(this)) {
+            EventBus.getDefault().unregister(this);
+        }
+        Log.d(getApplicationContext().getClass().getName(), "\n"
+                + " время: " + new Date() + "\n+" +
+                " Класс в процессе... " + this.getClass().getName() + "\n" +
+                " метод в процессе... " + Thread.currentThread().getStackTrace()[2].getMethodName()
+                + "   starting... onRestart" + " starting... onRestart");
+    }
+
+
+    // TODO: 23.01.2024 EventBus for Async
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void EventMessageEvensBusAyns(MessageEvensBusNetworkStatuses messageEvensBusNetworkStatuses){
+        try{
+
+                    buniccessLogicaActivityDashboard .getEventBusNetworkStatuses(messageEvensBusNetworkStatuses,getApplicationContext());
+
+            Log.d(getApplicationContext().getClass().getName(), "\n"
+                    + " время: " + new Date() + "\n+" +
+                    " Класс в процессе... " + this.getClass().getName() + "\n" +
+                    " метод в процессе... " + Thread.currentThread().getStackTrace()[2].getMethodName()
+                    + "   starting... onRestart" + " starting... onRestart");
+        } catch (Exception e) {
+            e.printStackTrace();
+            Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() + " Линия  :"
+                    + Thread.currentThread().getStackTrace()[2].getLineNumber());
+            new RecordNewErros(getApplicationContext()).recordnewerror(e.toString(), this.getClass().getName(), Thread.currentThread().getStackTrace()[2].getMethodName(),
+                    Thread.currentThread().getStackTrace()[2].getLineNumber());
+        }
+    }
 
 
     // TODO: 20.03.2025 end class

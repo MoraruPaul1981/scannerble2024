@@ -260,6 +260,9 @@ try{
                         getHiltPublicId)
                         .МетодНачалоСихронизациивФоне(context  );
 
+// TODO: 20.03.2025  
+
+                afterCodeAsyncForfwardActivityAsync(context, ФинальныйРезультатAsyncBackgroud,getWhoLaunched);
 
                 Log.d(getApplicationContext().getClass().getName(), "\n"
                         + " время: " + new Date() + "\n+" +
@@ -274,7 +277,6 @@ try{
             }
 
 
-            afterCodeAsyncForfwardActivityAsync(context, ФинальныйРезультатAsyncBackgroud,getWhoLaunched);
 
 
             // TODO: 10.10.2024 Окночание службы и передаем всем

@@ -146,7 +146,7 @@ public class DashboardFragmentSettings extends  DialogFragment {
 
             // TODO: 27.12.2024
 
-           registeEventBusFirst();
+
 
 // TODO: 27.12.2024 Инициализирукм Конструктор Класса для запуска Обновление ПО
             blInnerMainActivityBootAndAsync=new GetComponentActivityBootService(getsslSocketFactory2,getActivity(),getContext() ,lifecycleOwner);
@@ -313,7 +313,7 @@ public class DashboardFragmentSettings extends  DialogFragment {
         super.onStop();
         try{
             try{
-                unregisterEventBusFirst();
+
                 // TODO: 17.08.2023
                 Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                         " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
@@ -344,28 +344,6 @@ public class DashboardFragmentSettings extends  DialogFragment {
 
 
 
-    private void registeEventBusFirst() {
-
-        if (  !EventBus.getDefault().isRegistered(this)) {
-            EventBus.getDefault().register(this);
-        }
-        Log.d(getContext().getClass().getName(), "\n"
-                + " время: " + new Date() + "\n+" +
-                " Класс в процессе... " + this.getClass().getName() + "\n" +
-                " метод в процессе... " + Thread.currentThread().getStackTrace()[2].getMethodName()
-                + "   starting... onRestart" + " starting... onRestart");
-    }
-
-   private void unregisterEventBusFirst() {
-        if (  EventBus.getDefault().isRegistered(this)) {
-            EventBus.getDefault().unregister(this);
-        }
-        Log.d(getContext().getClass().getName(), "\n"
-                + " время: " + new Date() + "\n+" +
-                " Класс в процессе... " + this.getClass().getName() + "\n" +
-                " метод в процессе... " + Thread.currentThread().getStackTrace()[2].getMethodName()
-                + "   starting... onRestart" + " starting... onRestart");
-    }
 
 
     // TODO: 23.01.2024 EventBus for Update PO
