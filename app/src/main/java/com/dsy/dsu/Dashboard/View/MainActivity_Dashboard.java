@@ -427,7 +427,7 @@ try{
 
 
                 if(Статус.contains(    "UpdateProcessorPO")){
-                    Toast.makeText(getApplicationContext(),     "Идет Обновление ПО..."    , Toast.LENGTH_LONG).show();
+                    //Toast.makeText(getApplicationContext(),     "Идет Обновление ПО..."    , Toast.LENGTH_LONG).show();
 
                     Vibrator v2 = (Vibrator) getApplicationContext().getSystemService(Context.VIBRATOR_SERVICE);
                     v2.vibrate(VibrationEffect.createOneShot(150, VibrationEffect.DEFAULT_AMPLITUDE));
