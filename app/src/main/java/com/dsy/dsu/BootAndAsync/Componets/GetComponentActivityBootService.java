@@ -58,7 +58,7 @@ public class GetComponentActivityBootService {
 
     public static final int ALL_PERSSION_CODE=1;
 
-    @NonNull LinkedHashMap<Integer,String> getHiltPortJboss;
+
 
     ImageView imageView_faceapp_settings;
     // TODO: 27.12.2024 первый КОНСТРУКТОР
@@ -74,7 +74,6 @@ public class GetComponentActivityBootService {
         this.activity = activity;
         this.context = context;
         this.lifecycleOwner = lifecycleOwner;
-        this.getHiltPortJboss = getHiltPortJboss;
         // TODO: 24.01.2024
     }
 
@@ -103,7 +102,6 @@ public class GetComponentActivityBootService {
         this.navigationViewAsyncApp = navigationViewAsyncApp;
         this.context = context;
         this.lifecycleOwner = lifecycleOwner;
-        this.getHiltPortJboss = getHiltPortJboss;
         this.imageView_faceapp_settings = imageView_faceapp_settings;
         // TODO: 24.01.2024
     }

@@ -46,7 +46,6 @@ import com.dsy.dsu.BusinessLogicAll.Class_MODEL_synchronized;
 import com.dsy.dsu.CnangeServers.PUBLIC_CONTENT;
 
 import com.dsy.dsu.Hilt.JbossAdrress.getHiltPortJbossInterface;
-import com.dsy.dsu.Hilt.JbossAdrress.qualifiers.QualifierJbossServer3;
 import com.dsy.dsu.Hilt.getSSLSocketFactory2.QualifiergetsslSocketFactory2;
 import com.dsy.dsu.Tabels.MainActivity_New_Templates;
 import com.dsy.dsu.Services.ServiceUpdatePoОбновлениеПО;
@@ -70,10 +69,6 @@ import javax.net.ssl.SSLSocketFactory;
 
 import dagger.hilt.EntryPoints;
 import dagger.hilt.android.AndroidEntryPoint;
-import io.reactivex.rxjava3.core.Completable;
-import io.reactivex.rxjava3.core.CompletableObserver;
-import io.reactivex.rxjava3.disposables.Disposable;
-import io.reactivex.rxjava3.functions.Action;
 import io.reactivex.rxjava3.functions.Function;
 import io.reactivex.rxjava3.functions.Predicate;
 import io.reactivex.rxjava3.subjects.Subject;
@@ -117,9 +112,6 @@ public class DashboardFragmentSettings extends  DialogFragment {
     @Inject
     @QualifiergetsslSocketFactory2
     SSLSocketFactory getsslSocketFactory2;
-
-
-
 
 
      GetComponentActivityBootService blInnerMainActivityBootAndAsync;
@@ -257,7 +249,7 @@ public class DashboardFragmentSettings extends  DialogFragment {
             // TODO: 22.08.2023  дейстия кнопок TASK
             classBiznesLogikaSettings.new ClassAllTaskButtons().new SubClassoSystem().методТаскоСистемы();
 
-            classBiznesLogikaSettings.new ClassAllTaskButtons().new SubClassAsyncVisual().методStartingAsyncVisuals() ;
+            classBiznesLogikaSettings.new ClassAllTaskButtons().new SubClassAsyncVisual().ЗапускСинхрониазцииИзФрагмента() ;
 
             classBiznesLogikaSettings.new ClassAllTaskButtons().new SubClassChangeDataUsers().методСменыДанныхПользователя(); ;
 
@@ -615,7 +607,7 @@ public class DashboardFragmentSettings extends  DialogFragment {
 
 
             class SubClassAsyncVisual{
-                private void методStartingAsyncVisuals() {
+                private void ЗапускСинхрониазцииИзФрагмента() {
 
 
                     RxView.clicks(  КнопкаОбменДанными)
@@ -670,49 +662,10 @@ public class DashboardFragmentSettings extends  DialogFragment {
                     ///todo revboot
                     ProgressDialog  progressDialogДляСинхронизации = new ProgressDialog(getActivity());
 
-                         Boolean СтатусСервераСоюзаВключенИлиНЕт = false;
-
                         // TODO: 22.12.2022  сама запуска синхронищации из workmanager ОБЩЕГО
                         boolean ВыбранныйРежимСети =
                                 new GetConnectivityManagerAndroid(getContext()).сonnectivityManageruserselection();
-
-                        Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
-                                " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                                " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"
-                                + " lВыбранныйРежимСети" + ВыбранныйРежимСети);
-
-                        // TODO: 26.06.2022
-                        Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
-                                " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                                " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n");
-
-
-
                         if (ВыбранныйРежимСети == true) {
-                            // TODO: 16.12.2021 НЕПОСРЕДСТВЕННЫЙ ПИНГ СИСТЕНМ ИНТРЕНАТ НА НАЛИЧЕНИ СВАЗИ С БАЗОЙ SQL SERVER
-                            СтатусСервераСоюзаВключенИлиНЕт =
-                                    new Class_Connections_Server( ). pingServerJbossSuccessfulOrNot(getContext(),getsslSocketFactory2 );
-
-                            Log.d(this.getClass().getName(), "\n"
-                                    + " время: " + new Date() + "\n+" +
-                                    " Класс в процессе... " + this.getClass().getName() + "\n" +
-                                    " метод в процессе... " + Thread.currentThread().getStackTrace()[2].getMethodName() +
-                                    "   СтатусСервераСоюзаВключенИлиНЕт[0] " + СтатусСервераСоюзаВключенИлиНЕт);
-                            // TODO: 26.06.2022
-                            Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
-                                    " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                                    " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n");
-
-                        }
-                        // TODO: 26.06.2022
-                        Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
-                                " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                                " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"+
-                                " СтатусСервераСоюзаВключенИлиНЕт[0] " +СтатусСервераСоюзаВключенИлиНЕт);
-
-                        if (   СтатусСервераСоюзаВключенИлиНЕт == true) {
-
-
                             handlerAsync.post(() -> {
                                 progressDialogДляСинхронизации.setTitle("Обмен данными");
                                 progressDialogДляСинхронизации.setProgressStyle(ProgressDialog.STYLE_SPINNER);
@@ -724,7 +677,7 @@ public class DashboardFragmentSettings extends  DialogFragment {
                                 }
                             });
 
-// TODO: 10.07.2023  запуск обновление ПО
+                            // TODO: 10.07.2023  запуск Синхрониаию
                             serviceBootBinessLogic.startServiceBootAndAsync("IntentServiceBootAsync.com");
                             // TODO: 26.06.2022
                             Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +

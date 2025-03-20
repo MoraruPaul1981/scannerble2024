@@ -54,8 +54,8 @@ import dagger.hilt.components.SingletonComponent;
 @SuppressLint("Range")
 public class CompleteRemoteSyncService {
 
-    private Service_For_Remote_Async_Binary.LocalBinderAsync localBinderAsync;//TODO нова\
-    private ServiceUpdatePoОбновлениеПО.localBinderОбновлениеПО localBinderОбновлениеПО;//TODO нова
+    private  Service_For_Remote_Async_Binary.LocalBinderAsync localBinderAsync;//TODO нова\
+    private   ServiceUpdatePoОбновлениеПО.localBinderОбновлениеПО localBinderОбновлениеПО;//TODO нова
 
     private ServiceConnection connectionОбновлениеПО;
     private ServiceConnection connectionAsync;
@@ -1199,7 +1199,7 @@ public class CompleteRemoteSyncService {
 
             if(localBinderОбновлениеПО!=null){
                 if (localBinderОбновлениеПО.isBinderAlive()) {
-                    connectionОбновлениеПО.onServiceDisconnected(null);
+                    localBinderОбновлениеПО.getService().onDestroy();
                 }
             }
 
@@ -1226,7 +1226,7 @@ public class CompleteRemoteSyncService {
         try {
             if(localBinderAsync!=null){
                 if (localBinderAsync.isBinderAlive()) {
-                    connectionAsync.onServiceDisconnected(null);
+                    localBinderAsync.getService().onDestroy();
                 }
             }
             // TODO: 28.04.2023
