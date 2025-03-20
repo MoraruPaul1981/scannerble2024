@@ -343,9 +343,8 @@ public class MainActivityBootAndAsync extends AppCompatActivity {
     public void EventMessageEvensBusUpdatePO(MessageEvensBusUpdatePO messageEvensBusUpdatePO){
         try{
 
-            LinkedHashMap<Integer,String> getHiltPortJboss=   EntryPoints.get(getApplicationContext(), getHiltPortJbossInterface.class).getHiltPortJboss();
 
-            blInnerMainActivityBootAndAsync   .getEventBusUpdatePo(messageEvensBusUpdatePO, getHiltPortJboss);
+            blInnerMainActivityBootAndAsync   .getEventBusUpdatePo(messageEvensBusUpdatePO);
 
             Log.d(getApplicationContext().getClass().getName(), "\n"
                     + " время: " + new Date() + "\n+" +

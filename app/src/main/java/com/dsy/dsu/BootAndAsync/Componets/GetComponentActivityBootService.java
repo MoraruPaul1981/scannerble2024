@@ -107,7 +107,7 @@ public class GetComponentActivityBootService {
     }
 
 
-    public void getEventBusUpdatePo(@NonNull MessageEvensBusUpdatePO messageEvensBusUpdatePO , LinkedHashMap<Integer,String> getHiltPortJboss){
+    public void getEventBusUpdatePo(@NonNull MessageEvensBusUpdatePO messageEvensBusUpdatePO  ){
 
         try{
             Bundle bundleGetOtServiceUpdatePO =(Bundle)         messageEvensBusUpdatePO.mess.getExtras();
@@ -115,7 +115,7 @@ public class GetComponentActivityBootService {
             Integer СервернаяВерсия=   bundleGetOtServiceUpdatePO.getInt("СервернаяВерсия");
 
 
-                    if(Статус.contains( "У вас последная версия ПО !!!")){
+                    if(Статус.contains( " ")){
 
 
                         Toast.makeText(context,
@@ -128,18 +128,6 @@ public class GetComponentActivityBootService {
                                 " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n");
 
 
-                    }else {
-                        if(Статус.contains( "Запускаем Обновление ПО !!!!")) {
-                            // TODO: 22.01.2024
-                            DownLoadPO downLoadPO=new DownLoadPO(activity,context,СервернаяВерсия,getsslSocketFactory2,getHiltPortJboss);
-
-                            downLoadPO.МетодСообщениеАнализПО( );
-                            // TODO: 26.12.2022  конец основгого кода
-                            Log.d(context.getClass().getName(), "\n" + " class "
-                                    + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
-                                    " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                                    " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n");
-                        }
                     }
 
 
@@ -243,7 +231,7 @@ public class GetComponentActivityBootService {
             Bundle bundleGetOtServicePrograssBar =(Bundle)         messageEvensBusEndAync.mess.getExtras();
             String Статус=   bundleGetOtServicePrograssBar.getString("Статус");
             
-            if (Статус.contains("AnsycEnding")) {
+            if (Статус.contains("AnsycEnd")) {
                 // TODO: 26.03.2024
 
 

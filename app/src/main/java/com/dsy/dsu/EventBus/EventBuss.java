@@ -20,6 +20,7 @@ import com.dsy.dsu.Hilt.JbossAdrress.qualifiers.QualifierJbossServer3;
 import com.dsy.dsu.Passwords.MainActivityPasswords;
 
 import java.util.LinkedHashMap;
+import java.util.function.ToDoubleBiFunction;
 
 import javax.inject.Inject;
 import javax.net.ssl.SSLSocketFactory;
@@ -52,6 +53,14 @@ Activity  activity;
             Bundle bundleGetOtServiceUpdatePO =(Bundle)         messageEvensBusUpdatePO.mess.getExtras();
             String Статус=   bundleGetOtServiceUpdatePO.getString("Статус");
             Integer СервернаяВерсия=   bundleGetOtServiceUpdatePO.getInt("СервернаяВерсия");
+            // TODO: 20.03.2025
+            if (Статус.equalsIgnoreCase("EventBusUpdatePO")){
+                // TODO: 20.03.2025
+
+
+
+
+            }
 
 
             if(Статус.contains( "У вас последная версия ПО !!!")){
@@ -60,11 +69,11 @@ Activity  activity;
                 Toast.makeText(context,
                         "Уже установлена !!! "+ СервернаяВерсия    , Toast.LENGTH_LONG).show();
 
-// TODO: 26.12.2022  конец основгого кода
-                Log.d(context.getClass().getName(), "\n" + " class "
-                        + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
-                        " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                        " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n");
+
+
+
+
+
 
 
             }else {

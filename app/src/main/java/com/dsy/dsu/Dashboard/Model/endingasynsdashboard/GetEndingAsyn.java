@@ -23,12 +23,12 @@ public class GetEndingAsyn {
                                          @NonNull ServiceUpdatePoОбновлениеПО.localBinderОбновлениеПО localBinderОбновлениеПО){
         try {
 
-            Intent intentAnsycEnding=new Intent("AnsycEnding");
-            intentAnsycEnding.setAction("Broad_messageAsyncOrUpdatePO");
+            Intent intentAnsycEnding=new Intent();
+            intentAnsycEnding.setAction("EventBusAnsyc");
             Bundle bundle=new Bundle();
 
             bundle.putBinder("callbackbinderdashbord",localBinderОбновлениеПО);
-            bundle.putString("Статус",   "AnsycEnding");///"В процесс"
+            bundle.putString("Статус",   "AnsycEnd");///"В процесс"
             intentAnsycEnding.putExtras(bundle);
 
             EventBus.getDefault().post(new MessageEvensBusEndAync(intentAnsycEnding));
@@ -52,11 +52,11 @@ public class GetEndingAsyn {
     public void metoEndingAsynsOtService(@NonNull Context context){
         try {
 
-            Intent intentAnsycEnding=new Intent("AnsycEnding");
-            intentAnsycEnding.setAction("Broad_messageAsyncOrUpdatePO");
+            Intent intentAnsycEnding=new Intent();
+            intentAnsycEnding.setAction("EventBusAnsyc");
             Bundle bundle=new Bundle();
 
-            bundle.putString("Статус",   "AnsycEnding");///"В процесс"
+            bundle.putString("Статус",  "AnsycEnd");///"В процесс"
             intentAnsycEnding.putExtras(bundle);
 
             EventBus.getDefault().post(new MessageEvensBusEndAync(intentAnsycEnding));

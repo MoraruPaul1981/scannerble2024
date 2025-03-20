@@ -155,9 +155,8 @@ public class ServiceUpdatePoОбновлениеПО extends IntentService {////
             Intent intentComunicationEvensBusAyns=new Intent();
             // TODO: 20.03.2025
             Bundle bundleComunications=new Bundle();
-            intentComunicationEvensBusAyns.setAction("Broad_messageAsyncOrUpdateAsync");
-            bundleComunications.putString("Статус",  "Режим Сети не допустим !!! ");///"В процесс"
-            bundleComunications.putString("Действие",   "Режим Сети не допустим !!! ");///"В процесс"
+            intentComunicationEvensBusAyns.setAction("EventBusAnsyc");
+            bundleComunications.putString("Статус",  "NetworkOff");///"В процесс"
             intentComunicationEvensBusAyns.putExtras(bundleComunications);
 
             EventBus.getDefault().post(new MessageEvensBusAyns(intentComunicationEvensBusAyns));

@@ -1,17 +1,13 @@
 package com.dsy.dsu.BootAndAsync.BlBootAsync;
 
 import android.annotation.SuppressLint;
-import android.content.BroadcastReceiver;
-import android.content.ComponentCallbacks;
 import android.content.ComponentName;
 import android.content.ContentResolver;
 import android.content.Context;
 import android.content.Intent;
-import android.content.IntentFilter;
 import android.content.ServiceConnection;
 import android.content.SharedPreferences;
 import android.content.pm.PackageInfo;
-import android.content.res.Configuration;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
@@ -226,10 +222,6 @@ public class CompleteRemoteSyncService {
                     " line " + Thread.currentThread().getStackTrace()[2].getLineNumber()
                     + "\n"+ " СтатусРаботыСервера " +СтатусРаботыСервера);
 
-            // TODO: 22.01.2024 сеть включена
-            metodDontNetwork( context);
-            // TODO: 22.01.2024 сеть выключена
-            metodSucceessNetwork( context);
 
 
             if (СтатусРаботыСервера) {
@@ -240,6 +232,15 @@ public class CompleteRemoteSyncService {
                 getSendDOntWorkDashBornElseSucceessAyntifica(ФиналПолучаемРазницуМеждуДатами,  context);
 
             }
+
+
+            // TODO: 22.01.2024 сеть включена
+            metodDontSucceessNetwork( context);
+            // TODO: 22.01.2024 сеть выключена
+
+
+
+
 
             // TODO: 26.12.2022  конец основгого кода
             Log.d(context.getClass().getName(), "\n" + " class "
@@ -360,7 +361,7 @@ public class CompleteRemoteSyncService {
                                              @NonNull Context context) {
         try{
         if (      date_update != null && success_users != null && success_login != null
-                && ФиналПолучаемРазницуМеждуДатами < 40 ) {
+                && ФиналПолучаемРазницуМеждуДатами < permissibledaysofwork ) {
 
             // TODO: 22.01.2024  запускаеми службу обновление ПО
             new SuccessAsynsStartingUpdatrPO().startingAsyncForUpSoft(   getHiltPortJboss,landingMode,getWhoLaunched, context);
@@ -371,7 +372,8 @@ public class CompleteRemoteSyncService {
                     " Класс в процессе... " + this.getClass().getName() + "\n" +
                     " метод в процессе... " + Thread.currentThread().getStackTrace()[2].getMethodName()
                     + " localBinderОбновлениеПО.isBinderAlive() " + localBinderОбновлениеПО.isBinderAlive()+
-                    " ФиналПолучаемРазницуМеждуДатами " +ФиналПолучаемРазницуМеждуДатами);
+                    " ФиналПолучаемРазницуМеждуДатами " +ФиналПолучаемРазницуМеждуДатами
+                    +"\n" + " permissibledaysofwork " +permissibledaysofwork);
 
         }else {
 
@@ -401,9 +403,8 @@ public class CompleteRemoteSyncService {
         try{
             Intent intentComunicationsBusAyns=new Intent();
             Bundle bundleComunications=new Bundle();
-            intentComunicationsBusAyns.setAction("Broad_messageAsyncOrUpdateAsync");
-            bundleComunications.putString("Статус",  "Первый запуск  !!!!");///"В процесс"
-            bundleComunications.putString("Действие",   "Первый запуск  !!!!");///"В процесс"
+            intentComunicationsBusAyns.setAction("EventBusAnsyc");
+            bundleComunications.putString("Статус",  "AsyncStart");///"В процесс"
             intentComunicationsBusAyns.putExtras(bundleComunications);
 
             // TODO: 23.01.2024 SEND event bus
@@ -427,19 +428,26 @@ public class CompleteRemoteSyncService {
     
     
     
-    private void metodDontNetwork(@NonNull Context context) {
+    private void metodDontSucceessNetwork(@NonNull Context context) {
         try{
             Intent intentComunicationsBusAyns=new Intent();
             Bundle bundleComunications=new Bundle();
 
             if (СтатусРаботыСервера==false) {
-                intentComunicationsBusAyns.setAction("Broad_messageAsyncOrUpdateAsync");
-                bundleComunications.putString("Статус",  "Сервер выкл.!!!");///"В процесс"
-                bundleComunications.putString("Действие",  "Сервер выкл.!!!");///"В процесс"
+                intentComunicationsBusAyns.setAction("EventBusAnsyc");
+                bundleComunications.putString("Статус",  "ServerJbosOff");///"В процесс"
                 intentComunicationsBusAyns.putExtras(bundleComunications);
 
                 EventBus.getDefault().post(new MessageEvensBusAyns(intentComunicationsBusAyns));
                 // TODO: 22.01.2024 просто сеть рабоатет  переделаем програсс бару
+            }else {
+
+                    intentComunicationsBusAyns.setAction("EventBusAnsyc");
+                    bundleComunications.putString("Статус",  "ServerJbosOn");///"В процесс"
+                    intentComunicationsBusAyns.putExtras(bundleComunications);
+                    // TODO: 25.09.2024 call back AN Screnn User Boot Activity
+                    EventBus.getDefault().post(new MessageEvensBusPrograssBar(intentComunicationsBusAyns));
+
             }
 
             Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
@@ -460,31 +468,7 @@ public class CompleteRemoteSyncService {
 
 
 
-    private void metodSucceessNetwork(@NonNull Context context) {
-        try{
-            Intent intentComunicationsBusPrograssBar=new Intent();
-            Bundle bundleComunications=new Bundle();
-            if (СтатусРаботыСервера==true) {
-                intentComunicationsBusPrograssBar.setAction("Broad_messageAsyncPrograssBar");
-                bundleComunications.putString("Статус",  "PrograssBarVisible");///"В процесс"
-                bundleComunications.putString("Действие",  "PrograssBarVisible");///"В процесс"
-                intentComunicationsBusPrograssBar.putExtras(bundleComunications);
-                // TODO: 25.09.2024 call back AN Screnn User Boot Activity
-                EventBus.getDefault().post(new MessageEvensBusPrograssBar(intentComunicationsBusPrograssBar));
-            }
-            Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
-                    " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                    " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" +
-                    " localBinderAsync "+ "\n" );
-    } catch (Exception e) {
-        e.printStackTrace();
-        Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() + " Линия  :"
-                + Thread.currentThread().getStackTrace()[2].getLineNumber());
-        new RecordNewErros(context).recordnewerror(e.toString(), this.getClass().getName(),
-                Thread.currentThread().getStackTrace()[2].getMethodName(),
-                Thread.currentThread().getStackTrace()[2].getLineNumber());
-    }
-    }
+
 
 
 
@@ -581,7 +565,7 @@ public class CompleteRemoteSyncService {
             if (СервернаяВерсия > ЛокальнаяВерсияПО) {
 
                 // TODO: 22.01.2024 запускаю обновление ПО
-                youStartingUpdatePOComplete(СервернаяВерсия,context);
+                StartingUpdatePOComplete(СервернаяВерсия,context);
                 // TODO: 03.10.2023
                 Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                         " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
@@ -595,7 +579,7 @@ public class CompleteRemoteSyncService {
                 // TODO: 22.01.2024 версии равны Update PO ничего не запускаем
             }else {
                 // TODO: 24.09.2024 Запускаем  НЕ Обновленеи ПО  версии одинаковые
-                youhaveLatestVersionofUpdatePOComplete(СервернаяВерсия,context);
+                DontUpdatePOComplete(СервернаяВерсия,context);
                 // TODO: 03.10.2023
                 Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                         " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
@@ -621,14 +605,14 @@ public class CompleteRemoteSyncService {
 
 
 
-        private void launchUpdatePOandSync(Integer СервернаяВерсия, Integer ЛокальнаяВерсияПО,@NonNull  String getWhoLaunched,@NonNull Context context) {
+        private void launchUpdatePOandSync(Integer СервернаяВерсия, Integer ЛокальнаяВерсияПО,
+                                           @NonNull  String getWhoLaunched,@NonNull Context context) {
             // TODO: 22.01.2024  запускаем Синхронизацию
             try{
             if (СервернаяВерсия > ЛокальнаяВерсияПО) {
-
                 // TODO: 24.09.2024 Запускаем Обновленеи ПО
                 // TODO: 22.01.2024 запускаю обновление ПО
-                youStartingUpdatePOComplete(СервернаяВерсия,context);
+                StartingUpdatePOComplete(СервернаяВерсия,context);
                 // TODO: 03.10.2023
                 Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                         " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
@@ -710,14 +694,15 @@ public class CompleteRemoteSyncService {
 
 
 
-        private void youStartingUpdatePOComplete(@NonNull Integer СервернаяВерсия,@NonNull Context context) {
+        private void StartingUpdatePOComplete(@NonNull Integer СервернаяВерсия, @NonNull Context context) {
                      try{
                          Intent intentComunicationsUpdatePO=new Intent();
                          Bundle bundleComunications=new Bundle();
 
-                         intentComunicationsUpdatePO.setAction("Broad_messageAsyncOrUpdatePO");
-                         bundleComunications.putString("Статус",  "Запускаем Обновление ПО !!!!");///"В процесс"
+                         intentComunicationsUpdatePO.setAction("EventBusUpdatePO");
+                         bundleComunications.putString("Статус",  "Обновление ПО !!!");///"В процесс"
                          bundleComunications.putInt("СервернаяВерсия",  СервернаяВерсия);///"В процесс"
+                         bundleComunications.putBinder("callbackbinderdashbord",localBinderОбновлениеПО);
                          intentComunicationsUpdatePO.putExtras(bundleComunications);
 
                          EventBus.getDefault().post(new MessageEvensBusUpdatePO(intentComunicationsUpdatePO));
@@ -741,10 +726,10 @@ public class CompleteRemoteSyncService {
 
 
         // TODO: 20.03.2025  слушатель после завершения синхронизации и обновление по 
-        private void youhaveLatestVersionofUpdatePOComplete(@NonNull Integer СервернаяВерсия,@NonNull Context context) {
+        private void DontUpdatePOComplete(@NonNull Integer СервернаяВерсия, @NonNull Context context) {
             try{
                 Intent intentComunicationsUpdatePO=new Intent();
-                intentComunicationsUpdatePO.setAction("Broad_messageAsyncOrUpdatePO");
+                intentComunicationsUpdatePO.setAction("EventBusUpdatePO");
                 // TODO: 20.03.2025
                 Bundle bundleComunications=new Bundle();
 
@@ -756,8 +741,7 @@ public class CompleteRemoteSyncService {
                 }else {
                     bundleComunications.putInt("СервернаяВерсия",  СервернаяВерсия);///"В процесс"
                 }
-                bundleComunications.putString("Статус",   "У вас последная версия ПО !!!");///"В процесс"
-                bundleComunications.putString("Действие",   "У вас последная версия ПО !!!");///"В процесс"
+                bundleComunications.putString("Статус",   "Последная версия ПО !!!");///"В процесс"
                 intentComunicationsUpdatePO.putExtras(bundleComunications);
 
                 // TODO: 20.03.2025
@@ -1043,41 +1027,6 @@ public class CompleteRemoteSyncService {
 
                             // TODO: 28.07.2023  Update
                             localBinderОбновлениеПО = (ServiceUpdatePoОбновлениеПО.localBinderОбновлениеПО) service;
-
-                            localBinderОбновлениеПО.getService().registerComponentCallbacks(new ComponentCallbacks() {
-                                @Override
-                                public void onConfigurationChanged(@NonNull Configuration newConfig) {
-                                    // TODO: 25.03.2023
-                                    Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
-                                            " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                                            " line " + Thread.currentThread().getStackTrace()[2].getLineNumber());
-                                }
-
-                                @Override
-                                public void onLowMemory() {
-// TODO: 25.03.2023
-                                    Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
-                                            " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                                            " line " + Thread.currentThread().getStackTrace()[2].getLineNumber());
-                                }
-                            });
-
-
-
-                            localBinderОбновлениеПО.getService().registerReceiver(new BroadcastReceiver() {
-                                @Override
-                                public void onReceive(Context context, Intent intent) {
-                                    // TODO: 25.03.2023
-                                    Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
-                                            " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                                            " line " + Thread.currentThread().getStackTrace()[2].getLineNumber());
-                                }
-                            },new IntentFilter("UpdatePO"));
-
-
-
-
-
 
                             // TODO: 25.03.2023
                             Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +

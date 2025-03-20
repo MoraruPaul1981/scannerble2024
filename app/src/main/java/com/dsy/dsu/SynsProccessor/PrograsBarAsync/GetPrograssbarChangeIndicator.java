@@ -94,8 +94,8 @@ Context context;
             Intent intentComunicationsBusPrograssBar=new Intent();
             // TODO: 20.03.2025
             Bundle bundleComunications=new Bundle();
-            intentComunicationsBusPrograssBar.setAction("Broad_messageAsyncPrograssBar");
-            bundleComunications.putString("Статус" ,"AsyncPrograssBar");
+            intentComunicationsBusPrograssBar.setAction("EventBusPrograssBar");
+            bundleComunications.putString("Статус" ,"PrograssBarOn");
             bundleComunications.putInt("Проценны" ,Проценны);
             bundleComunications.putString("имятаблицы" ,имяТаблицаAsync);
             bundleComunications.putInt("maxtables" ,  maxAllCountRow );

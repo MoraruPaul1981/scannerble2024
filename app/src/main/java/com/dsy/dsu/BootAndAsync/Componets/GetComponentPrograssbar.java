@@ -36,16 +36,20 @@ public class GetComponentPrograssbar {
                 Bundle bundleGetOtServicePrograssBar = (Bundle) messageEvensBusPrograssBar.mess.getExtras();
                 String Статус = bundleGetOtServicePrograssBar.getString("Статус");
                 Handler handlerProfgarsBar = progressbarbootandasync.getHandler();
-                if (Статус.contains("PrograssBarVisible")) {
-                    МетодВизуацииБесконечногоПрогресБара();
-                    // TODO: 26.12.2022  конец основгого кода
-                    Log.d(context.getClass().getName(), "\n" + " class "
-                            + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
-                            " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                            " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n");
-                }
-                if (Статус.contains("AsyncPrograssBar")) {
-                    МетодВизуализацииСинхронизации(bundleGetOtServicePrograssBar, handlerProfgarsBar);
+                if (Статус.contains("PrograssBarOn")) {
+
+                    Integer MaxКоличествоСТрочеек = bundleGetOtServicePrograssBar.getInt("Проценны", 0);
+
+                    if (handlerProfgarsBar!=null) {
+                        if (MaxКоличествоСТрочеек>0) {
+                            // TODO: 20.03.2025 есть обработка таблиц
+                            МетодВизуализацииСинхронизации(bundleGetOtServicePrograssBar, handlerProfgarsBar);
+                        } else {
+                            // TODO: 20.03.2025  холостой ход обработки таблиц
+                            МетодВизуацииБесконечногоПрогресБара(handlerProfgarsBar);
+                        }
+                    }
+
                     // TODO: 26.12.2022  конец основгого кода
                     Log.d(context.getClass().getName(), "\n" + " class "
                             + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
@@ -66,13 +70,31 @@ public class GetComponentPrograssbar {
         }
     }
 
-    private void МетодВизуацииБесконечногоПрогресБара() {
-            if (!progressbarbootandasync.isIndeterminate()) {
-                // TODO: 25.09.2024
-                progressbarbootandasync.setIndeterminate(true);
-                progressbarbootandasync.requestLayout();
-                progressbarbootandasync.refreshDrawableState();
-            }
+    private void МетодВизуацииБесконечногоПрогресБара(@NonNull   Handler handlerProfgarsBar) {
+         try{
+             handlerProfgarsBar.post(()->{
+
+                 if (!progressbarbootandasync.isIndeterminate()) {
+                     // TODO: 25.09.2024
+                     progressbarbootandasync.setIndeterminate(true);
+                     progressbarbootandasync.requestLayout();
+                     progressbarbootandasync.refreshDrawableState();
+                 }
+
+             });
+        Log.d(context.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                " line " + Thread.currentThread().getStackTrace()[2].getLineNumber());
+    } catch (Exception e) {
+        e.printStackTrace();
+        Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() + " Линия  :"
+                + Thread.currentThread().getStackTrace()[2].getLineNumber());
+        new RecordNewErros(context).recordnewerror(e.toString(),
+                this.getClass().getName(), Thread.currentThread().getStackTrace()[2].getMethodName(),
+                Thread.currentThread().getStackTrace()[2].getLineNumber());
+    }
+
+
     }
 
 
