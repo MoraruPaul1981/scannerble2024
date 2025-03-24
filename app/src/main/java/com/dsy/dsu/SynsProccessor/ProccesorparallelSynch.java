@@ -15,17 +15,13 @@ import com.dsy.dsu.BusinessLogicAll.Class_MODEL_synchronized;
 import com.dsy.dsu.BusinessLogicAll.Jakson.GeneratorBinarySONSerializer;
 import com.dsy.dsu.BusinessLogicAll.Jakson.GeneratorJSONSerializer;
 import com.dsy.dsu.BusinessLogicAll.VersionCurentTable;
-import com.dsy.dsu.CnangeServers.PUBLIC_CONTENT;
 import com.dsy.dsu.Errors.controller.RecordNewErros;
-import com.dsy.dsu.Hilt.JbossAdrress.getHiltPortJbossInterface;
 import com.dsy.dsu.SynsProccessor.PrograsBarAsync.GetPrograssbarChangeIndicator;
 import com.fasterxml.jackson.core.JsonParser;
-import com.fasterxml.jackson.databind.DatabindException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SequenceWriter;
 import com.fasterxml.jackson.databind.module.SimpleModule;
-import com.google.common.util.concurrent.AtomicDouble;
 
 import org.jetbrains.annotations.NotNull;
 import org.json.JSONException;
@@ -33,8 +29,6 @@ import org.json.JSONException;
 import java.io.ByteArrayOutputStream;
 import java.io.InputStream;
 import java.io.Serializable;
-import java.io.StringWriter;
-import java.io.Writer;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -43,21 +37,16 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.concurrent.ConcurrentSkipListSet;
 import java.util.concurrent.CopyOnWriteArrayList;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
 
 import javax.net.ssl.SSLSocketFactory;
 
-import dagger.hilt.EntryPoints;
 import io.reactivex.rxjava3.core.Flowable;
-import io.reactivex.rxjava3.core.Maybe;
 import io.reactivex.rxjava3.core.Observable;
 import io.reactivex.rxjava3.core.Single;
-import io.reactivex.rxjava3.functions.Action;
 import io.reactivex.rxjava3.functions.Consumer;
 import io.reactivex.rxjava3.functions.Predicate;
-import io.reactivex.rxjava3.schedulers.Schedulers;
+import io.reactivex.rxjava3.functions.Supplier;
 
 public class ProccesorparallelSynch   {
 
@@ -183,8 +172,9 @@ public class ProccesorparallelSynch   {
 
             /////////////TODO ИДЕМ ПО ШАГАМ К ЗАПУСКИ СИНХРОГНИАЗЦИИ
 
+
                 РезультатТаблицыОбмена=
-                        startSendingDataTotheServerOrReceivingDataFromTheJbossServer(getNameTable,
+                        TwoOfaKindGetAndPostJboss(getNameTable,
                                 getVersionserverversion, PublicID,getParserVersionserver);
 
             // TODO: 12.07.2023
@@ -233,10 +223,10 @@ public class ProccesorparallelSynch   {
 
 
     @SuppressLint("Range")
-    Long startSendingDataTotheServerOrReceivingDataFromTheJbossServer(@NonNull String ИмяТаблицы,
-                                                                      @NonNull  Long ВерсияДанныхсSqlServer,
-                                                                      @NonNull  Integer PublicID,
-                                                                      @NonNull Date     ВремяОтSqlServer) {
+    Long TwoOfaKindGetAndPostJboss(@NonNull String ИмяТаблицы,
+                                   @NonNull  Long ВерсияДанныхсSqlServer,
+                                   @NonNull  Integer PublicID,
+                                   @NonNull Date     ВремяОтSqlServer) {
 
       ConcurrentSkipListSet<Long>  completedPostAndGetInsertorUpdateOperations=new ConcurrentSkipListSet<>();
         try  {
@@ -253,73 +243,72 @@ public class ProccesorparallelSynch   {
                         +" ВремяОтSqlServer " +ВремяОтSqlServer);
 
 
-
-
-
+            Single.fromCallable(()->{
 
 // TODO: 24.09.2024 Запускаем Отправление и или ПОлучение данных  сервера JBoss
-            // TODO: 08.04.2024 SEND SERVERR JBOSS POST
-            Long getSendingDatatoTheServerOnjboss =startSendingDatatoTheServerOnjboss(ИмяТаблицы,
-                    ВерсияДанныхсSqlServer,
-                    PublicID,
-                    ВремяОтSqlServer);
+                // TODO: 08.04.2024 SEND SERVERR JBOSS POST
+                Long getSendingDatatoTheServerOnjboss =startSendingDatatoTheServerOnjboss(ИмяТаблицы,
+                        ВерсияДанныхсSqlServer,
+                        PublicID,
+                        ВремяОтSqlServer);
 
 
-            // TODO: 24.09.2024
-            Log.d(this.getClass().getName(), "\n"
-                    + " время: " + new Date() + "\n+" +
-                    " Класс в процессе... " + this.getClass().getName() + "\n" +
-                    " метод в процессе... " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n"
-                    + " getSendingDatatoTheServerOnjboss "+getSendingDatatoTheServerOnjboss);
+                // TODO: 24.09.2024
+                Log.d(this.getClass().getName(), "\n"
+                        + " время: " + new Date() + "\n+" +
+                        " Класс в процессе... " + this.getClass().getName() + "\n" +
+                        " метод в процессе... " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n"
+                        + " getSendingDatatoTheServerOnjboss "+getSendingDatatoTheServerOnjboss);
 
 
-            if (getSendingDatatoTheServerOnjboss>0) {
-                completedPostAndGetInsertorUpdateOperations.add(getSendingDatatoTheServerOnjboss);
-            }
+                if (getSendingDatatoTheServerOnjboss>0) {
+                    completedPostAndGetInsertorUpdateOperations.add(getSendingDatatoTheServerOnjboss);
+                }
 
-            // TODO: 17.03.2025 Если Положительный ответ POST
-            if (getSendingDatatoTheServerOnjboss>0) {
-                // TODO: 13.02.2025 ПОСЛЕ ПОВЫШАЕМ ВЕРИСЮ ДАННЫХ ТОЛЬКО ДЛЯ POST после всей синхрониахции
-                workerUpVersionDataOnlyPOSTAsyncBack(   getSendingDatatoTheServerOnjboss, ИмяТаблицы);
-            }
-            // TODO: 24.09.2024
-            Log.d(this.getClass().getName(), "\n"
-                    + " время: " + new Date() + "\n+" +
-                    " Класс в процессе... " + this.getClass().getName() + "\n" +
-                    " метод в процессе... " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                    "  + getSendingDatatoTheServerOnjboss) " + getSendingDatatoTheServerOnjboss);
-
-
-
+                // TODO: 17.03.2025 Если Положительный ответ POST
+                if (getSendingDatatoTheServerOnjboss>0) {
+                    // TODO: 13.02.2025 ПОСЛЕ ПОВЫШАЕМ ВЕРИСЮ ДАННЫХ ТОЛЬКО ДЛЯ POST после всей синхрониахции
+                    workerUpVersionDataOnlyPOSTAsyncBack(   getSendingDatatoTheServerOnjboss, ИмяТаблицы);
+                }
+                // TODO: 24.09.2024
+                Log.d(this.getClass().getName(), "\n"
+                        + " время: " + new Date() + "\n+" +
+                        " Класс в процессе... " + this.getClass().getName() + "\n" +
+                        " метод в процессе... " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                        "  + getSendingDatatoTheServerOnjboss) " + getSendingDatatoTheServerOnjboss);
 
 
 
 
+                return getSendingDatatoTheServerOnjboss;
 
+            }).doOnSuccess(result->{
+                // TODO: 08.04.2024 через Retry Obsever множественое ображение  к серверу GET
+                Long getcompletedInsertorUpdateOperationsForEachWhile=completedInsertorUpdateOperationsForEachWhile(ИмяТаблицы,
+                        ВерсияДанныхсSqlServer,
+                        PublicID,
+                        ВремяОтSqlServer);
 
+                // TODO: 24.09.2024
+                Log.d(this.getClass().getName(), "\n"
+                        + " время: " + new Date() + "\n+" +
+                        " Класс в процессе... " + this.getClass().getName() + "\n" +
+                        " метод в процессе... " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                        "  + getcompletedInsertorUpdateOperationsForEachWhile" + getcompletedInsertorUpdateOperationsForEachWhile +"\n"
+                        + " getcompletedInsertorUpdateOperationsForEachWhile "+getcompletedInsertorUpdateOperationsForEachWhile);
 
+                // TODO: 17.03.2025 Если Положительный ответ GET
+                if (getcompletedInsertorUpdateOperationsForEachWhile>0) {
+                    completedPostAndGetInsertorUpdateOperations.add(getcompletedInsertorUpdateOperationsForEachWhile);
+                }
 
-
-
-
-            // TODO: 08.04.2024 через Retry Obsever множественое ображение  к серверу GET
-            Long getcompletedInsertorUpdateOperationsForEachWhile=completedInsertorUpdateOperationsForEachWhile(ИмяТаблицы,
-                    ВерсияДанныхсSqlServer,
-                    PublicID,
-                    ВремяОтSqlServer);
-
-            // TODO: 24.09.2024
-            Log.d(this.getClass().getName(), "\n"
-                    + " время: " + new Date() + "\n+" +
-                    " Класс в процессе... " + this.getClass().getName() + "\n" +
-                    " метод в процессе... " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                    "  + getcompletedInsertorUpdateOperationsForEachWhile" + getcompletedInsertorUpdateOperationsForEachWhile +"\n"
-                    + " getcompletedInsertorUpdateOperationsForEachWhile "+getcompletedInsertorUpdateOperationsForEachWhile);
-
-            // TODO: 17.03.2025 Если Положительный ответ GET
-            if (getcompletedInsertorUpdateOperationsForEachWhile>0) {
-                completedPostAndGetInsertorUpdateOperations.add(getcompletedInsertorUpdateOperationsForEachWhile);
-            }
+                // TODO: 17.03.2025
+                Log.d(this.getClass().getName(), "\n"
+                        + " время: " + new Date() + "\n+" +
+                        " Класс в процессе... " + this.getClass().getName() + "\n" +
+                        " метод в процессе... " + Thread.currentThread().getStackTrace()[2].getMethodName()
+                        + "\n" + " getcompletedInsertorUpdateOperationsForEachWhile " +getcompletedInsertorUpdateOperationsForEachWhile);
+            }).blockingSubscribe();
 
 
 
@@ -328,7 +317,7 @@ public class ProccesorparallelSynch   {
                     + " время: " + new Date() + "\n+" +
                     " Класс в процессе... " + this.getClass().getName() + "\n" +
                     " метод в процессе... " + Thread.currentThread().getStackTrace()[2].getMethodName()
-                    + "\n" + " getcompletedInsertorUpdateOperationsForEachWhile " +getcompletedInsertorUpdateOperationsForEachWhile);
+                    + "completedPostAndGetInsertorUpdateOperations " +completedPostAndGetInsertorUpdateOperations);
 
         } catch (Exception e) {
             e.printStackTrace();
