@@ -54,7 +54,7 @@ public class ClassPermissions {
 
 
             if ( ContextCompat.checkSelfPermission(activity, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
-                activity.requestPermissions( permissions, ALL_PERSSION_CODE);
+                ActivityCompat.requestPermissions(activity, permissions, ALL_PERSSION_CODE);
             }
 
             Log.d(this.getClass().getName(),"\n" + " class FaceAPp " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +

@@ -135,9 +135,6 @@ public class CoreApp extends Application {
       // TODO: 04.10.2023 разрешения для всего
       // TODO: 24.03.2025 test
 
-      BiccessLogicActivityError biccessLogicActivityErr=new BiccessLogicActivityError(getApplicationContext(),getSqlLiteCoreApp);
-      biccessLogicActivityErr.clearingTableError();;
-
 
 
       Log.d(this.getClass().getName(),"\n" + " class CoreApp    " + Thread.currentThread().getStackTrace()[2].getClassName()
