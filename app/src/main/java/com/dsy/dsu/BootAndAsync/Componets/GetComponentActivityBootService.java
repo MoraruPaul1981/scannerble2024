@@ -37,6 +37,7 @@ import com.dsy.dsu.Passwords.MainActivityPasswords;
 import com.dsy.dsu.R;
 import com.dsy.dsu.Settings.MainActivity_Settings;
 import com.google.android.material.navigation.NavigationView;
+import com.google.android.material.progressindicator.LinearProgressIndicator;
 
 import java.util.Date;
 
@@ -85,7 +86,7 @@ public class GetComponentActivityBootService {
 
     // TODO: 27.12.2024 ВТОРОЙ КОНТСРУКТОР
     public GetComponentActivityBootService(@NonNull SSLSocketFactory getsslSocketFactory2,
-                                           @NonNull  ProgressBar progressbarbootandasync,
+                                           @NonNull ProgressBar progressbarbootandasync,
                                            @NonNull Activity activity,
                                            @NonNull DrawerLayout drawerLayoutAsync,
                                            @NonNull  NavigationView navigationViewAsyncApp,

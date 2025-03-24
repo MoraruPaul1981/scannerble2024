@@ -32,6 +32,7 @@ import com.dsy.dsu.Errors.controller.RecordNewErros;
 import com.dsy.dsu.Hilt.getSSLSocketFactory2.QualifiergetsslSocketFactory2;
 import com.dsy.dsu.R;
 import com.google.android.material.navigation.NavigationView;
+import com.google.android.material.progressindicator.LinearProgressIndicator;
 
 
 import org.greenrobot.eventbus.EventBus;
@@ -39,11 +40,14 @@ import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.Date;
+import java.util.concurrent.TimeUnit;
 
 import javax.inject.Inject;
 import javax.net.ssl.SSLSocketFactory;
 
 import dagger.hilt.android.AndroidEntryPoint;
+import io.reactivex.rxjava3.core.Observable;
+import io.reactivex.rxjava3.functions.Consumer;
 
 @AndroidEntryPoint
 public class MainActivityBootAndAsync extends AppCompatActivity {
@@ -83,21 +87,13 @@ public class MainActivityBootAndAsync extends AppCompatActivity {
             setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LOCKED);
             setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 
-
-
-
             progressbarbootandasync = (ProgressBar) findViewById(R.id.progressbarbootandasync); /////КНОПКА ТАБЕЛЬНОГО УЧЕТА/
-
-
             drawerLayoutAsync = (DrawerLayout) findViewById(R.id.drawerLayout_async_prograsser); /////КНОПКА ТАБЕЛЬНОГО УЧЕТА
             drawerLayoutAsync.setBackgroundColor(Color.WHITE);         //TODO устанвливает цвета
             drawerLayoutAsync.setDrawingCacheBackgroundColor(Color.RED);//todo
             navigationViewAsyncApp    = (NavigationView) findViewById(R.id.navigator_asyncapp); /////КНОПКА ТАБЕЛЬНОГО УЧЕТА
 
             imageView_faceapp_settings = (ImageView) findViewById(R.id.imageView_faceapp_settings); /////КНОПКА ТАБЕЛЬНОГО УЧЕТА
-
-
-
 
             activity = this;
             getlifecycleOwner=this;
@@ -303,7 +299,7 @@ public class MainActivityBootAndAsync extends AppCompatActivity {
     @Subscribe (threadMode = ThreadMode.MAIN)
     public void EventMessageEvensBusPrograssBar(MessageEvensBusPrograssBar messageEvensBusPrograssBar){
         try{
-            GetComponentPrograssbar get_componentPrograssbar =new GetComponentPrograssbar(progressbarbootandasync,getApplicationContext());
+           GetComponentPrograssbar get_componentPrograssbar =new GetComponentPrograssbar(progressbarbootandasync,getApplicationContext());
             get_componentPrograssbar.getEventBusPrograssBar(messageEvensBusPrograssBar);
             Log.d(getApplicationContext().getClass().getName(), "\n"
                     + " время: " + new Date() + "\n+" +

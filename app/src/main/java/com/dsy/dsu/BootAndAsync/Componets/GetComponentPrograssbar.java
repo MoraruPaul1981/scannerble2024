@@ -15,40 +15,40 @@ import androidx.annotation.NonNull;
 
 import com.dsy.dsu.BootAndAsync.EventsBus.MessageEvensBusPrograssBar;
 import com.dsy.dsu.Errors.controller.RecordNewErros;
+import com.google.android.material.progressindicator.LinearProgressIndicator;
 
 import java.util.Optional;
 
 public class GetComponentPrograssbar {
     // TODO: 25.09.2024
-  private   ProgressBar progressbarbootandasync;
+  private ProgressBar getlinearProgressIndicator;
 
     private   Context context;
 
-    public GetComponentPrograssbar(ProgressBar progressbarbootandasync, Context context) {
-        this.progressbarbootandasync = progressbarbootandasync;
+    public GetComponentPrograssbar(ProgressBar getlinearProgressIndicator, Context context) {
+        this.getlinearProgressIndicator = getlinearProgressIndicator;
         this.context = context;
     }
 
 
     public void getEventBusPrograssBar(@NonNull MessageEvensBusPrograssBar messageEvensBusPrograssBar){
         try{
-            if (progressbarbootandasync.isAttachedToWindow()) {
+            if (getlinearProgressIndicator.isAttachedToWindow()) {
                 Bundle bundleGetOtServicePrograssBar = (Bundle) messageEvensBusPrograssBar.mess.getExtras();
                 String Статус = bundleGetOtServicePrograssBar.getString("Статус");
-                Handler handlerProfgarsBar = progressbarbootandasync.getHandler();
                 if (Статус.contains("PrograssBarOn")) {
+                    Integer getПроценны = bundleGetOtServicePrograssBar.getInt("Проценны", 0);
 
-                    Integer MaxКоличествоСТрочеек = bundleGetOtServicePrograssBar.getInt("Проценны", 0);
 
-                    if (handlerProfgarsBar!=null) {
-                        if (MaxКоличествоСТрочеек>0) {
                             // TODO: 20.03.2025 есть обработка таблиц
-                            МетодВизуализацииСинхронизации(bundleGetOtServicePrograssBar, handlerProfgarsBar);
-                        } else {
-                            // TODO: 20.03.2025  холостой ход обработки таблиц
-                            МетодВизуацииБесконечногоПрогресБара(handlerProfgarsBar);
-                        }
-                    }
+                            МетодВизуализацииСинхронизации(bundleGetOtServicePrograssBar, getПроценны);
+
+
+                            // TODO: 26.12.2022  конец основгого кода
+                            Log.d(context.getClass().getName(), "\n" + " class "
+                                    + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                                    " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                                    " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n");
 
                     // TODO: 26.12.2022  конец основгого кода
                     Log.d(context.getClass().getName(), "\n" + " class "
@@ -70,89 +70,59 @@ public class GetComponentPrograssbar {
         }
     }
 
-    private void МетодВизуацииБесконечногоПрогресБара(@NonNull   Handler handlerProfgarsBar) {
-         try{
-             handlerProfgarsBar.post(()->{
 
-                 if (!progressbarbootandasync.isIndeterminate()) {
-                     // TODO: 25.09.2024
-                     progressbarbootandasync.setIndeterminate(true);
-                     progressbarbootandasync.requestLayout();
-                     progressbarbootandasync.refreshDrawableState();
-                 }
-
-             });
-        Log.d(context.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
-                " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                " line " + Thread.currentThread().getStackTrace()[2].getLineNumber());
-    } catch (Exception e) {
-        e.printStackTrace();
-        Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() + " Линия  :"
-                + Thread.currentThread().getStackTrace()[2].getLineNumber());
-        new RecordNewErros(context).recordnewerror(e.toString(),
-                this.getClass().getName(), Thread.currentThread().getStackTrace()[2].getMethodName(),
-                Thread.currentThread().getStackTrace()[2].getLineNumber());
-    }
-
-
-    }
 
 
     @SuppressLint("NewApi")
     @MainThread
-    private void МетодВизуализацииСинхронизации(@NonNull Bundle bundleCallsBackAsynsService,@NonNull  Handler handlerProfgarsBar) {
+    private void МетодВизуализацииСинхронизации(@NonNull Bundle bundleCallsBackAsynsService,@NonNull  Integer getПроценны) {
         try {
             // TODO: 25.09.2024
-            handlerProfgarsBar.post(()->{
+
                 // TODO: 10.01.2025
                 try{
                 // TODO: 25.09.2024
-
-                Drawable progressDrawable = progressbarbootandasync.getProgressDrawable().mutate();
+                Drawable progressDrawable = getlinearProgressIndicator.getProgressDrawable().mutate();
                 progressDrawable.setColorFilter(Color.parseColor("#000000"), android.graphics.PorterDuff.Mode.SRC_IN);
-                progressbarbootandasync.setProgressDrawable(progressDrawable);
-                //      progressbarbootandasync.setProgressDrawableTiled(progressDrawable);
-
-
-
+                getlinearProgressIndicator.setProgressDrawable(progressDrawable);
                     // TODO: 25.09.2024
-                     Integer MaxКоличествоСТрочеек = bundleCallsBackAsynsService.getInt("maxtables", 0);
-                    String currentEventTable = bundleCallsBackAsynsService.getString("имятаблицы", "");
-                   // Integer SuccessInsertOrUpdates = bundleCallsBackAsynsService.getInt("currentEventTable" , 0);
-                    // TODO: 25.09.2024
-                    if (!currentEventTable.isEmpty()  ) {
-                 CharSequence currentEventTableAnSync=    Optional.ofNullable(progressbarbootandasync.getTooltipText()).orElse("");
-                        if (!currentEventTable.equalsIgnoreCase(currentEventTableAnSync.toString())) {
-                            Integer  Progress = progressbarbootandasync.getProgress() + 1;
-                            Integer SecondaryProgress = Progress + 2;
-                            progressbarbootandasync.setMax(MaxКоличествоСТрочеек);
-                            progressbarbootandasync.setIndeterminate(false);
-                            // TODO: 25.09.2024  
-                            if (Progress>progressbarbootandasync.getProgress()) {
-                                progressbarbootandasync.setProgress(Progress, true);
+                    String currentEventTable = null;
+                    if (getПроценны>0) {
+                        Integer MaxКоличествоСТрочеек = bundleCallsBackAsynsService.getInt("maxtables", 0);
+                        currentEventTable = bundleCallsBackAsynsService.getString("имятаблицы", "");
+                        getlinearProgressIndicator.setMax(MaxКоличествоСТрочеек);
+                        // TODO: 25.09.2024
+                        if (!currentEventTable.isEmpty()  ) {
+                            CharSequence currentEventTableAnSync = Optional.ofNullable(getlinearProgressIndicator.getTooltipText()).orElse("");
+                            if (!currentEventTable.equalsIgnoreCase(currentEventTableAnSync.toString())) {
+                                Integer getProgress = getlinearProgressIndicator.getProgress() + 1;
+                                Integer SecondaryProgress = getProgress + 2;
                                 // TODO: 25.09.2024
-                                progressbarbootandasync.setSecondaryProgress(SecondaryProgress);
-                                progressbarbootandasync.setSecondaryProgressTintList(ColorStateList.valueOf(Color.GRAY));
-                                // TODO: 10.01.2025
-                                progressbarbootandasync.setTooltipText(currentEventTableAnSync);
+                                if (getProgress > getlinearProgressIndicator.getProgress()) {
+                                    getlinearProgressIndicator.setIndeterminate(false);
+                                    getlinearProgressIndicator.setProgress(getProgress, true);
+                                    // TODO: 25.09.2024
+                                    getlinearProgressIndicator.setSecondaryProgress(SecondaryProgress);
+                                    getlinearProgressIndicator.setSecondaryProgressTintList(ColorStateList.valueOf(Color.GRAY));
+                                }
+                                // TODO: 30.09.2024
                             }
-                            // TODO: 30.09.2024
-                            progressbarbootandasync.setTooltipText(currentEventTable);
-                        } else {
-                            progressbarbootandasync.setIndeterminate(true);
+
                         }
-                    }else {
-                        progressbarbootandasync.setIndeterminate(true);
+                        getlinearProgressIndicator.setTooltipText(currentEventTable);
+                    } else {
+                        getlinearProgressIndicator.setIndeterminate(true);
                     }
-                    progressbarbootandasync.requestLayout();
-                    progressbarbootandasync.refreshDrawableState();
-                    
+                    getlinearProgressIndicator.requestLayout();
+                    getlinearProgressIndicator.refreshDrawableState() ;
+
+
                     Log.d(this.getClass().getName(), "\n" + " class " +
                             Thread.currentThread().getStackTrace()[2].getClassName()
                             + "\n" +
                             " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
                             " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"
-                            + " progressbarbootandasync" + progressbarbootandasync.getProgress());
+                            + " getlinearProgressIndicator" + getlinearProgressIndicator.getProgress());
                 // TODO: 10.01.2025
             } catch (Exception e) {
                 e.printStackTrace();
@@ -162,14 +132,14 @@ public class GetComponentPrograssbar {
                         this.getClass().getName(), Thread.currentThread().getStackTrace()[2].getMethodName(),
                         Thread.currentThread().getStackTrace()[2].getLineNumber());
             }
-            });
+
 
             Log.d(this.getClass().getName(), "\n" + " class " +
                     Thread.currentThread().getStackTrace()[2].getClassName()
                     + "\n" +
                     " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
                     " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"
-                    + " progressbarbootandasync" + progressbarbootandasync.getProgress());
+                    + " getlinearProgressIndicator" + getlinearProgressIndicator.getProgress());
 
         } catch (Exception e) {
             e.printStackTrace();
