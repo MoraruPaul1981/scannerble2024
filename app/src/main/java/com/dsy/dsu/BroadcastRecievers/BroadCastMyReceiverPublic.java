@@ -6,7 +6,7 @@ import android.content.Intent;
 import android.util.Log;
 
 import com.dsy.dsu.Errors.controller.RecordNewErros;
-import com.dsy.dsu.WorkManagers.BL_WorkMangers.CreatePublicWorkManager;
+import com.dsy.dsu.WorkManagers.binesslogic.CreatePublicWorkManager;
 import com.dsy.dsu.BusinessLogicAll.SubClass_Connection_BroadcastReceiver_Sous_Asyns_Glassfish;
 
 import java.util.Date;

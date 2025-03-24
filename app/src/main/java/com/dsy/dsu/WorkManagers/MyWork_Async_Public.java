@@ -9,15 +9,13 @@ import android.os.IBinder;
 import android.util.Log;
 
 import androidx.annotation.NonNull;
-import androidx.work.Data;
 import androidx.work.Worker;
 import androidx.work.WorkerParameters;
 
-import com.dsy.dsu.BusinessLogicAll.GetConnectivityManagerAndroid;
+import com.dsy.dsu.BootAndAsync.Service.IntentServiceBoot;
 import com.dsy.dsu.Errors.controller.RecordNewErros;
 import com.dsy.dsu.Services.Service_For_Remote_Async_Binary;
-
-import com.dsy.dsu.WorkManagers.BL_WorkMangers.FindRunnigServiceBeforeWorkManager;
+import com.dsy.dsu.WorkManagers.binesslogic.GetWorker;
 
 import java.util.Date;
 
@@ -27,14 +25,19 @@ public class MyWork_Async_Public extends Worker {
     private ServiceConnection serviceConnectionWorkManager;
     private Service_For_Remote_Async_Binary.LocalBinderAsync localBinderAsyncWorkmanager;
 
-
+    IntentServiceBoot.LocalBinderBootSerice          getlocalBinderBootSerice;
     // TODO: 28.09.2022
     @SuppressLint("RestrictedApi")
     public MyWork_Async_Public(@NonNull Context context, @NonNull WorkerParameters workerParams) {
         super(context, workerParams);
         try{
             // TODO: 22.12.2022
-            МетодБиндингаОбщая();
+            // TODO: 02.04.2024 Bl
+            getLiveBindibngServiceBoot();
+
+            Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                    " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                    " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n");
             Log.d(this.getClass().getName(),"\n"
                     + " bremy: " + new Date()+"\n+"
                     + "  class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
@@ -56,29 +59,19 @@ public class MyWork_Async_Public extends Worker {
     @NonNull
     @Override
     public Result doWork() {
-        Long     ФинальныйРезультатAsyncBackgroudPublic = 0l;
-        Data data = null;
         try {
-                // TODO: 01.04.2024
-           ФинальныйРезультатAsyncBackgroudPublic= МетодЗапускаОбщей();
+            // TODO: 18.03.2025
+            GetWorker getWorker=new GetWorker(getApplicationContext());
+            getWorker.startingWorkMangerSingleOrPublicWorker(getlocalBinderBootSerice,"WorkManager Synchronizasiy_Data Disposable");
+
+            Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                    " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                    " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"  + " getlocalBinderBootSerice " +getlocalBinderBootSerice );
 
             Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName()
                     + "\n" +
                     " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                    " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"
-                    + " ФинальныйРезультатAsyncBackgroudPublic " +ФинальныйРезультатAsyncBackgroudPublic+"\n");
-
-            Data.Builder      myDataОтветОбщейСлужбы = new Data.Builder()
-                    .putLong("ReturnWorklong", ФинальныйРезультатAsyncBackgroudPublic)
-                  .putInt("ReturnWorkint", ФинальныйРезультатAsyncBackgroudPublic.intValue());
-
-             data=   myDataОтветОбщейСлужбы.build();
-
-            Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName()
-                    + "\n" +
-                    " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                    " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"
-                    + " ФинальныйРезультатAsyncBackgroudPublic " +ФинальныйРезультатAsyncBackgroudPublic);
+                    " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n");
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -89,50 +82,11 @@ public class MyWork_Async_Public extends Worker {
                     Thread.currentThread().getStackTrace()[2].getLineNumber());
             Result.failure();
         }
-     return      Result.success(data);
+     return      Result.success();
     }
 
 
 
-    private void МетодБиндингаОбщая() throws InterruptedException {
-        try {
-            Intent intentГлавнаяСинхрониазция = new Intent(getApplicationContext(), Service_For_Remote_Async_Binary.class);
-                serviceConnectionWorkManager = new ServiceConnection() {
-                    @Override
-                    public void onServiceConnected(ComponentName name, IBinder service) {
-                        if (service.isBinderAlive()) {
-                            localBinderAsyncWorkmanager = (Service_For_Remote_Async_Binary.LocalBinderAsync) service;
-                            //TODO СИНХРОНИАЗЦИЯ ГЛАВНАЯ
-                            Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
-                                    " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                                    " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"
-                                    + "localBinderAsyncWorkmanager " + localBinderAsyncWorkmanager.isBinderAlive());
-                        }
-                    }
-
-                    @Override
-                    public void onServiceDisconnected(ComponentName name) {
-                        Log.d(getApplicationContext().getClass().getName().toString(), "\n"
-                                + "onServiceConnected  ОБЩАЯ messengerActivity  ");
-                    }
-                };
-            // TODO: 01.04.2024
-
-                getApplicationContext().bindService(intentГлавнаяСинхрониазция, serviceConnectionWorkManager, Context.BIND_AUTO_CREATE);
-
-
-            Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
-                    " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                    " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n");
-        } catch (Exception e) {
-            e.printStackTrace();
-            Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
-                    " Линия  :" + Thread.currentThread().getStackTrace()[2].getLineNumber());
-            new RecordNewErros(getApplicationContext()).recordnewerror(e.toString(), this.getClass().getName(), Thread.currentThread().getStackTrace()[2].getMethodName(),
-                    Thread.currentThread().getStackTrace()[2].getLineNumber());
-            Log.e(getApplicationContext().getClass().getName(), " ОШИБКА В WORK MANAGER  MyWork_AsyncSingle из FaceApp в  MyWork_AsyncSingle Exception  ошибка в классе  MyWork_AsyncSingle" + e.toString());
-        }
-    }
 
     @Override
     public void onStopped() {
@@ -156,55 +110,50 @@ public class MyWork_Async_Public extends Worker {
 
 
 
-    // TODO: 16.12.2021 МЕтод ЗАпуска  Сихрониазации Чисто В форне без актвтити
-    @SuppressLint("SuspiciousIndentation")
-    private Long    МетодЗапускаОбщей() {
-        Long ФинальныйРезультатAsyncBackgroud=0l;
-        try {
-            // TODO: 22.12.2022  сама запуска синхронищации из workmanager ОБЩЕГО
-            boolean ВыбранныйРежимСети =
-                    new GetConnectivityManagerAndroid(getApplicationContext()).сonnectivityManageruserselection();
+    public void getLiveBindibngServiceBoot() {
+        try{
+            Intent intentstartServiceOneSignal=new Intent(getApplicationContext(), IntentServiceBoot.class);
+            // TODO: 24.01.2024
+            getApplicationContext().bindService(intentstartServiceOneSignal, new ServiceConnection() {
+                @Override
+                public void onServiceConnected(ComponentName name, IBinder service) {
+                    if (service.isBinderAlive()) {
+                        getlocalBinderBootSerice = (IntentServiceBoot.LocalBinderBootSerice) service;
+                        // TODO: 03.03.2025
+                        // TODO: 03.03.2025
 
-            Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
-                    " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                    " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"
-                    + " lВыбранныйРежимСети" + ВыбранныйРежимСети);
+                        Log.d(getApplicationContext().getClass().getName(), "\n"
+                                + " время: " + new Date() + "\n+" +
+                                " Класс в процессе... " + this.getClass().getName() + "\n" +
+                                " onServiceConnected  метод в процессе... " + Thread.currentThread().getStackTrace()[2].getMethodName() +
+                                "  + getlocalBinderBootService.isBinderAlive()"+
+                                getlocalBinderBootSerice.isBinderAlive());
 
-            Boolean isWorkManagerRunning=  new FindRunnigServiceBeforeWorkManager(getApplicationContext()).isWorkManagerRunning(ИмяСлужбыSingleWorkManger);
-
-            if (localBinderAsyncWorkmanager!=null ) {
-                if (ВыбранныйРежимСети == true && localBinderAsyncWorkmanager.isBinderAlive()
-                        && isWorkManagerRunning==false ) {
-
-                  ФинальныйРезультатAsyncBackgroud = localBinderAsyncWorkmanager.getService().metodStartingSync( getApplicationContext(),"WorkManager");
-
-                    Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
-                            " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                            " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"
-                            + " ФинальныйРезультатAsyncBackgroud "+ФинальныйРезультатAsyncBackgroud
-                            + " localBinderAsyncWorkmanager.isBinderAlive( " + localBinderAsyncWorkmanager.isBinderAlive()+ "\n"+
-                            "\n" + " isWorkManagerRunning " +isWorkManagerRunning+ "\n"+ " ВыбранныйРежимСети " +ВыбранныйРежимСети);
+                    }
                 }
-            }
 
-            Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                @Override
+                public void onServiceDisconnected(ComponentName name) {
+                    Log.d(getApplicationContext().getClass().getName(), "\n"
+                            + " время: " + new Date() + "\n+" +
+                            " Класс в процессе... " + this.getClass().getName() + "\n" +
+                            " onServiceConnected  метод в процессе... " + Thread.currentThread().getStackTrace()[2].getMethodName());
+                }
+            }, Context.BIND_AUTO_CREATE);
+
+            Log.d(getApplicationContext().getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                     " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                    " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"
-                    + " ФинальныйРезультатAsyncBackgroud " + " localBinderAsyncWorkmanager.isBinderAlive( " + localBinderAsyncWorkmanager.isBinderAlive()+
-                    "\n" + " isWorkManagerRunning " +isWorkManagerRunning);
+                    " line " + Thread.currentThread().getStackTrace()[2].getLineNumber());
+        } catch (Exception e) {
+            e.printStackTrace();
+            Log.e(getApplicationContext().getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() + " Линия  :"
+                    + Thread.currentThread().getStackTrace()[2].getLineNumber());
+            new RecordNewErros(getApplicationContext().getApplicationContext()).recordnewerror(e.toString(),
+                    this.getClass().getName(), Thread.currentThread().getStackTrace()[2].getMethodName(),
+                    Thread.currentThread().getStackTrace()[2].getLineNumber());
+        }
 
-       } catch (Exception e) {
-           e.printStackTrace();
-           Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
-                   " Линия  :" + Thread.currentThread().getStackTrace()[2].getLineNumber());
-           new RecordNewErros(getApplicationContext()).recordnewerror(e.toString(), this.getClass().getName(),
-                   Thread.currentThread().getStackTrace()[2].getMethodName(),
-                   Thread.currentThread().getStackTrace()[2].getLineNumber());
-       }
-        return ФинальныйРезультатAsyncBackgroud;
     }
-
-
     // TODO: 03.10.2024 end class
 
 }
