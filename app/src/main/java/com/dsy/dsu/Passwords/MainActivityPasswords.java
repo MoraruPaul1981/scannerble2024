@@ -288,7 +288,14 @@ public class MainActivityPasswords extends AppCompatActivity {
 
 
 
+    @Override
+    public void onRequestPermissionsResult(final int requestCode, @NonNull final String[] permissions, @NonNull final int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
 
+        Log.d(this.getClass().getName(), " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
+                " Линия  :" + Thread.currentThread().getStackTrace()[2].getLineNumber()+
+                " Класс  :" + Thread.currentThread().getStackTrace()[2].getClassName());
+    }
 
 
 

@@ -11,6 +11,8 @@ import com.dsy.dsu.BootAndAsync.BlBootAsync.CompleteRemoteSyncService;
 import com.dsy.dsu.BusinessLogicAll.DeviceName.ModulegetDeviceName;
 import com.dsy.dsu.BusinessLogicAll.DeviceName.hilt.QualifiergetDeviceName;
 import com.dsy.dsu.BusinessLogicAll.DeviceName.hilt.QualifiergetDeviceVersionBack;
+import com.dsy.dsu.BusinessLogicAll.Permissions.ClassPermissions;
+import com.dsy.dsu.Errors.controller.BiccessLogicActivityError;
 import com.dsy.dsu.Errors.controller.RecordNewErros;
 import com.dsy.dsu.Hilt.JbossAdrress.getHiltPortJbossInterface;
 import com.dsy.dsu.Hilt.JbossAdrress.qualifiers.QualifierJbossServer3;
@@ -128,6 +130,14 @@ public class CoreApp extends Application {
       // Integer getde= moduleDeleting.getModuleDelete("errordsu1"," SELECT  *   FROM errordsu1 AS er  WHERE er.ERROR IS  NOT NULL  ORDER BY er.id DESC  " ,null);
 
       //LinkedHashMap<Integer,String> getHiltPortJboss=   EntryPoints.get(getApplicationContext(), getHiltPortJbossInterface.class).getHiltPortJboss();
+
+
+      // TODO: 04.10.2023 разрешения для всего
+      // TODO: 24.03.2025 test
+
+      BiccessLogicActivityError biccessLogicActivityErr=new BiccessLogicActivityError(getApplicationContext(),getSqlLiteCoreApp);
+      biccessLogicActivityErr.clearingTableError();;
+
 
 
       Log.d(this.getClass().getName(),"\n" + " class CoreApp    " + Thread.currentThread().getStackTrace()[2].getClassName()

@@ -104,9 +104,9 @@ public class MainActivity_AdmissionMaterials extends AppCompatActivity implement
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        if(requestCode==CAMERA_PERSSION_CODE){
+
             Log.d("checkCameraPermissions", "requestCode "+requestCode +  " permissions "+  permissions  +" grantResults " +grantResults);
-        }
+
     }
 
     @Override

@@ -95,21 +95,10 @@ public class MainActivity_Errors extends AppCompatActivity  {
             cameBoundServiceUpdatePO();
 
 // Storage Permissions
-            final int REQUEST_EXTERNAL_STORAGE = 1;
-            String[] PERMISSIONS_STORAGE = {
-                    Manifest.permission.READ_EXTERNAL_STORAGE,
-                    Manifest.permission.WRITE_EXTERNAL_STORAGE };
-            // Check if we have write permission
-            int permission = ActivityCompat.checkSelfPermission(activity, Manifest.permission.WRITE_EXTERNAL_STORAGE);
 
-            if (permission != PackageManager.PERMISSION_GRANTED) {
-                // We don't have permission so prompt the user
-                ActivityCompat.requestPermissions(
-                        activity,
-                        PERMISSIONS_STORAGE,
-                        REQUEST_EXTERNAL_STORAGE
-                );
-            }
+            // TODO: 04.10.2023 разрешения для всего
+            new ClassPermissions(this,ALL_PERSSION_CODE);
+
 
             fragmentManager = getSupportFragmentManager();
             fragmentTransaction = fragmentManager.beginTransaction();
@@ -137,7 +126,6 @@ public class MainActivity_Errors extends AppCompatActivity  {
 
             // TODO: 12.12.2023  staring biscce logic
             biccessLogicActivityError=new BiccessLogicActivityError( getApplicationContext(),sqLiteDatabase_error);
-
 
             // TODO: 17.04.2023
             Log.d(this.getClass().getName(),"\n" + " class FaceAPp " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
@@ -216,13 +204,17 @@ public class MainActivity_Errors extends AppCompatActivity  {
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         try{
-        if(requestCode == 11){
+            if(requestCode == 11){
             Toast.makeText(this, "Отправляем...", Toast.LENGTH_LONG).show();
-            // TODO: 22.09.2023  после оптавление ОШИБОК  
+            // TODO: 22.09.2023  после оптавление ОШИБОК
+
            // TODO: 28.06.2023 очищаем таблиц
             biccessLogicActivityError.   МетодУдаланиеОшибок(  );
+
+            biccessLogicActivityError.       clearingTableError();
+
             // TODO: 22.09.2023  exit error fragment
-             metodCallBackkFragemtSettings();
+                biccessLogicActivityError.    metodCallBackkFragemtSettings(getApplicationContext() ,localBinderОбновлениеПО);
         }
 
         Log.d(this.getClass().getName(),"\n" + " class FaceAPp " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
@@ -238,6 +230,20 @@ public class MainActivity_Errors extends AppCompatActivity  {
                 Thread.currentThread().getStackTrace()[2].getLineNumber());
     }
     }
+
+    @Override
+    public void onRequestPermissionsResult(final int requestCode, @NonNull final String[] permissions, @NonNull final int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        // TODO: 04.10.2023 разрешения для всего
+
+        Log.d(this.getClass().getName(), " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
+                " Линия  :" + Thread.currentThread().getStackTrace()[2].getLineNumber()+
+                " Класс  :" + Thread.currentThread().getStackTrace()[2].getClassName());
+    }
+
+
+
+
 
     private void metodProssecingErrorsAll(@NonNull   StringBuffer БуерДляОшибок) {
         try{
@@ -278,63 +284,7 @@ public class MainActivity_Errors extends AppCompatActivity  {
         }
 
     }
-    private void metodCallBackkFragemtSettings() {
-        try{
-            // TODO Запусукаем Фргамент НАстройки  dashbord
 
-
-            Intent Интент_ЗапускаетDashboard = new Intent();
-            Интент_ЗапускаетDashboard.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_SINGLE_TOP);
-            Интент_ЗапускаетDashboard.setAction("MainActivity_Dashboard.class");
-            Интент_ЗапускаетDashboard.setClass(getApplicationContext(), MainActivity_Dashboard.class);
-
-            Bundle bundleBinderUpdate=new Bundle();
-            bundleBinderUpdate.putBoolean("CallBackFromMainActivity_Errors", true);
-            bundleBinderUpdate.putBinder("callbackbinderdashbord", localBinderОбновлениеПО);
-            Интент_ЗапускаетDashboard.putExtras(bundleBinderUpdate);
-
-            Интент_ЗапускаетDashboard.putExtras(bundleBinderUpdate);
-            activity.  startActivity(Интент_ЗапускаетDashboard);//tso*/
-
-            Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
-                    " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                    " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n");
-            Log.d(this.getClass().getName(), " Ошибок Нет. время :   " +new Date().toString());
-        } catch (Exception e) {
-            e.printStackTrace();
-            Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :"
-                    + Thread.currentThread().getStackTrace()[2].getMethodName() + " Линия  :"
-                    + Thread.currentThread().getStackTrace()[2].getLineNumber());
-            // TODO: 01.09.2021 метод вызова
-            new RecordNewErros(getApplicationContext()).recordnewerror(e.toString(),
-                    this.getClass().getName(), Thread.currentThread().getStackTrace()[2].getMethodName(),
-                    Thread.currentThread().getStackTrace()[2].getLineNumber());
-        }
-    }
-    private void metodCallBackkFragemtBoot() {
-        try{
-            // TODO Запусукаем Фргамент НАстройки  dashbord
-            Intent IntentStartFaceApp = new Intent();
-            IntentStartFaceApp.setClass(getApplication(), MainActivityBootAndAsync.class);
-            IntentStartFaceApp.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_SINGLE_TOP);/// FLAG_ACTIVITY_SINGLE_TOP
-            startActivity(IntentStartFaceApp);
-
-
-            Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
-                    " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                    " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n");
-            Log.d(this.getClass().getName(), " Ошибок Нет. время :   " +new Date().toString());
-        } catch (Exception e) {
-            e.printStackTrace();
-            Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :"
-                    + Thread.currentThread().getStackTrace()[2].getMethodName() + " Линия  :"
-                    + Thread.currentThread().getStackTrace()[2].getLineNumber());
-            // TODO: 01.09.2021 метод вызова
-            new RecordNewErros(getApplicationContext()).recordnewerror(e.toString(),
-                    this.getClass().getName(), Thread.currentThread().getStackTrace()[2].getMethodName(),
-                    Thread.currentThread().getStackTrace()[2].getLineNumber());
-        }
-    }
 
 
 
@@ -497,11 +447,12 @@ public class MainActivity_Errors extends AppCompatActivity  {
             public void onClick(View v) {
                 try{
                     if (    СтатусЗадачи.equalsIgnoreCase("com.CallBackSettingsFragment")) {
-                        metodCallBackkFragemtSettings();
+                        // TODO: 22.09.2023  exit error fragment
+                        biccessLogicActivityError.    metodCallBackkFragemtSettings(getApplicationContext() , localBinderОбновлениеПО);
 
                     } else     if (    СтатусЗадачи.equalsIgnoreCase("com.CallBackBootAndAsync")) {
 
-                        metodCallBackkFragemtBoot();
+                        biccessLogicActivityError. metodCallBackkFragemtBoot(getApplicationContext());
                     }
 
                     Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +

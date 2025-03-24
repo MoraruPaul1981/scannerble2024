@@ -46,6 +46,7 @@ import com.dsy.dsu.BusinessLogicAll.Class_MODEL_synchronized;
 import com.dsy.dsu.CnangeServers.PUBLIC_CONTENT;
 
 import com.dsy.dsu.Hilt.JbossAdrress.getHiltPortJbossInterface;
+import com.dsy.dsu.Hilt.JbossAdrress.qualifiers.QualifierJbossServer3;
 import com.dsy.dsu.Hilt.getSSLSocketFactory2.QualifiergetsslSocketFactory2;
 import com.dsy.dsu.Tabels.MainActivity_New_Templates;
 import com.dsy.dsu.Services.ServiceUpdatePoОбновлениеПО;
@@ -106,6 +107,10 @@ public class DashboardFragmentSettings extends  DialogFragment {
 
     private   ServiceConnection  connectionОбновлениеПО;
 
+
+
+
+    GetComponentActivityBootService blInnerMainActivityBootAndAsync;
     @Inject
     ServiceBootBinessLogic serviceBootBinessLogic;
 
@@ -115,10 +120,10 @@ public class DashboardFragmentSettings extends  DialogFragment {
     SSLSocketFactory getsslSocketFactory2;
 
 
-     GetComponentActivityBootService blInnerMainActivityBootAndAsync;
 
-
-
+    @Inject
+    @QualifierJbossServer3
+    public LinkedHashMap<Integer,String> getHiltPortJboss;
 
     // TODO: Rename and change types and number of parameters
     public static DashboardFragmentSettings newInstance( ) {
@@ -703,8 +708,8 @@ public class DashboardFragmentSettings extends  DialogFragment {
                         public void onClick(View v) {
                             try {
                                 // TODO: 16.12.2021 НЕПОСРЕДСТВЕННЫЙ ПИНГ СИСТЕНМ ИНТРЕНАТ НА НАЛИЧЕНИ СВАЗИ С БАЗОЙ SQL SERVER
-                             Boolean   СтатусРаботыСервера =
-                                        new Class_Connections_Server(). pingServerJbossSuccessfulOrNot(getContext(),getsslSocketFactory2);
+                         Boolean   СтатусРаботыСервера =
+                                        new Class_Connections_Server(). pingServerJbossSuccessfulOrNot(getActivity(),getsslSocketFactory2,getHiltPortJboss);
 
                                 if (СтатусРаботыСервера == true) {
                                     String ПолученыйТекущееИмяПользователя = new Class_MODEL_synchronized(getContext())

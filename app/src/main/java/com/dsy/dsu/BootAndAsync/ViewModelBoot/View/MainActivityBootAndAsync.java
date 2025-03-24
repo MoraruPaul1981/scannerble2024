@@ -10,6 +10,7 @@ import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.lifecycle.LifecycleOwner;
@@ -25,6 +26,8 @@ import com.dsy.dsu.BootAndAsync.EventsBus.MessageEvensBusEndAync;
 import com.dsy.dsu.BootAndAsync.EventsBus.MessageEvensBusPrograssBar;
 import com.dsy.dsu.BootAndAsync.EventsBus.MessageEvensBusUpdatePO;
 import com.dsy.dsu.BootAndAsync.ViewModelBoot.ViewModel.ViewModel;
+import com.dsy.dsu.BusinessLogicAll.Permissions.ClassPermissions;
+import com.dsy.dsu.Errors.controller.BiccessLogicActivityError;
 import com.dsy.dsu.Errors.controller.RecordNewErros;
 import com.dsy.dsu.Hilt.getSSLSocketFactory2.QualifiergetsslSocketFactory2;
 import com.dsy.dsu.R;
@@ -59,7 +62,7 @@ public class MainActivityBootAndAsync extends AppCompatActivity {
 
     protected GetComponentActivityBootService blInnerMainActivityBootAndAsync;
 
-
+    public static final int ALL_PERSSION_CODE=1;
 
 
     private ImageView imageView_faceapp_settings;
@@ -99,6 +102,8 @@ public class MainActivityBootAndAsync extends AppCompatActivity {
             activity = this;
             getlifecycleOwner=this;
 
+            // TODO: 04.10.2023 разрешения для всего
+            new ClassPermissions(this,ALL_PERSSION_CODE);
 
 
 
@@ -125,8 +130,6 @@ public class MainActivityBootAndAsync extends AppCompatActivity {
 
             // TODO: 03.03.2025  call BAck with Data Ot ViewModel
             getViewModelProvider();
-
-
             Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                     " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
                     " line " + Thread.currentThread().getStackTrace()[2].getLineNumber());
@@ -272,7 +275,15 @@ public class MainActivityBootAndAsync extends AppCompatActivity {
 
 
 
+    @Override
+    public void onRequestPermissionsResult(final int requestCode, @NonNull final String[] permissions, @NonNull final int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        // TODO: 04.10.2023 разрешения для всего
 
+        Log.d(this.getClass().getName(), " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
+                " Линия  :" + Thread.currentThread().getStackTrace()[2].getLineNumber()+
+                " Класс  :" + Thread.currentThread().getStackTrace()[2].getClassName());
+    }
 
 
 
