@@ -9,7 +9,7 @@
     android:orientation="vertical"
     android:visibility="visible"
     android:theme="@style/Theme.MaterialComponents.Light.NoActionBar"
-    tools:context=".Tabels.viewpagers.MainActivity_Tabel_Single_PeopleOneSwipe">
+    tools:context=".Tabels.Tabel.Single.MainActivity_Tabel_Single_PeopleOneSwipe">
 
     <TableLayout
         android:id="@+id/tableLayout_single_tabel_one_swipe"

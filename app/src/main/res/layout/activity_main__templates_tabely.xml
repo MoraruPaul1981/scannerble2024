@@ -9,7 +9,7 @@
     android:focusable="auto"
     app:layout_collapseMode="pin"
     app:layout_scrollFlags="scroll|exitUntilCollapsed|snap"
-    tools:context=".Tabels.MainActivity_List_Tabels">
+    tools:context=".Tabels.Tabel.CompleteTabel.MainActivity_List_Tabels">
 
 
     <com.google.android.material.button.MaterialButton
@@ -69,7 +69,7 @@
 
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/КруглаяКнопкаСамТабель"
+        android:id="@+id/floatingactionbuttontemplates"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|end"

@@ -30,7 +30,7 @@ import com.dsy.dsu.BusinessLogicAll.Class_Generation_UUID;
 import com.dsy.dsu.BusinessLogicAll.Class_Generation_Weekend_For_Tabels;
 import com.dsy.dsu.BusinessLogicAll.DATE.Class_Generation_Data;
 import com.dsy.dsu.BusinessLogicAll.DATE.SubClassCursorLoader;
-import com.dsy.dsu.Tabels.MainActivity_List_Tabels;
+import com.dsy.dsu.Tabels.Tabel.CompleteTabel.MainActivity_List_Tabels;
 
 import org.reactivestreams.Subscription;
 
