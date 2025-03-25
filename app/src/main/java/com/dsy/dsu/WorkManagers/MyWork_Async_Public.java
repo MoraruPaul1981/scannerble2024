@@ -22,8 +22,7 @@ import java.util.Date;
 public class MyWork_Async_Public extends Worker {
 /*    private String ИмяСлужбыWorkManger ="WorkManager Synchronizasiy_Data";*/
     private  String ИмяСлужбыSingleWorkManger ="WorkManager Synchronizasiy_Data Disposable";
-    private ServiceConnection serviceConnectionWorkManager;
-    private Service_For_Remote_Async_Binary.LocalBinderAsync localBinderAsyncWorkmanager;
+
 
     IntentServiceBoot.LocalBinderBootSerice          getlocalBinderBootSerice;
     // TODO: 28.09.2022

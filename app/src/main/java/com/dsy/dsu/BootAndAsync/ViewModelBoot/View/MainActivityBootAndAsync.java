@@ -296,7 +296,7 @@ public class MainActivityBootAndAsync extends AppCompatActivity {
 
 
     // TODO: 23.01.2024 EventBus for Prograssbar
-    @Subscribe (threadMode = ThreadMode.MAIN)
+    @Subscribe (threadMode = ThreadMode.MAIN_ORDERED)
     public void EventMessageEvensBusPrograssBar(MessageEvensBusPrograssBar messageEvensBusPrograssBar){
         try{
            GetComponentPrograssbar get_componentPrograssbar =new GetComponentPrograssbar(progressbarbootandasync,getApplicationContext());

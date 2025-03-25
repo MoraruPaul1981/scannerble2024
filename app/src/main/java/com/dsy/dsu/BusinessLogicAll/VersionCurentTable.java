@@ -124,10 +124,9 @@ public class VersionCurentTable {
                 contentValuesДляПоднятияВерсии.put("versionserveraandroid", СгенерированованныйДата);
                 contentValuesДляПоднятияВерсии.put("versionserveraandroid_version", VersionFromSqlServerPost);
 
-
                 // TODO: 01.07.2023  после выравниванию ДЛЯ КЛИЕНТА
-             /*   contentValuesДляПоднятияВерсии.put("localversionandroid", СгенерированованныйДата);
-                contentValuesДляПоднятияВерсии.put("localversionandroid_version", VersionFromSqlServerPost);*/
+               contentValuesДляПоднятияВерсии.put("localversionandroid", СгенерированованныйДата);
+                contentValuesДляПоднятияВерсии.put("localversionandroid_version", VersionFromSqlServerPost);
 
                 SQLBuilderВерсияДанныхСистемнаяТАблицы.setTables(ТаблицаСистемная);
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {

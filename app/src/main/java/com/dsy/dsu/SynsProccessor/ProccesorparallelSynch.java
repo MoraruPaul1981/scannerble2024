@@ -226,7 +226,7 @@ public class ProccesorparallelSynch   {
     Long TwoOfaKindGetAndPostJboss(@NonNull String ИмяТаблицы,
                                    @NonNull  Long ВерсияДанныхсSqlServer,
                                    @NonNull  Integer PublicID,
-                                   @NonNull Date     ВремяОтSqlServer) {
+                                   @NonNull Date     ВремяОтSqlServer) throws  Exception{
 
       ConcurrentSkipListSet<Long>  completedPostAndGetInsertorUpdateOperations=new ConcurrentSkipListSet<>();
         try  {

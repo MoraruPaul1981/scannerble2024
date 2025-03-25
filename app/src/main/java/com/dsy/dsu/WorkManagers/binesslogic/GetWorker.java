@@ -35,7 +35,7 @@ public class GetWorker {
                 if (ВыбранныйРежимСети) {
 
                     if (getlocalBinderBootSerice.isBinderAlive() && isWorkManagerRunning == false) {
-                        String actionSingleWorker = "IntentServiceBootUpdatePo.comAndIntentServiceBootAsync.com";
+                        String actionSingleWorker = "IntentServiceBootAsync.com" ;
 
                         intentSingleWorker.setAction(actionSingleWorker);
                         intentSingleWorker.setData(Uri.parse(actionSingleWorker));
