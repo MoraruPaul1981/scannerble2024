@@ -182,34 +182,7 @@ public class MainActivity_New_Templates extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         try {
             super.onCreate(savedInstanceState);
-
-
-            WebView webView = new WebView(this);
-            setContentView(webView);
-
-            class JavascriptHandler {
-                /**
-                 * Key point here is the annotation @JavascriptInterface
-                 *
-                 */
-                @JavascriptInterface
-                public void jsCallback() {
-                    // Do something
-                }
-                @JavascriptInterface
-                public void jsCallbackTwo(String dummyData) {
-                    // Do something
-                }
-            }
-            /*
-             * Note the label Android, this is used in the Javascript side of things
-             * You can of course change this.
-             */
-            webView.addJavascriptInterface(new JavascriptHandler(), "Android");
-
-            webView.loadUrl("https://www.vesti.ru/?ysclid=m8op663ixq847077627");
-
-
+            setContentView(R.layout.activity_main_new_templates);
 
             //setContentView(R.layout.activity_main__tabel_listview_rows);
             setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
@@ -221,7 +194,7 @@ public class MainActivity_New_Templates extends AppCompatActivity {
             /////
             setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LOCKED);
             getSupportActionBar().hide(); ///скрывать тул бар
-            КонтекстСотрудникиДляТабеля = this;
+       /*     КонтекстСотрудникиДляТабеля = this;
             context = this;
             ///TODO попытка открыть экран как full screan
             Log.d(this.getClass().getName(), "   ");
@@ -288,7 +261,7 @@ public class MainActivity_New_Templates extends AppCompatActivity {
                     " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n");
             // TODO: 10.04.2023  новые данные
             //TODO #1 параметры из MainActivity_List_Tabels
-            МетодGetVarivateActivity_List_Tabels();
+            МетодGetVarivateActivity_List_Tabels();*/
 
 
         } catch (Exception e) {
@@ -326,10 +299,10 @@ public class MainActivity_New_Templates extends AppCompatActivity {
         try {
             ////
 
-            МетодЗаполняемДаннымиLIST();
+         /*   МетодЗаполняемДаннымиLIST();
             методСпинерЦФО();
-            МетолСпинерДаты();
-            setTextviewCountCustomer();
+            МетолСпинерДаты();*/
+            //setTextviewCountCustomer();
             Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                     " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
                     " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n");
