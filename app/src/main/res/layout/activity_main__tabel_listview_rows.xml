@@ -47,7 +47,7 @@
 
             <com.google.android.material.card.MaterialCardView
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="75dp"
                 app:cardCornerRadius="5dp"
                 android:layout_margin="2dp"
                 android:padding="2dp"
@@ -251,18 +251,32 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:gravity="center">
-
-
             <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
-
-
+                android:layout_height="match_parent">
+                <com.google.android.material.card.MaterialCardView
+                    android:id="@+id/materialcardViewrowscroll"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:cardCornerRadius="10dp"
+                    android:layout_above="@+id/materialcardViewlastrow"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginBottom="5dp"
+                    android:padding="2dp"
+                    android:animateLayoutChanges="true"
+                    android:gravity="center"
+                    app:strokeColor="@color/icon_dashdornd_tabel2_background"
+                    app:cardBackgroundColor="@color/actionbar_text_color"
+                    app:cardElevation="2dp"
+                    android:layout_alignParentTop="true"
+                    android:layout_centerHorizontal="true"
+                    app:cardMaxElevation="1dp"
+                    android:translationZ="4dp"
+                    app:strokeWidth="1dp">
             <ScrollView
                 android:id="@+id/nestedScrollView_singlet"
                 android:layout_width="match_parent"
-                android:layout_height="0dp"
+                android:layout_height="match_parent"
                 android:layout_margin="2dp"
                 android:padding="1dp"
                 android:fillViewport="true"
@@ -271,26 +285,7 @@
                 android:transcriptMode="alwaysScroll"
                 android:layout_alignParentTop="true"
                 android:layout_centerHorizontal="true"
-                android:layout_above="@+id/textviewcfo"
                 android:background="@drawable/disayn_line_tablerow5">
-
-
-
-                <com.google.android.material.card.MaterialCardView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    app:cardCornerRadius="3dp"
-                    android:layout_margin="2dp"
-                    android:padding="2dp"
-                    android:animateLayoutChanges="true"
-                    android:gravity="center"
-                    app:strokeColor="@color/icon_dashdornd_tabel2_background"
-                    app:cardBackgroundColor="@color/actionbar_text_color"
-                    app:cardElevation="2dp"
-                    app:cardMaxElevation="1dp"
-                    android:translationZ="4dp"
-                    app:strokeWidth="1dp">
-
 
                 <ListView
                     android:id="@+id/ListAllTabels"
@@ -311,10 +306,8 @@
                     android:visibility="visible" />
 
 
-                </com.google.android.material.card.MaterialCardView>
             </ScrollView>
-
-
+                </com.google.android.material.card.MaterialCardView>
 
 
 
@@ -330,99 +323,97 @@
 
 
                 <com.google.android.material.card.MaterialCardView
+                    android:id="@+id/materialcardViewlastrow"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="80dp"
                     app:cardCornerRadius="5dp"
-                    android:layout_margin="2dp"
                     android:padding="2dp"
                     android:animateLayoutChanges="true"
                     android:gravity="center"
-                    app:cardBackgroundColor="#FFFFFF"
+                    app:cardBackgroundColor="@color/actionbar_text_color"
+                    app:strokeColor="@color/icon_dashdornd_tabel2_background"
+                    android:layout_alignParentBottom="true"
+                    android:layout_centerHorizontal="true"
                     app:cardElevation="2dp"
                     app:cardMaxElevation="1dp"
                     android:translationZ="4dp"
-                    app:strokeColor="@color/divider"
                     app:strokeWidth="1dp">
 
+                 <RelativeLayout
+                     android:layout_width="match_parent"
+                     android:layout_height="wrap_content">
 
+
+
+
+
+     <com.google.android.material.textview.MaterialTextView
+         android:id="@+id/textviewcfo"
+         android:layout_width="100dp"
+         android:layout_height="25dp"
+         android:background="@drawable/style_for_assitiionmatrial_create_name2"
+         android:gravity="center_vertical|center_horizontal"
+         android:hint="цфо"
+         android:layout_marginTop="5dp"
+         android:padding="2dp"
+         android:layout_centerHorizontal="true"
+         android:layout_alignParentTop="true"
+         android:textColorHint="#000000"
+         android:textSize="13sp"
+         android:textStyle="bold"
+         android:translationZ="1dp"
+         android:visibility="visible"
+         app:cardCornerRadius="5dp"
+         app:cardElevation="1dp" />
+
+
+
+
+     <Spinner
+         android:id="@+id/СпинерТабельДепратамент"
+         android:layout_width="250dp"
+         android:layout_height="45dp"
+         android:layout_margin="2dp"
+         android:padding="2dp"
+         android:background="@drawable/style_forpolymaterialb_cycle_createspinner2"
+         android:backgroundTintMode="multiply"
+         android:dropDownWidth="match_parent"
+         android:foregroundGravity="center"
+         android:layout_alignParentBottom="true"
+         android:layout_centerHorizontal="true"
+         android:layout_marginBottom="5dp"
+         android:gravity="center"
+         android:spinnerMode="dropdown"
+         android:textColor="@android:color/white"
+         android:textSize="9dp"
+         android:textStyle="bold"
+         android:visibility="visible" />
+
+
+
+     <com.google.android.material.floatingactionbutton.FloatingActionButton
+         android:id="@+id/floatingactionbuttoncustomers"
+         android:layout_width="70dp"
+         android:layout_height="70dp"
+         android:layout_alignParentRight="true"
+         android:layout_centerVertical="true"
+          android:layout_margin="5dp"
+         android:padding="2dp"
+         android:layout_alignRight="@+id/СпинерТабельДепратамент"
+         android:layout_gravity="end|bottom"
+         android:backgroundTintMode="add"
+         app:backgroundTint="#FFD5D9DA"
+         app:fabSize="normal"
+         app:srcCompat="@drawable/icon_dsu1_plus_tabel" />
+
+
+ </RelativeLayout>
 
 
 
 
 
                 </com.google.android.material.card.MaterialCardView>
-
-
-
-
-
-
-
-
-
-
-
-
-
-                <com.google.android.material.textview.MaterialTextView
-                    android:id="@+id/textviewcfo"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:background="@drawable/style_for_assitiionmatrial_create_name2"
-                    android:gravity="center_vertical|center_horizontal"
-                    android:hint="цфо"
-                    android:layout_margin="2dp"
-                    android:padding="1dp"
-                    android:layout_centerHorizontal="true"
-                    android:layout_above="@+id/СпинерТабельДепратамент"
-                    android:minWidth="100dp"
-                    android:textColorHint="#000000"
-                    android:textSize="13sp"
-                    android:textStyle="bold"
-                    android:translationZ="1dp"
-                    android:visibility="visible"
-                    app:cardCornerRadius="5dp"
-                    app:cardElevation="1dp" />
-
-
-
-
-                <Spinner
-                    android:id="@+id/СпинерТабельДепратамент"
-                    android:layout_width="wrap_content"
-                    android:minWidth="250dp"
-                    android:layout_height="50dp"
-                    android:layout_margin="5dp"
-                    android:padding="2dp"
-                    android:layout_alignParentBottom="true"
-                    android:layout_toLeftOf="@+id/floatingactionbuttoncustomers"
-                    android:layout_centerHorizontal="true"
-                    android:background="@drawable/style_forpolymaterialb_cycle_createspinner2"
-                    android:backgroundTintMode="multiply"
-                    android:dropDownWidth="match_parent"
-                    android:foregroundGravity="center"
-                    android:gravity="center"
-                    android:spinnerMode="dropdown"
-                    android:textColor="@android:color/white"
-                    android:textSize="9dp"
-                    android:textStyle="bold"
-                    android:visibility="visible" />
-
-
-
-                <com.google.android.material.floatingactionbutton.FloatingActionButton
-                    android:id="@+id/floatingactionbuttoncustomers"
-                    android:layout_width="70dp"
-                    android:layout_height="70dp"
-                    android:layout_alignParentRight="true"
-                    android:layout_alignBottom ="@+id/СпинерТабельДепратамент"
-                    android:layout_margin="5dp"
-                    android:padding="2dp"
-                    android:layout_gravity="end|bottom"
-                    android:backgroundTintMode="add"
-                    app:backgroundTint="#FFD5D9DA"
-                    app:fabSize="normal"
-                    app:srcCompat="@drawable/icon_dsu1_plus_tabel" />
             </RelativeLayout>
         </TableRow>
     </TableLayout>
