@@ -1132,11 +1132,12 @@ public class FragmentSingleTabelOneSwipe extends Fragment {
 
                         // TODO: 22.06.2023 loop Name ROW
                         getLoopNameRecycreViewSingleTable(holder, cursor);
-                        messageRows.getTarget().postDelayed(()->{
+
+
+                        messageRows.getTarget().post(()->{
                             // TODO: 22.06.2023 loop   Value
                             getLoopValueRecycreViewSingleTable(holder, cursor);
-                            messageRows.getTarget().removeCallbacksAndMessages(null);
-                        },1000);
+                        });
 
 
 
