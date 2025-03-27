@@ -1128,16 +1128,15 @@ public class FragmentSingleTabelOneSwipe extends Fragment {
 
 
 
-                        messageRows.getTarget().post(()->{
-                            // TODO: 22.06.2023 loop Name ROW
-                            getLoopNameRecycreViewSingleTable(holder, cursor);
 
-                            // TODO: 22.06.2023 loop Name Value
+
+                        // TODO: 22.06.2023 loop Name ROW
+                        getLoopNameRecycreViewSingleTable(holder, cursor);
+                        messageRows.getTarget().postDelayed(()->{
+                            // TODO: 22.06.2023 loop   Value
                             getLoopValueRecycreViewSingleTable(holder, cursor);
-
                             messageRows.getTarget().removeCallbacksAndMessages(null);
-
-                        });
+                        },1000);
 
 
 
@@ -1310,7 +1309,7 @@ public class FragmentSingleTabelOneSwipe extends Fragment {
             @Override
             public void onBindViewHolder(@NonNull  MyViewHolder holder, int position) {
                 try {
-                    holder.itemView.startAnimation(animationFromRecyReview);
+                    holder.itemView.startAnimation(animation1);
                     Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                             " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
                             " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" + " cursorForViewPager " +cursor +
@@ -1477,6 +1476,8 @@ public class FragmentSingleTabelOneSwipe extends Fragment {
                                             методПереходНаМеткиТАбедяcRow(editTextRowКликПоДАнными);
                                             // TODO: 05.04.2023 Иниуиализация Клавиаьтуры Поднятие для кажой Ячейки
                                             методИницаллизацииКлавиаотурыЯчейка(editTextRowКликПоДАнными);
+
+
                                             // TODO: 10.05.2023
                                             Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                                                     " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
@@ -1747,7 +1748,6 @@ public class FragmentSingleTabelOneSwipe extends Fragment {
                             TextViewRowКликПоНазваниям.setBackground(drawableup);*/
                             TextViewRowКликПоНазваниям.requestLayout();
                         }
-                        TextViewRowКликПоНазваниям.startAnimation(animationFromRecyReview);
                         Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                                 " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
                                 " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"+   "  ВыходныеИлиПразничные "
@@ -1778,6 +1778,7 @@ public class FragmentSingleTabelOneSwipe extends Fragment {
                     if ( getWorkerDays.containsValue(ВыходныеИлиПразничные.trim())==true) {
 
                         if (EditTextRowДанные.isEnabled()) {
+                            EditTextRowДанные.startAnimation(animation1);
                             EditTextRowДанные.requestLayout();
                         }
                         Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
@@ -1788,6 +1789,7 @@ public class FragmentSingleTabelOneSwipe extends Fragment {
                         // TODO: 11.04.2023 Ставим Дни Выходные
                     } else {
                         if (EditTextRowДанные.isEnabled()) {
+                            EditTextRowДанные.startAnimation(animationFromRecyReview);
                             EditTextRowДанные.requestLayout();
                         }
 
@@ -2828,8 +2830,8 @@ public class FragmentSingleTabelOneSwipe extends Fragment {
 
 // TODO: 16.06.2023  ПРОИЗВОДИМ САМ СВАЙП
                     message.getTarget().postDelayed(()->{
-                        materialTextViewprofession.startAnimation(animation1);
-                        materialTextViewfio.startAnimation(animation1);
+                        materialTextViewprofession.startAnimation(animationFromRecyReview);
+                        materialTextViewfio.startAnimation(animationFromRecyReview);
                     },50);
 
                     Vibrator v2 = (Vibrator) getContext().getSystemService(Context.VIBRATOR_SERVICE);
