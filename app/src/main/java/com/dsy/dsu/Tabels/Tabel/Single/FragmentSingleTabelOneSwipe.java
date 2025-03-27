@@ -1127,9 +1127,20 @@ public class FragmentSingleTabelOneSwipe extends Fragment {
 
 
 
-                        // TODO: 22.06.2023 данные
-                        МетодЗаполняемДаннымиRecycreViewSingleTable(holder, cursor);
-                        // TODO: 06.04.2023
+
+                        messageRows.getTarget().post(()->{
+                            // TODO: 22.06.2023 loop Name ROW
+                            getLoopNameRecycreViewSingleTable(holder, cursor);
+
+                            // TODO: 22.06.2023 loop Name Value
+                            getLoopValueRecycreViewSingleTable(holder, cursor);
+
+                            messageRows.getTarget().removeCallbacksAndMessages(null);
+
+                        });
+
+
+
 
 
                         // TODO: 14.04.2023 ДОПОЛНИТЕЛЬНЫЕ МЕТОДЦ ПОСЛЕ ВСТАВКИ ЛДАННЫХ
@@ -1317,7 +1328,7 @@ public class FragmentSingleTabelOneSwipe extends Fragment {
 
 
             ///todo первый метод #1
-            private void МетодЗаполняемДаннымиRecycreViewSingleTable(@NonNull  MyViewHolder holder, @NonNull Cursor cursor) {
+            private void getLoopNameRecycreViewSingleTable(@NonNull  MyViewHolder holder, @NonNull Cursor cursor) {
                 try {
 // TODO: 26.06.2023 Цикл Крутим Нахвание и Данные Экрана
                     Flowable.fromIterable(holder.linkedHashMapsНазваниеиДанные)
@@ -1325,28 +1336,8 @@ public class FragmentSingleTabelOneSwipe extends Fragment {
                             .doOnNext(new Consumer<LinkedHashMap<TableRow, TableRow>>() {
                                 @Override
                                 public void accept(LinkedHashMap<TableRow, TableRow> tableRowTableRowLinkedHashMap) throws Throwable {
-
-                                    // TODO: 04.03.2025 vALUE
-                                    Flowable flowable1=  Flowable.fromIterable(tableRowTableRowLinkedHashMap.values())
-                                            .onBackpressureBuffer(1)
-                                            .doOnNext(new Consumer<TableRow>() {
-                                                @Override
-                                                public void accept(TableRow tableRowДанные) throws Throwable {
-                                                         // TODO: 04.03.2025
-                                                    // TODO: 04.04.2023   DATA ROW
-                                                    МетодЗаполняемДаннымиTableRow(cursor  ,tableRowДанные);
-
-                                                    // TODO: 26.06.2023  поднимае версию
-                                                    Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
-                                                            " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                                                            " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n");
-
-                                                }
-                                            });
-
-
-                                    // TODO: 04.03.2025 naME
-                               Flowable flowable2=     Flowable.fromIterable(tableRowTableRowLinkedHashMap.keySet())
+                                    // TODO: 04.03.2025 NAME
+                                    Flowable getName=     Flowable.fromIterable(tableRowTableRowLinkedHashMap.keySet())
                                             .onBackpressureBuffer(1)
                                             .doOnNext(new Consumer<TableRow>() {
                                                 @Override
@@ -1362,43 +1353,73 @@ public class FragmentSingleTabelOneSwipe extends Fragment {
                                                 }
                                             }) ;
 
-
-                                    Flowable.merge(flowable1,flowable2).doOnComplete(new Action() {
-                                                                                         @Override
-                                                                                         public void run() throws Throwable {
-                                                                                             // TODO: 26.06.2023  поднимае версию
-                                                                                             Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
-                                                                                                     " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                                                                                                     " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n");
-
-                                                                                         }
-                                                                                     }
-                                    ).subscribe();
-
-
-
-
-
-
+                                    getName.subscribe();
                                     // TODO: 26.06.2023  поднимае версию
                                     Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                                             " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
                                             " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n");
-
-
                                 }
-                            }).doOnError(new Consumer<Throwable>() {
+                            }) .doOnComplete(new Action() {
                                 @Override
-                                public void accept(Throwable throwable) throws Throwable {
-                                    throwable.printStackTrace();
-                                    Log.e(getContext().getClass().getName(),
-                                            "Ошибка " +throwable+ " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
-                                                    " Линия  :" + Thread.currentThread().getStackTrace()[2].getLineNumber());
-                                    new RecordNewErros(getContext()).recordnewerror(throwable.toString(),
-                                            this.getClass().getName().toString(), Thread.currentThread().getStackTrace()[2].getMethodName().toString(),
-                                            Thread.currentThread().getStackTrace()[2].getLineNumber());
+                                public void run() throws Throwable {
+                                    // TODO: 26.06.2023  поднимае версию
+                                    Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                                            " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                                            " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n");
                                 }
-                            }).doOnComplete(new Action() {
+                            }).subscribe();
+
+
+                    // TODO: 26.06.2023
+                    Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                            " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                            " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n");
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    Log.e(getContext().getClass().getName(),
+                            "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
+                                    " Линия  :" + Thread.currentThread().getStackTrace()[2].getLineNumber());
+                    new RecordNewErros(getContext()).recordnewerror(e.toString(),
+                            this.getClass().getName().toString(), Thread.currentThread().getStackTrace()[2].getMethodName().toString(),
+                            Thread.currentThread().getStackTrace()[2].getLineNumber());
+                }
+            }
+
+            ///todo первый метод #2
+            private void getLoopValueRecycreViewSingleTable(@NonNull  MyViewHolder holder, @NonNull Cursor cursor) {
+                try {
+// TODO: 26.06.2023 Цикл Крутим Нахвание и Данные Экрана
+                    Flowable.fromIterable(holder.linkedHashMapsНазваниеиДанные)
+                            .onBackpressureBuffer(1)
+                            .doOnNext(new Consumer<LinkedHashMap<TableRow, TableRow>>() {
+                                @Override
+                                public void accept(LinkedHashMap<TableRow, TableRow> tableRowTableRowLinkedHashMap) throws Throwable {
+                                    // TODO: 04.03.2025 NAME
+                                    // TODO: 04.03.2025 VALUE
+                                    Flowable getValue=  Flowable.fromIterable(tableRowTableRowLinkedHashMap.values())
+                                            .onBackpressureBuffer(1)
+                                            .doOnNext(new Consumer<TableRow>() {
+                                                @Override
+                                                public void accept(TableRow tableRowДанные) throws Throwable {
+                                                    // TODO: 04.03.2025
+                                                    // TODO: 04.04.2023   DATA ROW
+                                                    МетодЗаполняемДаннымиTableRow(cursor  ,tableRowДанные);
+
+                                                    // TODO: 26.06.2023  поднимае версию
+                                                    Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                                                            " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                                                            " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n");
+
+                                                }
+                                            });
+
+                                    getValue.subscribe();
+                                    // TODO: 26.06.2023  поднимае версию
+                                    Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                                            " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                                            " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n");
+                                }
+                            }) .doOnComplete(new Action() {
                                 @Override
                                 public void run() throws Throwable {
                                     // TODO: 26.06.2023  поднимае версию
@@ -2623,11 +2644,10 @@ public class FragmentSingleTabelOneSwipe extends Fragment {
                 Integer   ЧасыТекущегоСОтрудника = new Class_MODEL_synchronized(getContext()).МетодПосчётаЧасовПоСотруднику(cursor);
                 Log.d(this.getClass().getName(), "  ЧасыТекущегоСОтрудника " + ЧасыТекущегоСОтрудника);
 
-                String ЧасыТекущегоСотрудника="(" + ЧасыТекущегоСОтрудника + "/часы)  "
-                        + ""+ ПозицуияВыбраногоСОтрудника+" из "+  cursor.getCount()+"";
+                String ЧасыТекущегоСотрудника="(" + ЧасыТекущегоСОтрудника + "/часы) "
+                        +"\n"+ ПозицуияВыбраногоСОтрудника+" из "+  cursor.getCount()+"";
 
-
-                // TODO: 20.11.2023  заполение часов
+             // TODO: 20.11.2023  заполение часов
                 
                 class SpinerЧасы extends AddDataSpinersHasyAndMotch{
                     @Override
