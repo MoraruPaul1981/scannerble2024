@@ -21,7 +21,7 @@
         android:layout_weight="1"
 
 
-        android:gravity="left"
+        android:gravity="top"
         android:layout_gravity="center"
 
         android:animateLayoutChanges="true"
@@ -154,21 +154,20 @@
     </com.google.android.material.card.MaterialCardView>
 
 
+
+
+
     <com.google.android.material.card.MaterialCardView
         android:layout_width="match_parent"
         android:layout_height="120dp"
         app:cardCornerRadius="5dp"
         android:layout_margin="5dp"
         android:padding="2dp"
-
         android:layout_weight="1"
-
-
         android:gravity="center"
         android:layout_gravity="bottom"
-
         android:animateLayoutChanges="true"
-        app:cardBackgroundColor="@color/colorPrimary"
+        app:cardBackgroundColor="@color/color_beliyi"
         app:strokeColor="@color/icon_dashdornd_tabel2_background"
         app:cardElevation="2dp"
         app:cardMaxElevation="1dp"
@@ -178,9 +177,40 @@
             android:layout_margin="2dp"
             android:padding="2dp"
             android:layout_width="match_parent"
-            android:layout_height="80dp">
+            android:layout_height="wrap_content">
+
+
+            <!--  todo кнопка для сохранения-->
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/bottom_alaliz_and_dwonloadupdatepo"
+                style="@style/Widget.MaterialComponents.ExtendedFloatingActionButton.Icon"
+                android:layout_width="220dp"
+                android:layout_height="60dp"
+                android:layout_centerHorizontal  ="true"
+                android:gravity="center"
+                android:text="Загрузить"
+                android:layout_margin="5dp"
+                android:layout_centerInParent="true"
+                android:backgroundTint="#797C7C"
+                android:backgroundTintMode="screen"
+                android:textColor="#0E0E0E"
+                android:textSize="13sp"
+                android:textStyle="bold"
+                android:translationZ="150dp"
+                android:visibility="visible"
+                app:cornerRadius="20dp"
+                tools:visibility="visible" />
+
         </RelativeLayout>
     </com.google.android.material.card.MaterialCardView>
+
+
+
+
+
+
+
+
 
 
 </LinearLayout>

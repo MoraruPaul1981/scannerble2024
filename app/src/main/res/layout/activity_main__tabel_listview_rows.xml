@@ -402,6 +402,9 @@
          android:backgroundTintMode="add"
          app:backgroundTint="#FFD5D9DA"
          app:fabSize="normal"
+         app:rippleColor="@color/accent"
+         android:elevation="10dp"
+         android:contentDescription="Подбор"
          app:srcCompat="@drawable/icon_dsu1_plus_tabel" />
 
 
