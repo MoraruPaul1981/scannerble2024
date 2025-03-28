@@ -212,8 +212,20 @@ public class CompleteRemoteSyncService {
                 }
             }
 
+
+
+
+
+
+
+            // TODO: 22.01.2024 true запускаем Анализ По
+            Integer    СервернаяВерсия=        completeUpdatePO(getHiltPortJboss,context,getWhoLaunched);
+            // TODO: 24.09.2024   Локальная Версия Программернр Обеспечения табель
+            PackageInfo    pInfo = context. getPackageManager().getPackageInfo(context. getPackageName(), 0);
+            String version = pInfo.versionName;//Version Name
+            Integer ЛокальнаяВерсияПО = pInfo.versionCode;
             // TODO: 28.03.2025  Запускам Активти после Синхрониазции
-            weswitchtothedesiredactivityaftersynchronization(context,userHasReceivedAccesstoDashBordorPasswordisNeeded);
+            weswitchtothedesiredactivityaftersynchronization(context,userHasReceivedAccesstoDashBordorPasswordisNeeded,ЛокальнаяВерсияПО,СервернаяВерсия);
 
             // TODO: 26.12.2022  конец основгого кода
             Log.d(context.getClass().getName(), "\n" + " class "
@@ -285,28 +297,32 @@ public class CompleteRemoteSyncService {
 
 
     private void weswitchtothedesiredactivityaftersynchronization(  @NonNull Context context
-            ,@NonNull  Boolean userHasReceivedAccesstoDashBordorPasswordisNeeded) {
+            ,@NonNull  Boolean userHasReceivedAccesstoDashBordorPasswordisNeeded,
+                                                                    @NonNull Integer ЛокальнаяВерсияПО,@NonNull Integer СервернаяВерсия) {
 
         try {
 
-        if (userHasReceivedAccesstoDashBordorPasswordisNeeded){
-            // TODO: 01.04.2024 Все в порядке ЗАпускам Саму Программу DashBord
-            new GetEndingAsyn().forvardDashboard(context,localBinderОбновлениеПО);
+            if (ЛокальнаяВерсияПО>=СервернаяВерсия) {
+                if (userHasReceivedAccesstoDashBordorPasswordisNeeded){
+                    // TODO: 01.04.2024 Все в порядке ЗАпускам Саму Программу DashBord
+                    new GetEndingAsyn().forvardDashboard(context,localBinderОбновлениеПО);
 
-        }else {
+                }else {
 
-            // TODO: 28.04.2023 НЕт Анутифтикации Пароль
-            // TODO: 28.04.2023 НЕт Анутифтикации Пароль
-            new GetEndingAsyn().forvardActivityPassword(  context);
+                    // TODO: 28.04.2023 НЕт Анутифтикации Пароль
+                    // TODO: 28.04.2023 НЕт Анутифтикации Пароль
+                    new GetEndingAsyn().forvardActivityPassword(  context);
 
-        }
+                }
+            }
             // TODO: 28.04.2023
             Log.d(this.getClass().getName(), "\n" + " class " +
                     Thread.currentThread().getStackTrace()[2].getClassName()
                     + "\n" +
                     " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
                     " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"
-                    + " userHasReceivedAccesstoDashBordorPasswordisNeeded " +userHasReceivedAccesstoDashBordorPasswordisNeeded);
+                    + " userHasReceivedAccesstoDashBordorPasswordisNeeded " +userHasReceivedAccesstoDashBordorPasswordisNeeded+
+                     "ЛокальнаяВерсияПО " +ЛокальнаяВерсияПО  + " СервернаяВерсия " +СервернаяВерсия );
     } catch (Exception e) {
             e.printStackTrace();
             Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() + " Линия  :"
