@@ -41,6 +41,7 @@ import android.widget.Filter;
 import android.widget.FilterQueryProvider;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.RelativeLayout;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
@@ -187,11 +188,6 @@ public class FragmentSingleTabelOneSwipe extends Fragment {
 
     private LinkedHashMap< String,String> getWorkerDays =new LinkedHashMap<>();
     private LinkedHashMap< String,String> getHolidaysDays =new LinkedHashMap<>();
-
-
-
-    private NestedScrollView nestedScrollView_singlet;
-
 
 
     // TODO: Rename and change types and number of parameters
@@ -474,25 +470,24 @@ public class FragmentSingleTabelOneSwipe extends Fragment {
         class SubClassNewDataSingleTabel{
             void методВнешнийВидФрагмента(@NonNull View view){
                 try{
-                    LinearLayout linearLayout_tabel_single=view.findViewById(R.id.linearLayout_tabel_single);
+                    RelativeLayout getLayout_tabel_single=(RelativeLayout)view.findViewById(R.id.linearLayout_tabel_single);
 
 
-                    spinnermesazyear = (MaterialTextView) linearLayout_tabel_single. findViewById(R.id.spinnermesazyear_single);
-                    spinnerchasy = (MaterialTextView) linearLayout_tabel_single.findViewById(R.id.spinnerchasy_single);
-                    spinnerdepartament = (MaterialTextView) linearLayout_tabel_single.findViewById(R.id.spinnerdepartament_single);
+                    spinnermesazyear = (MaterialTextView) getLayout_tabel_single. findViewById(R.id.spinnermesazyear_single);
+                    spinnerchasy = (MaterialTextView) getLayout_tabel_single.findViewById(R.id.spinnerchasy_single);
+                    spinnerdepartament = (MaterialTextView) getLayout_tabel_single.findViewById(R.id.spinnerdepartament_single);
 
                     ///TODO на данной КНОПКЕ МЫ МОЖЕМ ДОБАВИТЬ СОТРУДНИКА К ТАБЕЛЮ ИЛИ СОЗДАТЬ НОВОГО СОТРУДНИКА
-                    imageButtonbackotsingletabel =(MaterialButton)linearLayout_tabel_single. findViewById(R.id.imageButtonbackotsingletabel);
+                    imageButtonbackotsingletabel =(MaterialButton)getLayout_tabel_single. findViewById(R.id.imageButtonbackotsingletabel);
 
-                    materialTextViewfio = (MaterialTextView)  linearLayout_tabel_single.findViewById(R.id.materialTextViewfio);
-                    materialTextViewprofession = (MaterialTextView)  linearLayout_tabel_single.findViewById(R.id.materialTextViewprofession);
+                    materialTextViewfio = (MaterialTextView)  getLayout_tabel_single.findViewById(R.id.materialTextViewfio);
+                    materialTextViewprofession = (MaterialTextView)  getLayout_tabel_single.findViewById(R.id.materialTextViewprofession);
 
-                    recycleviewsingletabel = (RecyclerView)  linearLayout_tabel_single.findViewById(R.id.recycleviewsingletabel);
+                    recycleviewsingletabel = (RecyclerView)  getLayout_tabel_single.findViewById(R.id.recycleviewsingletabel);
                     recycleviewsingletabel.scrollToPosition(View.FOCUS_UP);
                     recycleviewsingletabel.setNestedScrollingEnabled(false);
+                    recycleviewsingletabel.setVerticalScrollBarEnabled(true);
 
-                    // TODO: 30.11.2023
-                    nestedScrollView_singlet= (NestedScrollView)  linearLayout_tabel_single.findViewById(R.id.nestedScrollView_singlet);
 
 
 
@@ -1249,7 +1244,6 @@ public class FragmentSingleTabelOneSwipe extends Fragment {
                     if (cursor!=null) {
                         // TODO: 16.11.2023
                         if (cursor.getCount()>0) {
-                            //  viewSingleTabel = LayoutInflater.from(parent.getContext()).inflate(R.layout.simple_for_single_tabel_mm_one_row, parent, false);
                  if (МЕсяцТабелей!=2) {
                      if (getWorkerDays.size()==31) {
                          viewSingleTabel = LayoutInflater.from(parent.getContext()).inflate(R.layout.simple_for_single_tabel_one_single_31day, parent, false);
@@ -1731,30 +1725,24 @@ public class FragmentSingleTabelOneSwipe extends Fragment {
                     if ( getHolidaysDays.containsValue(ВыходныеИлиПразничные.trim())==true) {
 
                         if (TextViewRowКликПоНазваниям.isEnabled()) {
-                            TextViewRowКликПоНазваниям.setTextColor(Color.parseColor("#FFFFFF"));
-                            Drawable drawableup=getContext().getDrawable(R.drawable.style_for_chat4);
+                          /*  TextViewRowКликПоНазваниям.setTextColor(Color.parseColor("#FFFFFF"));*/
+                            Drawable drawableup = getContext().getDrawable(R.drawable.style_for_chat4);
                             TextViewRowКликПоНазваниям.setBackground(drawableup);
-                            TextViewRowКликПоНазваниям.requestLayout();
+
                         }
-                        Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                        Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                                 " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                                " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"+   "  ВыходныеИлиПразничные "
+                                " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" + "  ВыходныеИлиПразничные "
                                 + ВыходныеИлиПразничные);
 
-                        // TODO: 11.04.2023 Ставим Дни Выходные
-                    } else {
-                        if (TextViewRowКликПоНазваниям.isEnabled()) {
-                            TextViewRowКликПоНазваниям.setTextColor(Color.parseColor("#008080"));
-                         /*   Drawable drawableup=getContext().getDrawable(R.drawable.stylesingletable25);
-                            TextViewRowКликПоНазваниям.setBackground(drawableup);*/
-                            TextViewRowКликПоНазваниям.requestLayout();
-                        }
-                        Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
-                                " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                                " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"+   "  ВыходныеИлиПразничные "
-                                + ВыходныеИлиПразничные);
+                    }else{
+
+                        //TextViewRowКликПоНазваниям.setTextColor(Color.parseColor("#FFFFFF"));
+                        Drawable drawableup = getContext().getDrawable(R.drawable.style_for_chat7);
+                        TextViewRowКликПоНазваниям.setBackground(drawableup);
                     }
-
+                    TextViewRowКликПоНазваниям.refreshDrawableState();
+                    TextViewRowКликПоНазваниям.requestLayout();
 
                     // TODO: 19.10.2022
                     Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
