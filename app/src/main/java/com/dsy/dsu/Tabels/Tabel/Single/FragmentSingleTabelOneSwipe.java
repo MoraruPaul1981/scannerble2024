@@ -1663,14 +1663,15 @@ public class FragmentSingleTabelOneSwipe extends Fragment {
                     if (День.length()>0) {
                         char ЕслиБуквывДнеСодержимое=     День.charAt(0);
                         if(Character.isLetter( ЕслиБуквывДнеСодержимое )){
-                            editTextRowКликПоДАнными.setTextColor(Color.GRAY);
+                        editTextRowКликПоДАнными.setTextColor(Color.parseColor("#887B7B"));
+                        editTextRowКликПоДАнными.setTextSize(19l);
                         }else {
                             editTextRowКликПоДАнными.setTextColor(Color.BLACK);
+                            editTextRowКликПоДАнными.setTextSize(18l);
                         }
-                    }else{
-                        editTextRowКликПоДАнными.setTextColor(Color.BLACK);
                     }
                     editTextRowКликПоДАнными.refreshDrawableState();
+                    editTextRowКликПоДАнными.requestLayout();
                     // TODO: 19.10.2022
                     Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                             " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +

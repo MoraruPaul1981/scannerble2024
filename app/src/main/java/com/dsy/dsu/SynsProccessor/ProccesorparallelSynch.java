@@ -47,6 +47,7 @@ import io.reactivex.rxjava3.core.Single;
 import io.reactivex.rxjava3.functions.Consumer;
 import io.reactivex.rxjava3.functions.Predicate;
 import io.reactivex.rxjava3.functions.Supplier;
+import io.reactivex.rxjava3.schedulers.Schedulers;
 
 public class ProccesorparallelSynch   {
 
@@ -98,7 +99,7 @@ public class ProccesorparallelSynch   {
 
 // TODO: 20.01.2025 сама синхрониаиця
             Flowable.fromIterable(getBufferFromJbossServerAllTables)
-                    .onBackpressureBuffer(1)
+                    .onBackpressureBuffer(2)
                     .doOnNext(new Consumer<Map<String, String>>() {
                         @Override
                         public void accept(Map<String, String> stringStringMapMultiPotoks) throws Throwable {
@@ -123,6 +124,13 @@ public class ProccesorparallelSynch   {
                                     this.getClass().getName(), Thread.currentThread().getStackTrace()[2].getMethodName(),
                                     Thread.currentThread().getStackTrace()[2].getLineNumber()  );
                         }
+                    }).doOnComplete(()->{
+                        Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                                " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                                " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"
+                                + " getBufferFromJbossServerAllTables.size() " + getBufferFromJbossServerAllTables.size()
+                                +"\n");
+
                     })
                     .blockingSubscribe();
 
