@@ -557,7 +557,7 @@ public class MainActivity_List_Tabels extends AppCompatActivity  {
     }
     }
 
-    @SuppressLint("Range")
+    @SuppressLint({"Range", "SuspiciousIndentation"})
     private Cursor методGetИзСпинераВнутри() {
         Cursor    Курсор_MainСамиДанныеТекущегоТАбеля=null;
         try {

@@ -45,7 +45,7 @@ import androidx.fragment.app.FragmentTransaction;
 
 import com.dsy.dsu.Errors.controller.RecordNewErros;
 import com.dsy.dsu.BusinessLogicAll.Class_Generation_UUID;
-import com.dsy.dsu.BusinessLogicAll.Class_Generations_PUBLIC_CURRENT_ID;
+import com.dsy.dsu.BusinessLogicAll.GetPublicID.GetPublicID;
 
 import com.dsy.dsu.BusinessLogicAll.DATE.Class_Generation_Data;
 import com.dsy.dsu.BusinessLogicAll.DATE.SubClassCursorLoader;
@@ -111,7 +111,7 @@ public class FragmentNewOrderTransport extends Fragment {
             // TODO: 27.04.2023  Запускаем  Новый Заказ Транпорта
             subClassNewOrderTransport    =new SubClassNewOrderTransport(getActivity());
             subClassSetAllSprabochnik=           new SubClassSetAllSprabochnik();
-            ПубличныйID = new Class_Generations_PUBLIC_CURRENT_ID().getPublicIDAllApp(getContext());
+            ПубличныйID = new GetPublicID().getPublicIDAllApp(getContext());
             localBinderNewOrderTransport =  (ServiceOrserTransportService.  LocalBinderOrderTransport) getArguments().getBinder("binder");
             animationvibr1 = AnimationUtils.loadAnimation(getContext(),R.anim.slide_singletable2);//
             preferencesМатериалы = getContext().getSharedPreferences("sharedPreferencesХранилище", Context.MODE_MULTI_PROCESS);
@@ -934,7 +934,7 @@ public class FragmentNewOrderTransport extends Fragment {
                 subClassNewOrderTransport.     методЗаписьВыбраногоЦФО(getId,getName);
                 // TODO: 06.06.2023 запускаем сихорнизацию одноразовую
                 Integer ПубличныйIDДляФрагмента =
-                        new Class_Generations_PUBLIC_CURRENT_ID().getPublicIDAllApp(getContext());
+                        new GetPublicID().getPublicIDAllApp(getContext());
             } catch (Exception e) {
                 e.printStackTrace();
                 Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +

@@ -1,4 +1,4 @@
-package com.dsy.dsu.BusinessLogicAll;
+package com.dsy.dsu.BusinessLogicAll.GetPublicID;
 
 import android.content.ContentResolver;
 import android.content.Context;
@@ -15,11 +15,11 @@ import com.dsy.dsu.Errors.controller.RecordNewErros;
 import java.util.Date;
 
 
-public class Class_Generations_PUBLIC_CURRENT_ID {
+public class GetPublicID {
     Context context;
     private SQLiteDatabase sqLiteDatabase ;
 
-    public Class_Generations_PUBLIC_CURRENT_ID( ) {
+    public GetPublicID( ) {
         sqLiteDatabase=    GetSQLiteDatabase.SqliteDatabase();
     }
 

@@ -19,11 +19,7 @@ import java.util.Date;
 import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.function.Consumer;
 
-import javax.inject.Inject;
-import javax.inject.Singleton;
-
 //этот класс создает базу данных SQLite
-@Singleton
 public class GetSQLiteDatabase extends SQLiteOpenHelper{ ///SQLiteOpenHelper
      static final int VERSION =              1078;//ПРИ ЛЮБОМ ИЗМЕНЕНИЕ В СТРУКТУРЕ БАЗЫ ДАННЫХ НУЖНО ДОБАВИТЬ ПЛЮС ОДНУ ЦИФРУ К ВЕРСИИ 1=1+1=2 ИТД.1
    private   Context context;
@@ -33,7 +29,7 @@ public class GetSQLiteDatabase extends SQLiteOpenHelper{ ///SQLiteOpenHelper
 
 
 
-    public   @Inject      GetSQLiteDatabase   (@NotNull Context context) {/////КОНСТРУКТОР КЛАССА ПО СОЗДАНИЮ БАЗЫ ДАННЫХ
+    public         GetSQLiteDatabase   (@NotNull Context context) {/////КОНСТРУКТОР КЛАССА ПО СОЗДАНИЮ БАЗЫ ДАННЫХ
         super(context, "Database DSU-1.db", null, VERSION ); // определяем имя базы данных  и ее версию
         try{
                     this.context = context;
@@ -91,12 +87,6 @@ public class GetSQLiteDatabase extends SQLiteOpenHelper{ ///SQLiteOpenHelper
     }
 
 
-    public   void metodB(){
-
-        Log.d(this.getClass().getName(),"\n" + " class FaceAPp " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
-                " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n");
-    }
 
 
     //  Cоздание ТАблиц
@@ -110,7 +100,7 @@ public class GetSQLiteDatabase extends SQLiteOpenHelper{ ///SQLiteOpenHelper
             // TODO: 12.10.2022  СИСТЕМНЫЕ ТАБЛИЦЫ
             МетодТаблицаMODIFITATION_Client(ССылкаНаСозданнуюБазу);
             МетодСозданиеТаблицыОшибок(ССылкаНаСозданнуюБазу);
-            МетодСозданиеТаблицыЛогинов(ССылкаНаСозданнуюБазу);
+            МетодСозданиеТаблицыSuccessLogin(ССылкаНаСозданнуюБазу);
             // TODO: 22.03.2023 ТАБЛИЦЫ С ДАННЫМИ
             МетодСозданияСистемнойТаблицыСФО(ССылкаНаСозданнуюБазу);
             МетодСоздания_ТаблицыПрофесии(ССылкаНаСозданнуюБазу);
@@ -885,7 +875,7 @@ public class GetSQLiteDatabase extends SQLiteOpenHelper{ ///SQLiteOpenHelper
         Log.d(this.getClass().getName(), " сработала ...  создание таблицы metki_tabel");
     }
 
-    private void МетодСозданиеТаблицыЛогинов(SQLiteDatabase ССылкаНаСозданнуюБазу) {
+    private void МетодСозданиеТаблицыSuccessLogin(SQLiteDatabase ССылкаНаСозданнуюБазу) {
         ССылкаНаСозданнуюБазу.execSQL("drop table  if exists successlogin");//test
         ССылкаНаСозданнуюБазу.execSQL("Create table  if not exists successlogin (" +
                 " id   INTEGER PRIMARY KEY AUTOINCREMENT ," +
@@ -1265,27 +1255,9 @@ public class GetSQLiteDatabase extends SQLiteOpenHelper{ ///SQLiteOpenHelper
             Log.d(this.getClass().getName(), " после СЛУЖБА  содание базы newVersion==  652   (например)   " + new Date() + " newVersion " + newVersion);
             
 
-            if (newVersion > oldVersion) {
-            if(newVersion ==             1078){
-
-                    МетодСозданиеТаблицыЛогинов(ССылкаНаСозданнуюБазу);
-                // TODO: 08.10.2024  
-                МетодСозданиеSettingTabels(ССылкаНаСозданнуюБазу);
-
-                    Log.d(this.getClass().getName(), "\n"
-                            + " время: " + new Date() + "\n+" +
-                            " Класс в процессе... " + this.getClass().getName() + "\n" +
-                            " метод в процессе... " + Thread.currentThread().getStackTrace()[2].getMethodName()
-                            + "  сработала ... КОНЕЦ СОЗДАНИЯ ТАБЛИЦ ВИЮ ТРИГЕР ");
-
-
-                }else {
                     // TODO: 08.06.2021 создание Базы Данных  ЧИСТАЯ УСТАНОВКА
                     onCreate(ССылкаНаСозданнуюБазу);
-                    Log.d(this.getClass().getName(), " СЛУЖБА  содание базы newVersion > oldVersion   " + new Date());
-                }
 
-             }
             Log.d(this.getClass().getName(), "\n"
                     + " время: " + new Date() + "\n+" +
                     " Класс в процессе... " + this.getClass().getName() + "\n" +

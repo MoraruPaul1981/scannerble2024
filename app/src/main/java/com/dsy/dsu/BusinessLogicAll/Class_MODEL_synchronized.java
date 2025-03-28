@@ -11,7 +11,6 @@ import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Environment;
-import android.provider.Settings;
 import android.util.Log;
 
 import androidx.annotation.NonNull;
@@ -20,12 +19,11 @@ import com.dsy.dsu.AllDatabases.SQLTE.GetSQLiteDatabase;
 import com.dsy.dsu.BusinessLogicAll.DATE.Class_Generation_Data;
 
 import com.dsy.dsu.BusinessLogicAll.DeviceName.ModulegetDeviceName;
+import com.dsy.dsu.BusinessLogicAll.GetPublicID.GetPublicID;
 import com.dsy.dsu.CnangeServers.PUBLIC_CONTENT;
 import com.dsy.dsu.Errors.controller.RecordNewErros;
 import com.dsy.dsu.Hilt.JbossAdrress.getHiltPortJbossInterface;
 import com.dsy.dsu.Hilt.OkhhtpBuilder.GetAsyncOkHttpClientBuilder;
-import com.dsy.dsu.Hilt.OkhhtpBuilder.GetOkhhtpBuilderSSL;
-import com.dsy.dsu.Hilt.OkhhtpBuilder.InGetOkhhtpBuilder;
 import com.google.common.io.ByteSource;
 
 import org.jetbrains.annotations.NotNull;
@@ -1672,7 +1670,7 @@ import okio.BufferedSink;
             КонтейнерДляВставкиПубличныйID.put("currenttaskforthecontentprovider","firststartapp");
 
             // TODO: 08.10.2024 Находим если такой  Пользователь
-          Long getuuidLocal=  new Class_Generations_PUBLIC_CURRENT_ID().gettingSettingTableVersion(context," SELECT user_update FROM "+ИмяТаблицы+"  ",ИмяТаблицы);
+          Long getuuidLocal=  new GetPublicID().gettingSettingTableVersion(context," SELECT user_update FROM "+ИмяТаблицы+"  ",ИмяТаблицы);
             // TODO: 12.04.2023 UPDATER PUBLIC ID
           if(getuuidLocal>0 ){
               // TODO: 12.04.2023 UPDATER PUBLIC ID
@@ -1736,7 +1734,7 @@ import okio.BufferedSink;
             КонтейнерДляВставкиПубличныйID.put("publicid",PublicID);
             
             // TODO: 08.10.2024 Находим если такой  Пользователь
-            Long getuuidLocal=  new Class_Generations_PUBLIC_CURRENT_ID().gettingSettingTableVersion(context," SELECT id FROM "+ИмяТаблицы+"  ",ИмяТаблицы);
+            Long getuuidLocal=  new GetPublicID().gettingSettingTableVersion(context," SELECT id FROM "+ИмяТаблицы+"  ",ИмяТаблицы);
             // TODO: 08.10.2024  
             КонтейнерДляВставкиПубличныйID.put("getuuidLocal",getuuidLocal);
             // TODO: 12.04.2023 UPDATER PUBLIC ID

@@ -7,7 +7,7 @@ import android.util.Log;
 
 import androidx.annotation.NonNull;
 
-import com.dsy.dsu.BusinessLogicAll.Class_Generations_PUBLIC_CURRENT_ID;
+import com.dsy.dsu.BusinessLogicAll.GetPublicID.GetPublicID;
 import com.dsy.dsu.BusinessLogicAll.Class_MODEL_synchronized;
 import com.dsy.dsu.BusinessLogicAll.DATE.Class_Generation_Data;
 import com.dsy.dsu.BusinessLogicAll.VersionCurentTable;
@@ -34,7 +34,7 @@ public class GetSettingTableSaves implements  INSetttingTabels {
                 АдаптерВставкиПолученогоПубличногоID.put("user_update", PublicID);
 
                //Long NewUUID= new GetgeneratorNewUUID(context).generatorNewUUID();
-                Long getPublicID=  new Class_Generations_PUBLIC_CURRENT_ID().gettingSettingTableVersion(context," SELECT publicid FROM successlogin "  ,"successlogin");
+                Long getPublicID=  new GetPublicID().gettingSettingTableVersion(context," SELECT publicid FROM successlogin "  ,"successlogin");
                 АдаптерВставкиПолученогоПубличногоID.put("uuid", getPublicID);
 
                 АдаптерВставкиПолученогоПубличногоID.put("version_dsu1",  Integer.parseInt(verCode.toString()));

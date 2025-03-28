@@ -4,7 +4,7 @@ package com.dsy.dsu.Hilt.PublicId;
 import android.content.Context;
 import android.util.Log;
 
-import com.dsy.dsu.BusinessLogicAll.Class_Generations_PUBLIC_CURRENT_ID;
+import com.dsy.dsu.BusinessLogicAll.GetPublicID.GetPublicID;
 import com.dsy.dsu.Errors.controller.RecordNewErros;
 
 import dagger.Module;
@@ -27,7 +27,7 @@ public class ModulePublicId {
         Integer ПубличныйID = 0;
         try {
             ПубличныйID =
-                    new Class_Generations_PUBLIC_CURRENT_ID().getPublicIDAllApp(context);
+                    new GetPublicID().getPublicIDAllApp(context);
             // TODO: 29.01.2024
    ///// ПубличныйID=96;
         /////   ПубличныйID=8;

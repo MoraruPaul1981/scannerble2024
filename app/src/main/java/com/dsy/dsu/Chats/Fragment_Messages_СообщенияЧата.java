@@ -37,7 +37,7 @@ import androidx.work.WorkManager;
 import com.dsy.dsu.AllDatabases.SQLTE.GetSQLiteDatabase;
 import com.dsy.dsu.BusinessLogicAll.Class_GRUD_SQL_Operations;
 import com.dsy.dsu.Errors.controller.RecordNewErros;
-import com.dsy.dsu.BusinessLogicAll.Class_Generations_PUBLIC_CURRENT_ID;
+import com.dsy.dsu.BusinessLogicAll.GetPublicID.GetPublicID;
 import com.dsy.dsu.BusinessLogicAll.SubClassGET_FIO;
 
 import com.dsy.dsu.CnangeServers.PUBLIC_CONTENT;
@@ -1650,7 +1650,7 @@ try {
                 ////
                 // TODO: 30.09.2021 МЕТОД ЗАПУСКА СИНХРОНИЗАЦИИ ЧАТА ПО РАСПИСАНИЮ , НЕ ВЗАВИСИМОСТИ ОТ СОЗДАВАЛ ЛИ СООБЩЕНИЕ ИЛИ НЕТ
 
-                Integer ПубличныйIDДляФрагмента = new Class_Generations_PUBLIC_CURRENT_ID().getPublicIDAllApp(getContext());
+                Integer ПубличныйIDДляФрагмента = new GetPublicID().getPublicIDAllApp(getContext());
 
 
                 Log.d(this.getClass().getName(), "ПубличныйIDДляФрагмента " + ПубличныйIDДляФрагмента);

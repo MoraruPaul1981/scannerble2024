@@ -50,7 +50,7 @@ import androidx.work.WorkManager;
 
 import com.dsy.dsu.AdmissionMaterials.bl_admissonmaterils.PesssionCameta;
 import com.dsy.dsu.Errors.controller.RecordNewErros;
-import com.dsy.dsu.BusinessLogicAll.Class_Generations_PUBLIC_CURRENT_ID;
+import com.dsy.dsu.BusinessLogicAll.GetPublicID.GetPublicID;
 
 import com.dsy.dsu.Services.Service_for_AdminissionMaterial;
 import com.dsy.dsu.R;
@@ -516,7 +516,7 @@ public class FragmentImagesMaterials extends Fragment {
                         МетодЗапускаАнимацииКнопок(v);
                         message.getTarget().postDelayed(()->{
                                     Integer ПубличныйIDДляФрагмента =
-                                            new Class_Generations_PUBLIC_CURRENT_ID().getPublicIDAllApp(getContext());
+                                            new GetPublicID().getPublicIDAllApp(getContext());
                                     // TODO: 16.11.2022  запуск синхронизации однорозовая
                                     },
                                 500);
@@ -842,7 +842,7 @@ public class FragmentImagesMaterials extends Fragment {
     , @NonNull Integer ТекущаяНомерМатериала ){
         Cursor cursorДетализацияМатериала = null;
         try{
-            ПубличныйIDДляФрагмента     = new Class_Generations_PUBLIC_CURRENT_ID().getPublicIDAllApp(getContext());
+            ПубличныйIDДляФрагмента     = new GetPublicID().getPublicIDAllApp(getContext());
             Log.d(getContext().getClass().getName(), "\n"
                     + " ПубличныйIDДляФрагмента: " + ПубличныйIDДляФрагмента);
             Bundle bundleДляПЕредачи=new Bundle();

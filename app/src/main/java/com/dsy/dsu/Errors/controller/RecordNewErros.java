@@ -9,7 +9,7 @@ import androidx.annotation.NonNull;
 
 
 import com.dsy.dsu.BusinessLogicAll.Class_Generation_UUID;
-import com.dsy.dsu.BusinessLogicAll.Class_Generations_PUBLIC_CURRENT_ID;
+import com.dsy.dsu.BusinessLogicAll.GetPublicID.GetPublicID;
 import com.dsy.dsu.BusinessLogicAll.DATE.Class_Generation_Data;
 import com.dsy.dsu.BusinessLogicAll.DeviceName.ModulegetDeviceName;
 import com.dsy.dsu.BusinessLogicAll.VersionCurentTable;
@@ -160,7 +160,7 @@ public class RecordNewErros  implements RecordNewErrorsInterface {
             Long getVersionForError  = new VersionCurentTable(context).upVersionCurentTable("errordsu1");
             Long UUIDForError = (Long)
                     new Class_Generation_UUID(context).МетодГенерацииUUID();
-            Integer getPublicIdForError = new Class_Generations_PUBLIC_CURRENT_ID().
+            Integer getPublicIdForError = new GetPublicID().
                     getPublicIDAllApp(context);
 
 

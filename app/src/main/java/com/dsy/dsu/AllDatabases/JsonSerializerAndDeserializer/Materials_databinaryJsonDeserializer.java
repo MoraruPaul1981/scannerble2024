@@ -38,7 +38,7 @@ this.context=context;
         if (!Create_Database_СамаБАзаSQLite.inTransaction()) {
             Create_Database_СамаБАзаSQLite.beginTransaction();
         }
-    new ClassCreateFolderBinatyMatrilal(context ).МетодCreateFoldersBinaty();
+
 
 
 

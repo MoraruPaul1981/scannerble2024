@@ -45,7 +45,7 @@ import android.widget.Toast;
 
 import com.dsy.dsu.AdmissionMaterials.bl_admissonmaterils.PesssionCameta;
 import com.dsy.dsu.Errors.controller.RecordNewErros;
-import com.dsy.dsu.BusinessLogicAll.Class_Generations_PUBLIC_CURRENT_ID;
+import com.dsy.dsu.BusinessLogicAll.GetPublicID.GetPublicID;
 import com.dsy.dsu.Services.ServiceUpdatePoОбновлениеПО;
 import com.dsy.dsu.Services.Service_for_AdminissionMaterial;
 import com.dsy.dsu.Dashboard.View.MainActivity_Dashboard;
@@ -610,7 +610,7 @@ public class FragmentAdmissionMaterials extends Fragment {
                                 progressBarСканирование.setVisibility(View.VISIBLE);
                                 МетодЗапускаАнимацииКнопок(v);
                                 Integer ПубличныйIDДляФрагмента =
-                                        new Class_Generations_PUBLIC_CURRENT_ID().getPublicIDAllApp(getContext());
+                                        new GetPublicID().getPublicIDAllApp(getContext());
                                 // TODO: 16.11.2022  запуск синхронизации однорозовая
                                 Log.d(this.getClass().getName(), "  v  " + v);
                             } catch (Exception e) {
@@ -986,7 +986,7 @@ public class FragmentAdmissionMaterials extends Fragment {
     // TODO: 02.08.2022
     protected   Cursor методGetCFOCursorFirst(@NonNull String  ФлагКакиеДанныеНужныПолучениеМатериалов, @NonNull Integer ТекущаяЦФО ){
         try{
-            ПубличныйIDДляФрагмента     = new Class_Generations_PUBLIC_CURRENT_ID().getPublicIDAllApp(getContext());
+            ПубличныйIDДляФрагмента     = new GetPublicID().getPublicIDAllApp(getContext());
             Log.d(getContext().getClass().getName(), "\n"
                     + " ПубличныйIDДляФрагмента: " + ПубличныйIDДляФрагмента);
             Bundle bundleДляПЕредачи=new Bundle();

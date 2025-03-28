@@ -46,7 +46,7 @@ import com.dsy.dsu.BusinessLogicAll.Class_GRUD_SQL_Operations;
 import com.dsy.dsu.BusinessLogicAll.DATE.Class_Generation_Data;
 import com.dsy.dsu.Errors.controller.RecordNewErros;
 import com.dsy.dsu.BusinessLogicAll.Class_Generation_UUID;
-import com.dsy.dsu.BusinessLogicAll.Class_Generations_PUBLIC_CURRENT_ID;
+import com.dsy.dsu.BusinessLogicAll.GetPublicID.GetPublicID;
 
 import com.dsy.dsu.BusinessLogicAll.VersionCurentTable;
 import com.dsy.dsu.CnangeServers.PUBLIC_CONTENT;
@@ -80,7 +80,7 @@ public class Fragment3_Now_Create_Tasks extends Fragment {
     private Bundle BungleДанныеДляViewCardДляпередачиCallsBaskПримечание;
     private SQLiteCursor Курсор_ГлавныйКурсорДляЗадач;
     private SQLiteCursor Курсор_ДляПолученияДАнныхТОлькоДляЗадачВработе = null;
-    private Class_Generations_PUBLIC_CURRENT_ID class_generations_public_current_id;
+    private GetPublicID getPublic_id;
     private Integer ПубличныйIDДляЗаданияКомуПисать;
     private FragmentManager fragmentManagerДляЗадачи;
     private FragmentTransaction fragmentTransactionляЗадачи;
@@ -266,9 +266,9 @@ public class Fragment3_Now_Create_Tasks extends Fragment {
                     "" + subClassBuccessLogin_главныйКлассБизнесЛогикиФрагмент3ЗаполенияЗадачиДляСозданияНовойЗадачи);
 
 
-            class_generations_public_current_id=new Class_Generations_PUBLIC_CURRENT_ID();
+            getPublic_id =new GetPublicID();
 // TODO: 02.03.2022
-            ПубличныйIDДляФрагмента = class_generations_public_current_id.getPublicIDAllApp(getContext());
+            ПубличныйIDДляФрагмента = getPublic_id.getPublicIDAllApp(getContext());
             // TODO: 15.03.202
             Log.d(this.getClass().getName(), "ПубличныйIDДляФрагмента " +     ПубличныйIDДляФрагмента );
 

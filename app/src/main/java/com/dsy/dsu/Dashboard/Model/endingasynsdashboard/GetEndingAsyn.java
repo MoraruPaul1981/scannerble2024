@@ -7,7 +7,6 @@ import android.util.Log;
 
 import androidx.annotation.NonNull;
 
-import com.dsy.dsu.BootAndAsync.EventsBus.MessageEvensBusNetworkStatuses;
 import com.dsy.dsu.BootAndAsync.EventsBus.MessageEvensBusEndAync;
 import com.dsy.dsu.Errors.controller.RecordNewErros;
 import com.dsy.dsu.Passwords.MainActivityPasswords;
@@ -21,8 +20,8 @@ public class GetEndingAsyn {
 
 
 
-    public void metoEndingAsynsDashboard(@NonNull Context context,
-                                         @NonNull ServiceUpdatePoОбновлениеПО.localBinderОбновлениеПО localBinderОбновлениеПО){
+    public void forvardDashboard(@NonNull Context context,
+                                 @NonNull ServiceUpdatePoОбновлениеПО.localBinderОбновлениеПО localBinderОбновлениеПО){
         try {
 
             Intent intentAnsycEnding=new Intent();
@@ -81,7 +80,7 @@ public class GetEndingAsyn {
 
 
 
-    public void veryfirstlaunchActivityPassword(@NonNull Context context) {
+    public void forvardActivityPassword(@NonNull Context context) {
         try{
             Intent Интент_ЗапускаетFaceApp=new Intent();
             Интент_ЗапускаетFaceApp.setClass(context, MainActivityPasswords.class);

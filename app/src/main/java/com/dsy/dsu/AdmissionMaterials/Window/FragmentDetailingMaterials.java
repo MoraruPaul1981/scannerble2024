@@ -43,7 +43,7 @@ import androidx.work.WorkInfo;
 import androidx.work.WorkManager;
 
 import com.dsy.dsu.Errors.controller.RecordNewErros;
-import com.dsy.dsu.BusinessLogicAll.Class_Generations_PUBLIC_CURRENT_ID;
+import com.dsy.dsu.BusinessLogicAll.GetPublicID.GetPublicID;
 
 import com.dsy.dsu.Services.Service_for_AdminissionMaterial;
 import com.dsy.dsu.R;
@@ -572,7 +572,7 @@ public class FragmentDetailingMaterials extends Fragment {
                     МетодЗапускаАнимацииКнопок(GetNameSingleAsync1c);
                     handler.postDelayed(()->{
                                 Integer ПубличныйIDДляФрагмента =
-                                        new Class_Generations_PUBLIC_CURRENT_ID().getPublicIDAllApp(getContext());
+                                        new GetPublicID().getPublicIDAllApp(getContext());
                     },
                             500);
                     Log.d(this.getClass().getName(), " GetNameSingleAsync1c  " + GetNameSingleAsync1c);
@@ -956,7 +956,7 @@ public class FragmentDetailingMaterials extends Fragment {
     , @NonNull Integer НомерВыбраногоМатериала ){
         Cursor cursorДетализацияМатериала = null;
         try{
-            ПубличныйIDДляФрагмента     = new Class_Generations_PUBLIC_CURRENT_ID().getPublicIDAllApp(getContext());
+            ПубличныйIDДляФрагмента     = new GetPublicID().getPublicIDAllApp(getContext());
             Log.d(getContext().getClass().getName(), "\n"
                     + " ПубличныйIDДляФрагмента: " + ПубличныйIDДляФрагмента);
             Bundle bundleДляПЕредачи=new Bundle();

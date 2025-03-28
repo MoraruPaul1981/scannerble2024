@@ -27,6 +27,7 @@ import com.dsy.dsu.BootAndAsync.EventsBus.MessageEvensBusPrograssBar;
 import com.dsy.dsu.BootAndAsync.EventsBus.MessageEvensBusUpdatePO;
 import com.dsy.dsu.BootAndAsync.ViewModelBoot.ViewModel.ViewModel;
 import com.dsy.dsu.BusinessLogicAll.Permissions.ClassPermissions;
+import com.dsy.dsu.CoreApp.Model.BunessLogicCoreApp;
 import com.dsy.dsu.Errors.controller.BiccessLogicActivityError;
 import com.dsy.dsu.Errors.controller.RecordNewErros;
 import com.dsy.dsu.Hilt.getSSLSocketFactory2.QualifiergetsslSocketFactory2;
@@ -66,7 +67,7 @@ public class MainActivityBootAndAsync extends AppCompatActivity {
 
     protected GetComponentActivityBootService blInnerMainActivityBootAndAsync;
 
-    public static final int ALL_PERSSION_CODE=1;
+    private   final int ALL_PERSSION_CODE=1;
 
 
     private ImageView imageView_faceapp_settings;
@@ -101,7 +102,8 @@ public class MainActivityBootAndAsync extends AppCompatActivity {
             // TODO: 04.10.2023 разрешения для всего
             new ClassPermissions(this,ALL_PERSSION_CODE);
 
-
+            // TODO   запускам бизнес логику CoreApp
+            new BunessLogicCoreApp(getApplicationContext()).getBunessLogicCoreApp();
 
 
             registeEventBusFirst();

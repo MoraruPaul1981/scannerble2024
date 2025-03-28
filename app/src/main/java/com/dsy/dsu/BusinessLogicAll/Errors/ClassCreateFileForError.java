@@ -6,13 +6,22 @@ import android.util.Log;
 
 import androidx.annotation.NonNull;
 
+import com.dsy.dsu.Errors.controller.RecordNewErros;
+
 import java.io.File;
 
 public  class ClassCreateFileForError{
+
+     Context context;
     private String fileName = "Sous-Avtodor-ERROR.txt";
 
     private   String patchFileName="SousAvtoFile";
-    public void metodCreateFileForError(@NonNull Context context) {
+
+    public ClassCreateFileForError(Context context) {
+        this.context = context;
+    }
+
+    public void metodCreateFileForError() {
         try {
 
             File patchFile = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS),
@@ -36,9 +45,12 @@ public  class ClassCreateFileForError{
                     " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"  );
         } catch (Exception e) {
             e.printStackTrace();
-            Log.e(context.getClass().getName(),
-                    "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
-                            " Линия  :" + Thread.currentThread().getStackTrace()[2].getLineNumber());
+            Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" +
+                    Thread.currentThread().getStackTrace()[2].getMethodName() + " Линия  :"
+                    + Thread.currentThread().getStackTrace()[2].getLineNumber());
+            new RecordNewErros(context).recordnewerror(e.toString(),
+                    this.getClass().getName(), Thread.currentThread().getStackTrace()[2].getMethodName(),
+                    Thread.currentThread().getStackTrace()[2].getLineNumber());
         }
     }
 }

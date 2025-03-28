@@ -7,11 +7,16 @@ import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 
 
+import com.dsy.dsu.BootAndAsync.BlBootAsync.ClassCreateFolderUpdatePO;
 import com.dsy.dsu.BootAndAsync.BlBootAsync.CompleteRemoteSyncService;
+import com.dsy.dsu.BusinessLogicAll.CreateFolderBinatySave.ClassCreateFolderBinatyMatrilal;
+import com.dsy.dsu.BusinessLogicAll.CreateFolderBinatySave.ClassCreateFolderCommitPays1C;
 import com.dsy.dsu.BusinessLogicAll.DeviceName.ModulegetDeviceName;
 import com.dsy.dsu.BusinessLogicAll.DeviceName.hilt.QualifiergetDeviceName;
 import com.dsy.dsu.BusinessLogicAll.DeviceName.hilt.QualifiergetDeviceVersionBack;
+import com.dsy.dsu.BusinessLogicAll.Errors.ClassCreateFileForError;
 import com.dsy.dsu.BusinessLogicAll.Permissions.ClassPermissions;
+import com.dsy.dsu.CoreApp.Model.BunessLogicCoreApp;
 import com.dsy.dsu.Errors.controller.BiccessLogicActivityError;
 import com.dsy.dsu.Errors.controller.RecordNewErros;
 import com.dsy.dsu.Hilt.JbossAdrress.getHiltPortJbossInterface;
@@ -69,10 +74,17 @@ public class CoreApp extends Application {
    @QualifierJbossServer3
    public LinkedHashMap<Integer,String> getHiltPortJboss;
 
+
+
   @Override
   public void onCreate() {
     super.onCreate();
     try{
+      // TODO: 04.10.2023 разрешения для всего
+      // TODO   запускам бизнес логику CoreApp
+
+      new BunessLogicCoreApp(getApplicationContext()).getBunessLogicCoreApp();
+
 
       ///  getBinderAsync = EntryPoints.get(getApplicationContext(), HiltInterfaceBinderAsync.class).metodBinderAsync();
       // TODO: 02.09.2023  CREATE get SQLITE

@@ -13,7 +13,7 @@ import android.widget.EditText;
 import androidx.annotation.NonNull;
 
 import com.dsy.dsu.AllDatabases.SQLTE.GetSQLiteDatabase;
-import com.dsy.dsu.BusinessLogicAll.Class_Generations_PUBLIC_CURRENT_ID;
+import com.dsy.dsu.BusinessLogicAll.GetPublicID.GetPublicID;
 import com.dsy.dsu.Errors.controller.RecordNewErros;
 import com.dsy.dsu.BusinessLogicAll.DATE.Class_Generation_Data;
 import com.dsy.dsu.BusinessLogicAll.VersionCurentTable;
@@ -21,7 +21,6 @@ import com.google.android.material.textview.MaterialTextView;
 
 import java.util.Date;
 import java.util.function.LongToIntFunction;
-import java.util.stream.Stream;
 
 //TODO класс обновление Ячеек
 public class SubClassUpdatesCELL {
@@ -134,7 +133,7 @@ public class SubClassUpdatesCELL {
 
 
 
-            Long getPublicID=  new Class_Generations_PUBLIC_CURRENT_ID().gettingSettingTableVersion(context," SELECT publicid FROM successlogin "  ,"successlogin");
+            Long getPublicID=  new GetPublicID().gettingSettingTableVersion(context," SELECT publicid FROM successlogin "  ,"successlogin");
             contentValuesОбноленияЯчейкиSingleTanel.put("user_update", getPublicID);
 
 

@@ -5,6 +5,7 @@ import android.util.Log;
 
 import androidx.annotation.NonNull;
 
+import com.dsy.dsu.BusinessLogicAll.GetPublicID.GetPublicID;
 import com.dsy.dsu.Errors.controller.RecordNewErros;
 
 public class SubClass_Connection_BroadcastReceiver_Sous_Asyns_Glassfish  {
@@ -15,7 +16,7 @@ public class SubClass_Connection_BroadcastReceiver_Sous_Asyns_Glassfish  {
 
         try {
             // TODO: 30.09.2021 МЕТОД ЗАПУСКА СИНХРОНИЗАЦИИ ЧАТА ПО РАСПИСАНИЮ , НЕ ВЗАВИСИМОСТИ ОТ СОЗДАВАЛ ЛИ СООБЩЕНИЕ ИЛИ НЕТ
-            ПубличныйIDДляФрагмента = new Class_Generations_PUBLIC_CURRENT_ID().getPublicIDAllApp(context);
+            ПубличныйIDДляФрагмента = new GetPublicID().getPublicIDAllApp(context);
             Log.d(this.getClass().getName(), "ПубличныйIDДляФрагмента " + ПубличныйIDДляФрагмента);
             if (ПубличныйIDДляФрагмента == null) {
                 // TODO: 03.02.2022

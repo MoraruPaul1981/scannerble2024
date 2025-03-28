@@ -39,7 +39,7 @@ import androidx.work.WorkManager;
 import com.dsy.dsu.AllDatabases.SQLTE.GetSQLiteDatabase;
 import com.dsy.dsu.BusinessLogicAll.Class_GRUD_SQL_Operations;
 import com.dsy.dsu.Errors.controller.RecordNewErros;
-import com.dsy.dsu.BusinessLogicAll.Class_Generations_PUBLIC_CURRENT_ID;
+import com.dsy.dsu.BusinessLogicAll.GetPublicID.GetPublicID;
 
 
 import com.dsy.dsu.CnangeServers.PUBLIC_CONTENT;
@@ -72,7 +72,7 @@ public class Fragment1_One_Tasks extends Fragment {
     private View viewДляПервойКнопкиHome_Задания;
     private SQLiteCursor Курсор_ГлавныйКурсорДляЗадач;
     private SQLiteCursor Курсор_ДляПолученияДАнныхТОлькоДляЗадачВработе = null;
-    private Class_Generations_PUBLIC_CURRENT_ID class_generations_public_current_id;;
+    private GetPublicID getPublic_id;;
     private Bundle BungleДанныеДляViewCard;
     private Bundle BungleДанныеДляViewCardBungle;
     private Bundle BungleДанныеДляViewCardBungleID;
@@ -156,7 +156,7 @@ public class Fragment1_One_Tasks extends Fragment {
          sqLiteDatabase=    GetSQLiteDatabase.SqliteDatabase();
          // TODO: 04.03.2022 инициализацуия ссылок на кассы
          subClassBuccessLogin_главныйКлассБизнесЛогикиФрагмент1 = new SubClassBuccessLogin_ГлавныйКлассБизнесЛогикиФрагмент1(getContext(), getActivity());
-         class_generations_public_current_id=      new Class_Generations_PUBLIC_CURRENT_ID();
+         getPublic_id =      new GetPublicID();
         // TODO: 02.08.2022  иницциализирован два work manager
         subClassBuccessLogin_главныйКлассБизнесЛогикиФрагмент1.МетодСоздаенияСлушателяДляЧатаWorkMAnager();
         // TODO: 04.03.2022 создаем слушатель    третий класс создаем ЗАПУСКАЕМ СЛУШАТЕЛЬ КУРСОРРА туту запускам два слушателя дялнаших work manager
@@ -200,7 +200,7 @@ public class Fragment1_One_Tasks extends Fragment {
     public void onStart() {
         super.onStart();
         try{
-            ПубличныйIDДляФрагмента = class_generations_public_current_id.getPublicIDAllApp(getContext());
+            ПубличныйIDДляФрагмента = getPublic_id.getPublicIDAllApp(getContext());
             Курсор_ГлавныйКурсорДляЗадач=        subClassBuccessLogin_главныйКлассБизнесЛогикиФрагмент1.МетодПолучаемГлавныеДанныеДляЗадач(ПубличныйIDДляФрагмента);
             Log.d(this.getClass().getName(), "ПубличныйIDДляФрагмента " + ПубличныйIDДляФрагмента+ " Курсор_ГлавныйКурсорДляЗадач " +Курсор_ГлавныйКурсорДляЗадач);
             Курсор_ДляПолученияДАнныхТОлькоДляЗадачВработе=    subClassBuccessLogin_главныйКлассБизнесЛогикиФрагмент1.МетодПолученимТОлькоКоличествоЗадач(ПубличныйIDДляФрагмента);

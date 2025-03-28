@@ -39,7 +39,7 @@ import androidx.work.WorkManager;
 import com.dsy.dsu.AllDatabases.SQLTE.GetSQLiteDatabase;
 import com.dsy.dsu.BusinessLogicAll.Class_GRUD_SQL_Operations;
 import com.dsy.dsu.Errors.controller.RecordNewErros;
-import com.dsy.dsu.BusinessLogicAll.Class_Generations_PUBLIC_CURRENT_ID;
+import com.dsy.dsu.BusinessLogicAll.GetPublicID.GetPublicID;
 import com.dsy.dsu.CnangeServers.PUBLIC_CONTENT;
 import com.dsy.dsu.Services.Service_For_Task_Для_Задания_СменаСатуса;
 import com.dsy.dsu.R;
@@ -74,7 +74,7 @@ public class Fragment5_ViewcreatedTasks extends Fragment {
     private Bundle BungleДанныеДляViewCardДляпередачиCallsBaskПримечание;
     private SQLiteCursor Курсор_ГлавныйКурсорДляЗадач;
     private SQLiteCursor Курсор_ДляПолученияДАнныхТОлькоДляЗадачВработе = null;
-    private Class_Generations_PUBLIC_CURRENT_ID class_generations_public_current_id;
+    private GetPublicID getPublic_id;
     private FragmentManager fragmentManagerДляЗадачи;
     private FragmentTransaction fragmentTransactionляЗадачи;
     private Fragment fragment_ТекущийФрагмент;
@@ -261,13 +261,13 @@ public class Fragment5_ViewcreatedTasks extends Fragment {
 
 
             // TODO: 12.03.2022
-            class_generations_public_current_id=new Class_Generations_PUBLIC_CURRENT_ID();
+            getPublic_id =new GetPublicID();
 
             Log.d(this.getClass().getName(), " отработоатл  subClassBuccessLogin_главныйКлассБизнесЛогикиФрагмент3ЗаполенияЗадачиДляРедактирования " +
                     "" + subClassBuccessLogin_главныйКлассБизнесЛогикиФрагмент5ЗаполенияЗадачиДляСозданияНовойЗадачи);
 
             // TODO: 02.03.2022
-            ПубличныйIDДляФрагмента = class_generations_public_current_id.getPublicIDAllApp(getContext());
+            ПубличныйIDДляФрагмента = getPublic_id.getPublicIDAllApp(getContext());
             
 
             // TODO: 15.03.2022

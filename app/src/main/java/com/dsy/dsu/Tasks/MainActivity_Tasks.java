@@ -15,7 +15,7 @@ import androidx.work.WorkInfo;
 import androidx.work.WorkManager;
 
 import com.dsy.dsu.Errors.controller.RecordNewErros;
-import com.dsy.dsu.BusinessLogicAll.Class_Generations_PUBLIC_CURRENT_ID;
+import com.dsy.dsu.BusinessLogicAll.GetPublicID.GetPublicID;
 
 import com.dsy.dsu.R;
 
@@ -28,7 +28,7 @@ public class MainActivity_Tasks extends FragmentActivity {
     private FragmentTransaction fragmentTransactionляЗадачи;
     private Fragment fragment_дляЗадачиПерваяКнопка;
 
-   private Class_Generations_PUBLIC_CURRENT_ID class_generations_public_current_id;
+   private GetPublicID getPublic_id;
     private WorkInfo WorkInfoИнформацияОЗапущенойСлужбеОдноразовая;
     private String ИмяСлужбыСинхронизацииОдноразовая = "WorkManager Synchronizasiy_Data Disposable";
 
@@ -42,7 +42,7 @@ public class MainActivity_Tasks extends FragmentActivity {
             super.onCreate(savedInstanceState);
             activity=this;
             subClass_only_activyMain_buccess_logic=new SubClass_Only_ActivyMain_Buccess_Logic(getApplicationContext(),activity);
-            class_generations_public_current_id      =new Class_Generations_PUBLIC_CURRENT_ID();
+            getPublic_id =new GetPublicID();
             /*   setContentView(R.layout.activity_main_fragment1_for_tasks);//R.layout.activity_main_history_chat  //TODO old R.layout.activity_main_history_tasks*/
             setContentView(R.layout.activity_main_fisrt_for_tasks);//R.layout.activity_main_history_chat  //TODO old R.layout.activity_main_history_tasks
             // TODO: 27.04.2021 формируем внешний вид Чата через фрагменты
@@ -59,7 +59,7 @@ public class MainActivity_Tasks extends FragmentActivity {
                 WorkInfoИнформацияОЗапущенойСлужбеОдноразовая=   WorkManager.getInstance(getApplicationContext()).getWorkInfosByTag(ИмяСлужбыСинхронизацииОдноразовая).get() .get(0);
             if (WorkInfoИнформацияОЗапущенойСлужбеОдноразовая.getState().compareTo(WorkInfo.State.RUNNING)!=0) {
 // TODO: 02.03.2022
-                Integer ПубличныйIDДляФрагмента = class_generations_public_current_id.getPublicIDAllApp(getApplicationContext());
+                Integer ПубличныйIDДляФрагмента = getPublic_id.getPublicIDAllApp(getApplicationContext());
 
 
 

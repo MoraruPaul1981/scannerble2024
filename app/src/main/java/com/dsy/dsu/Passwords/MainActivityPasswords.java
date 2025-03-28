@@ -154,9 +154,7 @@ public class MainActivityPasswords extends AppCompatActivity {
             classDeleteErrorFile.МетодDeleteFolders();
 
 // TODO: 19.12.2023 создаем  файл ошибоок
-            // TODO: 07.10.2023  create file for ERROR
-            ClassCreateFileForError classCreateFileForError=new ClassCreateFileForError();
-            classCreateFileForError.metodCreateFileForError(this);
+
 
 
             КнопкаВходавСистему = (Button) findViewById(R.id.КнопкаВходаВПриложение);/////кнопка входа на сервер
@@ -184,12 +182,6 @@ public class MainActivityPasswords extends AppCompatActivity {
             // TODO: 12.04.2023  messageGet
             messageGet();
 
-            // TODO: 14.08.2023 создаем папку для BinaryFile Save
-            new ClassCreateFolderBinatyMatrilal(getApplicationContext()).МетодCreateFoldersBinaty();
-
-
-            // TODO: 14.08.2023 создаем папку для BinaryFile CommitPay1C Соласования
-            new ClassCreateFolderCommitPays1C(getApplicationContext()).МетодCreateFoldersBinaty();
 
 
 

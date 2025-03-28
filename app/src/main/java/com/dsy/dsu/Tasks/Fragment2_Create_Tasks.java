@@ -43,7 +43,7 @@ import com.dsy.dsu.AllDatabases.SQLTE.GetSQLiteDatabase;
 import com.dsy.dsu.BusinessLogicAll.Class_GRUD_SQL_Operations;
 import com.dsy.dsu.Errors.controller.RecordNewErros;
 
-import com.dsy.dsu.BusinessLogicAll.Class_Generations_PUBLIC_CURRENT_ID;
+import com.dsy.dsu.BusinessLogicAll.GetPublicID.GetPublicID;
 
 import com.dsy.dsu.BusinessLogicAll.Class_MODEL_synchronized;
 import com.dsy.dsu.CnangeServers.PUBLIC_CONTENT;
@@ -75,7 +75,7 @@ public class Fragment2_Create_Tasks extends Fragment {
     private SQLiteCursor Курсор_ГлавныйКурсорДляЗадач;
     private SQLiteCursor Курсор_ДляПолученияДАнныхТОлькоДляЗадачВработе ;
     private AccessibilityNodeInfo accessibilityNodeInfoBundle;
-    private Class_Generations_PUBLIC_CURRENT_ID class_generations_public_current_id;
+    private GetPublicID getPublic_id;
     private    Bundle   BungleДанныеДляViewCard;
     private   Bundle BungleДанныеДляViewCardBungle;
     private    Bundle   BungleДанныеДляViewCardBungleID;
@@ -161,7 +161,7 @@ public class Fragment2_Create_Tasks extends Fragment {
      sqLiteDatabase=    GetSQLiteDatabase.SqliteDatabase();
         // TODO: 02.08.2022 инициализация классовдля работы
         subClassBuccessLogin_главныйКлассБизнесЛогикиФрагмент2 = new SubClassBuccessLogin_ГлавныйКлассБизнесЛогикиФрагмент2(getContext(), getActivity());
-        class_generations_public_current_id=new    Class_Generations_PUBLIC_CURRENT_ID();
+        getPublic_id =new GetPublicID();
         // TODO: 02.08.2022  инициализация двух слуушатель для двух work manager
         subClassBuccessLogin_главныйКлассБизнесЛогикиФрагмент2.МетодСоздаенияСлушателяДляЧатаWorkMAnagerФрагмент2();
         subClassBuccessLogin_главныйКлассБизнесЛогикиФрагмент2.МетодСоздаенияСлушателяДляЧатаWorkMAnagerОбщщийДополнительныйФрагмент2();
@@ -202,7 +202,7 @@ public class Fragment2_Create_Tasks extends Fragment {
         // TODO: 20.07.2022
         try{
             // TODO: 14.03.2022
-            ПубличныйIDДляФрагмента = class_generations_public_current_id.getPublicIDAllApp(getContext());
+            ПубличныйIDДляФрагмента = getPublic_id.getPublicIDAllApp(getContext());
             subClassBuccessLogin_главныйКлассБизнесЛогикиФрагмент2.МетодПолучаемГлавныеДанныеДляЗадач(ПубличныйIDДляФрагмента);
             Log.d(this.getClass().getName(), "ПубличныйIDДляФрагмента " + ПубличныйIDДляФрагмента);
             subClassBuccessLogin_главныйКлассБизнесЛогикиФрагмент2.МетодПолученимТОлькоКоличествоЗадач(ПубличныйIDДляФрагмента);

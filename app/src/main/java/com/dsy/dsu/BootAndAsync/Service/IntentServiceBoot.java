@@ -20,7 +20,6 @@ import androidx.core.app.ServiceCompat;
 import com.dsy.dsu.BootAndAsync.BlBootAsync.CompleteRemoteSyncService;
 import com.dsy.dsu.Errors.controller.RecordNewErros;
 import com.dsy.dsu.Hilt.JbossAdrress.getHiltPortJbossInterface;
-import com.dsy.dsu.Hilt.JbossAdrress.qualifiers.QualifierJbossServer3;
 import com.dsy.dsu.Hilt.PublicId.QualifierPublicId;
 import com.dsy.dsu.Hilt.getSSLSocketFactory2.QualifiergetsslSocketFactory2;
 
@@ -266,7 +265,8 @@ public     void startingServiceBoot(@NotNull Intent intent,@NonNull String getWh
                 case "IntentServiceBootAsync.com" :
 
                     // TODO: 19.01.2024  запуск класса бизнес логики службы Синхроиазции и Обновление ПО
-                    completeRemoteSyncService.startingBindingAsyncJboss(getWhoLaunched,getApplicationContext());///"BootService"
+                    completeRemoteSyncService.startServiceOnlyAsync(getsslSocketFactory2, "IntentServiceBootAsync.com", getHiltPortJboss,
+                            "BootService",getApplicationContext());
 
                     Log.d(getApplicationContext().getClass().getName(), "\n"
                             + " время: " + new Date() + "\n+" +
@@ -280,7 +280,7 @@ public     void startingServiceBoot(@NotNull Intent intent,@NonNull String getWh
                 case "IntentServiceBootUpdatePo.com":
 
                     // TODO: 19.01.2024  запуск класса бизнес логики службы Синхроиазции и Обновление ПО
-                    completeRemoteSyncService.startServiceUpdatePO(getsslSocketFactory2, "IntentServiceBootUpdatePo.com", getHiltPortJboss,
+                    completeRemoteSyncService.startServiceOnlyUpdatePO(getsslSocketFactory2, "IntentServiceBootUpdatePo.com", getHiltPortJboss,
                             "BootService",getApplicationContext());
 
                     Log.d(getApplicationContext().getClass().getName(), "\n"
