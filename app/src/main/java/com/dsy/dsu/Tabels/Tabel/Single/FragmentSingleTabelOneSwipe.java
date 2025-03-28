@@ -784,9 +784,6 @@ public class FragmentSingleTabelOneSwipe extends Fragment {
 
         private void metodДизайнRecycreView() {
             try{
-
-
-                recycleviewsingletabel.setHasFixedSize(true);
                 DividerItemDecoration dividerItemDecorationVer=
                         new DividerItemDecoration(getActivity(), GridLayoutManager.VERTICAL);
                 dividerItemDecorationVer.setDrawable(getContext().getDrawable(R.drawable.divider_for_order_transport2));///R.dimen.activity_horizontal_margin
