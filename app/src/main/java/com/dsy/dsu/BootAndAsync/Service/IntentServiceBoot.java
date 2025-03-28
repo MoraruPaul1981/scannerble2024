@@ -256,13 +256,12 @@ public class IntentServiceBoot extends IntentService {
 
 public     void startingServiceBoot(@NotNull Intent intent,@NonNull String getWhoLaunched){
         try{
-
             LinkedHashMap<Integer,String> getHiltPortJboss=   EntryPoints.get(getApplicationContext(), getHiltPortJbossInterface.class).getHiltPortJboss();
             // TODO: 26.12.2024 выди запуска
             switch (intent.getAction().trim()){
 
                 // TODO: 26.12.2024 Синхрониазция
-                case "IntentServiceBootAsync.com" :
+              case "IntentServiceBootAsync.com" :
 
                     // TODO: 19.01.2024  запуск класса бизнес логики службы Синхроиазции и Обновление ПО
                     completeRemoteSyncService.startServiceOnlyAsync(getsslSocketFactory2, "IntentServiceBootAsync.com", getHiltPortJboss,

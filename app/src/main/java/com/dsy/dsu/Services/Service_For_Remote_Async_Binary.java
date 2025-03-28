@@ -71,8 +71,7 @@ public class Service_For_Remote_Async_Binary extends IntentService {
     @QualifierPublicId
     Integer getHiltPublicId;
 
-    @Inject
-    CompleteRemoteSyncService completeRemoteSyncService;
+
 
     public Service_For_Remote_Async_Binary() {
         super("Service_For_Remote_Async");
