@@ -1725,9 +1725,12 @@ public class FragmentSingleTabelOneSwipe extends Fragment {
                     if ( getHolidaysDays.containsValue(ВыходныеИлиПразничные.trim())==true) {
 
                         if (TextViewRowКликПоНазваниям.isEnabled()) {
-                          /*  TextViewRowКликПоНазваниям.setTextColor(Color.parseColor("#FFFFFF"));*/
                             Drawable drawableup = getContext().getDrawable(R.drawable.style_for_chat4);
                             TextViewRowКликПоНазваниям.setBackground(drawableup);
+                            TextViewRowКликПоНазваниям.setTextColor(Color.WHITE);
+                            TextViewRowКликПоНазваниям.startAnimation(animation1);
+                            TextViewRowКликПоНазваниям.refreshDrawableState();
+                            TextViewRowКликПоНазваниям.requestLayout();
 
                         }
                         Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
@@ -1735,14 +1738,8 @@ public class FragmentSingleTabelOneSwipe extends Fragment {
                                 " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" + "  ВыходныеИлиПразничные "
                                 + ВыходныеИлиПразничные);
 
-                    }else{
-
-                        //TextViewRowКликПоНазваниям.setTextColor(Color.parseColor("#FFFFFF"));
-                        Drawable drawableup = getContext().getDrawable(R.drawable.style_for_chat7);
-                        TextViewRowКликПоНазваниям.setBackground(drawableup);
                     }
-                    TextViewRowКликПоНазваниям.refreshDrawableState();
-                    TextViewRowКликПоНазваниям.requestLayout();
+
 
                     // TODO: 19.10.2022
                     Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
@@ -1767,7 +1764,10 @@ public class FragmentSingleTabelOneSwipe extends Fragment {
                     if ( getWorkerDays.containsValue(ВыходныеИлиПразничные.trim())==true) {
 
                         if (EditTextRowДанные.isEnabled()) {
-                            EditTextRowДанные.startAnimation(animation1);
+                            EditTextRowДанные.startAnimation(animationFromRecyReview);
+                            Drawable drawableup = getContext().getDrawable(R.drawable.style_for_chat7);
+                            EditTextRowДанные.setBackground(drawableup);
+                            EditTextRowДанные.refreshDrawableState();
                             EditTextRowДанные.requestLayout();
                         }
                         Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
@@ -1775,12 +1775,7 @@ public class FragmentSingleTabelOneSwipe extends Fragment {
                                 " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"+   "  ВыходныеИлиПразничные "
                                 + ВыходныеИлиПразничные);
 
-                        // TODO: 11.04.2023 Ставим Дни Выходные
-                    } else {
-                        if (EditTextRowДанные.isEnabled()) {
-                            EditTextRowДанные.startAnimation(animationFromRecyReview);
-                            EditTextRowДанные.requestLayout();
-                        }
+
 
                         Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                                 " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
@@ -1837,15 +1832,12 @@ public class FragmentSingleTabelOneSwipe extends Fragment {
                 try{
 
                     if (editTextRowКликПоДАнными!=null) {
-                        final String[] До = new String[1];
-                                editTextRowКликПоДАнными.addOnAttachStateChangeListener(new View.OnAttachStateChangeListener() {
-                            @Override
-                            public void onViewAttachedToWindow(View v) {
+
 
                                 // TODO: 25.08.2023  тест код
                                 disposableAfterTextChangeEvent=           RxTextView.afterTextChangeEvents( editTextRowКликПоДАнными)
                                         .skip(1)
-                                        .debounce(300,TimeUnit.MILLISECONDS)///общее время event
+                                        .debounce(500,TimeUnit.MILLISECONDS)///общее время event
                                         .filter(edit->edit.component1().getText().toString().length()<=2)
                                         .subscribeOn(Schedulers.single())
                                         .observeOn(AndroidSchedulers.mainThread())
@@ -1858,42 +1850,47 @@ public class FragmentSingleTabelOneSwipe extends Fragment {
                                                 try{
                                                 if(textViewAfterTextChangeEvent.component1().isInputMethodTarget()){
 
-                                                    String   НовоеЗначенияДня   =(String) textViewAfterTextChangeEvent.component1().getText().toString();
+
+                                                    // TODO: 28.03.2025
+                                                    textViewAfterTextChangeEvent.getView().getHandler().post(()->{
+
+                                                        String   НовоеЗначенияДня   =(String) textViewAfterTextChangeEvent.component1().getText().toString();
                                                         НовоеЗначенияДня=   НовоеЗначенияДня.replaceAll("[^0-9]","").trim();
 
 
                                                         Long getNewValueCell=     Optional.ofNullable(НовоеЗначенияДня).stream()
-                                                                        .filter(f1->f1!=null)
-                                                                      /*  .filter(f3->f3.chars().allMatch( Character::isDigit ))*/
-                                                                        .mapToInt(new ToIntFunction<String>() {
-                                                                            @Override
-                                                                            public int applyAsInt(String value) {
-                                                                                Integer getNewValue= 0;
-                                                                                if (!value.isEmpty()) {
-                                                                                    getNewValue = Integer.valueOf(value.replaceAll("[^0-9]","").trim());
-                                                                                }
-                                                                                // TODO: 24.08.2023
-                                                                                Log.d(this.getClass().getName(), "\n" + " class " +
-                                                                                        Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
-                                                                                        " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                                                                                        " line " + Thread.currentThread().getStackTrace()[2].getLineNumber()
-                                                                                        + "\n"+" value " +value );
-                                                                                return getNewValue;
-                                                                            }
-                                                                        }).asLongStream().findAny().orElse(0l);
+                                                                .filter(f1->f1!=null)
+                                                                /*  .filter(f3->f3.chars().allMatch( Character::isDigit ))*/
+                                                                .mapToInt(new ToIntFunction<String>() {
+                                                                    @Override
+                                                                    public int applyAsInt(String value) {
+                                                                        Integer getNewValue= 0;
+                                                                        if (!value.isEmpty()) {
+                                                                            getNewValue = Integer.valueOf(value.replaceAll("[^0-9]","").trim());
+                                                                        }
+                                                                        // TODO: 24.08.2023
+                                                                        Log.d(this.getClass().getName(), "\n" + " class " +
+                                                                                Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                                                                                " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                                                                                " line " + Thread.currentThread().getStackTrace()[2].getLineNumber()
+                                                                                + "\n"+" value " +value );
+                                                                        return getNewValue;
+                                                                    }
+                                                                }).asLongStream().findAny().orElse(0l);
 
 
-                                               Integer     РезультатОбновлениеЯчейки=        методListerAfterSaveNewDay (editTextRowКликПоДАнными,getNewValueCell );
+                                                        Integer     РезультатОбновлениеЯчейки=        методListerAfterSaveNewDay (editTextRowКликПоДАнными,getNewValueCell );
 
 
+                                                        // TODO: 24.08.2023
+                                                        Log.d(this.getClass().getName(), "\n" + " class " +
+                                                                Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                                                                " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                                                                " line " + Thread.currentThread().getStackTrace()[2].getLineNumber()
+                                                                + "\n"+" РезультатОбновлениеЯчейки " +РезультатОбновлениеЯчейки );
 
+                                                    });
 
-                                                    // TODO: 24.08.2023
-                                                    Log.d(this.getClass().getName(), "\n" + " class " +
-                                                            Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
-                                                            " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                                                            " line " + Thread.currentThread().getStackTrace()[2].getLineNumber()
-                                                            + "\n"+" РезультатОбновлениеЯчейки " +РезультатОбновлениеЯчейки );
 
 
                                                     return true;
@@ -1913,13 +1910,9 @@ public class FragmentSingleTabelOneSwipe extends Fragment {
                                         });
                             }
 
-                            @Override
-                            public void onViewDetachedFromWindow(View v) {
 
-                            }
-                        });
 
-                    }
+
                     Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                             " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
                             " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n");
