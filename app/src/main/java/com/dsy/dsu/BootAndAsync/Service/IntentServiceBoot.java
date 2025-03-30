@@ -247,7 +247,7 @@ private      void startingServiceBoot(@NotNull Intent intent ,@NonNull  LinkedHa
               case "lanchAsync" :
 
                     // TODO: 19.01.2024  запуск класса бизнес логики службы Синхроиазции и Обновление ПО
-                    completeRemoteSyncService.startServiceOnlyAsync(getsslSocketFactory2, getHiltPortJboss
+                    completeRemoteSyncService.lanchAsync(getsslSocketFactory2, getHiltPortJboss
                             ,getApplicationContext());
 
                     Log.d(getApplicationContext().getClass().getName(), "\n"
@@ -262,9 +262,7 @@ private      void startingServiceBoot(@NotNull Intent intent ,@NonNull  LinkedHa
                 case "lanchUpdatePO":
 
                     // TODO: 19.01.2024  запуск класса бизнес логики службы Синхроиазции и Обновление ПО
-                    completeRemoteSyncService.startServiceOnlyUpdatePO(getsslSocketFactory2,
-                            "lanchUpdatePO", getHiltPortJboss,
-                            "BootService",getApplicationContext());
+                    completeRemoteSyncService.lanchUpdatePO(getsslSocketFactory2, getHiltPortJboss,getApplicationContext());
 
                     Log.d(getApplicationContext().getClass().getName(), "\n"
                             + " время: " + new Date() + "\n+" +
@@ -277,9 +275,8 @@ private      void startingServiceBoot(@NotNull Intent intent ,@NonNull  LinkedHa
                 case "lanchUpdatePOAndAsync" :
 
                     // TODO: 19.01.2024  запуск класса бизнес логики службы Синхроиазции и Обновление ПО
-                    completeRemoteSyncService.startServiceUpdatePOAndAsync( getsslSocketFactory2,
-                            "lanchUpdatePOAndAsync",
-                            getHiltPortJboss,"BootService",getApplicationContext());
+                    completeRemoteSyncService.lanchUpdatePOAndAsync( getsslSocketFactory2,
+                            getHiltPortJboss,getApplicationContext());
 
                     Log.d(getApplicationContext().getClass().getName(), "\n"
                             + " время: " + new Date() + "\n+" +
@@ -329,7 +326,7 @@ private      void startingServiceBoot(@NotNull Intent intent ,@NonNull  LinkedHa
                 // TODO: 26.12.2024 Синхрониазция
                 case "lanchAsync" :
                     // TODO: 19.01.2024  запуск класса бизнес логики службы Синхроиазции и Обновление ПО
-                    completeRemoteSyncService.startServiceOnlyAsync(getsslSocketFactory2, getHiltPortJboss
+                    completeRemoteSyncService.lanchAsync(getsslSocketFactory2, getHiltPortJboss
                             ,getApplicationContext());
                     Log.d(getApplicationContext().getClass().getName(), "\n"
                             + " время: " + new Date() + "\n+" +
@@ -341,7 +338,7 @@ private      void startingServiceBoot(@NotNull Intent intent ,@NonNull  LinkedHa
                 // TODO: 26.12.2024 Только Обновление ПО
                 case "lanchUpdatePO":
                     // TODO: 19.01.2024  запуск класса бизнес логики службы Синхроиазции и Обновление ПО
-                    completeRemoteSyncService.startServiceOnlyUpdatePO(getsslSocketFactory2,
+                    completeRemoteSyncService.lanchUpdatePO(getsslSocketFactory2,
                             "lanchUpdatePO", getHiltPortJboss,
                             "BootService",getApplicationContext());
                     Log.d(getApplicationContext().getClass().getName(), "\n"

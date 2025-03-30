@@ -20,11 +20,8 @@ import com.dsy.dsu.BootAndAsync.EventsBus.MessageEvensBusNetworkStatuses;
 import com.dsy.dsu.BootAndAsync.EventsBus.MessageEvensBusUpdatePO;
 import com.dsy.dsu.BroadcastRecievers.Bl.RegisterBroadcastForWorkManager;
 import com.dsy.dsu.BusinessLogicAll.Class_Connections_Server;
-import com.dsy.dsu.BusinessLogicAll.GetConnectivityManagerAndroid;
 import com.dsy.dsu.Dashboard.Model.endingasynsdashboard.GetEndingAsyn;
 import com.dsy.dsu.Errors.controller.RecordNewErros;
-import com.dsy.dsu.Hilt.JbossAdrress.getHiltPortJbossInterface;
-import com.dsy.dsu.Hilt.getSSLSocketFactory2.GetsslSocketFactory2Interface;
 import com.dsy.dsu.Services.ServiceUpdatePoОбновлениеПО;
 import com.dsy.dsu.Services.Service_For_Remote_Async_Binary;
 
@@ -41,7 +38,6 @@ import javax.inject.Inject;
 import javax.net.ssl.SSLSocketFactory;
 
 import dagger.Module;
-import dagger.hilt.EntryPoints;
 import dagger.hilt.InstallIn;
 import dagger.hilt.android.qualifiers.ApplicationContext;
 import dagger.hilt.components.SingletonComponent;
@@ -93,11 +89,11 @@ public class CompleteRemoteSyncService {
 
 
 
-    public void startServiceOnlyUpdatePO(@NonNull SSLSocketFactory getsslSocketFactory2,
-                                         @NonNull String landingMode ,
-                                         @NonNull LinkedHashMap<Integer,String> getHiltPortJboss,
-                                         @NonNull  String getWhoLaunched,
-                                         @NonNull Context context) {
+    public void lanchUpdatePO(@NonNull SSLSocketFactory getsslSocketFactory2,
+                              @NonNull String landingMode ,
+                              @NonNull LinkedHashMap<Integer,String> getHiltPortJboss,
+                              @NonNull  String getWhoLaunched,
+                              @NonNull Context context) {
         try {
             // TODO: 14.08.2023 вызов кода ПОльзовательский
             preferences =context. getSharedPreferences("sharedPreferencesХранилище", Context.MODE_MULTI_PROCESS);
@@ -120,9 +116,9 @@ public class CompleteRemoteSyncService {
         }
     }
 
-    public void startServiceOnlyAsync(@NonNull SSLSocketFactory getsslSocketFactory2,
-                                         @NonNull LinkedHashMap<Integer,String> getHiltPortJboss,
-                                         @NonNull Context context) {
+    public void lanchAsync(@NonNull SSLSocketFactory getsslSocketFactory2,
+                           @NonNull LinkedHashMap<Integer,String> getHiltPortJboss,
+                           @NonNull Context context) {
         try {
             // TODO: 14.08.2023 вызов кода ПОльзовательский
             preferences =context. getSharedPreferences("sharedPreferencesХранилище", Context.MODE_MULTI_PROCESS);
@@ -145,11 +141,11 @@ public class CompleteRemoteSyncService {
         }
     }
 
-    public void startServiceUpdatePOAndAsync(@NonNull SSLSocketFactory getsslSocketFactory2,
-                                     @NonNull String  landingMode  ,
-                                     @NonNull LinkedHashMap<Integer,String> getHiltPortJboss
-                                     ,@NonNull  String getWhoLaunched,
-                                       @NonNull Context context) {
+    public void lanchUpdatePOAndAsync(@NonNull SSLSocketFactory getsslSocketFactory2,
+                                      @NonNull String  landingMode  ,
+                                      @NonNull LinkedHashMap<Integer,String> getHiltPortJboss
+                                     , @NonNull  String getWhoLaunched,
+                                      @NonNull Context context) {
         try {
             // TODO: 14.08.2023 вызов кода ПОльзовательский
             preferences =context. getSharedPreferences("sharedPreferencesХранилище", Context.MODE_MULTI_PROCESS);

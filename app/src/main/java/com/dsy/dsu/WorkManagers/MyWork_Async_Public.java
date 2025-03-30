@@ -61,7 +61,7 @@ public class MyWork_Async_Public extends Worker {
         try {
             // TODO: 18.03.2025
             GetWorker getWorker=new GetWorker(getApplicationContext());
-            getWorker.startingWorkMangerPublicWorker(getlocalBinderBootSerice,"WorkManager Synchronizasiy_Data Disposable");
+            getWorker.startingWorkMangerWorkers(getlocalBinderBootSerice,"WorkManager Synchronizasiy_Data Disposable");
 
             Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                     " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
