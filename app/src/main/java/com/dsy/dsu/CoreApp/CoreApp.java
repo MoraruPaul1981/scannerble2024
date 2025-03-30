@@ -2,24 +2,15 @@ package com.dsy.dsu.CoreApp;
 
 
 import android.app.Application;
-import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 
 
-import com.dsy.dsu.BootAndAsync.BlBootAsync.ClassCreateFolderUpdatePO;
-import com.dsy.dsu.BootAndAsync.BlBootAsync.CompleteRemoteSyncService;
-import com.dsy.dsu.BusinessLogicAll.CreateFolderBinatySave.ClassCreateFolderBinatyMatrilal;
-import com.dsy.dsu.BusinessLogicAll.CreateFolderBinatySave.ClassCreateFolderCommitPays1C;
-import com.dsy.dsu.BusinessLogicAll.DeviceName.ModulegetDeviceName;
+import com.dsy.dsu.BootAndAsync.BlBootAsync.BinessLogicIntentServiceBoot;
 import com.dsy.dsu.BusinessLogicAll.DeviceName.hilt.QualifiergetDeviceName;
 import com.dsy.dsu.BusinessLogicAll.DeviceName.hilt.QualifiergetDeviceVersionBack;
-import com.dsy.dsu.BusinessLogicAll.Errors.ClassCreateFileForError;
-import com.dsy.dsu.BusinessLogicAll.Permissions.ClassPermissions;
 import com.dsy.dsu.CoreApp.Model.BunessLogicCoreApp;
-import com.dsy.dsu.Errors.controller.BiccessLogicActivityError;
 import com.dsy.dsu.Errors.controller.RecordNewErros;
-import com.dsy.dsu.Hilt.JbossAdrress.getHiltPortJbossInterface;
 import com.dsy.dsu.Hilt.JbossAdrress.qualifiers.QualifierJbossServer3;
 import com.sous.backasync.businesslogic.errors.RecordNewErroBack;
 import com.sous.backasync.devicename.ModulegetDeviceNameBack;
@@ -34,7 +25,6 @@ import java.util.concurrent.CopyOnWriteArrayList;
 
 import javax.inject.Inject;
 
-import dagger.hilt.EntryPoints;
 import dagger.hilt.android.HiltAndroidApp;
 
 
@@ -68,7 +58,7 @@ public class CoreApp extends Application {
 
 
   @Inject
-  CompleteRemoteSyncService completeRemoteSyncService;
+  BinessLogicIntentServiceBoot binessLogicIntentServiceBoot;
 
   @Inject
    @QualifierJbossServer3

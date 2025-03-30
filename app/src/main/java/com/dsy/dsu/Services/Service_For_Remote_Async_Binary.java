@@ -18,10 +18,8 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 
-import com.dsy.dsu.BootAndAsync.BlBootAsync.CompleteRemoteSyncService;
-import com.dsy.dsu.Dashboard.Model.endingasynsdashboard.GetEndingAsyn;
+import com.dsy.dsu.BootAndAsync.BlBootAsync.BinessLogicIntentServiceBoot;
 import com.dsy.dsu.Errors.controller.RecordNewErros;
-import com.dsy.dsu.Hilt.JbossAdrress.qualifiers.QualifierJbossServer3;
 import com.dsy.dsu.Hilt.PublicId.QualifierPublicId;
 import com.dsy.dsu.Hilt.getSSLSocketFactory2.QualifiergetsslSocketFactory2;
 import com.dsy.dsu.SynsProccessor.AsynsProccessor;
@@ -31,7 +29,6 @@ import com.google.firebase.annotations.concurrent.Background;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Date;
-import java.util.LinkedHashMap;
 
 import javax.inject.Inject;
 import javax.net.ssl.SSLSocketFactory;
@@ -249,7 +246,7 @@ try{
         Long       ФинальныйРезультатAsyncBackgroud=0l;
         try{
 
-         Boolean   СтатусРаботыСервера=  new CompleteRemoteSyncService(context).МетодПингаКСереруЗапущенЛиСерерИлиНет(   getsslSocketFactory2,context);
+         Boolean   СтатусРаботыСервера=  new BinessLogicIntentServiceBoot(context).МетодПингаКСереруЗапущенЛиСерерИлиНет(   getsslSocketFactory2,context);
 
 
             if (СтатусРаботыСервера) {
@@ -271,7 +268,7 @@ try{
             }else {
 
                 // TODO: 20.03.2025  отправялем что нет сети
-             new CompleteRemoteSyncService (context).   getDontNetwork(context);
+             new BinessLogicIntentServiceBoot(context).   getDontNetwork(context);
 
             }
 

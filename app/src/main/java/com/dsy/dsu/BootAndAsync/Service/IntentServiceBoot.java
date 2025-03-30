@@ -17,7 +17,7 @@ import androidx.annotation.Nullable;
 import androidx.core.app.NotificationCompat;
 import androidx.core.app.ServiceCompat;
 
-import com.dsy.dsu.BootAndAsync.BlBootAsync.CompleteRemoteSyncService;
+import com.dsy.dsu.BootAndAsync.BlBootAsync.BinessLogicIntentServiceBoot;
 import com.dsy.dsu.Errors.controller.RecordNewErros;
 import com.dsy.dsu.Hilt.JbossAdrress.qualifiers.QualifierJbossServer3;
 import com.dsy.dsu.Hilt.PublicId.QualifierPublicId;
@@ -49,7 +49,7 @@ public class IntentServiceBoot extends IntentService {
     // TODO: 03.03.2025
     public  LocalBinderBootSerice getlocalBinderBootSerice = new  LocalBinderBootSerice();
     @Inject
-    CompleteRemoteSyncService completeRemoteSyncService;
+    BinessLogicIntentServiceBoot binessLogicIntentServiceBoot;
     @Inject
     @QualifiergetsslSocketFactory2
     SSLSocketFactory getsslSocketFactory2;
@@ -246,7 +246,7 @@ private      void startingServiceBoot(@NotNull Intent intent ,@NonNull  LinkedHa
               case "lanchAsync" :
 
                     // TODO: 19.01.2024  запуск класса бизнес логики службы Синхроиазции и Обновление ПО
-                    completeRemoteSyncService.lanchAsync(getsslSocketFactory2, getHiltPortJboss
+                    binessLogicIntentServiceBoot.lanchAsync(getsslSocketFactory2, getHiltPortJboss
                             ,getApplicationContext());
 
                     Log.d(getApplicationContext().getClass().getName(), "\n"
@@ -261,7 +261,7 @@ private      void startingServiceBoot(@NotNull Intent intent ,@NonNull  LinkedHa
                 case "lanchUpdatePO":
 
                     // TODO: 19.01.2024  запуск класса бизнес логики службы Синхроиазции и Обновление ПО
-                    completeRemoteSyncService.lanchUpdatePO(getsslSocketFactory2, getHiltPortJboss,getApplicationContext());
+                    binessLogicIntentServiceBoot.lanchUpdatePO(getsslSocketFactory2, getHiltPortJboss,getApplicationContext());
 
                     Log.d(getApplicationContext().getClass().getName(), "\n"
                             + " время: " + new Date() + "\n+" +
@@ -274,7 +274,7 @@ private      void startingServiceBoot(@NotNull Intent intent ,@NonNull  LinkedHa
                 case "lanchUpdatePOAndAsync" :
 
                     // TODO: 19.01.2024  запуск класса бизнес логики службы Синхроиазции и Обновление ПО
-                    completeRemoteSyncService.lanchUpdatePOAndAsync( getsslSocketFactory2,
+                    binessLogicIntentServiceBoot.lanchUpdatePOAndAsync( getsslSocketFactory2,
                             getHiltPortJboss,getApplicationContext());
 
                     Log.d(getApplicationContext().getClass().getName(), "\n"
@@ -289,7 +289,7 @@ private      void startingServiceBoot(@NotNull Intent intent ,@NonNull  LinkedHa
                 // TODO: 26.12.2024 EXIT
                 case     "ExitBootService" :
                     // TODO: 19.01.2024  запуск класса бизнес логики службы Синхроиазции и Обновление ПО
-                    completeRemoteSyncService.    getDontNetwork(getApplicationContext());
+                    binessLogicIntentServiceBoot.    getDontNetwork(getApplicationContext());
 
 
                     Log.d(getApplicationContext().getClass().getName(), "\n"
@@ -334,7 +334,7 @@ private      void startingServiceBoot(@NotNull Intent intent ,@NonNull  LinkedHa
                 // TODO: 26.12.2024 Синхрониазция
                 case "lanchAsync":
                     // TODO: 19.01.2024  запуск класса бизнес логики службы Синхроиазции и Обновление ПО
-                    completeRemoteSyncService.lanchAsync(getsslSocketFactory2, getHiltPortJboss
+                    binessLogicIntentServiceBoot.lanchAsync(getsslSocketFactory2, getHiltPortJboss
                             , getApplicationContext());
                     Log.d(getApplicationContext().getClass().getName(), "\n"
                             + " время: " + new Date() + "\n+" +
@@ -345,7 +345,7 @@ private      void startingServiceBoot(@NotNull Intent intent ,@NonNull  LinkedHa
                 // TODO: 26.12.2024 EXIT
                 case "ExitBootService":
                     // TODO: 19.01.2024  запуск класса бизнес логики службы Синхроиазции и Обновление ПО
-                    completeRemoteSyncService.getDontNetwork(getApplicationContext());
+                    binessLogicIntentServiceBoot.getDontNetwork(getApplicationContext());
 
 
                     Log.d(getApplicationContext().getClass().getName(), "\n"
