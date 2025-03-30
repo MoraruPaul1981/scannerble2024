@@ -121,9 +121,7 @@ public class CompleteRemoteSyncService {
     }
 
     public void startServiceOnlyAsync(@NonNull SSLSocketFactory getsslSocketFactory2,
-                                         @NonNull String landingMode ,
                                          @NonNull LinkedHashMap<Integer,String> getHiltPortJboss,
-                                         @NonNull  String getWhoLaunched,
                                          @NonNull Context context) {
         try {
             // TODO: 14.08.2023 вызов кода ПОльзовательский
@@ -541,7 +539,7 @@ public class CompleteRemoteSyncService {
                 // TODO: 26.12.2024 режим Обновление ПО или ВМЕСТЕ
                 switch (landingMode.trim()){
 
-                    case    "IntentServiceBootUpdatePo.comAndIntentServiceBootAsync.com" :
+                    case    "lanchUpdatePOAndAsync" :
                         // TODO: 22.01.2024  запускаем Синхронизацию
                         launchUpdatePOandSync(СервернаяВерсия, ЛокальнаяВерсияПО, getWhoLaunched,context,landingMode);
 
@@ -553,7 +551,7 @@ public class CompleteRemoteSyncService {
 
 
 
-                    case "IntentServiceBootUpdatePo.com" :
+                    case "lanchUpdatePO" :
                         // TODO: 22.01.2024  запускаем обновдение ПО
                         launchOnlyUpdatePO(СервернаяВерсия, ЛокальнаяВерсияПО,  context,getWhoLaunched);
 
@@ -566,7 +564,7 @@ public class CompleteRemoteSyncService {
 
 
                     // TODO: 26.12.2024 Синхрониазция
-                    case "IntentServiceBootAsync.com" :
+                    case "lanchAsync" :
 
                         // TODO: 24.09.2024 запускаем Синхронизацию
                         completeAsync(  getWhoLaunched ,context);

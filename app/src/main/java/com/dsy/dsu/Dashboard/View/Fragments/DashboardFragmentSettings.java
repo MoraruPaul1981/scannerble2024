@@ -653,7 +653,7 @@ public class DashboardFragmentSettings extends  DialogFragment {
                             });
 
                             // TODO: 10.07.2023  запуск Синхрониаию
-                            serviceBootBinessLogic.startServiceBootAndAsync("IntentServiceBootAsync.com");
+                            serviceBootBinessLogic.startServiceBootAndAsync("lanchAsync");
                             // TODO: 26.06.2022
                             Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                                     " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
@@ -878,7 +878,7 @@ public class DashboardFragmentSettings extends  DialogFragment {
 // TODO: 10.07.2023  запуск обновление ПО
 
 // TODO: 10.07.2023  запуск обновление ПО
-                               serviceBootBinessLogic.startServiceBootAndAsync("IntentServiceBootUpdatePo.com");
+                               serviceBootBinessLogic.startServiceBootAndAsync("lanchUpdatePO");
 
                                Log.i(this.getClass().getName(), " Из меню установкаОбновление ПО "
                                        + Thread.currentThread().getStackTrace()[2].getMethodName()

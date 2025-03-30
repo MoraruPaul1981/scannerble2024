@@ -72,7 +72,7 @@ public class ServiceBootBinessLogic {
         try{
 
             Intent intentstartServiceOneSignal=new Intent(context, IntentServiceBoot.class);
-            intentstartServiceOneSignal.setAction("IntentServiceBootAsync.com");
+            intentstartServiceOneSignal.setAction("lanchAsync");
             activity.stopService(intentstartServiceOneSignal);
             // TODO: 24.01.2024
             activity.finishAffinity();

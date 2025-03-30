@@ -26,7 +26,6 @@ import androidx.lifecycle.LifecycleOwner;
 import com.dsy.dsu.BootAndAsync.BlBootAsync.Hilts.ServiceBootBinessLogic;
 import com.dsy.dsu.BootAndAsync.DowloadUpdatePO.DownLoadPO;
 import com.dsy.dsu.BootAndAsync.EventsBus.MessageEvensBusNetworkStatuses;
-import com.dsy.dsu.BootAndAsync.EventsBus.MessageEvensBusEndAync;
 import com.dsy.dsu.BootAndAsync.EventsBus.MessageEvensBusUpdatePO;
 import com.dsy.dsu.BusinessLogicAll.Permissions.ClassPermissions;
 import com.dsy.dsu.CallNavigarlaout.CallNavigarlaout;
@@ -162,46 +161,8 @@ public class GetComponentActivityBootService {
 
 
 
-    public void getEventBusEndingAsync(MessageEvensBusEndAync messageEvensBusEndAync){
-
-        try{
-            Bundle bundleGetOtServicePrograssBar =(Bundle)         messageEvensBusEndAync.mess.getExtras();
-            String Статус=   bundleGetOtServicePrograssBar.getString("Статус");
-            
-            if (Статус.contains("AnsycEnd")) {
-                // TODO: 26.03.2024
-// TODO: 14.08.2023  Запускаем Код До Сиинхрониазщции
-                    Intent Интент_ЗапускаетDashboard = new Intent();
-                    Интент_ЗапускаетDashboard.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_SINGLE_TOP);
-                    Интент_ЗапускаетDashboard.setAction("MainActivity_Dashboard.class");
-                    Интент_ЗапускаетDashboard.setClass(context, MainActivity_Dashboard.class);
-                    Bundle bundleBinderUpdate=new Bundle();
-                    bundleBinderUpdate.putBoolean("CallBackMainActivityBootAndAsync", true);
-                    Интент_ЗапускаетDashboard.putExtras(bundleBinderUpdate);
-
-                    // TODO: 10.01.2025  после успешной или не успешной синхрониазции переходим на все приложения APP
-                    activity.  startActivity(Интент_ЗапускаетDashboard);//tso*/
-                }
-
-                // TODO: 26.12.2022  конец основгого кода
-                Log.d(context.getClass().getName(), "\n" + " class "
-                        + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
-                        " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                        " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n");
 
 
-            Log.d(context.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
-                    " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                    " line " + Thread.currentThread().getStackTrace()[2].getLineNumber());
-        } catch (Exception e) {
-            e.printStackTrace();
-            Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() + " Линия  :"
-                    + Thread.currentThread().getStackTrace()[2].getLineNumber());
-            new RecordNewErros(context).recordnewerror(e.toString(),
-                    this.getClass().getName(), Thread.currentThread().getStackTrace()[2].getMethodName(),
-                    Thread.currentThread().getStackTrace()[2].getLineNumber());
-        }
-    }
 
 
 
@@ -480,7 +441,7 @@ public class GetComponentActivityBootService {
                                 item.setChecked(true);
                                 try {
 // TODO: 10.07.2023  запуск обновление ПО
-                                    new ServiceBootBinessLogic(context).startServiceBootAndAsync("IntentServiceBootUpdatePo.com");
+                                    new ServiceBootBinessLogic(context).startServiceBootAndAsync("lanchUpdatePO");
 
                                     Log.d(context.getClass().getName(), "\n"
                                             + " время: " + new Date() + "\n+" +

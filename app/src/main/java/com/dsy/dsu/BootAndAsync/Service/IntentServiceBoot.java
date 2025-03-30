@@ -19,7 +19,7 @@ import androidx.core.app.ServiceCompat;
 
 import com.dsy.dsu.BootAndAsync.BlBootAsync.CompleteRemoteSyncService;
 import com.dsy.dsu.Errors.controller.RecordNewErros;
-import com.dsy.dsu.Hilt.JbossAdrress.getHiltPortJbossInterface;
+import com.dsy.dsu.Hilt.JbossAdrress.qualifiers.QualifierJbossServer3;
 import com.dsy.dsu.Hilt.PublicId.QualifierPublicId;
 import com.dsy.dsu.Hilt.getSSLSocketFactory2.QualifiergetsslSocketFactory2;
 
@@ -31,7 +31,6 @@ import java.util.LinkedHashMap;
 import javax.inject.Inject;
 import javax.net.ssl.SSLSocketFactory;
 
-import dagger.hilt.EntryPoints;
 import dagger.hilt.android.AndroidEntryPoint;
 
 /**
@@ -47,30 +46,20 @@ import dagger.hilt.android.AndroidEntryPoint;
 
 @AndroidEntryPoint
 public class IntentServiceBoot extends IntentService {
-
-
     // TODO: 03.03.2025
     public  LocalBinderBootSerice getlocalBinderBootSerice = new  LocalBinderBootSerice();
-
-
     @Inject
     CompleteRemoteSyncService completeRemoteSyncService;
-
     @Inject
     @QualifiergetsslSocketFactory2
     SSLSocketFactory getsslSocketFactory2;
-
-
-
-
     @Inject
     @QualifierPublicId
     Integer getHiltPublicId;
+   private Notification notification;
+    @QualifierJbossServer3
+    LinkedHashMap<Integer,String> getHiltPortJboss;
 
-
-
-
-    Notification notification;
 
 
     public IntentServiceBoot() {
@@ -119,7 +108,7 @@ public class IntentServiceBoot extends IntentService {
         super.onDestroy();
         try {
             // TODO: 25.12.2024
-            desibleServiceForeground();
+            getCloseService();
             // TODO: 10.10.2024 записываем статус службы ка в менякем статус как отработал
         Log.d(getApplicationContext().getClass().getName(), "\n"
                 + " время: " + new Date() + "\n+" +
@@ -157,13 +146,13 @@ public class IntentServiceBoot extends IntentService {
 
 
 
-            startingServiceBoot(intent,"BootService");
+            startingServiceBoot(intent,   getHiltPortJboss);
 
 
 
 
 
-            desibleServiceForeground();
+            getCloseService();
 
             Log.d(getApplicationContext().getClass().getName(), "\n"
                     + " время: " + new Date() + "\n+" +
@@ -181,10 +170,9 @@ public class IntentServiceBoot extends IntentService {
 
     }
 
-    private void desibleServiceForeground() {
+    private void getCloseService() {
         try{
             stopForeground(false);
-        stopSelf();
         Log.d(getApplicationContext().getClass().getName(), "\n"
                 + " время: " + new Date() + "\n+" +
                 " Класс в процессе... " + this.getClass().getName() + "\n" +
@@ -208,13 +196,8 @@ public class IntentServiceBoot extends IntentService {
 
             ((NotificationManager) getSystemService(getApplicationContext().NOTIFICATION_SERVICE)).createNotificationChannel(channel);
 
-            notification = new NotificationCompat.Builder(this, CHANNEL_ID)
-                    .setContentTitle("Обмен данными...")
-                    .setContentText("Обмен данными...").build();
-
+            notification = new NotificationCompat.Builder(this, CHANNEL_ID).build();
             ServiceCompat.startForeground(this,17,notification,ServiceCompat.STOP_FOREGROUND_REMOVE);
-            //ServiceCompat.startForeground(this,17,notification,ServiceCompat.STOP_FOREGROUND_REMOVE);
-            // startForeground(17,notification,ServiceInfo.FOREGROUND_SERVICE_TYPE_DATA_SYNC);
             Log.d(getApplicationContext().getClass().getName(), "\n"
                     + " время: " + new Date() + "\n+" +
                     " Класс в процессе... " + this.getClass().getName() + "\n" +
@@ -254,18 +237,18 @@ public class IntentServiceBoot extends IntentService {
 
 
 
-public     void startingServiceBoot(@NotNull Intent intent,@NonNull String getWhoLaunched){
+private      void startingServiceBoot(@NotNull Intent intent ,@NonNull  LinkedHashMap<Integer,String> getHiltPortJboss){
         try{
-            LinkedHashMap<Integer,String> getHiltPortJboss=   EntryPoints.get(getApplicationContext(), getHiltPortJbossInterface.class).getHiltPortJboss();
+            String getTypeTaskForBoot=  intent.getAction();
             // TODO: 26.12.2024 выди запуска
-            switch (intent.getAction().trim()){
+            switch (getTypeTaskForBoot.trim()){
 
                 // TODO: 26.12.2024 Синхрониазция
-              case "IntentServiceBootAsync.com" :
+              case "lanchAsync" :
 
                     // TODO: 19.01.2024  запуск класса бизнес логики службы Синхроиазции и Обновление ПО
-                    completeRemoteSyncService.startServiceOnlyAsync(getsslSocketFactory2, "IntentServiceBootAsync.com", getHiltPortJboss,
-                            "BootService",getApplicationContext());
+                    completeRemoteSyncService.startServiceOnlyAsync(getsslSocketFactory2, getHiltPortJboss
+                            ,getApplicationContext());
 
                     Log.d(getApplicationContext().getClass().getName(), "\n"
                             + " время: " + new Date() + "\n+" +
@@ -276,10 +259,11 @@ public     void startingServiceBoot(@NotNull Intent intent,@NonNull String getWh
                     break;
 
                 // TODO: 26.12.2024 Только Обновление ПО
-                case "IntentServiceBootUpdatePo.com":
+                case "lanchUpdatePO":
 
                     // TODO: 19.01.2024  запуск класса бизнес логики службы Синхроиазции и Обновление ПО
-                    completeRemoteSyncService.startServiceOnlyUpdatePO(getsslSocketFactory2, "IntentServiceBootUpdatePo.com", getHiltPortJboss,
+                    completeRemoteSyncService.startServiceOnlyUpdatePO(getsslSocketFactory2,
+                            "lanchUpdatePO", getHiltPortJboss,
                             "BootService",getApplicationContext());
 
                     Log.d(getApplicationContext().getClass().getName(), "\n"
@@ -290,10 +274,11 @@ public     void startingServiceBoot(@NotNull Intent intent,@NonNull String getWh
                     break;
 
                 // TODO: 26.12.2024 И Обновление и Синхронизация
-                case "IntentServiceBootUpdatePo.comAndIntentServiceBootAsync.com" :
+                case "lanchUpdatePOAndAsync" :
 
                     // TODO: 19.01.2024  запуск класса бизнес логики службы Синхроиазции и Обновление ПО
-                    completeRemoteSyncService.startServiceUpdatePOAndAsync( getsslSocketFactory2, "IntentServiceBootUpdatePo.comAndIntentServiceBootAsync.com",
+                    completeRemoteSyncService.startServiceUpdatePOAndAsync( getsslSocketFactory2,
+                            "lanchUpdatePOAndAsync",
                             getHiltPortJboss,"BootService",getApplicationContext());
 
                     Log.d(getApplicationContext().getClass().getName(), "\n"
@@ -308,10 +293,6 @@ public     void startingServiceBoot(@NotNull Intent intent,@NonNull String getWh
                 // TODO: 26.12.2024 EXIT
                 case     "ExitBootService" :
                     // TODO: 19.01.2024  запуск класса бизнес логики службы Синхроиазции и Обновление ПО
-                    completeRemoteSyncService.startServiceUpdatePOAndAsync(getsslSocketFactory2, "IntentServiceBootUpdatePo.comAndIntentServiceBootAsync.com",
-                            getHiltPortJboss,"BootService",getApplicationContext());
-
-
                     completeRemoteSyncService.    getDontNetwork(getApplicationContext());
 
 
@@ -340,6 +321,59 @@ public     void startingServiceBoot(@NotNull Intent intent,@NonNull String getWh
                 Thread.currentThread().getStackTrace()[2].getMethodName(), Thread.currentThread().getStackTrace()[2].getLineNumber());
     }
     }
+    public       void startingServiceAsyncForWorkManger(@NotNull Intent intent ,@NonNull  LinkedHashMap<Integer,String> getHiltPortJboss){
+        try{
+            String getTypeTaskWorkManager=  intent.getAction();
+            // TODO: 26.12.2024 выди запуска
+            switch (getTypeTaskWorkManager.trim()){
+                // TODO: 26.12.2024 Синхрониазция
+                case "lanchAsync" :
+                    // TODO: 19.01.2024  запуск класса бизнес логики службы Синхроиазции и Обновление ПО
+                    completeRemoteSyncService.startServiceOnlyAsync(getsslSocketFactory2, getHiltPortJboss
+                            ,getApplicationContext());
+                    Log.d(getApplicationContext().getClass().getName(), "\n"
+                            + " время: " + new Date() + "\n+" +
+                            " Класс в процессе... " + this.getClass().getName() + "\n" +
+                            " метод в процессе... " + Thread.currentThread().getStackTrace()[2].getMethodName()+
+                            " intent.getAction() " +intent.getAction());
+                    break;
 
+                // TODO: 26.12.2024 Только Обновление ПО
+                case "lanchUpdatePO":
+                    // TODO: 19.01.2024  запуск класса бизнес логики службы Синхроиазции и Обновление ПО
+                    completeRemoteSyncService.startServiceOnlyUpdatePO(getsslSocketFactory2,
+                            "lanchUpdatePO", getHiltPortJboss,
+                            "BootService",getApplicationContext());
+                    Log.d(getApplicationContext().getClass().getName(), "\n"
+                            + " время: " + new Date() + "\n+" +
+                            " Класс в процессе... " + this.getClass().getName() + "\n" +
+                            " метод в процессе... " + Thread.currentThread().getStackTrace()[2].getMethodName()+
+                            " intent.getAction() " +intent.getAction());
+                    break;
+
+
+                // TODO: 26.12.2024 EXIT
+                case     "ExitBootService" :
+                    // TODO: 19.01.2024  запуск класса бизнес логики службы Синхроиазции и Обновление ПО
+                    completeRemoteSyncService.    getDontNetwork(getApplicationContext());
+                    Log.d(getApplicationContext().getClass().getName(), "\n"
+                            + " время: " + new Date() + "\n+" +
+                            " Класс в процессе... " + this.getClass().getName() + "\n" +
+                            " метод в процессе... " + Thread.currentThread().getStackTrace()[2].getMethodName()+
+                            " intent.getAction() " +intent.getAction());
+                    break;
+            }
+            Log.d(getApplicationContext().getClass().getName(), "\n"
+                    + " время: " + new Date() + "\n+" +
+                    " Класс в процессе... " + this.getClass().getName() + "\n" +
+                    " метод в процессе... " + Thread.currentThread().getStackTrace()[2].getMethodName() + " getHiltPortJboss " +getHiltPortJboss);
+        } catch (Exception e) {
+            e.printStackTrace();
+            Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
+                    " Линия  :" + Thread.currentThread().getStackTrace()[2].getLineNumber());
+            new RecordNewErros(getApplicationContext()).recordnewerror(e.toString(), this.getClass().getName(),
+                    Thread.currentThread().getStackTrace()[2].getMethodName(), Thread.currentThread().getStackTrace()[2].getLineNumber());
+        }
+    }
     // TODO: 10.10.2024 end class
 }

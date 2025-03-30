@@ -8,8 +8,13 @@ import android.util.Log;
 import com.dsy.dsu.BootAndAsync.Service.IntentServiceBoot;
 import com.dsy.dsu.BusinessLogicAll.GetConnectivityManagerAndroid;
 import com.dsy.dsu.Errors.controller.RecordNewErros;
+import com.dsy.dsu.Hilt.JbossAdrress.getHiltPortJbossInterface;
 
 import org.jetbrains.annotations.NotNull;
+
+import java.util.LinkedHashMap;
+
+import dagger.hilt.EntryPoints;
 
 public class GetWorker {
 
@@ -35,12 +40,12 @@ public class GetWorker {
                 if (ВыбранныйРежимСети) {
 
                     if (getlocalBinderBootSerice.isBinderAlive() && isWorkManagerRunning == false) {
-                        String actionSingleWorker = "IntentServiceBootUpdatePo.comAndIntentServiceBootAsync.com" ;
+                        String actionSingleWorker = "lanchUpdatePOAndAsync" ;
 
                         intentSingleWorker.setAction(actionSingleWorker);
                         intentSingleWorker.setData(Uri.parse(actionSingleWorker));
 
-                        getlocalBinderBootSerice.getService().startingServiceBoot(intentSingleWorker, "BootService");
+                        getlocalBinderBootSerice.getService().startingServiceAsyncForWorkManger(intentSingleWorker  );
 
                     }
                 } else {
@@ -48,7 +53,7 @@ public class GetWorker {
                     String exitSingleWorker = "ExitBootService";
                     intentSingleWorker.setAction(exitSingleWorker);
                     intentSingleWorker.setData(Uri.parse(exitSingleWorker));
-                    getlocalBinderBootSerice.getService().startingServiceBoot(intentSingleWorker, "BootService");
+                    getlocalBinderBootSerice.getService().startingServiceAsyncForWorkManger(intentSingleWorker );
 
                     Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                             " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
@@ -79,6 +84,8 @@ public class GetWorker {
     public void startingWorkMangerPublicWorker(@NotNull  IntentServiceBoot.LocalBinderBootSerice          getlocalBinderBootSerice,
                                                        @NotNull String    ИмяСлужбыWorkManger  ) {
         try{
+            LinkedHashMap<Integer,String> getHiltPortJboss=   EntryPoints.get(context, getHiltPortJbossInterface.class).getHiltPortJboss();
+
             Boolean isWorkManagerRunning=  new FindRunnigServiceBeforeWorkManager(context).isWorkManagerRunning(ИмяСлужбыWorkManger);
 
             // TODO: 22.12.2022  сама запуска синхронищации из workmanager ОБЩЕГО
@@ -90,12 +97,11 @@ public class GetWorker {
                 if (ВыбранныйРежимСети) {
 
                     if (getlocalBinderBootSerice.isBinderAlive() && isWorkManagerRunning == false) {
-                        String actionSingleWorker =  "IntentServiceBootAsync.com" ;
-
+                        String actionSingleWorker =  "lanchAsync" ;
                         intentSingleWorker.setAction(actionSingleWorker);
                         intentSingleWorker.setData(Uri.parse(actionSingleWorker));
 
-                        getlocalBinderBootSerice.getService().startingServiceBoot(intentSingleWorker, "BootService");
+                        getlocalBinderBootSerice.getService().startingServiceAsyncForWorkManger(intentSingleWorker, getHiltPortJboss);
 
                     }
                 } else {
@@ -103,7 +109,7 @@ public class GetWorker {
                     String exitSingleWorker = "ExitBootService";
                     intentSingleWorker.setAction(exitSingleWorker);
                     intentSingleWorker.setData(Uri.parse(exitSingleWorker));
-                    getlocalBinderBootSerice.getService().startingServiceBoot(intentSingleWorker, "BootService");
+                    getlocalBinderBootSerice.getService().startingServiceAsyncForWorkManger(intentSingleWorker, getHiltPortJboss);
 
                     Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                             " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +

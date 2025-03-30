@@ -22,7 +22,6 @@ import com.dsy.dsu.BootAndAsync.BlBootAsync.Hilts.ServiceBootBinessLogic;
 import com.dsy.dsu.BootAndAsync.Componets.GetComponentActivityBootService;
 import com.dsy.dsu.BootAndAsync.Componets.GetComponentPrograssbar;
 import com.dsy.dsu.BootAndAsync.EventsBus.MessageEvensBusNetworkStatuses;
-import com.dsy.dsu.BootAndAsync.EventsBus.MessageEvensBusEndAync;
 import com.dsy.dsu.BootAndAsync.EventsBus.MessageEvensBusPrograssBar;
 import com.dsy.dsu.BootAndAsync.EventsBus.MessageEvensBusUpdatePO;
 import com.dsy.dsu.BootAndAsync.ViewModelBoot.ViewModel.ViewModel;
@@ -343,34 +342,7 @@ public class MainActivityBootAndAsync extends AppCompatActivity {
 
 
 
-    // TODO: 23.01.2024 EventBus END ASYNC
-    @Subscribe (threadMode = ThreadMode.MAIN)
-    public void EventMessageEvensBusEndAsync(MessageEvensBusEndAync messageEvensBusEndAync){
-        try{
 
-            // TODO: 22.01.2024 после успешной или не успешной синхрониазции переходим на все приложения Активити APP
-            blInnerMainActivityBootAndAsync   .getEventBusEndingAsync(messageEvensBusEndAync);
-
-
-            //TODO выключаем главную службу синхрониазации
-            new ServiceBootBinessLogic(getApplicationContext()).stopServiceBootAndAsync(this);
-
-
-            Log.d(getApplicationContext().getClass().getName(), "\n"
-                    + " время: " + new Date() + "\n+" +
-                    " Класс в процессе... " + this.getClass().getName() + "\n" +
-                    " метод в процессе... " + Thread.currentThread().getStackTrace()[2].getMethodName()
-                    + "   starting... onRestart" + " starting... onRestart");
-        } catch (Exception e) {
-            e.printStackTrace();
-            Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() + " Линия  :"
-                    + Thread.currentThread().getStackTrace()[2].getLineNumber());
-            new RecordNewErros(getApplicationContext()).recordnewerror(e.toString(), this.getClass().getName(), Thread.currentThread().getStackTrace()[2].getMethodName(),
-                    Thread.currentThread().getStackTrace()[2].getLineNumber());
-        }
-
-
-    }
 
 
 

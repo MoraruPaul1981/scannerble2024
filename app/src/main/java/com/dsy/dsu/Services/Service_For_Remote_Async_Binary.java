@@ -308,10 +308,7 @@ try{
         }
 
 
-        // TODO: 01.04.2024
-            if (getWhoLaunched.equalsIgnoreCase("BootService")) {
-                new GetEndingAsyn().  metoEndingAsynsOtService(context);
-            }
+
 
             Log.d(getApplicationContext().getClass().getName(), "\n"
                 + " время: " + new Date() + "\n+" +

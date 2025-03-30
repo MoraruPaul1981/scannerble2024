@@ -55,7 +55,7 @@ private  Activity activity;
    private SSLSocketFactory getsslSocketFactory2;
     private SharedPreferences preferences;
 
-    @NonNull  LinkedHashMap<Integer,String> getHiltPortJboss;
+
 
     public DownLoadPO(@NonNull Activity activity,@NonNull  Context context,
                       @NonNull Integer СервернаяВерсияПОВнутри,
