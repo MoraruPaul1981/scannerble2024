@@ -26,7 +26,7 @@ public class GetWorker {
     }
 
 
-    public void startingWorkMangerWorkers(@NotNull  IntentServiceBoot.LocalBinderBootSerice          getlocalBinderBootSerice,
+    public void startingSingleWorkerManger(@NotNull  IntentServiceBoot.LocalBinderBootSerice          getlocalBinderBootSerice,
                                                        @NotNull String    ИмяСлужбыWorkManger  ) {
         try{
             LinkedHashMap<Integer,String> getHiltPortJboss=   EntryPoints.get(context, getHiltPortJbossInterface.class).getHiltPortJboss();
@@ -82,7 +82,46 @@ public class GetWorker {
 
 
 
+    public void startingPublicWorkManager(@NotNull  IntentServiceBoot.LocalBinderBootSerice          getlocalBinderBootSerice,
+                                          @NotNull String    ИмяСлужбыWorkManger  ) {
+        try{
+            LinkedHashMap<Integer,String> getHiltPortJboss=   EntryPoints.get(context, getHiltPortJbossInterface.class).getHiltPortJboss();
 
+            Boolean isWorkManagerRunning=  new FindRunnigServiceBeforeWorkManager(context).isWorkManagerRunning(ИмяСлужбыWorkManger);
+
+            // TODO: 22.12.2022  сама запуска синхронищации из workmanager ОБЩЕГО
+            boolean ВыбранныйРежимСети =
+                    new GetConnectivityManagerAndroid(context).сonnectivityManageruserselection();
+            Intent intentSingleWorker=new Intent();
+
+            if(getlocalBinderBootSerice!=null) {
+                if (ВыбранныйРежимСети) {
+
+                    if (getlocalBinderBootSerice.isBinderAlive() && isWorkManagerRunning == false) {
+                        String actionSingleWorker =  "lanchAsync" ;
+                        intentSingleWorker.setAction(actionSingleWorker);
+                        intentSingleWorker.setData(Uri.parse(actionSingleWorker));
+
+                        getlocalBinderBootSerice.getService().startingServiceAsyncForWorkManger(intentSingleWorker, getHiltPortJboss);
+
+                    }
+                }
+            }
+
+            Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                    " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                    " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"
+                    + " isWorkManagerRunning " +isWorkManagerRunning );
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
+                    " Линия  :" + Thread.currentThread().getStackTrace()[2].getLineNumber());
+            new RecordNewErros(context).recordnewerror(e.toString(), this.getClass().getName(), Thread.currentThread().getStackTrace()[2].getMethodName(),
+                    Thread.currentThread().getStackTrace()[2].getLineNumber());
+        }
+
+    }
 
 
 

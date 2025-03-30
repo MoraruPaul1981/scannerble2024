@@ -236,13 +236,12 @@ public class IntentServiceBoot extends IntentService {
     }
 
 
-
+    // TODO: 30.03.2025 ONLY BOOT service
 private      void startingServiceBoot(@NotNull Intent intent ,@NonNull  LinkedHashMap<Integer,String> getHiltPortJboss){
         try{
             String getTypeTaskForBoot=  intent.getAction();
             // TODO: 26.12.2024 выди запуска
             switch (getTypeTaskForBoot.trim()){
-
                 // TODO: 26.12.2024 Синхрониазция
               case "lanchAsync" :
 
@@ -318,52 +317,51 @@ private      void startingServiceBoot(@NotNull Intent intent ,@NonNull  LinkedHa
                 Thread.currentThread().getStackTrace()[2].getMethodName(), Thread.currentThread().getStackTrace()[2].getLineNumber());
     }
     }
-    public       void startingServiceAsyncForWorkManger(@NotNull Intent intent ,@NonNull  LinkedHashMap<Integer,String> getHiltPortJboss){
-        try{
-            String getTypeTaskWorkManager=  intent.getAction();
+
+
+
+
+
+
+
+    // TODO: 30.03.2025 ONLY WORK Manager 
+    public       void startingServiceAsyncForWorkManger(@NotNull Intent intent ,@NonNull  LinkedHashMap<Integer,String> getHiltPortJboss) {
+        try {
+            String getTypeTaskWorkManager = intent.getAction();
             // TODO: 26.12.2024 выди запуска
-            switch (getTypeTaskWorkManager.trim()){
+            switch (getTypeTaskWorkManager.trim()) {
+
                 // TODO: 26.12.2024 Синхрониазция
-                case "lanchAsync" :
+                case "lanchAsync":
                     // TODO: 19.01.2024  запуск класса бизнес логики службы Синхроиазции и Обновление ПО
                     completeRemoteSyncService.lanchAsync(getsslSocketFactory2, getHiltPortJboss
-                            ,getApplicationContext());
+                            , getApplicationContext());
                     Log.d(getApplicationContext().getClass().getName(), "\n"
                             + " время: " + new Date() + "\n+" +
                             " Класс в процессе... " + this.getClass().getName() + "\n" +
-                            " метод в процессе... " + Thread.currentThread().getStackTrace()[2].getMethodName()+
-                            " intent.getAction() " +intent.getAction());
+                            " метод в процессе... " + Thread.currentThread().getStackTrace()[2].getMethodName() +
+                            " intent.getAction() " + intent.getAction());
                     break;
-
-                // TODO: 26.12.2024 Только Обновление ПО
-                case "lanchUpdatePO":
-                    // TODO: 19.01.2024  запуск класса бизнес логики службы Синхроиазции и Обновление ПО
-                    completeRemoteSyncService.lanchUpdatePO(getsslSocketFactory2,
-                            "lanchUpdatePO", getHiltPortJboss,
-                            "BootService",getApplicationContext());
-                    Log.d(getApplicationContext().getClass().getName(), "\n"
-                            + " время: " + new Date() + "\n+" +
-                            " Класс в процессе... " + this.getClass().getName() + "\n" +
-                            " метод в процессе... " + Thread.currentThread().getStackTrace()[2].getMethodName()+
-                            " intent.getAction() " +intent.getAction());
-                    break;
-
-
                 // TODO: 26.12.2024 EXIT
-                case     "ExitBootService" :
+                case "ExitBootService":
                     // TODO: 19.01.2024  запуск класса бизнес логики службы Синхроиазции и Обновление ПО
-                    completeRemoteSyncService.    getDontNetwork(getApplicationContext());
+                    completeRemoteSyncService.getDontNetwork(getApplicationContext());
+
+
                     Log.d(getApplicationContext().getClass().getName(), "\n"
                             + " время: " + new Date() + "\n+" +
                             " Класс в процессе... " + this.getClass().getName() + "\n" +
-                            " метод в процессе... " + Thread.currentThread().getStackTrace()[2].getMethodName()+
-                            " intent.getAction() " +intent.getAction());
+                            " метод в процессе... " + Thread.currentThread().getStackTrace()[2].getMethodName() +
+                            " intent.getAction() " + intent.getAction());
+
                     break;
+
+
             }
             Log.d(getApplicationContext().getClass().getName(), "\n"
                     + " время: " + new Date() + "\n+" +
                     " Класс в процессе... " + this.getClass().getName() + "\n" +
-                    " метод в процессе... " + Thread.currentThread().getStackTrace()[2].getMethodName() + " getHiltPortJboss " +getHiltPortJboss);
+                    " метод в процессе... " + Thread.currentThread().getStackTrace()[2].getMethodName() + " getHiltPortJboss " + getHiltPortJboss);
         } catch (Exception e) {
             e.printStackTrace();
             Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +

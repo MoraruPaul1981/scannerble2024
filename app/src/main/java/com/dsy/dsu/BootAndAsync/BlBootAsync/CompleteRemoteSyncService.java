@@ -41,6 +41,9 @@ import dagger.Module;
 import dagger.hilt.InstallIn;
 import dagger.hilt.android.qualifiers.ApplicationContext;
 import dagger.hilt.components.SingletonComponent;
+import io.reactivex.rxjava3.core.Maybe;
+import io.reactivex.rxjava3.core.MaybeObserver;
+import io.reactivex.rxjava3.core.Observable;
 
 @Module
 @InstallIn(SingletonComponent.class)
@@ -90,17 +93,12 @@ public class CompleteRemoteSyncService {
 
 
     public void lanchUpdatePO(@NonNull SSLSocketFactory getsslSocketFactory2,
-                              @NonNull String landingMode ,
                               @NonNull LinkedHashMap<Integer,String> getHiltPortJboss,
-                              @NonNull  String getWhoLaunched,
                               @NonNull Context context) {
         try {
             // TODO: 14.08.2023 вызов кода ПОльзовательский
-            preferences =context. getSharedPreferences("sharedPreferencesХранилище", Context.MODE_MULTI_PROCESS);
-            РежимЗапускаСинхронизации = preferences.getString("РежимЗапускаСинхронизации","СамыйПервыйЗапускСинхронизации");
-            // TODO: 22.01.2024
-            // TODO: 23.01.2024 stating .... Main Code
-            WorkerUpdatePOAndAsync(   getHiltPortJboss,  getsslSocketFactory2,landingMode,getWhoLaunched,  context);
+
+
 
 
             Log.d(context.getClass().getName(), "\n"
@@ -142,25 +140,32 @@ public class CompleteRemoteSyncService {
     }
 
     public void lanchUpdatePOAndAsync(@NonNull SSLSocketFactory getsslSocketFactory2,
-                                      @NonNull String  landingMode  ,
-                                      @NonNull LinkedHashMap<Integer,String> getHiltPortJboss
-                                     , @NonNull  String getWhoLaunched,
+                                      @NonNull LinkedHashMap<Integer,String> getHiltPortJboss,
                                       @NonNull Context context) {
         try {
-            // TODO: 14.08.2023 вызов кода ПОльзовательский
-            preferences =context. getSharedPreferences("sharedPreferencesХранилище", Context.MODE_MULTI_PROCESS);
-            РежимЗапускаСинхронизации = preferences.getString("РежимЗапускаСинхронизации","СамыйПервыйЗапускСинхронизации");
-            // TODO: 22.01.2024
+            // TODO: 14.08.2023 Проверяем версси ПО с серврной и локальной
+           Maybe.fromCallable(()->{
 
-            // TODO: 23.01.2024 stating .... Main Code
-            WorkerUpdatePOAndAsync(   getHiltPortJboss,  getsslSocketFactory2,landingMode,getWhoLaunched,context);
+               Log.d(context.getClass().getName(), "\n"
+                       + " время: " + new Date() + "\n+" +
+                       " Класс в процессе... " + this.getClass().getName() + "\n" +
+                       " метод в процессе... " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n");
+                return null;
+            }).doOnSuccess(succes->{
+               // TODO: 30.03.2025 Запускаем ПО
+               Log.d(context.getClass().getName(), "\n"
+                       + " время: " + new Date() + "\n+" +
+                       " Класс в процессе... " + this.getClass().getName() + "\n" +
+                       " метод в процессе... " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n");
+            }).doOnComplete(()->{
+               // TODO: 30.03.2025 Запускаем СИНХРОНИЗАЦИЮ
+               Log.d(context.getClass().getName(), "\n"
+                       + " время: " + new Date() + "\n+" +
+                       " Класс в процессе... " + this.getClass().getName() + "\n" +
+                       " метод в процессе... " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n");
 
+            }).onErrorResumeWith(Maybe.empty()).blockingSubscribe();
 
-
-
-            getCloseingBindingUpdate(context);
-
-            getCloseingBindingAsync(context);
 
             Log.d(context.getClass().getName(), "\n"
                     + " время: " + new Date() + "\n+" +
@@ -178,73 +183,6 @@ public class CompleteRemoteSyncService {
 
 
 
-
-
-    private void WorkerUpdatePOAndAsync( @NonNull LinkedHashMap<Integer, String> getHiltPortJboss,
-                                         @NonNull SSLSocketFactory getsslSocketFactory2,
-                                         @NonNull String landingMode,
-                                         @NonNull  String getWhoLaunched,
-                                         @NonNull Context context) {
-
-        try{
-
-
-            Boolean userHasReceivedAccesstoDashBordorPasswordisNeeded=   userHasReceivedAccesstoDashBordorPasswordisNeeded(context);
-
-            Boolean   СтатусРаботыСервера=  МетодПингаКСереруЗапущенЛиСерерИлиНет(   getsslSocketFactory2,context);
-
-
-            // TODO: 28.03.2025  Запускам Синхронизацию
-            if (userHasReceivedAccesstoDashBordorPasswordisNeeded) {
-                if (СтатусРаботыСервера) {
-                    // TODO: 01.04.2024  запускаем саму синхрониазцию через запуск Work Manamger
-                    metodВыполняетсяГлавнаяWork(   getHiltPortJboss ,  landingMode,getWhoLaunched,  context);//todo Main Code Sercice
-                }else {
-                    // TODO: 20.03.2025  отправялем что нет сети
-                      getDontNetwork(context);
-
-                }
-            }
-
-
-
-
-
-
-
-            // TODO: 22.01.2024 true запускаем Анализ По
-            Integer    СервернаяВерсия=        completeUpdatePO(getHiltPortJboss,context,getWhoLaunched);
-            // TODO: 24.09.2024   Локальная Версия Программернр Обеспечения табель
-            PackageInfo    pInfo = context. getPackageManager().getPackageInfo(context. getPackageName(), 0);
-            String version = pInfo.versionName;//Version Name
-            Integer ЛокальнаяВерсияПО = pInfo.versionCode;
-            // TODO: 28.03.2025  Запускам Активти после Синхрониазции
-            weswitchtothedesiredactivityaftersynchronization(context,userHasReceivedAccesstoDashBordorPasswordisNeeded,ЛокальнаяВерсияПО,СервернаяВерсия);
-
-            // TODO: 26.12.2022  конец основгого кода
-            Log.d(context.getClass().getName(), "\n" + " class "
-                    + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
-                    " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                    " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"+ " РежимЗапускаСинхронизации " +РежимЗапускаСинхронизации);
-
-
-            // TODO: 28.04.2023
-            Log.d(this.getClass().getName(), "\n" + " class " +
-                    Thread.currentThread().getStackTrace()[2].getClassName()
-                    + "\n" +
-                    " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                    " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n");
-        } catch (Exception e) {
-            e.printStackTrace();
-            Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() + " Линия  :"
-                    + Thread.currentThread().getStackTrace()[2].getLineNumber());
-            new RecordNewErros(context).recordnewerror(e.toString(), this.getClass().getName(),
-                    Thread.currentThread().getStackTrace()[2].getMethodName(),
-                    Thread.currentThread().getStackTrace()[2].getLineNumber());
-
-        }
-
-    }
 
 
 
