@@ -258,7 +258,7 @@ try{
 
 // TODO: 20.03.2025  
 
-                afterCodeAsyncForfwardActivityAsync(context, ФинальныйРезультатAsyncBackgroud,getWhoLaunched);
+                afterCodeAsyncForfwardActivityAsync(context, ФинальныйРезультатAsyncBackgroud);
 
                 Log.d(getApplicationContext().getClass().getName(), "\n"
                         + " время: " + new Date() + "\n+" +

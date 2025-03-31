@@ -201,7 +201,6 @@ public class AsynsProccessor extends Class_MODEL_synchronized {
         Long РезультатСинхронизации=0l;
         try {
             Log.d(this.getClass().getName(), "   ID  getPublicID" +   getPublicID);
-            String ДанныеПришлаСпискаТаблицДляОбмена = new String();
             StringBuffer BufferGetVersionData = new StringBuffer();
 
             preferences=  context .getSharedPreferences("sharedPreferencesХранилище", Context.MODE_MULTI_PROCESS);

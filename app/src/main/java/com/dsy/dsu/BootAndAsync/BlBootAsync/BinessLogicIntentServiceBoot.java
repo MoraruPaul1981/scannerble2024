@@ -17,6 +17,7 @@ import androidx.annotation.NonNull;
 
 import com.dsy.dsu.BootAndAsync.EventsBus.MessageEvensBusNetworkStatuses;
 import com.dsy.dsu.BootAndAsync.EventsBus.MessageEvensBusUpdatePO;
+import com.dsy.dsu.BusinessLogicAll.AnalysisUserAuthenticated.GetAnalysisUserAuthenticated;
 import com.dsy.dsu.BusinessLogicAll.Class_Connections_Server;
 import com.dsy.dsu.Dashboard.Model.endingasynsdashboard.LauntchActivityAfterUpdatePOAndAsync;
 import com.dsy.dsu.Errors.controller.RecordNewErros;
@@ -54,9 +55,6 @@ public class BinessLogicIntentServiceBoot {
 
     private ServiceConnection connectionОбновлениеПО;
     private ServiceConnection connectionAsync;
-    private String success_users;
-    private String success_login;
-    private String date_update;
 
     private  Integer permissibledaysofwork=240;
 
@@ -231,19 +229,16 @@ public class BinessLogicIntentServiceBoot {
 
             }).onErrorResumeWith(Maybe.empty())
                    .doFinally(()->{
+
+
                // TODO: 31.03.2025 после Обновлени ПО и Синхронизации проверяем и запускаем Активти нужное или Password or DachBoad
+                   afterUpdatePOandAsynclaunchActivity(context);
 
-
-    Boolean getanalysisUserAuthenticated=           analysisUserAuthenticated(context);
-
-               if (getanalysisUserAuthenticated) {
-                   afterUpdatePOandAsynclaunchActivity(context,getanalysisUserAuthenticated);
-               }
 
                Log.d(context.getClass().getName(), "\n"
                        + " время: " + new Date() + "\n+" +
                        " Класс в процессе... " + this.getClass().getName() + "\n" +
-                       " метод в процессе... " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" + " getanalysisUserAuthenticated " +getanalysisUserAuthenticated);
+                       " метод в процессе... " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" + " GetAnalysisUserAuthenticated " +getanalysisUserAuthenticated);
 
            });
             // TODO: 31.03.2025
@@ -273,46 +268,13 @@ public class BinessLogicIntentServiceBoot {
 
 
 
-    private Boolean  analysisUserAuthenticated(  @NonNull Context context) {
-        Boolean userHasReceivedAccesstoDashBordorPasswordisNeeded=false;
-        try {
-
-            // TODO: 14.08.2023  Запускаем Код До Сиинхрониазщции
-            Integer     ФиналПолучаемРазницуМеждуДатами=   МетодОпределениеКогдаПоследнийРазЗаходилПользователь( context);
-            // TODO: 23.01.2024
-            if (      date_update != null && success_users != null && success_login != null
-                    && ФиналПолучаемРазницуМеждуДатами < permissibledaysofwork  ) {
-                // TODO: 28.03.2025
-                userHasReceivedAccesstoDashBordorPasswordisNeeded=true;
-
-            }
-
-
-        // TODO: 28.04.2023 НЕт Анутифтикации Пароль
-        Log.d(this.getClass().getName(), "  ФиналПолучаемРазницуМеждуДатами  " + ФиналПолучаемРазницуМеждуДатами
-                + " date_update " + date_update +
-                " permissibledaysofwork " +permissibledaysofwork + " ФиналПолучаемРазницуМеждуДатами " +ФиналПолучаемРазницуМеждуДатами+
-                " userHasReceivedAccesstoDashBordorPasswordisNeeded " +userHasReceivedAccesstoDashBordorPasswordisNeeded);
-
-    } catch (Exception e) {
-            e.printStackTrace();
-            Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() + " Линия  :"
-                    + Thread.currentThread().getStackTrace()[2].getLineNumber());
-            new RecordNewErros(context).recordnewerror(e.toString(), this.getClass().getName(),
-                    Thread.currentThread().getStackTrace()[2].getMethodName(),
-                    Thread.currentThread().getStackTrace()[2].getLineNumber());
-
-        }
-        return  userHasReceivedAccesstoDashBordorPasswordisNeeded;
-
-
-    }
 
 
     // TODO: 31.03.2025  после обновлени и /или синхрониазци запцскаем нужную активти
-    private void afterUpdatePOandAsynclaunchActivity(@NonNull Context context
-            , @NonNull  Boolean UserAuthenticated) {
+    private void afterUpdatePOandAsynclaunchActivity(@NonNull Context context) {
         try {
+     Boolean UserAuthenticated=       new GetAnalysisUserAuthenticated(context).analysisUserAuthenticated(240);
+
                 if (UserAuthenticated){
                     // TODO: 01.04.2024 Все в порядке ЗАпускам Саму Программу DashBord
                     new LauntchActivityAfterUpdatePOAndAsync().forvardDashboard(context,localBinderОбновлениеПО);
@@ -537,74 +499,7 @@ public class BinessLogicIntentServiceBoot {
     // TODO: 19.01.2024   /////// МЕТОД КОГДА ЗАХОДИЛ ПОСЛЬДНИЙ РАЗ ПОЛЬЗОВАТЛЬ
 
 
-    public Integer МетодОпределениеКогдаПоследнийРазЗаходилПользователь(@NonNull Context context) {
-        Cursor Курсор_7ДнейЗаходаПользователя = null;
-        Integer  ФиналПолучаемРазницуМеждуДатами=0;
-        try {
-            Uri uri = Uri.parse("content://com.dsy.dsu.providerdatabasecurrentoperations/" + "successlogin" + "");
-            ContentResolver contentResolver=context. getContentResolver();
-            Курсор_7ДнейЗаходаПользователя =      contentResolver.query(uri,new String[]{},
-                    new String(" SELECT *  FROM    successlogin   ORDER BY id  LIMIT   1  "),
-                    new String[]{},null);///   "  //// SELECT * FROM  viewtabel WHERE year_tabels=?  AND month_tabels=?  AND cfo=?  AND status_send!=?
-            Log.d(this.getClass().getName(), "  Курсор_7ДнейЗаходаПользователя " +  Курсор_7ДнейЗаходаПользователя);
 
-
-            if (Курсор_7ДнейЗаходаПользователя.getCount() > 0) {/////ПРОВЕРЯЕМ ЕСЛИ ПО ДАННОМУ ID UUID ЗАПОЛНЕ ЛИ ОН
-                Курсор_7ДнейЗаходаПользователя.moveToFirst();
-                success_users =
-                        Курсор_7ДнейЗаходаПользователя.getString(Курсор_7ДнейЗаходаПользователя.getColumnIndex("success_users")).trim();
-                success_login =
-                        Курсор_7ДнейЗаходаПользователя.getString(Курсор_7ДнейЗаходаПользователя.getColumnIndex("success_login")).trim();
-                date_update =
-                        Курсор_7ДнейЗаходаПользователя.getString(Курсор_7ДнейЗаходаПользователя.getColumnIndex("date_update")).trim();
-
-                Integer   ПолученныйПубличныйID= Курсор_7ДнейЗаходаПользователя.getInt(Курсор_7ДнейЗаходаПользователя.getColumnIndex("id"));
-
-                Log.d(this.getClass().getName(), "  success_users  " + success_users + "  " +
-                        "    success_login  " + success_login + " date_update " + date_update);
-
-                // TODO: 13.08.2023 дата из табции
-                Date ДатаSucceslogin =
-                        new android.icu.text.SimpleDateFormat("yyyy-MM-dd",
-                                new Locale("ru")).parse(date_update);//TODO "2023-08-01 19:00:59.781"
-
-                Log.d(this.getClass().getName(), "  ДатаSucceslogin  " + ДатаSucceslogin);
-
-
-                // TODO: 13.08.2023 Дата NOW !!!!!
-                Date ДатаNOW = Calendar.getInstance().getTime();
-                DateFormat dateFormat = new java.text.SimpleDateFormat("yyyy-MM-dd", new Locale("ru"));//"yyyy-MM-dd'T'HH:mm:ss'Z'
-                String ДатСегодняДатаNOW = dateFormat.format(ДатаNOW);
-                ДатаNOW = dateFormat.parse(ДатСегодняДатаNOW);
-                Log.d(this.getClass().getName(), "  ДатаNOW  " + ДатаNOW);
-
-
-                ////TODO само сравнивание дат на 7 дней назад
-                long РазницаМеждуДатамиNowИДатыИзБазы =
-                        ДатаNOW.getTime()
-                                - ДатаSucceslogin.getTime(); //локальное сравнение дата из базы андройда и дат сегодня
-                ///////////
-                ФиналПолучаемРазницуМеждуДатами = Integer.parseInt("" + (TimeUnit.DAYS.convert(РазницаМеждуДатамиNowИДатыИзБазы, TimeUnit.MILLISECONDS)));
-
-                Log.d(this.getClass().getName(), "  ФиналПолучаемРазницуМеждуДатами  " + ФиналПолучаемРазницуМеждуДатами);
-
-            }
-            // TODO: 13.08.2023
-            if (Курсор_7ДнейЗаходаПользователя != null) {
-                Курсор_7ДнейЗаходаПользователя.close();///
-            }
-            Log.d(this.getClass().getName(), "  ФиналПолучаемРазницуМеждуДатами  " + ФиналПолучаемРазницуМеждуДатами);
-
-        } catch (Exception e) {
-            e.printStackTrace();
-            Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
-                    " Линия  :" + Thread.currentThread().getStackTrace()[2].getLineNumber());
-            new RecordNewErros(context).recordnewerror(e.toString(), this.getClass().getName(), Thread.currentThread().getStackTrace()[2].getMethodName(),
-                    Thread.currentThread().getStackTrace()[2].getLineNumber());
-        }
-    return  ФиналПолучаемРазницуМеждуДатами;
-
-    }
 
     ///////todo ФИНАЛЬНЫЙ МЕТОД КТО ВХОДИЛ ДО 7 ДНЕЙ ИЛИ ПОСЫЛАЕМ НА АУНТИФИКАЦИЮ
     Integer getVersionServicePO(@NonNull LinkedHashMap<Integer,String> getHiltPortJboss, @NonNull Context context) {
@@ -661,11 +556,11 @@ public class BinessLogicIntentServiceBoot {
         try{
             // TODO: 03.10.2023
 
-            completeAsync=  localBinderAsync.getService().metodStartingSync(context,TypeAsync);
+            completeAsync=  localBinderAsync.getService().metodStartingSync(context);
 
             Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                     " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                    " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"+ " completeAsync " +completeAsync + " TypeAsync " +TypeAsync);
+                    " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"+ " completeAsync " +completeAsync );
 
         } catch (Exception e) {
             e.printStackTrace();
