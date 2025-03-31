@@ -236,6 +236,9 @@ public class IntentServiceBoot extends IntentService {
     }
 
 
+
+
+
     // TODO: 30.03.2025 ONLY BOOT service
 private      void startingServiceBoot(@NotNull Intent intent ,@NonNull  LinkedHashMap<Integer,String> getHiltPortJboss){
         try{
@@ -244,11 +247,9 @@ private      void startingServiceBoot(@NotNull Intent intent ,@NonNull  LinkedHa
             switch (getTypeTaskForBoot.trim()){
                 // TODO: 26.12.2024 Синхрониазция
               case "lanchAsync" :
-
                     // TODO: 19.01.2024  запуск класса бизнес логики службы Синхроиазции и Обновление ПО
                     binessLogicIntentServiceBoot.lanchAsync(getsslSocketFactory2, getHiltPortJboss
                             ,getApplicationContext());
-
                     Log.d(getApplicationContext().getClass().getName(), "\n"
                             + " время: " + new Date() + "\n+" +
                             " Класс в процессе... " + this.getClass().getName() + "\n" +
@@ -256,54 +257,37 @@ private      void startingServiceBoot(@NotNull Intent intent ,@NonNull  LinkedHa
                             " intent.getAction() " +intent.getAction());
 
                     break;
-
                 // TODO: 26.12.2024 Только Обновление ПО
                 case "lanchUpdatePO":
-
                     // TODO: 19.01.2024  запуск класса бизнес логики службы Синхроиазции и Обновление ПО
                     binessLogicIntentServiceBoot.lanchUpdatePO(getsslSocketFactory2, getHiltPortJboss,getApplicationContext());
-
                     Log.d(getApplicationContext().getClass().getName(), "\n"
                             + " время: " + new Date() + "\n+" +
                             " Класс в процессе... " + this.getClass().getName() + "\n" +
                             " метод в процессе... " + Thread.currentThread().getStackTrace()[2].getMethodName()+
                             " intent.getAction() " +intent.getAction());
                     break;
-
                 // TODO: 26.12.2024 И Обновление и Синхронизация
                 case "lanchUpdatePOAndAsync" :
-
                     // TODO: 19.01.2024  запуск класса бизнес логики службы Синхроиазции и Обновление ПО
                     binessLogicIntentServiceBoot.lanchUpdatePOAndAsync( getsslSocketFactory2,
                             getHiltPortJboss,getApplicationContext());
-
                     Log.d(getApplicationContext().getClass().getName(), "\n"
                             + " время: " + new Date() + "\n+" +
                             " Класс в процессе... " + this.getClass().getName() + "\n" +
                             " метод в процессе... " + Thread.currentThread().getStackTrace()[2].getMethodName()+
                             " intent.getAction() " +intent.getAction());
-
                     break;
-
-
                 // TODO: 26.12.2024 EXIT
                 case     "ExitBootService" :
                     // TODO: 19.01.2024  запуск класса бизнес логики службы Синхроиазции и Обновление ПО
                     binessLogicIntentServiceBoot.    getDontNetwork(getApplicationContext());
-
-
                     Log.d(getApplicationContext().getClass().getName(), "\n"
                             + " время: " + new Date() + "\n+" +
                             " Класс в процессе... " + this.getClass().getName() + "\n" +
                             " метод в процессе... " + Thread.currentThread().getStackTrace()[2].getMethodName()+
                             " intent.getAction() " +intent.getAction());
-
                     break;
-
-
-
-
-
             }
         Log.d(getApplicationContext().getClass().getName(), "\n"
                 + " время: " + new Date() + "\n+" +
@@ -324,13 +308,16 @@ private      void startingServiceBoot(@NotNull Intent intent ,@NonNull  LinkedHa
 
 
 
+
+
+
+
     // TODO: 30.03.2025 ONLY WORK Manager 
     public       void startingServiceAsyncForWorkManger(@NotNull Intent intent ,@NonNull  LinkedHashMap<Integer,String> getHiltPortJboss) {
         try {
             String getTypeTaskWorkManager = intent.getAction();
             // TODO: 26.12.2024 выди запуска
             switch (getTypeTaskWorkManager.trim()) {
-
                 // TODO: 26.12.2024 Синхрониазция
                 case "lanchAsync":
                     // TODO: 19.01.2024  запуск класса бизнес логики службы Синхроиазции и Обновление ПО
@@ -346,17 +333,12 @@ private      void startingServiceBoot(@NotNull Intent intent ,@NonNull  LinkedHa
                 case "ExitBootService":
                     // TODO: 19.01.2024  запуск класса бизнес логики службы Синхроиазции и Обновление ПО
                     binessLogicIntentServiceBoot.getDontNetwork(getApplicationContext());
-
-
                     Log.d(getApplicationContext().getClass().getName(), "\n"
                             + " время: " + new Date() + "\n+" +
                             " Класс в процессе... " + this.getClass().getName() + "\n" +
                             " метод в процессе... " + Thread.currentThread().getStackTrace()[2].getMethodName() +
                             " intent.getAction() " + intent.getAction());
-
                     break;
-
-
             }
             Log.d(getApplicationContext().getClass().getName(), "\n"
                     + " время: " + new Date() + "\n+" +

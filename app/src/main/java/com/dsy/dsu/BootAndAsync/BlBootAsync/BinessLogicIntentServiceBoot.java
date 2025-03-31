@@ -134,19 +134,14 @@ public class BinessLogicIntentServiceBoot {
         try {
             // TODO: 14.08.2023 Проверяем версси ПО с серврной и локальной
            Maybe.fromCallable(()->{
-
                // TODO: 22.01.2024 true запускаем Анализ По
                Integer    versionServicePO=        getVersionServicePO(getHiltPortJboss,context);
                Integer    versionLocalPO=        getVersionLocalPO(getHiltPortJboss,context);
-
-
                Log.d(context.getClass().getName(), "\n"
                        + " время: " + new Date() + "\n+" +
                        " Класс в процессе... " + this.getClass().getName() + "\n" +
                        " метод в процессе... " + Thread.currentThread().getStackTrace()[2].getMethodName()
                        + "\n"+"versionServicePO"+versionServicePO + " versionLocalPO "+versionLocalPO);
-
-
                if (versionServicePO>versionLocalPO) {
                    return versionServicePO;
                } else {
@@ -154,18 +149,38 @@ public class BinessLogicIntentServiceBoot {
                }
             }).doOnSuccess(succes->{
                // TODO: 30.03.2025 Запускаем ПО
+
+
+
                Log.d(context.getClass().getName(), "\n"
                        + " время: " + new Date() + "\n+" +
                        " Класс в процессе... " + this.getClass().getName() + "\n" +
                        " метод в процессе... " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n");
             }).doOnComplete(()->{
                // TODO: 30.03.2025 Запускаем СИНХРОНИЗАЦИЮ
+
+
+
+
+
+
                Log.d(context.getClass().getName(), "\n"
                        + " время: " + new Date() + "\n+" +
                        " Класс в процессе... " + this.getClass().getName() + "\n" +
                        " метод в процессе... " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n");
 
-            }).onErrorResumeWith(Maybe.empty()).blockingSubscribe();
+            }).onErrorResumeWith(Maybe.empty()).doFinally(()->{
+               // TODO: 31.03.2025 после Обновлени ПО и Синхронизации проверяем и запускаем Активти нужное или Password or DachBoad
+
+
+               AfterSoftwareUpdateandSynchronizationLaunchActivity(context,UserAuthenticated);
+
+               Log.d(context.getClass().getName(), "\n"
+                       + " время: " + new Date() + "\n+" +
+                       " Класс в процессе... " + this.getClass().getName() + "\n" +
+                       " метод в процессе... " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n");
+
+           }).blockingSubscribe();
 
 
             Log.d(context.getClass().getName(), "\n"
@@ -231,29 +246,22 @@ public class BinessLogicIntentServiceBoot {
 
     private void AfterSoftwareUpdateandSynchronizationLaunchActivity(  @NonNull Context context
             ,@NonNull  Boolean UserAuthenticated) {
-
         try {
-
                 if (UserAuthenticated){
                     // TODO: 01.04.2024 Все в порядке ЗАпускам Саму Программу DashBord
                     new LauntchActivityAfterUpdatePOAndAsync().forvardDashboard(context,localBinderОбновлениеПО);
-
                 }else {
-
                     // TODO: 28.04.2023 НЕт Анутифтикации Пароль
                     // TODO: 28.04.2023 НЕт Анутифтикации Пароль
                     new LauntchActivityAfterUpdatePOAndAsync().forvardActivityPassword(  context,localBinderОбновлениеПО);
-
                 }
-            }
             // TODO: 28.04.2023
             Log.d(this.getClass().getName(), "\n" + " class " +
                     Thread.currentThread().getStackTrace()[2].getClassName()
                     + "\n" +
                     " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
                     " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"
-                    + " userHasReceivedAccesstoDashBordorPasswordisNeeded " +UserAuthenticated+
-                     "ЛокальнаяВерсияПО " +ЛокальнаяВерсияПО  + " СервернаяВерсия " +СервернаяВерсия );
+                    + " userHasReceivedAccesstoDashBordorPasswordisNeeded " +UserAuthenticated);
     } catch (Exception e) {
             e.printStackTrace();
             Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() + " Линия  :"
