@@ -246,44 +246,66 @@ public class IntentServiceBoot extends IntentService {
     // TODO: 30.03.2025 ONLY BOOT service
 private      void startingServiceBoot(@NotNull Intent intent ,@NonNull  LinkedHashMap<Integer,String> getHiltPortJboss){
         try{
-            Boolean UserAuthenticated=       new GetAnalysisUserAuthenticated(getApplicationContext()).analysisUserAuthenticated(240);
-            String getTypeTaskForBoot=  intent.getAction();
-            if (UserAuthenticated) {
-                // TODO: 26.12.2024 выди запуска
-                switch (getTypeTaskForBoot.trim()){
-                    // TODO: 26.12.2024 Синхрониазция
-                  case "lanchAsync" :
-                        // TODO: 19.01.2024  запуск класса бизнес логики службы Синхроиазции и Обновление ПО
-                        binessLogicIntentServiceBoot.lanchAsync(getApplicationContext());
-                        Log.d(getApplicationContext().getClass().getName(), "\n"
-                                + " время: " + new Date() + "\n+" +
-                                " Класс в процессе... " + this.getClass().getName() + "\n" +
-                                " метод в процессе... " + Thread.currentThread().getStackTrace()[2].getMethodName()+
-                                " intent.getAction() " +intent.getAction());
 
-                        break;
-                    // TODO: 26.12.2024 Только Обновление ПО
-                    case "lanchUpdatePO":
-                        // TODO: 19.01.2024  запуск класса бизнес логики службы Синхроиазции и Обновление ПО
-                        binessLogicIntentServiceBoot.lanchUpdatePO( getHiltPortJboss,getApplicationContext());
+            String getTypeTaskForBoot=  intent.getAction();
+            Maybe.fromCallable(()->{
+                        Boolean UserAuthenticated=       new GetAnalysisUserAuthenticated(getApplicationContext()).analysisUserAuthenticated(240);
+                        // TODO: 26.12.2024 выди запуска
                         Log.d(getApplicationContext().getClass().getName(), "\n"
                                 + " время: " + new Date() + "\n+" +
                                 " Класс в процессе... " + this.getClass().getName() + "\n" +
                                 " метод в процессе... " + Thread.currentThread().getStackTrace()[2].getMethodName()+
-                                " intent.getAction() " +intent.getAction());
-                        break;
-                    // TODO: 26.12.2024 EXIT
-                    case     "ExitBootService" :
-                        // TODO: 19.01.2024  запуск класса бизнес логики службы Синхроиазции и Обновление ПО
-                        binessLogicIntentServiceBoot.    getDontNetwork(getApplicationContext());
+                                " UserAuthenticated " +UserAuthenticated + "  getTypeTaskWorkManager " +getTypeTaskWorkManager);
+                        if (UserAuthenticated) {
+                            return UserAuthenticated;
+                        } else {return null;
+                        }
+                    }).doOnSuccess(s->{
+                        // TODO: 31.03.2025
+                        switch (getTypeTaskForBoot.trim()) {
+                            // TODO: 26.12.2024 Синхрониазция
+                            case "lanchAsync":
+                                // TODO: 19.01.2024  запуск класса бизнес логики службы Синхроиазции и Обновление ПО
+                                binessLogicIntentServiceBoot.lanchAsync(getApplicationContext());
+                                Log.d(getApplicationContext().getClass().getName(), "\n"
+                                        + " время: " + new Date() + "\n+" +
+                                        " Класс в процессе... " + this.getClass().getName() + "\n" +
+                                        " метод в процессе... " + Thread.currentThread().getStackTrace()[2].getMethodName() +
+                                        " intent.getAction() " + intent.getAction());
+                                break;
+                            // TODO: 26.12.2024 Только Обновление ПО
+                            case "lanchUpdatePO":
+                                // TODO: 19.01.2024  запуск класса бизнес логики службы Синхроиазции и Обновление ПО
+                                binessLogicIntentServiceBoot.lanchUpdatePO( getHiltPortJboss,getApplicationContext());
+                                Log.d(getApplicationContext().getClass().getName(), "\n"
+                                        + " время: " + new Date() + "\n+" +
+                                        " Класс в процессе... " + this.getClass().getName() + "\n" +
+                                        " метод в процессе... " + Thread.currentThread().getStackTrace()[2].getMethodName()+
+                                        " intent.getAction() " +intent.getAction());
+
+
+                            // TODO: 26.12.2024 EXIT
+                            case "ExitBootService":
+                                // TODO: 19.01.2024  запуск класса бизнес логики службы Синхроиазции и Обновление ПО
+                                binessLogicIntentServiceBoot.getDontNetwork(getApplicationContext());
+                                Log.d(getApplicationContext().getClass().getName(), "\n"
+                                        + " время: " + new Date() + "\n+" +
+                                        " Класс в процессе... " + this.getClass().getName() + "\n" +
+                                        " метод в процессе... " + Thread.currentThread().getStackTrace()[2].getMethodName() +
+                                        " intent.getAction() " + intent.getAction());
+                                break;
+                        }
+
+
                         Log.d(getApplicationContext().getClass().getName(), "\n"
                                 + " время: " + new Date() + "\n+" +
                                 " Класс в процессе... " + this.getClass().getName() + "\n" +
-                                " метод в процессе... " + Thread.currentThread().getStackTrace()[2].getMethodName()+
-                                " intent.getAction() " +intent.getAction());
-                        break;
-                }
-            }
+                                " метод в процессе... " + Thread.currentThread().getStackTrace()[2].getMethodName() + " getHiltPortJboss " + getHiltPortJboss+
+                                " getTypeTaskForBoot " +getTypeTaskForBoot);
+
+                    }).observeOn(AndroidSchedulers.mainThread())
+                    .onErrorResumeWith(Maybe.empty())
+                    .blockingSubscribe();
             Log.d(getApplicationContext().getClass().getName(), "\n"
                 + " время: " + new Date() + "\n+" +
                 " Класс в процессе... " + this.getClass().getName() + "\n" +
@@ -347,9 +369,6 @@ private      void startingServiceBoot(@NotNull Intent intent ,@NonNull  LinkedHa
                                         " метод в процессе... " + Thread.currentThread().getStackTrace()[2].getMethodName()+
                                         " intent.getAction() " +intent.getAction());
                                 break;
-
-
-
                             // TODO: 26.12.2024 EXIT
                             case "ExitBootService":
                                 // TODO: 19.01.2024  запуск класса бизнес логики службы Синхроиазции и Обновление ПО
