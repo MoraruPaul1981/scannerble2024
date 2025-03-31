@@ -273,7 +273,7 @@ public class BinessLogicIntentServiceBoot {
 
 
     // TODO: 31.03.2025  после обновлени и /или синхрониазци запцскаем нужную активти
-    private void afterUpdatePOandAsynclaunchActivity(@NonNull Context context) {
+    public void afterUpdatePOandAsynclaunchActivity(@NonNull Context context) {
         try {
      Boolean UserAuthenticated=       new GetAnalysisUserAuthenticated(context).analysisUserAuthenticated(240);
 

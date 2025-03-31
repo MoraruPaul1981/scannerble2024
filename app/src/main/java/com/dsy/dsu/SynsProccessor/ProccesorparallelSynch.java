@@ -37,6 +37,7 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.concurrent.ConcurrentSkipListSet;
 import java.util.concurrent.CopyOnWriteArrayList;
+import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
 
 import javax.net.ssl.SSLSocketFactory;
@@ -99,7 +100,7 @@ public class ProccesorparallelSynch   {
      case  "СамыйПервыйЗапускСинхронизации":
 
          Flowable.fromIterable(getBufferFromJbossServerAllTables)
-                 .parallel(2).runOn(Schedulers.io(),2)
+                 .parallel(2).runOn(Schedulers.from(Executors.newFixedThreadPool(2)))
                  .doOnNext(new Consumer<Map<String, String>>() {
                      @Override
                      public void accept(Map<String, String> stringStringMapMultiPotoks) throws Throwable {

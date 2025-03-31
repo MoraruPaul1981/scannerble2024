@@ -33,6 +33,8 @@ import javax.inject.Inject;
 import javax.net.ssl.SSLSocketFactory;
 
 import dagger.hilt.android.AndroidEntryPoint;
+import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
+import io.reactivex.rxjava3.core.Maybe;
 
 /**
  * An {@link IntentService} subclass for handling asynchronous task requests in
@@ -319,46 +321,79 @@ private      void startingServiceBoot(@NotNull Intent intent ,@NonNull  LinkedHa
     public       void startingServiceAsyncForWorkManger(@NotNull Intent intent ,@NonNull  LinkedHashMap<Integer,String> getHiltPortJboss) {
         try {
             String getTypeTaskWorkManager = intent.getAction();
-            Boolean UserAuthenticated=       new GetAnalysisUserAuthenticated(getApplicationContext()).analysisUserAuthenticated(240);
-            // TODO: 26.12.2024 выди запуска
-            if (UserAuthenticated) {
-                switch (getTypeTaskWorkManager.trim()) {
-                    // TODO: 26.12.2024 Синхрониазция
-                    case "lanchAsync":
-                        // TODO: 19.01.2024  запуск класса бизнес логики службы Синхроиазции и Обновление ПО
-                        binessLogicIntentServiceBoot.lanchAsync(getApplicationContext());
-                        Log.d(getApplicationContext().getClass().getName(), "\n"
-                                + " время: " + new Date() + "\n+" +
-                                " Класс в процессе... " + this.getClass().getName() + "\n" +
-                                " метод в процессе... " + Thread.currentThread().getStackTrace()[2].getMethodName() +
-                                " intent.getAction() " + intent.getAction());
-                        break;
-
-                    // TODO: 26.12.2024 И Обновление и Синхронизация
-                    case "lanchUpdatePOAndAsync" :
-                        // TODO: 19.01.2024  запуск класса бизнес логики службы Синхроиазции и Обновление ПО
-                        binessLogicIntentServiceBoot.lanchUpdatePOAndAsync(getHiltPortJboss,getApplicationContext());
+            Maybe.fromCallable(()->{
+                Boolean UserAuthenticated=       new GetAnalysisUserAuthenticated(getApplicationContext()).analysisUserAuthenticated(240);
+                // TODO: 26.12.2024 выди запуска
                         Log.d(getApplicationContext().getClass().getName(), "\n"
                                 + " время: " + new Date() + "\n+" +
                                 " Класс в процессе... " + this.getClass().getName() + "\n" +
                                 " метод в процессе... " + Thread.currentThread().getStackTrace()[2].getMethodName()+
-                                " intent.getAction() " +intent.getAction());
-                        break;
+                                " UserAuthenticated " +UserAuthenticated + "  getTypeTaskWorkManager " +getTypeTaskWorkManager);
+                if (UserAuthenticated) {
+                    return UserAuthenticated;
+                } else {return null;
+                        }
+            }).doOnSuccess(s->{
+                        // TODO: 31.03.2025
+                        switch (getTypeTaskWorkManager.trim()) {
+                            // TODO: 26.12.2024 Синхрониазция
+                            case "lanchAsync":
+                                // TODO: 19.01.2024  запуск класса бизнес логики службы Синхроиазции и Обновление ПО
+                                binessLogicIntentServiceBoot.lanchAsync(getApplicationContext());
+                                Log.d(getApplicationContext().getClass().getName(), "\n"
+                                        + " время: " + new Date() + "\n+" +
+                                        " Класс в процессе... " + this.getClass().getName() + "\n" +
+                                        " метод в процессе... " + Thread.currentThread().getStackTrace()[2].getMethodName() +
+                                        " intent.getAction() " + intent.getAction());
+                                break;
+
+                            // TODO: 26.12.2024 И Обновление и Синхронизация
+                            case "lanchUpdatePOAndAsync" :
+                                // TODO: 19.01.2024  запуск класса бизнес логики службы Синхроиазции и Обновление ПО
+                                binessLogicIntentServiceBoot.lanchUpdatePOAndAsync(getHiltPortJboss,getApplicationContext());
+                                Log.d(getApplicationContext().getClass().getName(), "\n"
+                                        + " время: " + new Date() + "\n+" +
+                                        " Класс в процессе... " + this.getClass().getName() + "\n" +
+                                        " метод в процессе... " + Thread.currentThread().getStackTrace()[2].getMethodName()+
+                                        " intent.getAction() " +intent.getAction());
+                                break;
 
 
 
-                    // TODO: 26.12.2024 EXIT
-                    case "ExitBootService":
-                        // TODO: 19.01.2024  запуск класса бизнес логики службы Синхроиазции и Обновление ПО
-                        binessLogicIntentServiceBoot.getDontNetwork(getApplicationContext());
+                            // TODO: 26.12.2024 EXIT
+                            case "ExitBootService":
+                                // TODO: 19.01.2024  запуск класса бизнес логики службы Синхроиазции и Обновление ПО
+                                binessLogicIntentServiceBoot.getDontNetwork(getApplicationContext());
+                                Log.d(getApplicationContext().getClass().getName(), "\n"
+                                        + " время: " + new Date() + "\n+" +
+                                        " Класс в процессе... " + this.getClass().getName() + "\n" +
+                                        " метод в процессе... " + Thread.currentThread().getStackTrace()[2].getMethodName() +
+                                        " intent.getAction() " + intent.getAction());
+                                break;
+                        }
+
+
                         Log.d(getApplicationContext().getClass().getName(), "\n"
                                 + " время: " + new Date() + "\n+" +
                                 " Класс в процессе... " + this.getClass().getName() + "\n" +
-                                " метод в процессе... " + Thread.currentThread().getStackTrace()[2].getMethodName() +
-                                " intent.getAction() " + intent.getAction());
-                        break;
-                }
-            }
+                                " метод в процессе... " + Thread.currentThread().getStackTrace()[2].getMethodName() + " getHiltPortJboss " + getHiltPortJboss+
+                                " getTypeTaskWorkManager " +getTypeTaskWorkManager);
+
+                    }).observeOn(AndroidSchedulers.mainThread())
+                    .doOnComplete(()->{
+                        switch (getTypeTaskWorkManager.trim()) {
+                            // TODO: 31.03.2025
+                            // TODO: 26.12.2024 И Обновление и Синхронизация
+                            case "lanchUpdatePOAndAsync" :
+                                // TODO: 31.03.2025 нет логина  и пароля переводим программу на Активити Password
+                                binessLogicIntentServiceBoot.afterUpdatePOandAsynclaunchActivity(getApplicationContext());
+
+                                break;
+                        }
+
+            }).onErrorResumeWith(Maybe.empty())
+                    .blockingSubscribe();
+                // TODO: 31.03.2025  КОгда первый запук и нет не имени не пароля
             Log.d(getApplicationContext().getClass().getName(), "\n"
                     + " время: " + new Date() + "\n+" +
                     " Класс в процессе... " + this.getClass().getName() + "\n" +
