@@ -217,9 +217,6 @@ public class MainActivity_Errors extends AppCompatActivity  {
             biccessLogicActivityError.   МетодУдаланиеОшибок(  );
 
             biccessLogicActivityError.       clearingTableError();
-
-            // TODO: 22.09.2023  exit error fragment
-                biccessLogicActivityError.    metodCallBackkFragemtSettings(fragmentTransaction,fragmentManager,getApplicationContext() );
         }
 
         Log.d(this.getClass().getName(),"\n" + " class FaceAPp " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +

@@ -282,7 +282,7 @@ private      void startingServiceBoot(@NotNull Intent intent ,@NonNull  LinkedHa
                                         " Класс в процессе... " + this.getClass().getName() + "\n" +
                                         " метод в процессе... " + Thread.currentThread().getStackTrace()[2].getMethodName()+
                                         " intent.getAction() " +intent.getAction());
-
+                                break;
 
                             // TODO: 26.12.2024 EXIT
                             case "ExitBootService":
