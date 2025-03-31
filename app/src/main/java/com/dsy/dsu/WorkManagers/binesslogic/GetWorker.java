@@ -46,7 +46,7 @@ public class GetWorker {
                         intentSingleWorker.setAction(actionSingleWorker);
                         intentSingleWorker.setData(Uri.parse(actionSingleWorker));
 
-                        getlocalBinderBootSerice.getService().startingServiceAsyncForWorkManger(intentSingleWorker, getHiltPortJboss);
+                        getlocalBinderBootSerice.getService().startingServiceSingleWorkManger(intentSingleWorker, getHiltPortJboss);
 
                     }
                 } else {
@@ -54,7 +54,7 @@ public class GetWorker {
                     String exitSingleWorker = "ExitBootService";
                     intentSingleWorker.setAction(exitSingleWorker);
                     intentSingleWorker.setData(Uri.parse(exitSingleWorker));
-                    getlocalBinderBootSerice.getService().startingServiceAsyncForWorkManger(intentSingleWorker, getHiltPortJboss);
+                    getlocalBinderBootSerice.getService().startingServiceSingleWorkManger(intentSingleWorker, getHiltPortJboss);
 
                     Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                             " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
@@ -102,7 +102,7 @@ public class GetWorker {
                         intentSingleWorker.setAction(actionSingleWorker);
                         intentSingleWorker.setData(Uri.parse(actionSingleWorker));
 
-                        getlocalBinderBootSerice.getService().startingServiceAsyncForWorkManger(intentSingleWorker, getHiltPortJboss);
+                        getlocalBinderBootSerice.getService().startingServicePublicWorkManger(intentSingleWorker, getHiltPortJboss);
 
                     }
                 }

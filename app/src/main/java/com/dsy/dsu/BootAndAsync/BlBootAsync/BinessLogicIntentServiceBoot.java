@@ -117,8 +117,9 @@ public class BinessLogicIntentServiceBoot {
                                 " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" );
                     }).doOnComplete(()->{
                         // TODO: 30.03.2025 Сообщаем ЧТо версия Уже есть
+            Integer    versionServicePO=        getVersionServicePO(getHiltPortJboss,context);
 
-                        getLastVersionUpdatePO(context);
+                        getLastVersionUpdatePO(context,versionServicePO);
 
                         Log.d(context.getClass().getName(), "\n"
                                 + " время: " + new Date() + "\n+" +
@@ -222,12 +223,6 @@ public class BinessLogicIntentServiceBoot {
                        " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
                        " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"  + " getcompleteAsync " +getcompleteAsync);
 
-
-                   // TODO: 31.03.2025 после Обновлени ПО и Синхронизации проверяем и запускаем Активти нужное или Password or DachBoad
-                   afterUpdatePOandAsynclaunchActivity(context);
-
-
-
                Log.d(context.getClass().getName(), "\n"
                        + " время: " + new Date() + "\n+" +
                        " Класс в процессе... " + this.getClass().getName() + "\n" +
@@ -328,7 +323,7 @@ public class BinessLogicIntentServiceBoot {
 
 
 
-    public void getLastVersionUpdatePO(@NonNull Context context) {
+    public void getLastVersionUpdatePO(@NonNull Context context,@NonNull  Integer    СервернаяВерсия) {
         try{
             Intent intentComunicationsBusAyns=new Intent();
             Bundle bundleComunications=new Bundle();
@@ -336,32 +331,7 @@ public class BinessLogicIntentServiceBoot {
 
             intentComunicationsBusAyns.setAction("EventBusAnsyc");
             bundleComunications.putString("Статус",  "LastVersionUpdatePO");///"В процесс"
-            intentComunicationsBusAyns.putExtras(bundleComunications);
-
-            EventBus.getDefault().post(new MessageEvensBusNetworkStatuses(intentComunicationsBusAyns));
-            // TODO: 22.01.2024 просто сеть рабоатет  переделаем програсс бару
-
-            Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
-                    " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                    " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" +
-                    " localBinderAsync "+ "\n" );
-        } catch (Exception e) {
-            e.printStackTrace();
-            Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() + " Линия  :"
-                    + Thread.currentThread().getStackTrace()[2].getLineNumber());
-            new RecordNewErros(context).recordnewerror(e.toString(), this.getClass().getName(),
-                    Thread.currentThread().getStackTrace()[2].getMethodName(),
-                    Thread.currentThread().getStackTrace()[2].getLineNumber());
-        }
-    }
-    public void getUpdateProcessorPO(@NonNull Context context) {
-        try{
-            Intent intentComunicationsBusAyns=new Intent();
-            Bundle bundleComunications=new Bundle();
-
-
-            intentComunicationsBusAyns.setAction("EventBusAnsyc");
-            bundleComunications.putString("Статус",  "UpdateProcessorPO");///"В процесс"
+            bundleComunications.putInt("СервернаяВерсия",  СервернаяВерсия);///"В процесс"
             intentComunicationsBusAyns.putExtras(bundleComunications);
 
             EventBus.getDefault().post(new MessageEvensBusNetworkStatuses(intentComunicationsBusAyns));

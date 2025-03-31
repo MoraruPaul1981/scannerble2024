@@ -112,27 +112,23 @@ public class GetComponentActivityBootService {
             Bundle bundleGetOtServiceUpdatePO =(Bundle)         messageEvensBusUpdatePO.mess.getExtras();
             String Статус=   bundleGetOtServiceUpdatePO.getString("Статус");
             Integer СервернаяВерсия=   bundleGetOtServiceUpdatePO.getInt("СервернаяВерсия");
-
-
             if(Статус.contains(    "LastVersionUpdatePO")){
-                Toast.makeText(context,     "Последняя версия ПО !!!"    , Toast.LENGTH_LONG).show();
+                Toast.makeText(context,     "Последняя версия ПО !!!"+СервернаяВерсия.toString()    , Toast.LENGTH_LONG).show();
 
+                // TODO: 26.12.2022  конец основгого кода
+                Log.d(context.getClass().getName(), "\n" + " class "
+                        + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                        " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                        " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n");
             }
 
-
-
-
             if(Статус.contains(    "UpdateProcessorPO")){
-          /*      Toast.makeText(context,     "Идет Обновление ПО..."    , Toast.LENGTH_LONG).show();
-                Toast.makeText(context,     "Идет Обновление ПО..."    , Toast.LENGTH_LONG).show();*/
-
                 Vibrator v2 = (Vibrator) context.getSystemService(Context.VIBRATOR_SERVICE);
                 v2.vibrate(VibrationEffect.createOneShot(150, VibrationEffect.DEFAULT_AMPLITUDE));
-
                 // TODO: 22.01.2024
                 DownLoadPO downLoadPO=new DownLoadPO(activity,context,СервернаяВерсия,getsslSocketFactory2);
-
                 downLoadPO.МетодСообщениеАнализПО( );
+
                 // TODO: 26.12.2022  конец основгого кода
                 Log.d(context.getClass().getName(), "\n" + " class "
                         + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
@@ -221,10 +217,6 @@ public class GetComponentActivityBootService {
 
 
 
-            if(Статус.contains(    "UpdateProcessorPO")){
-                Toast.makeText(context,     "Идет Обновление ПО..."    , Toast.LENGTH_LONG).show();
-
-            }
 
             // TODO: 26.12.2022  конец основгого кода
             Log.d(context.getClass().getName(), "\n" + " class "
