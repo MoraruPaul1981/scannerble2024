@@ -112,16 +112,6 @@ public class GetComponentActivityBootService {
             Bundle bundleGetOtServiceUpdatePO =(Bundle)         messageEvensBusUpdatePO.mess.getExtras();
             String Статус=   bundleGetOtServiceUpdatePO.getString("Статус");
             Integer СервернаяВерсия=   bundleGetOtServiceUpdatePO.getInt("СервернаяВерсия");
-            if(Статус.contains(    "LastVersionUpdatePO")){
-                Toast.makeText(context,     "Последняя версия ПО !!!"+СервернаяВерсия.toString()    , Toast.LENGTH_LONG).show();
-
-                // TODO: 26.12.2022  конец основгого кода
-                Log.d(context.getClass().getName(), "\n" + " class "
-                        + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
-                        " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                        " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n");
-            }
-
             if(Статус.contains(    "UpdateProcessorPO")){
                 Vibrator v2 = (Vibrator) context.getSystemService(Context.VIBRATOR_SERVICE);
                 v2.vibrate(VibrationEffect.createOneShot(150, VibrationEffect.DEFAULT_AMPLITUDE));
@@ -202,7 +192,7 @@ public class GetComponentActivityBootService {
         try{
             Bundle bundleGetOtServicePrograssBar =(Bundle)         messageEvensBusNetworkStatuses.mess.getExtras();
             String Статус=   bundleGetOtServicePrograssBar.getString("Статус");
-
+            Integer СервернаяВерсия=   bundleGetOtServicePrograssBar.getInt("СервернаяВерсия");
 
             if(Статус.contains(    "ServerJbosOff")){
                 Toast.makeText(context,     "Сервер выкл.!!!"    , Toast.LENGTH_LONG).show();
@@ -210,13 +200,9 @@ public class GetComponentActivityBootService {
             }
 
             if(Статус.contains(    "LastVersionUpdatePO")){
-                Toast.makeText(context,     "Последняя версия ПО !!!"    , Toast.LENGTH_LONG).show();
+                Toast.makeText(context,     "Последняя версия ПО !!! ("+СервернаяВерсия+")"    , Toast.LENGTH_LONG).show();
 
             }
-
-
-
-
 
             // TODO: 26.12.2022  конец основгого кода
             Log.d(context.getClass().getName(), "\n" + " class "
