@@ -446,14 +446,10 @@ public class MainActivity_Errors extends AppCompatActivity  {
             @Override
             public void onClick(View v) {
                 try{
-                    if (    СтатусЗадачи.equalsIgnoreCase("com.CallBackSettingsFragment")) {
                         // TODO: 22.09.2023  exit error fragment
                         biccessLogicActivityError.    metodCallBackkFragemtSettings(getApplicationContext() , localBinderОбновлениеПО);
 
-                    } else     if (    СтатусЗадачи.equalsIgnoreCase("com.CallBackBootAndAsync")) {
 
-                        biccessLogicActivityError. metodCallBackkFragemtBoot(getApplicationContext());
-                    }
 
                     Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                             " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +

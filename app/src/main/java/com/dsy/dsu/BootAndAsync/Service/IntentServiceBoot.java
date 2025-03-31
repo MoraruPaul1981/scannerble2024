@@ -246,7 +246,6 @@ public class IntentServiceBoot extends IntentService {
 private      void startingServiceBoot(@NotNull Intent intent ,@NonNull  LinkedHashMap<Integer,String> getHiltPortJboss){
         try{
             Boolean UserAuthenticated=       new GetAnalysisUserAuthenticated(getApplicationContext()).analysisUserAuthenticated(240);
-
             String getTypeTaskForBoot=  intent.getAction();
             if (UserAuthenticated) {
                 // TODO: 26.12.2024 выди запуска
@@ -266,16 +265,6 @@ private      void startingServiceBoot(@NotNull Intent intent ,@NonNull  LinkedHa
                     case "lanchUpdatePO":
                         // TODO: 19.01.2024  запуск класса бизнес логики службы Синхроиазции и Обновление ПО
                         binessLogicIntentServiceBoot.lanchUpdatePO( getHiltPortJboss,getApplicationContext());
-                        Log.d(getApplicationContext().getClass().getName(), "\n"
-                                + " время: " + new Date() + "\n+" +
-                                " Класс в процессе... " + this.getClass().getName() + "\n" +
-                                " метод в процессе... " + Thread.currentThread().getStackTrace()[2].getMethodName()+
-                                " intent.getAction() " +intent.getAction());
-                        break;
-                    // TODO: 26.12.2024 И Обновление и Синхронизация
-                    case "lanchUpdatePOAndAsync" :
-                        // TODO: 19.01.2024  запуск класса бизнес логики службы Синхроиазции и Обновление ПО
-                        binessLogicIntentServiceBoot.lanchUpdatePOAndAsync(getHiltPortJboss,getApplicationContext());
                         Log.d(getApplicationContext().getClass().getName(), "\n"
                                 + " время: " + new Date() + "\n+" +
                                 " Класс в процессе... " + this.getClass().getName() + "\n" +

@@ -17,6 +17,7 @@ import androidx.annotation.NonNull;
 import androidx.core.content.FileProvider;
 
 import com.dsy.dsu.BootAndAsync.ViewModelBoot.View.MainActivityBootAndAsync;
+import com.dsy.dsu.Dashboard.Model.bl_launchFragmentSettingsandDashbord.LaunchActivityDashboard;
 import com.dsy.dsu.Dashboard.View.MainActivity_Dashboard;
 import com.dsy.dsu.Services.ServiceUpdatePoОбновлениеПО;
 import com.google.firebase.crashlytics.buildtools.reloc.org.apache.commons.io.IOUtils;
@@ -123,12 +124,15 @@ public class  BiccessLogicActivityError{
             Интент_ЗапускаетDashboard.setClass(context, MainActivity_Dashboard.class);
 
             Bundle bundleBinderUpdate=new Bundle();
-            bundleBinderUpdate.putBoolean("CallBackFromMainActivity_Errors", true);
+            bundleBinderUpdate.putBoolean("CallBackMainActivityBootAndAsync", false);
             bundleBinderUpdate.putBinder("callbackbinderdashbord", localBinderОбновлениеПО);
             Интент_ЗапускаетDashboard.putExtras(bundleBinderUpdate);
 
             Интент_ЗапускаетDashboard.putExtras(bundleBinderUpdate);
             context.  startActivity(Интент_ЗапускаетDashboard);//tso*/
+
+            LaunchActivityDashboard launchActivityDashboard=new LaunchActivityDashboard();
+            launchActivityDashboard.     launchStartingDashboardFragmentSettings();
 
             Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                     " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
