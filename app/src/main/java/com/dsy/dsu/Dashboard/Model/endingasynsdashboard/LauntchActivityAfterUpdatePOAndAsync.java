@@ -2,20 +2,19 @@ package com.dsy.dsu.Dashboard.Model.endingasynsdashboard;
 
 import android.content.Context;
 import android.content.Intent;
-import android.os.Bundle;
 import android.util.Log;
 
 import androidx.annotation.NonNull;
 
+import com.dsy.dsu.Dashboard.View.MainActivity_Dashboard;
 import com.dsy.dsu.Errors.controller.RecordNewErros;
 import com.dsy.dsu.Passwords.MainActivityPasswords;
 import com.dsy.dsu.Services.ServiceUpdatePoОбновлениеПО;
 
-import org.greenrobot.eventbus.EventBus;
-
+import java.io.Serializable;
 import java.util.Date;
 
-public class GetEndingAsyn {
+public class LauntchActivityAfterUpdatePOAndAsync {
 
 
 
@@ -23,13 +22,12 @@ public class GetEndingAsyn {
                                  @NonNull ServiceUpdatePoОбновлениеПО.localBinderОбновлениеПО localBinderОбновлениеПО){
         try {
 
-            Intent intentAnsycEnding=new Intent();
-            intentAnsycEnding.setAction("EventBusAnsyc");
-            Bundle bundle=new Bundle();
-
-            bundle.putBinder("callbackbinderdashbord",localBinderОбновлениеПО);
-            bundle.putString("Статус",   "AnsycEnd");///"В процесс"
-            intentAnsycEnding.putExtras(bundle);
+            Intent Интент_ЗапускаетDashboard=new Intent();
+            Интент_ЗапускаетDashboard.setClass(context, MainActivity_Dashboard.class);
+            Интент_ЗапускаетDashboard.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_SINGLE_TOP);
+            Интент_ЗапускаетDashboard.putExtra("callbackbinderdashbord",(Serializable) localBinderОбновлениеПО);
+            Интент_ЗапускаетDashboard.setAction("MainActivity_Dashboard.class");
+            context.startActivity(Интент_ЗапускаетDashboard);//tso
 
 
 
@@ -53,13 +51,16 @@ public class GetEndingAsyn {
 
 
 
-    public void forvardActivityPassword(@NonNull Context context) {
+    public void forvardActivityPassword(@NonNull Context context,
+                                        @NonNull ServiceUpdatePoОбновлениеПО.localBinderОбновлениеПО localBinderОбновлениеПО) {
         try{
-            Intent Интент_ЗапускаетFaceApp=new Intent();
-            Интент_ЗапускаетFaceApp.setClass(context, MainActivityPasswords.class);
-            Интент_ЗапускаетFaceApp.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_SINGLE_TOP);
-            Интент_ЗапускаетFaceApp.setAction("MainActivityPasswords.class");
-            context.startActivity(Интент_ЗапускаетFaceApp);//tso
+            Intent Интент_ЗапускаетPasswords=new Intent();
+            Интент_ЗапускаетPasswords.setClass(context, MainActivityPasswords.class);
+            Интент_ЗапускаетPasswords.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_SINGLE_TOP);
+            Интент_ЗапускаетPasswords.putExtra("callbackbinderdashbord",(Serializable) localBinderОбновлениеПО);
+            Интент_ЗапускаетPasswords.setAction("MainActivityPasswords.class");
+            context.startActivity(Интент_ЗапускаетPasswords);//tso
+
             Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                     " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
                     " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" +

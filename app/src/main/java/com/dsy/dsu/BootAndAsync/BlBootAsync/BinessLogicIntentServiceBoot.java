@@ -19,7 +19,7 @@ import com.dsy.dsu.BootAndAsync.EventsBus.MessageEvensBusNetworkStatuses;
 import com.dsy.dsu.BootAndAsync.EventsBus.MessageEvensBusUpdatePO;
 import com.dsy.dsu.BroadcastRecievers.Bl.RegisterBroadcastForWorkManager;
 import com.dsy.dsu.BusinessLogicAll.Class_Connections_Server;
-import com.dsy.dsu.Dashboard.Model.endingasynsdashboard.GetEndingAsyn;
+import com.dsy.dsu.Dashboard.Model.endingasynsdashboard.LauntchActivityAfterUpdatePOAndAsync;
 import com.dsy.dsu.Errors.controller.RecordNewErros;
 import com.dsy.dsu.Services.ServiceUpdatePoОбновлениеПО;
 import com.dsy.dsu.Services.Service_For_Remote_Async_Binary;
@@ -56,8 +56,6 @@ public class BinessLogicIntentServiceBoot {
     private String success_login;
     private String date_update;
 
-    @Inject
-    RegisterBroadcastForWorkManager registerBroadcastForWorkManager;
     private  Integer permissibledaysofwork=240;
 
     public  @Inject BinessLogicIntentServiceBoot(@ApplicationContext Context contextBounding) {
@@ -231,22 +229,20 @@ public class BinessLogicIntentServiceBoot {
 
 
 
-    private void weswitchtothedesiredactivityaftersynchronization(  @NonNull Context context
-            ,@NonNull  Boolean userHasReceivedAccesstoDashBordorPasswordisNeeded,
-                                                                    @NonNull Integer ЛокальнаяВерсияПО,@NonNull Integer СервернаяВерсия) {
+    private void AfterSoftwareUpdateandSynchronizationLaunchActivity(  @NonNull Context context
+            ,@NonNull  Boolean UserAuthenticated) {
 
         try {
 
-            if (ЛокальнаяВерсияПО>=СервернаяВерсия) {
-                if (userHasReceivedAccesstoDashBordorPasswordisNeeded){
+                if (UserAuthenticated){
                     // TODO: 01.04.2024 Все в порядке ЗАпускам Саму Программу DashBord
-                    new GetEndingAsyn().forvardDashboard(context,localBinderОбновлениеПО);
+                    new LauntchActivityAfterUpdatePOAndAsync().forvardDashboard(context,localBinderОбновлениеПО);
 
                 }else {
 
                     // TODO: 28.04.2023 НЕт Анутифтикации Пароль
                     // TODO: 28.04.2023 НЕт Анутифтикации Пароль
-                    new GetEndingAsyn().forvardActivityPassword(  context);
+                    new LauntchActivityAfterUpdatePOAndAsync().forvardActivityPassword(  context,localBinderОбновлениеПО);
 
                 }
             }
@@ -256,7 +252,7 @@ public class BinessLogicIntentServiceBoot {
                     + "\n" +
                     " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
                     " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"
-                    + " userHasReceivedAccesstoDashBordorPasswordisNeeded " +userHasReceivedAccesstoDashBordorPasswordisNeeded+
+                    + " userHasReceivedAccesstoDashBordorPasswordisNeeded " +UserAuthenticated+
                      "ЛокальнаяВерсияПО " +ЛокальнаяВерсияПО  + " СервернаяВерсия " +СервернаяВерсия );
     } catch (Exception e) {
             e.printStackTrace();
@@ -287,33 +283,6 @@ public class BinessLogicIntentServiceBoot {
 
 
 
-    private void metodВыполняетсяГлавнаяWork(@NonNull LinkedHashMap<Integer,String> getHiltPortJboss,
-                                             @NonNull String landingMode,
-                                             @NonNull  String getWhoLaunched,
-                                             @NonNull Context context) {
-        try{
-
-            // TODO: 22.01.2024  запускаеми службу обновление ПО
-            new SuccessAsynsStartingUpdatrPO().startingAsyncForUpSoft(   getHiltPortJboss,landingMode,getWhoLaunched, context);
-
-            Log.d(this.getClass().getName(), "\n"
-                    + " время: " + new Date() + "\n+" +
-                    " Класс в процессе... " + this.getClass().getName() + "\n" +
-                    " метод в процессе... " + Thread.currentThread().getStackTrace()[2].getMethodName()
-                    + " localBinderОбновлениеПО.isBinderAlive() " + localBinderОбновлениеПО.isBinderAlive() +"\n" + " permissibledaysofwork " +permissibledaysofwork);
-
-
-
-    } catch (Exception e) {
-        e.printStackTrace();
-        Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() + " Линия  :"
-                + Thread.currentThread().getStackTrace()[2].getLineNumber());
-        new RecordNewErros(context).recordnewerror(e.toString(), this.getClass().getName(),
-                Thread.currentThread().getStackTrace()[2].getMethodName(),
-                Thread.currentThread().getStackTrace()[2].getLineNumber());
-    }
-    }
-
 
 
 
@@ -323,32 +292,7 @@ public class BinessLogicIntentServiceBoot {
     
     
     
-    public void getSucceessNetwork(@NonNull Context context) {
-        try{
-            Intent intentComunicationsBusAyns=new Intent();
-            Bundle bundleComunications=new Bundle();
 
-
-                    intentComunicationsBusAyns.setAction("EventBusAnsyc");
-                    bundleComunications.putString("Статус",  "ServerJbosOn");///"В процесс"
-                    intentComunicationsBusAyns.putExtras(bundleComunications);
-                    // TODO: 25.09.2024 call back AN Screnn User Boot Activity
-                    EventBus.getDefault().post(new MessageEvensBusNetworkStatuses(intentComunicationsBusAyns));
-
-
-            Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
-                    " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                    " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" +
-                    " localBinderAsync "+ "\n" );
-    } catch (Exception e) {
-        e.printStackTrace();
-        Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() + " Линия  :"
-                + Thread.currentThread().getStackTrace()[2].getLineNumber());
-        new RecordNewErros(context).recordnewerror(e.toString(), this.getClass().getName(),
-                Thread.currentThread().getStackTrace()[2].getMethodName(),
-                Thread.currentThread().getStackTrace()[2].getLineNumber());
-    }
-    }
 
 
     public void getDontNetwork(@NonNull Context context) {
