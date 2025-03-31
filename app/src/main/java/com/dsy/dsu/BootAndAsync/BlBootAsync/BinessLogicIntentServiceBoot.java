@@ -217,6 +217,10 @@ public class BinessLogicIntentServiceBoot {
             }).doOnComplete(()->{
                // TODO: 30.03.2025 Запускаем СИНХРОНИЗАЦИЮ
                Long getcompleteAsync =   completeAsync(   context  );
+                   // TODO: 31.03.2025
+
+                   // TODO: 31.03.2025 нет логина  и пароля переводим программу на Активити Password
+                   afterUpdatePOandAsynclaunchActivity(context);
 
                // TODO: 03.10.2023
                Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
@@ -228,8 +232,7 @@ public class BinessLogicIntentServiceBoot {
                        " Класс в процессе... " + this.getClass().getName() + "\n" +
                        " метод в процессе... " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n");
 
-            }).onErrorResumeWith(Maybe.empty())
-               .observeOn(AndroidSchedulers.mainThread());
+            }).onErrorResumeWith(Maybe.empty());
             // TODO: 31.03.2025
             maybelanchUpdatePOAndAsync.blockingSubscribe();
 
