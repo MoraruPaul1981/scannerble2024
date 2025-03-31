@@ -42,7 +42,7 @@ public class GetWorker {
                 if (ВыбранныйРежимСети) {
 
                     if (getlocalBinderBootSerice.isBinderAlive() && isWorkManagerRunning == false) {
-                        String actionSingleWorker =  "lanchAsync" ;
+                        String actionSingleWorker =  "lanchUpdatePOAndAsync" ;
                         intentSingleWorker.setAction(actionSingleWorker);
                         intentSingleWorker.setData(Uri.parse(actionSingleWorker));
 

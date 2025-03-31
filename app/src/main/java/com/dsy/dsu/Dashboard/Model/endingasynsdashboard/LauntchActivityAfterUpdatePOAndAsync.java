@@ -2,6 +2,7 @@ package com.dsy.dsu.Dashboard.Model.endingasynsdashboard;
 
 import android.content.Context;
 import android.content.Intent;
+import android.os.Bundle;
 import android.util.Log;
 
 import androidx.annotation.NonNull;
@@ -25,7 +26,9 @@ public class LauntchActivityAfterUpdatePOAndAsync {
             Intent Интент_ЗапускаетDashboard=new Intent();
             Интент_ЗапускаетDashboard.setClass(context, MainActivity_Dashboard.class);
             Интент_ЗапускаетDashboard.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_SINGLE_TOP);
-            Интент_ЗапускаетDashboard.putExtra("callbackbinderdashbord",(Serializable) localBinderОбновлениеПО);
+            Bundle bundle=new Bundle();
+            bundle.putBinder("callbackbinderdashbord", localBinderОбновлениеПО);
+            Интент_ЗапускаетDashboard.putExtras(bundle);
             Интент_ЗапускаетDashboard.setAction("MainActivity_Dashboard.class");
             context.startActivity(Интент_ЗапускаетDashboard);//tso
 
@@ -57,7 +60,9 @@ public class LauntchActivityAfterUpdatePOAndAsync {
             Intent Интент_ЗапускаетPasswords=new Intent();
             Интент_ЗапускаетPasswords.setClass(context, MainActivityPasswords.class);
             Интент_ЗапускаетPasswords.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_SINGLE_TOP);
-            Интент_ЗапускаетPasswords.putExtra("callbackbinderdashbord",(Serializable) localBinderОбновлениеПО);
+            Bundle bundle=new Bundle();
+            bundle.putBinder("callbackbinderdashbord", localBinderОбновлениеПО);
+            Интент_ЗапускаетPasswords.putExtras(bundle);
             Интент_ЗапускаетPasswords.setAction("MainActivityPasswords.class");
             context.startActivity(Интент_ЗапускаетPasswords);//tso
 

@@ -40,6 +40,7 @@ import dagger.Module;
 import dagger.hilt.InstallIn;
 import dagger.hilt.android.qualifiers.ApplicationContext;
 import dagger.hilt.components.SingletonComponent;
+import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
 import io.reactivex.rxjava3.core.Completable;
 import io.reactivex.rxjava3.core.Maybe;
 import io.reactivex.rxjava3.core.Observable;
@@ -228,6 +229,7 @@ public class BinessLogicIntentServiceBoot {
                        " метод в процессе... " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n");
 
             }).onErrorResumeWith(Maybe.empty())
+               .observeOn(AndroidSchedulers.mainThread())
                    .doFinally(()->{
 
 
@@ -238,7 +240,7 @@ public class BinessLogicIntentServiceBoot {
                Log.d(context.getClass().getName(), "\n"
                        + " время: " + new Date() + "\n+" +
                        " Класс в процессе... " + this.getClass().getName() + "\n" +
-                       " метод в процессе... " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" + " GetAnalysisUserAuthenticated " +getanalysisUserAuthenticated);
+                       " метод в процессе... " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n"  );
 
            });
             // TODO: 31.03.2025
@@ -275,13 +277,14 @@ public class BinessLogicIntentServiceBoot {
         try {
      Boolean UserAuthenticated=       new GetAnalysisUserAuthenticated(context).analysisUserAuthenticated(240);
 
+            LauntchActivityAfterUpdatePOAndAsync launtchActivityAfterUpdatePOAndAsync=new LauntchActivityAfterUpdatePOAndAsync();
                 if (UserAuthenticated){
                     // TODO: 01.04.2024 Все в порядке ЗАпускам Саму Программу DashBord
-                    new LauntchActivityAfterUpdatePOAndAsync().forvardDashboard(context,localBinderОбновлениеПО);
+                    launtchActivityAfterUpdatePOAndAsync.forvardDashboard(context,localBinderОбновлениеПО);
                 }else {
                     // TODO: 28.04.2023 НЕт Анутифтикации Пароль
                     // TODO: 28.04.2023 НЕт Анутифтикации Пароль
-                    new LauntchActivityAfterUpdatePOAndAsync().forvardActivityPassword(  context,localBinderОбновлениеПО);
+                    launtchActivityAfterUpdatePOAndAsync.forvardActivityPassword(  context,localBinderОбновлениеПО);
                 }
             // TODO: 28.04.2023
             Log.d(this.getClass().getName(), "\n" + " class " +
