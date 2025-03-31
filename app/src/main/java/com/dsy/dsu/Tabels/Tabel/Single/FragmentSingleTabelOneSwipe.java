@@ -168,7 +168,7 @@ public class FragmentSingleTabelOneSwipe extends Fragment {
 
     // TODO: 12.10.2022  для одного сигг табеля сотрудника
     private  SubClassBisscessFragmentSingleTabel fragmentSingleTabel;
-    private  ViewGroup contGruop;
+
     private  SubClassSingleTabelRecycreView singleTabelRecycreView;
 
 
@@ -242,10 +242,8 @@ public class FragmentSingleTabelOneSwipe extends Fragment {
         View viewSingletabek=null;
         try{
            // viewSingletabek= inflater.inflate(R.layout.fragment_single_tabel_viewpager2, container, false);
-            viewSingletabek= inflater.inflate(R.layout.simple_for_headers_fragmentsingle, container, false);
+            viewSingletabek= inflater.inflate(R.layout.simple_forfragmentsingle, container, false);
             // TODO: 21.06.2023
-            contGruop=container;
-
             Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                     " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
                     " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n");
