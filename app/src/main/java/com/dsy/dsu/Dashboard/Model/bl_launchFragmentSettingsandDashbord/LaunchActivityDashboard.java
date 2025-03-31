@@ -46,10 +46,10 @@ public class LaunchActivityDashboard {
                     + " FragmentУжеЕСтьИлиНЕт " + FragmentУжеЕСтьИлиНЕт);
         } catch (Exception e) {
             e.printStackTrace();
-            Log.e(getApplicationContext().getClass().getName(),
+            Log.e(context.getClass().getName(),
                     "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
                             " Линия  :" + Thread.currentThread().getStackTrace()[2].getLineNumber());
-            new RecordNewErros(getApplicationContext()).recordnewerror(e.toString(),
+            new RecordNewErros(context).recordnewerror(e.toString(),
                     this.getClass().getName().toString(), Thread.currentThread().getStackTrace()[2].getMethodName().toString(),
                     Thread.currentThread().getStackTrace()[2].getLineNumber());
         }
@@ -59,7 +59,8 @@ public class LaunchActivityDashboard {
         try {
             // TODO Запусукаем Фргамент DdshBoard
             DashboardFragmentSettings dashboardFragmentSettings = DashboardFragmentSettings.newInstance();
-            Bundle data = new Bundle();
+            Bundle data=new Bundle();
+            dashboardFragmentSettings.setArguments(data);
             dashboardFragmentSettings.setArguments(data);
             fragmentManager.popBackStack();
             // TODO: 10.03.2025
@@ -74,10 +75,10 @@ public class LaunchActivityDashboard {
                     " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n");
         } catch (Exception e) {
             e.printStackTrace();
-            Log.e(getApplicationContext().getClass().getName(),
+            Log.e(context.getClass().getName(),
                     "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
                             " Линия  :" + Thread.currentThread().getStackTrace()[2].getLineNumber());
-            new RecordNewErros(getApplicationContext()).recordnewerror(e.toString(),
+            new RecordNewErros(context).recordnewerror(e.toString(),
                     this.getClass().getName().toString(), Thread.currentThread().getStackTrace()[2].getMethodName().toString(),
                     Thread.currentThread().getStackTrace()[2].getLineNumber());
         }

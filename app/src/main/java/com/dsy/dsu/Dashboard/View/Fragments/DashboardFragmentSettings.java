@@ -508,7 +508,7 @@ public class DashboardFragmentSettings extends  DialogFragment {
                             // TODO: 10.03.2025
                             fragmentTransaction.remove(DashboardFragmentSettings.this).commit() ;
                             // TODO: 03.10.2023
-                                dashboardFragmentHarmonyOS.show(fragmentManager, "dashboardFragmentHarmonyOS");
+                                dashboardFragmentHarmonyOS.show(fragmentManager, "DashboardFragmentMaterialDesign");
                                 // TODO: 01.08.2023
                             Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                                     " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +

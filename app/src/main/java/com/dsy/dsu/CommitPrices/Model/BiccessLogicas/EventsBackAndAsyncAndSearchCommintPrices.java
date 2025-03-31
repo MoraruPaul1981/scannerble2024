@@ -106,7 +106,6 @@ public class EventsBackAndAsyncAndSearchCommintPrices {
                                 Интент_BackВозвращаемАктивти.setClass(context, MainActivity_Dashboard.class);
 
                                 Bundle bundleBinderUpdate=new Bundle();
-                                bundleBinderUpdate.putBoolean("CallBackMainActivityBootAndAsync", true);
                                 Интент_BackВозвращаемАктивти.putExtras(bundleBinderUpdate);
                             Log.d(this.getClass().getName(), "  выходим из задания МетодКпопкаВозвращениеНазадИзСогласованиии");
                             context. startActivity(Интент_BackВозвращаемАктивти);

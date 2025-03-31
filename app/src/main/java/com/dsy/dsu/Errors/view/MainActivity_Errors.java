@@ -78,6 +78,8 @@ public class MainActivity_Errors extends AppCompatActivity  {
     @Inject
     ModuleQuety moduleQuety;
 
+
+
     @SuppressLint("MissingInflatedId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -91,6 +93,9 @@ public class MainActivity_Errors extends AppCompatActivity  {
 
             // TODO: 04.10.2023 разрешения для всего
             new ClassPermissions(this,ALL_PERSSION_CODE);
+
+            fragmentManager =  getSupportFragmentManager();
+            fragmentTransaction = fragmentManager.beginTransaction();
 
             cameBoundServiceUpdatePO();
 
@@ -214,7 +219,7 @@ public class MainActivity_Errors extends AppCompatActivity  {
             biccessLogicActivityError.       clearingTableError();
 
             // TODO: 22.09.2023  exit error fragment
-                biccessLogicActivityError.    metodCallBackkFragemtSettings(getApplicationContext() ,localBinderОбновлениеПО);
+                biccessLogicActivityError.    metodCallBackkFragemtSettings(fragmentTransaction,fragmentManager,getApplicationContext() );
         }
 
         Log.d(this.getClass().getName(),"\n" + " class FaceAPp " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
@@ -447,9 +452,8 @@ public class MainActivity_Errors extends AppCompatActivity  {
             public void onClick(View v) {
                 try{
                         // TODO: 22.09.2023  exit error fragment
-                        biccessLogicActivityError.    metodCallBackkFragemtSettings(getApplicationContext() , localBinderОбновлениеПО);
-
-
+                    // TODO: 22.09.2023  exit error fragment
+                    biccessLogicActivityError.    metodCallBackkFragemtSettings(fragmentTransaction,fragmentManager,getApplicationContext() );
 
                     Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                             " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +

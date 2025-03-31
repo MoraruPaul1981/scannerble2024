@@ -28,7 +28,6 @@ public class LauntchActivityAfterUpdatePOAndAsync {
             Интент_ЗапускаетDashboard.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_SINGLE_TOP);
             Bundle bundle=new Bundle();
             bundle.putBinder("callbackbinderdashbord", localBinderОбновлениеПО);
-            bundle.putBoolean("CallBackMainActivityBootAndAsync", true);
             Интент_ЗапускаетDashboard.putExtras(bundle);
             Интент_ЗапускаетDashboard.setAction("MainActivity_Dashboard.class");
             context.startActivity(Интент_ЗапускаетDashboard);//tso

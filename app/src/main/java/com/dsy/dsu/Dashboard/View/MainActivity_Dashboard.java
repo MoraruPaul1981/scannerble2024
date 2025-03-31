@@ -131,23 +131,13 @@ public class MainActivity_Dashboard extends AppCompatActivity {
         super.onStart();
         try {
 
-            LaunchActivityDashboard launchActivityDashboard=new LaunchActivityDashboard();
+            LaunchActivityDashboard launchActivityDashboard=new LaunchActivityDashboard(fragmentTransaction,fragmentManager,getApplicationContext());
             // TODO: 27.03.2024 в зависомсти кто вызвает
-       Bundle bundleMainActivityDashcBoard=    getIntent().getExtras();
-         Boolean getCallBackMainActivityBootAndAsync=   bundleMainActivityDashcBoard.getBoolean("CallBackMainActivityBootAndAsync");
-            if (getCallBackMainActivityBootAndAsync==true) {
                 launchActivityDashboard.     launchADashboardFragment();
-            }else {
-                // TODO: 31.03.2025
-                if (getCallBackMainActivityBootAndAsync==false) {
-                    launchActivityDashboard.     launchStartingDashboardFragmentSettings();
-                }
-            }
 
             Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                     " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                    " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"
-                    + "getCallBackMainActivityBootAndAsync " +getCallBackMainActivityBootAndAsync);
+                    " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n");
         } catch (Exception e) {
             e.printStackTrace();
             Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() + " Линия  :"

@@ -15,6 +15,8 @@ import android.util.Log;
 
 import androidx.annotation.NonNull;
 import androidx.core.content.FileProvider;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 
 import com.dsy.dsu.BootAndAsync.ViewModelBoot.View.MainActivityBootAndAsync;
 import com.dsy.dsu.Dashboard.Model.bl_launchFragmentSettingsandDashbord.LaunchActivityDashboard;
@@ -115,23 +117,11 @@ public class  BiccessLogicActivityError{
                     Thread.currentThread().getStackTrace()[2].getLineNumber());
         }
     }
-    public void metodCallBackkFragemtSettings(@NonNull Context context,@NonNull ServiceUpdatePoОбновлениеПО.localBinderОбновлениеПО localBinderОбновлениеПО) {
+    public void metodCallBackkFragemtSettings(FragmentTransaction fragmentTransaction, FragmentManager fragmentManager, Context context ) {
         try{
             // TODO Запусукаем Фргамент НАстройки  dashbord
-            Intent Интент_ЗапускаетDashboard = new Intent();
-            Интент_ЗапускаетDashboard.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_SINGLE_TOP);
-            Интент_ЗапускаетDashboard.setAction("MainActivity_Dashboard.class");
-            Интент_ЗапускаетDashboard.setClass(context, MainActivity_Dashboard.class);
-
-            Bundle bundleBinderUpdate=new Bundle();
-            bundleBinderUpdate.putBoolean("CallBackMainActivityBootAndAsync", false);
-            bundleBinderUpdate.putBinder("callbackbinderdashbord", localBinderОбновлениеПО);
-            Интент_ЗапускаетDashboard.putExtras(bundleBinderUpdate);
-
-            Интент_ЗапускаетDashboard.putExtras(bundleBinderUpdate);
-            context.  startActivity(Интент_ЗапускаетDashboard);//tso*/
-
-            LaunchActivityDashboard launchActivityDashboard=new LaunchActivityDashboard();
+            LaunchActivityDashboard launchActivityDashboard=new LaunchActivityDashboard(fragmentTransaction,fragmentManager,context);
+            // TODO: 27.03.2024 в зависомсти кто вызвает
             launchActivityDashboard.     launchStartingDashboardFragmentSettings();
 
             Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
