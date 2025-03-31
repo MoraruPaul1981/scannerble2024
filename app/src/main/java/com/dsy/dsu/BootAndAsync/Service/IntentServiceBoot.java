@@ -60,10 +60,11 @@ public class IntentServiceBoot extends IntentService {
     @QualifierPublicId
     Integer getHiltPublicId;
    private Notification notification;
+
+
+    @Inject
     @QualifierJbossServer3
-    LinkedHashMap<Integer,String> getHiltPortJboss;
-
-
+    public  LinkedHashMap<Integer,String> getHiltPortJboss;
 
     public IntentServiceBoot() {
 
