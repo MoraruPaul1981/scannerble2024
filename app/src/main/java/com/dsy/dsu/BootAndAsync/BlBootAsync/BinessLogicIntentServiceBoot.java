@@ -223,26 +223,18 @@ public class BinessLogicIntentServiceBoot {
                        " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"  + " getcompleteAsync " +getcompleteAsync);
 
 
+                   // TODO: 31.03.2025 после Обновлени ПО и Синхронизации проверяем и запускаем Активти нужное или Password or DachBoad
+                   afterUpdatePOandAsynclaunchActivity(context);
+
+
+
                Log.d(context.getClass().getName(), "\n"
                        + " время: " + new Date() + "\n+" +
                        " Класс в процессе... " + this.getClass().getName() + "\n" +
                        " метод в процессе... " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n");
 
             }).onErrorResumeWith(Maybe.empty())
-               .observeOn(AndroidSchedulers.mainThread())
-                   .doFinally(()->{
-
-
-               // TODO: 31.03.2025 после Обновлени ПО и Синхронизации проверяем и запускаем Активти нужное или Password or DachBoad
-                   afterUpdatePOandAsynclaunchActivity(context);
-
-
-               Log.d(context.getClass().getName(), "\n"
-                       + " время: " + new Date() + "\n+" +
-                       " Класс в процессе... " + this.getClass().getName() + "\n" +
-                       " метод в процессе... " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n"  );
-
-           });
+               .observeOn(AndroidSchedulers.mainThread());
             // TODO: 31.03.2025
             maybelanchUpdatePOAndAsync.blockingSubscribe();
 

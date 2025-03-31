@@ -255,7 +255,7 @@ private      void startingServiceBoot(@NotNull Intent intent ,@NonNull  LinkedHa
                                 + " время: " + new Date() + "\n+" +
                                 " Класс в процессе... " + this.getClass().getName() + "\n" +
                                 " метод в процессе... " + Thread.currentThread().getStackTrace()[2].getMethodName()+
-                                " UserAuthenticated " +UserAuthenticated + "  getTypeTaskWorkManager " +getTypeTaskWorkManager);
+                                " UserAuthenticated " +UserAuthenticated + "  getHiltPortJboss " +getHiltPortJboss.values().toString());
                         if (UserAuthenticated) {
                             return UserAuthenticated;
                         } else {return null;
@@ -288,6 +288,8 @@ private      void startingServiceBoot(@NotNull Intent intent ,@NonNull  LinkedHa
                             case "ExitBootService":
                                 // TODO: 19.01.2024  запуск класса бизнес логики службы Синхроиазции и Обновление ПО
                                 binessLogicIntentServiceBoot.getDontNetwork(getApplicationContext());
+                                // TODO: 31.03.2025 нет логина  и пароля переводим программу на Активити Password
+                                binessLogicIntentServiceBoot.afterUpdatePOandAsynclaunchActivity(getApplicationContext());
                                 Log.d(getApplicationContext().getClass().getName(), "\n"
                                         + " время: " + new Date() + "\n+" +
                                         " Класс в процессе... " + this.getClass().getName() + "\n" +
@@ -303,8 +305,7 @@ private      void startingServiceBoot(@NotNull Intent intent ,@NonNull  LinkedHa
                                 " метод в процессе... " + Thread.currentThread().getStackTrace()[2].getMethodName() + " getHiltPortJboss " + getHiltPortJboss+
                                 " getTypeTaskForBoot " +getTypeTaskForBoot);
 
-                    }).observeOn(AndroidSchedulers.mainThread())
-                    .onErrorResumeWith(Maybe.empty())
+                    }).onErrorResumeWith(Maybe.empty())
                     .blockingSubscribe();
             Log.d(getApplicationContext().getClass().getName(), "\n"
                 + " время: " + new Date() + "\n+" +
@@ -373,6 +374,8 @@ private      void startingServiceBoot(@NotNull Intent intent ,@NonNull  LinkedHa
                             case "ExitBootService":
                                 // TODO: 19.01.2024  запуск класса бизнес логики службы Синхроиазции и Обновление ПО
                                 binessLogicIntentServiceBoot.getDontNetwork(getApplicationContext());
+                                // TODO: 31.03.2025 нет логина  и пароля переводим программу на Активити Password
+                                binessLogicIntentServiceBoot.afterUpdatePOandAsynclaunchActivity(getApplicationContext());
                                 Log.d(getApplicationContext().getClass().getName(), "\n"
                                         + " время: " + new Date() + "\n+" +
                                         " Класс в процессе... " + this.getClass().getName() + "\n" +
@@ -388,8 +391,7 @@ private      void startingServiceBoot(@NotNull Intent intent ,@NonNull  LinkedHa
                                 " метод в процессе... " + Thread.currentThread().getStackTrace()[2].getMethodName() + " getHiltPortJboss " + getHiltPortJboss+
                                 " getTypeTaskWorkManager " +getTypeTaskWorkManager);
 
-                    }).observeOn(AndroidSchedulers.mainThread())
-                    .doOnComplete(()->{
+                    }).doOnComplete(()->{
                         switch (getTypeTaskWorkManager.trim()) {
                             // TODO: 31.03.2025
                             // TODO: 26.12.2024 И Обновление и Синхронизация
