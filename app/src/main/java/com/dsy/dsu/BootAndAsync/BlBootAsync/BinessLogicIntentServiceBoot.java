@@ -17,7 +17,6 @@ import androidx.annotation.NonNull;
 
 import com.dsy.dsu.BootAndAsync.EventsBus.MessageEvensBusNetworkStatuses;
 import com.dsy.dsu.BootAndAsync.EventsBus.MessageEvensBusUpdatePO;
-import com.dsy.dsu.BroadcastRecievers.Bl.RegisterBroadcastForWorkManager;
 import com.dsy.dsu.BusinessLogicAll.Class_Connections_Server;
 import com.dsy.dsu.Dashboard.Model.endingasynsdashboard.LauntchActivityAfterUpdatePOAndAsync;
 import com.dsy.dsu.Errors.controller.RecordNewErros;
@@ -40,7 +39,10 @@ import dagger.Module;
 import dagger.hilt.InstallIn;
 import dagger.hilt.android.qualifiers.ApplicationContext;
 import dagger.hilt.components.SingletonComponent;
+import io.reactivex.rxjava3.core.Completable;
 import io.reactivex.rxjava3.core.Maybe;
+import io.reactivex.rxjava3.core.Observable;
+import io.reactivex.rxjava3.core.Single;
 
 @Module
 @InstallIn(SingletonComponent.class)
@@ -85,13 +87,48 @@ public class BinessLogicIntentServiceBoot {
 
 
 
-    public void lanchUpdatePO(@NonNull SSLSocketFactory getsslSocketFactory2,
-                              @NonNull LinkedHashMap<Integer,String> getHiltPortJboss,
+    public void lanchUpdatePO(@NonNull LinkedHashMap<Integer,String> getHiltPortJboss,
                               @NonNull Context context) {
         try {
             // TODO: 14.08.2023 вызов кода ПОльзовательский
 
+            // TODO: 14.08.2023 Проверяем версси ПО с серврной и локальной
+        Maybe maybelanchUpdatePO=    Maybe.fromCallable(()->{
+                        // TODO: 22.01.2024 true запускаем Анализ По
+                        Integer    versionServicePO=        getVersionServicePO(getHiltPortJboss,context);
+                        Integer    versionLocalPO=        getVersionLocalPO(getHiltPortJboss,context);
+                        Log.d(context.getClass().getName(), "\n"
+                                + " время: " + new Date() + "\n+" +
+                                " Класс в процессе... " + this.getClass().getName() + "\n" +
+                                " метод в процессе... " + Thread.currentThread().getStackTrace()[2].getMethodName()
+                                + "\n"+"versionServicePO"+versionServicePO + " versionLocalPO "+versionLocalPO);
+                        if (versionServicePO>versionLocalPO) {
+                            return versionServicePO;
+                        } else {
+                            return null;
+                        }
+                    }).doOnSuccess(versionServicePO->{
+                        // TODO: 30.03.2025 Запускаем ПО
+                        // TODO: 22.01.2024 запускаю обновление ПО
+                        startingUpdatePOComplete(versionServicePO,context );
 
+                        // TODO: 03.10.2023
+                        Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                                " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                                " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" );
+                    }).doOnComplete(()->{
+                        // TODO: 30.03.2025 Сообщаем ЧТо версия Уже есть
+
+                        getLastVersionUpdatePO(context);
+
+                        Log.d(context.getClass().getName(), "\n"
+                                + " время: " + new Date() + "\n+" +
+                                " Класс в процессе... " + this.getClass().getName() + "\n" +
+                                " метод в процессе... " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n");
+
+                    }).onErrorResumeWith(Maybe.empty());
+
+            maybelanchUpdatePO .blockingSubscribe();
 
 
             Log.d(context.getClass().getName(), "\n"
@@ -107,13 +144,35 @@ public class BinessLogicIntentServiceBoot {
         }
     }
 
-    public void lanchAsync(@NonNull SSLSocketFactory getsslSocketFactory2,
-                           @NonNull LinkedHashMap<Integer,String> getHiltPortJboss,
-                           @NonNull Context context) {
+    public void lanchAsync(@NonNull Context context) {
         try {
             // TODO: 14.08.2023 вызов кода ПОльзовательский
 
+            // TODO: 14.08.2023 Проверяем версси ПО с серврной и локальной
+            Completable maybelanchAsync=    Completable.fromAction(()->{
 
+                Long getcompleteAsync =   completeAsync(   context);
+
+                // TODO: 03.10.2023
+                Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                        " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                        " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"   + " getcompleteAsync " +getcompleteAsync);
+
+            }).doOnComplete(()->{
+                        Log.d(context.getClass().getName(), "\n"
+                                + " время: " + new Date() + "\n+" +
+                                " Класс в процессе... " + this.getClass().getName() + "\n" +
+                                " метод в процессе... " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n");
+                    })
+                    .onErrorResumeWith(e-> Observable.empty());
+            // TODO: 31.03.2025
+            maybelanchAsync.blockingSubscribe();
+
+
+            Log.d(context.getClass().getName(), "\n"
+                    + " время: " + new Date() + "\n+" +
+                    " Класс в процессе... " + this.getClass().getName() + "\n" +
+                    " метод в процессе... " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n");//
 
             Log.d(context.getClass().getName(), "\n"
                     + " время: " + new Date() + "\n+" +
@@ -128,12 +187,11 @@ public class BinessLogicIntentServiceBoot {
         }
     }
 
-    public void lanchUpdatePOAndAsync(@NonNull SSLSocketFactory getsslSocketFactory2,
-                                      @NonNull LinkedHashMap<Integer,String> getHiltPortJboss,
+    public void lanchUpdatePOAndAsync(@NonNull LinkedHashMap<Integer,String> getHiltPortJboss,
                                       @NonNull Context context) {
         try {
             // TODO: 14.08.2023 Проверяем версси ПО с серврной и локальной
-           Maybe.fromCallable(()->{
+       Maybe maybelanchUpdatePOAndAsync=    Maybe.fromCallable(()->{
                // TODO: 22.01.2024 true запускаем Анализ По
                Integer    versionServicePO=        getVersionServicePO(getHiltPortJboss,context);
                Integer    versionLocalPO=        getVersionLocalPO(getHiltPortJboss,context);
@@ -147,21 +205,23 @@ public class BinessLogicIntentServiceBoot {
                } else {
                    return null;
                }
-            }).doOnSuccess(succes->{
+            }).doOnSuccess(versionServicePO->{
                // TODO: 30.03.2025 Запускаем ПО
+               // TODO: 22.01.2024 запускаю обновление ПО
+               startingUpdatePOComplete(versionServicePO,context );
 
-
-
-               Log.d(context.getClass().getName(), "\n"
-                       + " время: " + new Date() + "\n+" +
-                       " Класс в процессе... " + this.getClass().getName() + "\n" +
-                       " метод в процессе... " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n");
+               // TODO: 03.10.2023
+               Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                       " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                       " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" );
             }).doOnComplete(()->{
                // TODO: 30.03.2025 Запускаем СИНХРОНИЗАЦИЮ
+               Long getcompleteAsync =   completeAsync(   context  );
 
-
-
-
+               // TODO: 03.10.2023
+               Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                       " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                       " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"  + " getcompleteAsync " +getcompleteAsync);
 
 
                Log.d(context.getClass().getName(), "\n"
@@ -169,18 +229,25 @@ public class BinessLogicIntentServiceBoot {
                        " Класс в процессе... " + this.getClass().getName() + "\n" +
                        " метод в процессе... " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n");
 
-            }).onErrorResumeWith(Maybe.empty()).doFinally(()->{
+            }).onErrorResumeWith(Maybe.empty())
+                   .doFinally(()->{
                // TODO: 31.03.2025 после Обновлени ПО и Синхронизации проверяем и запускаем Активти нужное или Password or DachBoad
 
 
-               AfterSoftwareUpdateandSynchronizationLaunchActivity(context,UserAuthenticated);
+    Boolean getanalysisUserAuthenticated=           analysisUserAuthenticated(context);
+
+               if (getanalysisUserAuthenticated) {
+                   afterUpdatePOandAsynclaunchActivity(context,getanalysisUserAuthenticated);
+               }
 
                Log.d(context.getClass().getName(), "\n"
                        + " время: " + new Date() + "\n+" +
                        " Класс в процессе... " + this.getClass().getName() + "\n" +
-                       " метод в процессе... " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n");
+                       " метод в процессе... " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" + " getanalysisUserAuthenticated " +getanalysisUserAuthenticated);
 
-           }).blockingSubscribe();
+           });
+            // TODO: 31.03.2025
+            maybelanchUpdatePOAndAsync.blockingSubscribe();
 
 
             Log.d(context.getClass().getName(), "\n"
@@ -206,7 +273,7 @@ public class BinessLogicIntentServiceBoot {
 
 
 
-    private Boolean userHasReceivedAccesstoDashBordorPasswordisNeeded(  @NonNull Context context) {
+    private Boolean  analysisUserAuthenticated(  @NonNull Context context) {
         Boolean userHasReceivedAccesstoDashBordorPasswordisNeeded=false;
         try {
 
@@ -242,10 +309,9 @@ public class BinessLogicIntentServiceBoot {
     }
 
 
-
-
-    private void AfterSoftwareUpdateandSynchronizationLaunchActivity(  @NonNull Context context
-            ,@NonNull  Boolean UserAuthenticated) {
+    // TODO: 31.03.2025  после обновлени и /или синхрониазци запцскаем нужную активти
+    private void afterUpdatePOandAsynclaunchActivity(@NonNull Context context
+            , @NonNull  Boolean UserAuthenticated) {
         try {
                 if (UserAuthenticated){
                     // TODO: 01.04.2024 Все в порядке ЗАпускам Саму Программу DashBord
@@ -273,34 +339,6 @@ public class BinessLogicIntentServiceBoot {
         }
 
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    
-    
-    
-    
-    
-
 
 
     public void getDontNetwork(@NonNull Context context) {
@@ -414,98 +452,6 @@ public class BinessLogicIntentServiceBoot {
 
 
 
-        private void launchOnlyUpdatePO(Integer СервернаяВерсия, Integer ЛокальнаяВерсияПО,@NonNull Context context,@NonNull String getWhoLaunched) {
-            // TODO: 22.01.2024  запускаем обновдение ПО
-            try{
-
-
-                // TODO: 22.01.2024   запускаем  Обновление ПО
-
-            if (СервернаяВерсия > ЛокальнаяВерсияПО) {
-
-                // TODO: 22.01.2024 запускаю обновление ПО
-                StartingUpdatePOComplete(СервернаяВерсия,context,getWhoLaunched);
-
-
-
-                // TODO: 03.10.2023
-                Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
-                        " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                        " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" );
-
-
-
-
-
-
-                // TODO: 22.01.2024 версии равны Update PO ничего не запускаем
-            }else {
-                // TODO: 24.09.2024 Запускаем  НЕ Обновленеи ПО  версии одинаковые
-                DontUpdatePOComplete(СервернаяВерсия,context,getWhoLaunched);
-                // TODO: 03.10.2023
-                Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
-                        " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                        " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" );
-            }
-            Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
-                    " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                    " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" +
-                    " СервернаяВерсия "+ "\n"+" СервернаяВерсия " +"ЛокальнаяВерсияПО "+ЛокальнаяВерсияПО );
-        } catch (Exception e) {
-            e.printStackTrace();
-            Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :"
-                    + Thread.currentThread().getStackTrace()[2].getMethodName() + " Линия  :"
-                    + Thread.currentThread().getStackTrace()[2].getLineNumber());
-            new RecordNewErros(context).recordnewerror(e.toString(),
-                    this.getClass().getName(), Thread.currentThread().getStackTrace()[2].getMethodName(),
-                    Thread.currentThread().getStackTrace()[2].getLineNumber());
-        }
-        }
-
-
-
-
-
-
-        private void launchUpdatePOandSync(Integer СервернаяВерсия, Integer ЛокальнаяВерсияПО,
-                                           @NonNull  String getWhoLaunched,@NonNull Context context,@NonNull String landingMode) {
-            // TODO: 22.01.2024  запускаем Синхронизацию
-            try{
-            if (СервернаяВерсия > ЛокальнаяВерсияПО) {
-                // TODO: 24.09.2024 Запускаем Обновленеи ПО
-                // TODO: 22.01.2024 запускаю обновление ПО
-                StartingUpdatePOComplete(СервернаяВерсия,context,getWhoLaunched);
-                // TODO: 03.10.2023
-                Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
-                        " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                        " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n");
-
-            }else {
-
-                // TODO: 24.09.2024 запускаем Синхронизацию
-                completeAsync(  getWhoLaunched ,context );
-
-                // TODO: 03.10.2023
-                Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
-                        " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                        " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" );
-            }
-
-            Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
-                    " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                    " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" +
-                    " localBinderAsync "+ "\n" );
-        } catch (Exception e) {
-            e.printStackTrace();
-            Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :"
-                    + Thread.currentThread().getStackTrace()[2].getMethodName() + " Линия  :"
-                    + Thread.currentThread().getStackTrace()[2].getLineNumber());
-            new RecordNewErros(context).recordnewerror(e.toString(),
-                    this.getClass().getName(), Thread.currentThread().getStackTrace()[2].getMethodName(),
-                    Thread.currentThread().getStackTrace()[2].getLineNumber());
-        }
-
-        }
 
 
 
@@ -515,7 +461,10 @@ public class BinessLogicIntentServiceBoot {
 
 
 
-        private void StartingUpdatePOComplete(@NonNull Integer СервернаяВерсия, @NonNull Context context,@NonNull String getWhoLaunched) {
+
+
+
+        private void startingUpdatePOComplete(@NonNull Integer СервернаяВерсия, @NonNull Context context) {
                      try{
                          Intent intentComunicationsUpdatePO=new Intent();
                          Bundle bundleComunications=new Bundle();
@@ -706,17 +655,17 @@ public class BinessLogicIntentServiceBoot {
 
 
 
-    Long completeAsync(@NonNull  String getWhoLaunched , @NonNull Context context){
+    Long completeAsync( @NonNull Context context  ){
         // TODO: 28.03.2025
         Long completeAsync=0l;
         try{
             // TODO: 03.10.2023
 
-            completeAsync=  localBinderAsync.getService().metodStartingSync(context,getWhoLaunched);
+            completeAsync=  localBinderAsync.getService().metodStartingSync(context,TypeAsync);
 
             Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                     " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                    " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"+ " completeAsync " +completeAsync + " getWhoLaunched " +getWhoLaunched);
+                    " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"+ " completeAsync " +completeAsync + " TypeAsync " +TypeAsync);
 
         } catch (Exception e) {
             e.printStackTrace();

@@ -242,7 +242,7 @@ try{
 
     @BinderThread
     @Background
-    public Long metodStartingSync(  @NotNull Context context,@NonNull  String getWhoLaunched) {
+    public Long metodStartingSync(  @NotNull Context context ) {
         Long       ФинальныйРезультатAsyncBackgroud=0l;
         try{
 
@@ -297,21 +297,18 @@ try{
 
 
 
-    private void afterCodeAsyncForfwardActivityAsync(@NonNull Context context, Long ФинальныйРезультатAsyncBackgroud, String getWhoLaunched) {
+    private void afterCodeAsyncForfwardActivityAsync(@NonNull Context context, Long ФинальныйРезультатAsyncBackgroud ) {
         // TODO: 26.03.2023 дополнительное удаление после Удаление статсу удалнеенон
         try{
         if (ФинальныйРезультатAsyncBackgroud >0) {
             МетодПослеСинхрониазцииУдалениеСтатусаУдаленный(getApplicationContext());
         }
 
-
-
-
             Log.d(getApplicationContext().getClass().getName(), "\n"
                 + " время: " + new Date() + "\n+" +
                 " Класс в процессе... " + this.getClass().getName() + "\n" +
                 " метод в процессе... " + Thread.currentThread().getStackTrace()[2].getMethodName()
-                + " ФинальныйРезультатAsyncBackgroud " +ФинальныйРезультатAsyncBackgroud + " getWhoLaunched " +getWhoLaunched);
+                + " ФинальныйРезультатAsyncBackgroud " +ФинальныйРезультатAsyncBackgroud);
     } catch (Exception e) {
         e.printStackTrace();
         Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +

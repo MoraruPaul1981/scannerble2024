@@ -248,8 +248,7 @@ private      void startingServiceBoot(@NotNull Intent intent ,@NonNull  LinkedHa
                 // TODO: 26.12.2024 Синхрониазция
               case "lanchAsync" :
                     // TODO: 19.01.2024  запуск класса бизнес логики службы Синхроиазции и Обновление ПО
-                    binessLogicIntentServiceBoot.lanchAsync(getsslSocketFactory2, getHiltPortJboss
-                            ,getApplicationContext());
+                    binessLogicIntentServiceBoot.lanchAsync(getApplicationContext());
                     Log.d(getApplicationContext().getClass().getName(), "\n"
                             + " время: " + new Date() + "\n+" +
                             " Класс в процессе... " + this.getClass().getName() + "\n" +
@@ -260,7 +259,7 @@ private      void startingServiceBoot(@NotNull Intent intent ,@NonNull  LinkedHa
                 // TODO: 26.12.2024 Только Обновление ПО
                 case "lanchUpdatePO":
                     // TODO: 19.01.2024  запуск класса бизнес логики службы Синхроиазции и Обновление ПО
-                    binessLogicIntentServiceBoot.lanchUpdatePO(getsslSocketFactory2, getHiltPortJboss,getApplicationContext());
+                    binessLogicIntentServiceBoot.lanchUpdatePO( getHiltPortJboss,getApplicationContext());
                     Log.d(getApplicationContext().getClass().getName(), "\n"
                             + " время: " + new Date() + "\n+" +
                             " Класс в процессе... " + this.getClass().getName() + "\n" +
@@ -270,8 +269,7 @@ private      void startingServiceBoot(@NotNull Intent intent ,@NonNull  LinkedHa
                 // TODO: 26.12.2024 И Обновление и Синхронизация
                 case "lanchUpdatePOAndAsync" :
                     // TODO: 19.01.2024  запуск класса бизнес логики службы Синхроиазции и Обновление ПО
-                    binessLogicIntentServiceBoot.lanchUpdatePOAndAsync( getsslSocketFactory2,
-                            getHiltPortJboss,getApplicationContext());
+                    binessLogicIntentServiceBoot.lanchUpdatePOAndAsync(getHiltPortJboss,getApplicationContext());
                     Log.d(getApplicationContext().getClass().getName(), "\n"
                             + " время: " + new Date() + "\n+" +
                             " Класс в процессе... " + this.getClass().getName() + "\n" +
