@@ -66,7 +66,7 @@ public class MyWork_AsyncSingle extends Worker {
         try {
             // TODO: 18.03.2025
             GetWorker getWorker=new GetWorker(getApplicationContext());
-            getWorker.startingSingleWorkerManger(getlocalBinderBootSerice,"WorkManager Synchronizasiy_Data");
+            getWorker.startingSingleWorkerManger(getlocalBinderBootSerice,ИмяСлужбыWorkManger);
 
             Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                     " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
