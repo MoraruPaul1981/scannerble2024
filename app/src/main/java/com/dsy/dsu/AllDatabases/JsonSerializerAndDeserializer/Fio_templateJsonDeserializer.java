@@ -312,7 +312,22 @@ this.context=context;
             sqLiteStatementInsert.bindString(4, jsonNodeParentMAP.get("date_update").asText());//"date_update"
             sqLiteStatementInsert.bindLong(5, jsonNodeParentMAP.get("user_update").intValue());//"user_update"
             sqLiteStatementInsert.bindLong(6, jsonNodeParentMAP.get("current_table").longValue());//"current_table"
-            sqLiteStatementInsert.bindString(7, jsonNodeParentMAP.get("status_send").asText().trim());//"user_update"
+
+
+
+
+
+            if (jsonNodeParentMAP.has("status_send")) {
+                if (!jsonNodeParentMAP.get("status_send").isNull()) {
+                    sqLiteStatementInsert.bindString(7, jsonNodeParentMAP.get("status_send").asText().trim());//"user_update"
+                }else {
+                    sqLiteStatementInsert.bindNull(7);
+                }
+            }else {
+                sqLiteStatementInsert.bindNull(7);
+            }
+
+
 
             // TODO: 05.07.2023  Для Состыковки
             sqLiteStatementInsert.bindLong(8,jsonNodeParentMAP.get("uuid").longValue());//"uuid уже для UUID"

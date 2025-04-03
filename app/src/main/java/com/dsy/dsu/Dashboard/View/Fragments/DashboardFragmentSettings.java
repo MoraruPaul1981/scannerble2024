@@ -913,11 +913,9 @@ public class DashboardFragmentSettings extends  DialogFragment {
                                 bundleBinderUpdate.putBinder("callbackbinderdashbord", localBinderОбновлениеПО);
                                 Интент_BackFromErrors.putExtras(bundleBinderUpdate);
 
-                                Интент_BackFromErrors.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_SINGLE_TOP);
+                                Интент_BackFromErrors.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
                                 Интент_BackFromErrors.putExtra("ЗапускШаблоновFaceAppБлокировкаКнопкиДа", true);
                                  startActivity(Интент_BackFromErrors);
-
-
                                 Log.d(this.getClass().getName(), "" +
                                         "                     case R.id.ПунктМенюПервый:");
                             } catch (Exception e) {

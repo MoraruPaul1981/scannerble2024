@@ -37,6 +37,9 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.concurrent.ConcurrentSkipListSet;
 import java.util.concurrent.CopyOnWriteArrayList;
+import java.util.concurrent.Executor;
+import java.util.concurrent.ExecutorCompletionService;
+import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
 
@@ -99,8 +102,9 @@ public class ProccesorparallelSynch   {
 
      case  "СамыйПервыйЗапускСинхронизации":
 
+      final    ExecutorService threadPool = Executors.newFixedThreadPool(2);
          Flowable.fromIterable(getBufferFromJbossServerAllTables)
-                 .parallel(2).runOn(Schedulers.from(Executors.newFixedThreadPool(2)))
+                 .parallel(2).runOn(Schedulers.from(threadPool))
                  .doOnNext(new Consumer<Map<String, String>>() {
                      @Override
                      public void accept(Map<String, String> stringStringMapMultiPotoks) throws Throwable {
@@ -126,6 +130,8 @@ public class ProccesorparallelSynch   {
                                  Thread.currentThread().getStackTrace()[2].getLineNumber()  );
                      }
                  }).doOnComplete(()->{
+                     // TODO: 03.04.2025
+                     threadPool.shutdown();
                      Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                              " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
                              " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"
@@ -229,12 +235,8 @@ public class ProccesorparallelSynch   {
 
 
             /////////////TODO ИДЕМ ПО ШАГАМ К ЗАПУСКИ СИНХРОГНИАЗЦИИ
-
-
-                РезультатТаблицыОбмена=
-                        TwoOfaKindGetAndPostJboss(getNameTable,
+                РезультатТаблицыОбмена= TwoOfaKindGetAndPostJboss(getNameTable,
                                 getVersionserverversion, PublicID,getParserVersionserver);
-
             // TODO: 12.07.2023
 
             Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +

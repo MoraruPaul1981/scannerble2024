@@ -350,7 +350,26 @@ this.context=context;
             sqLiteStatementInsert.bindLong(8, jsonNodeParentMAP.get("user_update").intValue());//"uuid"
             sqLiteStatementInsert.bindLong(9, jsonNodeParentMAP.get("cfo").intValue());//"uuid"
             sqLiteStatementInsert.bindLong(10, jsonNodeParentMAP.get("current_table").longValue());//"current_table"
-            sqLiteStatementInsert.bindString(11, jsonNodeParentMAP.get("status_send").asText().trim());//"uuid"
+
+
+
+            if (jsonNodeParentMAP.has("status_send")) {
+                if (!jsonNodeParentMAP.get("status_send").isNull()) {
+                    sqLiteStatementInsert.bindString(11, jsonNodeParentMAP.get("status_send").asText().trim());//"user_update"
+                }else {
+                    sqLiteStatementInsert.bindNull(11);
+                }
+            }else {
+                sqLiteStatementInsert.bindNull(11);
+            }
+
+
+
+
+
+
+
+
             sqLiteStatementInsert.bindString(12, jsonNodeParentMAP.get("ttn").asText().trim());//"date_update"
             sqLiteStatementInsert.bindString(13, jsonNodeParentMAP.get("datattn").asText().trim());//"date_update"
 

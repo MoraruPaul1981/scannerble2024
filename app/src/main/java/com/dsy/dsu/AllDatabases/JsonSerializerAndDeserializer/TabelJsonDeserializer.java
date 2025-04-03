@@ -302,7 +302,24 @@ this.context=context;
             sqLiteStatementInsert.bindLong(3, jsonNodeParentMAP.get("year_tabels").intValue());//"id""
             sqLiteStatementInsert.bindString(4, jsonNodeParentMAP.get("date_update").asText().trim());//"date_update"
             sqLiteStatementInsert.bindLong(5, jsonNodeParentMAP.get("uuid").longValue());//"uuid"
-            sqLiteStatementInsert.bindString(6, jsonNodeParentMAP.get("status_send").asText().trim());//"id""
+
+
+
+
+
+            if (jsonNodeParentMAP.has("status_send")) {
+                if (!jsonNodeParentMAP.get("status_send").isNull()) {
+                    sqLiteStatementInsert.bindString(6, jsonNodeParentMAP.get("status_send").asText().trim());//"user_update"
+                }else {
+                    sqLiteStatementInsert.bindNull(6);
+                }
+            }else {
+                sqLiteStatementInsert.bindNull(6);
+            }
+
+
+
+
             sqLiteStatementInsert.bindLong(7, jsonNodeParentMAP.get("user_update").intValue());//"uuid"
             sqLiteStatementInsert.bindLong(8, jsonNodeParentMAP.get("current_table").longValue());//"current_table"
 

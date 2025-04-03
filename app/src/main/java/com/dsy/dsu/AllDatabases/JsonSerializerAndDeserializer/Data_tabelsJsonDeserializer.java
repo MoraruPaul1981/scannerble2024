@@ -372,8 +372,23 @@ this.context=context;
         sqLiteStatementInsert.bindLong(35, jsonNodeParentMAP.get("current_table").longValue());//"current_table"
         sqLiteStatementInsert.bindLong(36, jsonNodeParentMAP.get("uuid").longValue());//"uuid"
         sqLiteStatementInsert.bindLong(37, jsonNodeParentMAP.get("user_update").intValue());//"uuid"
-        sqLiteStatementInsert.bindString(38, jsonNodeParentMAP.get("status_send").asText().trim());//"id""
-        sqLiteStatementInsert.bindLong(39, jsonNodeParentMAP.get("status_carried_out").intValue());//"id""
+
+
+
+            if (jsonNodeParentMAP.has("status_send")) {
+                if (!jsonNodeParentMAP.get("status_send").isNull()) {
+                    sqLiteStatementInsert.bindString(38, jsonNodeParentMAP.get("status_send").asText().trim());//"user_update"
+                }else {
+                    sqLiteStatementInsert.bindNull(38);
+                }
+            }else {
+                sqLiteStatementInsert.bindNull(38);
+            }
+
+
+
+
+            sqLiteStatementInsert.bindLong(39, jsonNodeParentMAP.get("status_carried_out").intValue());//"id""
 
 
             // TODO: 25.09.2024
@@ -451,7 +466,22 @@ this.context=context;
             sqLiteStatementInsert.bindLong(35, jsonNodeParentMAP.get("current_table").longValue());//"current_table"
             sqLiteStatementInsert.bindLong(36, jsonNodeParentMAP.get("uuid").longValue());//"uuid"
             sqLiteStatementInsert.bindLong(37, jsonNodeParentMAP.get("user_update").intValue());//"uuid"
-            sqLiteStatementInsert.bindString(38, jsonNodeParentMAP.get("status_send").asText().trim());//"id""
+
+            if (jsonNodeParentMAP.has("status_send")) {
+                if (!jsonNodeParentMAP.get("status_send").isNull()) {
+                    sqLiteStatementInsert.bindString(38, jsonNodeParentMAP.get("status_send").asText().trim());//"user_update"
+                }else {
+                    sqLiteStatementInsert.bindNull(38);
+                }
+            }else {
+                sqLiteStatementInsert.bindNull(38);
+            }
+
+
+
+
+
+
             sqLiteStatementInsert.bindLong(39, jsonNodeParentMAP.get("status_carried_out").intValue());//"id""
 
 

@@ -37,6 +37,7 @@ import com.dsy.dsu.AllDatabases.SQLTE.GetSQLiteDatabase;
 
 import com.dsy.dsu.BusinessLogicAll.Class_GRUD_SQL_Operations;
 import com.dsy.dsu.BusinessLogicAll.DATE.Class_Generation_Data;
+import com.dsy.dsu.Dashboard.Model.LaunchActivityDiaologSettings;
 import com.dsy.dsu.Errors.controller.RecordNewErros;
 import com.dsy.dsu.BusinessLogicAll.Class_MODEL_synchronized;
 import com.dsy.dsu.CnangeServers.PUBLIC_CONTENT;
@@ -911,24 +912,13 @@ return (int) РезультатВставкиНовогоСотрудникар�
         imageViewСтрелкаВнутриНастроек.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Log.d(this.getClass().getName(), " кликнем для созданни новго сотрдника при нажатии  ");
-                // TODO Запусукаем Фргамент НАстройки  dashbord
-                DashboardFragmentSettings dashboardFragmentSettings = DashboardFragmentSettings.newInstance();
-                Bundle data=new Bundle();
-                dashboardFragmentSettings.setArguments(data);
-                fragmentTransaction.remove(dashboardFragmentSettings);
-                String fragmentNewImageNameaddToBackStack=   dashboardFragmentSettings.getClass().getName();
-                fragmentTransaction.addToBackStack(fragmentNewImageNameaddToBackStack);
-                Fragment FragmentУжеЕСтьИлиНЕт=     fragmentManager.findFragmentByTag(fragmentNewImageNameaddToBackStack);
-                if (FragmentУжеЕСтьИлиНЕт==null) {
-                    dashboardFragmentSettings.show(fragmentManager, "DashboardFragmentSettings");
-                    // TODO: 01.08.2023
 
-                }
+                // TODO Запусукаем Фргамент НАстройки  dashbord
+                new LaunchActivityDiaologSettings(fragmentManager,context).launchADashboardSettings();
+
                 Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                         " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                        " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"
-                        + " FragmentУжеЕСтьИлиНЕт " +FragmentУжеЕСтьИлиНЕт );
+                        " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n");
 
 
 
