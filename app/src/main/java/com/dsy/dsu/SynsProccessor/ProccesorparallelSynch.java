@@ -131,14 +131,12 @@ public class ProccesorparallelSynch   {
                      }
                  }).doOnComplete(()->{
                      // TODO: 03.04.2025
-                     threadPool.shutdown();
                      Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                              " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
                              " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"
-                             + " coutSucceessItemAsycnTablesComplete.size() " + coutSucceessItemAsycnTablesComplete.size()
-                             +"\n" + "РежимЗапускаСинхронизации " +РежимЗапускаСинхронизации);
+                             +"\n" + "POOL NAME  " +Thread.currentThread().getName());
 
-                 }).sequentialDelayError().blockingSubscribe();
+                 }).sequentialDelayError() .blockingSubscribe();
          // TODO: 15.09.2023
          Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                  " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
