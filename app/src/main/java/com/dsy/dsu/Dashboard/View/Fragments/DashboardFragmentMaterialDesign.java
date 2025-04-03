@@ -81,12 +81,7 @@ public class DashboardFragmentMaterialDesign extends  DialogFragment  {
 
 
     // TODO: Rename and change types and number of parameters
-    public static DashboardFragmentMaterialDesign newInstance( ) {
-        DashboardFragmentMaterialDesign fragment = new DashboardFragmentMaterialDesign();
-        Bundle args = new Bundle();
-        fragment.setArguments(args);
-        return fragment;
-    }
+
 
     @Override
     public void onCreate(Bundle savedInstanceState) {

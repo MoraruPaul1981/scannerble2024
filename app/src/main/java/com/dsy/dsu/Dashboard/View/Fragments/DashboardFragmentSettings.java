@@ -498,22 +498,25 @@ public class DashboardFragmentSettings extends  DialogFragment {
                     public void onClick(View v) {
                         try{
                             // TODO Запусукаем  Фрагмент Главный Экран
-                            DashboardFragmentMaterialDesign    dashboardFragmentHarmonyOS = DashboardFragmentMaterialDesign.newInstance();
+                            Fragment      dashboardFragmentMaterialDesign = new DashboardFragmentMaterialDesign();
                             Bundle data=new Bundle();
                             data.putBinder("callbackbinderdashbord",localBinderОбновлениеПО);
-                            dashboardFragmentHarmonyOS.setArguments(data);
-                            String fragmentNewImageNameaddToBackStack=   dashboardFragmentHarmonyOS.getClass().getName();
-                            fragmentTransaction.addToBackStack(fragmentNewImageNameaddToBackStack);
-                            fragmentManager.popBackStack();
-                            // TODO: 10.03.2025
-                            fragmentTransaction.remove(DashboardFragmentSettings.this).commit() ;
-                            // TODO: 03.10.2023
-                                dashboardFragmentHarmonyOS.show(fragmentManager, "DashboardFragmentMaterialDesign");
+                            dashboardFragmentMaterialDesign.setArguments(data);
+                            // TODO Запусукаем Фргамент DdshBoard
+                            FragmentTransaction   fragmentTransaction = fragmentManager.beginTransaction();
+                            dashboardFragmentMaterialDesign.setArguments(data);
+                            fragmentTransaction.addToBackStack(null)
+                                    .setPrimaryNavigationFragment(dashboardFragmentMaterialDesign)
+                                    .setReorderingAllowed(true);
+                            dashboardFragmentMaterialDesign.setEnterTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
+                            fragmentTransaction.setCustomAnimations(android.R.anim.slide_in_left, android.R.anim.slide_out_right);
+                            fragmentTransaction.add(R.id.linearLayout_root_activity_dashboard, dashboardFragmentMaterialDesign);//.layout.activity_for_fragemtb_history_tasks
+                            fragmentTransaction.commit();
+                            fragmentTransaction.show(dashboardFragmentMaterialDesign);
                                 // TODO: 01.08.2023
                             Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                                     " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                                    " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"
-                                    + " dashboardFragmentHarmonyOS " +dashboardFragmentHarmonyOS );
+                                    " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n");
                         } catch (Exception e) {
                             e.printStackTrace();
                             Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() + " Линия  :"

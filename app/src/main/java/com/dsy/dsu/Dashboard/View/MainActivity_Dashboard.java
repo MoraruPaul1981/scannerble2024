@@ -21,6 +21,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentContainerView;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
@@ -64,13 +65,13 @@ public class MainActivity_Dashboard extends AppCompatActivity {
     GetStartingRegistraziyOneSIgnalAndFireBase getStartingRegistraziyOneSIgnalAndFireBase;
 
     private   Activity activity;
-    private ScrollView scrollview_dashboard;
+
     private  BuniccessLogicaActivityDashboard buniccessLogicaActivityDashboard;
 
 
     public static final int ALL_PERSSION_CODE=1;
     private FragmentManager fragmentManager;
-    private FragmentTransaction fragmentTransaction;
+
     private SharedPreferences preferences;
 
 
@@ -90,16 +91,17 @@ public class MainActivity_Dashboard extends AppCompatActivity {
         try {
             super.onCreate(savedInstanceState);
             setContentView(R.layout.activity_main_dashboard);
-            scrollview_dashboard = (ScrollView) findViewById(R.id.scrollview_dashboard); /////КНОПКА ТАБЕЛЬНОГО УЧЕТА
+            FragmentContainerView fragmentContainerView=   (FragmentContainerView) findViewById(R.id.linearLayout_root_activity_dashboard);
             activity = this;
             getSupportActionBar().hide();
             fragmentManager =  getSupportFragmentManager();
-            fragmentTransaction = fragmentManager.beginTransaction();
             preferences=   getApplicationContext() .getSharedPreferences("sharedPreferencesХранилище", Context.MODE_MULTI_PROCESS);
             // TODO: 04.10.2023 разрешения для всего
             new ClassPermissions(this,ALL_PERSSION_CODE);
 
             registeEventBusFirst();
+
+
 
 
             // TODO: 15.08.2023 Начинается Пользовательский КОд
@@ -131,7 +133,7 @@ public class MainActivity_Dashboard extends AppCompatActivity {
         super.onStart();
         try {
 
-            LaunchActivityDashboard launchActivityDashboard=new LaunchActivityDashboard(fragmentTransaction,fragmentManager,getApplicationContext());
+            LaunchActivityDashboard launchActivityDashboard=new LaunchActivityDashboard( fragmentManager,getApplicationContext());
             // TODO: 27.03.2024 в зависомсти кто вызвает
                 launchActivityDashboard.     launchADashboardFragment();
 

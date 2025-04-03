@@ -1,13 +1,11 @@
 package com.dsy.dsu.Errors.view;
 
-import android.Manifest;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.ActivityInfo;
-import android.content.pm.PackageManager;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Build;
 import android.os.Bundle;
@@ -22,16 +20,13 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
 
-import com.dsy.dsu.BootAndAsync.ViewModelBoot.View.MainActivityBootAndAsync;
 import com.dsy.dsu.BusinessLogicAll.Class_Sendiing_Errors;
 import com.dsy.dsu.BusinessLogicAll.DeviceName.ModulegetDeviceName;
 import com.dsy.dsu.BusinessLogicAll.Permissions.ClassPermissions;
-import com.dsy.dsu.Dashboard.View.MainActivity_Dashboard;
 import com.dsy.dsu.Errors.controller.BiccessLogicActivityError;
 
 import com.dsy.dsu.Errors.controller.GettingErrorsIsFileOrIsCursor;
@@ -127,7 +122,7 @@ public class MainActivity_Errors extends AppCompatActivity  {
               sqLiteDatabase_error = EntryPoints.get(getApplicationContext(), HiltInterfacesqlite.class).getHiltSqlite();
 
             // TODO: 22.09.2023  exit error fragment
-            методBackInError();
+            launchBackFragmentSettings();
 
             // TODO: 12.12.2023  staring biscce logic
             biccessLogicActivityError=new BiccessLogicActivityError( getApplicationContext(),sqLiteDatabase_error);
@@ -443,14 +438,14 @@ public class MainActivity_Errors extends AppCompatActivity  {
         }
 
     }
-    private void методBackInError() {
+    private void launchBackFragmentSettings() {
         imageViewBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 try{
                         // TODO: 22.09.2023  exit error fragment
                     // TODO: 22.09.2023  exit error fragment
-                    biccessLogicActivityError.    metodCallBackkFragemtSettings(fragmentTransaction,fragmentManager,getApplicationContext() );
+                    biccessLogicActivityError.    metodCallBackkFragemtSettings( fragmentManager,getApplicationContext() );
 
                     Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                             " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
