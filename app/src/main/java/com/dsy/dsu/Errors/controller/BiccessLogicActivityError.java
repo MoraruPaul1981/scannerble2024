@@ -21,6 +21,7 @@ import androidx.fragment.app.FragmentTransaction;
 
 import com.dsy.dsu.BootAndAsync.ViewModelBoot.View.MainActivityBootAndAsync;
 import com.dsy.dsu.BusinessLogicAll.AnalysisUserAuthenticated.GetAnalysisUserAuthenticated;
+import com.dsy.dsu.Dashboard.Model.LaunchActivityDiaologSettings;
 import com.dsy.dsu.Dashboard.Model.bl_launchFragmentSettingsandDashbord.LaunchActivityDashboard;
 import com.dsy.dsu.Dashboard.Model.endingasynsdashboard.LauntchActivityAfterUpdatePOAndAsync;
 import com.dsy.dsu.Dashboard.View.Fragments.DashboardFragmentSettings;
@@ -129,38 +130,12 @@ public class  BiccessLogicActivityError{
 
             if (UserAuthenticated) {
                 // TODO: 01.04.2024 Все в порядке ЗАпускам Саму Программу DashBord
-                DashboardFragmentSettings dashboardFragmentSettings = DashboardFragmentSettings.newInstance();
-                Bundle data = new Bundle();
-                FragmentTransaction   fragmentTransaction = fragmentManager.beginTransaction();
-
-
-                fragmentTransaction.runOnCommit(new Runnable() {
-                    @Override
-                    public void run() {
-                        Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
-                                " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                                " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n");
-                    }
-                });
-                fragmentTransaction.setBreadCrumbShortTitle("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
-
-
-
-                dashboardFragmentSettings.setArguments(data);
-                fragmentTransaction.addToBackStack(null)
-                        .setPrimaryNavigationFragment(dashboardFragmentSettings)
-                        .setReorderingAllowed(true);
-                fragmentTransaction.setCustomAnimations(android.R.anim.slide_in_left, android.R.anim.slide_out_right);
-                fragmentTransaction.replace(R.id.linearLayout_root_activity_dashboard, dashboardFragmentSettings).commit();//.layout.activity_for_fragemtb_history_tasks
-                if (dashboardFragmentSettings.isAdded()) {
-                    fragmentTransaction.show(dashboardFragmentSettings);
-                }
-
-
-
-
-
-
+                // TODO Запусукаем Фргамент НАстройки  dashbord
+                new LaunchActivityDiaologSettings(fragmentManager,context).launchADashboardSettings();
+                // TODO: 01.08.2023
+                Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                        " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                        " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n");
 
                     // TODO: 01.08.2023
                 Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
