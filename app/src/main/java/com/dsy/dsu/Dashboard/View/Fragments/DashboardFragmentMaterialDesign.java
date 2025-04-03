@@ -6,19 +6,29 @@ import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.ServiceConnection;
+import android.database.Cursor;
+import android.graphics.Color;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.os.IBinder;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
+import android.widget.ListView;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.widget.AppCompatImageButton;
+import androidx.appcompat.widget.SearchView;
+import androidx.cursoradapter.widget.CursorAdapter;
+import androidx.cursoradapter.widget.SimpleCursorAdapter;
 import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
@@ -39,6 +49,8 @@ import com.dsy.dsu.Services.ServiceUpdatePoОбновлениеПО;
 import com.dsy.dsu.Tabels.Tabel.CompleteTabel.MainActivity_List_Tabels;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.card.MaterialCardView;
+import com.google.android.material.dialog.MaterialAlertDialogBuilder;
+import com.google.android.material.textview.MaterialTextView;
 
 import java.util.Date;
 
@@ -91,18 +103,42 @@ public class DashboardFragmentMaterialDesign extends  DialogFragment  {
         return fragment;
     }
 
-/*    @NonNull
+    @NonNull
     @Override
     public Dialog onCreateDialog(@Nullable Bundle savedInstanceState) {
+        super.onCreateDialog(savedInstanceState);
+        return     new MaterialAlertDialogBuilder(getContext()){
+            @NonNull
+            @Override
+            public MaterialAlertDialogBuilder setView(View view) {
+                try {
+                    // TODO: 15.08.2023
+                    Log.d(this.getClass().getName(),"\n" + " class "
+                            + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                            " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                            " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n");
 
-        new AlertDialog.Builder(getActivity())
-                .setIcon(R.drawable.icon_dsu1_new_customer_calendar)
-                .setTitle("ffff")
-                .create();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
+                            " Линия  :" + Thread.currentThread().getStackTrace()[2].getLineNumber());
+                    new RecordNewErros(getContext()).recordnewerror(e.toString(),
+                            this.getClass().getName(),
+                            Thread.currentThread().getStackTrace()[2].getMethodName(), Thread.currentThread().getStackTrace()[2].getLineNumber());
+                }
+                return super.setView(view);
+            }
+
+        }
+                .setTitle("ddd")
+                .setCancelable(false)
+                .setIcon( R.drawable.icon_newscannertwo)
+                .setView(getLayoutInflater().inflate( R.layout.simple_dashbord_fragment_scroll, null )).create();
 
 
-        return super.onCreateDialog(savedInstanceState);
-    }*/
+
+
+    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -223,14 +259,14 @@ public class DashboardFragmentMaterialDesign extends  DialogFragment  {
         }
     }
 
-    @Override
+/*    @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view=null;
         try{
-       /*     ViewDashboart= inflater.inflate(R.layout.simple_dashbord_fragment_grey, container, false);
+       *//*     ViewDashboart= inflater.inflate(R.layout.simple_dashbord_fragment_grey, container, false);
             ViewDashboart= inflater.inflate(R.layout.simple_dashbord_fragment_grey, container, false);
-            ViewDashboart= inflater.inflate(R.layout.simple_dashbord_fragment_grey, container, false);*/
+            ViewDashboart= inflater.inflate(R.layout.simple_dashbord_fragment_grey, container, false);*//*
             // ViewDashboart= inflater.inflate(R.layout.simple_dashbord_fragment_grey, container, false);
             // ViewDashboart= inflater.inflate(R.layout.simple_dashbord_fragment_blue, container, false);
             // view= inflater.inflate(R.layout.simple_dashbord_fragment_grey_materialdisign_3, container, false);
@@ -250,7 +286,7 @@ public class DashboardFragmentMaterialDesign extends  DialogFragment  {
                     Thread.currentThread().getStackTrace()[2].getLineNumber());
         }
         return  view; //TODO inflater.inflate(R.layout.activity_main__tabel_four_colums, container, false);
-    }
+    }*/
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
