@@ -1,4 +1,4 @@
-package com.dsy.dsu.Settings.Model.Model;
+package com.dsy.dsu.Settings.Model;
 
 import android.content.ContentResolver;
 import android.content.ContentValues;
@@ -32,7 +32,7 @@ public class ChangeSSLForSettings {
       String getMode_ssl=new String();
       //SELECT
 
-      getMode_ssl=new SLLBenessLogicMode(context).getModeSLL();
+      getMode_ssl=new com.dsy.dsu.Settings.Model.Model.SLLBenessLogicMode(context).getModeSLL();
 
       Log.d(context.getClass().getName(), "\n"
               + " время: " + new Date()+"\n+" +

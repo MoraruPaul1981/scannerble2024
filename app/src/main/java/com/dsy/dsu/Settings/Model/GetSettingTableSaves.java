@@ -1,4 +1,4 @@
-package com.dsy.dsu.Settings.Model.Model;
+package com.dsy.dsu.Settings.Model;
 
 import android.content.ContentValues;
 import android.content.Context;
@@ -15,7 +15,7 @@ import com.dsy.dsu.Errors.controller.RecordNewErros;
 
 import java.util.Date;
 
-public class GetSettingTableSaves implements  INSetttingTabels {
+public class GetSettingTableSaves implements com.dsy.dsu.Settings.Model.Model.INSetttingTabels {
 
 
     @Override

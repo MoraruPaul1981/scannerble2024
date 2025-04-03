@@ -46,7 +46,8 @@ import com.dsy.dsu.BusinessLogicAll.SubClassWriterPUBLICIDtoDatabase;
 
 import com.dsy.dsu.Hilt.getSSLSocketFactory2.QualifiergetsslSocketFactory2;
 import com.dsy.dsu.R;
-import com.dsy.dsu.Settings.Model.Model.GetSettingTableSaves;
+
+import com.dsy.dsu.Settings.Model.GetSettingTableSaves;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.textfield.TextInputEditText;
 import com.jakewharton.rxbinding4.view.RxView;

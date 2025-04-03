@@ -42,7 +42,8 @@ import com.dsy.dsu.BusinessLogicAll.Class_MODEL_synchronized;
 import com.dsy.dsu.CnangeServers.PUBLIC_CONTENT;
 import com.dsy.dsu.Dashboard.View.Fragments.DashboardFragmentSettings;
 import com.dsy.dsu.R;
-import com.dsy.dsu.Settings.Model.Model.ChangeSSLForSettings;
+import com.dsy.dsu.Settings.Model.ChangeSSLForSettings;
+
 
 import org.jetbrains.annotations.NotNull;
 
