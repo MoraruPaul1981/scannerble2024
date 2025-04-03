@@ -29,17 +29,19 @@ public class LaunchActivityDashboard {
   public   void launchADashboardFragment() {
         try {
             // TODO Запусукаем Фргамент DdshBoard
-           // Fragment      dashboardFragmentMaterialDesign = new DashboardFragmentMaterialDesign();
-            Fragment      dashboardFragmentMaterialDesign = new BlankFragmentError();
+            DashboardFragmentMaterialDesign dashboardFragmentMaterialDesign = DashboardFragmentMaterialDesign.newInstance();
+            //Fragment      dashboardFragmentMaterialDesign = new BlankFragmentError();
             Bundle data = new Bundle();
             FragmentTransaction   fragmentTransaction = fragmentManager.beginTransaction();
+            fragmentTransaction.addToBackStack(null);
+            fragmentManager.popBackStack();
             dashboardFragmentMaterialDesign.setArguments(data);
-             fragmentTransaction.setPrimaryNavigationFragment(dashboardFragmentMaterialDesign);
+           fragmentTransaction.setPrimaryNavigationFragment(dashboardFragmentMaterialDesign);
             dashboardFragmentMaterialDesign.setEnterTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
              fragmentTransaction.setCustomAnimations(android.R.anim.slide_in_left, android.R.anim.slide_out_right);
-            fragmentTransaction.add(R.id.linearLayout_root_activity_dashboard, dashboardFragmentMaterialDesign);
-            fragmentTransaction.commit();
-            fragmentTransaction.show(dashboardFragmentMaterialDesign);
+            dashboardFragmentMaterialDesign.show(fragmentManager, "DashboardFragmentMaterialDesign");
+
+
             Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                     " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
                     " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n");

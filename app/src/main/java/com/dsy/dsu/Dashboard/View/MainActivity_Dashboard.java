@@ -102,8 +102,6 @@ public class MainActivity_Dashboard extends AppCompatActivity {
             registeEventBusFirst();
 
 
-
-
             // TODO: 15.08.2023 Начинается Пользовательский КОд
             buniccessLogicaActivityDashboard=new BuniccessLogicaActivityDashboard();
             // TODO: 29.09.2023 Статус Повтороной Синхрониазции

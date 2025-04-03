@@ -1,5 +1,7 @@
 package com.dsy.dsu.Dashboard.View.Fragments;
 
+import android.app.AlertDialog;
+import android.app.Dialog;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
@@ -81,7 +83,26 @@ public class DashboardFragmentMaterialDesign extends  DialogFragment  {
 
 
     // TODO: Rename and change types and number of parameters
+    // TODO: Rename and change types and number of parameters
+    public static DashboardFragmentMaterialDesign newInstance( ) {
+        DashboardFragmentMaterialDesign fragment = new DashboardFragmentMaterialDesign();
+        Bundle args = new Bundle();
+        fragment.setArguments(args);
+        return fragment;
+    }
 
+/*    @NonNull
+    @Override
+    public Dialog onCreateDialog(@Nullable Bundle savedInstanceState) {
+
+        new AlertDialog.Builder(getActivity())
+                .setIcon(R.drawable.icon_dsu1_new_customer_calendar)
+                .setTitle("ffff")
+                .create();
+
+
+        return super.onCreateDialog(savedInstanceState);
+    }*/
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -237,6 +258,7 @@ public class DashboardFragmentMaterialDesign extends  DialogFragment  {
             super.onViewCreated(view, savedInstanceState);
 
 
+/*
 
             ViewDashboart=view;
             relativelayout_dashboard         = (RelativeLayout) view.findViewById(R.id.relativelayout_dashboard); /////КНОПКА ТАБЕЛЬНОГО УЧЕТА
@@ -275,6 +297,7 @@ public class DashboardFragmentMaterialDesign extends  DialogFragment  {
                     КнопкаТабель,getGrantRemote);
 
 
+*/
 
 
             Log.d(this.getClass().getName(),"\n" + " class " +
@@ -301,11 +324,13 @@ public class DashboardFragmentMaterialDesign extends  DialogFragment  {
     public void onStart() {
         super.onStart();
         try{
+/*
 
             buniccessLogicFra4gmentDashboard.new ClassButtonsApp().методStartingAllButtonApp();
 
 
             buniccessLogicFra4gmentDashboard.new ClassAnimatilBackButton().методToSettingsFragment();
+*/
 
 
 
