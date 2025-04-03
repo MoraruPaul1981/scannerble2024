@@ -7,7 +7,7 @@
     android:background="#FFFFFF"
     android:foregroundGravity="center"
     android:visibility="visible"
-    tools:context=".Settings.MainActivity_Settings"
+    tools:context=".Settings.View.MainActivity_Settings"
     tools:visibility="visible">
 
 

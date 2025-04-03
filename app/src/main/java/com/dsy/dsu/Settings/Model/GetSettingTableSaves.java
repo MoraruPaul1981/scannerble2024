@@ -1,4 +1,4 @@
-package com.dsy.dsu.Settings.Model.bl_SettingsActivity;
+package com.dsy.dsu.Settings.Model.Model;
 
 import android.content.ContentValues;
 import android.content.Context;

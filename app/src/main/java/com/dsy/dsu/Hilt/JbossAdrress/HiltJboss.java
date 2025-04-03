@@ -11,11 +11,9 @@ import com.dsy.dsu.Hilt.JbossAdrress.intarfaces.HiltJbossBinessLogicIntarface;
 import com.dsy.dsu.Hilt.JbossAdrress.qualifiers.QualifierJbossServer3;
 import com.dsy.dsu.Hilt.JbossAdrress.reliesadress.HiltJbossBinessLogic;
 import com.dsy.dsu.Hilt.JbossAdrress.reliesadress.HiltJbossBinessLogicSSl;
-import com.dsy.dsu.Settings.Model.bl_SettingsActivity.SLLBenessLogicMode;
+import com.dsy.dsu.Settings.Model.Model.SLLBenessLogicMode;
 
 import java.util.LinkedHashMap;
-
-import javax.inject.Singleton;
 
 import dagger.Module;
 import dagger.Provides;

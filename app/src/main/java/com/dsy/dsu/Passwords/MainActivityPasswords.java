@@ -32,25 +32,21 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.dsy.dsu.AllDatabases.SQLTE.GetSQLiteDatabase;
 import com.dsy.dsu.BootAndAsync.EventsBus.MessageEvensBusNetworkStatuses;
-import com.dsy.dsu.BootAndAsync.EventsBus.MessageEvensBusUpdatePO;
 import com.dsy.dsu.BootAndAsync.ViewModelBoot.View.MainActivityBootAndAsync;
 import com.dsy.dsu.BusinessLogicAll.Class_Clears_Tables;
 import com.dsy.dsu.BusinessLogicAll.Class_Connections_Server;
 
-import com.dsy.dsu.BusinessLogicAll.CreateFolderBinatySave.ClassCreateFolderCommitPays1C;
 import com.dsy.dsu.BusinessLogicAll.CreateFolderBinatySave.ClassDeleteErrorFile;
-import com.dsy.dsu.BusinessLogicAll.Errors.ClassCreateFileForError;
 import com.dsy.dsu.BusinessLogicAll.GetConnectivityManagerAndroid;
 import com.dsy.dsu.Errors.controller.RecordNewErros;
 import com.dsy.dsu.BusinessLogicAll.Class_MODEL_synchronized;
-import com.dsy.dsu.BusinessLogicAll.CreateFolderBinatySave.ClassCreateFolderBinatyMatrilal;
 import com.dsy.dsu.BusinessLogicAll.Permissions.ClassPermissions;
 import com.dsy.dsu.CnangeServers.PUBLIC_CONTENT;
 import com.dsy.dsu.BusinessLogicAll.SubClassWriterPUBLICIDtoDatabase;
 
 import com.dsy.dsu.Hilt.getSSLSocketFactory2.QualifiergetsslSocketFactory2;
 import com.dsy.dsu.R;
-import com.dsy.dsu.Settings.Model.bl_SettingsActivity.GetSettingTableSaves;
+import com.dsy.dsu.Settings.Model.Model.GetSettingTableSaves;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.textfield.TextInputEditText;
 import com.jakewharton.rxbinding4.view.RxView;

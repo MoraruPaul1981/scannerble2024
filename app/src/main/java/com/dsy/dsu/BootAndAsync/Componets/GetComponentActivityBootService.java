@@ -29,14 +29,11 @@ import com.dsy.dsu.BootAndAsync.EventsBus.MessageEvensBusNetworkStatuses;
 import com.dsy.dsu.BootAndAsync.EventsBus.MessageEvensBusUpdatePO;
 import com.dsy.dsu.BusinessLogicAll.Permissions.ClassPermissions;
 import com.dsy.dsu.CallNavigarlaout.CallNavigarlaout;
-import com.dsy.dsu.Dashboard.View.MainActivity_Dashboard;
 import com.dsy.dsu.Errors.controller.RecordNewErros;
 import com.dsy.dsu.Errors.view.MainActivity_Errors;
-import com.dsy.dsu.Passwords.MainActivityPasswords;
 import com.dsy.dsu.R;
-import com.dsy.dsu.Settings.MainActivity_Settings;
+import com.dsy.dsu.Settings.View.MainActivity_Settings;
 import com.google.android.material.navigation.NavigationView;
-import com.google.android.material.progressindicator.LinearProgressIndicator;
 
 import java.util.Date;
 

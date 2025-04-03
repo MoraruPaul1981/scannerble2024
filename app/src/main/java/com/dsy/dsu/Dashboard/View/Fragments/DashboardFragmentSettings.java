@@ -49,7 +49,7 @@ import com.dsy.dsu.Hilt.getSSLSocketFactory2.QualifiergetsslSocketFactory2;
 import com.dsy.dsu.Tabels.Templates.MainActivity_New_Templates;
 import com.dsy.dsu.Services.ServiceUpdatePoОбновлениеПО;
 import com.dsy.dsu.Errors.view.MainActivity_Errors;
-import com.dsy.dsu.Settings.MainActivity_Settings;
+import com.dsy.dsu.Settings.View.MainActivity_Settings;
 import com.dsy.dsu.R;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.card.MaterialCardView;

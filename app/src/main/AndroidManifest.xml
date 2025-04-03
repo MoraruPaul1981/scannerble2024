@@ -535,7 +535,7 @@
                 android:value="com.dsy.dsu.Tabels.Tabel.CompleteTabel.MainActivity_List_Tabels" />
         </activity>
         <activity
-            android:name=".Settings.MainActivity_Settings"
+            android:name=".Settings.View.MainActivity_Settings"
             android:exported="true"
             android:label="Форма просмотр Логин"
             android:theme="@style/Theme.MaterialComponents.DayNight.DarkActionBar">

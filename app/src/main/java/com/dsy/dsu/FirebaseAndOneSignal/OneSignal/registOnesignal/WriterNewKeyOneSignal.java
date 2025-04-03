@@ -9,7 +9,7 @@ import com.dsy.dsu.BusinessLogicAll.GetPublicID.GetPublicID;
 import com.dsy.dsu.BusinessLogicAll.VersionCurentTable;
 import com.dsy.dsu.CnangeServers.PUBLIC_CONTENT;
 import com.dsy.dsu.Errors.controller.RecordNewErros;
-import com.dsy.dsu.Settings.Model.bl_SettingsActivity.GetSettingTableSaves;
+import com.dsy.dsu.Settings.Model.Model.GetSettingTableSaves;
 
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;

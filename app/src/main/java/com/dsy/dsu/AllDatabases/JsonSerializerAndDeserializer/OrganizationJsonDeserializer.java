@@ -268,8 +268,21 @@ this.context=context;
         sqLiteStatementInsert.bindString(4,jsonNodeParentMAP.get("kpp").asText().trim());//"kpp"
         sqLiteStatementInsert.bindString(5,jsonNodeParentMAP.get("date_update").asText().trim());//"date_update"
         sqLiteStatementInsert.bindLong(6,jsonNodeParentMAP.get("user_update").intValue());//"user_update"
-        sqLiteStatementInsert.bindLong(7,jsonNodeParentMAP.get("chosen_organization").intValue());//"chosen_organization"
-        sqLiteStatementInsert.bindLong(8,jsonNodeParentMAP.get("current_table").longValue());//"current_table"
+
+
+
+            // TODO: 25.09.2024 "chosen_organization"
+            if (  jsonNodeParentMAP.has("chosen_organization") ) {
+                if (!jsonNodeParentMAP.get("chosen_organization").isNull()  ) {
+                    sqLiteStatementInsert.bindLong(7,jsonNodeParentMAP.get("chosen_organization").intValue());//"name"
+                }else {
+                    sqLiteStatementInsert.bindNull(7);
+                }
+            }else{
+                sqLiteStatementInsert.bindNull(7);
+            }
+
+            sqLiteStatementInsert.bindLong(8,jsonNodeParentMAP.get("current_table").longValue());//"current_table"
         sqLiteStatementInsert.bindLong(9,jsonNodeParentMAP.get("uuid").longValue());//"uuid"
 
         Log.d(this.getClass().getName(), "\n" + " class " +

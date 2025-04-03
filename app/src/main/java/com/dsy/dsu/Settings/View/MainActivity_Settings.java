@@ -1,4 +1,4 @@
-package com.dsy.dsu.Settings;
+package com.dsy.dsu.Settings.View;
 
 import android.annotation.SuppressLint;
 import android.content.ContentValues;
@@ -42,7 +42,7 @@ import com.dsy.dsu.BusinessLogicAll.Class_MODEL_synchronized;
 import com.dsy.dsu.CnangeServers.PUBLIC_CONTENT;
 import com.dsy.dsu.Dashboard.View.Fragments.DashboardFragmentSettings;
 import com.dsy.dsu.R;
-import com.dsy.dsu.Settings.Model.bl_SettingsActivity.ChangeSSLForSettings;
+import com.dsy.dsu.Settings.Model.Model.ChangeSSLForSettings;
 
 import org.jetbrains.annotations.NotNull;
 
