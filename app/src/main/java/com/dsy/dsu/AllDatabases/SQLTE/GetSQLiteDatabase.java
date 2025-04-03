@@ -754,7 +754,7 @@ public class GetSQLiteDatabase extends SQLiteOpenHelper{ ///SQLiteOpenHelper
                 "status_send TEXT DEFAULT 'Локальные'  ," +
                 "status_carried_out   INTEGER DEFAULT 0   ,"+
                 " prof   INTEGER    ,"+
-                " UNIQUE (fio,uuid_tabel,prof),"+
+                " UNIQUE (fio,uuid_tabel,prof,status_send),"+
                 "FOREIGN KEY(prof) REFERENCES prof  (_id)  ON UPDATE CASCADE," +
                 "FOREIGN KEY(fio ) REFERENCES fio (uuid)  ON UPDATE CASCADE )  ");//  "PRIMARY KEY(fio,uuid_tabel)) ");
         ///             "FOREIGN KEY(uuid_tabel ) REFERENCES tabel (uuid)  ON UPDATE CASCADE  ON DELETE CASCADE," +
