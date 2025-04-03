@@ -34,12 +34,10 @@ public class LaunchActivityDashboard {
             Bundle data = new Bundle();
             FragmentTransaction   fragmentTransaction = fragmentManager.beginTransaction();
             dashboardFragmentMaterialDesign.setArguments(data);
-            fragmentTransaction.addToBackStack(null)
-                    .setPrimaryNavigationFragment(dashboardFragmentMaterialDesign)
-                    .setReorderingAllowed(true);
+             fragmentTransaction.setPrimaryNavigationFragment(dashboardFragmentMaterialDesign);
             dashboardFragmentMaterialDesign.setEnterTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
              fragmentTransaction.setCustomAnimations(android.R.anim.slide_in_left, android.R.anim.slide_out_right);
-            fragmentTransaction.add(R.id.linearLayout_root_activity_dashboard, dashboardFragmentMaterialDesign);//.layout.activity_for_fragemtb_history_tasks
+            fragmentTransaction.add(R.id.linearLayout_root_activity_dashboard, dashboardFragmentMaterialDesign);
             fragmentTransaction.commit();
             fragmentTransaction.show(dashboardFragmentMaterialDesign);
             Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
