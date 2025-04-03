@@ -39,6 +39,7 @@ import com.dsy.dsu.BootAndAsync.Componets.GetComponentActivityBootService;
 import com.dsy.dsu.BootAndAsync.EventsBus.MessageEvensBusUpdatePO;
 import com.dsy.dsu.BusinessLogicAll.Class_Clears_Tables;
 import com.dsy.dsu.BusinessLogicAll.Class_Connections_Server;
+import com.dsy.dsu.Dashboard.Model.bl_launchFragmentSettingsandDashbord.LaunchActivityDashboard;
 import com.dsy.dsu.Errors.controller.RecordNewErros;
 
 import com.dsy.dsu.BusinessLogicAll.Class_MODEL_synchronized;
@@ -498,21 +499,10 @@ public class DashboardFragmentSettings extends  DialogFragment {
                     public void onClick(View v) {
                         try{
                             // TODO Запусукаем  Фрагмент Главный Экран
-                            Fragment      dashboardFragmentMaterialDesign = new DashboardFragmentMaterialDesign();
-                            Bundle data=new Bundle();
-                            data.putBinder("callbackbinderdashbord",localBinderОбновлениеПО);
-                            dashboardFragmentMaterialDesign.setArguments(data);
-                            // TODO Запусукаем Фргамент DdshBoard
-                            FragmentTransaction   fragmentTransaction = fragmentManager.beginTransaction();
-                            dashboardFragmentMaterialDesign.setArguments(data);
-                            fragmentTransaction.addToBackStack(null)
-                                    .setPrimaryNavigationFragment(dashboardFragmentMaterialDesign)
-                                    .setReorderingAllowed(true);
-                            dashboardFragmentMaterialDesign.setEnterTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
-                            fragmentTransaction.setCustomAnimations(android.R.anim.slide_in_left, android.R.anim.slide_out_right);
-                            fragmentTransaction.add(R.id.linearLayout_root_activity_dashboard, dashboardFragmentMaterialDesign);//.layout.activity_for_fragemtb_history_tasks
-                            fragmentTransaction.commit();
-                            fragmentTransaction.show(dashboardFragmentMaterialDesign);
+                            LaunchActivityDashboard launchActivityDashboard=new LaunchActivityDashboard( fragmentManager,getContext());
+                            // TODO: 27.03.2024 в зависомсти кто вызвает
+                            launchActivityDashboard.     launchADashboardFragment(localBinderОбновлениеПО);
+
                                 // TODO: 01.08.2023
                             Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                                     " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +

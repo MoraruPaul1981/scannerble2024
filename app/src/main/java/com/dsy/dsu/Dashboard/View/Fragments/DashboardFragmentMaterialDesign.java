@@ -9,6 +9,7 @@ import android.content.ServiceConnection;
 import android.database.Cursor;
 import android.graphics.Color;
 import android.graphics.Typeface;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.os.IBinder;
 import android.util.Log;
@@ -16,11 +17,13 @@ import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
 import android.view.WindowManager;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
+import android.widget.TableLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -33,11 +36,13 @@ import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.LifecycleOwner;
+import androidx.viewpager.widget.ViewPager;
 import androidx.viewpager2.widget.ViewPager2;
 
 import com.dsy.dsu.AdmissionMaterials.Window.MainActivity_AdmissionMaterials;
 import com.dsy.dsu.CommitPrices.View.Window.MainActivityCommitingPrices;
 
+import com.dsy.dsu.Dashboard.Model.LaunchActivityDiaologSettings;
 import com.dsy.dsu.Dashboard.Model.bl_viewpager2.BunesslogicViewPager2;
 import com.dsy.dsu.Dashboard.Model.changeaccessrights.DashboardGRANTorREVOKE;
 import com.dsy.dsu.Errors.controller.RecordNewErros;
@@ -66,9 +71,9 @@ public class DashboardFragmentMaterialDesign extends  DialogFragment  {
     private MaterialCardView materialcardview_dashboard=null;
     private FragmentManager fragmentManager;
     private FragmentTransaction fragmentTransaction;
-    private          View ViewDashboart=null;
 
-    private   RelativeLayout relativelayout_dashboard;
+
+    private   TableLayout tableLayout_dashboard;
 
     private Animation animation1,animation2,animation3,animation4,animation5;
 
@@ -103,42 +108,7 @@ public class DashboardFragmentMaterialDesign extends  DialogFragment  {
         return fragment;
     }
 
-    @NonNull
-    @Override
-    public Dialog onCreateDialog(@Nullable Bundle savedInstanceState) {
-        super.onCreateDialog(savedInstanceState);
-        return     new MaterialAlertDialogBuilder(getContext()){
-            @NonNull
-            @Override
-            public MaterialAlertDialogBuilder setView(View view) {
-                try {
-                    // TODO: 15.08.2023
-                    Log.d(this.getClass().getName(),"\n" + " class "
-                            + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
-                            " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                            " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n");
 
-                } catch (Exception e) {
-                    e.printStackTrace();
-                    Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
-                            " Линия  :" + Thread.currentThread().getStackTrace()[2].getLineNumber());
-                    new RecordNewErros(getContext()).recordnewerror(e.toString(),
-                            this.getClass().getName(),
-                            Thread.currentThread().getStackTrace()[2].getMethodName(), Thread.currentThread().getStackTrace()[2].getLineNumber());
-                }
-                return super.setView(view);
-            }
-
-        }
-                .setTitle("ddd")
-                .setCancelable(false)
-                .setIcon( R.drawable.icon_newscannertwo)
-                .setView(getLayoutInflater().inflate( R.layout.simple_dashbord_fragment_scroll, null )).create();
-
-
-
-
-    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -191,7 +161,8 @@ public class DashboardFragmentMaterialDesign extends  DialogFragment  {
             // setStyle(   DialogFragment.STYLE_NORMAL ,android.R.style.Theme_Black_NoTitleBar );
             //  setStyle(   DialogFragment.STYLE_NORMAL ,android.R.style.Theme_Material_Light_Dialog_Presentation);
             setStyle(   DialogFragment.STYLE_NORMAL ,android.R.style.Theme_Material_Light_NoActionBar );
-
+           // setStyle(   DialogFragment.STYLE_NORMAL ,android.R.style.Theme_Material_Light_NoActionBar_Fullscreen);
+          // setStyle(   DialogFragment.STYLE_NORMAL ,android.R.style.Theme_DeviceDefault_NoActionBar_Fullscreen );
             setShowsDialog(true);
             // TODO: 15.08.2023
             Log.d(this.getClass().getName(),"\n" + " class "
@@ -259,19 +230,13 @@ public class DashboardFragmentMaterialDesign extends  DialogFragment  {
         }
     }
 
-/*    @Override
+     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view=null;
         try{
-       *//*     ViewDashboart= inflater.inflate(R.layout.simple_dashbord_fragment_grey, container, false);
-            ViewDashboart= inflater.inflate(R.layout.simple_dashbord_fragment_grey, container, false);
-            ViewDashboart= inflater.inflate(R.layout.simple_dashbord_fragment_grey, container, false);*//*
-            // ViewDashboart= inflater.inflate(R.layout.simple_dashbord_fragment_grey, container, false);
-            // ViewDashboart= inflater.inflate(R.layout.simple_dashbord_fragment_blue, container, false);
-            // view= inflater.inflate(R.layout.simple_dashbord_fragment_grey_materialdisign_3, container, false);
             view= inflater.inflate(R.layout.simple_dashbord_fragment_scroll, container, false);
-            // view= inflater.inflate(R.layout.simple_dashbord_fragment_green, container, false);
+
             // TODO: 21.06.2023
             Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                     " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
@@ -286,28 +251,21 @@ public class DashboardFragmentMaterialDesign extends  DialogFragment  {
                     Thread.currentThread().getStackTrace()[2].getLineNumber());
         }
         return  view; //TODO inflater.inflate(R.layout.activity_main__tabel_four_colums, container, false);
-    }*/
+    }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         try{
             super.onViewCreated(view, savedInstanceState);
-
-
-/*
-
-            ViewDashboart=view;
-            relativelayout_dashboard         = (RelativeLayout) view.findViewById(R.id.relativelayout_dashboard); /////КНОПКА ТАБЕЛЬНОГО УЧЕТА
-
-
-
-            КнопкаЗаявкаНаТранспорт   = (MaterialButton) view.findViewById(R.id.КнопкаЗаявкаНаТранспорт); /////КНОПКА ТАБЕЛЬНОГО УЧЕТА
-            КнопкаСогласование         = (MaterialButton) view.findViewById(R.id.КнопкаСогласование); /////КНОПКА ТАБЕЛЬНОГО УЧЕТА
-            КнопкаСогласЦен         = (MaterialButton) view.findViewById(R.id.КнопкаСогласЦен); /////КНОПКА ТАБЕЛЬНОГО УЧЕТА
-            КнопкаПоступлениеМатериалов         = (MaterialButton) view.findViewById(R.id.КнопкаПоступлениеМатериалов); /////КНОПКА ТАБЕЛЬНОГО УЧЕТА
-            КнопкаТабель          = (MaterialButton) view.findViewById(R.id.КнопкаТабель); /////КНОПКА ТАБЕЛЬНОГО УЧЕТА
-            imageview_to_settings      = (AppCompatImageButton) view.findViewById(R.id.imageview_to_settings); /////КНОПКА ТАБЕЛЬНОГО УЧЕТА
-            pagerdachbord = (ViewPager2) view.findViewById(R.id.pagerdachbord);
+            // TODO: 03.04.2025
+            tableLayout_dashboard         = (TableLayout) view.findViewById(R.id.tableLayout_dashboard); /////КНОПКА ТАБЕЛЬНОГО УЧЕТА
+            КнопкаЗаявкаНаТранспорт   = (MaterialButton) tableLayout_dashboard.findViewById(R.id.КнопкаЗаявкаНаТранспорт); /////КНОПКА ТАБЕЛЬНОГО УЧЕТА
+            КнопкаСогласование         = (MaterialButton) tableLayout_dashboard.findViewById(R.id.КнопкаСогласование); /////КНОПКА ТАБЕЛЬНОГО УЧЕТА
+            КнопкаСогласЦен         = (MaterialButton) tableLayout_dashboard.findViewById(R.id.КнопкаСогласЦен); /////КНОПКА ТАБЕЛЬНОГО УЧЕТА
+            КнопкаПоступлениеМатериалов         = (MaterialButton) tableLayout_dashboard.findViewById(R.id.КнопкаПоступлениеМатериалов); /////КНОПКА ТАБЕЛЬНОГО УЧЕТА
+            КнопкаТабель          = (MaterialButton) tableLayout_dashboard.findViewById(R.id.КнопкаТабель); /////КНОПКА ТАБЕЛЬНОГО УЧЕТА
+            imageview_to_settings      = (AppCompatImageButton) tableLayout_dashboard.findViewById(R.id.imageview_to_settings); /////КНОПКА ТАБЕЛЬНОГО УЧЕТА
+            pagerdachbord = (ViewPager2) tableLayout_dashboard.findViewById(R.id.pagerdachbord);
 
 
             // TODO: 17.03.2025 Старрт Бизнес ЛОгики
@@ -333,7 +291,7 @@ public class DashboardFragmentMaterialDesign extends  DialogFragment  {
                     КнопкаТабель,getGrantRemote);
 
 
-*/
+
 
 
             Log.d(this.getClass().getName(),"\n" + " class " +
@@ -360,15 +318,9 @@ public class DashboardFragmentMaterialDesign extends  DialogFragment  {
     public void onStart() {
         super.onStart();
         try{
-/*
-
             buniccessLogicFra4gmentDashboard.new ClassButtonsApp().методStartingAllButtonApp();
 
-
             buniccessLogicFra4gmentDashboard.new ClassAnimatilBackButton().методToSettingsFragment();
-*/
-
-
 
             // TODO: 20.07.2023
             Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
@@ -604,23 +556,11 @@ public class DashboardFragmentMaterialDesign extends  DialogFragment  {
                     public void onClick(View v) {
                         try{
                             // TODO Запусукаем Фргамент НАстройки  dashbord
-                            DashboardFragmentSettings    dashboardFragmentSettings = DashboardFragmentSettings.newInstance();
-                            Bundle data=new Bundle();
-                            data.putBinder("callbackbinderdashbord",localBinderОбновлениеПО);
-                            dashboardFragmentSettings.setArguments(data);
-                            fragmentManager.popBackStack();
-                            // TODO: 10.03.2025
-                            fragmentTransaction.remove(DashboardFragmentMaterialDesign.this).commit() ;
-
-                            // TODO: 03.10.2023
-
-                                dashboardFragmentSettings.show(fragmentManager, "DashboardFragmentSettings");
+                            new LaunchActivityDiaologSettings(fragmentManager,getContext()).launchADashboardSettings(localBinderОбновлениеПО);
                                 // TODO: 01.08.2023
                             Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                                     " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
                                     " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n");
-
-
 
 
                             Log.i(getContext().getClass().getName(),  " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
@@ -716,6 +656,41 @@ public class DashboardFragmentMaterialDesign extends  DialogFragment  {
 
 
     }
+/*    @NonNull
+    @Override
+    public Dialog onCreateDialog(@Nullable Bundle savedInstanceState) {
+        super.onCreateDialog(savedInstanceState);
+        return     new MaterialAlertDialogBuilder(getContext(),android.R.style.Theme_DeviceDefault_NoActionBar_Fullscreen){
+            @NonNull
+            @Override
+            public MaterialAlertDialogBuilder setView(View view) {
+                try {
+                    // TODO: 15.08.2023
+                    Log.d(this.getClass().getName(),"\n" + " class "
+                            + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                            " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                            " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n");
 
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
+                            " Линия  :" + Thread.currentThread().getStackTrace()[2].getLineNumber());
+                    new RecordNewErros(getContext()).recordnewerror(e.toString(),
+                            this.getClass().getName(),
+                            Thread.currentThread().getStackTrace()[2].getMethodName(), Thread.currentThread().getStackTrace()[2].getLineNumber());
+                }
+                return super.setView(view);
+            }
+
+        }
+                .setTitle("ddd")
+                .setCancelable(false)
+                .setIcon( R.drawable.icon_newscannertwo)
+                .setView(getLayoutInflater().inflate( R.layout.simple_dashbord_fragment_scroll, null )).create();
+
+
+
+
+    }*/
     // TODO: 10.03.2025 end class
 }
