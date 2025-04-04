@@ -36,13 +36,8 @@ import dagger.hilt.components.SingletonComponent;
 public class RecordNewErroBack   implements RecordNewErrorsBackInterface {
 
     private Context context;
-    /*private String fileName = "Sous-Avtodor-ERROR.txt";
-
-    private   String patchFileName="SousAvtoFile";*/
     public @Inject RecordNewErroBack(@ApplicationContext Context context) {
-
         this.context=context;
-
         Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                 " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
                 " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n");

@@ -18,7 +18,6 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
-import com.dsy.dsu.BootAndAsync.BlBootAsync.Hilts.ServiceBootBinessLogic;
 import com.dsy.dsu.BootAndAsync.Componets.GetComponentActivityBootService;
 import com.dsy.dsu.BootAndAsync.Componets.GetComponentPrograssbar;
 import com.dsy.dsu.BootAndAsync.EventsBus.MessageEvensBusNetworkStatuses;
@@ -27,12 +26,10 @@ import com.dsy.dsu.BootAndAsync.EventsBus.MessageEvensBusUpdatePO;
 import com.dsy.dsu.BootAndAsync.ViewModelBoot.ViewModel.ViewModel;
 import com.dsy.dsu.BusinessLogicAll.Permissions.ClassPermissions;
 import com.dsy.dsu.CoreApp.Model.BunessLogicCoreApp;
-import com.dsy.dsu.Errors.controller.BiccessLogicActivityError;
 import com.dsy.dsu.Errors.controller.RecordNewErros;
 import com.dsy.dsu.Hilt.getSSLSocketFactory2.QualifiergetsslSocketFactory2;
 import com.dsy.dsu.R;
 import com.google.android.material.navigation.NavigationView;
-import com.google.android.material.progressindicator.LinearProgressIndicator;
 
 
 import org.greenrobot.eventbus.EventBus;
@@ -40,14 +37,11 @@ import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.Date;
-import java.util.concurrent.TimeUnit;
 
 import javax.inject.Inject;
 import javax.net.ssl.SSLSocketFactory;
 
 import dagger.hilt.android.AndroidEntryPoint;
-import io.reactivex.rxjava3.core.Observable;
-import io.reactivex.rxjava3.functions.Consumer;
 
 @AndroidEntryPoint
 public class MainActivityBootAndAsync extends AppCompatActivity {

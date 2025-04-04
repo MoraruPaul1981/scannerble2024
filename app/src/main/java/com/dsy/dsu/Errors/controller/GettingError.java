@@ -27,14 +27,14 @@ import javax.inject.Inject;
 
 import io.reactivex.rxjava3.core.Flowable;
 
-public class GettingErrorsIsFileOrIsCursor implements GettingErrorsIsFileInterface {
+public class GettingError implements GettingErrorsIsFileInterface {
 
     Context context;
 
     @Inject
     ModuleQuety moduleQuety;
 
-    public GettingErrorsIsFileOrIsCursor(Context context, ModuleQuety moduleQuety) {
+    public GettingError(Context context, ModuleQuety moduleQuety) {
         this.context = context;
         this.moduleQuety = moduleQuety;
     }
