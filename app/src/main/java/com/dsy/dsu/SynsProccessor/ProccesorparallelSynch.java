@@ -35,6 +35,7 @@ import java.util.Date;
 import java.util.LinkedHashMap;
 import java.util.Locale;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentSkipListSet;
 import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.concurrent.Executor;
@@ -72,13 +73,13 @@ public class ProccesorparallelSynch   {
 
     private  String  РежимЗапускаСинхронизации;
 
-    private  CopyOnWriteArrayList<Map<String, String>> getBufferFromJbossServerAllTables;
+    private  CopyOnWriteArrayList<ConcurrentHashMap<String, String>> getBufferFromJbossServerAllTables;
 
 
     public ProccesorparallelSynch(@NonNull Context context,
                                   @NonNull ObjectMapper jsonGenerator,
                                   @NonNull SSLSocketFactory getsslSocketFactory2,
-                                  @NonNull    CopyOnWriteArrayList<Map<String, String>> getBufferFromJbossServerAllTables,
+                                  @NonNull    CopyOnWriteArrayList<ConcurrentHashMap<String, String>> getBufferFromJbossServerAllTables,
                                   @NonNull Integer PublicID,
                                   @NonNull  LinkedHashMap<Integer,String> getHiltPortJboss) {
 
@@ -102,9 +103,9 @@ public class ProccesorparallelSynch   {
             // TODO: 20.01.2025 сама синхрониаиця
             Flowable.fromIterable(getBufferFromJbossServerAllTables)
                     .onBackpressureBuffer(1)
-                    .doOnNext(new Consumer<Map<String, String>>() {
+                    .doOnNext(new Consumer<ConcurrentHashMap<String, String>>() {
                         @Override
-                        public void accept(Map<String, String> stringStringMapMultiPotoks) throws Throwable {
+                        public void accept(ConcurrentHashMap<String, String> stringStringMapMultiPotoks) throws Throwable {
                             // TODO: 28.12.2024
                             // TODO: 06.12.2023  запуск синхризуции по таблице конктерной
                             coutSucceessItemAsycnTablesComplete.getAndSet(getLooTablesPOSTANDGET(stringStringMapMultiPotoks));      ;
@@ -114,7 +115,7 @@ public class ProccesorparallelSynch   {
                                     " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
                                     " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"
                                     + " getBufferFromJbossServerAllTables.size() " + getBufferFromJbossServerAllTables.size()
-                                    +"\n");
+                                    +"\n" +" POOL NAMES "+Thread.currentThread().getName());
                         }
                     }).doOnError(new Consumer<Throwable>() {
                         @Override
@@ -133,7 +134,7 @@ public class ProccesorparallelSynch   {
                                 + " coutSucceessItemAsycnTablesComplete.get() " + coutSucceessItemAsycnTablesComplete.get()
                                 +"\n");
 
-                    })
+                    }).repeat(2)
                     .blockingSubscribe();
 
             Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
@@ -155,7 +156,7 @@ public class ProccesorparallelSynch   {
 
 
 
-    public Long getLooTablesPOSTANDGET(@NonNull Map<String, String> stringStringMapRowSingle) {
+    public Long getLooTablesPOSTANDGET(@NonNull ConcurrentHashMap<String, String> stringStringMapRowSingle) {
         Long   РезультатТаблицыОбмена=0l;
         try{
             // TODO: 21.08.2023 Запуск Синхронизации после получение Версии

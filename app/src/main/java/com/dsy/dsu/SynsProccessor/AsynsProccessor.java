@@ -22,6 +22,7 @@ import org.json.JSONException;
 
 import java.util.LinkedHashMap;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.TimeoutException;
@@ -238,9 +239,9 @@ public class AsynsProccessor extends Class_MODEL_synchronized {
 
 
                     //TODO Таблицы ОТ  Сервера
-                    CopyOnWriteArrayList<Map<String, String>> getBufferFromJbossServerAllTables =
+                    CopyOnWriteArrayList<ConcurrentHashMap<String, String>> getBufferFromJbossServerAllTables =
                             jsonGenerator.readValue(BufferGetVersionData.toString(),
-                            new TypeReference<CopyOnWriteArrayList<Map<String, String>>>() {
+                            new TypeReference<CopyOnWriteArrayList<ConcurrentHashMap<String, String>>>() {
                             });
                     Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                             " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
@@ -249,11 +250,11 @@ public class AsynsProccessor extends Class_MODEL_synchronized {
 
 
                     //TODO Таблицы ОТ  Андройда
-                    CopyOnWriteArrayList<String>      getMainTabelAllAndroid = new PUBLIC_CONTENT(context).getWorkerTablesALl(context);
+                 //   CopyOnWriteArrayList<String>      getMainTabelAllAndroid = new PUBLIC_CONTENT(context).getWorkerTablesALl(context);
 
                     Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                             " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                            " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"   + " getMainTabelAllAndroid " +getMainTabelAllAndroid);
+                            " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"   + " getBufferFromJbossServerAllTables " +getBufferFromJbossServerAllTables);
 
 // TODO: 25.09.2024  Запускаем ГЛАВНУЮ ОБРБАБОТКУ по таблицам
                     РезультатСинхронизации   = МетодГлавныхЦиклТаблицДляСинхронизации(getPublicID,getBufferFromJbossServerAllTables);
@@ -408,8 +409,8 @@ public class AsynsProccessor extends Class_MODEL_synchronized {
 
 
     @SuppressLint("SuspiciousIndentation")
-    Long МетодГлавныхЦиклТаблицДляСинхронизации(@NonNull Integer PublicID,   @NonNull    CopyOnWriteArrayList<Map<String, String>> getBufferFromJbossServerAllTables)
-            throws ExecutionException, InterruptedException {//КонтекстСинхроДляКонтроллера
+    Long МетодГлавныхЦиклТаблицДляСинхронизации(@NonNull Integer PublicID,
+                                                @NonNull    CopyOnWriteArrayList<ConcurrentHashMap<String, String>> getBufferFromJbossServerAllTables) {//КонтекстСинхроДляКонтроллера
         // TODO: 07.04.2024
        AtomicReference<Long> ResultatSync =new AtomicReference<>(0l);
         try {
