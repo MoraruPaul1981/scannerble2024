@@ -2,6 +2,7 @@ package com.dsy.dsu.Errors.view;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 
 import androidx.constraintlayout.widget.ConstraintLayout;
@@ -52,6 +53,9 @@ public class FragmentError extends DialogFragment {
 
     // TODO: 14.10.2022 настйрока хранилища
    SharedPreferences sharedPreferencesХранилище;
+
+    @Inject
+    public SQLiteDatabase getSqlLiteCoreApp;
 
     // TODO: Rename and change types and number of parameters
     public static FragmentError newInstance( ) {
@@ -146,7 +150,7 @@ public class FragmentError extends DialogFragment {
             Log.d(this.getClass().getName(),"\n" + " class "
                 + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                 " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n");
+                " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"   +  "getSqlLiteCoreApp " +getSqlLiteCoreApp);
     } catch (Exception e) {
         e.printStackTrace();
         Log.e(getContext().getClass().getName(),

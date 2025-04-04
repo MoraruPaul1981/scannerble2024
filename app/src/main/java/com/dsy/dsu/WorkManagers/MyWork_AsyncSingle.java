@@ -1,6 +1,7 @@
 package com.dsy.dsu.WorkManagers;
 
 import android.annotation.SuppressLint;
+import android.app.ActivityManager;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
@@ -64,6 +65,7 @@ public class MyWork_AsyncSingle extends Worker {
     public Result doWork() {
         // TODO: 24.09.2024
         try {
+
             // TODO: 18.03.2025
             GetWorker getWorker=new GetWorker(getApplicationContext());
             getWorker.startingSingleWorkerManger(getlocalBinderBootSerice,ИмяСлужбыWorkManger);

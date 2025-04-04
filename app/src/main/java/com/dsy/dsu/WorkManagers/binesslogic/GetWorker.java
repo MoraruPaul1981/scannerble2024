@@ -59,7 +59,7 @@ public class GetWorker {
                     Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                             " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
                             " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"
-                            + " isWorkManagerRunning " + isWorkManagerRunning);
+                            + " SINGLE SINGLE SINGLE  isWorkManagerRunning " + isWorkManagerRunning);
 
 
                 }
@@ -95,16 +95,23 @@ public class GetWorker {
                     new GetConnectivityManagerAndroid(context).сonnectivityManageruserselection();
             Intent intentSingleWorker=new Intent();
 
-            if(getlocalBinderBootSerice!=null) {
-                if (ВыбранныйРежимСети) {
+            GetActivityManager getActivityManager=new GetActivityManager(context);
 
-                    if (getlocalBinderBootSerice.isBinderAlive() && isWorkManagerRunning == false) {
-                        String actionSingleWorker =  "lanchAsync" ;
-                        intentSingleWorker.setAction(actionSingleWorker);
-                        intentSingleWorker.setData(Uri.parse(actionSingleWorker));
+            Boolean getActivityTasks=   getActivityManager.getActivityTasks();
 
-                        getlocalBinderBootSerice.getService().startingServicePublicWorkManger(intentSingleWorker, getHiltPortJboss);
 
+            if (getActivityTasks) {
+                if(getlocalBinderBootSerice!=null) {
+                    if (ВыбранныйРежимСети) {
+
+                        if (getlocalBinderBootSerice.isBinderAlive() && isWorkManagerRunning == false) {
+                            String actionSingleWorker =  "lanchAsync" ;
+                            intentSingleWorker.setAction(actionSingleWorker);
+                            intentSingleWorker.setData(Uri.parse(actionSingleWorker));
+
+                            getlocalBinderBootSerice.getService().startingServicePublicWorkManger(intentSingleWorker, getHiltPortJboss);
+
+                        }
                     }
                 }
             }
@@ -112,7 +119,7 @@ public class GetWorker {
             Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                     " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
                     " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"
-                    + " isWorkManagerRunning " +isWorkManagerRunning );
+                    + " PUBLIC PUBLIC PUBLIC isWorkManagerRunning " +isWorkManagerRunning  + " getActivityTasks " +getActivityTasks  );
 
         } catch (Exception e) {
             e.printStackTrace();

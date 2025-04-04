@@ -17,7 +17,7 @@ import dagger.hilt.InstallIn;
 import dagger.hilt.android.qualifiers.ApplicationContext;
 import dagger.hilt.components.SingletonComponent;
 
-
+@QualifiertEnd
 @Module
 @InstallIn(SingletonComponent.class)
 public class DataModuleSqlite {
@@ -26,7 +26,6 @@ public class DataModuleSqlite {
 
     @Singleton
     @Provides
-    @QualifiertEnd
     public SQLiteDatabase metodHiltSqlite (@ApplicationContext Context context) {
         SQLiteDatabase getSQLites=null;
         try{
