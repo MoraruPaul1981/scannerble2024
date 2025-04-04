@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.FragmentContainerView;
 import androidx.fragment.app.FragmentManager;
@@ -119,12 +120,12 @@ public class FragmentError extends DialogFragment {
         try{
          view= inflater.inflate(R.layout.fragment_error_list, container, false);
 
-            FragmentContainerView   fragmentContainerViewerrors =(FragmentContainerView) view;
+            ConstraintLayout constraintLayoutgetError =(ConstraintLayout) view;
             // TODO: 04.04.2025
-            textViewAllError = (TextView) fragmentContainerViewerrors.findViewById(R.id.textViewAllError);
-            textViewHeaderErrors = (TextView)fragmentContainerViewerrors. findViewById(R.id.textViewHeaderErrors);
-            materialButtonОтправка = (MaterialButton) fragmentContainerViewerrors.findViewById(R.id.materialButtonОтправка);
-            imageViewBack = (MaterialButton) fragmentContainerViewerrors.findViewById(R.id.imageViewBack);
+            textViewAllError = (TextView) constraintLayoutgetError.findViewById(R.id.textViewAllError);
+            textViewHeaderErrors = (TextView)constraintLayoutgetError. findViewById(R.id.textViewHeaderErrors);
+            materialButtonОтправка = (MaterialButton) constraintLayoutgetError.findViewById(R.id.materialButtonОтправка);
+            imageViewBack = (MaterialButton) constraintLayoutgetError.findViewById(R.id.imageViewBack);
             materialButtonОтправка.setClickable(false);
             materialButtonОтправка.setFocusable(false);
             preferences=   getContext().getSharedPreferences("sharedPreferencesХранилище", Context.MODE_MULTI_PROCESS);

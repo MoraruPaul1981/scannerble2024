@@ -45,11 +45,11 @@ import com.dsy.dsu.Errors.controller.RecordNewErros;
 import com.dsy.dsu.BusinessLogicAll.Class_MODEL_synchronized;
 import com.dsy.dsu.CnangeServers.PUBLIC_CONTENT;
 
+import com.dsy.dsu.Errors.model.LaunchFragmenrError;
 import com.dsy.dsu.Hilt.JbossAdrress.qualifiers.QualifierJbossServer3;
 import com.dsy.dsu.Hilt.getSSLSocketFactory2.QualifiergetsslSocketFactory2;
 import com.dsy.dsu.Tabels.Templates.MainActivity_New_Templates;
 import com.dsy.dsu.Services.ServiceUpdatePoОбновлениеПО;
-import com.dsy.dsu.Errors.view.MainActivity_Errors;
 import com.dsy.dsu.Settings.View.MainActivity_Settings;
 import com.dsy.dsu.R;
 import com.google.android.material.button.MaterialButton;
@@ -95,7 +95,7 @@ public class DashboardFragmentSettings extends  DialogFragment {
     private Animation  animation6;
     private TextView TextViewLogo;
     private LifecycleOwner lifecycleOwner;
-    private AppCompatImageButton imageButton_back_in_settings ;
+    private AppCompatImageButton bottonBack;
 
     private ServiceUpdatePoОбновлениеПО.localBinderОбновлениеПО localBinderОбновлениеПО;//TODO новаЯ
 
@@ -222,7 +222,7 @@ public class DashboardFragmentSettings extends  DialogFragment {
             КнопкаОшибки          = (MaterialButton) materialcardview_settings.findViewById(R.id.КнопкаОшибки); /////КНОПКА ТАБЕЛЬНОГО УЧЕТА
             КнопкаШаблоны          = (MaterialButton) materialcardview_settings.findViewById(R.id.КнопкаШаблоны); /////КНОПКА ТАБЕЛЬНОГО УЧЕТА
             TextViewLogo      = (TextView) materialcardview_settings.findViewById(R.id.TextViewLogo); /////КНОПКА ТАБЕЛЬНОГО УЧЕТА
-            imageButton_back_in_settings      = (AppCompatImageButton) materialcardview_settings.findViewById(R.id.imageButton_back_in_settings); /////КНОПКА ТАБЕЛЬНОГО УЧЕТА
+            bottonBack = (AppCompatImageButton) materialcardview_settings.findViewById(R.id.imageButton_back_in_settings); /////КНОПКА ТАБЕЛЬНОГО УЧЕТА
 
            // view= inflater.inflate(R.layout.simple_dashbord_fragment_green, container, false);
             // TODO: 21.06.2023
@@ -494,7 +494,7 @@ public class DashboardFragmentSettings extends  DialogFragment {
         // TODO: 22.08.2023  классс который отвечает за Переход на Фрагмент НАстройки
         class ClassAnimatilBackButton{
             void методToSettingsFragment(){
-                imageButton_back_in_settings.setOnClickListener(new View.OnClickListener() {
+                bottonBack.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         try{
@@ -906,18 +906,14 @@ public class DashboardFragmentSettings extends  DialogFragment {
                         public void onClick(View v) {
                             try {
 
-                                Intent Интент_BackFromErrors = new Intent();
-                                Интент_BackFromErrors.setClass(getContext(), MainActivity_Errors.class); //
-                                Интент_BackFromErrors.setAction("com.CallBackSettingsFragment");
-                                Bundle bundleBinderUpdate=new Bundle();
-                                bundleBinderUpdate.putBinder("callbackbinderdashbord", localBinderОбновлениеПО);
-                                Интент_BackFromErrors.putExtras(bundleBinderUpdate);
+                                // TODO Запусукаем  Фрагмент Главный Экран
+                                LaunchFragmenrError launchFragmenrError=new LaunchFragmenrError( fragmentManager,getContext());
+                                // TODO: 27.03.2024 в зависомсти кто вызвает
+                                launchFragmenrError.     launchErrorFragment(localBinderОбновлениеПО);
 
-                                Интент_BackFromErrors.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
-                                Интент_BackFromErrors.putExtra("ЗапускШаблоновFaceAppБлокировкаКнопкиДа", true);
-                                 startActivity(Интент_BackFromErrors);
-                                Log.d(this.getClass().getName(), "" +
-                                        "                     case R.id.ПунктМенюПервый:");
+                                Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                                        " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                                        " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n");
                             } catch (Exception e) {
                                 e.printStackTrace();
                                 Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() + " Линия  :"

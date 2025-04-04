@@ -30,7 +30,7 @@ import com.dsy.dsu.BootAndAsync.EventsBus.MessageEvensBusUpdatePO;
 import com.dsy.dsu.BusinessLogicAll.Permissions.ClassPermissions;
 import com.dsy.dsu.CallNavigarlaout.CallNavigarlaout;
 import com.dsy.dsu.Errors.controller.RecordNewErros;
-import com.dsy.dsu.Errors.view.MainActivity_Errors;
+import com.dsy.dsu.Errors.model.LaunchFragmenrError;
 import com.dsy.dsu.R;
 import com.dsy.dsu.Settings.View.MainActivity_Settings;
 import com.google.android.material.navigation.NavigationView;
@@ -389,11 +389,12 @@ public class GetComponentActivityBootService {
                             case R.id.one:
                                 try {
                                     item.setChecked(true);
-                                    Intent Интент_Меню = new Intent(activity, MainActivity_Errors.class);
-                                    Интент_Меню.setAction("com.CallBackBootAndAsync");
-                                    Интент_Меню.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);//////FLAG_ACTIVITY_SINGLE_TOP
 
-                                    activity. startActivity(Интент_Меню);
+                                    // TODO: 04.04.2025
+                                    // TODO Запусукаем  Фрагмент Главный Экран
+                               /*     LaunchFragmenrError launchFragmenrError=new LaunchFragmenrError( fragmentManager,context);
+                                    // TODO: 27.03.2024 в зависомсти кто вызвает
+                                    launchFragmenrError.     launchErrorFragment();*/
 
                                     Log.d(context.getClass().getName(), "\n"
                                             + " время: " + new Date() + "\n+" +

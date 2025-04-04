@@ -12,7 +12,7 @@ import dagger.hilt.components.SingletonComponent;
 @InstallIn(SingletonComponent.class)
 public interface HiltInterfacesqlite {
 
-
+    @QualifiertEnd
     SQLiteDatabase getHiltSqlite( );
 }
 
