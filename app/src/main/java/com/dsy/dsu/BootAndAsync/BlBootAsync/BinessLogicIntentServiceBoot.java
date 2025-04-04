@@ -126,7 +126,7 @@ public class BinessLogicIntentServiceBoot {
                                 " Класс в процессе... " + this.getClass().getName() + "\n" +
                                 " метод в процессе... " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n");
 
-                    }).onErrorResumeWith(Maybe.empty());
+                    });
 
             maybelanchUpdatePO .blockingSubscribe();
 
@@ -163,8 +163,7 @@ public class BinessLogicIntentServiceBoot {
                                 + " время: " + new Date() + "\n+" +
                                 " Класс в процессе... " + this.getClass().getName() + "\n" +
                                 " метод в процессе... " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n");
-                    })
-                    .onErrorResumeWith(e-> Observable.empty());
+                    });
             // TODO: 31.03.2025
             maybelanchAsync.blockingSubscribe();
 
@@ -232,7 +231,7 @@ public class BinessLogicIntentServiceBoot {
                        " Класс в процессе... " + this.getClass().getName() + "\n" +
                        " метод в процессе... " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n");
 
-            }).onErrorResumeWith(Maybe.empty());
+            });
             // TODO: 31.03.2025
             maybelanchUpdatePOAndAsync.blockingSubscribe();
 

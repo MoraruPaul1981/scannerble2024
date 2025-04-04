@@ -35,6 +35,7 @@ import javax.net.ssl.SSLSocketFactory;
 import dagger.hilt.android.AndroidEntryPoint;
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
 import io.reactivex.rxjava3.core.Maybe;
+import io.reactivex.rxjava3.functions.Predicate;
 
 /**
  * An {@link IntentService} subclass for handling asynchronous task requests in
@@ -305,8 +306,12 @@ private      void startingServiceBoot(@NotNull Intent intent ,@NonNull  LinkedHa
                                 " метод в процессе... " + Thread.currentThread().getStackTrace()[2].getMethodName() + " getHiltPortJboss " + getHiltPortJboss+
                                 " getTypeTaskForBoot " +getTypeTaskForBoot);
 
-                    }).onErrorResumeWith(Maybe.empty())
-                    .blockingSubscribe();
+                    }).doOnError(e->{
+                Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
+                        " Линия  :" + Thread.currentThread().getStackTrace()[2].getLineNumber());
+                new RecordNewErros(getApplicationContext()).recordnewerror(e.toString(), this.getClass().getName(),
+                        Thread.currentThread().getStackTrace()[2].getMethodName(), Thread.currentThread().getStackTrace()[2].getLineNumber());
+            }).blockingSubscribe();
             Log.d(getApplicationContext().getClass().getName(), "\n"
                 + " время: " + new Date() + "\n+" +
                 " Класс в процессе... " + this.getClass().getName() + "\n" +
@@ -335,6 +340,7 @@ private      void startingServiceBoot(@NotNull Intent intent ,@NonNull  LinkedHa
         try {
             String getTypeTaskWorkManager = intent.getAction();
             Maybe.fromCallable(()->{
+                // TODO: 04.04.2025
                 Boolean UserAuthenticated=       new GetAnalysisUserAuthenticated(getApplicationContext()).analysisUserAuthenticated(240);
                 // TODO: 26.12.2024 выди запуска
                         Log.d(getApplicationContext().getClass().getName(), "\n"
@@ -392,7 +398,12 @@ private      void startingServiceBoot(@NotNull Intent intent ,@NonNull  LinkedHa
                                 break;
                         }
 
-            }).onErrorResumeWith(Maybe.empty())
+            }).doOnError(e->{
+                        Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
+                                " Линия  :" + Thread.currentThread().getStackTrace()[2].getLineNumber());
+                        new RecordNewErros(getApplicationContext()).recordnewerror(e.toString(), this.getClass().getName(),
+                                Thread.currentThread().getStackTrace()[2].getMethodName(), Thread.currentThread().getStackTrace()[2].getLineNumber());
+                    })
                     .blockingSubscribe();
                 // TODO: 31.03.2025  КОгда первый запук и нет не имени не пароля
             Log.d(getApplicationContext().getClass().getName(), "\n"
@@ -470,8 +481,12 @@ private      void startingServiceBoot(@NotNull Intent intent ,@NonNull  LinkedHa
                                 break;
                         }
 
-                    }).onErrorResumeWith(Maybe.empty())
-                    .blockingSubscribe();
+                    }).doOnError(e->{
+                Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
+                        " Линия  :" + Thread.currentThread().getStackTrace()[2].getLineNumber());
+                new RecordNewErros(getApplicationContext()).recordnewerror(e.toString(), this.getClass().getName(),
+                        Thread.currentThread().getStackTrace()[2].getMethodName(), Thread.currentThread().getStackTrace()[2].getLineNumber());
+            }) .blockingSubscribe();
             // TODO: 31.03.2025  КОгда первый запук и нет не имени не пароля
             Log.d(getApplicationContext().getClass().getName(), "\n"
                     + " время: " + new Date() + "\n+" +
