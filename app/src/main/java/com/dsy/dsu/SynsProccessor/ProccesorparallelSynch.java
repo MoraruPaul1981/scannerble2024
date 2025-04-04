@@ -134,8 +134,7 @@ public class ProccesorparallelSynch   {
                                 + " coutSucceessItemAsycnTablesComplete.get() " + coutSucceessItemAsycnTablesComplete.get()
                                 +"\n");
 
-                    }).repeat(2)
-                    .blockingSubscribe();
+                    }).blockingSubscribe();
 
             Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                     " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +

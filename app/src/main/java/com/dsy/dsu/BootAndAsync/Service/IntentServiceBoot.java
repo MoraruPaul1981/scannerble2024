@@ -178,6 +178,7 @@ public class IntentServiceBoot extends IntentService {
     private void getCloseService() {
         try{
             stopForeground(false);
+            stopSelf();
         Log.d(getApplicationContext().getClass().getName(), "\n"
                 + " время: " + new Date() + "\n+" +
                 " Класс в процессе... " + this.getClass().getName() + "\n" +

@@ -144,34 +144,17 @@ public class BinessLogicIntentServiceBoot {
         }
     }
 
-    public void lanchAsync(@NonNull Context context) {
+    @SuppressLint("SuspiciousIndentation")
+    public Long lanchAsync(@NonNull Context context) {
+        Long  getcompleteAsync=0l;
         try {
             // TODO: 14.08.2023 вызов кода ПОльзовательский
+               getcompleteAsync =   completeAsync(   context);
 
-            // TODO: 14.08.2023 Проверяем версси ПО с серврной и локальной
-            Completable maybelanchAsync=    Completable.fromAction(()->{
-
-                Long getcompleteAsync =   completeAsync(   context);
-
-                // TODO: 03.10.2023
-                Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
-                        " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                        " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"   + " getcompleteAsync " +getcompleteAsync);
-
-            }).doOnComplete(()->{
-                        Log.d(context.getClass().getName(), "\n"
-                                + " время: " + new Date() + "\n+" +
-                                " Класс в процессе... " + this.getClass().getName() + "\n" +
-                                " метод в процессе... " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n");
-                    });
-            // TODO: 31.03.2025
-            maybelanchAsync.blockingSubscribe();
-
-
-            Log.d(context.getClass().getName(), "\n"
-                    + " время: " + new Date() + "\n+" +
-                    " Класс в процессе... " + this.getClass().getName() + "\n" +
-                    " метод в процессе... " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n");//
+            // TODO: 03.10.2023
+            Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                    " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                    " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"   + " getcompleteAsync " +getcompleteAsync);
 
             Log.d(context.getClass().getName(), "\n"
                     + " время: " + new Date() + "\n+" +
@@ -184,6 +167,7 @@ public class BinessLogicIntentServiceBoot {
             new RecordNewErros(context).recordnewerror(e.toString(), this.getClass().getName(), Thread.currentThread().getStackTrace()[2].getMethodName(),
                     Thread.currentThread().getStackTrace()[2].getLineNumber());
         }
+        return   getcompleteAsync;
     }
 
     public void lanchUpdatePOAndAsync(@NonNull LinkedHashMap<Integer,String> getHiltPortJboss,
@@ -215,7 +199,7 @@ public class BinessLogicIntentServiceBoot {
                        " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" );
             }).doOnComplete(()->{
                // TODO: 30.03.2025 Запускаем СИНХРОНИЗАЦИЮ
-               Long getcompleteAsync =   completeAsync(   context  );
+               Long getcompleteAsync =   lanchAsync(   context  );
                    // TODO: 31.03.2025
 
                    // TODO: 31.03.2025 нет логина  и пароля переводим программу на Активити Password
@@ -231,7 +215,17 @@ public class BinessLogicIntentServiceBoot {
                        " Класс в процессе... " + this.getClass().getName() + "\n" +
                        " метод в процессе... " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n");
 
-            });
+            }).doOnTerminate(()->{
+           // TODO: 04.04.2025
+           closingBinder(context);
+
+           Log.d(context.getClass().getName(), "\n"
+                   + " время: " + new Date() + "\n+" +
+                   " Класс в процессе... " + this.getClass().getName() + "\n" +
+                   " метод в процессе... " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n");
+
+
+       });
             // TODO: 31.03.2025
             maybelanchUpdatePOAndAsync.blockingSubscribe();
 
@@ -249,16 +243,33 @@ public class BinessLogicIntentServiceBoot {
         }
     }
 
+    private void closingBinder(@NonNull Context context) {
+        try{
+            if (localBinderAsync!=null) {
+                if (localBinderAsync.isBinderAlive()) {
+                    localBinderAsync.getService().onDestroy();
+                }
+            }
+
+            if (localBinderОбновлениеПО!=null) {
+                if (localBinderОбновлениеПО.isBinderAlive()) {
+                    localBinderОбновлениеПО.getService().onDestroy();
+                }
+            }
 
 
-
-
-
-
-
-
-
-
+            Log.d(context.getClass().getName(), "\n"
+                + " время: " + new Date() + "\n+" +
+                " Класс в процессе... " + this.getClass().getName() + "\n" +
+                " метод в процессе... " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n");//
+    } catch (Exception e) {
+        e.printStackTrace();
+        Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() + " Линия  :"
+                + Thread.currentThread().getStackTrace()[2].getLineNumber());
+        new RecordNewErros(context).recordnewerror(e.toString(), this.getClass().getName(), Thread.currentThread().getStackTrace()[2].getMethodName(),
+                Thread.currentThread().getStackTrace()[2].getLineNumber());
+    }
+    }
 
 
     // TODO: 31.03.2025  после обновлени и /или синхрониазци запцскаем нужную активти
