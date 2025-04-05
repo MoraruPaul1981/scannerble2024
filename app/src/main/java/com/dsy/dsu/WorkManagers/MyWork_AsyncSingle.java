@@ -22,9 +22,8 @@ import java.util.Date;
 
 @SuppressLint("RestrictedApi")
 public class MyWork_AsyncSingle extends Worker {
-    protected String ИмяСлужбыWorkManger ="WorkManager Synchronizasiy_Data";
-/*    protected  String ИмяСлужбыSingleWorkManger ="WorkManager Synchronizasiy_Data Disposable";*/
-
+  /*  protected String ИмяСлужбыWorkManger ="WorkManager Synchronizasiy_Data";
+    protected  String ИмяСлужбыSingleWorkManger ="WorkManager Synchronizasiy_Data Disposable";*/
     IntentServiceBoot.LocalBinderBootSerice          getlocalBinderBootSerice;
 
     public MyWork_AsyncSingle(@NonNull Context context, @NonNull WorkerParameters workerParams) {
@@ -68,7 +67,7 @@ public class MyWork_AsyncSingle extends Worker {
 
             // TODO: 18.03.2025
             GetWorker getWorker=new GetWorker(getApplicationContext());
-            getWorker.startingSingleWorkerManger(getlocalBinderBootSerice,ИмяСлужбыWorkManger);
+            getWorker.startingSingleWorkerManger(getlocalBinderBootSerice);
 
             Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                     " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +

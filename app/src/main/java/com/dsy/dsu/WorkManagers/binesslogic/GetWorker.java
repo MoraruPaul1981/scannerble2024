@@ -26,12 +26,11 @@ public class GetWorker {
     }
 
 
-    public void startingSingleWorkerManger(@NotNull  IntentServiceBoot.LocalBinderBootSerice          getlocalBinderBootSerice,
-                                                       @NotNull String    ИмяСлужбыWorkManger  ) {
+    public void startingSingleWorkerManger(@NotNull  IntentServiceBoot.LocalBinderBootSerice          getlocalBinderBootSerice) {
         try{
             LinkedHashMap<Integer,String> getHiltPortJboss=   EntryPoints.get(context, getHiltPortJbossInterface.class).getHiltPortJboss();
 
-            Boolean isWorkManagerRunning=  new FindRunnigServiceBeforeWorkManager(context).isWorkManagerRunning(ИмяСлужбыWorkManger);
+
 
             // TODO: 22.12.2022  сама запуска синхронищации из workmanager ОБЩЕГО
             boolean ВыбранныйРежимСети =
@@ -40,8 +39,7 @@ public class GetWorker {
 
             if(getlocalBinderBootSerice!=null) {
                 if (ВыбранныйРежимСети) {
-
-                    if (getlocalBinderBootSerice.isBinderAlive() && isWorkManagerRunning == false) {
+                    if (getlocalBinderBootSerice.isBinderAlive()  ) {
                         String actionSingleWorker =  "lanchUpdatePOAndAsync" ;
                         intentSingleWorker.setAction(actionSingleWorker);
                         intentSingleWorker.setData(Uri.parse(actionSingleWorker));
@@ -59,7 +57,7 @@ public class GetWorker {
                     Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                             " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
                             " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"
-                            + " SINGLE SINGLE SINGLE  isWorkManagerRunning " + isWorkManagerRunning);
+                            + " SINGLE SINGLE SINGLE  isWorkManagerRunning " );
 
 
                 }
@@ -68,8 +66,7 @@ public class GetWorker {
 
             Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                     " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                    " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"
-                    + " isWorkManagerRunning " +isWorkManagerRunning );
+                    " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n");
 
         } catch (Exception e) {
             e.printStackTrace();

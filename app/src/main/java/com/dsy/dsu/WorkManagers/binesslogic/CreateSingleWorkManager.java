@@ -38,7 +38,7 @@ public class CreateSingleWorkManager {
                     .build();
 
             Constraints constraintsЗапускСинхОдноразоваяСлужба = new Constraints.Builder()
-                    .setRequiredNetworkType(NetworkType.NOT_REQUIRED)
+                    .setRequiredNetworkType(NetworkType.CONNECTED)
                     .setRequiresBatteryNotLow(false)
                     .setRequiresStorageNotLow(false)
                     .build();
