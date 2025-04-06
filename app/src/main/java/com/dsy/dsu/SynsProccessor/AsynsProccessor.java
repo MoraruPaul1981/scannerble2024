@@ -26,6 +26,7 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.TimeoutException;
+import java.util.concurrent.atomic.AtomicLong;
 import java.util.concurrent.atomic.AtomicReference;
 
 import javax.net.ssl.SSLSocketFactory;
@@ -412,7 +413,7 @@ public class AsynsProccessor extends Class_MODEL_synchronized {
     Long МетодГлавныхЦиклТаблицДляСинхронизации(@NonNull Integer PublicID,
                                                 @NonNull    CopyOnWriteArrayList<ConcurrentHashMap<String, String>> getBufferFromJbossServerAllTables) {//КонтекстСинхроДляКонтроллера
         // TODO: 07.04.2024
-       AtomicReference<Long> ResultatSync =new AtomicReference<>(0l);
+       AtomicLong ResultatSync =new AtomicLong(0l);
         try {
             Log.i(this.getClass().getName(), " PublicID "
                     +  PublicID.toString()
