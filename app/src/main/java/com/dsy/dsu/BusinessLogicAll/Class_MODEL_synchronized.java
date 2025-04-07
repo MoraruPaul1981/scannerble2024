@@ -16,6 +16,8 @@ import android.util.Log;
 import androidx.annotation.NonNull;
 
 import com.dsy.dsu.AllDatabases.SQLTE.GetSQLiteDatabase;
+import com.dsy.dsu.BusinessLogicAll.BunessLogicDownloadFiles.DownloadFiles;
+import com.dsy.dsu.BusinessLogicAll.BunessLogicDownloadFiles.GetBinessLogicDownloadFiles;
 import com.dsy.dsu.BusinessLogicAll.DATE.Class_Generation_Data;
 
 import com.dsy.dsu.BusinessLogicAll.DeviceName.ModulegetDeviceName;
@@ -3086,7 +3088,7 @@ Class_GRUD_SQL_Operations classGrudSqlOperationsУдалениеДанныхЧе
                                                   @NonNull  Integer ВремяНАReadFile,
                                                   @NonNull SSLSocketFactory getsslSocketFactory2) {
         // TODO: 24.09.2024
-        AtomicReference<File>   getFileAPKandJson = new  AtomicReference<>();
+         AtomicReference<File>  getFileAPKandJson=new AtomicReference<>();
         try {
             String enableSSl = preferencesJboss.getString("enablesll","http");
 
@@ -3152,7 +3154,7 @@ Class_GRUD_SQL_Operations classGrudSqlOperationsУдалениеДанныхЧе
             Dispatcher  dispatcherЗагрузкаПО = okHttpClientЗагрузкаНовогоПО.dispatcher();
             okHttpClientЗагрузкаНовогоПО.newCall(requestGET).enqueue(new Callback() {
 
-                private BufferedInputStream buf;
+
 
                 @Override
                 public void onFailure(@NonNull Call call, @NonNull IOException e) {
@@ -3190,128 +3192,17 @@ Class_GRUD_SQL_Operations classGrudSqlOperationsУдалениеДанныхЧе
 
                             // TODO: 06.05.2023  если ПОТОК ЕСТЬ СОДЕРЖИВАЕМ ПАРСИМ
                             if(РазмерПришедшегоПотока>0){
-                                InputStream inputStreamОтПинга =null;
-                                // TODO: 07.10.2023  get GZIP
-                             /*   if (ФлагgZIPOutputStream==true) {
-                                    inputStreamОтПинга = new GZIPInputStream(response.body().source().inputStream(),2048);///4096
-                                }else {
-                                    inputStreamОтПинга = response.body().source().inputStream();
+                                // TODO: 07.04.2025  получаем STEAM  от сервера и обрабоатываем его для получение файла
 
-                                }*/
+                                DownloadFiles getBinessLogicDwonloadFiles=new DownloadFiles();
+                                // TODO: 07.04.2025 обрабоатываем пршедщий файл
+                                getFileAPKandJson.set(getBinessLogicDwonloadFiles.downloadFiles(context,
+                                        new GetBinessLogicDownloadFiles(),
+                                        response.body().bytes() ,ИмяФайлаЗагрузки)) ;
 
-
-
-                                File ПутькФайлу = null;
-                                if (Build.VERSION.SDK_INT >= 30) {
-                                    ПутькФайлу = context.getExternalFilesDir( Environment.DIRECTORY_DOWNLOADS+ File.separator + PatchDeleteJsonAnalitic);
-                                } else {
-                                    ПутькФайлу = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS+ File.separator + PatchDeleteJsonAnalitic);
-                                }
-
-                                   ПутькФайлу.mkdirs();
-                                    ПутькФайлу.getParentFile().mkdirs();
-                                // TODO: 12.02.2025 удаление
-                                // TODO: 12.02.2025  второе удаление файла самого
-
-                                File СамкФайлу = null;
-                                if (Build.VERSION.SDK_INT >= 30) {
-                                    СамкФайлу = context.getExternalFilesDir( Environment.DIRECTORY_DOWNLOADS+ File.separator + PatchDeleteJsonAnalitic+File.separator + ИмяФайлаЗагрузки);
-                                } else {
-                                    СамкФайлу = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS+ File.separator + PatchDeleteJsonAnalitic+File.separator + ИмяФайлаЗагрузки);
-                                }
-
-                                    СамкФайлу.delete();
-                                    Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
-                                            " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                                            " line " + Thread.currentThread().getStackTrace()[2].getLineNumber());
-
-
-
-                                getFileAPKandJson.set(new File(String.valueOf(СамкФайлу))) ;
-                                getFileAPKandJson.get().setWritable(true);
-                                getFileAPKandJson.get().setExecutable(true);
-
-                                // TODO: 24.09.2024
                                 Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                                         " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                                        " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + " СамФайлJsonandApk[0] " +  getFileAPKandJson.get());
-
-                                    // TODO: 20.03.2023 само создание файла
-                                    if ( getFileAPKandJson.get().createNewFile()) {
-
-
-
-
-
-
-                                        try (ByteArrayInputStream bin = new ByteArrayInputStream(response.body().bytes());
-                                             GZIPInputStream gzipper = new GZIPInputStream(bin))
-                                        {
-                                            // Not sure where to go here
-
-                                            byte[] buffer = new byte[2048];
-                                            ByteArrayOutputStream out = new ByteArrayOutputStream();
-
-                                            int len;
-                                            while ((len = gzipper.read(buffer)) > 0) {
-                                                out.write(buffer, 0, len);
-                                            }
-
-                                            gzipper.close();
-                                            out.flush();
-                                            out.close();
-                                              //out.toByteArray();
-
-                                            try (FileOutputStream outputStream = new FileOutputStream(getFileAPKandJson.get())) {
-                                                outputStream.write(out.toByteArray());
-                                            }
-
-
-                                      /*      BufferedInputStream bis = new BufferedInputStream(new FileInputStream(getFileAPKandJson.get()));
-
-                                            ByteArrayOutputStream baos = new ByteArrayOutputStream();
-                                            int bytes = 2048;
-                                            while ((bytes = bis.read(buffer, 0, buffer.length)) > 0) {
-                                                baos.write(buffer, 0, bytes);
-                                            }
-                                            baos.close();
-                                            bis.close();*/
-
-                                        }
-
-
-                              /*          ByteArrayInputStream bais = new ByteArrayInputStream(response.body().bytes());
-
-                                        @SuppressLint({"NewApi", "LocalSuppress"}) ByteArrayInputStream byteArrayInputStream = new ByteArrayInputStream(gzis.readAllBytes());
-*/
-
-
-
-
-
-                                   /*     Log.d(context.getClass().getName(), "Будущий файл успешно создалься , далее запись на диск новго APk файла ");
-
-                                        // TODO: 21.09.2023  GET NEW BINATY FILE OT SERVER
-                                        BufferedOutputStream buffer =
-                                                new BufferedOutputStream(
-                                                        new FileOutputStream(  СамФайлJsonandApk[0]),2048);//8192  ,2048
-                                        //todo #2
-                                        byte[] bufferfile = new byte[2048];//8192
-                                        int rows= 0;
-                                        while(( rows = gzis.read( bufferfile )) > 0 ) {
-                                            buffer.write( bufferfile, 0, rows );
-                                        }
-                                        gzis.close();
-                                        bais.close();
-                                        buffer.flush();
-                                        buffer.close();
-                                        inputStreamОтПинга.close();*/
-                                        Log.d(context.getClass().getName(), "FileUtils.copyInputStreamToFile  getFileAPKandJson.get()[0]"+ getFileAPKandJson.get());
-                                    } else {
-                                        Log.e(context.getClass().getName(), "Ошибка не создалься Будущий файл успешно создалься , далее запись на диск новго APk файла  СЛУЖБА ");
-                                    }
-
-
+                                        " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() +" getFileAPKandJson.get() " +getFileAPKandJson.get());
 
                                 // TODO: 20.03.2023 ответ от сервреа если нет цифры значит не и файла
                             }
@@ -3336,7 +3227,10 @@ Class_GRUD_SQL_Operations classGrudSqlOperationsУдалениеДанныхЧе
                 }
             });
             dispatcherЗагрузкаПО.executorService().awaitTermination(1,TimeUnit.DAYS);
-            Log.i(context.getClass().getName(), "   getFileAPKandJson.get()" +     getFileAPKandJson.get());
+            // TODO: 07.04.2025  
+            Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                    " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                    " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() +" getFileAPKandJson.get() " +getFileAPKandJson.get());
             // TODO: 13.03.2023  конец загрузки файла по новому FILE
         } catch (IOException | InterruptedException ex) {
             ex.printStackTrace();
