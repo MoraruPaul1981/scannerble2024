@@ -22,7 +22,6 @@ import androidx.fragment.app.FragmentManager;
 
 import com.dsy.dsu.BusinessLogicAll.AnalysisUserAuthenticated.GetAnalysisUserAuthenticated;
 import com.dsy.dsu.BusinessLogicAll.Class_Sendiing_Errors;
-import com.dsy.dsu.BusinessLogicAll.DeviceName.ModulegetDeviceName;
 import com.dsy.dsu.Dashboard.Model.LaunchActivityDiaologSettings;
 import com.google.android.material.button.MaterialButton;
 import com.google.firebase.crashlytics.buildtools.reloc.org.apache.commons.io.IOUtils;
@@ -30,15 +29,10 @@ import com.sous.backasync.launch.ModuleQuety;
 
 import org.jetbrains.annotations.NotNull;
 
-import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.nio.charset.StandardCharsets;
-import java.nio.file.Files;
-import java.nio.file.Paths;
 import java.util.Date;
 import java.util.function.Consumer;
 
@@ -70,70 +64,8 @@ public class BinessLogicFragmentError {
     }
 
 
-    // TODO: 28.06.2023 Запись Ошибков
-    public void МетодУдаланиеОшибок()   {
-        try {
 
-            if (!sqLiteDatabase_error.inTransaction()) {
-                sqLiteDatabase_error.beginTransaction();
-            }
-            sqLiteDatabase_error.execSQL("DELETE FROM errordsu1 ");
-
-            // TODO: 22.09.2023
-// TODO: 17.04.2023
-            Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
-                    " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                    " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" );
-
-            sqLiteDatabase_error.setTransactionSuccessful();
-
-            if (sqLiteDatabase_error.inTransaction()) {
-                sqLiteDatabase_error.endTransaction();
-            }
-
-
-
-            Log.d(this.getClass().getName(),"\n" + " class FaceAPp " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
-                    " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                    " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n");
-
-        } catch (Exception e) {
-            e.printStackTrace();
-            new RecordNewErros(context).recordnewerror(e.toString(),
-                    this.getClass().getName(), Thread.currentThread().getStackTrace()[2].getMethodName(),
-                    Thread.currentThread().getStackTrace()[2].getLineNumber());
-        }
-    }
-
-    public void clearingTableError() {
-        try    {
-            File fileDelete = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS)+
-                    File.separator+patchFileName +File.separator+ fileName);
-            if ( fileDelete.exists()) {
-                Uri address = FileProvider.getUriForFile(context, "com.dsy.dsu.provider", fileDelete);
-               try( final InputStream getfileStream = context.getContentResolver().openInputStream(address);){
-
-                   FileOutputStream outputStream = new FileOutputStream(fileDelete);
-                   IOUtils.copy(getfileStream, outputStream);
-                   fileDelete.deleteOnExit();
-                   fileDelete.delete();
-                   outputStream.close();
-               }
-
-            }
-            Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
-                    " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                    " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" );
-
-
-        } catch (IOException e) {
-            e.printStackTrace();
-            new RecordNewErros(context).recordnewerror(e.toString(),
-                    this.getClass().getName(), Thread.currentThread().getStackTrace()[2].getMethodName(),
-                    Thread.currentThread().getStackTrace()[2].getLineNumber());
-        }
-    }
-    public void metodCallBackkFragemtSettings( FragmentManager fragmentManager, Context context ) {
+    public void CallBackkFragemtSettings(FragmentManager fragmentManager, Context context ) {
         try{
             // TODO Запусукаем Фргамент НАстройки  dashbord
             Boolean UserAuthenticated=       new GetAnalysisUserAuthenticated(context).analysisUserAuthenticated(240);
@@ -170,7 +102,7 @@ public class BinessLogicFragmentError {
         }
     }
 
-    protected void МетодПосылаемОшибкиНапочту(@NonNull StringBuffer БуерДляОшибок, @NonNull Activity activity,@NonNull SharedPreferences preferences) {
+    protected void sendingErrorsbyMail(@NonNull StringBuffer БуерДляОшибок, @NonNull Activity activity, @NonNull SharedPreferences preferences) {
         try{
             Integer   ПубличноеID  = preferences.getInt("ПубличноеID",0);
             БуерДляОшибок.append("\n")
@@ -197,14 +129,14 @@ public class BinessLogicFragmentError {
         }
 
     }
-      public void launchBackFragmentSettings(@NonNull MaterialButton imageViewBack,@NonNull  FragmentManager fragmentManager ) {
+      public void BackFragmentSettings(@NonNull MaterialButton imageViewBack, @NonNull  FragmentManager fragmentManager ) {
         imageViewBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 try{
                     // TODO: 22.09.2023  exit error fragment
                     // TODO: 22.09.2023  exit error fragment
-                   metodCallBackkFragemtSettings( fragmentManager,context );
+                   CallBackkFragemtSettings( fragmentManager,context );
 
                     Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                             " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
@@ -242,7 +174,19 @@ public class BinessLogicFragmentError {
                         v2.vibrate(50);
                     }
                     // TODO: 06.07.2023  оправлем ощибку на почту
-                    МетодПосылаемОшибкиНапочту(БуерДляОшибок,activity,sharedPreferences);
+                    sendingErrorsbyMail(БуерДляОшибок,activity,sharedPreferences);
+
+
+
+                    // TODO: 07.04.2025 Удаление ОШИБОК
+                    v.getHandler().postDelayed(()->{
+                              removingErrorsinFile();
+                                clearingTableError();
+                        Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                                " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                                " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n");
+                        Log.d(this.getClass().getName(), " Ошибок Нет. время :   " +new Date().toString());
+                    },1000);
 
                     Log.d(this.getClass().getName(), " Ошибок Нет. время :   " +new Date().toString());
 
@@ -337,7 +281,7 @@ public class BinessLogicFragmentError {
         }
     }
 
-    public void metodButtonINVISIBLEs(@NonNull   MaterialButton materialButtonОтправка) {
+    public void metodButtonDisable(@NonNull   MaterialButton materialButtonОтправка) {
         try{
             materialButtonОтправка.setClickable(false);
             materialButtonОтправка.setFocusable(false);
@@ -360,73 +304,7 @@ public class BinessLogicFragmentError {
     }
 
 
-    public StringBuffer gettingErrorsIsFile()   {
-        StringBuffer БуерДляОшибок =new StringBuffer();
-        // TODO: 14.01.2025
-        java.io.File getFileAllErrors ;
-        try{
-            // TODO: 11.12.2023  для android 11++
-            File getFileError = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS)
-                    +File.separator+patchFileName +File.separator+fileName);
 
-            getFileError.setWritable(true);
-            getFileError.setExecutable(true);
-            getFileError.setReadable(true);
-
-            File getPatchNewFileError= new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS)
-                    +File.separator+patchFileName  );
-            BufferedReader newBufferedReader = null;
-
-            if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.R) {
-                if (getPatchNewFileError.isDirectory() && getFileError.exists()) {
-                    Uri address = FileProvider.getUriForFile(context, "com.dsy.dsu.provider", getFileError);
-                    final InputStream imageStream = context.getContentResolver().openInputStream(address);
-                    // TODO: 15.01.2025
-                    newBufferedReader = new BufferedReader(new InputStreamReader(imageStream, StandardCharsets.UTF_16));
-
-
-                    Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
-                            " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                            " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" + "newBufferedReader " +newBufferedReader.markSupported() );
-                }
-                Log.d(this.getClass().getName(),  " date " +new Date().toGMTString().toString()   );
-            } else {
-                // TODO: 15.01.2025
-                newBufferedReader = Files.newBufferedReader(Paths.get(getFileError.getPath()), StandardCharsets.UTF_16);
-
-                Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
-                        " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                        " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" + "newBufferedReader " +newBufferedReader.markSupported() );
-
-            }
-
-            if (newBufferedReader!=null) {
-                String    lineErrorsAll=null;
-                while ((lineErrorsAll =newBufferedReader.readLine()) != null) {
-                    БуерДляОшибок.append(lineErrorsAll);
-                    БуерДляОшибок.append('\n');
-                    Log.d(this.getClass().getName(), "line " +lineErrorsAll  );
-                }
-            }
-
-
-            Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
-                    " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                    " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" + "БуерДляОшибок " +БуерДляОшибок );
-
-        } catch (Exception e) {
-            e.printStackTrace();
-            Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :"
-                    + Thread.currentThread().getStackTrace()[2].getMethodName() + " Линия  :"
-                    + Thread.currentThread().getStackTrace()[2].getLineNumber());
-            // TODO: 01.09.2021 метод вызова
-            new RecordNewErros(context).recordnewerror(e.toString(),
-                    this.getClass().getName(), Thread.currentThread().getStackTrace()[2].getMethodName(),
-                    Thread.currentThread().getStackTrace()[2].getLineNumber());
-        }
-
-        return  БуерДляОшибок;
-    }
 
 
     public StringBuffer gettingErrorsIsCursor() {
@@ -468,7 +346,7 @@ public class BinessLogicFragmentError {
                     .filter(kol-> getbackasyncQueryandWhere!=null)
                     .filter(kol-> getbackasyncQueryandWhere.getCount()>0)
 
-                    .onBackpressureBuffer().blockingIterable().forEach(new Consumer<Integer>() {
+                    .onBackpressureBuffer(1).blockingIterable().forEach(new Consumer<Integer>() {
                         @Override
                         public void accept(Integer step) {// TODO: 17.01.2025
                             try{
@@ -544,32 +422,70 @@ public class BinessLogicFragmentError {
 
 
 
+    // TODO: 28.06.2023 Запись Ошибков
+    public void removingErrorsinFile()   {
+        try {
 
-    public String getDeviceName(@NonNull Context context) {
-        String getDeviceName = null;
-        // TODO: 14.01.2025
-        try{
+            if (!sqLiteDatabase_error.inTransaction()) {
+                sqLiteDatabase_error.beginTransaction();
+            }
+            sqLiteDatabase_error.execSQL("DELETE FROM errordsu1 ");
 
-            ModulegetDeviceName modulegetDeviceName =new ModulegetDeviceName();
-            getDeviceName=   modulegetDeviceName.getDeviceName(context);
-
+            // TODO: 22.09.2023
+// TODO: 17.04.2023
             Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                     " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                    " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" + "getDeviceName " +getDeviceName );
+                    " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" );
+
+            sqLiteDatabase_error.setTransactionSuccessful();
+
+            if (sqLiteDatabase_error.inTransaction()) {
+                sqLiteDatabase_error.endTransaction();
+            }
+
+
+
+            Log.d(this.getClass().getName(),"\n" + " class FaceAPp " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                    " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                    " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n");
 
         } catch (Exception e) {
             e.printStackTrace();
-            Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :"
-                    + Thread.currentThread().getStackTrace()[2].getMethodName() + " Линия  :"
-                    + Thread.currentThread().getStackTrace()[2].getLineNumber());
-            // TODO: 01.09.2021 метод вызова
             new RecordNewErros(context).recordnewerror(e.toString(),
                     this.getClass().getName(), Thread.currentThread().getStackTrace()[2].getMethodName(),
                     Thread.currentThread().getStackTrace()[2].getLineNumber());
         }
-
-        return  getDeviceName;
     }
+
+    public void clearingTableError() {
+        try    {
+            File fileDelete = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS)+
+                    File.separator+patchFileName +File.separator+ fileName);
+            if ( fileDelete.exists()) {
+                Uri address = FileProvider.getUriForFile(context, "com.dsy.dsu.provider", fileDelete);
+                try( final InputStream getfileStream = context.getContentResolver().openInputStream(address);){
+
+                    FileOutputStream outputStream = new FileOutputStream(fileDelete);
+                    IOUtils.copy(getfileStream, outputStream);
+                    fileDelete.deleteOnExit();
+                    fileDelete.delete();
+                    outputStream.close();
+                }
+
+            }
+            Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                    " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                    " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" );
+
+
+        } catch (IOException e) {
+            e.printStackTrace();
+            new RecordNewErros(context).recordnewerror(e.toString(),
+                    this.getClass().getName(), Thread.currentThread().getStackTrace()[2].getMethodName(),
+                    Thread.currentThread().getStackTrace()[2].getLineNumber());
+        }
+    }
+
     // TODO: 24.03.2025 end class
 }
 

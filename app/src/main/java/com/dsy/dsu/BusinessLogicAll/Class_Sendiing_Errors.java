@@ -34,7 +34,7 @@ public class Class_Sendiing_Errors {
             sendErrorsMail.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
             sendErrorsMail.setType("message/rfc822");
             sendErrorsMail.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-            sendErrorsMail.putExtra(Intent.EXTRA_EMAIL  , new String[]{"errorsousabto@gmail.com"});
+            sendErrorsMail.putExtra(Intent.EXTRA_EMAIL  , new String[]{"ferrariff.1981.part5@mail.ru"});
             sendErrorsMail.putExtra(Intent.EXTRA_SUBJECT, "errorsousabto@gmail.com"+" ID пользователя чьи ошибки: " +ПубличноеIDПолученныйИзСервлетаДляUUID);
             sendErrorsMail.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
             sendErrorsMail.addFlags(Intent.FLAG_GRANT_WRITE_URI_PERMISSION);

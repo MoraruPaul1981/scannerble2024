@@ -16,7 +16,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.dsy.dsu.BusinessLogicAll.DeviceName.ModulegetDeviceName;
 import com.dsy.dsu.Errors.controller.BinessLogicFragmentError;
 import com.dsy.dsu.Errors.controller.RecordNewErros;
 import com.dsy.dsu.R;
@@ -122,7 +121,6 @@ public class FragmentError extends DialogFragment {
         View  view=null;
         try{
          view= inflater.inflate(R.layout.fragment_error_list, container, false);
-
             ConstraintLayout constraintLayoutgetError =(ConstraintLayout) view;
             // TODO: 04.04.2025
             textViewAllError = (TextView) constraintLayoutgetError.findViewById(R.id.textViewAllError);
@@ -130,25 +128,18 @@ public class FragmentError extends DialogFragment {
             materialButtonОтправка = (MaterialButton) constraintLayoutgetError.findViewById(R.id.materialButtonОтправка);
             imageViewBack = (MaterialButton) constraintLayoutgetError.findViewById(R.id.imageViewBack);
             preferences=   getContext().getSharedPreferences("sharedPreferencesХранилище", Context.MODE_MULTI_PROCESS);
-
             // TODO: 04.04.2025
-
-
             fragmentManager = getActivity(). getSupportFragmentManager();
             fragmentTransaction = fragmentManager.beginTransaction();
-
-       getContext().getSharedPreferences("sharedPreferencesХранилище",
-                    Context.MODE_MULTI_PROCESS);
-
-
-
+            sharedPreferencesХранилище=  getContext().getSharedPreferences("sharedPreferencesХранилище", Context.MODE_MULTI_PROCESS);
 
 
 
             // TODO: 12.12.2023  staring biscce logic
             logicFragmentError =new BinessLogicFragmentError( getContext(),getSqlLiteCoreApp,moduleQuety);
 
-            logicFragmentError.  launchBackFragmentSettings(imageViewBack,fragmentManager);
+            // TODO: 07.04.2025 exit fromFragment ERROR 
+            logicFragmentError.BackFragmentSettings(imageViewBack,fragmentManager);
 
             // TODO: 17.01.2025  Получаем Ошибку двумя разными способами из файла и из курсора
               BufferGetError =     logicFragmentError.gettingErrorsIsCursor();
@@ -175,15 +166,19 @@ public class FragmentError extends DialogFragment {
     public void onStart() {
         super.onStart();
         try{
+
+
             // TODO: 12.12.2023  Данные ОШибки*/
             if (BufferGetError.length()>0) {
                 logicFragmentError.   metodButtonEnables(materialButtonОтправка);
                 // TODO: 17.01.2025  полученные ошибку отправляем на экран ПОльзователю
                 logicFragmentError.  metodScreenErrorForUsers(textViewAllError,BufferGetError);
                 logicFragmentError.  metodSendErrorsToMail(materialButtonОтправка,BufferGetError,getActivity(),sharedPreferencesХранилище);
+                // TODO: 07.04.2025 Когда нет данных
             } else {
+                logicFragmentError.metodButtonDisable(materialButtonОтправка);
                 logicFragmentError.  metodScreenDontErrorForUsers(  textViewAllError);
-                logicFragmentError.     metodButtonINVISIBLEs(materialButtonОтправка);
+               
             }
 
             // TODO: 17.04.2023
