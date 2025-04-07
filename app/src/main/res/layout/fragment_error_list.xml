@@ -3,7 +3,7 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/linearistpeoples"
+    android:id="@+id/linearerrorfragment"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:gravity="center_horizontal"
@@ -69,7 +69,7 @@
 
 
                         <com.google.android.material.button.MaterialButton
-                            android:id="@+id/imageViewСтрелкаВнутриТабеля"
+                            android:id="@+id/imageViewBack"
                             android:layout_width="43dp"
                             android:layout_height="55dp"
                             android:layout_column="0"

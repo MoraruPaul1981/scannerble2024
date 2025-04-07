@@ -14,6 +14,9 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.dsy.dsu.Errors.controller.BinessLogicFragmentError;
@@ -54,6 +57,7 @@ public class FragmentError extends DialogFragment {
     // TODO: 14.10.2022 настйрока хранилища
     private  SharedPreferences sharedPreferencesХранилище;
     private     StringBuffer BufferGetError;
+    private Animation animationv3;
 
     // TODO: Rename and change types and number of parameters
     public static FragmentError newInstance( ) {
@@ -121,18 +125,18 @@ public class FragmentError extends DialogFragment {
         View  view=null;
         try{
          view= inflater.inflate(R.layout.fragment_error_list, container, false);
-            ConstraintLayout constraintLayoutgetError =(ConstraintLayout) view;
+            // TODO: 07.04.2025
+            LinearLayout linearerrorfragment =(LinearLayout) view;
             // TODO: 04.04.2025
-            textViewAllError = (TextView) constraintLayoutgetError.findViewById(R.id.textViewAllError);
-            textViewHeaderErrors = (TextView)constraintLayoutgetError. findViewById(R.id.textViewHeaderErrors);
-            materialButtonОтправка = (MaterialButton) constraintLayoutgetError.findViewById(R.id.materialButtonОтправка);
-            imageViewBack = (MaterialButton) constraintLayoutgetError.findViewById(R.id.imageViewBack);
+            textViewAllError = (TextView) linearerrorfragment.findViewById(R.id.textViewAllError);
+            materialButtonОтправка = (MaterialButton) linearerrorfragment.findViewById(R.id.materialButtonОтправка);
+            imageViewBack = (MaterialButton) linearerrorfragment.findViewById(R.id.imageViewBack);
             preferences=   getContext().getSharedPreferences("sharedPreferencesХранилище", Context.MODE_MULTI_PROCESS);
             // TODO: 04.04.2025
             fragmentManager = getActivity(). getSupportFragmentManager();
             fragmentTransaction = fragmentManager.beginTransaction();
             sharedPreferencesХранилище=  getContext().getSharedPreferences("sharedPreferencesХранилище", Context.MODE_MULTI_PROCESS);
-
+            animationv3 = AnimationUtils.loadAnimation(getContext(),R.anim.slide_singletable2);
 
 
             // TODO: 12.12.2023  staring biscce logic
@@ -172,12 +176,12 @@ public class FragmentError extends DialogFragment {
             if (BufferGetError.length()>0) {
                 logicFragmentError.   metodButtonEnables(materialButtonОтправка);
                 // TODO: 17.01.2025  полученные ошибку отправляем на экран ПОльзователю
-                logicFragmentError.  metodScreenErrorForUsers(textViewAllError,BufferGetError);
+                logicFragmentError.  metodScreenErrorForUsers(textViewAllError,BufferGetError,animationv3);
                 logicFragmentError.  metodSendErrorsToMail(materialButtonОтправка,BufferGetError,getActivity(),sharedPreferencesХранилище);
                 // TODO: 07.04.2025 Когда нет данных
             } else {
                 logicFragmentError.metodButtonDisable(materialButtonОтправка);
-                logicFragmentError.  metodScreenDontErrorForUsers(  textViewAllError);
+                logicFragmentError.  metodScreenDontErrorForUsers(  textViewAllError,animationv3);
                
             }
 

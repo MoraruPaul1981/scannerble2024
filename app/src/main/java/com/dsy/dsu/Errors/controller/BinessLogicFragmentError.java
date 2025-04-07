@@ -13,6 +13,7 @@ import android.os.VibrationEffect;
 import android.os.Vibrator;
 import android.util.Log;
 import android.view.View;
+import android.view.animation.Animation;
 import android.widget.TextView;
 
 
@@ -207,10 +208,10 @@ public class BinessLogicFragmentError {
 
     }
 
-    public void metodScreenDontErrorForUsers(@NonNull TextView    textViewAllError) {
+    public void metodScreenDontErrorForUsers(@NonNull TextView    textViewAllError,@NonNull Animation animationv3) {
         try{
             textViewAllError.setText("Нет ошибок !!! ");
-
+            textViewAllError.startAnimation(animationv3);
             textViewAllError.requestLayout();
             textViewAllError.refreshDrawableState();
             Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
@@ -238,10 +239,11 @@ public class BinessLogicFragmentError {
 
 
 
-    public void metodScreenErrorForUsers(@NotNull TextView textViewAllError, @NonNull StringBuffer bufferError) {
+    public void metodScreenErrorForUsers(@NotNull TextView textViewAllError, @NonNull StringBuffer bufferError, @NonNull Animation animationv3) {
         try{
             textViewAllError.setText(bufferError.toString());
 
+            textViewAllError.startAnimation(animationv3);
             textViewAllError.requestLayout();
             textViewAllError.refreshDrawableState();
             Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
