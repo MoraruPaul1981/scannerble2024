@@ -14,7 +14,6 @@ import androidx.work.WorkerParameters;
 
 import com.dsy.dsu.BootAndAsync.Service.IntentServiceBoot;
 import com.dsy.dsu.Errors.controller.RecordNewErros;
-import com.dsy.dsu.Services.Service_For_Remote_Async_Binary;
 import com.dsy.dsu.WorkManagers.binesslogic.GetWorker;
 
 import java.util.Date;
@@ -61,7 +60,10 @@ public class MyWork_Async_Public extends Worker {
         try {
             // TODO: 18.03.2025
             GetWorker getWorker=new GetWorker(getApplicationContext());
+            // TODO: 07.04.2025 start
             getWorker.startingPublicWorkManager(getlocalBinderBootSerice,ИмяСлужбыSingleWorkManger);
+            // TODO: 07.04.2025 close
+            getWorker.closingSinglePublicWorkManager(getlocalBinderBootSerice);
 
             Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                     " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +

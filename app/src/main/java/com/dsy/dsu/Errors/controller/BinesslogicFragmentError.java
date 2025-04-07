@@ -47,12 +47,12 @@ public class BinesslogicFragmentError {
 
 
 
-    public BinesslogicFragmentError(@NonNull  Context context) {
+    public BinesslogicFragmentError(@NonNull  Context context,@NonNull SQLiteDatabase sqLiteDatabase_error) {
         this.moduleQuety = moduleQuety;
         this.context = context;
         this.sqLiteDatabase_error = sqLiteDatabase_error;
         // TODO: 17.01.2025
-         sqLiteDatabase_error = EntryPoints.get(context, HiltInterfacesqlite.class).getHiltSqlite();
+
 
         // TODO: 17.04.2023
         Log.d(this.getClass().getName(),"\n" + " class FaceAPp " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +

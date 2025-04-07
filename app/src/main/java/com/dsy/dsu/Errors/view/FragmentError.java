@@ -51,11 +51,11 @@ public class FragmentError extends DialogFragment {
     private FragmentManager fragmentManager;
     private FragmentTransaction fragmentTransaction;
 
-    // TODO: 14.10.2022 настйрока хранилища
-   SharedPreferences sharedPreferencesХранилище;
-
     @Inject
-    public SQLiteDatabase getSqlLiteCoreApp;
+   SQLiteDatabase getSqlLiteCoreApp;
+
+    // TODO: 14.10.2022 настйрока хранилища
+    private  SharedPreferences sharedPreferencesХранилище;
 
     // TODO: Rename and change types and number of parameters
     public static FragmentError newInstance( ) {
@@ -145,7 +145,7 @@ public class FragmentError extends DialogFragment {
 
 
             // TODO: 12.12.2023  staring biscce logic
-            binesslogicFragmentError =new BinesslogicFragmentError( getContext());
+            binesslogicFragmentError =new BinesslogicFragmentError( getContext(),getSqlLiteCoreApp);
 
             Log.d(this.getClass().getName(),"\n" + " class "
                 + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
