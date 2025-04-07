@@ -125,7 +125,7 @@ public class GetJsonOt1cComminhgPrices extends  GetJsonOt1cComminhgPricesParent 
                 " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"  );
 
         dispatcher.executorService().awaitTermination(1,TimeUnit.DAYS);
-        dispatcher.cancelAll();
+
 
         Log.d(this.getClass().getName(),"\n"
                 + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +

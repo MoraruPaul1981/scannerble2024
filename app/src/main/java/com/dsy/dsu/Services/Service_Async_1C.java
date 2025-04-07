@@ -250,7 +250,7 @@ public class Service_Async_1C extends IntentService {
                     });
                     // TODO: 31.05.2022
                     okHttpClient.dispatcher().executorService().awaitTermination(1,TimeUnit.DAYS);
-            okHttpClient.dispatcher().cancelAll();
+
                     // TODO: 06.07.2022
     } catch (Exception e) {
         e.printStackTrace();

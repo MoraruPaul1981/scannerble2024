@@ -63,8 +63,6 @@ public class MyWork_Async_Public extends Worker {
             // TODO: 07.04.2025 start
             getWorker.startingPublicWorkManager(getlocalBinderBootSerice,ИмяСлужбыSingleWorkManger);
             // TODO: 07.04.2025 close
-            getWorker.closingSinglePublicWorkManager(getlocalBinderBootSerice);
-
             Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                     " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
                     " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"  + " getlocalBinderBootSerice " +getlocalBinderBootSerice );

@@ -28,6 +28,7 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.Date;
 import java.util.LinkedHashMap;
+import java.util.Random;
 
 import javax.inject.Inject;
 import javax.net.ssl.SSLSocketFactory;
@@ -111,7 +112,6 @@ public class IntentServiceBoot extends IntentService {
         super.onDestroy();
         try {
             // TODO: 25.12.2024
-            getCloseService();
             // TODO: 10.10.2024 записываем статус службы ка в менякем статус как отработал
         Log.d(getApplicationContext().getClass().getName(), "\n"
                 + " время: " + new Date() + "\n+" +
@@ -153,10 +153,6 @@ public class IntentServiceBoot extends IntentService {
 
 
 
-
-
-            getCloseService();
-
             Log.d(getApplicationContext().getClass().getName(), "\n"
                     + " время: " + new Date() + "\n+" +
                     " Класс в процессе... " + this.getClass().getName() + "\n" +
@@ -176,7 +172,6 @@ public class IntentServiceBoot extends IntentService {
     private void getCloseService() {
         try{
             stopForeground(false);
-            stopSelf();
         Log.d(getApplicationContext().getClass().getName(), "\n"
                 + " время: " + new Date() + "\n+" +
                 " Класс в процессе... " + this.getClass().getName() + "\n" +
@@ -201,7 +196,7 @@ public class IntentServiceBoot extends IntentService {
             ((NotificationManager) getSystemService(getApplicationContext().NOTIFICATION_SERVICE)).createNotificationChannel(channel);
 
             notification = new NotificationCompat.Builder(this, CHANNEL_ID).build();
-            ServiceCompat.startForeground(this,17,notification,ServiceCompat.STOP_FOREGROUND_REMOVE);
+            ServiceCompat.startForeground(this,new Random().nextInt(2),notification,ServiceCompat.STOP_FOREGROUND_REMOVE);
             Log.d(getApplicationContext().getClass().getName(), "\n"
                     + " время: " + new Date() + "\n+" +
                     " Класс в процессе... " + this.getClass().getName() + "\n" +

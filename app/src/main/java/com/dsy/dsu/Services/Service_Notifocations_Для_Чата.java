@@ -102,7 +102,7 @@ public class Service_Notifocations_Для_Чата extends Service {////Service
                             + " время: "
                             + new Date() + "intent.getAction().toString() " + intent.getAction().toString() + "bundleЧата " + ИмяСлужбыУведомленияДляЧата);
     
-                    // notificationManager.cancelAll();
+
                     notificationManager.cancel(Integer.parseInt(PROCESS_ID));
     
                     stopForeground(true);

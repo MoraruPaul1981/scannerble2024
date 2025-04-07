@@ -150,7 +150,7 @@ public InputStream   МетодПолучемJSONОт1СДляСогласова
                 " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"  );
 
         dispatcher.executorService().awaitTermination(1,TimeUnit.DAYS);
-        dispatcher.cancelAll();
+
         // TODO: 01.12.2023
     } catch (Exception e) {
         e.printStackTrace();
@@ -241,7 +241,6 @@ public InputStream   МетодПолучемJSONОт1СДляСогласова
              //TODO
             Log.i(context.getClass().getName(), "stringBuffer" + stringBufferВторайШагПолучаемСамиДанныеНАОснованииЦФО);
             okHttpClientДляЛимитаМатериалов.dispatcher().executorService().awaitTermination(1,TimeUnit.DAYS);
-            okHttpClientДляЛимитаМатериалов.dispatcher().cancelAll();
             // TODO: 06.07.2022
         } catch (Exception e) {
             e.printStackTrace();
@@ -335,7 +334,7 @@ public InputStream   МетодПолучемJSONОт1СДляСогласова
             // okHttpClient.dispatcher().executorService().awaitTermination(1,TimeUnit.MINUTES);
             okHttpClientЛиммитМатериаловЭтаппервый.dispatcher().executorService().awaitTermination(1,TimeUnit.DAYS);
             // TODO: 06.07.2022
-            okHttpClientЛиммитМатериаловЭтаппервый.dispatcher().cancelAll();
+
             ///
         } catch (Exception e) {
             e.printStackTrace();
@@ -475,7 +474,7 @@ public InputStream   МетодПолучемJSONОт1СДляСогласова
                     }}
             });
             dispatcher.executorService().awaitTermination(1,TimeUnit.DAYS);
-            dispatcher.cancelAll();
+
             Log.i(context.getClass().getName(), "stringBuffer" + stringBufferотправкаНа1С);
         } catch (Exception e) {
             e.printStackTrace();
@@ -597,7 +596,7 @@ public InputStream   МетодПолучемJSONОт1СДляСогласова
                         }}
                 });
                 dispatcher.executorService().awaitTermination(1,TimeUnit.DAYS);
-                dispatcher.cancelAll();
+
             }
             Log.i(context.getClass().getName(), "newFileBinaty1c" + newFileBinaty1c[0]);
         } catch (Exception e) {

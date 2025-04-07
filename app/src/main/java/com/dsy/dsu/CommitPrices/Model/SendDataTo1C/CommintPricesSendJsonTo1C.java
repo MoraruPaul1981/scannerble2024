@@ -168,7 +168,7 @@ public class CommintPricesSendJsonTo1C extends  SendDataParent {
                     " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"  );
 
             dispatcher.executorService().awaitTermination(1,TimeUnit.DAYS);
-            dispatcher.cancelAll();
+
 
             Log.d(this.getClass().getName(),"\n"
                     + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +

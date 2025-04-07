@@ -25,6 +25,7 @@ import com.dsy.dsu.Errors.WriteErrorForAll.RecordNewErros;
 import com.dsy.dsu.Hilt.JbossAdrress.getHiltPortJbossInterface;
 import com.dsy.dsu.Hilt.OkhhtpBuilder.GetAsyncOkHttpClientBuilder;
 import com.google.common.io.ByteSource;
+import com.google.firebase.crashlytics.buildtools.reloc.org.apache.commons.io.IOUtils;
 
 import org.jetbrains.annotations.NotNull;
 import org.json.JSONObject;
@@ -32,11 +33,15 @@ import org.json.JSONObject;
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
 import java.io.BufferedReader;
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.OutputStream;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
 import java.security.InvalidKeyException;
@@ -254,7 +259,6 @@ import okio.BufferedSink;
             });
             //TODO
             dispatcherДанныеОтСервера.executorService().awaitTermination(1, TimeUnit.DAYS);
-            dispatcherДанныеОтСервера.cancelAll();
         } catch (IOException | InterruptedException e) {
             e.printStackTrace();
             String ОшибкаТекущегоМетода = e.toString();
@@ -410,7 +414,6 @@ import okio.BufferedSink;
             });
             //TODO
             dispatcherДанныеОтСервера.executorService().awaitTermination(1, TimeUnit.DAYS);
-            dispatcherДанныеОтСервера.cancelAll();
         } catch (IOException | InterruptedException e) {
             e.printStackTrace();
             String ОшибкаТекущегоМетода = e.toString();
@@ -575,7 +578,7 @@ import okio.BufferedSink;
                 }
             });
             dispatcherПинг.executorService().awaitTermination(1,TimeUnit.DAYS);
-            dispatcherПинг.cancelAll();
+
             Log.i(context.getClass().getName(), "БуферРезультатПингасСервером" + БуферРезультатПингасСервером);
         } catch (IOException | InterruptedException ex) {
             ex.printStackTrace();
@@ -822,7 +825,7 @@ import okio.BufferedSink;
                         }
                     });
                     dispatcherCallsBackСервера.executorService().awaitTermination(1, TimeUnit.DAYS);
-                    dispatcherCallsBackСервера.cancelAll();
+
                     Log.i(context.getClass().getName(), "БуферCallsBackОтСеврера" + БуферCallsBackОтСеврера[0]);
                     // TODO: 12.03.2023  тест код конец
                 } catch (IOException | InterruptedException ex) {
@@ -3189,12 +3192,12 @@ Class_GRUD_SQL_Operations classGrudSqlOperationsУдалениеДанныхЧе
                             if(РазмерПришедшегоПотока>0){
                                 InputStream inputStreamОтПинга =null;
                                 // TODO: 07.10.2023  get GZIP
-                                if (ФлагgZIPOutputStream==true) {
+                             /*   if (ФлагgZIPOutputStream==true) {
                                     inputStreamОтПинга = new GZIPInputStream(response.body().source().inputStream(),2048);///4096
                                 }else {
                                     inputStreamОтПинга = response.body().source().inputStream();
 
-                                }
+                                }*/
 
 
 
@@ -3235,7 +3238,42 @@ Class_GRUD_SQL_Operations classGrudSqlOperationsУдалениеДанныхЧе
 
                                     // TODO: 20.03.2023 само создание файла
                                     if ( СамФайлJsonandApk[0].createNewFile()) {
-                                        Log.d(context.getClass().getName(), "Будущий файл успешно создалься , далее запись на диск новго APk файла ");
+
+
+
+
+
+
+                                        try (ByteArrayInputStream bin = new ByteArrayInputStream(response.body().bytes());
+                                             GZIPInputStream gzipper = new GZIPInputStream(bin))
+                                        {
+                                            // Not sure where to go here
+
+                                            byte[] buffer = new byte[2048];
+                                            ByteArrayOutputStream out = new ByteArrayOutputStream();
+
+                                            int len;
+                                            while ((len = gzipper.read(buffer)) > 0) {
+                                                out.write(buffer, 0, len);
+                                            }
+
+                                            gzipper.close();
+                                            out.close();
+                                              out.toByteArray();
+
+                                        }
+
+
+                              /*          ByteArrayInputStream bais = new ByteArrayInputStream(response.body().bytes());
+
+                                        @SuppressLint({"NewApi", "LocalSuppress"}) ByteArrayInputStream byteArrayInputStream = new ByteArrayInputStream(gzis.readAllBytes());
+*/
+
+
+
+
+
+                                   /*     Log.d(context.getClass().getName(), "Будущий файл успешно создалься , далее запись на диск новго APk файла ");
 
                                         // TODO: 21.09.2023  GET NEW BINATY FILE OT SERVER
                                         BufferedOutputStream buffer =
@@ -3244,12 +3282,14 @@ Class_GRUD_SQL_Operations classGrudSqlOperationsУдалениеДанныхЧе
                                         //todo #2
                                         byte[] bufferfile = new byte[2048];//8192
                                         int rows= 0;
-                                        while(( rows = inputStreamОтПинга.read( bufferfile )) > 0 ) {
+                                        while(( rows = gzis.read( bufferfile )) > 0 ) {
                                             buffer.write( bufferfile, 0, rows );
                                         }
+                                        gzis.close();
+                                        bais.close();
                                         buffer.flush();
                                         buffer.close();
-                                        inputStreamОтПинга.close();
+                                        inputStreamОтПинга.close();*/
                                         Log.d(context.getClass().getName(), "FileUtils.copyInputStreamToFile  СамФайлJsonandApk[0]"+  СамФайлJsonandApk[0]);
                                     } else {
                                         Log.e(context.getClass().getName(), "Ошибка не создалься Будущий файл успешно создалься , далее запись на диск новго APk файла  СЛУЖБА ");
@@ -3280,7 +3320,6 @@ Class_GRUD_SQL_Operations classGrudSqlOperationsУдалениеДанныхЧе
                 }
             });
             dispatcherЗагрузкаПО.executorService().awaitTermination(1,TimeUnit.DAYS);
-            dispatcherЗагрузкаПО.cancelAll();
             Log.i(context.getClass().getName(), "   СамФайлJsonandApk[0] " +     СамФайлJsonandApk[0]);
             // TODO: 13.03.2023  конец загрузки файла по новому FILE
         } catch (IOException | InterruptedException ex) {

@@ -334,7 +334,7 @@ public class Service_For_Task_Для_Задания_СменаСатуса exten
 
                 NotificationManager      notificationManager = (NotificationManager)
                         getSystemService(NOTIFICATION_SERVICE);
-                // notificationManager.cancelAll();
+
                 notificationManager.cancel(Integer.parseInt(PROCESS_ID));
 
                 stopForeground(true);
