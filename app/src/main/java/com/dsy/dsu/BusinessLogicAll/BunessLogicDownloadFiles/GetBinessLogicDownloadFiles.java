@@ -73,7 +73,6 @@ public class GetBinessLogicDownloadFiles implements  GetBinessLogicDwonloadFiles
 
               byte[] buffer = new byte[2048];
               ByteArrayOutputStream out = new ByteArrayOutputStream();
-
               int len;
               while ((len = gzipper.read(buffer)) > 0) {
                   out.write(buffer, 0, len);

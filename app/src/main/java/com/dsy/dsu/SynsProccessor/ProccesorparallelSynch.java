@@ -93,41 +93,101 @@ public class ProccesorparallelSynch   {
             preferences =context. getSharedPreferences("sharedPreferencesХранилище", Context.MODE_MULTI_PROCESS);
              РежимЗапускаСинхронизации = preferences.getString("РежимЗапускаСинхронизации","СамыйПервыйЗапускСинхронизации");
             // TODO: 20.01.2025 сама синхрониаиця
-            Flowable.fromIterable(getBufferFromJbossServerAllTables)
-                    .parallel().runOn(Schedulers.io())
-                    .doOnNext(new Consumer<ConcurrentHashMap<String, String>>() {
-                        @Override
-                        public void accept(ConcurrentHashMap<String, String> stringStringMapMultiPotoks) throws Throwable {
-                            // TODO: 28.12.2024
-                            // TODO: 06.12.2023  запуск синхризуции по таблице конктерной
-                            coutSucceessItemAsycnTablesComplete.getAndSet(getLooTablesPOSTANDGET(stringStringMapMultiPotoks));      ;
-                            // TODO: 30.09.2024
-                            // TODO: 15.09.2023
-                            Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
-                                    " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                                    " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"
-                                    + " getBufferFromJbossServerAllTables.size() " + getBufferFromJbossServerAllTables.size()
-                                    +"\n" +" POOL NAMES "+Thread.currentThread().getName()+"\n"+
-                                    " coutSucceessItemAsycnTablesComplete.get() " +coutSucceessItemAsycnTablesComplete.get());
-                        }
-                    }).doOnError(new Consumer<Throwable>() {
-                        @Override
-                        public void accept(Throwable throwable) throws Throwable {
-                            throwable.printStackTrace();
-                            Log.e(this.getClass().getName(), "Ошибка " + throwable + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() + " Линия  :"
-                                    + Thread.currentThread().getStackTrace()[2].getLineNumber());
-                            new RecordNewErros(context).recordnewerror(throwable.toString(),
-                                    this.getClass().getName(), Thread.currentThread().getStackTrace()[2].getMethodName(),
-                                    Thread.currentThread().getStackTrace()[2].getLineNumber()  );
-                        }
-                    }).doOnComplete(()->{
-                        // TODO: 03.04.2025
-                        Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
-                                " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                                " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"
-                                +"\n" + "POOL NAME  " +Thread.currentThread().getName());
+            switch (РежимЗапускаСинхронизации){
+// TODO: 20.01.2025 сама синхрониаиця
+                case  "СамыйПервыйЗапускСинхронизации":
+                    Flowable.fromIterable(getBufferFromJbossServerAllTables)
+                            .parallel().runOn(Schedulers.io())
+                            .doOnNext(new Consumer<ConcurrentHashMap<String, String>>() {
+                                @Override
+                                public void accept(ConcurrentHashMap<String, String> stringStringMapMultiPotoks) throws Throwable {
+                                    // TODO: 28.12.2024
+                                    // TODO: 06.12.2023  запуск синхризуции по таблице конктерной
+                                    coutSucceessItemAsycnTablesComplete.getAndSet(getLooTablesPOSTANDGET(stringStringMapMultiPotoks));      ;
+                                    // TODO: 30.09.2024
+                                    // TODO: 15.09.2023
+                                    Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                                            " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                                            " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"
+                                            + " getBufferFromJbossServerAllTables.size() " + getBufferFromJbossServerAllTables.size()
+                                            +"\n" +" POOL NAMES "+Thread.currentThread().getName()+"\n"+
+                                            " coutSucceessItemAsycnTablesComplete.get() " +coutSucceessItemAsycnTablesComplete.get());
+                                }
+                            }).doOnError(new Consumer<Throwable>() {
+                                @Override
+                                public void accept(Throwable throwable) throws Throwable {
+                                    throwable.printStackTrace();
+                                    Log.e(this.getClass().getName(), "Ошибка " + throwable + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() + " Линия  :"
+                                            + Thread.currentThread().getStackTrace()[2].getLineNumber());
+                                    new RecordNewErros(context).recordnewerror(throwable.toString(),
+                                            this.getClass().getName(), Thread.currentThread().getStackTrace()[2].getMethodName(),
+                                            Thread.currentThread().getStackTrace()[2].getLineNumber()  );
+                                }
+                            }).doOnComplete(()->{
+                                // TODO: 03.04.2025
+                                Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                                        " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                                        " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"
+                                        +"\n" + "POOL NAME  " +Thread.currentThread().getName());
 
-                    }).sequentialDelayError() .blockingSubscribe();
+                            }).sequentialDelayError() .blockingSubscribe();
+                    // TODO: 15.09.2023
+                    Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                            " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                            " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"
+                            + " getBufferFromJbossServerAllTables.size() " + getBufferFromJbossServerAllTables.size()
+                            +"\n");
+                    break;
+
+                // TODO: 20.01.2025 сама синхрониаиця
+                case "ПовторныйЗапускСинхронизации":
+// TODO: 20.01.2025 сама синхрониаиця
+                    Flowable.fromIterable(getBufferFromJbossServerAllTables)
+                            .onBackpressureBuffer(1)
+                            .doOnNext(new Consumer<ConcurrentHashMap<String, String>>() {
+                                @Override
+                                public void accept(ConcurrentHashMap<String, String> stringStringMapMultiPotoks) throws Throwable {
+                                    // TODO: 28.12.2024
+                                    // TODO: 06.12.2023  запуск синхризуции по таблице конктерной
+                                    coutSucceessItemAsycnTablesComplete.getAndSet(getLooTablesPOSTANDGET(stringStringMapMultiPotoks));      ;
+                                    // TODO: 30.09.2024
+                                    // TODO: 15.09.2023
+                                    Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                                            " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                                            " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"
+                                            + " getBufferFromJbossServerAllTables.size() " + getBufferFromJbossServerAllTables.size()
+                                            +"\n" +" POOL NAMES "+Thread.currentThread().getName());
+                                }
+                            }).doOnError(new Consumer<Throwable>() {
+                                @Override
+                                public void accept(Throwable throwable) throws Throwable {
+                                    throwable.printStackTrace();
+                                    Log.e(this.getClass().getName(), "Ошибка " + throwable + " Метод :"
+                                            + Thread.currentThread().getStackTrace()[2].getMethodName() + " Линия  :"
+                                            + Thread.currentThread().getStackTrace()[2].getLineNumber());
+                                    new RecordNewErros(context).recordnewerror(throwable.toString(),
+                                            this.getClass().getName(), Thread.currentThread().getStackTrace()[2].getMethodName(),
+                                            Thread.currentThread().getStackTrace()[2].getLineNumber()  );
+                                }
+                            }).doOnComplete(()->{
+                                Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                                        " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                                        " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"
+                                        + " coutSucceessItemAsycnTablesComplete.size() " + coutSucceessItemAsycnTablesComplete.get()
+                                        +"\n");
+
+                            })
+                            .blockingSubscribe();
+                    // TODO: 15.09.2023
+                    Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                            " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                            " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"
+                            + " getBufferFromJbossServerAllTables.size() " + getBufferFromJbossServerAllTables.size()
+                            +"\n"+"\n" + "РежимЗапускаСинхронизации " +РежимЗапускаСинхронизации);
+                    break;
+            }
+
+
             // TODO: 15.09.2023
             Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                     " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
