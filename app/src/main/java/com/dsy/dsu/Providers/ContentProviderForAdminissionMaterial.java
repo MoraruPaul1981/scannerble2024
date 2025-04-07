@@ -25,7 +25,7 @@ import androidx.loader.content.AsyncTaskLoader;
 
 
 import com.dsy.dsu.BusinessLogicAll.Class_GRUD_SQL_Operations;
-import com.dsy.dsu.Errors.controller.RecordNewErros;
+import com.dsy.dsu.Errors.WriteErrorForAll.RecordNewErros;
 import com.dsy.dsu.CnangeServers.PUBLIC_CONTENT;
 import com.dsy.dsu.BusinessLogicAll.WorkerTables.SubClassCreatingMainAllTables;
 import com.dsy.dsu.Hilt.Sqlitehilt.HiltInterfacesqlite;

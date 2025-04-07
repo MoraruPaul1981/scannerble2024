@@ -4,7 +4,7 @@ import android.content.Context;
 import android.net.NetworkInfo;
 import android.util.Log;
 
-import com.dsy.dsu.Errors.controller.RecordNewErros;
+import com.dsy.dsu.Errors.WriteErrorForAll.RecordNewErros;
 
 public class GetConnectivityManagerAndroid {
     Context context ;

@@ -3,7 +3,7 @@ package com.dsy.dsu.BroadcastRecievers.Bl;
 import android.content.Context;
 import android.util.Log;
 
-import com.dsy.dsu.Errors.controller.RecordNewErros;
+import com.dsy.dsu.Errors.WriteErrorForAll.RecordNewErros;
 
 import org.jetbrains.annotations.NotNull;
 

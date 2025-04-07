@@ -19,7 +19,7 @@ import androidx.annotation.Nullable;
 
 
 import com.dsy.dsu.BootAndAsync.BlBootAsync.BinessLogicIntentServiceBoot;
-import com.dsy.dsu.Errors.controller.RecordNewErros;
+import com.dsy.dsu.Errors.WriteErrorForAll.RecordNewErros;
 import com.dsy.dsu.Hilt.PublicId.QualifierPublicId;
 import com.dsy.dsu.Hilt.getSSLSocketFactory2.QualifiergetsslSocketFactory2;
 import com.dsy.dsu.SynsProccessor.AsynsProccessor;

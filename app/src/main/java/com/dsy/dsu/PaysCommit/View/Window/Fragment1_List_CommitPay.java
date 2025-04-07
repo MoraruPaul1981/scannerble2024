@@ -24,7 +24,7 @@ import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.Observer;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.dsy.dsu.Errors.controller.RecordNewErros;
+import com.dsy.dsu.Errors.WriteErrorForAll.RecordNewErros;
 import com.dsy.dsu.Hilt.Adress1cPays.QualifierCommintgPays;
 import com.dsy.dsu.Hilt.Adress1cPays.QualifierCommintgPays2;
 import com.dsy.dsu.Hilt.Adress1cPays.QualifierCommintgPays4;

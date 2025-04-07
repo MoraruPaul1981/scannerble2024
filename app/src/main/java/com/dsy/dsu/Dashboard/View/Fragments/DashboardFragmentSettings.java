@@ -40,12 +40,12 @@ import com.dsy.dsu.BootAndAsync.EventsBus.MessageEvensBusUpdatePO;
 import com.dsy.dsu.BusinessLogicAll.Class_Clears_Tables;
 import com.dsy.dsu.BusinessLogicAll.Class_Connections_Server;
 import com.dsy.dsu.Dashboard.Model.bl_launchFragmentSettingsandDashbord.LaunchActivityDashboard;
-import com.dsy.dsu.Errors.controller.RecordNewErros;
+import com.dsy.dsu.Errors.WriteErrorForAll.RecordNewErros;
 
 import com.dsy.dsu.BusinessLogicAll.Class_MODEL_synchronized;
 import com.dsy.dsu.CnangeServers.PUBLIC_CONTENT;
 
-import com.dsy.dsu.Errors.model.LaunchFragmenrError;
+import com.dsy.dsu.Errors.model.BinessLogicLaunchFragmenrError;
 import com.dsy.dsu.Hilt.JbossAdrress.qualifiers.QualifierJbossServer3;
 import com.dsy.dsu.Hilt.getSSLSocketFactory2.QualifiergetsslSocketFactory2;
 import com.dsy.dsu.Tabels.Templates.MainActivity_New_Templates;
@@ -907,9 +907,9 @@ public class DashboardFragmentSettings extends  DialogFragment {
                             try {
 
                                 // TODO Запусукаем  Фрагмент Главный Экран
-                                LaunchFragmenrError launchFragmenrError=new LaunchFragmenrError( fragmentManager,getContext());
+                                BinessLogicLaunchFragmenrError binessLogicLaunchFragmenrError =new BinessLogicLaunchFragmenrError( fragmentManager,getContext());
                                 // TODO: 27.03.2024 в зависомсти кто вызвает
-                                launchFragmenrError.     launchErrorFragment(localBinderОбновлениеПО);
+                                binessLogicLaunchFragmenrError.     launchErrorFragment(localBinderОбновлениеПО);
 
                                 Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                                         " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +

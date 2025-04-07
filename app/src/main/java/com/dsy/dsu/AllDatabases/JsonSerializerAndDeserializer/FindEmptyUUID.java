@@ -9,7 +9,7 @@ import androidx.annotation.NonNull;
 import androidx.sqlite.db.SupportSQLiteStatement;
 
 import com.dsy.dsu.AllDatabases.ROOM.ROOMDatabase;
-import com.dsy.dsu.Errors.controller.RecordNewErros;
+import com.dsy.dsu.Errors.WriteErrorForAll.RecordNewErros;
 import com.fasterxml.jackson.databind.JsonNode;
 
 public class FindEmptyUUID {

@@ -3,7 +3,7 @@ package com.dsy.dsu.DocumentsCom.Model.BL;
 import android.content.Context;
 import android.util.Log;
 
-import com.dsy.dsu.Errors.controller.RecordNewErros;
+import com.dsy.dsu.Errors.WriteErrorForAll.RecordNewErros;
 
 public class BL {
 

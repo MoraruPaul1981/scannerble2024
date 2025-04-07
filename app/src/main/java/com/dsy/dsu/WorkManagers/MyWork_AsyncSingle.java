@@ -1,7 +1,6 @@
 package com.dsy.dsu.WorkManagers;
 
 import android.annotation.SuppressLint;
-import android.app.ActivityManager;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
@@ -14,7 +13,7 @@ import androidx.work.Worker;
 import androidx.work.WorkerParameters;
 
 import com.dsy.dsu.BootAndAsync.Service.IntentServiceBoot;
-import com.dsy.dsu.Errors.controller.RecordNewErros;
+import com.dsy.dsu.Errors.WriteErrorForAll.RecordNewErros;
 import com.dsy.dsu.WorkManagers.binesslogic.GetWorker;
 
 

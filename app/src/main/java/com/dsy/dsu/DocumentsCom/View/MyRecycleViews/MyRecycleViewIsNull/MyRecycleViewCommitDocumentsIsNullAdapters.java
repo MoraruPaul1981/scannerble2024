@@ -15,7 +15,7 @@ import androidx.lifecycle.LiveData;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.dsy.dsu.DocumentsCom.View.ComponentsUI.InitiativeComponentCommitDocumentsUI;
-import com.dsy.dsu.Errors.controller.RecordNewErros;
+import com.dsy.dsu.Errors.WriteErrorForAll.RecordNewErros;
 import com.dsy.dsu.R;
 
 import org.jetbrains.annotations.NotNull;

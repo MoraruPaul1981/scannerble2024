@@ -5,7 +5,7 @@ package com.dsy.dsu.Hilt.OneSignal;
 import android.content.Context;
 import android.util.Log;
 
-import com.dsy.dsu.Errors.controller.RecordNewErros;
+import com.dsy.dsu.Errors.WriteErrorForAll.RecordNewErros;
 
 
 import javax.inject.Singleton;

@@ -13,7 +13,7 @@ import android.widget.LinearLayout;
 import androidx.annotation.NonNull;
 
 import com.dsy.dsu.Dashboard.Model.hilts.QualifierDashboards;
-import com.dsy.dsu.Errors.controller.RecordNewErros;
+import com.dsy.dsu.Errors.WriteErrorForAll.RecordNewErros;
 import com.dsy.dsu.GrantsRights.InGRANTs;
 import com.google.android.material.button.MaterialButton;
 

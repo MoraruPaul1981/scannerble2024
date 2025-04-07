@@ -11,7 +11,7 @@ import android.widget.Switch;
 import androidx.annotation.NonNull;
 
 import com.dsy.dsu.BusinessLogicAll.GetPublicID.GetPublicID;
-import com.dsy.dsu.Errors.controller.RecordNewErros;
+import com.dsy.dsu.Errors.WriteErrorForAll.RecordNewErros;
 
 import java.util.Date;
 

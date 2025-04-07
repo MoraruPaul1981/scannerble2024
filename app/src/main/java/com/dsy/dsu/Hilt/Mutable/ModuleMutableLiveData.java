@@ -8,7 +8,7 @@ import android.util.Log;
 
 import androidx.lifecycle.MutableLiveData;
 
-import com.dsy.dsu.Errors.controller.RecordNewErros;
+import com.dsy.dsu.Errors.WriteErrorForAll.RecordNewErros;
 
 import dagger.Module;
 import dagger.Provides;

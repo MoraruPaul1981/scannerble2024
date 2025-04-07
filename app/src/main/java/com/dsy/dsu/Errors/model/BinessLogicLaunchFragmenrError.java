@@ -7,14 +7,13 @@ import android.util.Log;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
-import com.dsy.dsu.Dashboard.View.Fragments.DashboardFragmentMaterialDesign;
-import com.dsy.dsu.Errors.controller.RecordNewErros;
+import com.dsy.dsu.Errors.WriteErrorForAll.RecordNewErros;
 import com.dsy.dsu.Errors.view.FragmentError;
 import com.dsy.dsu.Services.ServiceUpdatePoОбновлениеПО;
 
 import org.jetbrains.annotations.NotNull;
 
-public class LaunchFragmenrError {
+public class BinessLogicLaunchFragmenrError {
 
 
 
@@ -22,7 +21,7 @@ public class LaunchFragmenrError {
     FragmentManager fragmentManager;
     Context context;
 
-    public LaunchFragmenrError(  FragmentManager fragmentManager, Context context) {
+    public BinessLogicLaunchFragmenrError(FragmentManager fragmentManager, Context context) {
         this.fragmentManager = fragmentManager;
         this.context = context;
     }

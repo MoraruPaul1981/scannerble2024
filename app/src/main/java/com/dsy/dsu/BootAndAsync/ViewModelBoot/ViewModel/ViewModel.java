@@ -11,7 +11,7 @@ import androidx.lifecycle.MutableLiveData;
 import androidx.work.WorkInfo;
 
 import com.dsy.dsu.BootAndAsync.ViewModelBoot.Model.ModelBootService;
-import com.dsy.dsu.Errors.controller.RecordNewErros;
+import com.dsy.dsu.Errors.WriteErrorForAll.RecordNewErros;
 
 import javax.inject.Inject;
 

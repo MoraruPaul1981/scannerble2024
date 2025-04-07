@@ -5,7 +5,7 @@ import android.content.Context;
 import android.util.Log;
 
 import com.dsy.dsu.AllDatabases.JsonSerializerAndDeserializer.modelJSON.Organization;
-import com.dsy.dsu.Errors.controller.RecordNewErros;
+import com.dsy.dsu.Errors.WriteErrorForAll.RecordNewErros;
 import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.DeserializationContext;

@@ -14,7 +14,7 @@ import androidx.loader.content.AsyncTaskLoader;
 
 import com.dsy.dsu.AllDatabases.SQLTE.GetSqlite;
 import com.dsy.dsu.BusinessLogicAll.DATE.Class_Generation_Data;
-import com.dsy.dsu.Errors.controller.RecordNewErros;
+import com.dsy.dsu.Errors.WriteErrorForAll.RecordNewErros;
 
 
 import org.jetbrains.annotations.NotNull;

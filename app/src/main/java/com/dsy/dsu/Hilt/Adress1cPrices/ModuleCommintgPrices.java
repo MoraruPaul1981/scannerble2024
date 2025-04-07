@@ -5,10 +5,7 @@ package com.dsy.dsu.Hilt.Adress1cPrices;
 import android.content.Context;
 import android.util.Log;
 
-import com.dsy.dsu.Errors.controller.RecordNewErros;
-
-import javax.inject.Inject;
-import javax.inject.Named;
+import com.dsy.dsu.Errors.WriteErrorForAll.RecordNewErros;
 
 import dagger.Module;
 import dagger.Provides;

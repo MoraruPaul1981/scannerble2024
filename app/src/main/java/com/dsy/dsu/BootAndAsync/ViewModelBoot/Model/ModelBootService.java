@@ -3,7 +3,7 @@ package com.dsy.dsu.BootAndAsync.ViewModelBoot.Model;
 import android.content.Context;
 import android.util.Log;
 
-import com.dsy.dsu.Errors.controller.RecordNewErros;
+import com.dsy.dsu.Errors.WriteErrorForAll.RecordNewErros;
 import com.dsy.dsu.WorkManagers.binesslogic.CreateSingleWorkManager;
 
 import java.util.Date;

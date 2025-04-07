@@ -1,22 +1,16 @@
 package com.dsy.dsu.BootAndAsync.BlBootAsync.Hilts;
 
 import android.app.Activity;
-import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
-import android.content.ServiceConnection;
 import android.net.Uri;
-import android.os.IBinder;
 import android.util.Log;
 
 import androidx.annotation.NonNull;
 import androidx.core.content.ContextCompat;
 
 import com.dsy.dsu.BootAndAsync.Service.IntentServiceBoot;
-import com.dsy.dsu.Errors.controller.RecordNewErros;
-import com.dsy.dsu.Services.Service_for_AdminissionMaterial;
-
-import java.util.Date;
+import com.dsy.dsu.Errors.WriteErrorForAll.RecordNewErros;
 
 import javax.inject.Inject;
 import javax.inject.Named;

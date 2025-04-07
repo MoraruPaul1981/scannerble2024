@@ -13,7 +13,7 @@ import androidx.work.Worker;
 import androidx.work.WorkerParameters;
 
 import com.dsy.dsu.BootAndAsync.Service.IntentServiceBoot;
-import com.dsy.dsu.Errors.controller.RecordNewErros;
+import com.dsy.dsu.Errors.WriteErrorForAll.RecordNewErros;
 import com.dsy.dsu.WorkManagers.binesslogic.GetWorker;
 
 import java.util.Date;

@@ -4,17 +4,15 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.util.Log;
 
-import androidx.annotation.NonNull;
 import androidx.loader.content.AsyncTaskLoader;
 
-import com.dsy.dsu.Errors.controller.RecordNewErros;
+import com.dsy.dsu.Errors.WriteErrorForAll.RecordNewErros;
 import com.dsy.dsu.Hilt.JbossAdrress.getHiltPortJbossInterface;
 
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Date;
 import java.util.LinkedHashMap;
-import java.util.Map;
 
 import javax.net.ssl.SSLSocketFactory;
 

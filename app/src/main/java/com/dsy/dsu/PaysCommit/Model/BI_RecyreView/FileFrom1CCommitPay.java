@@ -5,7 +5,7 @@ import android.util.Log;
 import android.widget.TableLayout;
 
 import com.dsy.dsu.PaysCommit.View.RecyreView.MyViewHolderPayCommingPay;
-import com.dsy.dsu.Errors.controller.RecordNewErros;
+import com.dsy.dsu.Errors.WriteErrorForAll.RecordNewErros;
 import com.dsy.dsu.Services.Service_Notificatios_Для_Согласования;
 import com.fasterxml.jackson.databind.JsonNode;
 

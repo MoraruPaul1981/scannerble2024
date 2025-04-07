@@ -14,7 +14,7 @@ import androidx.annotation.NonNull;
 import androidx.core.content.FileProvider;
 
 import com.dsy.dsu.BusinessLogicAll.VersionCurentTable;
-import com.dsy.dsu.Errors.controller.RecordNewErros;
+import com.dsy.dsu.Errors.WriteErrorForAll.RecordNewErros;
 import com.fasterxml.jackson.databind.JsonNode;
 
 import java.io.ByteArrayOutputStream;

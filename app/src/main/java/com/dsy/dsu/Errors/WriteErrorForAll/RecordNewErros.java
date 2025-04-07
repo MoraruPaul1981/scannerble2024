@@ -1,4 +1,4 @@
-package com.dsy.dsu.Errors.controller;
+package com.dsy.dsu.Errors.WriteErrorForAll;
 
 import android.content.ContentValues;
 import android.content.Context;
@@ -13,7 +13,7 @@ import com.dsy.dsu.BusinessLogicAll.GetPublicID.GetPublicID;
 import com.dsy.dsu.BusinessLogicAll.DATE.Class_Generation_Data;
 import com.dsy.dsu.BusinessLogicAll.DeviceName.ModulegetDeviceName;
 import com.dsy.dsu.BusinessLogicAll.VersionCurentTable;
-import com.dsy.dsu.Errors.controller.interfaces.RecordNewErrorsInterface;
+import com.dsy.dsu.Errors.model.interfaces.RecordNewErrorsInterface;
 import com.sous.backasync.launch.ModuleInserting;
 
 import java.io.BufferedWriter;

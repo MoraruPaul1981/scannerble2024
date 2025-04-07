@@ -1,11 +1,10 @@
 package com.dsy.dsu.Hilt.OkhhtpBuilder;
-import android.annotation.SuppressLint;
 import android.content.Context;
 import android.util.Log;
 
 import androidx.annotation.NonNull;
 
-import com.dsy.dsu.Errors.controller.RecordNewErros;
+import com.dsy.dsu.Errors.WriteErrorForAll.RecordNewErros;
 import javax.net.ssl.SSLSocketFactory;
 
 import okhttp3.OkHttpClient;

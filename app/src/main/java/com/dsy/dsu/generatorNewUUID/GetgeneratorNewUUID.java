@@ -3,7 +3,7 @@ package com.dsy.dsu.generatorNewUUID;
 import android.content.Context;
 import android.util.Log;
 
-import com.dsy.dsu.Errors.controller.RecordNewErros;
+import com.dsy.dsu.Errors.WriteErrorForAll.RecordNewErros;
 
 import java.math.BigInteger;
 import java.time.LocalDateTime;

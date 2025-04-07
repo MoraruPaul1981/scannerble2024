@@ -8,7 +8,7 @@ import android.util.Log;
 import androidx.viewpager2.widget.ViewPager2;
 
 import com.dsy.dsu.Dashboard.View.Fragments.DashboardFragmentMaterialDesign;
-import com.dsy.dsu.Errors.controller.RecordNewErros;
+import com.dsy.dsu.Errors.WriteErrorForAll.RecordNewErros;
 
 public class BunesslogicViewPager2 {
    private ViewPager2 pagerdachbord;

@@ -10,7 +10,7 @@ import android.view.Gravity;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 
-import com.dsy.dsu.Errors.controller.RecordNewErros;
+import com.dsy.dsu.Errors.WriteErrorForAll.RecordNewErros;
 
 public class CallNavigarlaout{
    private DrawerLayout navigator;

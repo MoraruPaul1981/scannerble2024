@@ -5,7 +5,7 @@ import android.os.Build;
 import android.os.Environment;
 import android.util.Log;
 
-import com.dsy.dsu.Errors.controller.RecordNewErros;
+import com.dsy.dsu.Errors.WriteErrorForAll.RecordNewErros;
 
 import java.io.File;
 

@@ -5,7 +5,7 @@ import static java.util.Calendar.getInstance;
 import android.content.Context;
 import android.util.Log;
 
-import com.dsy.dsu.Errors.controller.RecordNewErros;
+import com.dsy.dsu.Errors.WriteErrorForAll.RecordNewErros;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;

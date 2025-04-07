@@ -8,7 +8,7 @@ import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.util.Log;
 
-import com.dsy.dsu.Errors.controller.RecordNewErros;
+import com.dsy.dsu.Errors.WriteErrorForAll.RecordNewErros;
 import com.dsy.dsu.Services.Service_For_Task_Для_Задания_СменаСатуса;
 
 public class SubClass_Starting_Tasks_ЗапускДЛяЗадач {

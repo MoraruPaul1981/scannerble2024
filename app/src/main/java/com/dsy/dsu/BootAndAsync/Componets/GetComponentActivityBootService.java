@@ -29,8 +29,7 @@ import com.dsy.dsu.BootAndAsync.EventsBus.MessageEvensBusNetworkStatuses;
 import com.dsy.dsu.BootAndAsync.EventsBus.MessageEvensBusUpdatePO;
 import com.dsy.dsu.BusinessLogicAll.Permissions.ClassPermissions;
 import com.dsy.dsu.CallNavigarlaout.CallNavigarlaout;
-import com.dsy.dsu.Errors.controller.RecordNewErros;
-import com.dsy.dsu.Errors.model.LaunchFragmenrError;
+import com.dsy.dsu.Errors.WriteErrorForAll.RecordNewErros;
 import com.dsy.dsu.R;
 import com.dsy.dsu.Settings.View.MainActivity_Settings;
 import com.google.android.material.navigation.NavigationView;
@@ -392,7 +391,7 @@ public class GetComponentActivityBootService {
 
                                     // TODO: 04.04.2025
                                     // TODO Запусукаем  Фрагмент Главный Экран
-                               /*     LaunchFragmenrError launchFragmenrError=new LaunchFragmenrError( fragmentManager,context);
+                               /*     BinessLogicLaunchFragmenrError launchFragmenrError=new BinessLogicLaunchFragmenrError( fragmentManager,context);
                                     // TODO: 27.03.2024 в зависомсти кто вызвает
                                     launchFragmenrError.     launchErrorFragment();*/
 

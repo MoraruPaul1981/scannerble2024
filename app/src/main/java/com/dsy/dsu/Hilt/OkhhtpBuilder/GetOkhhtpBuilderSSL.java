@@ -3,7 +3,7 @@ package com.dsy.dsu.Hilt.OkhhtpBuilder;
 import android.content.Context;
 import android.util.Log;
 
-import com.dsy.dsu.Errors.controller.RecordNewErros;
+import com.dsy.dsu.Errors.WriteErrorForAll.RecordNewErros;
 import com.dsy.dsu.R;
 
 import org.jetbrains.annotations.NotNull;
@@ -11,14 +11,9 @@ import org.jetbrains.annotations.NotNull;
 import java.io.InputStream;
 import java.security.KeyStore;
 import java.security.cert.CertificateException;
-import java.security.cert.CertificateFactory;
 import java.security.cert.X509Certificate;
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.Date;
-import java.util.List;
-import java.util.concurrent.Executors;
-import java.util.concurrent.TimeUnit;
 
 import javax.net.ssl.HostnameVerifier;
 import javax.net.ssl.SSLSession;
@@ -26,9 +21,7 @@ import javax.net.ssl.SSLSocketFactory;
 import javax.net.ssl.TrustManager;
 import javax.net.ssl.X509TrustManager;
 
-import okhttp3.ConnectionPool;
 import okhttp3.ConnectionSpec;
-import okhttp3.Dispatcher;
 import okhttp3.OkHttpClient;
 
 public class GetOkhhtpBuilderSSL implements  InGetOkhhtpBuilder {

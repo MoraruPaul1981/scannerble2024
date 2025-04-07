@@ -8,11 +8,10 @@ import android.util.Log;
 import androidx.annotation.NonNull;
 
 import com.dsy.dsu.Dashboard.View.MainActivity_Dashboard;
-import com.dsy.dsu.Errors.controller.RecordNewErros;
+import com.dsy.dsu.Errors.WriteErrorForAll.RecordNewErros;
 import com.dsy.dsu.Passwords.MainActivityPasswords;
 import com.dsy.dsu.Services.ServiceUpdatePoОбновлениеПО;
 
-import java.io.Serializable;
 import java.util.Date;
 
 public class LauntchActivityAfterUpdatePOAndAsync {

@@ -3,14 +3,10 @@ package com.dsy.dsu.BusinessLogicAll.WorkerTables;
 import android.content.Context;
 import android.util.Log;
 
-import com.dsy.dsu.Errors.controller.RecordNewErros;
-
-import org.jetbrains.annotations.NotNull;
+import com.dsy.dsu.Errors.WriteErrorForAll.RecordNewErros;
 
 import java.util.concurrent.CopyOnWriteArrayList;
 
-import javax.inject.Inject;
-import javax.inject.Named;
 import javax.inject.Singleton;
 
 import dagger.Module;

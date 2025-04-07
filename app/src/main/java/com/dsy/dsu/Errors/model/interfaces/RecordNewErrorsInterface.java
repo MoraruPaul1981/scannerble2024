@@ -1,4 +1,4 @@
-package com.dsy.dsu.Errors.controller.interfaces;
+package com.dsy.dsu.Errors.model.interfaces;
 
 import android.database.sqlite.SQLiteDatabase;
 

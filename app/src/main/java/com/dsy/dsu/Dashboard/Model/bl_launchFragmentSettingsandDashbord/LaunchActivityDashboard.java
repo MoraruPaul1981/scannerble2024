@@ -4,17 +4,12 @@ import android.content.Context;
 import android.os.Bundle;
 import android.util.Log;
 
-import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
 import com.dsy.dsu.Dashboard.View.Fragments.DashboardFragmentMaterialDesign;
-import com.dsy.dsu.Dashboard.View.Fragments.DashboardFragmentSettings;
-import com.dsy.dsu.Errors.controller.RecordNewErros;
-import com.dsy.dsu.R;
+import com.dsy.dsu.Errors.WriteErrorForAll.RecordNewErros;
 import com.dsy.dsu.Services.ServiceUpdatePoОбновлениеПО;
-import com.dsy.dsu.Settings.View.BlankFragmentError;
-import com.dsy.dsu.Tabels.Tabel.Single.FragmentSingleTabelOneSwipe;
 
 import org.jetbrains.annotations.NotNull;
 

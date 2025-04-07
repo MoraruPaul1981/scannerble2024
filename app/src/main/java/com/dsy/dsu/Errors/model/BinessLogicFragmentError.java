@@ -1,4 +1,4 @@
-package com.dsy.dsu.Errors.controller;
+package com.dsy.dsu.Errors.model;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
@@ -24,6 +24,7 @@ import androidx.fragment.app.FragmentManager;
 import com.dsy.dsu.BusinessLogicAll.AnalysisUserAuthenticated.GetAnalysisUserAuthenticated;
 import com.dsy.dsu.BusinessLogicAll.Class_Sendiing_Errors;
 import com.dsy.dsu.Dashboard.Model.LaunchActivityDiaologSettings;
+import com.dsy.dsu.Errors.WriteErrorForAll.RecordNewErros;
 import com.google.android.material.button.MaterialButton;
 import com.google.firebase.crashlytics.buildtools.reloc.org.apache.commons.io.IOUtils;
 import com.sous.backasync.launch.ModuleQuety;
@@ -309,116 +310,8 @@ public class BinessLogicFragmentError {
 
 
 
-    public StringBuffer gettingErrorsIsCursor() {
-        StringBuffer БуерДляОшибок =new StringBuffer();
-        // TODO: 14.01.2025
-        try{
-
-            Cursor getbackasyncQueryandWhere=   moduleQuety.getModuleQueryForceLoad("errordsu1",
-                    " SELECT  *   FROM errordsu1 AS er  WHERE er.ERROR IS  NOT NULL  ORDER BY er.id DESC  " ,
-                    null);
-
-            БуерДляОшибок=    rowAppendBufferErrors(getbackasyncQueryandWhere);
-
-            Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
-                    " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                    " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" + "БуерДляОшибок " +БуерДляОшибок );
-
-        } catch (Exception e) {
-            e.printStackTrace();
-            Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :"
-                    + Thread.currentThread().getStackTrace()[2].getMethodName() + " Линия  :"
-                    + Thread.currentThread().getStackTrace()[2].getLineNumber());
-            // TODO: 01.09.2021 метод вызова
-            new RecordNewErros(context).recordnewerror(e.toString(),
-                    this.getClass().getName(), Thread.currentThread().getStackTrace()[2].getMethodName(),
-                    Thread.currentThread().getStackTrace()[2].getLineNumber());
-        }
-
-        return  БуерДляОшибок;
-    }
 
 
-    @SuppressLint("Range")
-    private StringBuffer rowAppendBufferErrors(Cursor getbackasyncQueryandWhere) {
-        // TODO: 17.01.2025
-        StringBuffer БуерДляОшибок=new StringBuffer();
-        try {
-            Flowable.range(0, getbackasyncQueryandWhere.getCount())
-                    .filter(kol-> getbackasyncQueryandWhere!=null)
-                    .filter(kol-> getbackasyncQueryandWhere.getCount()>0)
-
-                    .onBackpressureBuffer(1).blockingIterable().forEach(new Consumer<Integer>() {
-                        @Override
-                        public void accept(Integer step) {// TODO: 17.01.2025
-                            try{
-
-                                String date_update=     getbackasyncQueryandWhere.getString(getbackasyncQueryandWhere.getColumnIndex("date_update"));
-                                // TODO: 17.01.2025
-                                БуерДляОшибок
-                                        .append("\n")
-                                        .append("\n")
-                                        .append("************ Ошибка ************")
-                                        .append("\n")
-                                        .append("\n").append(date_update);
-                                String getErrorRow=     getbackasyncQueryandWhere.getString(getbackasyncQueryandWhere.getColumnIndex("Error"));
-                                // TODO: 17.01.2025
-                                БуерДляОшибок
-                                        .append("\n")
-                                        .append("\n")
-                                        .append("\n").append(getErrorRow);
-                                String Klass=     getbackasyncQueryandWhere.getString(getbackasyncQueryandWhere.getColumnIndex("Klass"));
-                                // TODO: 17.01.2025
-                                БуерДляОшибок
-                                        .append("\n")
-                                        .append("\n")
-                                        .append("\n").append(Klass);
-                                String Metod=     getbackasyncQueryandWhere.getString(getbackasyncQueryandWhere.getColumnIndex("Metod"));
-                                // TODO: 17.01.2025
-                                БуерДляОшибок
-                                        .append("\n")
-                                        .append("\n")
-                                        .append("\n").append(Metod);
-                                String LineError=     getbackasyncQueryandWhere.getString(getbackasyncQueryandWhere.getColumnIndex("LineError"));
-                                // TODO: 17.01.2025
-                                БуерДляОшибок.append("\n").append(LineError);
-
-                                // TODO: 17.01.2025   СТЕП
-                                getbackasyncQueryandWhere.moveToNext();
-                                // TODO: 17.01.2025
-
-                                Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
-                                        " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                                        " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" + "БуерДляОшибок " + БуерДляОшибок);
-
-                            } catch (Exception e) {
-                                e.printStackTrace();
-                                Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :"
-                                        + Thread.currentThread().getStackTrace()[2].getMethodName() + " Линия  :"
-                                        + Thread.currentThread().getStackTrace()[2].getLineNumber());
-                                // TODO: 01.09.2021 метод вызова
-                                new RecordNewErros(context).recordnewerror(e.toString(),
-                                        this.getClass().getName(), Thread.currentThread().getStackTrace()[2].getMethodName(),
-                                        Thread.currentThread().getStackTrace()[2].getLineNumber());
-                            }
-                        }
-                    });
-            Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
-                    " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                    " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" + "БуерДляОшибок " +БуерДляОшибок );
-
-        } catch (Exception e) {
-            e.printStackTrace();
-            Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :"
-                    + Thread.currentThread().getStackTrace()[2].getMethodName() + " Линия  :"
-                    + Thread.currentThread().getStackTrace()[2].getLineNumber());
-            // TODO: 01.09.2021 метод вызова
-            new RecordNewErros(context).recordnewerror(e.toString(),
-                    this.getClass().getName(), Thread.currentThread().getStackTrace()[2].getMethodName(),
-                    Thread.currentThread().getStackTrace()[2].getLineNumber());
-        }
-        return  БуерДляОшибок;
-    }
 
 
 

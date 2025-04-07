@@ -6,7 +6,6 @@ import android.content.res.ColorStateList;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
-import android.os.Handler;
 import android.util.Log;
 import android.widget.ProgressBar;
 
@@ -14,8 +13,7 @@ import androidx.annotation.MainThread;
 import androidx.annotation.NonNull;
 
 import com.dsy.dsu.BootAndAsync.EventsBus.MessageEvensBusPrograssBar;
-import com.dsy.dsu.Errors.controller.RecordNewErros;
-import com.google.android.material.progressindicator.LinearProgressIndicator;
+import com.dsy.dsu.Errors.WriteErrorForAll.RecordNewErros;
 
 import java.util.Optional;
 

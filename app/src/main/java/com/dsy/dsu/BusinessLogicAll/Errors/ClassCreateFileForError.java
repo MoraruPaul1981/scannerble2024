@@ -4,9 +4,7 @@ import android.content.Context;
 import android.os.Environment;
 import android.util.Log;
 
-import androidx.annotation.NonNull;
-
-import com.dsy.dsu.Errors.controller.RecordNewErros;
+import com.dsy.dsu.Errors.WriteErrorForAll.RecordNewErros;
 
 import java.io.File;
 

@@ -12,7 +12,7 @@ import android.widget.ProgressBar;
 import androidx.annotation.NonNull;
 
 import com.dsy.dsu.Dashboard.View.MainActivity_Dashboard;
-import com.dsy.dsu.Errors.controller.RecordNewErros;
+import com.dsy.dsu.Errors.WriteErrorForAll.RecordNewErros;
 import com.dsy.dsu.R;
 import com.google.android.material.bottomnavigation.BottomNavigationItemView;
 import com.google.android.material.bottomnavigation.BottomNavigationView;

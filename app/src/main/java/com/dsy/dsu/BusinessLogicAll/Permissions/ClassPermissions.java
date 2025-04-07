@@ -9,7 +9,7 @@ import androidx.annotation.NonNull;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
-import com.dsy.dsu.Errors.controller.RecordNewErros;
+import com.dsy.dsu.Errors.WriteErrorForAll.RecordNewErros;
 
 public class ClassPermissions {
     public ClassPermissions(@NonNull Activity activity, @NonNull int ALL_PERSSION_CODE ) {

@@ -42,7 +42,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.dsy.dsu.BusinessLogicAll.GetPublicID.GetPublicID;
 import com.dsy.dsu.Dashboard.View.MainActivity_Dashboard;
-import com.dsy.dsu.Errors.controller.RecordNewErros;
+import com.dsy.dsu.Errors.WriteErrorForAll.RecordNewErros;
 import com.dsy.dsu.Gsons.SubClass_JSON_B_P_GET_1C_shipment_of_materials;
 import com.dsy.dsu.R;
 import com.dsy.dsu.Services.Service_Get1C_ПолучениеДанныхОт1С;

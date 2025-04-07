@@ -5,7 +5,6 @@ import android.content.SharedPreferences;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 
-import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
@@ -19,8 +18,10 @@ import android.view.animation.AnimationUtils;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.dsy.dsu.Errors.controller.BinessLogicFragmentError;
-import com.dsy.dsu.Errors.controller.RecordNewErros;
+import com.dsy.dsu.Errors.model.BinessLogicFragmentError;
+import com.dsy.dsu.Errors.WriteErrorForAll.RecordNewErros;
+import com.dsy.dsu.Errors.model.BinessLogicGetDataFragmentError;
+import com.dsy.dsu.Errors.model.GettingExistingErrorFromFile;
 import com.dsy.dsu.R;
 import com.google.android.material.button.MaterialButton;
 import com.sous.backasync.launch.ModuleQuety;
@@ -146,7 +147,7 @@ public class FragmentError extends DialogFragment {
             logicFragmentError.BackFragmentSettings(imageViewBack,fragmentManager);
 
             // TODO: 17.01.2025  Получаем Ошибку двумя разными способами из файла и из курсора
-              BufferGetError =     logicFragmentError.gettingErrorsIsCursor();
+              BufferGetError =     new BinessLogicGetDataFragmentError(getContext(),getSqlLiteCoreApp,moduleQuety).getDataFragmentError( new GettingExistingErrorFromFile() );
 
             Log.d(this.getClass().getName(),"\n" + " class "
                 + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +

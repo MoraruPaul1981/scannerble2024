@@ -17,7 +17,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.dsy.dsu.DocumentsCom.View.MyRecycleViews.MyRecycleViewIsNull.MyRecycleViewCommitDocumentsIsNullAdapters;
 import com.dsy.dsu.DocumentsCom.View.Window.FragmentCommitDocuments;
 import com.dsy.dsu.CommitPrices.Model.BiccessLogicas.DizaynRecyreView.LeftDividerItemDecorator;
-import com.dsy.dsu.Errors.controller.RecordNewErros;
+import com.dsy.dsu.Errors.WriteErrorForAll.RecordNewErros;
 import com.dsy.dsu.R;
 import com.fasterxml.jackson.databind.ObjectMapper;
 

@@ -5,7 +5,7 @@ import android.content.Context;
 import android.util.Log;
 
 import com.dsy.dsu.BusinessLogicAll.GetPublicID.GetPublicID;
-import com.dsy.dsu.Errors.controller.RecordNewErros;
+import com.dsy.dsu.Errors.WriteErrorForAll.RecordNewErros;
 
 import dagger.Module;
 import dagger.Provides;

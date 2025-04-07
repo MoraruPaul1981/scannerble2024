@@ -3,7 +3,7 @@ package com.dsy.dsu.Hilt.getSSLSocketFactory2.Businesslogic;
 import android.content.Context;
 import android.util.Log;
 
-import com.dsy.dsu.Errors.controller.RecordNewErros;
+import com.dsy.dsu.Errors.WriteErrorForAll.RecordNewErros;
 import com.dsy.dsu.R;
 
 import org.jetbrains.annotations.NotNull;
@@ -19,7 +19,6 @@ import java.security.NoSuchAlgorithmException;
 import java.util.Date;
 
 import javax.net.ssl.SSLContext;
-import javax.net.ssl.SSLSocket;
 import javax.net.ssl.SSLSocketFactory;
 import javax.net.ssl.TrustManagerFactory;
 
