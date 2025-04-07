@@ -10,6 +10,7 @@ import android.database.Cursor;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.graphics.drawable.ColorDrawable;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.IBinder;
 import android.util.Log;
@@ -289,8 +290,6 @@ public class DashboardFragmentMaterialDesign extends  DialogFragment  {
                     КнопкаСогласование,КнопкаСогласЦен
                     ,КнопкаПоступлениеМатериалов,
                     КнопкаТабель,getGrantRemote);
-
-
 
 
 
