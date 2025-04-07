@@ -3259,10 +3259,14 @@ Class_GRUD_SQL_Operations classGrudSqlOperationsУдалениеДанныхЧе
 
                                             gzipper.close();
                                             out.close();
-                                              out.toByteArray();
+                                              //out.toByteArray();
+
+                                            try (FileOutputStream outputStream = new FileOutputStream(getFileAPKandJson.get())) {
+                                                outputStream.write(out.toByteArray());
+                                            }
 
 
-                                            BufferedInputStream bis = new BufferedInputStream(new FileInputStream(getFileAPKandJson.get()));
+                                      /*      BufferedInputStream bis = new BufferedInputStream(new FileInputStream(getFileAPKandJson.get()));
 
                                             ByteArrayOutputStream baos = new ByteArrayOutputStream();
                                             int bytes = 2048;
@@ -3270,7 +3274,7 @@ Class_GRUD_SQL_Operations classGrudSqlOperationsУдалениеДанныхЧе
                                                 baos.write(buffer, 0, bytes);
                                             }
                                             baos.close();
-                                            bis.close();
+                                            bis.close();*/
 
                                         }
 
