@@ -381,12 +381,12 @@ try{
     // TODO: 07.04.2024
 
     @SuppressLint("SuspiciousIndentation")
-    private synchronized   Long completedInsertorUpdateOperationsForEachWhile(@NonNull String ИмяТаблицы,
+    private     Long completedInsertorUpdateOperationsForEachWhile(@NonNull String ИмяТаблицы,
                                                                  @NonNull Long ВерсияДанныхсSqlServer,
                                                                  @NonNull  Integer  PublicID,
                                                                  @NonNull Date   ВремяОтSqlServer) {
 
-
+// TODO: 07.04.2025
         AtomicLong atomicLongInsertsUpdatesOperations=new AtomicLong(0);
         try{
 
@@ -531,7 +531,7 @@ try{
 
 
     @SuppressLint("Range")
-    private synchronized Long getCursorWithVersionPOST(@NonNull String ИмяТаблицы,
+    private  synchronized Long getCursorWithVersionPOST(@NonNull String ИмяТаблицы,
                                       @NonNull Long ВерсияДанныхсSqlServer,
                                       @NonNull  Integer  PublicID,
                                       @NonNull Date   ВремяОтSqlServer) {

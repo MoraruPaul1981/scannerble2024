@@ -15,6 +15,8 @@ import com.sous.backasync.launch.ModuleQuety;
 import java.util.function.Consumer;
 
 import io.reactivex.rxjava3.core.Flowable;
+import io.reactivex.rxjava3.functions.Action;
+import io.reactivex.rxjava3.schedulers.Schedulers;
 
 public class GettingExistingErrorFromCursor    implements GettingExistingErrorsInterface {
 
@@ -64,62 +66,65 @@ public class GettingExistingErrorFromCursor    implements GettingExistingErrorsI
             Flowable.range(0, getbackasyncQueryandWhere.getCount())
                     .filter(kol-> getbackasyncQueryandWhere!=null)
                     .filter(kol-> getbackasyncQueryandWhere.getCount()>0)
+                    .onBackpressureBuffer(1)
+                    .doOnNext(procucer->{
+                        // TODO: 07.04.2025
+                        String date_update=     getbackasyncQueryandWhere.getString(getbackasyncQueryandWhere.getColumnIndex("date_update"));
+                        // TODO: 17.01.2025
+                        БуерДляОшибок
+                                .append("\n")
+                                .append("\n")
+                                .append("************ Ошибка ************")
+                                .append("\n")
+                                .append("\n").append(date_update);
+                        String getErrorRow=     getbackasyncQueryandWhere.getString(getbackasyncQueryandWhere.getColumnIndex("Error"));
+                        // TODO: 17.01.2025
+                        БуерДляОшибок
+                                .append("\n")
+                                .append("\n")
+                                .append("\n").append(getErrorRow);
+                        String Klass=     getbackasyncQueryandWhere.getString(getbackasyncQueryandWhere.getColumnIndex("Klass"));
+                        // TODO: 17.01.2025
+                        БуерДляОшибок
+                                .append("\n")
+                                .append("\n")
+                                .append("\n").append(Klass);
+                        String Metod=     getbackasyncQueryandWhere.getString(getbackasyncQueryandWhere.getColumnIndex("Metod"));
+                        // TODO: 17.01.2025
+                        БуерДляОшибок
+                                .append("\n")
+                                .append("\n")
+                                .append("\n").append(Metod);
+                        String LineError=     getbackasyncQueryandWhere.getString(getbackasyncQueryandWhere.getColumnIndex("LineError"));
+                        // TODO: 17.01.2025
+                        БуерДляОшибок.append("\n").append(LineError);
 
-                    .onBackpressureBuffer(1).blockingIterable().forEach(new Consumer<Integer>() {
+                        // TODO: 17.01.2025   СТЕП
+                        getbackasyncQueryandWhere.moveToNext();
+                        // TODO: 17.01.2025
+
+                        Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                                " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                                " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" + "БуерДляОшибок " + БуерДляОшибок);
+
+                    }).subscribeOn(Schedulers.single()).doOnComplete(new Action() {
                         @Override
-                        public void accept(Integer step) {// TODO: 17.01.2025
-                            try{
-
-                                String date_update=     getbackasyncQueryandWhere.getString(getbackasyncQueryandWhere.getColumnIndex("date_update"));
-                                // TODO: 17.01.2025
-                                БуерДляОшибок
-                                        .append("\n")
-                                        .append("\n")
-                                        .append("************ Ошибка ************")
-                                        .append("\n")
-                                        .append("\n").append(date_update);
-                                String getErrorRow=     getbackasyncQueryandWhere.getString(getbackasyncQueryandWhere.getColumnIndex("Error"));
-                                // TODO: 17.01.2025
-                                БуерДляОшибок
-                                        .append("\n")
-                                        .append("\n")
-                                        .append("\n").append(getErrorRow);
-                                String Klass=     getbackasyncQueryandWhere.getString(getbackasyncQueryandWhere.getColumnIndex("Klass"));
-                                // TODO: 17.01.2025
-                                БуерДляОшибок
-                                        .append("\n")
-                                        .append("\n")
-                                        .append("\n").append(Klass);
-                                String Metod=     getbackasyncQueryandWhere.getString(getbackasyncQueryandWhere.getColumnIndex("Metod"));
-                                // TODO: 17.01.2025
-                                БуерДляОшибок
-                                        .append("\n")
-                                        .append("\n")
-                                        .append("\n").append(Metod);
-                                String LineError=     getbackasyncQueryandWhere.getString(getbackasyncQueryandWhere.getColumnIndex("LineError"));
-                                // TODO: 17.01.2025
-                                БуерДляОшибок.append("\n").append(LineError);
-
-                                // TODO: 17.01.2025   СТЕП
-                                getbackasyncQueryandWhere.moveToNext();
-                                // TODO: 17.01.2025
-
-                                Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
-                                        " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                                        " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" + "БуерДляОшибок " + БуерДляОшибок);
-
-                            } catch (Exception e) {
-                                e.printStackTrace();
-                                Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :"
-                                        + Thread.currentThread().getStackTrace()[2].getMethodName() + " Линия  :"
-                                        + Thread.currentThread().getStackTrace()[2].getLineNumber());
-                                // TODO: 01.09.2021 метод вызова
-                                new RecordNewErros(context).recordnewerror(e.toString(),
-                                        this.getClass().getName(), Thread.currentThread().getStackTrace()[2].getMethodName(),
-                                        Thread.currentThread().getStackTrace()[2].getLineNumber());
-                            }
+                        public void run() throws Throwable {
+                            // TODO: 07.04.2025
+                            getbackasyncQueryandWhere.close();;
                         }
-                    });
+                    }).doOnError(e->{
+                        e.printStackTrace();
+                        Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :"
+                                + Thread.currentThread().getStackTrace()[2].getMethodName() + " Линия  :"
+                                + Thread.currentThread().getStackTrace()[2].getLineNumber());
+                        // TODO: 01.09.2021 метод вызова
+                        new RecordNewErros(context).recordnewerror(e.toString(),
+                                this.getClass().getName(), Thread.currentThread().getStackTrace()[2].getMethodName(),
+                                Thread.currentThread().getStackTrace()[2].getLineNumber());
+                    }).blockingSubscribe();
+
+
             Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                     " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
                     " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" + "БуерДляОшибок " +БуерДляОшибок );

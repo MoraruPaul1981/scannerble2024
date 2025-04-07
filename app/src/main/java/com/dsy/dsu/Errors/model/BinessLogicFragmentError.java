@@ -183,7 +183,7 @@ public class BinessLogicFragmentError {
                     // TODO: 07.04.2025 Удаление ОШИБОК
                     v.getHandler().postDelayed(()->{
                               removingErrorsinFile();
-                                clearingTableError();
+                                //clearingTableError();
                         Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                                 " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
                                 " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n");

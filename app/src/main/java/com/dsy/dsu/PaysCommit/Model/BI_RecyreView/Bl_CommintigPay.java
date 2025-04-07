@@ -382,6 +382,8 @@ public class Bl_CommintigPay {
         Интент_BackВозвращаемАктивти.setClass(context, MainActivity_Dashboard.class); // Т
             Интент_BackВозвращаемАктивти.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_SINGLE_TOP);
             Интент_BackВозвращаемАктивти.setAction("MainActivity_Dashboard.class");
+            Интент_BackВозвращаемАктивти.  addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+            Интент_BackВозвращаемАктивти.  addFlags(Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
             Интент_BackВозвращаемАктивти.setClass(context, MainActivity_Dashboard.class);
             Bundle bundleBinderUpdate=new Bundle();
             bundleBinderUpdate.putBoolean("CallBackMainActivityBootAndAsync", true);

@@ -1,13 +1,19 @@
 package com.dsy.dsu.Errors.model;
 
+import android.Manifest;
+import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Environment;
 import android.util.Log;
 
 import androidx.annotation.NonNull;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 import androidx.core.content.FileProvider;
 
 import com.dsy.dsu.Errors.WriteErrorForAll.RecordNewErros;
@@ -28,27 +34,29 @@ import io.reactivex.rxjava3.core.Single;
 import io.reactivex.rxjava3.schedulers.Schedulers;
 
 public class GettingExistingErrorFromFile  implements GettingExistingErrorsInterface {
-
+    String fileName = "Sous-Avtodor-ERROR.txt";
+    String patchFileName="SousAvtoFile";
 
     /**
      * @return
      */
+    @SuppressLint("SuspiciousIndentation")
     @Override
     public StringBuffer gettingExistingErrors(@NonNull Context context,ModuleQuety moduleQuety,SQLiteDatabase sqLiteDatabase_error) {
         // TODO: 17.04.2023
         Single<StringBuffer>stringBufferSingle=null;
         try {
-
+            // TODO: 07.04.2025  
          stringBufferSingle=Single.fromCallable(()->{
                 // TODO: 07.04.2025  get erro from file
              StringBuffer stringBuffergetFileError=new StringBuffer();
 
                 File getPatchNewFileError= new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS)
-                        +File.separator+patchFileName  );
+                        +File.separator+patchFileName+File.separator+fileName  );
                 BufferedReader newBufferedReader = null;
 
-                if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.R) {
-                    if (getPatchNewFileError.isDirectory() && getPatchNewFileError.exists()) {
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+                    if (  getPatchNewFileError.exists()) {
                         Uri address = FileProvider.getUriForFile(context, "com.dsy.dsu.provider", getPatchNewFileError);
                         final InputStream imageStream = context.getContentResolver().openInputStream(address);
                         // TODO: 15.01.2025
@@ -78,6 +86,8 @@ public class GettingExistingErrorFromFile  implements GettingExistingErrorsInter
                         Log.d(this.getClass().getName(), "line " +lineErrorsAll  );
                     }
                 }
+             // TODO: 07.04.2025
+             newBufferedReader.close();
                 Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                         " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
                         " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" + "stringBuffergetFileError " +stringBuffergetFileError );

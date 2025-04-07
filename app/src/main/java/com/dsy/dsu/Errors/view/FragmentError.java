@@ -1,10 +1,14 @@
 package com.dsy.dsu.Errors.view;
 
+import android.Manifest;
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
@@ -18,9 +22,11 @@ import android.view.animation.AnimationUtils;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.dsy.dsu.BusinessLogicAll.Permissions.ClassPermissions;
 import com.dsy.dsu.Errors.model.BinessLogicFragmentError;
 import com.dsy.dsu.Errors.WriteErrorForAll.RecordNewErros;
 import com.dsy.dsu.Errors.model.BinessLogicGetDataFragmentError;
+import com.dsy.dsu.Errors.model.GettingExistingErrorFromCursor;
 import com.dsy.dsu.Errors.model.GettingExistingErrorFromFile;
 import com.dsy.dsu.R;
 import com.google.android.material.button.MaterialButton;
@@ -141,13 +147,17 @@ public class FragmentError extends DialogFragment {
 
 
             // TODO: 12.12.2023  staring biscce logic
+            // TODO: 04.10.2023 разрешения для всего
+            new ClassPermissions(getActivity(),1);
+
             logicFragmentError =new BinessLogicFragmentError( getContext(),getSqlLiteCoreApp,moduleQuety);
 
             // TODO: 07.04.2025 exit fromFragment ERROR 
             logicFragmentError.BackFragmentSettings(imageViewBack,fragmentManager);
 
             // TODO: 17.01.2025  Получаем Ошибку двумя разными способами из файла и из курсора
-              BufferGetError =     new BinessLogicGetDataFragmentError(getContext(),getSqlLiteCoreApp,moduleQuety).getDataFragmentError( new GettingExistingErrorFromFile() );
+              //77777BufferGetError =     new BinessLogicGetDataFragmentError(getContext(),getSqlLiteCoreApp,moduleQuety).getDataFragmentError( new GettingExistingErrorFromFile() );
+              BufferGetError =     new BinessLogicGetDataFragmentError(getContext(),getSqlLiteCoreApp,moduleQuety).getDataFragmentError( new GettingExistingErrorFromCursor() );
 
             Log.d(this.getClass().getName(),"\n" + " class "
                 + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
