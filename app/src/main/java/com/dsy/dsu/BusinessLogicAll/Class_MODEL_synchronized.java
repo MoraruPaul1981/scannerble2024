@@ -3086,7 +3086,7 @@ Class_GRUD_SQL_Operations classGrudSqlOperationsУдалениеДанныхЧе
                                                   @NonNull  Integer ВремяНАReadFile,
                                                   @NonNull SSLSocketFactory getsslSocketFactory2) {
         // TODO: 24.09.2024
-        final File[] СамФайлJsonandApk = {null};
+        AtomicReference<File>   getFileAPKandJson = new  AtomicReference<>();
         try {
             String enableSSl = preferencesJboss.getString("enablesll","http");
 
@@ -3227,17 +3227,17 @@ Class_GRUD_SQL_Operations classGrudSqlOperationsУдалениеДанныхЧе
 
 
 
-                                СамФайлJsonandApk[0] =new File(String.valueOf(СамкФайлу)) ;
-                                СамФайлJsonandApk[0].setWritable(true);
-                                СамФайлJsonandApk[0].setExecutable(true);
+                                getFileAPKandJson.set(new File(String.valueOf(СамкФайлу))) ;
+                                getFileAPKandJson.get().setWritable(true);
+                                getFileAPKandJson.get().setExecutable(true);
 
                                 // TODO: 24.09.2024
                                 Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                                         " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                                        " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + " СамФайлJsonandApk[0] " +    СамФайлJsonandApk[0]);
+                                        " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + " СамФайлJsonandApk[0] " +  getFileAPKandJson.get());
 
                                     // TODO: 20.03.2023 само создание файла
-                                    if ( СамФайлJsonandApk[0].createNewFile()) {
+                                    if ( getFileAPKandJson.get().createNewFile()) {
 
 
 
@@ -3260,6 +3260,17 @@ Class_GRUD_SQL_Operations classGrudSqlOperationsУдалениеДанныхЧе
                                             gzipper.close();
                                             out.close();
                                               out.toByteArray();
+
+
+                                            BufferedInputStream bis = new BufferedInputStream(new FileInputStream(getFileAPKandJson.get()));
+
+                                            ByteArrayOutputStream baos = new ByteArrayOutputStream();
+                                            int bytes = 2048;
+                                            while ((bytes = bis.read(buffer, 0, buffer.length)) > 0) {
+                                                baos.write(buffer, 0, bytes);
+                                            }
+                                            baos.close();
+                                            bis.close();
 
                                         }
 
@@ -3290,7 +3301,7 @@ Class_GRUD_SQL_Operations classGrudSqlOperationsУдалениеДанныхЧе
                                         buffer.flush();
                                         buffer.close();
                                         inputStreamОтПинга.close();*/
-                                        Log.d(context.getClass().getName(), "FileUtils.copyInputStreamToFile  СамФайлJsonandApk[0]"+  СамФайлJsonandApk[0]);
+                                        Log.d(context.getClass().getName(), "FileUtils.copyInputStreamToFile  getFileAPKandJson.get()[0]"+ getFileAPKandJson.get());
                                     } else {
                                         Log.e(context.getClass().getName(), "Ошибка не создалься Будущий файл успешно создалься , далее запись на диск новго APk файла  СЛУЖБА ");
                                     }
@@ -3320,7 +3331,7 @@ Class_GRUD_SQL_Operations classGrudSqlOperationsУдалениеДанныхЧе
                 }
             });
             dispatcherЗагрузкаПО.executorService().awaitTermination(1,TimeUnit.DAYS);
-            Log.i(context.getClass().getName(), "   СамФайлJsonandApk[0] " +     СамФайлJsonandApk[0]);
+            Log.i(context.getClass().getName(), "   getFileAPKandJson.get()" +     getFileAPKandJson.get());
             // TODO: 13.03.2023  конец загрузки файла по новому FILE
         } catch (IOException | InterruptedException ex) {
             ex.printStackTrace();
@@ -3338,7 +3349,7 @@ Class_GRUD_SQL_Operations classGrudSqlOperationsУдалениеДанныхЧе
 
             }
         }
-        return    СамФайлJsonandApk[0];
+        return   getFileAPKandJson.get();
 
     }
 
