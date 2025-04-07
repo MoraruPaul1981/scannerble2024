@@ -3076,7 +3076,7 @@ Class_GRUD_SQL_Operations classGrudSqlOperationsУдалениеДанныхЧе
 
     // TODO: 09.04.2021 Метод Обновление Получение ПО с Сервера
     // TODO: 09.04.2021 Метод Обновление Получение ПО с Сервера
-    public File МетодЗагрузкиОбновлениеПОсСервера(@NonNull String АдресЗагрузки,
+    public synchronized File МетодЗагрузкиОбновлениеПОсСервера(@NonNull String АдресЗагрузки,
                                                   @NonNull Context context,
                                                   @NonNull String ИмяСервера,
                                                   @NonNull Integer ИмяПорта,
@@ -3258,6 +3258,7 @@ Class_GRUD_SQL_Operations classGrudSqlOperationsУдалениеДанныхЧе
                                             }
 
                                             gzipper.close();
+                                            out.flush();
                                             out.close();
                                               //out.toByteArray();
 
