@@ -7,7 +7,6 @@ import android.os.Bundle;
 
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.DialogFragment;
-import androidx.fragment.app.FragmentContainerView;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
@@ -18,8 +17,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.dsy.dsu.BusinessLogicAll.DeviceName.ModulegetDeviceName;
-import com.dsy.dsu.Errors.controller.BinesslogicFragmentError;
-import com.dsy.dsu.Errors.controller.GettingError;
+import com.dsy.dsu.Errors.controller.BinessLogicFragmentError;
 import com.dsy.dsu.Errors.controller.RecordNewErros;
 import com.dsy.dsu.R;
 import com.google.android.material.button.MaterialButton;
@@ -42,7 +40,7 @@ public class FragmentError extends DialogFragment {
     private MaterialButton materialButtonОтправка;
     private SharedPreferences preferences;
     private MaterialButton imageViewBack;
-    private BinesslogicFragmentError binesslogicFragmentError;
+    private BinessLogicFragmentError logicFragmentError;
 
     @Inject
     ModuleQuety moduleQuety;
@@ -56,6 +54,7 @@ public class FragmentError extends DialogFragment {
 
     // TODO: 14.10.2022 настйрока хранилища
     private  SharedPreferences sharedPreferencesХранилище;
+    private     StringBuffer BufferGetError;
 
     // TODO: Rename and change types and number of parameters
     public static FragmentError newInstance( ) {
@@ -130,8 +129,6 @@ public class FragmentError extends DialogFragment {
             textViewHeaderErrors = (TextView)constraintLayoutgetError. findViewById(R.id.textViewHeaderErrors);
             materialButtonОтправка = (MaterialButton) constraintLayoutgetError.findViewById(R.id.materialButtonОтправка);
             imageViewBack = (MaterialButton) constraintLayoutgetError.findViewById(R.id.imageViewBack);
-            materialButtonОтправка.setClickable(false);
-            materialButtonОтправка.setFocusable(false);
             preferences=   getContext().getSharedPreferences("sharedPreferencesХранилище", Context.MODE_MULTI_PROCESS);
 
             // TODO: 04.04.2025
@@ -144,13 +141,23 @@ public class FragmentError extends DialogFragment {
                     Context.MODE_MULTI_PROCESS);
 
 
+
+
+
+
             // TODO: 12.12.2023  staring biscce logic
-            binesslogicFragmentError =new BinesslogicFragmentError( getContext(),getSqlLiteCoreApp);
+            logicFragmentError =new BinessLogicFragmentError( getContext(),getSqlLiteCoreApp,moduleQuety);
+
+            logicFragmentError.  launchBackFragmentSettings(imageViewBack,fragmentManager);
+
+            // TODO: 17.01.2025  Получаем Ошибку двумя разными способами из файла и из курсора
+              BufferGetError =     logicFragmentError.gettingErrorsIsCursor();
 
             Log.d(this.getClass().getName(),"\n" + " class "
                 + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                 " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"   +  "getSqlLiteCoreApp " +getSqlLiteCoreApp);
+                " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"   +  "getSqlLiteCoreApp " +getSqlLiteCoreApp +
+                    " BufferGetError " +BufferGetError);
     } catch (Exception e) {
         e.printStackTrace();
         Log.e(getContext().getClass().getName(),
@@ -168,22 +175,15 @@ public class FragmentError extends DialogFragment {
     public void onStart() {
         super.onStart();
         try{
-            // TODO: 17.01.2025  Получаем Ошибку двумя разными способами из файла и из курсора
-            StringBuffer BufferGetError =     new GettingError(getContext(), moduleQuety).gettingErrorsIsCursor();
-            // TODO: 17.01.2025  полученные ошибку отправляем на экран ПОльзователю
-            binesslogicFragmentError.  metodScreenErrorForUsers(textViewAllError,BufferGetError);
-
-            binesslogicFragmentError.  launchBackFragmentSettings(imageViewBack,fragmentManager);
-
-            binesslogicFragmentError.  metodSendErrorsToMail(materialButtonОтправка,BufferGetError,getActivity(),sharedPreferencesХранилище);
             // TODO: 12.12.2023  Данные ОШибки*/
-            ModulegetDeviceName modulegetDeviceName =new ModulegetDeviceName();
             if (BufferGetError.length()>0) {
-                binesslogicFragmentError.   metodButtonEnables(materialButtonОтправка);
+                logicFragmentError.   metodButtonEnables(materialButtonОтправка);
+                // TODO: 17.01.2025  полученные ошибку отправляем на экран ПОльзователю
+                logicFragmentError.  metodScreenErrorForUsers(textViewAllError,BufferGetError);
+                logicFragmentError.  metodSendErrorsToMail(materialButtonОтправка,BufferGetError,getActivity(),sharedPreferencesХранилище);
             } else {
-                modulegetDeviceName.getDeviceName(getContext());
-                binesslogicFragmentError.  metodScreenDontErrorForUsers(  textViewAllError);
-                binesslogicFragmentError.     metodButtonINVISIBLEs(materialButtonОтправка);
+                logicFragmentError.  metodScreenDontErrorForUsers(  textViewAllError);
+                logicFragmentError.     metodButtonINVISIBLEs(materialButtonОтправка);
             }
 
             // TODO: 17.04.2023

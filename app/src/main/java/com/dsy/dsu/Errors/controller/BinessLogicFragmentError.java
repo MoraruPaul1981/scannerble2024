@@ -1,8 +1,10 @@
 package com.dsy.dsu.Errors.controller;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
 import android.os.Build;
@@ -22,22 +24,28 @@ import com.dsy.dsu.BusinessLogicAll.AnalysisUserAuthenticated.GetAnalysisUserAut
 import com.dsy.dsu.BusinessLogicAll.Class_Sendiing_Errors;
 import com.dsy.dsu.BusinessLogicAll.DeviceName.ModulegetDeviceName;
 import com.dsy.dsu.Dashboard.Model.LaunchActivityDiaologSettings;
-import com.dsy.dsu.Hilt.Sqlitehilt.HiltInterfacesqlite;
 import com.google.android.material.button.MaterialButton;
 import com.google.firebase.crashlytics.buildtools.reloc.org.apache.commons.io.IOUtils;
 import com.sous.backasync.launch.ModuleQuety;
 
 import org.jetbrains.annotations.NotNull;
 
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.Date;
+import java.util.function.Consumer;
 
-import dagger.hilt.EntryPoints;
-public class BinesslogicFragmentError {
-    private ModuleQuety moduleQuety;
+import io.reactivex.rxjava3.core.Flowable;
+
+public class BinessLogicFragmentError {
+
     private Context context;
 
     private SQLiteDatabase sqLiteDatabase_error;
@@ -45,9 +53,9 @@ public class BinesslogicFragmentError {
     private String fileName = "Sous-Avtodor-ERROR.txt";
     private   String patchFileName="SousAvtoFile";
 
+    private  ModuleQuety moduleQuety;
 
-
-    public BinesslogicFragmentError(@NonNull  Context context,@NonNull SQLiteDatabase sqLiteDatabase_error) {
+    public BinessLogicFragmentError(@NonNull  Context context, @NonNull SQLiteDatabase sqLiteDatabase_error,  @NonNull  ModuleQuety moduleQuety) {
         this.moduleQuety = moduleQuety;
         this.context = context;
         this.sqLiteDatabase_error = sqLiteDatabase_error;
@@ -309,7 +317,8 @@ public class BinesslogicFragmentError {
     }
     public void metodButtonEnables(@NonNull  MaterialButton materialButtonОтправка) {
         try{
-            materialButtonОтправка.setVisibility(View.VISIBLE);
+            materialButtonОтправка.setClickable(true);
+            materialButtonОтправка.setFocusable(true);
             materialButtonОтправка.requestLayout();
             materialButtonОтправка.refreshDrawableState();
             Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
@@ -330,7 +339,8 @@ public class BinesslogicFragmentError {
 
     public void metodButtonINVISIBLEs(@NonNull   MaterialButton materialButtonОтправка) {
         try{
-            materialButtonОтправка.setVisibility(View.INVISIBLE);
+            materialButtonОтправка.setClickable(false);
+            materialButtonОтправка.setFocusable(false);
             materialButtonОтправка.requestLayout();
             materialButtonОтправка.refreshDrawableState();
             Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
@@ -350,6 +360,216 @@ public class BinesslogicFragmentError {
     }
 
 
+    public StringBuffer gettingErrorsIsFile()   {
+        StringBuffer БуерДляОшибок =new StringBuffer();
+        // TODO: 14.01.2025
+        java.io.File getFileAllErrors ;
+        try{
+            // TODO: 11.12.2023  для android 11++
+            File getFileError = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS)
+                    +File.separator+patchFileName +File.separator+fileName);
+
+            getFileError.setWritable(true);
+            getFileError.setExecutable(true);
+            getFileError.setReadable(true);
+
+            File getPatchNewFileError= new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS)
+                    +File.separator+patchFileName  );
+            BufferedReader newBufferedReader = null;
+
+            if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.R) {
+                if (getPatchNewFileError.isDirectory() && getFileError.exists()) {
+                    Uri address = FileProvider.getUriForFile(context, "com.dsy.dsu.provider", getFileError);
+                    final InputStream imageStream = context.getContentResolver().openInputStream(address);
+                    // TODO: 15.01.2025
+                    newBufferedReader = new BufferedReader(new InputStreamReader(imageStream, StandardCharsets.UTF_16));
+
+
+                    Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                            " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                            " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" + "newBufferedReader " +newBufferedReader.markSupported() );
+                }
+                Log.d(this.getClass().getName(),  " date " +new Date().toGMTString().toString()   );
+            } else {
+                // TODO: 15.01.2025
+                newBufferedReader = Files.newBufferedReader(Paths.get(getFileError.getPath()), StandardCharsets.UTF_16);
+
+                Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                        " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                        " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" + "newBufferedReader " +newBufferedReader.markSupported() );
+
+            }
+
+            if (newBufferedReader!=null) {
+                String    lineErrorsAll=null;
+                while ((lineErrorsAll =newBufferedReader.readLine()) != null) {
+                    БуерДляОшибок.append(lineErrorsAll);
+                    БуерДляОшибок.append('\n');
+                    Log.d(this.getClass().getName(), "line " +lineErrorsAll  );
+                }
+            }
+
+
+            Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                    " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                    " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" + "БуерДляОшибок " +БуерДляОшибок );
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :"
+                    + Thread.currentThread().getStackTrace()[2].getMethodName() + " Линия  :"
+                    + Thread.currentThread().getStackTrace()[2].getLineNumber());
+            // TODO: 01.09.2021 метод вызова
+            new RecordNewErros(context).recordnewerror(e.toString(),
+                    this.getClass().getName(), Thread.currentThread().getStackTrace()[2].getMethodName(),
+                    Thread.currentThread().getStackTrace()[2].getLineNumber());
+        }
+
+        return  БуерДляОшибок;
+    }
+
+
+    public StringBuffer gettingErrorsIsCursor() {
+        StringBuffer БуерДляОшибок =new StringBuffer();
+        // TODO: 14.01.2025
+        try{
+
+            Cursor getbackasyncQueryandWhere=   moduleQuety.getModuleQueryForceLoad("errordsu1",
+                    " SELECT  *   FROM errordsu1 AS er  WHERE er.ERROR IS  NOT NULL  ORDER BY er.id DESC  " ,
+                    null);
+
+            БуерДляОшибок=    rowAppendBufferErrors(getbackasyncQueryandWhere);
+
+            Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                    " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                    " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" + "БуерДляОшибок " +БуерДляОшибок );
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :"
+                    + Thread.currentThread().getStackTrace()[2].getMethodName() + " Линия  :"
+                    + Thread.currentThread().getStackTrace()[2].getLineNumber());
+            // TODO: 01.09.2021 метод вызова
+            new RecordNewErros(context).recordnewerror(e.toString(),
+                    this.getClass().getName(), Thread.currentThread().getStackTrace()[2].getMethodName(),
+                    Thread.currentThread().getStackTrace()[2].getLineNumber());
+        }
+
+        return  БуерДляОшибок;
+    }
+
+
+    @SuppressLint("Range")
+    private StringBuffer rowAppendBufferErrors(Cursor getbackasyncQueryandWhere) {
+        // TODO: 17.01.2025
+        StringBuffer БуерДляОшибок=new StringBuffer();
+        try {
+            Flowable.range(0, getbackasyncQueryandWhere.getCount())
+                    .filter(kol-> getbackasyncQueryandWhere!=null)
+                    .filter(kol-> getbackasyncQueryandWhere.getCount()>0)
+
+                    .onBackpressureBuffer().blockingIterable().forEach(new Consumer<Integer>() {
+                        @Override
+                        public void accept(Integer step) {// TODO: 17.01.2025
+                            try{
+
+                                String date_update=     getbackasyncQueryandWhere.getString(getbackasyncQueryandWhere.getColumnIndex("date_update"));
+                                // TODO: 17.01.2025
+                                БуерДляОшибок
+                                        .append("\n")
+                                        .append("\n")
+                                        .append("************ Ошибка ************")
+                                        .append("\n")
+                                        .append("\n").append(date_update);
+                                String getErrorRow=     getbackasyncQueryandWhere.getString(getbackasyncQueryandWhere.getColumnIndex("Error"));
+                                // TODO: 17.01.2025
+                                БуерДляОшибок
+                                        .append("\n")
+                                        .append("\n")
+                                        .append("\n").append(getErrorRow);
+                                String Klass=     getbackasyncQueryandWhere.getString(getbackasyncQueryandWhere.getColumnIndex("Klass"));
+                                // TODO: 17.01.2025
+                                БуерДляОшибок
+                                        .append("\n")
+                                        .append("\n")
+                                        .append("\n").append(Klass);
+                                String Metod=     getbackasyncQueryandWhere.getString(getbackasyncQueryandWhere.getColumnIndex("Metod"));
+                                // TODO: 17.01.2025
+                                БуерДляОшибок
+                                        .append("\n")
+                                        .append("\n")
+                                        .append("\n").append(Metod);
+                                String LineError=     getbackasyncQueryandWhere.getString(getbackasyncQueryandWhere.getColumnIndex("LineError"));
+                                // TODO: 17.01.2025
+                                БуерДляОшибок.append("\n").append(LineError);
+
+                                // TODO: 17.01.2025   СТЕП
+                                getbackasyncQueryandWhere.moveToNext();
+                                // TODO: 17.01.2025
+
+                                Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                                        " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                                        " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" + "БуерДляОшибок " + БуерДляОшибок);
+
+                            } catch (Exception e) {
+                                e.printStackTrace();
+                                Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :"
+                                        + Thread.currentThread().getStackTrace()[2].getMethodName() + " Линия  :"
+                                        + Thread.currentThread().getStackTrace()[2].getLineNumber());
+                                // TODO: 01.09.2021 метод вызова
+                                new RecordNewErros(context).recordnewerror(e.toString(),
+                                        this.getClass().getName(), Thread.currentThread().getStackTrace()[2].getMethodName(),
+                                        Thread.currentThread().getStackTrace()[2].getLineNumber());
+                            }
+                        }
+                    });
+            Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                    " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                    " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" + "БуерДляОшибок " +БуерДляОшибок );
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :"
+                    + Thread.currentThread().getStackTrace()[2].getMethodName() + " Линия  :"
+                    + Thread.currentThread().getStackTrace()[2].getLineNumber());
+            // TODO: 01.09.2021 метод вызова
+            new RecordNewErros(context).recordnewerror(e.toString(),
+                    this.getClass().getName(), Thread.currentThread().getStackTrace()[2].getMethodName(),
+                    Thread.currentThread().getStackTrace()[2].getLineNumber());
+        }
+        return  БуерДляОшибок;
+    }
+
+
+
+
+
+
+    public String getDeviceName(@NonNull Context context) {
+        String getDeviceName = null;
+        // TODO: 14.01.2025
+        try{
+
+            ModulegetDeviceName modulegetDeviceName =new ModulegetDeviceName();
+            getDeviceName=   modulegetDeviceName.getDeviceName(context);
+
+            Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                    " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                    " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" + "getDeviceName " +getDeviceName );
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :"
+                    + Thread.currentThread().getStackTrace()[2].getMethodName() + " Линия  :"
+                    + Thread.currentThread().getStackTrace()[2].getLineNumber());
+            // TODO: 01.09.2021 метод вызова
+            new RecordNewErros(context).recordnewerror(e.toString(),
+                    this.getClass().getName(), Thread.currentThread().getStackTrace()[2].getMethodName(),
+                    Thread.currentThread().getStackTrace()[2].getLineNumber());
+        }
+
+        return  getDeviceName;
+    }
     // TODO: 24.03.2025 end class
 }
 
