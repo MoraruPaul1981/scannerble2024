@@ -59,7 +59,6 @@ public class LaunchActivityDashboard {
             // TODO Запусукаем Фргамент DdshBoard
             DashboardFragmentMaterialDesign dashboardFragmentMaterialDesign = DashboardFragmentMaterialDesign.newInstance();
             Bundle data = new Bundle();
-            data.putBinder("callbackbinderdashbord",localBinderОбновлениеПО);
             FragmentTransaction   fragmentTransaction = fragmentManager.beginTransaction();
             fragmentTransaction.addToBackStack(null);
             fragmentManager.popBackStack();

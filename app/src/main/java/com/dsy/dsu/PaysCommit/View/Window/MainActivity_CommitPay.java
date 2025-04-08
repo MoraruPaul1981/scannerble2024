@@ -137,11 +137,6 @@ public class MainActivity_CommitPay extends FragmentActivity  implements BinderS
                             try {
                                 binderСогласования1C = (Service_Notificatios_Для_Согласования.LocalBinderДляСогласования) service;
                               if (service.isBinderAlive()) {
-
-                                  Bundle bundlebinder1ССлужба=new Bundle();
-                                  bundlebinder1ССлужба.putBinder("binderСогласования1C",binderСогласования1C);
-                                  fragmentManager.setFragmentResult("callbackbinderdashbord",    bundlebinder1ССлужба);
-
                                     Log.i(getApplicationContext().getClass().getName(), "    onServiceConnected  service.isBinderAlive()"
                                             + service.isBinderAlive());
                                 }

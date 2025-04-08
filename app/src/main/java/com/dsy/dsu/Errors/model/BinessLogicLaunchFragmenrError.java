@@ -62,7 +62,6 @@ public class BinessLogicLaunchFragmenrError {
             // TODO Запусукаем Фргамент DdshBoard
             FragmentError fragmentError = FragmentError.newInstance();
             Bundle data = new Bundle();
-            data.putBinder("callbackbinderdashbord",localBinderОбновлениеПО);
             FragmentTransaction   fragmentTransaction = fragmentManager.beginTransaction();
             fragmentTransaction.addToBackStack(null);
             fragmentManager.popBackStack();

@@ -26,7 +26,6 @@ public class LauntchActivityAfterUpdatePOAndAsync {
             Интент_ЗапускаетDashboard.setClass(context, MainActivity_Dashboard.class);
             Интент_ЗапускаетDashboard.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_SINGLE_TOP);
             Bundle bundle=new Bundle();
-            bundle.putBinder("callbackbinderdashbord", localBinderОбновлениеПО);
             Интент_ЗапускаетDashboard.putExtras(bundle);
             Интент_ЗапускаетDashboard.  addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
             Интент_ЗапускаетDashboard.  addFlags(Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
@@ -62,7 +61,6 @@ public class LauntchActivityAfterUpdatePOAndAsync {
             Интент_ЗапускаетPasswords.setClass(context, MainActivityPasswords.class);
             Интент_ЗапускаетPasswords.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_SINGLE_TOP);
             Bundle bundle=new Bundle();
-            bundle.putBinder("callbackbinderdashbord", localBinderОбновлениеПО);
             Интент_ЗапускаетPasswords.putExtras(bundle);
             Интент_ЗапускаетPasswords.setAction("MainActivityPasswords.class");
             context.startActivity(Интент_ЗапускаетPasswords);//tso

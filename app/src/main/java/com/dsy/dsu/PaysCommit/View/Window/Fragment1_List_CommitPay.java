@@ -66,8 +66,11 @@ public class Fragment1_List_CommitPay extends Fragment   {
     private Fragment fragment_ТекущийФрагментСогласованиеСписок;
 
     private BottomNavigationView bottomNavigationViewParent;
+    @SuppressLint("RestrictedApi")
     private BottomNavigationItemView bottomNavigationBack;
+    @SuppressLint("RestrictedApi")
     private BottomNavigationItemView bottomNavigationAsync;
+    @SuppressLint("RestrictedApi")
     private BottomNavigationItemView bottomNavigationSearch;
 
     private ProgressBar progressBarCommitPay;
@@ -142,8 +145,6 @@ public class Fragment1_List_CommitPay extends Fragment   {
 
 
 
-            // TODO: 03.10.2023 Код Внутри Фрагмента Commting Pay
-          методСлушательФрагментовBinder();
 
 
             setObservableLiveData();
@@ -398,46 +399,7 @@ public class Fragment1_List_CommitPay extends Fragment   {
     }
 // TODO: 09.11.2023  Код Внутри Фрагмента Pay Commiting
 
-        private void методСлушательФрагментовBinder() {
-            try {
-                fragmentManager.setFragmentResultListener("callbackbinderdashbord", lifecycleOwner, new FragmentResultListener() {
-                    @Override
-                    public void onFragmentResult(@NonNull String requestKey, @NonNull Bundle result) {
-                        if (requestKey.equalsIgnoreCase("callbackbinderdashbord")) {
-                            try {
-                                binderСогласования1C = (Service_Notificatios_Для_Согласования.LocalBinderДляСогласования) result.getBinder("binderСогласования1C");
 
-                                // TODO: 21.08.2023
-                                Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
-                                        " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                                        " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" +
-                                        "  binderСогласования1C " + binderСогласования1C);
-                            } catch (Exception e) {
-                                e.printStackTrace();
-                                Log.e(getContext().getClass().getName(),
-                                        "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
-                                                " Линия  :" + Thread.currentThread().getStackTrace()[2].getLineNumber());
-                                new RecordNewErros(getContext()).recordnewerror(e.toString(),
-                                        this.getClass().getName().toString(), Thread.currentThread().getStackTrace()[2].getMethodName().toString(),
-                                        Thread.currentThread().getStackTrace()[2].getLineNumber());
-                            }
-
-                        }
-                    }
-                });
-                Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
-                        " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                        " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n");
-            } catch (Exception e) {
-                e.printStackTrace();
-                Log.e(getContext().getClass().getName(),
-                        "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
-                                " Линия  :" + Thread.currentThread().getStackTrace()[2].getLineNumber());
-                new RecordNewErros(getContext()).recordnewerror(e.toString(),
-                        this.getClass().getName().toString(), Thread.currentThread().getStackTrace()[2].getMethodName().toString(),
-                        Thread.currentThread().getStackTrace()[2].getLineNumber());
-            }
-        }
 
 
 

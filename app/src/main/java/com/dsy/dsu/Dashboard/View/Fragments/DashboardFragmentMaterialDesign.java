@@ -355,7 +355,6 @@ public class DashboardFragmentMaterialDesign extends  DialogFragment  {
                             Log.d(this.getClass().getName(), "Запускает Согласния   ");
                             Intent ИнтентЗаявкаНаТранспорт = new Intent();
                             Bundle data = new Bundle();
-                            data.putBinder("callbackbinderdashbord", localBinderОбновлениеПО);
                             ИнтентЗаявкаНаТранспорт.putExtras(data);
                             ИнтентЗаявкаНаТранспорт.setClass(getContext(), MainActivityOrdersTransports.class);//рабочий
                             ИнтентЗаявкаНаТранспорт.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
@@ -382,7 +381,6 @@ public class DashboardFragmentMaterialDesign extends  DialogFragment  {
                             Log.d(this.getClass().getName(), "Запускает Согласния   ");
                             Intent intentЗапускСогласования1C = new Intent();
                             Bundle data = new Bundle();
-                            data.putBinder("callbackbinderdashbord", localBinderОбновлениеПО);
                             intentЗапускСогласования1C.putExtras(data);
                             intentЗапускСогласования1C.setClass(getContext(), MainActivity_CommitPay.class);//рабочий
                             intentЗапускСогласования1C.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
@@ -411,7 +409,6 @@ public class DashboardFragmentMaterialDesign extends  DialogFragment  {
                             Log.d(this.getClass().getName(), "Запускает Согласния   ");
                             Intent ИнтентЗаявкаНаТранспорт = new Intent();
                             Bundle data = new Bundle();
-                            data.putBinder("callbackbinderdashbord", localBinderОбновлениеПО);
                             ИнтентЗаявкаНаТранспорт.putExtras(data);
                             ИнтентЗаявкаНаТранспорт.setClass(getContext(), MainActivity_AdmissionMaterials.class);//рабочий
                             ИнтентЗаявкаНаТранспорт.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
@@ -438,7 +435,6 @@ public class DashboardFragmentMaterialDesign extends  DialogFragment  {
                         try {
                             Intent Интент_ЗапускТабельногоУчётаПервыйШаг = new Intent();
                             Bundle data = new Bundle();
-                            data.putBinder("callbackbinderdashbord", localBinderОбновлениеПО);
                             Интент_ЗапускТабельногоУчётаПервыйШаг.putExtras(data);
                             Интент_ЗапускТабельногоУчётаПервыйШаг.setClass(getContext(), MainActivity_List_Tabels.class); //  ТЕСТ КОД КОТОРЫЙ ЗАПУСКАЕТ ACTIVITY VIEWDATA  ПРОВЕРИТЬ ОБМЕН
                             Интент_ЗапускТабельногоУчётаПервыйШаг.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
@@ -464,7 +460,6 @@ public class DashboardFragmentMaterialDesign extends  DialogFragment  {
                         try {
                             Intent intentЗапускСогласования = new Intent();
                             Bundle data = new Bundle();
-                            data.putBinder("callbackbinderdashbord", localBinderОбновлениеПО);
                             intentЗапускСогласования.putExtras(data);
                             intentЗапускСогласования.setClass(getContext(), MainActivity_CommitPay.class);//рабочий
                             intentЗапускСогласования.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
@@ -494,7 +489,6 @@ public class DashboardFragmentMaterialDesign extends  DialogFragment  {
                         try {
                             Intent intentЗапускСогласованиеЦены1С = new Intent();
                             Bundle data = new Bundle();
-                            data.putBinder("callbackbinderdashbord", localBinderОбновлениеПО);
                             intentЗапускСогласованиеЦены1С.putExtras(data);
                             intentЗапускСогласованиеЦены1С.setClass(getContext(), MainActivityCommitingPrices.class);//рабочий
                             intentЗапускСогласованиеЦены1С.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);

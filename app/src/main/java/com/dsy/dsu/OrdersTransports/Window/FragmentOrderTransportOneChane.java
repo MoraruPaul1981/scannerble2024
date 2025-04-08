@@ -87,9 +87,13 @@ public class FragmentOrderTransportOneChane extends Fragment {
     private Integer ПубличныйID;
     LinearLayout linearLayout_orders_transport;
     private BottomNavigationView BottomNavigationOrderTransport;
+    @SuppressLint("RestrictedApi")
     private BottomNavigationItemView bottomNavigationItemViewвыход;
+    @SuppressLint("RestrictedApi")
     private BottomNavigationItemView bottomNavigationItemView2создать;
+    @SuppressLint("RestrictedApi")
     private BottomNavigationItemView bottomNavigationItemView3обновить;
+    @SuppressLint("RestrictedApi")
     private BottomNavigationItemView bottomNavigationItemView4История;
     private ProgressBar progressBarСканирование;
 
@@ -160,10 +164,7 @@ public class FragmentOrderTransportOneChane extends Fragment {
 
 
 
-            // TODO: 03.10.2023
-            SubClassOrdersTransport.ClassBinderUpdatePO classBinderUpdatePO=subClassOrdersTransport.new ClassBinderUpdatePO() ;
 
-            classBinderUpdatePO.   методСлушательФрагментовBinder( );
 
             Log.d(getContext().getClass().getName(), "\n"
                     + " время: " + new Date() + "\n+" +
@@ -625,7 +626,6 @@ public class FragmentOrderTransportOneChane extends Fragment {
                Интент_ЗапускаетDashboard.setClass(getActivity(), MainActivity_Dashboard.class);
 
                Bundle bundleBinderUpdate=new Bundle();
-               bundleBinderUpdate.putBinder("callbackbinderdashbord", localBinderОбновлениеПО);
                bundleBinderUpdate.putBoolean("CallBackMainActivityBootAndAsync", true);
                Интент_ЗапускаетDashboard.putExtras(bundleBinderUpdate);
                activity.  startActivity(Интент_ЗапускаетDashboard);//tso*/
@@ -3018,48 +3018,7 @@ private void методИсторияFragment( ) {
 
 }
 
-class ClassBinderUpdatePO {
-    private void методСлушательФрагментовBinder( ) {
-        try{
-            fragmentManager.setFragmentResultListener("callbackbinderdashbord", lifecycleOwner, new FragmentResultListener() {
-                @Override
-                public void onFragmentResult(@NonNull String requestKey, @NonNull Bundle result) {
-                    if (requestKey.equalsIgnoreCase("callbackbinderdashbord")) {
-                        try{
-                            localBinderОбновлениеПО=(ServiceUpdatePoОбновлениеПО.localBinderОбновлениеПО)       result.getBinder("callbackbinderdashbord");
-                            // TODO: 21.08.2023
 
-                            Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
-                                    " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                                    " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"  +
-                                    "  localBinderОбновлениеПО " +localBinderОбновлениеПО);
-                        } catch (Exception e) {
-                            e.printStackTrace();
-                            Log.e(getContext().getClass().getName(),
-                                    "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
-                                            " Линия  :" + Thread.currentThread().getStackTrace()[2].getLineNumber());
-                            new RecordNewErros(getContext()).recordnewerror(e.toString(),
-                                    this.getClass().getName().toString(), Thread.currentThread().getStackTrace()[2].getMethodName().toString(),
-                                    Thread.currentThread().getStackTrace()[2].getLineNumber());
-                        }
-
-                    }
-                }
-            });
-            Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
-                    " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                    " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n");
-        } catch (Exception e) {
-            e.printStackTrace();
-            Log.e(getContext().getClass().getName(),
-                    "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
-                            " Линия  :" + Thread.currentThread().getStackTrace()[2].getLineNumber());
-            new RecordNewErros(getContext()).recordnewerror(e.toString(),
-                    this.getClass().getName().toString(), Thread.currentThread().getStackTrace()[2].getMethodName().toString(),
-                    Thread.currentThread().getStackTrace()[2].getLineNumber());
-        }
-    }
-}
 
 
 // TODO: 28.04.2023  КОНЕЦ SubClassNewOrderTranport           //// TODO: 28.04.2023  КОНЕЦ SubClassNewOrderTranport   //// TODO: 28.04.2023  КОНЕЦ SubClassNewOrderTranport

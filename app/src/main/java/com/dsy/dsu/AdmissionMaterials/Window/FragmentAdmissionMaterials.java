@@ -546,7 +546,6 @@ public class FragmentAdmissionMaterials extends Fragment {
                         Bundle gameData = new Bundle();
                         gameData.putString("ФлагСтатусИзФрагментаСканирования", "ЗакрываетИзСканирования");
                         gameData.putBinder("binder", binderДляПолучениеМатериалов);
-                        gameData.putBinder("callbackbinderdashbord", localBinderОбновлениеПО);
                         Интент_BackВозвращаемАктивти.putExtras(gameData);
                         message.getTarget().postDelayed(()->{ startActivity(Интент_BackВозвращаемАктивти); },500);
 

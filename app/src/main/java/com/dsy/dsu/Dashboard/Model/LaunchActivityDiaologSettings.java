@@ -60,7 +60,6 @@ public class LaunchActivityDiaologSettings {
             // TODO Запусукаем Фргамент DdshBoard
             DashboardFragmentSettings dashboardFragmentSettings = DashboardFragmentSettings.newInstance();
             Bundle data = new Bundle();
-            data.putBinder("callbackbinderdashbord",localBinderОбновлениеПО);
             FragmentTransaction   fragmentTransaction = fragmentManager.beginTransaction();
             fragmentTransaction.addToBackStack(null);
             fragmentManager.popBackStack();

@@ -362,7 +362,6 @@ public class BinessLogicIntentServiceBoot {
                          intentComunicationsUpdatePO.setAction("EventBusUpdatePO");
                          bundleComunications.putString("Статус",  "UpdateProcessorPO");///"В процесс"
                          bundleComunications.putInt("СервернаяВерсия",  СервернаяВерсия);///"В процесс"
-                         bundleComunications.putBinder("callbackbinderdashbord",localBinderОбновлениеПО);
                          intentComunicationsUpdatePO.putExtras(bundleComunications);
 
                          EventBus.getDefault().post(new MessageEvensBusUpdatePO(intentComunicationsUpdatePO));
