@@ -1155,7 +1155,7 @@ try{
                     + " ИмяСерверИзХранилица " + ИмяСерверИзХранилица+
                     " ПортСерверИзХранилица " +ПортСерверИзХранилица+"\n"+ " ВерсииНаАндройдеСерверная " +ВерсииНаАндройдеСерверная );
             // TODO: 10.11.2022  Получение JSON-потока
-            InputStream BufferGetData =new Class_MODEL_synchronized(context). методGetByteFromServerAsync(
+            byte[] BufferGetData =new Class_MODEL_synchronized(context). методGetByteFromServerAsync(
                     ИмяТаблицы,
                     "application/gzip",
                     "Хотим Получить  JSON"
@@ -1193,7 +1193,7 @@ try{
 
     /////// TODO МЕТОД ПАСРИНГА ПРИШЕДШЕГО  С СЕРВЕРА ВНУТРИ ASYNSTASK В ФОНЕ
     @SuppressLint("SuspiciousIndentation")
-    Long МетодПарсингJSONФайлаОтСервреравФоне(@NonNull  InputStream БуферGetByteJson,
+    Long МетодПарсингJSONФайлаОтСервреравФоне(@NonNull  byte[] БуферGetByteJson,
                                               @NonNull  String имяТаблицаAsync) throws InterruptedException, JSONException {
         // TODO: 05.07.2023 result suync
         Long  РезультСинхрониазции=0l;

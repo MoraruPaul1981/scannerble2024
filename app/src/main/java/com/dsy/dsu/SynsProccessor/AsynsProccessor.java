@@ -200,11 +200,9 @@ public class AsynsProccessor extends Class_MODEL_synchronized {
         Long РезультатСинхронизации=0l;
         try {
             Log.d(this.getClass().getName(), "   ID  getPublicID" +   getPublicID);
-            StringBuffer BufferGetVersionData = new StringBuffer();
-
             preferences=  context .getSharedPreferences("sharedPreferencesХранилище", Context.MODE_MULTI_PROCESS);
-
             LinkedHashMap<Integer,String> getHiltPortJboss=   EntryPoints.get(context, getHiltPortJbossInterface.class).getHiltPortJboss();
+
 // TODO: 02.04.2024  Адресс и Порт Сервера Jboss 
             String   ИмяСерверИзХранилица = getHiltPortJboss.values().stream().map(m->String.valueOf(m)).findFirst().get();
             Integer    ПортСерверИзХранилица = getHiltPortJboss.keySet().stream().mapToInt(m->m).findFirst().getAsInt();
@@ -218,7 +216,7 @@ public class AsynsProccessor extends Class_MODEL_synchronized {
 
 
             // TODO: 10.11.2022 Получение Список Таблиц
-            BufferGetVersionData = МетодУниверсальныйСервернаяВерсияДанныхДанныесСервера(
+            StringBuffer       BufferGetVersionData = МетодУниверсальныйСервернаяВерсияДанныхДанныесСервера(
                     "view_alltablesversion",
                     "application/gzip",
                     "Хотим Получить Версию Данных Сервера",///"Хотим Получить Версию Данных Сервера" б //TODO "Хотим Получить Статус Блокировки Пользователя по ID"
@@ -226,6 +224,7 @@ public class AsynsProccessor extends Class_MODEL_synchronized {
                     getPublicID,
                     ИмяСерверИзХранилица ,
                     ПортСерверИзХранилица,getsslSocketFactory2);
+
             Log.d(this.getClass().getName(), " BufferGetVersionData.toString().toCharArray().length "
                     + BufferGetVersionData.toString().toCharArray().length);
             // TODO: 03.09.2021

@@ -10,14 +10,13 @@ import android.database.sqlite.SQLiteCursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
 import android.os.Build;
-import android.os.Environment;
 import android.util.Log;
 
 import androidx.annotation.NonNull;
 
 import com.dsy.dsu.AllDatabases.SQLTE.GetSQLiteDatabase;
-import com.dsy.dsu.BusinessLogicAll.BunessLogicDownloadFiles.DownloadFiles;
-import com.dsy.dsu.BusinessLogicAll.BunessLogicDownloadFiles.GetBinessLogicDownloadFiles;
+import com.dsy.dsu.BusinessLogicAll.DownloadsJBOSS.BunessLogicDownloadFiles.DownloadFiles;
+import com.dsy.dsu.BusinessLogicAll.DownloadsJBOSS.BunessLogicDownloadFiles.GetBinessLogicDownloadFiles;
 import com.dsy.dsu.BusinessLogicAll.DATE.Class_Generation_Data;
 
 import com.dsy.dsu.BusinessLogicAll.DeviceName.ModulegetDeviceName;
@@ -27,23 +26,15 @@ import com.dsy.dsu.Errors.WriteErrorForAll.RecordNewErros;
 import com.dsy.dsu.Hilt.JbossAdrress.getHiltPortJbossInterface;
 import com.dsy.dsu.Hilt.OkhhtpBuilder.GetAsyncOkHttpClientBuilder;
 import com.google.common.io.ByteSource;
-import com.google.firebase.crashlytics.buildtools.reloc.org.apache.commons.io.IOUtils;
 
 import org.jetbrains.annotations.NotNull;
 import org.json.JSONObject;
 
-import java.io.BufferedInputStream;
-import java.io.BufferedOutputStream;
 import java.io.BufferedReader;
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.io.OutputStream;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
 import java.security.InvalidKeyException;
@@ -281,7 +272,7 @@ import okio.BufferedSink;
 
     // TODO: 06.09.2023  пришли данные байтовые от сервера
     ///МЕТОД ПОЛУЧЕНИЕ ДАННЫХ С СЕРВЕРА
-    public   InputStream     методGetByteFromServerAsync(String ИмяТаблицы,
+    public   byte[]     методGetByteFromServerAsync(String ИмяТаблицы,
                                                                               String Тип,
                                                                               String JobForServer,
                                                                               Long Версия,
@@ -290,7 +281,7 @@ import okio.BufferedSink;
                                                                               Integer ИмяПорта,
                                                          SSLSocketFactory getsslSocketFactory2) {
 
-        AtomicReference<InputStream>  inputStreamJaksonByte = new AtomicReference();
+        AtomicReference<byte[]>  inputStreamJaksonByte = new AtomicReference();
         try {
             String enableSSl = preferencesJboss.getString("enablesll","http");
             String СтрокаСвязиСсервером =enableSSl+"://"+ИмяСервера+":"+ИмяПорта+"/"+new PUBLIC_CONTENT(context).getСсылкаНаРежимСервераТабель();;
@@ -433,6 +424,20 @@ import okio.BufferedSink;
         return   inputStreamJaksonByte.get();
 
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     //todo #GET     //#GET  только для ПИНГА     //#GET  только для ПИНГА  //#GET  только для ПИНГА //#GET  только для ПИНГА //#GET  только для ПИНГА //#GET  только для ПИНГА //#GET  только для ПИНГА //#GET  только для ПИНГА
     ///МЕТОД ПОЛУЧЕНИЕ ДАННЫХ С СЕРВЕРА
