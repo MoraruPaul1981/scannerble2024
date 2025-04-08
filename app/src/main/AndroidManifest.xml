@@ -399,8 +399,9 @@
             android:configChanges="orientation|screenSize|keyboardHidden|screenSize|screenLayout"
             android:exported="true"
             android:grantUriPermissions="true"
+            android:finishOnTaskLaunch="true"
             android:label="@string/name_dsu"
-            android:launchMode="singleTask"
+            android:launchMode="singleTop"
             android:requestLegacyExternalStorage="true"
             android:showOnLockScreen="true"
             android:theme="@style/Theme.MaterialComponents.DayNight.DarkActionBar">
@@ -491,33 +492,24 @@
             android:exported="true"
             android:label="Аунтификация ДСУ-1"
             android:launchMode="singleTop"
+            android:finishOnTaskLaunch="true"
             android:theme="@style/Theme.MaterialComponents.DayNight.DarkActionBar">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".BootAndAsync.ViewModelBoot.View.MainActivityBootAndAsync" />
         </activity>
-        <activity
-            android:name=".Errors.view.MainActivity_Errors"
-            android:exported="true"
-            android:grantUriPermissions="true"
-            android:label="Ошибки приложения ДСУ-1"
-            android:launchMode="singleTop"
-            android:requestLegacyExternalStorage="true"
-            android:theme="@style/Theme.MaterialComponents.DayNight.DarkActionBar">
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value=".BootAndAsync.ViewModelBoot.View.MainActivityBootAndAsync" />
-        </activity> <!-- активити прикложения ДСУ-1 -->
+
         <!-- активити прикложения ДСУ-1 -->
         <!-- активити прикложения ДСУ-1 -->
         <!-- активити прикложения ДСУ-1 -->
-        <!-- активити прикложения ДСУ-1  singleTask singleTop  standard -->
+        <!-- активити прикложения ДСУ-1  singleTop singleTop  standard -->
         <activity
             android:name=".Dashboard.View.MainActivity_Dashboard"
             android:exported="true"
             android:grantUriPermissions="true"
             android:label="Союз-Автодор"
-            android:launchMode="singleTask"
+            android:finishOnTaskLaunch="true"
+            android:launchMode="singleTop"
             android:requestLegacyExternalStorage="true"
             android:showOnLockScreen="true"
             android:theme="@style/Theme.MaterialComponents.DayNight.DarkActionBar">
