@@ -1198,7 +1198,7 @@ try{
         // TODO: 05.07.2023 result suync
         Long  РезультСинхрониазции=0l;
         try {
-            Log.d(this.getClass().getName(), " имяТаблицаAsync " + имяТаблицаAsync + " БуферПолученныйJSON " +БуферGetByteJson.available()  );
+            Log.d(this.getClass().getName(), " имяТаблицаAsync " + имяТаблицаAsync + " БуферGetByteJson " +БуферGetByteJson.length );
             //TODO БУфер JSON от Сервера
             //  ObjectMapper jsonGenerator = new PUBLIC_CONTENT(context).getGeneratorJackson();
 
@@ -1225,8 +1225,6 @@ try{
 
             }
 // TODO: 14.09.2023 exit
-            БуферGetByteJson.close();
-
             Log.d(this.getClass().getName(),"\n" + " class " +
                     Thread.currentThread().getStackTrace()[2].getClassName()
                     + "\n" +

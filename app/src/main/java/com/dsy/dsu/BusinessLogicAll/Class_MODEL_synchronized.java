@@ -17,6 +17,8 @@ import androidx.annotation.NonNull;
 import com.dsy.dsu.AllDatabases.SQLTE.GetSQLiteDatabase;
 import com.dsy.dsu.BusinessLogicAll.DownloadsJBOSS.BunessLogicDownloadBufferReader.DownloadReader;
 import com.dsy.dsu.BusinessLogicAll.DownloadsJBOSS.BunessLogicDownloadBufferReader.GetBinessLogicDownloadReader;
+import com.dsy.dsu.BusinessLogicAll.DownloadsJBOSS.BunessLogicDownloadByte.DownloadByte;
+import com.dsy.dsu.BusinessLogicAll.DownloadsJBOSS.BunessLogicDownloadByte.GetBinessLogicDownloadByte;
 import com.dsy.dsu.BusinessLogicAll.DownloadsJBOSS.BunessLogicDownloadFiles.DownloadFiles;
 import com.dsy.dsu.BusinessLogicAll.DownloadsJBOSS.BunessLogicDownloadFiles.GetBinessLogicDownloadFiles;
 import com.dsy.dsu.BusinessLogicAll.DATE.Class_Generation_Data;
@@ -397,16 +399,18 @@ import okio.BufferedSink;
                             Boolean ФлагgZIPOutputStream =Boolean.parseBoolean (  Optional.ofNullable(response.header("GZIPOutputStream")).map(String::new).orElse("false"));
                             if (РазмерПришедшегоПотока>0l) {
                                 // TODO: 07.10.2023  gzip
-                                byte[] asByteBuffer=    response.body().source().readByteArray();
+                          /*      byte[] asByteBuffer=    response.body().source().readByteArray();
                                 // TODO: 25.09.2024
-                                inputStreamJaksonByte.set(new GZIPInputStream(ByteSource.wrap(asByteBuffer).openBufferedStream(),2048)); ;//4096
+                                inputStreamJaksonByte.set(new GZIPInputStream(ByteSource.wrap(asByteBuffer).openBufferedStream(),2048)); ;//4096*/
 
-                                Log.d(context.getClass().getName(), "\n"
-                                        + " время: " + new Date() + "\n+" +
-                                        " Класс в процессе... " + this.getClass().getName() + "\n" +
-                                        " метод в процессе... " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n"+
-                                        " inputStreamJaksonByte " +inputStreamJaksonByte.get());
+                                // TODO: 07.04.2025  получаем STEAM  от сервера и обрабоатываем его для READER
+                                DownloadByte downloadByte=new DownloadByte();
+                                // TODO: 07.04.2025 обрабоатываем пршедщий файл
+                                inputStreamJaksonByte.set(downloadByte.downloadByte(context, new GetBinessLogicDownloadByte(), response.body().bytes())); ;
 
+                                Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                                        " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                                        " line " + Thread.currentThread().getStackTrace()[2].getLineNumber()+" inputStreamJaksonByte.get() " +inputStreamJaksonByte.get());
                             }
                             // TODO: 28.12.2024 closeting
                             response.close();
