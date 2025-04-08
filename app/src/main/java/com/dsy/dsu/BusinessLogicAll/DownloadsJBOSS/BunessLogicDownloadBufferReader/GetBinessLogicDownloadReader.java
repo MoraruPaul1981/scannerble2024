@@ -26,29 +26,32 @@ public class GetBinessLogicDownloadReader implements GetBinessLogicDwonloadReade
      * @return
      */
     @Override
-    public BufferedReader getBinessLogicDwonloadReader(@NotNull Context context, @NotNull byte[] getbytejboss ) {
+    public StringBuffer getBinessLogicDwonloadReader(@NotNull Context context, @NotNull byte[] getbytejboss ) {
         // TODO: 07.04.2025
-        BufferedReader   getNewReader =null;
+        StringBuffer   buffer =null;
   try{
           try (ByteArrayInputStream bin = new ByteArrayInputStream(getbytejboss);
                GZIPInputStream gzipper = new GZIPInputStream(bin))
           {
               // Not sure where to go here
               InputStreamReader reader=new InputStreamReader(gzipper, StandardCharsets.UTF_8);
-              getNewReader=new BufferedReader(reader);
+              BufferedReader   getNewReader=new BufferedReader(reader);
               // TODO: 08.04.2025
+
+               buffer = getNewReader.lines().collect(StringBuffer::new, (sb, i) -> sb.append(i),
+                      StringBuffer::append);
+
               gzipper.close();
               reader.close();
 
-
               Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                       " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                      " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + " getNewReader " +getNewReader);
+                      " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + " buffer " +buffer);
           }
 
       Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
               " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-              " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + " getNewReader " +getNewReader);
+              " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + " buffer " +buffer);
     } catch (Exception e) {
         e.printStackTrace();
         Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() + " Линия  :"
@@ -58,6 +61,6 @@ public class GetBinessLogicDownloadReader implements GetBinessLogicDwonloadReade
                 Thread.currentThread().getStackTrace()[2].getLineNumber());
     }
 
-        return getNewReader;
+        return buffer;
     }
 }

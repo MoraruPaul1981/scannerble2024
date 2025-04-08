@@ -12,10 +12,10 @@ final public class DownloadReader {
 
 
 
-   public   BufferedReader downloadReader (@NotNull Context context, @NotNull GetBinessLogicDwonloadReaderInterface getBinessLogicDwonloadByteInterface,
+   public   StringBuffer downloadReader (@NotNull Context context, @NotNull GetBinessLogicDwonloadReaderInterface getBinessLogicDwonloadByteInterface,
                                                       @NotNull   byte[] getbytejboss ){
         // TODO: 07.04.2025
-       BufferedReader getDownloadReader=  null;
+       StringBuffer getDownloadReader=  null;
 
         try{
             // TODO: 07.04.2025 start

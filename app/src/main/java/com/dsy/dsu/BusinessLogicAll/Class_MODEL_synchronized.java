@@ -224,13 +224,15 @@ import okio.BufferedSink;
                             // TODO: 07.04.2025  получаем STEAM  от сервера и обрабоатываем его для READER
                             DownloadReader downloadReader=new DownloadReader();
                             // TODO: 07.04.2025 обрабоатываем пршедщий файл
-                            BufferedReader   РидерОтСервераМетодаGET=downloadReader.downloadReader(context, new GetBinessLogicDownloadReader(),
+                            // TODO: 07.04.2025 обрабоатываем пршедщий файл
+                            БуферСамиДанныеОтСервера[0]=downloadReader.downloadReader(context, new GetBinessLogicDownloadReader(),
                                     response.body().bytes()) ;
                             Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                                     " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                                    " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + " РидерОтСервераМетодаGET " +РидерОтСервераМетодаGET);
+                                    " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "     БуферСамиДанныеОтСервера[0] " +    БуферСамиДанныеОтСервера[0]
+                                    +  " РазмерПришедшегоПотока " + РазмерПришедшегоПотока);
 
-                            БуферСамиДанныеОтСервера[0] = РидерОтСервераМетодаGET.lines().collect(StringBuffer::new, (sb, i) -> sb.append(i),StringBuffer::append);
+
 
 /*
 
@@ -579,16 +581,15 @@ import okio.BufferedSink;
                             // TODO: 07.04.2025  получаем STEAM  от сервера и обрабоатываем его для READER
                             DownloadReader downloadReader=new DownloadReader();
                             // TODO: 07.04.2025 обрабоатываем пршедщий файл
-                            BufferedReader   РидерОтСервераМетодаGET=downloadReader.downloadReader(context, new GetBinessLogicDownloadReader(),
+                            StringBuffer   РидерОтСервераМетодаGET=downloadReader.downloadReader(context, new GetBinessLogicDownloadReader(),
                                     response.body().bytes()) ;
                             Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                                     " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                                    " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + " РидерОтСервераМетодаGET " +РидерОтСервераМетодаGET);
+                                    " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + " РидерОтСервераМетодаGET " +РидерОтСервераМетодаGET
+                                    +  " РазмерПришедшегоПотока[0] " + РазмерПришедшегоПотока[0]);
 
-                            БуферРезультатПингасСервером = РидерОтСервераМетодаGET.lines().collect(StringBuffer::new, (sb, i) -> sb.append(i),
-                                        StringBuffer::append);
-                                Log.d(this.getClass().getName(), "БуферРезультатПингасСервером " + БуферРезультатПингасСервером
-                                        +  " РазмерПришедшегоПотока[0] " + РазмерПришедшегоПотока[0]);
+
+
                         }
                         Log.d(this.getClass().getName(), "БуферРезультатПингасСервером " + БуферРезультатПингасСервером +  " РазмерПришедшегоПотока[0] " + РазмерПришедшегоПотока[0]);
                     }
@@ -824,14 +825,13 @@ import okio.BufferedSink;
                                     // TODO: 07.04.2025  получаем STEAM  от сервера и обрабоатываем его для READER
                                     DownloadReader downloadReader=new DownloadReader();
                                     // TODO: 07.04.2025 обрабоатываем пршедщий файл
-                                    BufferedReader   РидерОтСервераМетодаGET=downloadReader.downloadReader(context, new GetBinessLogicDownloadReader(),
+                                    // TODO: 07.04.2025 обрабоатываем пршедщий файл
+                                    БуферCallsBackОтСеврера[0] =downloadReader.downloadReader(context, new GetBinessLogicDownloadReader(),
                                             response.body().bytes()) ;
                                     Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                                             " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                                            " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + " РидерОтСервераМетодаGET " +РидерОтСервераМетодаGET);
-
-                                        БуферCallsBackОтСеврера[0] = РидерОтСервераМетодаGET.lines().collect(StringBuffer::new, (sb, i) -> sb.append(i),
-                                                StringBuffer::append);
+                                            " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + " БуферCallsBackОтСеврера[0]  " +БуферCallsBackОтСеврера[0]
+                                            +  " РазмерПришедшегоПотока" + РазмерПришедшегоПотока);
 
                                         Log.d(this.getClass().getName(), " БуферCallsBackОтСеврера[0] " +  БуферCallsBackОтСеврера[0] +
                                                 " РазмерПришедшегоПотока " +РазмерПришедшегоПотока);
@@ -3677,21 +3677,13 @@ Class_GRUD_SQL_Operations classGrudSqlOperationsУдалениеДанныхЧе
                                     // TODO: 07.04.2025  получаем STEAM  от сервера и обрабоатываем его для READER
                                     DownloadReader downloadReader=new DownloadReader();
                                     // TODO: 07.04.2025 обрабоатываем пршедщий файл
-                                    BufferedReader   РидерОтСервераМетодаGET=downloadReader.downloadReader(context, new GetBinessLogicDownloadReader(),
+                                    // TODO: 07.04.2025 обрабоатываем пршедщий файл
+                                    StringBuffer   БуферПубличныйID=downloadReader.downloadReader(context, new GetBinessLogicDownloadReader(),
                                             response.body().bytes()) ;
                                     Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                                             " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                                            " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + " РидерОтСервераМетодаGET " +РидерОтСервераМетодаGET);
-
-
-
-
-
-
-                                   StringBuffer БуферПубличныйID = РидерОтСервераМетодаGET.lines().collect(StringBuffer::new, (sb, i) -> sb.append(i),
-                                            StringBuffer::append);
-                                    Log.d(this.getClass().getName(), "БуферПубличныйIDОтСервера "
-                                            + БуферПубличныйIDОтСервера[0] +  " РазмерПришедшегоПотока " +РазмерПришедшегоПотока);
+                                            " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + " БуферПубличныйID " +БуферПубличныйID
+                                            +  " РазмерПришедшегоПотока " + РазмерПришедшегоПотока);
                                     // TODO: 31.05.2022
                                     String  БуферПубличный = БуферПубличныйID.toString().trim();
 

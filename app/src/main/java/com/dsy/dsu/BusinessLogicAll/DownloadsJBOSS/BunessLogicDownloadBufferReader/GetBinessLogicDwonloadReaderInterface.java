@@ -10,6 +10,6 @@ import java.io.File;
 public interface GetBinessLogicDwonloadReaderInterface {
 
 
-    BufferedReader getBinessLogicDwonloadReader(@NotNull Context context, @NotNull byte[] getbytejboss  );
+    StringBuffer getBinessLogicDwonloadReader(@NotNull Context context, @NotNull byte[] getbytejboss  );
 
 }
