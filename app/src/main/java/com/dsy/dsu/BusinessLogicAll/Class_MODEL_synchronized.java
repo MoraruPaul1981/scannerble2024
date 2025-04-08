@@ -15,6 +15,8 @@ import android.util.Log;
 import androidx.annotation.NonNull;
 
 import com.dsy.dsu.AllDatabases.SQLTE.GetSQLiteDatabase;
+import com.dsy.dsu.BusinessLogicAll.DownloadsJBOSS.BunessLogicDownloadBufferReader.DownloadReader;
+import com.dsy.dsu.BusinessLogicAll.DownloadsJBOSS.BunessLogicDownloadBufferReader.GetBinessLogicDownloadReader;
 import com.dsy.dsu.BusinessLogicAll.DownloadsJBOSS.BunessLogicDownloadFiles.DownloadFiles;
 import com.dsy.dsu.BusinessLogicAll.DownloadsJBOSS.BunessLogicDownloadFiles.GetBinessLogicDownloadFiles;
 import com.dsy.dsu.BusinessLogicAll.DATE.Class_Generation_Data;
@@ -216,6 +218,20 @@ import okio.BufferedSink;
                         if (РазмерПришедшегоПотока>0l) {
                             // TODO: 07.10.2023  gzip
                             // TODO: 07.10.2023  gzip
+
+                            // TODO: 07.04.2025  получаем STEAM  от сервера и обрабоатываем его для READER
+                            DownloadReader downloadReader=new DownloadReader();
+                            // TODO: 07.04.2025 обрабоатываем пршедщий файл
+                            BufferedReader   РидерОтСервераМетодаGET=downloadReader.downloadReader(context, new GetBinessLogicDownloadReader(),
+                                    response.body().bytes()) ;
+                            Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                                    " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                                    " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + " РидерОтСервераМетодаGET " +РидерОтСервераМетодаGET);
+
+                            БуферСамиДанныеОтСервера[0] = РидерОтСервераМетодаGET.lines().collect(StringBuffer::new, (sb, i) -> sb.append(i),StringBuffer::append);
+
+/*
+
                             InputStream inputStreamОтПинга = new GZIPInputStream(response.body().source().inputStream(),2048);////4096
                             // TODO: 07.10.2023 end
                             BufferedReader РидерОтСервераМетодаGET;//
@@ -226,14 +242,16 @@ import okio.BufferedSink;
                             }
                                 БуферСамиДанныеОтСервера[0] = РидерОтСервераМетодаGET.lines().collect(StringBuffer::new, (sb, i) -> sb.append(i),
                                         StringBuffer::append);
-                                Log.d(this.getClass().getName(), "БуферСамиДанныеОтСервера " + БуферСамиДанныеОтСервера[0] +  " РазмерПришедшегоПотока " +РазмерПришедшегоПотока);
+                                Log.d(this.getClass().getName(), "БуферСамиДанныеОтСервера " + БуферСамиДанныеОтСервера[0] +  " РазмерПришедшегоПотока " +РазмерПришедшегоПотока);*/
 
 
                         }
 
 
 
-                        Log.d(this.getClass().getName(), "БуферСамиДанныеОтСервера " + БуферСамиДанныеОтСервера[0] +  " РазмерПришедшегоПотока " +РазмерПришедшегоПотока);
+                        Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                                " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                                " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "   БуферСамиДанныеОтСервера[0] " +  БуферСамиДанныеОтСервера[0]);
 
                         // TODO: 28.12.2024 closeting
                         response.close();
@@ -552,16 +570,17 @@ import okio.BufferedSink;
                         Boolean ФлагgZIPOutputStream =Boolean.parseBoolean (  Optional.ofNullable(response.header("GZIPOutputStream")).map(String::new).orElse("false"));
                         StringBuffer БуферРезультатПингасСервером = null;
                         if (РазмерПришедшегоПотока[0] >0l) {
-                            // TODO: 07.10.2023  gzip
-                            // TODO: 07.10.2023  gzip
-                            InputStream inputStreamОтПинга = new GZIPInputStream(response.body().source().inputStream(),2048);///4096
-                            //TODO БУфер JSON от Сервера
-                            BufferedReader РидерОтСервераМетодаGET;//
-                            if (КакаяКодировка==8) {
-                                РидерОтСервераМетодаGET = new BufferedReader(new InputStreamReader(inputStreamОтПинга, StandardCharsets.UTF_8));
-                            } else {
-                                РидерОтСервераМетодаGET = new BufferedReader(new InputStreamReader(inputStreamОтПинга, StandardCharsets.UTF_16));
-                            }
+
+
+                            // TODO: 07.04.2025  получаем STEAM  от сервера и обрабоатываем его для READER
+                            DownloadReader downloadReader=new DownloadReader();
+                            // TODO: 07.04.2025 обрабоатываем пршедщий файл
+                            BufferedReader   РидерОтСервераМетодаGET=downloadReader.downloadReader(context, new GetBinessLogicDownloadReader(),
+                                    response.body().bytes()) ;
+                            Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                                    " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                                    " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + " РидерОтСервераМетодаGET " +РидерОтСервераМетодаGET);
+
                             БуферРезультатПингасСервером = РидерОтСервераМетодаGET.lines().collect(StringBuffer::new, (sb, i) -> sb.append(i),
                                         StringBuffer::append);
                                 Log.d(this.getClass().getName(), "БуферРезультатПингасСервером " + БуферРезультатПингасСервером
@@ -798,15 +817,15 @@ import okio.BufferedSink;
                                 Boolean ФлагgZIPOutputStream =Boolean.parseBoolean (  Optional.ofNullable(response.header("GZIPOutputStream")).map(String::new).orElse("false"));
                                 if (РазмерПришедшегоПотока>0l) {
                                     // TODO: 07.10.2023
-                                    // TODO: 07.10.2023  gzip
-                                    InputStream inputStreamОтПинга = new GZIPInputStream(response.body().source().inputStream(),2048);//4096
+                                    // TODO: 07.04.2025  получаем STEAM  от сервера и обрабоатываем его для READER
+                                    DownloadReader downloadReader=new DownloadReader();
+                                    // TODO: 07.04.2025 обрабоатываем пршедщий файл
+                                    BufferedReader   РидерОтСервераМетодаGET=downloadReader.downloadReader(context, new GetBinessLogicDownloadReader(),
+                                            response.body().bytes()) ;
+                                    Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                                            " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                                            " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + " РидерОтСервераМетодаGET " +РидерОтСервераМетодаGET);
 
-                                    BufferedReader РидерОтСервераМетодаGET;//
-                                    if (КакаяКодировка==8) {
-                                        РидерОтСервераМетодаGET = new BufferedReader(new InputStreamReader(inputStreamОтПинга, StandardCharsets.UTF_8));
-                                    } else {
-                                        РидерОтСервераМетодаGET = new BufferedReader(new InputStreamReader(inputStreamОтПинга, StandardCharsets.UTF_16));
-                                    }
                                         БуферCallsBackОтСеврера[0] = РидерОтСервераМетодаGET.lines().collect(StringBuffer::new, (sb, i) -> sb.append(i),
                                                 StringBuffer::append);
 
@@ -3197,8 +3216,8 @@ Class_GRUD_SQL_Operations classGrudSqlOperationsУдалениеДанныхЧе
 
                             // TODO: 06.05.2023  если ПОТОК ЕСТЬ СОДЕРЖИВАЕМ ПАРСИМ
                             if(РазмерПришедшегоПотока>0){
-                                // TODO: 07.04.2025  получаем STEAM  от сервера и обрабоатываем его для получение файла
 
+                                // TODO: 07.04.2025  получаем STEAM  от сервера и обрабоатываем его для получение файла
                                 DownloadFiles getBinessLogicDwonloadFiles=new DownloadFiles();
                                 // TODO: 07.04.2025 обрабоатываем пршедщий файл
                                 getFileAPKandJson.set(getBinessLogicDwonloadFiles.downloadFiles(context,
@@ -3651,13 +3670,20 @@ Class_GRUD_SQL_Operations classGrudSqlOperationsУдалениеДанныхЧе
                                 Boolean ФлагgZIPOutputStream =Boolean.parseBoolean (  Optional.ofNullable(response.header("GZIPOutputStream")).map(String::new).orElse("false"));
                                 if (РазмерПришедшегоПотока>0) {
                                     // TODO: 07.10.2023  gzip
-                                 InputStream   inputStreamОтПинга = new GZIPInputStream(response.body().source().inputStream(),2048);//4096
-                                    BufferedReader РидерОтСервераМетодаGET;//
-                                    if (КакаяКодировка==8) {
-                                        РидерОтСервераМетодаGET = new BufferedReader(new InputStreamReader(inputStreamОтПинга, StandardCharsets.UTF_8));
-                                    } else {
-                                        РидерОтСервераМетодаGET = new BufferedReader(new InputStreamReader(inputStreamОтПинга, StandardCharsets.UTF_16));
-                                    }
+                                    // TODO: 07.04.2025  получаем STEAM  от сервера и обрабоатываем его для READER
+                                    DownloadReader downloadReader=new DownloadReader();
+                                    // TODO: 07.04.2025 обрабоатываем пршедщий файл
+                                    BufferedReader   РидерОтСервераМетодаGET=downloadReader.downloadReader(context, new GetBinessLogicDownloadReader(),
+                                            response.body().bytes()) ;
+                                    Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                                            " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                                            " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + " РидерОтСервераМетодаGET " +РидерОтСервераМетодаGET);
+
+
+
+
+
+
                                    StringBuffer БуферПубличныйID = РидерОтСервераМетодаGET.lines().collect(StringBuffer::new, (sb, i) -> sb.append(i),
                                             StringBuffer::append);
                                     Log.d(this.getClass().getName(), "БуферПубличныйIDОтСервера "

@@ -15,6 +15,8 @@ import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
+import java.io.InputStreamReader;
+import java.nio.charset.StandardCharsets;
 import java.util.zip.GZIPInputStream;
 
 public class GetBinessLogicDownloadReader implements GetBinessLogicDwonloadReaderInterface {
@@ -32,18 +34,12 @@ public class GetBinessLogicDownloadReader implements GetBinessLogicDwonloadReade
                GZIPInputStream gzipper = new GZIPInputStream(bin))
           {
               // Not sure where to go here
-
-              byte[] buffer = new byte[2048];
-              ByteArrayOutputStream out = new ByteArrayOutputStream();
-              int len;
-              while ((len = gzipper.read(buffer)) > 0) {
-                  out.write(buffer, 0, len);
-              }
-
+              InputStreamReader reader=new InputStreamReader(gzipper, StandardCharsets.UTF_8);
+              getNewReader=new BufferedReader(reader);
+              // TODO: 08.04.2025
               gzipper.close();
-              out.flush();
-              out.close();
-              //getNewReader=out.toByteArray();
+              reader.close();
+
 
               Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                       " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
