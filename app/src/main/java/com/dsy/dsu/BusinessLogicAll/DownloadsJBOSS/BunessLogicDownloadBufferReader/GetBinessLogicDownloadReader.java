@@ -1,30 +1,32 @@
-package com.dsy.dsu.BusinessLogicAll.DownloadsJBOSS.BunessLogicDownloadByte;
+package com.dsy.dsu.BusinessLogicAll.DownloadsJBOSS.BunessLogicDownloadBufferReader;
 
 import android.content.Context;
 import android.os.Build;
 import android.os.Environment;
 import android.util.Log;
 
+import com.dsy.dsu.BusinessLogicAll.DownloadsJBOSS.BunessLogicDownloadBufferReader.GetBinessLogicDwonloadReaderInterface;
 import com.dsy.dsu.Errors.WriteErrorForAll.RecordNewErros;
 
 import org.jetbrains.annotations.NotNull;
 
+import java.io.BufferedReader;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.util.zip.GZIPInputStream;
 
-public class GetBinessLogicDownloadByte implements  GetBinessLogicDwonloadByteInterface {
+public class GetBinessLogicDownloadReader implements GetBinessLogicDwonloadReaderInterface {
     /**
      * @param context
      * @param
      * @return
      */
     @Override
-    public byte[] getBinessLogicDwonloadByte(@NotNull Context context, @NotNull byte[] getbytejboss ) {
+    public BufferedReader getBinessLogicDwonloadReader(@NotNull Context context, @NotNull byte[] getbytejboss ) {
         // TODO: 07.04.2025
-        byte[]  getNewByte=null;
+        BufferedReader   getNewReader =null;
   try{
           try (ByteArrayInputStream bin = new ByteArrayInputStream(getbytejboss);
                GZIPInputStream gzipper = new GZIPInputStream(bin))
@@ -41,16 +43,16 @@ public class GetBinessLogicDownloadByte implements  GetBinessLogicDwonloadByteIn
               gzipper.close();
               out.flush();
               out.close();
-              getNewByte=out.toByteArray();
+              //getNewReader=out.toByteArray();
 
               Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                       " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                      " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + " getNewByte " +getNewByte);
+                      " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + " getNewReader " +getNewReader);
           }
 
       Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
               " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-              " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + " getNewByte " +getNewByte);
+              " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + " getNewReader " +getNewReader);
     } catch (Exception e) {
         e.printStackTrace();
         Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() + " Линия  :"
@@ -60,6 +62,6 @@ public class GetBinessLogicDownloadByte implements  GetBinessLogicDwonloadByteIn
                 Thread.currentThread().getStackTrace()[2].getLineNumber());
     }
 
-        return getNewByte;
+        return getNewReader;
     }
 }

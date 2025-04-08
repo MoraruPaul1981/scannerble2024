@@ -9,6 +9,6 @@ import java.io.File;
 public interface GetBinessLogicDwonloadByteInterface {
 
 
-    byte[] getBinessLogicDwonloadByte(@NotNull Context context, @NotNull byte[] getbytejboss , @NotNull String ИмяФайлаЗагрузки );
+    byte[] getBinessLogicDwonloadByte(@NotNull Context context, @NotNull byte[] getbytejboss  );
 
 }

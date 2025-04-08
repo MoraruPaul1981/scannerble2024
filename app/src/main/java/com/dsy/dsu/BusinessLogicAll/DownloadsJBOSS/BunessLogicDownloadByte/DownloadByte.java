@@ -13,15 +13,14 @@ final public class DownloadByte {
 
 
 
-  public synchronized  byte[]  downloadByte  (@NotNull Context context,@NotNull GetBinessLogicDwonloadByteInterface getBinessLogicDwonloadByteInterface,
-                                           @NotNull   byte[] getbytejboss,@NotNull String ИмяФайлаЗагрузки){
+   public    byte[]  downloadByte  (@NotNull Context context,@NotNull GetBinessLogicDwonloadByteInterface getBinessLogicDwonloadByteInterface,
+                                           @NotNull   byte[] getbytejboss ){
         // TODO: 07.04.2025
       byte[]  getDownloadByte=  null;
 
         try{
-            getBinessLogicDwonloadByteInterface =new GetBinessLogicDownloadByte();
             // TODO: 07.04.2025 start
-            getDownloadByte=    getBinessLogicDwonloadByteInterface.getBinessLogicDwonloadByte(context, getbytejboss, ИмяФайлаЗагрузки);
+            getDownloadByte=    getBinessLogicDwonloadByteInterface.getBinessLogicDwonloadByte(context, getbytejboss );
 
 
             Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +

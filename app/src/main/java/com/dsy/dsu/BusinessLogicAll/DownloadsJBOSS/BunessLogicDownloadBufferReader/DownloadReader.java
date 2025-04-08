@@ -1,32 +1,30 @@
-package com.dsy.dsu.BusinessLogicAll.DownloadsJBOSS.BunessLogicDownloadFiles;
+package com.dsy.dsu.BusinessLogicAll.DownloadsJBOSS.BunessLogicDownloadBufferReader;
 
 import android.content.Context;
 import android.util.Log;
-
 import com.dsy.dsu.Errors.WriteErrorForAll.RecordNewErros;
 
 import org.jetbrains.annotations.NotNull;
 
-import java.io.File;
+import java.io.BufferedReader;
 
-final public class DownloadFiles {
+final public class DownloadReader {
 
 
 
-  public synchronized File downloadFiles  (@NotNull Context context,@NotNull GetBinessLogicDwonloadFilesInterface getBinessLogicDwonloadFilesInterface,
-                                           @NotNull   byte[] getbytejboss,@NotNull String ИмяФайлаЗагрузки){
+   public   BufferedReader downloadReader (@NotNull Context context, @NotNull GetBinessLogicDwonloadReaderInterface getBinessLogicDwonloadByteInterface,
+                                                      @NotNull   byte[] getbytejboss ){
         // TODO: 07.04.2025
-        File downloadFile=null;
+       BufferedReader getDownloadReader=  null;
 
         try{
-            getBinessLogicDwonloadFilesInterface =new GetBinessLogicDownloadFiles();
             // TODO: 07.04.2025 start
-            downloadFile=    getBinessLogicDwonloadFilesInterface.GetBinessLogicDwonloadFiles(context, getbytejboss, ИмяФайлаЗагрузки);
+            getDownloadReader=    getBinessLogicDwonloadByteInterface.getBinessLogicDwonloadReader(context, getbytejboss );
 
 
             Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                     " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                    " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + " downloadFile " +downloadFile);
+                    " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + " getDownloadReader " +getDownloadReader);
 
 
         } catch (Exception e) {
@@ -38,7 +36,7 @@ final public class DownloadFiles {
                     Thread.currentThread().getStackTrace()[2].getLineNumber());
         }
 
-    return  downloadFile;
+    return  getDownloadReader;
     }
 
 }

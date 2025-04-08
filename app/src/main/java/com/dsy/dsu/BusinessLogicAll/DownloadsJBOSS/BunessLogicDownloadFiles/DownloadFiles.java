@@ -13,13 +13,12 @@ final public class DownloadFiles {
 
 
 
-  public synchronized File downloadFiles  (@NotNull Context context,@NotNull GetBinessLogicDwonloadFilesInterface getBinessLogicDwonloadFilesInterface,
+  public   File downloadFiles  (@NotNull Context context,@NotNull GetBinessLogicDwonloadFilesInterface getBinessLogicDwonloadFilesInterface,
                                            @NotNull   byte[] getbytejboss,@NotNull String ИмяФайлаЗагрузки){
         // TODO: 07.04.2025
         File downloadFile=null;
 
         try{
-            getBinessLogicDwonloadFilesInterface =new GetBinessLogicDownloadFiles();
             // TODO: 07.04.2025 start
             downloadFile=    getBinessLogicDwonloadFilesInterface.GetBinessLogicDwonloadFiles(context, getbytejboss, ИмяФайлаЗагрузки);
 
