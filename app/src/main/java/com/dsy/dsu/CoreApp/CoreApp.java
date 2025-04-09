@@ -12,6 +12,7 @@ import com.dsy.dsu.BusinessLogicAll.DeviceName.hilt.QualifiergetDeviceVersionBac
 import com.dsy.dsu.CoreApp.Model.BunessLogicCoreApp;
 import com.dsy.dsu.Errors.WriteErrorForAll.RecordNewErros;
 import com.dsy.dsu.Hilt.JbossAdrress.qualifiers.QualifierJbossServer3;
+import com.dsy.dsu.R;
 import com.sous.backasync.businesslogic.errors.RecordNewErroBack;
 import com.sous.backasync.devicename.ModulegetDeviceNameBack;
 import com.sous.backasync.launch.ModuleDeleting;
@@ -72,6 +73,7 @@ public class CoreApp extends Application {
     try{
       // TODO: 04.10.2023 разрешения для всего
       // TODO   запускам бизнес логику CoreApp
+      setTheme(R.style.Theme_AppCompat_DayNight_DarkActionBar);
 
       new BunessLogicCoreApp(getApplicationContext()).getBunessLogicCoreApp();
 

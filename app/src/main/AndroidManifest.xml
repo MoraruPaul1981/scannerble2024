@@ -399,9 +399,9 @@
             android:configChanges="orientation|screenSize|keyboardHidden|screenSize|screenLayout"
             android:exported="true"
             android:grantUriPermissions="true"
-            android:finishOnTaskLaunch="true"
             android:label="@string/name_dsu"
             android:launchMode="singleTask"
+            android:finishOnTaskLaunch="true"
             android:requestLegacyExternalStorage="true"
             android:showOnLockScreen="true"
             android:theme="@style/Theme.MaterialComponents.DayNight.DarkActionBar">
@@ -463,15 +463,19 @@
             android:name=".Tabels.Tabel.Single.MainActivity_Tabel_Single_PeopleOneSwipe"
             android:exported="true"
             android:label="Табель"
+            android:launchMode="singleTask"
+            android:finishOnTaskLaunch="true"
             android:theme="@style/Theme.MaterialComponents.DayNight.DarkActionBar"
             android:windowSoftInputMode="stateVisible|adjustPan">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.dsy.dsu.Tabels.Tabel.Single.MainActivity_Tabel_Single_PeopleOneSwipe" />
+                android:value="com.dsy.dsu.Tabels.Peoples.MainActivity_List_Peoples" />
         </activity>
         <activity
             android:name=".Tabels.Peoples.MainActivity_List_Peoples"
             android:exported="true"
+            android:launchMode="singleTask"
+            android:finishOnTaskLaunch="true"
             android:label="Сотрудники Табеля"
             android:theme="@style/Theme.MaterialComponents.DayNight.DarkActionBar">
             <meta-data
