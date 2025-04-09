@@ -63,7 +63,7 @@
         <com.google.android.material.textview.MaterialTextView
             android:layout_column="0"
             android:layout_width="5mm"
-            android:layout_height="4mm"
+            android:layout_height="5mm"
             android:id="@+id/d1"
             android:gravity="center_vertical|center_horizontal"
             android:layout_margin="2dp"
@@ -76,7 +76,7 @@
         <com.google.android.material.textview.MaterialTextView
             android:layout_column="1"
             android:layout_width="5mm"
-            android:layout_height="4mm"
+            android:layout_height="5mm"
             android:id="@+id/d2"
             android:gravity="center_vertical|center_horizontal"
             android:textStyle="bold"
@@ -91,7 +91,7 @@
         <com.google.android.material.textview.MaterialTextView
             android:layout_column="2"
             android:layout_width="5mm"
-            android:layout_height="4mm"
+            android:layout_height="5mm"
             android:id="@+id/d3"
             android:gravity="center_vertical|center_horizontal"
             android:textStyle="bold"
@@ -105,7 +105,7 @@
         <com.google.android.material.textview.MaterialTextView
             android:layout_column="3"
             android:layout_width="5mm"
-            android:layout_height="4mm"
+            android:layout_height="5mm"
             android:id="@+id/d4"
             android:gravity="center_vertical|center_horizontal"
             android:textStyle="bold"
@@ -227,7 +227,7 @@
                 android:layout_column="0"
                 android:id="@+id/d5"
                 android:layout_width="5mm"
-                android:layout_height="4mm"
+                android:layout_height="5mm"
                 android:gravity="center_vertical|center_horizontal"
                 android:layout_margin="2dp"
                 android:textStyle="bold"
@@ -238,7 +238,7 @@
             <com.google.android.material.textview.MaterialTextView
                 android:layout_column="1"
                 android:layout_width="5mm"
-                android:layout_height="4mm"
+                android:layout_height="5mm"
                 android:id="@+id/d6"
                 android:gravity="center_vertical|center_horizontal"
                 android:textStyle="bold"
@@ -251,7 +251,7 @@
             <com.google.android.material.textview.MaterialTextView
                 android:layout_column="2"
                 android:layout_width="5mm"
-                android:layout_height="4mm"
+                android:layout_height="5mm"
                 android:id="@+id/d7"
                 android:gravity="center_vertical|center_horizontal"
                 android:textStyle="bold"
@@ -270,7 +270,7 @@
                 android:visibility="visible"
                 android:hint="d8"
                 android:layout_width="5mm"
-                android:layout_height="4mm"
+                android:layout_height="5mm"
                        android:textSize="13sp"
                 android:background="@drawable/style_for_chat7"/>
         </TableRow>
@@ -380,7 +380,7 @@
             <com.google.android.material.textview.MaterialTextView
                 android:layout_column="0"
                 android:layout_width="5mm"
-                android:layout_height="4mm"
+                android:layout_height="5mm"
                 android:id="@+id/d9"
                 android:gravity="center_vertical|center_horizontal"
                 android:layout_margin="2dp"
@@ -395,7 +395,7 @@
             <com.google.android.material.textview.MaterialTextView
                 android:layout_column="1"
                 android:layout_width="5mm"
-                android:layout_height="4mm"
+                android:layout_height="5mm"
                 android:id="@+id/d10"
                 android:gravity="center_vertical|center_horizontal"
                 android:textStyle="bold"
@@ -411,7 +411,7 @@
             <com.google.android.material.textview.MaterialTextView
                 android:layout_column="2"
                 android:layout_width="5mm"
-                android:layout_height="4mm"
+                android:layout_height="5mm"
                 android:id="@+id/d11"
                 android:gravity="center_vertical|center_horizontal"
                 android:textStyle="bold"
@@ -426,7 +426,7 @@
             <com.google.android.material.textview.MaterialTextView
                 android:layout_column="3"
                 android:layout_width="5mm"
-                android:layout_height="4mm"
+                android:layout_height="5mm"
                 android:id="@+id/d12"
                 android:gravity="center_vertical|center_horizontal"
                 android:textStyle="bold"
@@ -550,7 +550,7 @@
             <com.google.android.material.textview.MaterialTextView
                 android:layout_column="0"
                 android:layout_width="5mm"
-                android:layout_height="4mm"
+                android:layout_height="5mm"
                 android:id="@+id/d13"
                 android:gravity="center_vertical|center_horizontal"
                 android:layout_margin="2dp"
@@ -563,7 +563,7 @@
             <com.google.android.material.textview.MaterialTextView
                 android:layout_column="1"
                 android:layout_width="5mm"
-                android:layout_height="4mm"
+                android:layout_height="5mm"
                 android:id="@+id/d14"
                 android:gravity="center_vertical|center_horizontal"
                 android:textStyle="bold"
@@ -576,7 +576,7 @@
             <com.google.android.material.textview.MaterialTextView
                 android:layout_column="2"
                 android:layout_width="5mm"
-                android:layout_height="4mm"
+                android:layout_height="5mm"
                 android:id="@+id/d15"
                 android:gravity="center_vertical|center_horizontal"
                 android:textStyle="bold"
@@ -589,7 +589,7 @@
             <com.google.android.material.textview.MaterialTextView
                 android:layout_column="3"
                 android:layout_width="5mm"
-                android:layout_height="4mm"
+                android:layout_height="5mm"
                 android:id="@+id/d16"
                 android:gravity="center_vertical|center_horizontal"
                 android:textStyle="bold"
@@ -708,7 +708,7 @@
             <com.google.android.material.textview.MaterialTextView
                 android:layout_column="0"
                 android:layout_width="5mm"
-                android:layout_height="4mm"
+                android:layout_height="5mm"
                 android:id="@+id/d17"
                 android:gravity="center_vertical|center_horizontal"
                 android:layout_margin="2dp"
@@ -721,7 +721,7 @@
             <com.google.android.material.textview.MaterialTextView
                 android:layout_column="1"
                 android:layout_width="5mm"
-                android:layout_height="4mm"
+                android:layout_height="5mm"
                 android:id="@+id/d18"
                 android:gravity="center_vertical|center_horizontal"
                 android:textStyle="bold"
@@ -734,7 +734,7 @@
             <com.google.android.material.textview.MaterialTextView
                 android:layout_column="2"
                 android:layout_width="5mm"
-                android:layout_height="4mm"
+                android:layout_height="5mm"
                 android:id="@+id/d19"
                 android:gravity="center_vertical|center_horizontal"
                 android:textStyle="bold"
@@ -747,7 +747,7 @@
             <com.google.android.material.textview.MaterialTextView
                 android:layout_column="3"
                 android:layout_width="5mm"
-                android:layout_height="4mm"
+                android:layout_height="5mm"
                 android:id="@+id/d20"
                 android:gravity="center_vertical|center_horizontal"
                 android:textStyle="bold"
@@ -865,7 +865,7 @@
             <com.google.android.material.textview.MaterialTextView
                 android:layout_column="0"
                 android:layout_width="5mm"
-                android:layout_height="4mm"
+                android:layout_height="5mm"
                 android:id="@+id/d21"
                 android:gravity="center_vertical|center_horizontal"
                 android:layout_margin="2dp"
@@ -878,7 +878,7 @@
             <com.google.android.material.textview.MaterialTextView
                 android:layout_column="1"
                 android:layout_width="5mm"
-                android:layout_height="4mm"
+                android:layout_height="5mm"
                 android:id="@+id/d22"
                 android:gravity="center_vertical|center_horizontal"
                 android:textStyle="bold"
@@ -891,7 +891,7 @@
             <com.google.android.material.textview.MaterialTextView
                 android:layout_column="2"
                 android:layout_width="5mm"
-                android:layout_height="4mm"
+                android:layout_height="5mm"
                 android:id="@+id/d23"
                 android:gravity="center_vertical|center_horizontal"
                 android:textStyle="bold"
@@ -904,7 +904,7 @@
             <com.google.android.material.textview.MaterialTextView
                 android:layout_column="3"
                 android:layout_width="5mm"
-                android:layout_height="4mm"
+                android:layout_height="5mm"
                 android:id="@+id/d24"
                 android:gravity="center_vertical|center_horizontal"
                 android:textStyle="bold"
@@ -1021,7 +1021,7 @@
             <com.google.android.material.textview.MaterialTextView
                 android:layout_column="0"
                 android:layout_width="5mm"
-                android:layout_height="4mm"
+                android:layout_height="5mm"
                 android:id="@+id/d25"
                 android:gravity="center_vertical|center_horizontal"
                 android:layout_margin="2dp"
@@ -1034,7 +1034,7 @@
             <com.google.android.material.textview.MaterialTextView
                 android:layout_column="1"
                 android:layout_width="5mm"
-                android:layout_height="4mm"
+                android:layout_height="5mm"
                 android:id="@+id/d26"
                 android:gravity="center_vertical|center_horizontal"
                 android:textStyle="bold"
@@ -1047,7 +1047,7 @@
             <com.google.android.material.textview.MaterialTextView
                 android:layout_column="2"
                 android:layout_width="5mm"
-                android:layout_height="4mm"
+                android:layout_height="5mm"
                 android:id="@+id/d27"
                 android:gravity="center_vertical|center_horizontal"
                 android:textStyle="bold"
@@ -1060,7 +1060,7 @@
             <com.google.android.material.textview.MaterialTextView
                 android:layout_column="3"
                 android:layout_width="5mm"
-                android:layout_height="4mm"
+                android:layout_height="5mm"
                 android:id="@+id/d28"
                 android:gravity="center_vertical|center_horizontal"
                 android:textStyle="bold"
@@ -1181,7 +1181,7 @@
             <com.google.android.material.textview.MaterialTextView
                 android:layout_column="0"
                 android:layout_width="5mm"
-                android:layout_height="4mm"
+                android:layout_height="5mm"
                 android:id="@+id/d29"
                 android:gravity="center_vertical|center_horizontal"
                 android:layout_margin="2dp"
@@ -1193,7 +1193,7 @@
             <com.google.android.material.textview.MaterialTextView
                 android:layout_column="1"
                 android:layout_width="5mm"
-                android:layout_height="4mm"
+                android:layout_height="5mm"
                 android:id="@+id/d30"
                 android:gravity="center_vertical|center_horizontal"
                 android:textStyle="bold"
@@ -1205,7 +1205,7 @@
             <com.google.android.material.textview.MaterialTextView
                 android:layout_column="2"
                 android:layout_width="5mm"
-                android:layout_height="4mm"
+                android:layout_height="5mm"
                 android:id="@+id/d31"
                 android:gravity="center_vertical|center_horizontal"
                 android:textStyle="bold"

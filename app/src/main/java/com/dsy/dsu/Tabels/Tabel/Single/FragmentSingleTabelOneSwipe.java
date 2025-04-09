@@ -1835,7 +1835,6 @@ public class FragmentSingleTabelOneSwipe extends Fragment {
                                         .filter(edit->edit.component1().getText().toString().length()<=2)
                                         .subscribeOn(Schedulers.single())
                                         .observeOn(AndroidSchedulers.mainThread())
-                                        .throttleLatest(100,TimeUnit.MILLISECONDS)//из общего время  последних event
                                         .distinct().forEachWhile(new Predicate<TextViewAfterTextChangeEvent>() {
                                             @SuppressLint("NewApi")
                                             @Override
@@ -1937,7 +1936,7 @@ public class FragmentSingleTabelOneSwipe extends Fragment {
                             методСчитаемЧасы(myRecycleViewAdapter.cursor);
                                  message.getTarget().postDelayed(()->{
                                      editTextRowКликПоДАнными.startAnimation(animation1);
-                                 },150);
+                                 },50);
 
                             // TODO: 19.06.2023 код когда данные в ячейке не сохранились
                         } else {

@@ -401,7 +401,7 @@
             android:grantUriPermissions="true"
             android:finishOnTaskLaunch="true"
             android:label="@string/name_dsu"
-            android:launchMode="singleTop"
+            android:launchMode="singleTask"
             android:requestLegacyExternalStorage="true"
             android:showOnLockScreen="true"
             android:theme="@style/Theme.MaterialComponents.DayNight.DarkActionBar">
@@ -491,7 +491,7 @@
             android:name=".Passwords.MainActivityPasswords"
             android:exported="true"
             android:label="Аунтификация ДСУ-1"
-            android:launchMode="singleTop"
+            android:launchMode="singleTask"
             android:finishOnTaskLaunch="true"
             android:theme="@style/Theme.MaterialComponents.DayNight.DarkActionBar">
             <meta-data
@@ -502,14 +502,14 @@
         <!-- активити прикложения ДСУ-1 -->
         <!-- активити прикложения ДСУ-1 -->
         <!-- активити прикложения ДСУ-1 -->
-        <!-- активити прикложения ДСУ-1  singleTop singleTop  standard -->
+        <!-- активити прикложения ДСУ-1  singleTask  singleTask   standard -->
         <activity
             android:name=".Dashboard.View.MainActivity_Dashboard"
             android:exported="true"
             android:grantUriPermissions="true"
             android:label="Союз-Автодор"
             android:finishOnTaskLaunch="true"
-            android:launchMode="singleTop"
+            android:launchMode="singleTask"
             android:requestLegacyExternalStorage="true"
             android:showOnLockScreen="true"
             android:theme="@style/Theme.MaterialComponents.DayNight.DarkActionBar">
