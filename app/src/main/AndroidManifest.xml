@@ -401,7 +401,6 @@
             android:grantUriPermissions="true"
             android:label="@string/name_dsu"
             android:launchMode="singleTask"
-            android:finishOnTaskLaunch="true"
             android:requestLegacyExternalStorage="true"
             android:showOnLockScreen="true"
             android:theme="@style/Theme.MaterialComponents.DayNight.DarkActionBar">
@@ -463,8 +462,6 @@
             android:name=".Tabels.Tabel.Single.MainActivity_Tabel_Single_PeopleOneSwipe"
             android:exported="true"
             android:label="Табель"
-            android:launchMode="singleTask"
-            android:finishOnTaskLaunch="true"
             android:theme="@style/Theme.MaterialComponents.DayNight.DarkActionBar"
             android:windowSoftInputMode="stateVisible|adjustPan">
             <meta-data
@@ -474,8 +471,6 @@
         <activity
             android:name=".Tabels.Peoples.MainActivity_List_Peoples"
             android:exported="true"
-            android:launchMode="singleTask"
-            android:finishOnTaskLaunch="true"
             android:label="Сотрудники Табеля"
             android:theme="@style/Theme.MaterialComponents.DayNight.DarkActionBar">
             <meta-data
@@ -496,7 +491,6 @@
             android:exported="true"
             android:label="Аунтификация ДСУ-1"
             android:launchMode="singleTask"
-            android:finishOnTaskLaunch="true"
             android:theme="@style/Theme.MaterialComponents.DayNight.DarkActionBar">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
@@ -512,7 +506,6 @@
             android:exported="true"
             android:grantUriPermissions="true"
             android:label="Союз-Автодор"
-            android:finishOnTaskLaunch="true"
             android:launchMode="singleTask"
             android:requestLegacyExternalStorage="true"
             android:showOnLockScreen="true"

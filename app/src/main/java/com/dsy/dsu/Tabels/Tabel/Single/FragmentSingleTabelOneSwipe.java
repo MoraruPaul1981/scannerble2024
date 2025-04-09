@@ -147,8 +147,6 @@ public class FragmentSingleTabelOneSwipe extends Fragment {
     private  String ФИО;
     private Message message;
     private      Message messageRows;
-
-
     private RecyclerView recycleviewsingletabel;
     private  SubClassSingleTabelRecycreView. MyRecycleViewAdapter myRecycleViewAdapter;
     private  SubClassSingleTabelRecycreView. MyViewHolder myViewHolder;
@@ -158,32 +156,16 @@ public class FragmentSingleTabelOneSwipe extends Fragment {
     private  String ИмесяцвИГодСразу = "";
     private  Integer МЕсяцТабелей=0;
     private InputMethodManager imm;
-
-
-
-    private String ИмяСлужбыСинхронизацииОбщая="WorkManager Synchronizasiy_Data";
-    private LifecycleOwner lifecycleOwner;
-    private   LifecycleOwner  lifecycleOwnerОбщая;
-    private    long startДляОбноразвовной;
-
     // TODO: 12.10.2022  для одного сигг табеля сотрудника
     private  SubClassBisscessFragmentSingleTabel fragmentSingleTabel;
-
     private  SubClassSingleTabelRecycreView singleTabelRecycreView;
-
-
     private  Integer GetPosition;
   private      Animation animation1;
-
   private      Animation animationFromRecyReview;
-
   private  Disposable disposableAfterTextChangeEvent;
   private      Cursor    cursorForViewPager;
-
   private      Handler handlerМетодForCurcorHandlerCallBack;
-
   private  MaterialTextView  materialTextViewfio,materialTextViewprofession;
-
     private LinkedHashMap< String,String> getWorkerDays =new LinkedHashMap<>();
     private LinkedHashMap< String,String> getHolidaysDays =new LinkedHashMap<>();
 
@@ -205,10 +187,8 @@ public class FragmentSingleTabelOneSwipe extends Fragment {
             fragmentSingleTabel=new SubClassBisscessFragmentSingleTabel();
             fragmentSingleTabel.МетодGetmessage();
             // TODO: 29.03.2023  Метод RerecyView RerecyView RerecyView RerecyView RerecyView
-            lifecycleOwner=this;
-            lifecycleOwnerОбщая=this;
             // TODO: 22.06.2023
-            singleTabelRecycreView= new SubClassSingleTabelRecycreView(lifecycleOwner,lifecycleOwnerОбщая,getActivity());
+            singleTabelRecycreView= new SubClassSingleTabelRecycreView( );
 
             fragmentSingleTabel.new SubClassBungleSingle().методGETДанныеИзДругихАктивити();
 
@@ -323,18 +303,10 @@ public class FragmentSingleTabelOneSwipe extends Fragment {
             cursorForViewPager  =   singleTabelRecycreView.  new SubClassGetCursor().МетодSwipesКурсор();
             // TODO: 21.06.2023 Смещения Курсоора
             cursorForViewPager.moveToPosition(GetPosition);
-
-            singleTabelRecycreView.   методWorkManagerLifecycleOwner();
-
             singleTabelRecycreView.МетодСлушательКурсора(cursorForViewPager);
-
-
             // TODO: 26.06.2023  созданнй CallBack
             singleTabelRecycreView.методДляSimpeCallbacks( );
-
             singleTabelRecycreView.МетодСлушательRecycleView();
-
-
             // TODO: 16.06.2023  перегрузка экрана
             singleTabelRecycreView.   методПерегрузкиRecycreView();
 
@@ -484,11 +456,6 @@ public class FragmentSingleTabelOneSwipe extends Fragment {
                     recycleviewsingletabel.setNestedScrollingEnabled(false);
                     recycleviewsingletabel.setVerticalScrollBarEnabled(true);
 
-
-
-
-
-                    startДляОбноразвовной= Calendar.getInstance().getTimeInMillis();
 
 
                     fragmentSingleTabel.  методСпинерМесяцы( );
@@ -775,9 +742,7 @@ public class FragmentSingleTabelOneSwipe extends Fragment {
     public class SubClassSingleTabelRecycreView  {
         private     Cursor cursorForViewPager;
 
-        public SubClassSingleTabelRecycreView(@NonNull  LifecycleOwner lifecycleOwner,
-                                              @NonNull  LifecycleOwner  lifecycleOwnerОбщая,
-                                              @NonNull Activity activity) {
+        public SubClassSingleTabelRecycreView() {
         }
 
         private void metodДизайнRecycreView() {
@@ -2317,62 +2282,6 @@ public class FragmentSingleTabelOneSwipe extends Fragment {
 
 
 
-        // TODO: 18.10.2021  СИНХРОНИАЗЦИЯ ЧАТА ПО РАСПИСАНИЮ ЧАТ
-        @SuppressLint("FragmentLiveDataObserve")
-        void методWorkManagerLifecycleOwner() {
-// TODO: 11.05.2021 ЗПУСКАЕМ СЛУЖБУ через брдкастер синхронизхации и уведомления
-            try {
-                lifecycleOwnerОбщая.getLifecycle().addObserver(new LifecycleEventObserver() {
-                    @Override
-                    public void onStateChanged(@NonNull LifecycleOwner source, @NonNull Lifecycle.Event event) {
-                        source.getLifecycle().getCurrentState();
-                        event.getTargetState().name();
-                    }
-                });
-
-                WorkManager.getInstance(getContext()).getWorkInfosByTagLiveData(ИмяСлужбыСинхронизацииОбщая)
-                        .observe(lifecycleOwnerОбщая, new Observer<List<WorkInfo>>() {
-                            @Override
-                            public void onChanged(List<WorkInfo> workInfos) {
-                                workInfos.forEach((СтастусWorkMangerДляФрагментаЧитатьИПисать) -> {
-                                    try {
-                                        if(СтастусWorkMangerДляФрагментаЧитатьИПисать.getState().compareTo(WorkInfo.State.RUNNING)!=0) {
-                                            long end = Calendar.getInstance().getTimeInMillis();
-                                            Integer ReturnCallPublic = СтастусWorkMangerДляФрагментаЧитатьИПисать.getOutputData().getInt("ReturnPublicAsyncWork", 0);
-
-                                            // TODO: 17.06.2023  если прошло время нужное
-                                            long РазницаВоврмени=end-startДляОбноразвовной;
-                                            if (РазницаВоврмени>20000) {
-                                                // TODO: 04.07.2023 обновление данных их WorkManager
-                                                методОбновлениеДанныхИзWorkManager();
-
-                                                // TODO: 16.06.2023  перегрузка экрана
-                                                singleTabelRecycreView.   методПерегрузкиRecycreView();
-
-                                                // TODO: 04.07.2023 перегрузка внешнего видаметодПерегрузкиRecycreView();
-                                            }
-                                        }
-                                        Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
-                                                " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                                                " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"  );
-                                    } catch (Exception e) {
-                                        e.printStackTrace();
-                                        Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
-                                                " Линия  :" + Thread.currentThread().getStackTrace()[2].getLineNumber());
-                                        new RecordNewErros(getContext()).recordnewerror(e.toString(), this.getClass().getName(),
-                                                Thread.currentThread().getStackTrace()[2].getMethodName(), Thread.currentThread().getStackTrace()[2].getLineNumber());
-                                    }
-                                });
-                            }
-                        });
-            } catch (Exception e) {
-                e.printStackTrace();
-                Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
-                        " Линия  :" + Thread.currentThread().getStackTrace()[2].getLineNumber());
-                new RecordNewErros(getContext()).recordnewerror(e.toString(), this.getClass().getName(),
-                        Thread.currentThread().getStackTrace()[2].getMethodName(), Thread.currentThread().getStackTrace()[2].getLineNumber());
-            }
-        }
 
         private void методОбновлениеДанныхИзWorkManager() {
             try{
@@ -3596,11 +3505,11 @@ public class FragmentSingleTabelOneSwipe extends Fragment {
 //TODO класс получение Каленалря ДНЕЙ и ПРАЗНИКОВ
     class GetDayFromKalendary{
     // TODO: 03.04.2023 Создание  Дней Недели Вс, Пон, Ср,Черт
-    private  LinkedHashMap< String,String> методВыходныеДниИзКалендарь() throws ParseException,RuntimeException {
+    private  LinkedHashMap< String,String> getWorkerDays() throws ParseException,RuntimeException {
         LinkedHashMap< String,String> linkedHashMapВыходные=new LinkedHashMap<>();
         try {
             Integer ПолученоеКоличествоДнейНаКонкретныйМЕсяц=МетодПолучениеСколькоДнейВКонкретномМесяце(ГодТабелей,    МЕсяцТабелей );
-            IntStream.iterate(1, i -> i + 1).limit(ПолученоеКоличествоДнейНаКонкретныйМЕсяц ).forEachOrdered(new IntConsumer() {
+            IntStream.iterate(1, i -> i + 1).limit(ПолученоеКоличествоДнейНаКонкретныйМЕсяц ).parallel().forEachOrdered(new IntConsumer() {
                 @Override
                 public void accept(int ИндексДней) {
                     SimpleDateFormat СозданияВычисляемВыходные = null;
@@ -3647,11 +3556,11 @@ public class FragmentSingleTabelOneSwipe extends Fragment {
     }
 
     // TODO: 03.04.2023 Создание  ПРАЗНИЧНЫЕ ДНИ
-    private  LinkedHashMap< String,String> методПразничныеДниИзКалендаря() throws ParseException,RuntimeException {
+    private  LinkedHashMap< String,String> getHolidaysDays() throws ParseException,RuntimeException {
         LinkedHashMap< String,String> linkedHashMapПраздничныеДни =new LinkedHashMap<>();
         try {
             Integer ПолученоеКоличествоДнейНаКонкретныйМЕсяц=МетодПолучениеСколькоДнейВКонкретномМесяце(ГодТабелей,    МЕсяцТабелей );
-            IntStream.iterate(1, i -> i + 1).limit(ПолученоеКоличествоДнейНаКонкретныйМЕсяц ).forEachOrdered(new IntConsumer() {
+            IntStream.iterate(1, i -> i + 1).limit(ПолученоеКоличествоДнейНаКонкретныйМЕсяц ).parallel().forEachOrdered(new IntConsumer() {
                 @Override
                 public void accept(int ИндексДней) {
                     SimpleDateFormat СозданияВычисляемВыходные = null;
@@ -3689,30 +3598,13 @@ public class FragmentSingleTabelOneSwipe extends Fragment {
                                 " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"
                                 + " integerСубота " + integerСубота
                                 + " integerВоск " + integerВоск);
-                    }else {
-                        if(МЕсяцТабелей ==5 || МЕсяцТабелей==6|| МЕсяцТабелей ==11   ){
-                            if (МЕсяцТабелей ==5 ) {
-                                if(ИндексДней==1 || ИндексДней==9    ){
-                                    linkedHashMapПраздничныеДни.put("d"+ИндексДнейФинал.toString().trim(), СокращенныйДниМесяцаВТабеле.trim());
-                                }
-                            }
-                            if (МЕсяцТабелей==6) {
-                                if(  ИндексДней==12   ){
-                                    linkedHashMapПраздничныеДни.put("d"+ИндексДнейФинал.toString().trim(), СокращенныйДниМесяцаВТабеле.trim());
-                                }
-                            }
-                            if (МЕсяцТабелей ==11) {
-                                if(  ИндексДней==4 ){
-                                    linkedHashMapПраздничныеДни.put("d"+ИндексДнейФинал.toString().trim(), СокращенныйДниМесяцаВТабеле.trim());
-                                }
-                            }
-                        }
+                    }
                         Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                                 " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
                                 " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"
                                 + " linkedHashMapПраздничныеДни " + linkedHashMapПраздничныеДни
                                 + " МЕсяцТабелей " + МЕсяцТабелей);
-                    }
+
 
                     Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                             " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
@@ -3810,14 +3702,14 @@ public class FragmentSingleTabelOneSwipe extends Fragment {
             // TODO: 20.11.2023 Получение Празничных и Выходных Дней
             GetDayFromKalendary getDayFromKalendary=new GetDayFromKalendary();
 
-            getWorkerDays = getDayFromKalendary.методВыходныеДниИзКалендарь();
+            getWorkerDays = getDayFromKalendary.getWorkerDays();
             // TODO: 26.06.2023 Празничные Дни
             Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                     " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
                     " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"+" cursorForViewPager.getPosition() ");
 
 
-            getHolidaysDays =getDayFromKalendary. методПразничныеДниИзКалендаря();
+            getHolidaysDays =getDayFromKalendary.getHolidaysDays();
             // TODO: 16.11.2023
             Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                     " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
