@@ -1,14 +1,10 @@
 package com.dsy.dsu.Errors.view;
 
-import android.Manifest;
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.content.pm.PackageManager;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 
-import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
 import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
@@ -23,11 +19,10 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 
-import com.dsy.dsu.Errors.model.BinessLogicFragmentError;
+import com.dsy.dsu.Errors.model.bl_fragment_errors.BinessLogicFragmentError;
 import com.dsy.dsu.Errors.WriteErrorForAll.RecordNewErros;
 import com.dsy.dsu.Errors.model.BinessLogicGetDataFragmentError;
-import com.dsy.dsu.Errors.model.GettingExistingErrorFromCursor;
-import com.dsy.dsu.Errors.model.GettingExistingErrorFromFile;
+import com.dsy.dsu.Errors.model.bl_get_error_from_files.GettingExistingErrorFromCursor;
 import com.dsy.dsu.R;
 import com.google.android.material.button.MaterialButton;
 import com.sous.backasync.launch.ModuleQuety;

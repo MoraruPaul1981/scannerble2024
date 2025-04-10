@@ -21,6 +21,7 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.fragment.app.FragmentManager;
 import androidx.lifecycle.LifecycleOwner;
 
 import com.dsy.dsu.BootAndAsync.BlBootAsync.Hilts.ServiceBootBinessLogic;
@@ -30,6 +31,7 @@ import com.dsy.dsu.BootAndAsync.EventsBus.MessageEvensBusUpdatePO;
 
 import com.dsy.dsu.CallNavigarlaout.CallNavigarlaout;
 import com.dsy.dsu.Errors.WriteErrorForAll.RecordNewErros;
+import com.dsy.dsu.Errors.model.BinessLogicLaunchFragmenrError;
 import com.dsy.dsu.R;
 import com.dsy.dsu.Settings.View.MainActivity_Settings;
 import com.google.android.material.navigation.NavigationView;
@@ -376,7 +378,7 @@ public class GetComponentActivityBootService {
 // TODO: 10.01.2025
 
     // TODO: 04.10.2023
-    public void  workerNavigationViewAsyncApp() {
+    public void  workerNavigationViewAsyncApp(@NonNull FragmentManager fragmentManager) {
         // TODO: 06.04.2022
         try {
             navigationViewAsyncApp.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
@@ -391,9 +393,9 @@ public class GetComponentActivityBootService {
 
                                     // TODO: 04.04.2025
                                     // TODO Запусукаем  Фрагмент Главный Экран
-                               /*     BinessLogicLaunchFragmenrError launchFragmenrError=new BinessLogicLaunchFragmenrError( fragmentManager,context);
+                                  BinessLogicLaunchFragmenrError launchFragmenrError=new BinessLogicLaunchFragmenrError( fragmentManager,context);
                                     // TODO: 27.03.2024 в зависомсти кто вызвает
-                                    launchFragmenrError.     launchErrorFragment();*/
+                                    launchFragmenrError.     launchErrorFragment() ;
 
                                     Log.d(context.getClass().getName(), "\n"
                                             + " время: " + new Date() + "\n+" +

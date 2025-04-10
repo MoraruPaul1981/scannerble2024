@@ -17,6 +17,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.FileProvider;
 import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.fragment.app.FragmentManager;
 import androidx.lifecycle.LifecycleOwner;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.Observer;
@@ -75,7 +76,7 @@ public class MainActivityBootAndAsync extends AppCompatActivity {
     private ImageView imageView_faceapp_settings;
 
     private ViewModel getviewModel;
-
+   private FragmentManager fragmentManager;
 
     @SuppressLint("MissingInflatedId")
     @Override
@@ -89,6 +90,8 @@ public class MainActivityBootAndAsync extends AppCompatActivity {
             getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
             setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LOCKED);
             setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+
+            fragmentManager = getSupportFragmentManager();
 
             progressbarbootandasync = (ProgressBar) findViewById(R.id.progressbarbootandasync); /////КНОПКА ТАБЕЛЬНОГО УЧЕТА/
             drawerLayoutAsync = (DrawerLayout) findViewById(R.id.drawerLayout_async_prograsser); /////КНОПКА ТАБЕЛЬНОГО УЧЕТА
@@ -128,7 +131,7 @@ public class MainActivityBootAndAsync extends AppCompatActivity {
 
             blInnerMainActivityBootAndAsync .listerNavigationViewAsyncApp();
 
-            blInnerMainActivityBootAndAsync .  workerNavigationViewAsyncApp();
+            blInnerMainActivityBootAndAsync .  workerNavigationViewAsyncApp(fragmentManager);
 
             blInnerMainActivityBootAndAsync .  workerImageViewsettings();
 

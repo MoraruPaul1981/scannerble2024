@@ -31,5 +31,5 @@ public interface RecordNewErrorsInterface {
 
     void writeDownAnewErrorFile(@NonNull ArrayList<String> linkedBlockingQueueВскеОшибкиДляЗаписи);
 
-    void writeDownAnewErrorNotePad(@NonNull  ArrayList<String> linkedBlockingQueueВскеОшибкиДляЗаписи);
+
 }

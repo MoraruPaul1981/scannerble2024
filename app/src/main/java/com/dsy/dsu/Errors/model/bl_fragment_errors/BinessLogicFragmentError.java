@@ -1,4 +1,4 @@
-package com.dsy.dsu.Errors.model;
+package com.dsy.dsu.Errors.model.bl_fragment_errors;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;

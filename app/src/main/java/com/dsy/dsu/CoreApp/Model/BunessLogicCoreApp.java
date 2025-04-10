@@ -6,9 +6,9 @@ import android.util.Log;
 import com.dsy.dsu.BootAndAsync.BlBootAsync.ClassCreateFolderUpdatePO;
 import com.dsy.dsu.BusinessLogicAll.CreateFolderBinatySave.ClassCreateFolderBinatyMatrilal;
 import com.dsy.dsu.BusinessLogicAll.CreateFolderBinatySave.ClassCreateFolderCommitPays1C;
-import com.dsy.dsu.BusinessLogicAll.Errors.GetWorkerErrosInterface;
-import com.dsy.dsu.BusinessLogicAll.Errors.GetWorkerErrosMediaStore;
 import com.dsy.dsu.Errors.WriteErrorForAll.RecordNewErros;
+import com.dsy.dsu.Errors.model.creatingfileerrors.CreatingAFileForApp;
+import com.dsy.dsu.Errors.model.interfaces.GetWorkerErrosInterface;
 
 public class BunessLogicCoreApp {
 
@@ -24,9 +24,9 @@ public class BunessLogicCoreApp {
         try{
 
           // TODO: 07.10.2023  create file for ERROR
-            GetWorkerErrosInterface getWorkerErros =new GetWorkerErrosMediaStore(context);
+            GetWorkerErrosInterface getWorkerErros =new CreatingAFileForApp(context);
 
-            getWorkerErros.launchWorkerErros();
+            getWorkerErros.launchCreatingAFileForApp();
 
 
           // TODO: 14.08.2023 создаем папку для BinaryFile Save

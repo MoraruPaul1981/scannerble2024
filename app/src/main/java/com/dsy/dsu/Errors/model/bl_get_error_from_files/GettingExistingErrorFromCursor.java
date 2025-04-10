@@ -1,4 +1,4 @@
-package com.dsy.dsu.Errors.model;
+package com.dsy.dsu.Errors.model.bl_get_error_from_files;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
