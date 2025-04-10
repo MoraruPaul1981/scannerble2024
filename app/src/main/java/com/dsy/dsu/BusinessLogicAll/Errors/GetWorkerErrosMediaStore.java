@@ -5,15 +5,22 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Environment;
 import android.provider.MediaStore;
 import android.util.Log;
 
-import com.dsy.dsu.Errors.WriteErrorForAll.RecordNewErros;
+import androidx.core.content.FileProvider;
 
+import com.dsy.dsu.Errors.WriteErrorForAll.RecordNewErros;
+import com.google.firebase.crashlytics.buildtools.reloc.org.apache.commons.io.FileUtils;
+
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.io.OutputStream;
+import java.nio.charset.StandardCharsets;
 
 public  class GetWorkerErrosMediaStore implements  GetWorkerErrosInterface {
 
@@ -62,25 +69,33 @@ public  class GetWorkerErrosMediaStore implements  GetWorkerErrosInterface {
 
                 values.put(MediaStore.MediaColumns.DISPLAY_NAME, "menuCategory");       //file name
                 values.put(MediaStore.MediaColumns.MIME_TYPE, "text/plain");        //file extension, will automatically add to file
-                values.put(MediaStore.MediaColumns.RELATIVE_PATH, Environment.DIRECTORY_DOWNLOADS +File.separator + patchFileName +File.separator + patchFileName);     //end "/" is not mandatory
+                values.put(MediaStore.MediaColumns.RELATIVE_PATH, Environment.DIRECTORY_DOWNLOADS + File.separator + patchFileName + File.separator + patchFileName);     //end "/" is not mandatory
 
                 Uri uri = context.getContentResolver().insert(MediaStore.Files.getContentUri("external"), values);      //important!
 
 
+
+                /*String s=null;
+                s.length();*/
 // Check for the freshest data.
-                ContentResolver getcontentResolverFile= context.getContentResolver();
+                ContentResolver getcontentResolverFile = context.getContentResolver();
                 OutputStream outputStream = getcontentResolverFile.openOutputStream(uri);
                 InputStream inputStream = getcontentResolverFile.openInputStream(uri);
+                // TODO: 15.01.2025
+                BufferedReader    newBufferedReaderError = new BufferedReader(new InputStreamReader(inputStream, StandardCharsets.UTF_16));
+
 
                 Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                         " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
                         " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"  +   " file.isFile() "+file.isFile());
 
-            }
 
-            Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
-                    " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                    " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"  );
+
+                Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                        " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                        " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"  );
+
+            }
         } catch (Exception e) {
             e.printStackTrace();
             Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" +
