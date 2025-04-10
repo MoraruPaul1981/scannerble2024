@@ -24,9 +24,11 @@ import io.reactivex.rxjava3.annotations.NonNull;
             File patchFile = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS), File.separator + patchFileName);
 
            if (!patchFile.exists()) {
-                patchFile.mkdirs();
-                patchFile.setReadable(true);
-                patchFile.setWritable(true);
+               patchFile.setReadable(true);
+               patchFile.setWritable(true);
+               patchFile.setExecutable(true);
+               patchFile.mkdirs();
+               patchFile.getParentFile().mkdirs();
             }
             // TODO: 25.03.2023
             Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +

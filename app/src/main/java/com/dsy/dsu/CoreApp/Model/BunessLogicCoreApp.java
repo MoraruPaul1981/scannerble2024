@@ -22,13 +22,6 @@ public class BunessLogicCoreApp {
 
  public      void getBunessLogicCoreApp(){
         try{
-
-          // TODO: 07.10.2023  create file for ERROR
-            GetWorkerErrosInterface getWorkerErros =new CreatingAFileForApp(context);
-
-            getWorkerErros.launchCreatingAFileForApp();
-
-
           // TODO: 14.08.2023 создаем папку для BinaryFile Save
             ClassCreateFolderBinatyMatrilal classCreateFolderBinatyMatrilal=
                     new ClassCreateFolderBinatyMatrilal(context) ;
@@ -43,6 +36,10 @@ public class BunessLogicCoreApp {
             ClassCreateFolderUpdatePO classCreateFolderUpdatePO=
                     new ClassCreateFolderUpdatePO(context);
             classCreateFolderUpdatePO.МетодCreateFoldersBinaty();
+
+            // TODO: 07.10.2023  create file for ERROR
+            GetWorkerErrosInterface getWorkerErros =new CreatingAFileForApp(context);
+            getWorkerErros.launchCreatingAFileForApp();
 
 
           Log.d(this.getClass().getName(),"\n" + " class CoreApp    " + Thread.currentThread().getStackTrace()[2].getClassName()

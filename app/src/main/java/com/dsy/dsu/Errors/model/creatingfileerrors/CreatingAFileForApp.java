@@ -40,32 +40,32 @@ public  class CreatingAFileForApp implements GetWorkerErrosInterface {
     public void launchCreatingAFileForApp() {
         try {
 
-            File file = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS),
+            File patchFile = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS),
+                    File.separator + patchFileName  );
+            if ( !patchFile.exists()) {
+                    patchFile.setReadable(true);
+                    patchFile.setWritable(true);
+                    patchFile.setExecutable(true);
+                    patchFile.mkdirs();
+                    patchFile.getParentFile().mkdirs();
+                }
+            File NewFileError = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS),
                     File.separator + patchFileName +File.separator+fileNameFull+".txt" );
-            if ( !file.exists()) {
-
-            ContentValues values = new ContentValues();
-
-                values.put(MediaStore.MediaColumns.DISPLAY_NAME, fileNameFull); //"menuCategory"      //file name
-                values.put(MediaStore.MediaColumns.MIME_TYPE, "text/plain");        //file extension, will automatically add to file
-                values.put(MediaStore.MediaColumns.RELATIVE_PATH, Environment.DIRECTORY_DOWNLOADS + File.separator + patchFileName   );
-
-                ContentResolver contentResolverCreateFileError=   context.getContentResolver();
-
-            Uri uri =contentResolverCreateFileError.insert(MediaStore.Files.getContentUri("external"), values);      //important!
-
-            OutputStream outputStream = contentResolverCreateFileError.openOutputStream(uri);
-            outputStream.close();
-
-
-                Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
-                        " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                        " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"  +   " file.isFile() "+file.isFile());
+            if ( !NewFileError.exists()) {
+                NewFileError.setReadable(true);
+                NewFileError.setWritable(true);
+                NewFileError.setExecutable(true);
+                NewFileError.getParentFile().mkdirs();
+                NewFileError.createNewFile();
             }
 
                 Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                         " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                        " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"  +   " file.isFile() "+file.isFile());
+
+
+                Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                        " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                        " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"   ));
 
         } catch (Exception e) {
             e.printStackTrace();
