@@ -16,11 +16,16 @@ import com.dsy.dsu.Errors.WriteErrorForAll.RecordNewErros;
 import com.google.firebase.crashlytics.buildtools.reloc.org.apache.commons.io.FileUtils;
 
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.File;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
+import java.io.OutputStreamWriter;
 import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.nio.file.StandardOpenOption;
 
 public  class GetWorkerErrosMediaStore implements  GetWorkerErrosInterface {
 
@@ -81,8 +86,17 @@ public  class GetWorkerErrosMediaStore implements  GetWorkerErrosInterface {
                 ContentResolver getcontentResolverFile = context.getContentResolver();
                 OutputStream outputStream = getcontentResolverFile.openOutputStream(uri);
                 InputStream inputStream = getcontentResolverFile.openInputStream(uri);
+
+
+
                 // TODO: 15.01.2025
-                BufferedReader    newBufferedReaderError = new BufferedReader(new InputStreamReader(inputStream, StandardCharsets.UTF_16));
+                BufferedReader     BufferedReaderError = new BufferedReader(new InputStreamReader(inputStream, StandardCharsets.UTF_16));
+
+                BufferedWriter bufferedWriterError = new BufferedWriter(new OutputStreamWriter(outputStream, StandardCharsets.UTF_16));
+
+
+                BufferedWriter bufferedWriter =  Files.newBufferedWriter(Paths.get(file.getPath()), StandardCharsets.UTF_16,
+                        StandardOpenOption.CREATE, StandardOpenOption.APPEND);
 
 
                 Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
