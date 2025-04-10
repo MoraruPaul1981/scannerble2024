@@ -25,7 +25,7 @@ import java.util.ArrayList;
 
 public class WewriteallApplicationErrorstoaFile {
 
-    private String fileName = "Sous-Avtodor-ERROR.txt";
+    private String fileNameFull = "Sous-Avtodor-ERROR";
 
     private   String patchFileName="SousAvtoFile";
 
@@ -50,77 +50,86 @@ public class WewriteallApplicationErrorstoaFile {
             } else {
                 СамаОшибка = linkedBlockingQueueВскеОшибкиДляЗаписи.get(0).toString();
             }
-            ContentValues values = new ContentValues();
 
-            values.put(MediaStore.MediaColumns.DISPLAY_NAME, "menuCategory");       //file name
-            values.put(MediaStore.MediaColumns.MIME_TYPE, "text/plain");        //file extension, will automatically add to file
-            values.put(MediaStore.MediaColumns.RELATIVE_PATH, Environment.DIRECTORY_DOWNLOADS + File.separator + patchFileName + File.separator + patchFileName);     //end "/" is not mandatory
+            File file = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS),
+                    File.separator + patchFileName +File.separator+fileNameFull );
+            if (  file.exists()) {
 
-            Uri uri = context.getContentResolver().insert(MediaStore.Files.getContentUri("external"), values);      //important!
+                ContentValues values = new ContentValues();
 
-
-            ContentResolver getcontentResolverFile = context.getContentResolver();
-            OutputStream outputStream = getcontentResolverFile.openOutputStream(uri);
-
-
-            BufferedWriter bufferedWriter = new BufferedWriter(new OutputStreamWriter(outputStream, StandardCharsets.UTF_16));
+                values.put(MediaStore.MediaColumns.DISPLAY_NAME, fileNameFull);   //"menuCategory"    //file name
+                values.put(MediaStore.MediaColumns.MIME_TYPE, "text/plain");        //file extension, will automatically add to file
+                values.put(MediaStore.MediaColumns.RELATIVE_PATH, Environment.DIRECTORY_DOWNLOADS + File.separator + patchFileName +File.separator+fileNameFull );
 
 
-            bufferedWriter.write("\n");
-            bufferedWriter.write("##### ERROR #####");
-            bufferedWriter.write("\n");
-            bufferedWriter.write("\n");
-            bufferedWriter.write("\n");
-            bufferedWriter.write("\n");
-            bufferedWriter.write(СгенерированованныйДатаВремениСейчаcДляУдаления);
-            bufferedWriter.write("\n");
-            bufferedWriter.write("\n");
-            bufferedWriter.write("\n");
-            bufferedWriter.write("\n");
-            bufferedWriter.write("error");
-            bufferedWriter.write("\n");
-            bufferedWriter.write("\n");
-            bufferedWriter.write("\n");
-            bufferedWriter.write("\n");
-            bufferedWriter.write("\n");
-            bufferedWriter.write(СамаОшибка);
-            bufferedWriter.write("\n");
-            bufferedWriter.write("\n");
-            bufferedWriter.write("\n");
-            bufferedWriter.write("\n");
-            bufferedWriter.write("Class");
-            bufferedWriter.write("\n");
-            bufferedWriter.write("\n");
-            bufferedWriter.write("\n");
-            bufferedWriter.write(linkedBlockingQueueВскеОшибкиДляЗаписи.get(1).toString());
-            bufferedWriter.write("\n");
-            bufferedWriter.write("\n");
-            bufferedWriter.write("\n");
-            bufferedWriter.write("\n");
-            bufferedWriter.write("Metod");
-            bufferedWriter.write("\n");
-            bufferedWriter.write("\n");
-            bufferedWriter.write("\n");
-            bufferedWriter.write(linkedBlockingQueueВскеОшибкиДляЗаписи.get(2).toString());
-            bufferedWriter.write("\n");
-            bufferedWriter.write("\n");
-            bufferedWriter.write("\n");
-            bufferedWriter.write("\n");
-            bufferedWriter.write("Line");
-            bufferedWriter.write("\n");
-            bufferedWriter.write("\n");
-            bufferedWriter.write("\n");
-            bufferedWriter.write(linkedBlockingQueueВскеОшибкиДляЗаписи.get(3).toString());
-            bufferedWriter.write("\n");
-            bufferedWriter.write("\n");
+                Uri uri = context.getContentResolver().insert(MediaStore.Files.getContentUri("external"), values);      //important!
+                ContentResolver getcontentResolverFile = context.getContentResolver();
+                OutputStream outputStream = getcontentResolverFile.openOutputStream(uri);
 
 
-            bufferedWriter.flush();
-            bufferedWriter.close();
+                BufferedWriter bufferedWriter = new BufferedWriter(new OutputStreamWriter(outputStream, StandardCharsets.UTF_16));
+
+
+                bufferedWriter.write("\n");
+                bufferedWriter.write("##### ERROR #####");
+                bufferedWriter.write("\n");
+                bufferedWriter.write("\n");
+                bufferedWriter.write("\n");
+                bufferedWriter.write("\n");
+                bufferedWriter.write(СгенерированованныйДатаВремениСейчаcДляУдаления);
+                bufferedWriter.write("\n");
+                bufferedWriter.write("\n");
+                bufferedWriter.write("\n");
+                bufferedWriter.write("\n");
+                bufferedWriter.write("error");
+                bufferedWriter.write("\n");
+                bufferedWriter.write("\n");
+                bufferedWriter.write("\n");
+                bufferedWriter.write("\n");
+                bufferedWriter.write("\n");
+                bufferedWriter.write(СамаОшибка);
+                bufferedWriter.write("\n");
+                bufferedWriter.write("\n");
+                bufferedWriter.write("\n");
+                bufferedWriter.write("\n");
+                bufferedWriter.write("Class");
+                bufferedWriter.write("\n");
+                bufferedWriter.write("\n");
+                bufferedWriter.write("\n");
+                bufferedWriter.write(linkedBlockingQueueВскеОшибкиДляЗаписи.get(1).toString());
+                bufferedWriter.write("\n");
+                bufferedWriter.write("\n");
+                bufferedWriter.write("\n");
+                bufferedWriter.write("\n");
+                bufferedWriter.write("Metod");
+                bufferedWriter.write("\n");
+                bufferedWriter.write("\n");
+                bufferedWriter.write("\n");
+                bufferedWriter.write(linkedBlockingQueueВскеОшибкиДляЗаписи.get(2).toString());
+                bufferedWriter.write("\n");
+                bufferedWriter.write("\n");
+                bufferedWriter.write("\n");
+                bufferedWriter.write("\n");
+                bufferedWriter.write("Line");
+                bufferedWriter.write("\n");
+                bufferedWriter.write("\n");
+                bufferedWriter.write("\n");
+                bufferedWriter.write(linkedBlockingQueueВскеОшибкиДляЗаписи.get(3).toString());
+                bufferedWriter.write("\n");
+                bufferedWriter.write("\n");
+
+
+                bufferedWriter.flush();
+                bufferedWriter.close();
+
+                Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                        " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                        " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"+ bufferedWriter.toString() );
+            }
 
         Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                 " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"+ bufferedWriter.toString() );
+                " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n");
     } catch (Exception e) {
         e.printStackTrace();
         Log.e(context.getClass().getName(),

@@ -2,6 +2,8 @@ package com.dsy.dsu.Errors.model.bl_get_error_from_files;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
+import android.content.ContentResolver;
+import android.content.ContentValues;
 import android.content.Context;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
@@ -9,6 +11,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Environment;
+import android.provider.MediaStore;
 import android.util.Log;
 
 import androidx.annotation.NonNull;
@@ -24,6 +27,7 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.OutputStream;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Paths;
@@ -34,8 +38,9 @@ import io.reactivex.rxjava3.core.Single;
 import io.reactivex.rxjava3.schedulers.Schedulers;
 
 public class GettingExistingErrorFromFile  implements GettingExistingErrorsInterface {
-    String fileName = "Sous-Avtodor-ERROR.txt";
-    String patchFileName="SousAvtoFile";
+    private String fileNameFull = "Sous-Avtodor-ERROR";
+
+    private   String patchFileName="SousAvtoFile";
 
     /**
      * @return
@@ -51,43 +56,41 @@ public class GettingExistingErrorFromFile  implements GettingExistingErrorsInter
                 // TODO: 07.04.2025  get erro from file
              StringBuffer stringBuffergetFileError=new StringBuffer();
 
-                File getPatchNewFileError= new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS)
-                        +File.separator+patchFileName+File.separator+fileName  );
-                BufferedReader newBufferedReader = null;
 
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
-                    if (  getPatchNewFileError.exists()) {
-                        Uri address = FileProvider.getUriForFile(context, "com.dsy.dsu.provider", getPatchNewFileError);
-                        final InputStream imageStream = context.getContentResolver().openInputStream(address);
-                        // TODO: 15.01.2025
-                        newBufferedReader = new BufferedReader(new InputStreamReader(imageStream, StandardCharsets.UTF_16));
+             File file = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS),
+                     File.separator + patchFileName +File.separator+fileNameFull );
+             if (  file.exists()) {
+
+                 ContentValues values = new ContentValues();
+
+                 values.put(MediaStore.MediaColumns.DISPLAY_NAME, fileNameFull); //"menuCategory"      //file name
+                 values.put(MediaStore.MediaColumns.MIME_TYPE, "text/plain");        //file extension, will automatically add to file
+                 values.put(MediaStore.MediaColumns.RELATIVE_PATH, Environment.DIRECTORY_DOWNLOADS + File.separator + patchFileName +File.separator+fileNameFull );
+
+                 ContentResolver contentResolverCreateFileError=   context.getContentResolver();
+
+                 Uri uri =contentResolverCreateFileError.insert(MediaStore.Files.getContentUri("external"), values);      //important!
 
 
-                        Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
-                                " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                                " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" + "newBufferedReader " +newBufferedReader.markSupported() );
-                    }
-                    Log.d(this.getClass().getName(),  " date " +new Date().toGMTString().toString()   );
-                } else {
-                    // TODO: 15.01.2025
-                    newBufferedReader = Files.newBufferedReader(Paths.get(getPatchNewFileError.getPath()), StandardCharsets.UTF_16);
+                 InputStream inputStream = contentResolverCreateFileError.openInputStream(uri);
+                 // TODO: 15.01.2025
+                 BufferedReader     BufferedReaderError = new BufferedReader(new InputStreamReader(inputStream, StandardCharsets.UTF_16));
 
-                    Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
-                            " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                            " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" + "newBufferedReader " +newBufferedReader.markSupported() );
+                 stringBuffergetFileError= BufferedReaderError.lines().collect(StringBuffer::new, (sb, i) -> sb.append(i), StringBuffer::append);
 
-                }
+                 // TODO: 10.04.2025
+                 inputStream.close();
 
-                if (newBufferedReader!=null) {
-                    String    lineErrorsAll=null;
-                    while ((lineErrorsAll =newBufferedReader.readLine()) != null) {
-                        stringBuffergetFileError.append(lineErrorsAll);
-                        stringBuffergetFileError.append('\n');
-                        Log.d(this.getClass().getName(), "line " +lineErrorsAll  );
-                    }
-                }
-             // TODO: 07.04.2025
-             newBufferedReader.close();
+                 Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                         " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                         " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"  +   " stringBuffergetFileError"+stringBuffergetFileError);
+             }
+
+
+
+
+
+
                 Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                         " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
                         " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" + "stringBuffergetFileError " +stringBuffergetFileError );

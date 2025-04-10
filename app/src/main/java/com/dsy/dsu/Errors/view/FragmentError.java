@@ -23,6 +23,7 @@ import com.dsy.dsu.Errors.model.bl_fragment_errors.BinessLogicFragmentError;
 import com.dsy.dsu.Errors.WriteErrorForAll.RecordNewErros;
 import com.dsy.dsu.Errors.model.BinessLogicGetDataFragmentError;
 import com.dsy.dsu.Errors.model.bl_get_error_from_files.GettingExistingErrorFromCursor;
+import com.dsy.dsu.Errors.model.bl_get_error_from_files.GettingExistingErrorFromFile;
 import com.dsy.dsu.R;
 import com.google.android.material.button.MaterialButton;
 import com.sous.backasync.launch.ModuleQuety;
@@ -151,7 +152,8 @@ public class FragmentError extends DialogFragment {
 
             // TODO: 17.01.2025  Получаем Ошибку двумя разными способами из файла и из курсора
               //77777BufferGetError =     new BinessLogicGetDataFragmentError(getContext(),getSqlLiteCoreApp,moduleQuety).getDataFragmentError( new GettingExistingErrorFromFile() );
-              BufferGetError =     new BinessLogicGetDataFragmentError(getContext(),getSqlLiteCoreApp,moduleQuety).getDataFragmentError( new GettingExistingErrorFromCursor() );
+         //     BufferGetError =     new BinessLogicGetDataFragmentError(getContext(),getSqlLiteCoreApp,moduleQuety).getDataFragmentError( new GettingExistingErrorFromCursor() );
+              BufferGetError =     new BinessLogicGetDataFragmentError(getContext(),getSqlLiteCoreApp,moduleQuety).getDataFragmentError( new GettingExistingErrorFromFile() );
 
             Log.d(this.getClass().getName(),"\n" + " class "
                 + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
