@@ -1,7 +1,6 @@
 package com.dsy.dsu.AdmissionMaterials.Window;
 
 
-
 import android.annotation.SuppressLint;
 import android.content.ContentResolver;
 import android.content.Context;
@@ -10,6 +9,20 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
+import android.os.VibrationEffect;
+import android.os.Vibrator;
+import android.util.Log;
+import android.util.Size;
+import android.view.Gravity;
+import android.view.LayoutInflater;
+import android.view.OrientationEventListener;
+import android.view.Surface;
+import android.view.View;
+import android.view.ViewGroup;
+import android.view.WindowManager;
+import android.widget.ImageButton;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.camera.core.Camera;
@@ -27,25 +40,9 @@ import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
-import android.os.Environment;
-import android.os.VibrationEffect;
-import android.os.Vibrator;
-import android.util.Log;
-import android.util.Size;
-import android.view.Gravity;
-import android.view.LayoutInflater;
-import android.view.OrientationEventListener;
-import android.view.Surface;
-import android.view.View;
-import android.view.ViewGroup;
-import android.view.WindowManager;
-import android.widget.ImageButton;
-import android.widget.Toast;
-
 import com.dsy.dsu.AdmissionMaterials.bl_admissonmaterils.PesssionCameta;
-import com.dsy.dsu.Errors.WriteErrorForAll.RecordNewErros;
 import com.dsy.dsu.BusinessLogicAll.Class_Generation_UUID;
-import com.dsy.dsu.BusinessLogicAll.Permissions.ClassPermissions;
+import com.dsy.dsu.Errors.WriteErrorForAll.RecordNewErros;
 import com.dsy.dsu.R;
 import com.google.android.material.button.MaterialButton;
 import com.google.common.util.concurrent.ListenableFuture;
@@ -100,7 +97,6 @@ public class FragmentCameraNewPhoto extends DialogFragment  implements CameraXIn
             bisinessLogica=new BisinessLogica();
             // TODO: 04.10.2023 разрешения для всего
             // TODO: 04.10.2023 разрешения для всего
-            new ClassPermissions(getActivity(),ALL_PERSSION_CODE);
             // TODO: 02.08.2023
             mExecutorService = Executors.newSingleThreadExecutor();
 

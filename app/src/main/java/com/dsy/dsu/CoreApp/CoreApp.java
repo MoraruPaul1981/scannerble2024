@@ -3,8 +3,13 @@ package com.dsy.dsu.CoreApp;
 
 import android.app.Application;
 import android.database.sqlite.SQLiteDatabase;
+import android.net.Uri;
+import android.os.Environment;
+import android.provider.MediaStore;
 import android.util.Log;
 
+
+import androidx.core.content.FileProvider;
 
 import com.dsy.dsu.BootAndAsync.BlBootAsync.BinessLogicIntentServiceBoot;
 import com.dsy.dsu.BusinessLogicAll.DeviceName.hilt.QualifiergetDeviceName;
@@ -13,6 +18,7 @@ import com.dsy.dsu.CoreApp.Model.BunessLogicCoreApp;
 import com.dsy.dsu.Errors.WriteErrorForAll.RecordNewErros;
 import com.dsy.dsu.Hilt.JbossAdrress.qualifiers.QualifierJbossServer3;
 import com.dsy.dsu.R;
+import com.google.firebase.crashlytics.buildtools.reloc.org.apache.commons.io.IOUtils;
 import com.sous.backasync.businesslogic.errors.RecordNewErroBack;
 import com.sous.backasync.devicename.ModulegetDeviceNameBack;
 import com.sous.backasync.launch.ModuleDeleting;
@@ -21,6 +27,9 @@ import com.sous.backasync.launch.ModuleQuety;
 import com.sous.backasync.launch.ModuleUpdating;
 
 
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.InputStream;
 import java.util.LinkedHashMap;
 import java.util.concurrent.CopyOnWriteArrayList;
 
@@ -75,7 +84,8 @@ public class CoreApp extends Application {
       // TODO   запускам бизнес логику CoreApp
       setTheme(R.style.Theme_AppCompat_DayNight_DarkActionBar);
 
-      new BunessLogicCoreApp(getApplicationContext()).getBunessLogicCoreApp();
+
+     // new BunessLogicCoreApp(getApplicationContext()).getBunessLogicCoreApp();
 
 
       ///  getBinderAsync = EntryPoints.get(getApplicationContext(), HiltInterfaceBinderAsync.class).metodBinderAsync();

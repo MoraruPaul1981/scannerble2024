@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.ActivityInfo;
+import android.content.pm.PackageManager;
 import android.content.res.Configuration;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Color;
@@ -27,7 +28,8 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 
 
 import com.dsy.dsu.AllDatabases.SQLTE.GetSQLiteDatabase;
@@ -38,9 +40,11 @@ import com.dsy.dsu.BusinessLogicAll.Class_Connections_Server;
 
 import com.dsy.dsu.BusinessLogicAll.CreateFolderBinatySave.ClassDeleteErrorFile;
 import com.dsy.dsu.BusinessLogicAll.GetConnectivityManagerAndroid;
+import com.dsy.dsu.BusinessLogicAll.Permissions.GrandPermissions;
+import com.dsy.dsu.CoreApp.Model.BunessLogicCoreApp;
 import com.dsy.dsu.Errors.WriteErrorForAll.RecordNewErros;
 import com.dsy.dsu.BusinessLogicAll.Class_MODEL_synchronized;
-import com.dsy.dsu.BusinessLogicAll.Permissions.ClassPermissions;
+
 import com.dsy.dsu.CnangeServers.PUBLIC_CONTENT;
 import com.dsy.dsu.BusinessLogicAll.SubClassWriterPUBLICIDtoDatabase;
 
@@ -57,7 +61,9 @@ import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.Locale;
 import java.util.concurrent.TimeUnit;
 
@@ -102,7 +108,7 @@ public class MainActivityPasswords extends AppCompatActivity {
 
 
 
-
+    //////////////////////TODO SERVICE
 
 
     ////
@@ -120,15 +126,17 @@ public class MainActivityPasswords extends AppCompatActivity {
             Class_Engine_SQLГдеНаходитьсяМенеджерПотоков = new PUBLIC_CONTENT(getApplicationContext());
 
 
+
+
             // TODO: 04.10.2023 разрешения для всего
-            new ClassPermissions(this,ALL_PERSSION_CODE);
-
-
+            GrandPermissions grandPermissions=   new GrandPermissions(this );
+            grandPermissions.checkPermissions();
 
             /* TODO: 06.09.2023 tabase */
             sqLiteDatabase = GetSQLiteDatabase.SqliteDatabase();
 
-
+// TODO   запускам бизнес логику CoreApp
+            new BunessLogicCoreApp(getApplicationContext()).getBunessLogicCoreApp();
 
 
             методHideКлавиатура();
@@ -278,15 +286,25 @@ public class MainActivityPasswords extends AppCompatActivity {
 
 
     @Override
-    public void onRequestPermissionsResult(final int requestCode, @NonNull final String[] permissions, @NonNull final int[] grantResults) {
+    public void onRequestPermissionsResult(int requestCode, String permissions[], int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-
-        Log.d(this.getClass().getName(), " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
-                " Линия  :" + Thread.currentThread().getStackTrace()[2].getLineNumber()+
-                " Класс  :" + Thread.currentThread().getStackTrace()[2].getClassName());
+        switch (requestCode) {
+            case 10: {
+                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    // permissions granted.
+                    Log.d(this.getClass().getName(), " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
+                            " Линия  :" + Thread.currentThread().getStackTrace()[2].getLineNumber()+
+                            " Класс  :" + Thread.currentThread().getStackTrace()[2].getClassName());
+                } else {
+                    // no permissions granted.
+                    Log.d(this.getClass().getName(), " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
+                            " Линия  :" + Thread.currentThread().getStackTrace()[2].getLineNumber()+
+                            " Класс  :" + Thread.currentThread().getStackTrace()[2].getClassName());
+                }
+                return;
+            }
+        }
     }
-
-
 
 
 
@@ -822,7 +840,6 @@ public class MainActivityPasswords extends AppCompatActivity {
 
 
     // TODO: 23.01.2024 EventBus for Update PO
-
 
 
 

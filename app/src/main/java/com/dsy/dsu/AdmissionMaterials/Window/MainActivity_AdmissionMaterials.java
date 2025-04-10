@@ -21,7 +21,6 @@ import android.view.WindowManager;
 import android.widget.LinearLayout;
 
 import com.dsy.dsu.Errors.WriteErrorForAll.RecordNewErros;
-import com.dsy.dsu.BusinessLogicAll.Permissions.ClassPermissions;
 import com.dsy.dsu.Services.ServiceUpdatePoОбновлениеПО;
 import com.dsy.dsu.Services.Service_for_AdminissionMaterial;
 import com.dsy.dsu.R;
@@ -75,9 +74,6 @@ public class MainActivity_AdmissionMaterials extends AppCompatActivity implement
             businessLogic. методБиндингСлужбы();
             // TODO: 04.10.2023 разрешения для всего
             // TODO: 04.10.2023 разрешения для всего
-            new ClassPermissions(this,ALL_PERSSION_CODE);
-
-
 
 
                 businessLogic.МетодЗапускФрагментаПриемМатериалов();

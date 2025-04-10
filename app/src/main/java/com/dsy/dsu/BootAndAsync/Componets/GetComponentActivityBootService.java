@@ -27,7 +27,7 @@ import com.dsy.dsu.BootAndAsync.BlBootAsync.Hilts.ServiceBootBinessLogic;
 import com.dsy.dsu.BootAndAsync.DowloadUpdatePO.DownLoadPO;
 import com.dsy.dsu.BootAndAsync.EventsBus.MessageEvensBusNetworkStatuses;
 import com.dsy.dsu.BootAndAsync.EventsBus.MessageEvensBusUpdatePO;
-import com.dsy.dsu.BusinessLogicAll.Permissions.ClassPermissions;
+
 import com.dsy.dsu.CallNavigarlaout.CallNavigarlaout;
 import com.dsy.dsu.Errors.WriteErrorForAll.RecordNewErros;
 import com.dsy.dsu.R;
@@ -290,7 +290,7 @@ public class GetComponentActivityBootService {
 
         try{
 
-            new ClassPermissions(activity,ALL_PERSSION_CODE);
+
 
             Log.d(context.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                     " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +

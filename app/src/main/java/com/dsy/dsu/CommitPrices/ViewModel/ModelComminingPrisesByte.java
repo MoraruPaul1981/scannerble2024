@@ -53,10 +53,7 @@ public class ModelComminingPrisesByte  extends ViewModel {
         }
     }
 
-    @Override
-    public void addCloseable(@NonNull Closeable closeable) {
-        super.addCloseable(closeable);
-    }
+
 
     @Override
     protected void onCleared() {

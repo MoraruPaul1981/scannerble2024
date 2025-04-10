@@ -3,8 +3,11 @@ package com.dsy.dsu.BootAndAsync.ViewModelBoot.View;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.pm.ActivityInfo;
+import android.content.pm.PackageManager;
 import android.graphics.Color;
+import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
 import android.util.Log;
 import android.view.WindowManager;
 import android.widget.ImageView;
@@ -12,6 +15,7 @@ import android.widget.ProgressBar;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.FileProvider;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.lifecycle.LifecycleOwner;
 import androidx.lifecycle.LiveData;
@@ -24,18 +28,23 @@ import com.dsy.dsu.BootAndAsync.EventsBus.MessageEvensBusNetworkStatuses;
 import com.dsy.dsu.BootAndAsync.EventsBus.MessageEvensBusPrograssBar;
 import com.dsy.dsu.BootAndAsync.EventsBus.MessageEvensBusUpdatePO;
 import com.dsy.dsu.BootAndAsync.ViewModelBoot.ViewModel.ViewModel;
-import com.dsy.dsu.BusinessLogicAll.Permissions.ClassPermissions;
+
+import com.dsy.dsu.BusinessLogicAll.Permissions.GrandPermissions;
 import com.dsy.dsu.CoreApp.Model.BunessLogicCoreApp;
 import com.dsy.dsu.Errors.WriteErrorForAll.RecordNewErros;
 import com.dsy.dsu.Hilt.getSSLSocketFactory2.QualifiergetsslSocketFactory2;
 import com.dsy.dsu.R;
 import com.google.android.material.navigation.NavigationView;
+import com.google.firebase.crashlytics.buildtools.reloc.org.apache.commons.io.IOUtils;
 
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.InputStream;
 import java.util.Date;
 
 import javax.inject.Inject;
@@ -93,7 +102,9 @@ public class MainActivityBootAndAsync extends AppCompatActivity {
             getlifecycleOwner=this;
 
             // TODO: 04.10.2023 разрешения для всего
-            new ClassPermissions(this,ALL_PERSSION_CODE);
+            // TODO: 04.10.2023 разрешения для всего
+            GrandPermissions grandPermissions=   new GrandPermissions(this );
+            grandPermissions.checkPermissions();
 
             // TODO   запускам бизнес логику CoreApp
             new BunessLogicCoreApp(getApplicationContext()).getBunessLogicCoreApp();
@@ -118,7 +129,6 @@ public class MainActivityBootAndAsync extends AppCompatActivity {
 
             blInnerMainActivityBootAndAsync .  workerImageViewsettings();
 
-
             // TODO: 03.03.2025  call BAck with Data Ot ViewModel
             getViewModelProvider();
             Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
@@ -134,8 +144,6 @@ public class MainActivityBootAndAsync extends AppCompatActivity {
                     Thread.currentThread().getStackTrace()[2].getLineNumber());
         }
     }
-
-
 
 
 
@@ -186,6 +194,26 @@ public class MainActivityBootAndAsync extends AppCompatActivity {
         }
     }
 
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String permissions[], int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        switch (requestCode) {
+            case 10: {
+                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    // permissions granted.
+                    Log.d(this.getClass().getName(), " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
+                            " Линия  :" + Thread.currentThread().getStackTrace()[2].getLineNumber()+
+                            " Класс  :" + Thread.currentThread().getStackTrace()[2].getClassName());
+                } else {
+                    // no permissions granted.
+                    Log.d(this.getClass().getName(), " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
+                            " Линия  :" + Thread.currentThread().getStackTrace()[2].getLineNumber()+
+                            " Класс  :" + Thread.currentThread().getStackTrace()[2].getClassName());
+                }
+                return;
+            }
+        }
+    }
 
 
 
@@ -265,16 +293,6 @@ public class MainActivityBootAndAsync extends AppCompatActivity {
     }
 
 
-
-    @Override
-    public void onRequestPermissionsResult(final int requestCode, @NonNull final String[] permissions, @NonNull final int[] grantResults) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        // TODO: 04.10.2023 разрешения для всего
-
-        Log.d(this.getClass().getName(), " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
-                " Линия  :" + Thread.currentThread().getStackTrace()[2].getLineNumber()+
-                " Класс  :" + Thread.currentThread().getStackTrace()[2].getClassName());
-    }
 
 
 

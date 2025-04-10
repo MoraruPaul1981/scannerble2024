@@ -21,7 +21,7 @@ import com.dsy.dsu.BootAndAsync.DowloadUpdatePO.DownLoadPO;
 import com.dsy.dsu.BootAndAsync.EventsBus.MessageEvensBusNetworkStatuses;
 import com.dsy.dsu.BootAndAsync.EventsBus.MessageEvensBusUpdatePO;
 import com.dsy.dsu.BroadcastRecievers.Bl.RegisterBroadcastForWorkManager;
-import com.dsy.dsu.BusinessLogicAll.Permissions.ClassPermissions;
+
 import com.dsy.dsu.Dashboard.Model.bl_launchFragmentSettingsandDashbord.LaunchActivityDashboard;
 import com.dsy.dsu.Errors.WriteErrorForAll.RecordNewErros;
 
@@ -86,7 +86,7 @@ public class MainActivity_Dashboard extends AppCompatActivity {
             fragmentManager =  getSupportFragmentManager();
             preferences=   getApplicationContext() .getSharedPreferences("sharedPreferencesХранилище", Context.MODE_MULTI_PROCESS);
             // TODO: 04.10.2023 разрешения для всего
-            new ClassPermissions(this,ALL_PERSSION_CODE);
+
 
             registeEventBusFirst();
 

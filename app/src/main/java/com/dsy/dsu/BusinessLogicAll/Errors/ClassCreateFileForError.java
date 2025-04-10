@@ -29,15 +29,18 @@ public  class ClassCreateFileForError{
                 patchFile.mkdirs();
                 patchFile.setReadable(true);
                 patchFile.setWritable(true);
+                // TODO: 10.04.2025
+            }
+            File file = new File(String.valueOf(patchFile.getAbsoluteFile())+File.separator+fileName);
+            file.setReadable(true);
+            file.setWritable(true);
+            if (  file.createNewFile()) {
+
+                Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                        " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                        " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"  +   " file.isFile() "+file.isFile());
             }
 
-            File file = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS),
-                    File.separator+patchFileName +File.separator+ fileName);
-            if (!file.isFile()) {
-                file.createNewFile();
-                file.setReadable(true);
-                file.setWritable(true);
-            }
             Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                     " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
                     " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"  );

@@ -22,7 +22,7 @@ import android.view.animation.AnimationUtils;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.dsy.dsu.BusinessLogicAll.Permissions.ClassPermissions;
+
 import com.dsy.dsu.Errors.model.BinessLogicFragmentError;
 import com.dsy.dsu.Errors.WriteErrorForAll.RecordNewErros;
 import com.dsy.dsu.Errors.model.BinessLogicGetDataFragmentError;
@@ -147,8 +147,7 @@ public class FragmentError extends DialogFragment {
 
 
             // TODO: 12.12.2023  staring biscce logic
-            // TODO: 04.10.2023 разрешения для всего
-            new ClassPermissions(getActivity(),1);
+
 
             logicFragmentError =new BinessLogicFragmentError( getContext(),getSqlLiteCoreApp,moduleQuety);
 
