@@ -1,7 +1,9 @@
 package com.dsy.dsu.BusinessLogicAll.Errors;
 
+import android.content.ContentResolver;
 import android.content.ContentValues;
 import android.content.Context;
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Environment;
 import android.provider.MediaStore;
@@ -64,8 +66,11 @@ public  class GetWorkerErrosMediaStore implements  GetWorkerErrosInterface {
 
                 Uri uri = context.getContentResolver().insert(MediaStore.Files.getContentUri("external"), values);      //important!
 
-                OutputStream outputStream = context.getContentResolver().openOutputStream(uri);
-                InputStream inputStream = context.getContentResolver().openInputStream(uri);
+
+// Check for the freshest data.
+                ContentResolver getcontentResolverFile= context.getContentResolver();
+                OutputStream outputStream = getcontentResolverFile.openOutputStream(uri);
+                InputStream inputStream = getcontentResolverFile.openInputStream(uri);
 
                 Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                         " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
