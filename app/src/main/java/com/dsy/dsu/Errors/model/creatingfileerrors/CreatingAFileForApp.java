@@ -26,7 +26,8 @@ import java.nio.file.StandardOpenOption;
 public  class CreatingAFileForApp implements GetWorkerErrosInterface {
 
     private    Context context;
-    private String fileName = "Sous-Avtodor-ERROR.txt";
+
+    private String fileName = "Sous-Avtodor-ERROR";
 
     private   String patchFileName="SousAvtoFile";
 
@@ -40,10 +41,36 @@ public  class CreatingAFileForApp implements GetWorkerErrosInterface {
         try {
 
 
-            File patchFile = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS),
-                    File.separator + patchFileName );
+            /*File patchFile = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS),
+                    File.separator + patchFileName );*/
 
-            if (!patchFile.isDirectory()) {
+            File file = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS),
+                    File.separator + patchFileName +File.separator+fileName );
+            if ( ! file.exists()) {
+
+            ContentValues values = new ContentValues();
+
+                values.put(MediaStore.MediaColumns.DISPLAY_NAME, fileName); //"menuCategory"      //file name
+                values.put(MediaStore.MediaColumns.MIME_TYPE, "text/plain");        //file extension, will automatically add to file
+                values.put(MediaStore.MediaColumns.RELATIVE_PATH, Environment.DIRECTORY_DOWNLOADS + File.separator + patchFileName +File.separator+fileName );
+
+                ContentResolver contentResolverCreateFileError=   context.getContentResolver();
+
+            Uri uri =contentResolverCreateFileError.insert(MediaStore.Files.getContentUri("external"), values);      //important!
+
+            OutputStream outputStream = contentResolverCreateFileError.openOutputStream(uri);
+
+            outputStream.write("This is menu category data.".getBytes());
+
+            outputStream.close();
+
+
+                Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                        " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                        " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"  +   " file.isFile() "+file.isFile());
+            }
+
+      /*      if (!patchFile.isDirectory()) {
                 patchFile.setReadable(true);
                 patchFile.setWritable(true);
                 patchFile.setExecutable(true);
@@ -58,13 +85,13 @@ public  class CreatingAFileForApp implements GetWorkerErrosInterface {
                 file.setWritable(true);
                 file.setExecutable(true);
                 file.createNewFile();
-
+            }*/
 
 
                 Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                         " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
                         " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"  +   " file.isFile() "+file.isFile());
-            }
+
         } catch (Exception e) {
             e.printStackTrace();
             Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" +
