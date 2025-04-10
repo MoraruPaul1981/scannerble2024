@@ -40,13 +40,9 @@ public  class CreatingAFileForApp implements GetWorkerErrosInterface {
     public void launchCreatingAFileForApp() {
         try {
 
-
-            /*File patchFile = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS),
-                    File.separator + patchFileName );*/
-
             File file = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS),
                     File.separator + patchFileName +File.separator+fileNameFull+".txt" );
-            if ( ! file.exists()) {
+            if ( !file.exists()) {
 
             ContentValues values = new ContentValues();
 
@@ -59,9 +55,6 @@ public  class CreatingAFileForApp implements GetWorkerErrosInterface {
             Uri uri =contentResolverCreateFileError.insert(MediaStore.Files.getContentUri("external"), values);      //important!
 
             OutputStream outputStream = contentResolverCreateFileError.openOutputStream(uri);
-
-            outputStream.write("This is menu category data.".getBytes());
-
             outputStream.close();
 
 
@@ -69,24 +62,6 @@ public  class CreatingAFileForApp implements GetWorkerErrosInterface {
                         " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
                         " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"  +   " file.isFile() "+file.isFile());
             }
-
-      /*      if (!patchFile.isDirectory()) {
-                patchFile.setReadable(true);
-                patchFile.setWritable(true);
-                patchFile.setExecutable(true);
-                patchFile.mkdirs();
-                // TODO: 10.04.2025
-                patchFile.createNewFile();
-            }
-
-            File file = new File(String.valueOf(patchFile.getAbsoluteFile())+File.separator+fileName);
-            if ( ! file.isFile()) {
-                file.setReadable(true);
-                file.setWritable(true);
-                file.setExecutable(true);
-                file.createNewFile();
-            }*/
-
 
                 Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                         " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +

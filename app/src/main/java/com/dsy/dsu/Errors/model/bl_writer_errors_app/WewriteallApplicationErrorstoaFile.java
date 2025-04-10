@@ -9,6 +9,7 @@ import android.provider.MediaStore;
 import android.util.Log;
 
 import androidx.annotation.NonNull;
+import androidx.core.content.FileProvider;
 
 import com.dsy.dsu.BusinessLogicAll.DATE.Class_Generation_Data;
 import com.dsy.dsu.CallNavigarlaout.CallNavigarlaout;
@@ -55,19 +56,11 @@ public class WewriteallApplicationErrorstoaFile {
                     File.separator + patchFileName +File.separator+fileNameFull+".txt" );
             if (  file.exists()) {
 
-                ContentValues values = new ContentValues();
+                    Uri uriInsertNewError=     FileProvider.getUriForFile(context.getApplicationContext(), "com.dsy.dsu.provider" ,file );
+                    ContentResolver contentResolver = context.getContentResolver();
+                    OutputStream outputStreamInsertnewError = contentResolver.openOutputStream(uriInsertNewError);
 
-                values.put(MediaStore.MediaColumns.DISPLAY_NAME, fileNameFull);   //"menuCategory"    //file name
-                values.put(MediaStore.MediaColumns.MIME_TYPE, "text/plain");        //file extension, will automatically add to file
-                values.put(MediaStore.MediaColumns.RELATIVE_PATH, Environment.DIRECTORY_DOWNLOADS + File.separator + patchFileName );
-
-
-                Uri uri = context.getContentResolver().insert(MediaStore.Files.getContentUri("external"), values);      //important!
-                ContentResolver getcontentResolverFile = context.getContentResolver();
-                OutputStream outputStream = getcontentResolverFile.openOutputStream(uri);
-
-
-                BufferedWriter bufferedWriter = new BufferedWriter(new OutputStreamWriter(outputStream, StandardCharsets.UTF_16));
+                BufferedWriter bufferedWriter = new BufferedWriter(new OutputStreamWriter(outputStreamInsertnewError, StandardCharsets.UTF_16));
 
 
                 bufferedWriter.write("\n");

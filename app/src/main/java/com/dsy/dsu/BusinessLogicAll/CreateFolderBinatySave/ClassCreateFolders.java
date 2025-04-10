@@ -23,7 +23,7 @@ import io.reactivex.rxjava3.annotations.NonNull;
         try{
             File patchFile = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS), File.separator + patchFileName);
 
-            if (!patchFile.exists()) {
+           if (!patchFile.exists()) {
                 patchFile.mkdirs();
                 patchFile.setReadable(true);
                 patchFile.setWritable(true);

@@ -38,11 +38,6 @@ import dagger.hilt.components.SingletonComponent;
 public class RecordNewErros  implements RecordNewErrorsInterface {
 
     private Context context;
-    /*private String fileName = "Sous-Avtodor-ERROR.txt";
-
-    private   String patchFileName="SousAvtoFile";*/
-
-
       ModuleInserting moduleInserting;
 
 
@@ -76,6 +71,9 @@ public class RecordNewErros  implements RecordNewErrorsInterface {
                     Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                             " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
                             " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" + "\n" +" ТекстОшибки " +ТекстОшибки);;
+
+
+
 
                     // TODO: 20.12.2022  дополнительный механизм записи ошибкок
                     getWriteNewErrorNotePad(ТекстОшибки, КлассГнерацииОшибки, МетодаОшибки, ЛинияОшибки);

@@ -24,10 +24,12 @@ import com.dsy.dsu.Errors.model.interfaces.GettingExistingErrorsInterface;
 import com.sous.backasync.launch.ModuleQuety;
 
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.File;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
+import java.io.OutputStreamWriter;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Paths;
@@ -49,54 +51,34 @@ public class GettingExistingErrorFromFile  implements GettingExistingErrorsInter
     @Override
     public StringBuffer gettingExistingErrors(@NonNull Context context,ModuleQuety moduleQuety,SQLiteDatabase sqLiteDatabase_error) {
         // TODO: 17.04.2023
-        Single<StringBuffer>stringBufferSingle=null;
+        StringBuffer stringBuffergetFileError=new StringBuffer();
         try {
-            // TODO: 07.04.2025  
-         stringBufferSingle=Single.fromCallable(()->{
-                // TODO: 07.04.2025  get erro from file
-             StringBuffer stringBuffergetFileError=new StringBuffer();
+            // TODO: 07.04.2025
+            // TODO: 07.04.2025  get erro from file
+                File file = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS),
+                        File.separator + patchFileName + File.separator + fileNameFull + ".txt");
+                if (file.exists()) {
+
+                        Uri uriGetErrors=     FileProvider.getUriForFile(context.getApplicationContext(), "com.dsy.dsu.provider" ,file );
+                        ContentResolver contentResolverGetErrors = context.getContentResolver();
+                    InputStream inputStream = contentResolverGetErrors.openInputStream(uriGetErrors);
+                    // TODO: 15.01.2025
+                    BufferedReader     BufferedReaderError = new BufferedReader(new InputStreamReader(inputStream, StandardCharsets.UTF_16));
+                    stringBuffergetFileError= BufferedReaderError.lines().collect(StringBuffer::new, (sb, i) -> sb.append(i), StringBuffer::append);
+                    // TODO: 10.04.2025
+                    inputStream.close();
+                    Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                            " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                            " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"  +   " stringBuffergetFileError"+stringBuffergetFileError);
 
 
-             File file = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS),
-                     File.separator + patchFileName +File.separator+fileNameFull+".txt" );
-             if (  file.exists()) {
+                }
 
-                 ContentValues values = new ContentValues();
-
-                 values.put(MediaStore.MediaColumns.DISPLAY_NAME, fileNameFull ); //"menuCategory"      //file name
-                 values.put(MediaStore.MediaColumns.MIME_TYPE, "text/plain");        //file extension, will automatically add to file
-                 values.put(MediaStore.MediaColumns.RELATIVE_PATH, Environment.DIRECTORY_DOWNLOADS + File.separator + patchFileName   );
-
-                 ContentResolver contentResolverCreateFileError=   context.getContentResolver();
-
-                 Uri uri =contentResolverCreateFileError.insert(MediaStore.Files.getContentUri("external"), values);      //important!
-
-
-                 InputStream inputStream = contentResolverCreateFileError.openInputStream(uri);
-                 // TODO: 15.01.2025
-                 BufferedReader     BufferedReaderError = new BufferedReader(new InputStreamReader(inputStream, StandardCharsets.UTF_16));
-
-                 stringBuffergetFileError= BufferedReaderError.lines().collect(StringBuffer::new, (sb, i) -> sb.append(i), StringBuffer::append);
-
-                 // TODO: 10.04.2025
-                 inputStream.close();
-
-                 Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
-                         " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                         " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"  +   " stringBuffergetFileError"+stringBuffergetFileError);
-             }
-
-
-
-
-
-
-                Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                // TODO: 07.04.2025
+                Log.d(this.getClass().getName(), "\n" + " class FaceAPp " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                         " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                        " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" + "stringBuffergetFileError " +stringBuffergetFileError );
-
-                return  stringBuffergetFileError;
-            }).doOnError(e->{
+                        " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n");
+            } catch(Exception e){
                 e.printStackTrace();
                 Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName()
                         + " Линия  :" + Thread.currentThread().getStackTrace()[2].getLineNumber());
@@ -104,26 +86,12 @@ public class GettingExistingErrorFromFile  implements GettingExistingErrorsInter
                 new RecordNewErros(context).recordnewerror(e.toString(),
                         this.getClass().getName(), Thread.currentThread().getStackTrace()[2].getMethodName(),
                         Thread.currentThread().getStackTrace()[2].getLineNumber());
+            }
+            return stringBuffergetFileError;
+
+            // TODO: 24.03.2025 end class
 
 
-            }).subscribeOn(Schedulers.single());
-            // TODO: 07.04.2025
-            Log.d(this.getClass().getName(), "\n" + " class FaceAPp " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
-                    " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                    " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n");
-        } catch (Exception e) {
-            e.printStackTrace();
-            Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName()
-                    + " Линия  :" + Thread.currentThread().getStackTrace()[2].getLineNumber());
-            // TODO: 01.09.2021 метод вызова
-            new RecordNewErros(context).recordnewerror(e.toString(),
-                    this.getClass().getName(), Thread.currentThread().getStackTrace()[2].getMethodName(),
-                    Thread.currentThread().getStackTrace()[2].getLineNumber());
         }
-        return      stringBufferSingle.blockingGet();
-
-    }
-
-    // TODO: 24.03.2025 end class
+// TODO: 10.04.2025  end class
 }
-
