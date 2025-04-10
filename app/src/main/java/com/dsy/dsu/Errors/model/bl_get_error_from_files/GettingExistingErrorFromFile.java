@@ -58,14 +58,14 @@ public class GettingExistingErrorFromFile  implements GettingExistingErrorsInter
 
 
              File file = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS),
-                     File.separator + patchFileName +File.separator+fileNameFull );
+                     File.separator + patchFileName +File.separator+fileNameFull+".txt" );
              if (  file.exists()) {
 
                  ContentValues values = new ContentValues();
 
-                 values.put(MediaStore.MediaColumns.DISPLAY_NAME, fileNameFull); //"menuCategory"      //file name
+                 values.put(MediaStore.MediaColumns.DISPLAY_NAME, fileNameFull ); //"menuCategory"      //file name
                  values.put(MediaStore.MediaColumns.MIME_TYPE, "text/plain");        //file extension, will automatically add to file
-                 values.put(MediaStore.MediaColumns.RELATIVE_PATH, Environment.DIRECTORY_DOWNLOADS + File.separator + patchFileName +File.separator+fileNameFull );
+                 values.put(MediaStore.MediaColumns.RELATIVE_PATH, Environment.DIRECTORY_DOWNLOADS + File.separator + patchFileName   );
 
                  ContentResolver contentResolverCreateFileError=   context.getContentResolver();
 
