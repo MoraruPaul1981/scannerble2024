@@ -8,24 +8,26 @@ import com.dsy.dsu.Errors.WriteErrorForAll.RecordNewErros;
 
 import java.io.File;
 
-public  class ClassCreateFileForError{
+public  class GetWorkerErros implements  GetWorkerErrosInterface {
 
-     Context context;
+    private    Context context;
     private String fileName = "Sous-Avtodor-ERROR.txt";
 
     private   String patchFileName="SousAvtoFile";
 
-    public ClassCreateFileForError(Context context) {
+    public GetWorkerErros(Context context) {
         this.context = context;
     }
 
-    public void metodCreateFileForError() {
+
+    @Override
+    public void launchWorkerErros() {
         try {
 
             File patchFile = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS),
                     File.separator + patchFileName);
 
-            if (!patchFile.exists()) {
+            if (!patchFile.isDirectory()) {
                 patchFile.mkdirs();
                 patchFile.setReadable(true);
                 patchFile.setWritable(true);
@@ -34,7 +36,9 @@ public  class ClassCreateFileForError{
             File file = new File(String.valueOf(patchFile.getAbsoluteFile())+File.separator+fileName);
             file.setReadable(true);
             file.setWritable(true);
-            if (  file.createNewFile()) {
+            if (  file.isFile()) {
+
+                file.createNewFile();
 
                 Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                         " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +

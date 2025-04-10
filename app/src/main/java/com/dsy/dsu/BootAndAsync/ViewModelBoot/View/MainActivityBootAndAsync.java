@@ -106,6 +106,9 @@ public class MainActivityBootAndAsync extends AppCompatActivity {
             GrandPermissions grandPermissions=   new GrandPermissions(this );
             grandPermissions.checkPermissions();
 
+
+
+
             // TODO   запускам бизнес логику CoreApp
             new BunessLogicCoreApp(getApplicationContext()).getBunessLogicCoreApp();
 
