@@ -32,7 +32,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.dsy.dsu.AllDatabases.SQLTE.GetSQLiteDatabase;
 import com.dsy.dsu.BootAndAsync.View.MainActivityBootAndAsync;
-import com.dsy.dsu.BootAndAsync.ViewModelBoot.Model.EventsBus.MessageEvensBusNetworkStatuses;
+
 import com.dsy.dsu.BusinessLogicAll.Class_Clears_Tables;
 import com.dsy.dsu.BusinessLogicAll.Class_Connections_Server;
 
@@ -811,32 +811,7 @@ public class MainActivityPasswords extends AppCompatActivity {
                 + "   starting... onRestart" + " starting... onRestart");
     }
 
-
-    // TODO: 23.01.2024 EventBus for Async
-    @Subscribe (threadMode = ThreadMode.MAIN)
-    public void EventMessageEvensBusAyns(MessageEvensBusNetworkStatuses messageEvensBusNetworkStatuses){
-        try{
-
-
-
-            Log.d(getApplicationContext().getClass().getName(), "\n"
-                    + " время: " + new Date() + "\n+" +
-                    " Класс в процессе... " + this.getClass().getName() + "\n" +
-                    " метод в процессе... " + Thread.currentThread().getStackTrace()[2].getMethodName()
-                    + "   starting... onRestart" + " starting... onRestart");
-        } catch (Exception e) {
-            e.printStackTrace();
-            Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() + " Линия  :"
-                    + Thread.currentThread().getStackTrace()[2].getLineNumber());
-            new RecordNewErros(getApplicationContext()).recordnewerror(e.toString(), this.getClass().getName(), Thread.currentThread().getStackTrace()[2].getMethodName(),
-                    Thread.currentThread().getStackTrace()[2].getLineNumber());
-        }
-    }
-
-
     // TODO: 23.01.2024 EventBus for Update PO
-
-
 
 }
 

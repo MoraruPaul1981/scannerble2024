@@ -12,12 +12,13 @@ import android.util.Log;
 
 import androidx.annotation.NonNull;
 
-import com.dsy.dsu.BootAndAsync.ViewModelBoot.Model.DowloadUpdatePO.CallBackBusUpdatePO;
-import com.dsy.dsu.BootAndAsync.ViewModelBoot.Model.EventsBus.MessageEvensBusNetworkStatuses;
-import com.dsy.dsu.BootAndAsync.ViewModelBoot.Model.EventsBus.MessageEvensBusUpdatePO;
+
+import com.dsy.dsu.BootAndAsync.Model.DowloadUpdatePO.CallBackBusUpdatePO;
+import com.dsy.dsu.BootAndAsync.Model.EventsBus.MessageEvensBusNetworkStatuses;
+import com.dsy.dsu.BootAndAsync.Model.EventsBus.MessageEvensBusUpdatePO;
 import com.dsy.dsu.BusinessLogicAll.AnalysisUserAuthenticated.GetAnalysisUserAuthenticated;
 import com.dsy.dsu.BusinessLogicAll.Class_Connections_Server;
-import com.dsy.dsu.Dashboard.Model.endingasynsdashboard.LauntchActivityAfterUpdatePOAndAsync;
+import com.dsy.dsu.Dashboard.Model.endingasynsdashboard.LaunchMainAppAfterSyncing;
 import com.dsy.dsu.Errors.WriteErrorForAll.RecordNewErros;
 import com.dsy.dsu.Services.ServiceUpdatePoОбновлениеПО;
 import com.dsy.dsu.Services.Service_For_Remote_Async_Binary;
@@ -228,15 +229,20 @@ public class BinessLogicIntentServiceBoot {
         try {
      Boolean UserAuthenticated=       new GetAnalysisUserAuthenticated(context).analysisUserAuthenticated(240);
 
-            LauntchActivityAfterUpdatePOAndAsync launtchActivityAfterUpdatePOAndAsync=new LauntchActivityAfterUpdatePOAndAsync();
+            LaunchMainAppAfterSyncing launchMainAppaftersyncing =new LaunchMainAppAfterSyncing();
                 if (UserAuthenticated){
                     // TODO: 01.04.2024 Все в порядке ЗАпускам Саму Программу DashBord
-                    launtchActivityAfterUpdatePOAndAsync.forvardDashboard(context);
+                    launchMainAppaftersyncing.appAfterSyncingDashboard(context);
                 }else {
                     // TODO: 28.04.2023 НЕт Анутифтикации Пароль
                     // TODO: 28.04.2023 НЕт Анутифтикации Пароль
-                    launtchActivityAfterUpdatePOAndAsync.forvardActivityPassword(  context);
+                    launchMainAppaftersyncing.appAfterSyncingDashboard(  context);
                 }
+
+
+
+
+
             // TODO: 28.04.2023
             Log.d(this.getClass().getName(), "\n" + " class " +
                     Thread.currentThread().getStackTrace()[2].getClassName()

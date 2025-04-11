@@ -27,9 +27,10 @@ import androidx.lifecycle.LifecycleOwner;
 import com.dsy.dsu.BootAndAsync.Model.DowloadUpdatePO.DownLoadPO;
 
 
+import com.dsy.dsu.BootAndAsync.Model.EventsBus.MessageEvensBusNetworkStatuses;
+import com.dsy.dsu.BootAndAsync.Model.EventsBus.MessageEvensBusUpdatePO;
 import com.dsy.dsu.BootAndAsync.Model.Service.bl_service_boot.StartServiceBootAndAsync;
-import com.dsy.dsu.BootAndAsync.ViewModelBoot.Model.EventsBus.MessageEvensBusNetworkStatuses;
-import com.dsy.dsu.BootAndAsync.ViewModelBoot.Model.EventsBus.MessageEvensBusUpdatePO;
+
 
 import com.dsy.dsu.CallNavigarlaout.CallNavigarlaout;
 import com.dsy.dsu.Errors.WriteErrorForAll.RecordNewErros;

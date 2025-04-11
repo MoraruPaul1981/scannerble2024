@@ -1,4 +1,4 @@
-package com.dsy.dsu.BootAndAsync.ViewModelBoot.Model.EventsBus;
+package com.dsy.dsu.BootAndAsync.Model.EventsBus;
 
 import android.content.Intent;
 

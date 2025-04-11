@@ -17,13 +17,15 @@ import androidx.fragment.app.FragmentManager;
 import androidx.lifecycle.LifecycleOwner;
 
 
+import com.dsy.dsu.BootAndAsync.Model.EventsBus.MessageEvensBusAppAfterSyncing;
+import com.dsy.dsu.BootAndAsync.Model.EventsBus.MessageEvensBusNetworkStatuses;
+import com.dsy.dsu.BootAndAsync.Model.EventsBus.MessageEvensBusPrograssBar;
+import com.dsy.dsu.BootAndAsync.Model.EventsBus.MessageEvensBusUpdatePO;
 import com.dsy.dsu.BootAndAsync.Model.ModuleSingleWorkManager.ModuleSingleWorkManager;
 import com.dsy.dsu.BootAndAsync.View.ComponetsUI.GetComponentActivityBootService;
-import com.dsy.dsu.BootAndAsync.ViewModelBoot.View.Componets.GetComponentPrograssbar;
-import com.dsy.dsu.BootAndAsync.ViewModelBoot.Model.EventsBus.MessageEvensBusNetworkStatuses;
-import com.dsy.dsu.BootAndAsync.ViewModelBoot.Model.EventsBus.MessageEvensBusPrograssBar;
-import com.dsy.dsu.BootAndAsync.ViewModelBoot.Model.EventsBus.MessageEvensBusUpdatePO;
 
+
+import com.dsy.dsu.BootAndAsync.View.ComponetsUI.GetComponentPrograssbar;
 import com.dsy.dsu.BusinessLogicAll.Permissions.GrandPermissions;
 import com.dsy.dsu.CoreApp.Model.BunessLogicCoreApp;
 import com.dsy.dsu.Errors.WriteErrorForAll.RecordNewErros;
@@ -326,18 +328,9 @@ public class MainActivityBootAndAsync extends AppCompatActivity {
                     Thread.currentThread().getStackTrace()[2].getLineNumber());
         }
 
-
     }
 
-
-
-
-
-
-
-
-
-    // TODO: 23.01.2024 EventBus for Async
+    // TODO: 23.01.2024 EventBus for Status
     @Subscribe (threadMode = ThreadMode.MAIN)
     public void EventMessageEvensBusAyns(MessageEvensBusNetworkStatuses messageEvensBusNetworkStatuses){
         try{
@@ -359,7 +352,26 @@ public class MainActivityBootAndAsync extends AppCompatActivity {
     }
 
 
+    // TODO: 23.01.2024 EventBus for AppAfterSyncing
+    @Subscribe (threadMode = ThreadMode.MAIN)
+    public void EventMessageEvensAppAfterSyncing(MessageEvensBusAppAfterSyncing messageEvensBusAppAfterSyncing){
+        try{
 
+
+
+            Log.d(getApplicationContext().getClass().getName(), "\n"
+                    + " время: " + new Date() + "\n+" +
+                    " Класс в процессе... " + this.getClass().getName() + "\n" +
+                    " метод в процессе... " + Thread.currentThread().getStackTrace()[2].getMethodName()
+                    + "   starting... onRestart" + " starting... onRestart");
+        } catch (Exception e) {
+            e.printStackTrace();
+            Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() + " Линия  :"
+                    + Thread.currentThread().getStackTrace()[2].getLineNumber());
+            new RecordNewErros(getApplicationContext()).recordnewerror(e.toString(), this.getClass().getName(), Thread.currentThread().getStackTrace()[2].getMethodName(),
+                    Thread.currentThread().getStackTrace()[2].getLineNumber());
+        }
+    }
 
 
 

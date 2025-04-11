@@ -1,4 +1,4 @@
-package com.dsy.dsu.BootAndAsync.ViewModelBoot.Model.DowloadUpdatePO;
+package com.dsy.dsu.BootAndAsync.Model.DowloadUpdatePO;
 
 import android.content.Context;
 import android.content.Intent;
@@ -6,7 +6,8 @@ import android.util.Log;
 
 import androidx.annotation.NonNull;
 
-import com.dsy.dsu.BootAndAsync.ViewModelBoot.Model.EventsBus.MessageEvensBusUpdatePO;
+
+import com.dsy.dsu.BootAndAsync.Model.EventsBus.MessageEvensBusUpdatePO;
 import com.dsy.dsu.Errors.WriteErrorForAll.RecordNewErros;
 
 import org.greenrobot.eventbus.EventBus;

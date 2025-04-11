@@ -10,15 +10,14 @@ import androidx.annotation.NonNull;
 import com.dsy.dsu.Dashboard.View.MainActivity_Dashboard;
 import com.dsy.dsu.Errors.WriteErrorForAll.RecordNewErros;
 import com.dsy.dsu.Passwords.MainActivityPasswords;
-import com.dsy.dsu.Services.ServiceUpdatePoОбновлениеПО;
 
 import java.util.Date;
 
-public class LauntchActivityAfterUpdatePOAndAsync {
+public class LaunchMainAppAfterSyncing {
 
 
 
-    public void forvardDashboard(@NonNull Context context){
+    public void appAfterSyncingDashboard(@NonNull Context context){
         try {
 
             Intent Интент_ЗапускаетDashboard=new Intent();
@@ -50,7 +49,7 @@ public class LauntchActivityAfterUpdatePOAndAsync {
 
 
 
-    public void forvardActivityPassword(@NonNull Context context) {
+    public void appAfterSyncingPassword(@NonNull Context context) {
         try{
             Intent Интент_ЗапускаетPasswords=new Intent();
             Интент_ЗапускаетPasswords.setClass(context, MainActivityPasswords.class);
