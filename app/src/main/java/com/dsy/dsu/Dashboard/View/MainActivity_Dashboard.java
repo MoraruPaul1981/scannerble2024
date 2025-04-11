@@ -123,6 +123,8 @@ public class MainActivity_Dashboard extends AppCompatActivity {
         super.onStart();
         try {
 
+
+
             LaunchActivityDashboard launchActivityDashboard=new LaunchActivityDashboard( fragmentManager,getApplicationContext());
             // TODO: 27.03.2024 в зависомсти кто вызвает
                 launchActivityDashboard.     launchADashboardFragment();

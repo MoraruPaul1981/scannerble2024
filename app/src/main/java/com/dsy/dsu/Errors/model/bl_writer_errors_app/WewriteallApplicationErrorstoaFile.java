@@ -7,6 +7,7 @@ import android.net.Uri;
 import android.os.Environment;
 import android.provider.MediaStore;
 import android.util.Log;
+import android.view.Display;
 
 import androidx.annotation.NonNull;
 import androidx.core.content.FileProvider;
@@ -62,7 +63,7 @@ public class WewriteallApplicationErrorstoaFile {
 
                 BufferedWriter bufferedWriter = new BufferedWriter(new OutputStreamWriter(outputStreamInsertnewError, StandardCharsets.UTF_16));
 
-
+                bufferedWriter.newLine();
                 bufferedWriter.write("\n");
                 bufferedWriter.write("##### ERROR #####");
                 bufferedWriter.write("\n");

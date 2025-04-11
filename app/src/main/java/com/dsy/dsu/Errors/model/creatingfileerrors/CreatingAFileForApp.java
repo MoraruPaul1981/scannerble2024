@@ -42,12 +42,9 @@ public  class CreatingAFileForApp implements GetWorkerErrosInterface {
 
             File patchFile = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS),
                     File.separator + patchFileName  );
-            if ( !patchFile.exists()) {
-                    patchFile.setReadable(true);
-                    patchFile.setWritable(true);
-                    patchFile.setExecutable(true);
+            if ( !patchFile.isDirectory()) {
                     patchFile.mkdirs();
-                    patchFile.getParentFile().mkdirs();
+
                 }
             File NewFileError = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS),
                     File.separator + patchFileName +File.separator+fileNameFull+".txt" );
