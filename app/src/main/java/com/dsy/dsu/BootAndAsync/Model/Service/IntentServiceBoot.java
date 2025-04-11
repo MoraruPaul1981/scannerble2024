@@ -387,6 +387,7 @@ private      void startingServiceBoot(@NotNull Intent intent ,@NonNull  LinkedHa
                             // TODO: 31.03.2025
                             // TODO: 26.12.2024 И Обновление и Синхронизация
                             case "lanchUpdatePOAndAsync" :
+                            case "ExitBootService" :
                                 // TODO: 31.03.2025 нет логина  и пароля переводим программу на Активити Password
                                 binessLogicIntentServiceBoot.afterUpdatePOandAsynclaunchActivity(getApplicationContext());
 
