@@ -6,7 +6,7 @@
     android:id="@+id/linearLayout_root_activity_dashboard"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/divider"
+    android:background="@color/actionbar_text_color"
     android:orientation="vertical"
     tools:context=".Dashboard.View.MainActivity_Dashboard">
 
