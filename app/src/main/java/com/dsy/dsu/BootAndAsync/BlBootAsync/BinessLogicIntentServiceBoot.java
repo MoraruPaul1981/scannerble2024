@@ -230,11 +230,11 @@ public class BinessLogicIntentServiceBoot {
             LauntchActivityAfterUpdatePOAndAsync launtchActivityAfterUpdatePOAndAsync=new LauntchActivityAfterUpdatePOAndAsync();
                 if (UserAuthenticated){
                     // TODO: 01.04.2024 Все в порядке ЗАпускам Саму Программу DashBord
-                    launtchActivityAfterUpdatePOAndAsync.forvardDashboard(context,localBinderОбновлениеПО);
+                    launtchActivityAfterUpdatePOAndAsync.forvardDashboard(context);
                 }else {
                     // TODO: 28.04.2023 НЕт Анутифтикации Пароль
                     // TODO: 28.04.2023 НЕт Анутифтикации Пароль
-                    launtchActivityAfterUpdatePOAndAsync.forvardActivityPassword(  context,localBinderОбновлениеПО);
+                    launtchActivityAfterUpdatePOAndAsync.forvardActivityPassword(  context);
                 }
             // TODO: 28.04.2023
             Log.d(this.getClass().getName(), "\n" + " class " +

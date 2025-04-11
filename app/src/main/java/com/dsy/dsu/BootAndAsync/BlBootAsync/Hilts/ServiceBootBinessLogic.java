@@ -61,30 +61,6 @@ public class ServiceBootBinessLogic {
         }
     }
 
-    public void stopServiceBootAndAsync(@NonNull Activity activity){
-
-        try{
-
-            Intent intentstartServiceOneSignal=new Intent(context, IntentServiceBoot.class);
-            intentstartServiceOneSignal.setAction("lanchAsync");
-            activity.stopService(intentstartServiceOneSignal);
-            // TODO: 24.01.2024
-            activity.finishAffinity();
-
-
-            Log.d(context.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
-                    " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                    " line " + Thread.currentThread().getStackTrace()[2].getLineNumber());
-        } catch (Exception e) {
-            e.printStackTrace();
-            Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() + " Линия  :"
-                    + Thread.currentThread().getStackTrace()[2].getLineNumber());
-            new RecordNewErros(context).recordnewerror(e.toString(),
-                    this.getClass().getName(), Thread.currentThread().getStackTrace()[2].getMethodName(),
-                    Thread.currentThread().getStackTrace()[2].getLineNumber());
-        }
-    }
-
 
 
 

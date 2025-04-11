@@ -8,7 +8,7 @@
     android:layout_margin="10dp"
     android:padding="5dp"
     android:visibility="visible"
-    tools:context=".BootAndAsync.Window.MainActivityBootAndAsync"
+    tools:context=".BootAndAsync.ViewModelBoot.View.MainActivityBootAndAsync"
     tools:visibility="visible">
 
 

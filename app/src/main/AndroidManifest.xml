@@ -397,7 +397,9 @@
             android:exported="true"
             android:grantUriPermissions="true"
             android:label="@string/name_dsu"
-            android:launchMode="singleTask"
+            android:launchMode="singleInstance"
+            android:finishOnTaskLaunch="true"
+            android:noHistory="true"
             android:requestLegacyExternalStorage="true"
             android:showOnLockScreen="true"
             android:theme="@style/Theme.MaterialComponents.DayNight.DarkActionBar">
@@ -407,6 +409,27 @@
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
+
+        <!-- активити прикложения ДСУ-1 -->
+        <!-- активити прикложения ДСУ-1 -->
+        <!-- активити прикложения ДСУ-1 -->
+        <!-- активити прикложения ДСУ-1  singleTask  singleTask   standard -->
+        <activity
+            android:name=".Dashboard.View.MainActivity_Dashboard"
+            android:exported="true"
+            android:grantUriPermissions="true"
+            android:label="Союз-Автодор"
+            android:requestLegacyExternalStorage="true"
+            android:launchMode="singleInstance"
+            android:clearTaskOnLaunch="true"
+            android:showOnLockScreen="true"
+            android:theme="@style/Theme.MaterialComponents.DayNight.DarkActionBar">
+        </activity>
+
+
+
+
+
 
         <activity
             android:name=".Tabels.Templates.MainActivity_New_Templates"
@@ -487,30 +510,12 @@
             android:name=".Passwords.MainActivityPasswords"
             android:exported="true"
             android:label="Аунтификация ДСУ-1"
-            android:launchMode="singleTask"
             android:theme="@style/Theme.MaterialComponents.DayNight.DarkActionBar">
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value=".BootAndAsync.ViewModelBoot.View.MainActivityBootAndAsync" />
         </activity>
 
-        <!-- активити прикложения ДСУ-1 -->
-        <!-- активити прикложения ДСУ-1 -->
-        <!-- активити прикложения ДСУ-1 -->
-        <!-- активити прикложения ДСУ-1  singleTask  singleTask   standard -->
-        <activity
-            android:name=".Dashboard.View.MainActivity_Dashboard"
-            android:exported="true"
-            android:grantUriPermissions="true"
-            android:label="Союз-Автодор"
-            android:launchMode="singleTask"
-            android:requestLegacyExternalStorage="true"
-            android:showOnLockScreen="true"
-            android:theme="@style/Theme.MaterialComponents.DayNight.DarkActionBar">
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value=".BootAndAsync.ViewModelBoot.View.MainActivityBootAndAsync" />
-        </activity>
+
+
+
         <activity
             android:name=".Tabels.Tabel.New.MainActivity_New_Tabely"
             android:exported="true"
@@ -525,9 +530,6 @@
             android:exported="true"
             android:label="Форма просмотр Логин"
             android:theme="@style/Theme.MaterialComponents.DayNight.DarkActionBar">
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value=".BootAndAsync.ViewModelBoot.View.MainActivityBootAndAsync" />
         </activity>
         <activity
             android:name=".OrdersTransports.Window.MainActivityOrdersTransports"

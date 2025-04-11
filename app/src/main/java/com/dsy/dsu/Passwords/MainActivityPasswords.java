@@ -434,10 +434,10 @@ public class MainActivityPasswords extends AppCompatActivity {
                 IntentStartFaceApp.putExtra("ПубличноеИмяПользовательДлСервлета", ПубличноеЛогин);
                 IntentStartFaceApp.putExtra("ПубличноеПарольДлСервлета", ПубличноеПароль);
                 IntentStartFaceApp.setClass(getApplication(), MainActivityBootAndAsync.class);
-                IntentStartFaceApp.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_SINGLE_TOP);/// FLAG_ACTIVITY_SINGLE_TOP
+                IntentStartFaceApp.setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY | Intent.FLAG_ACTIVITY_NEW_TASK);
 
                 startActivity(IntentStartFaceApp);
-                finish();
+                finishAffinity();
 
             Log.d(getApplicationContext().getClass().getName(), "\n"
                     + " время: " + new Date()+"\n+" +
