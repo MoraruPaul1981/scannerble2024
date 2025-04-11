@@ -31,6 +31,7 @@ import com.dsy.dsu.Hilt.JbossAdrress.getHiltPortJbossInterface;
 import com.dsy.dsu.R;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
+import com.google.common.util.concurrent.AtomicDouble;
 
 import java.io.File;
 import java.util.Date;
@@ -87,69 +88,82 @@ public     void МетодСообщениеАнализПО( ) {
                 public void onClick(View v) {
                     // TODO: 18.02.2023 Загрузка Нового файла APK
                     try {
+                        // TODO: 11.04.2025 Загружаем файл
+                        Maybe.fromCallable(()->{
+                                    // TODO: 11.04.2025
+                                    // TODO: 18.02.2023 удаление Файлов перед Обновление ПО или Анализм Версии ПО
+                                    new GetDeletingFilesJsonAndApk(context).startingDeletingFileApk();
 
-                        Maybe.fromAction(new Action() {
-                            @Override
-                            public void run() throws Throwable {
+                                    LinkedHashMap<Integer,String> getHiltPortJboss=   EntryPoints.get(context, getHiltPortJbossInterface.class).getHiltPortJboss();
 
-                                // TODO: 18.02.2023 удаление Файлов перед Обновление ПО или Анализм Версии ПО
-                              new GetDeletingFilesJsonAndApk(context).startingDeletingFileApk();
+                                    // TODO: 29.07.2023 ЗАгрузки  ПО
+                                    FileAPK =    МетодЗагрузкиAPK(getHiltPortJboss,  getsslSocketFactory2) ;
 
-                                LinkedHashMap<Integer,String> getHiltPortJboss=   EntryPoints.get(context, getHiltPortJbossInterface.class).getHiltPortJboss();
+                                    Log.d(context.getClass().getName(), "\n"
+                                            + " время: " + new Date() + "\n+" +
+                                            " Класс в процессе... " + this.getClass().getName() + "\n" +
+                                            " метод в процессе... " + Thread.currentThread().getStackTrace()[2].getMethodName()  + " FileAPK " +FileAPK);
+                            return FileAPK;
+                                }).doOnSuccess(FileAPK->{
+                                    // TODO: 11.04.2025
 
-                                // TODO: 29.07.2023 ЗАгрузки  ПО
-                               FileAPK =    МетодЗагрузкиAPK(getHiltPortJboss,  getsslSocketFactory2) ;
 
-                                Log.w(context.getClass().getName(), Thread.currentThread().getStackTrace()[2].getMethodName() + " СервернаяВерсияПОВнутри  "
-                                        + СервернаяВерсияПОВнутри + " POOLS"+ " FileAPK "+ FileAPK);
-                            }
-                        }).subscribeOn(Schedulers.single()).observeOn(AndroidSchedulers.mainThread()).subscribe(new MaybeObserver<Object>() {
-                            @Override
-                            public void onSubscribe(@io.reactivex.rxjava3.annotations.NonNull Disposable d) {
-                                КнопкаЗАгрузкиПО.setEnabled(false);
-                                КнопкаЗАгрузкиПО.setBackgroundColor(Color.GRAY);
-                                КнопкаЗАгрузкиПО.requestLayout();
-                                КнопкаЗАгрузкиПО.refreshDrawableState();
-                                // TODO: 06.05.2023 делаем кнопки не активныйе
-                                Vibrator v2 = (Vibrator) context.getSystemService(Context.VIBRATOR_SERVICE);
-                                v2.vibrate(VibrationEffect.createOneShot(100, VibrationEffect.DEFAULT_AMPLITUDE));
-
-                                context.getMainExecutor().execute( new Runnable() {
-                                    @Override
-                                    public void run() {
-                                        PrograssBarЗагрузкиПО.setVisibility(View.VISIBLE);
-                                        PrograssBarЗагрузкиПО.setIndeterminate(true);
-                                        PrograssBarЗагрузкиПО.requestLayout();
-                                        PrograssBarЗагрузкиПО.refreshDrawableState();
-
+                            КнопкаЗАгрузкиПО.getHandler().post( new Runnable() {
+                                @Override
+                                public void run() {
+                                    if (FileAPK!=null) {
+                                        методПослеАнализаПО();
                                     }
-                                });
-                            }
 
-                            @Override
-                            public void onSuccess(@io.reactivex.rxjava3.annotations.NonNull Object o) {
+                                    Log.d(context.getClass().getName(), "\n"
+                                            + " время: " + new Date() + "\n+" +
+                                            " Класс в процессе... " + this.getClass().getName() + "\n" +
+                                            " метод в процессе... " + Thread.currentThread().getStackTrace()[2].getMethodName()  + " FileAPK " +FileAPK);
+                                }
+                            });
+                                    Log.d(context.getClass().getName(), "\n"
+                                            + " время: " + new Date() + "\n+" +
+                                            " Класс в процессе... " + this.getClass().getName() + "\n" +
+                                            " метод в процессе... " + Thread.currentThread().getStackTrace()[2].getMethodName()  + " FileAPK " +FileAPK);
+                                }).doOnError(e->{
+                                    e.printStackTrace();
+                                    Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() + " Линия  :"
+                                            + Thread.currentThread().getStackTrace()[2].getLineNumber());
+                                    new RecordNewErros(context).recordnewerror(e.toString(),
+                                            this.getClass().getName(), Thread.currentThread().getStackTrace()[2].getMethodName(),
+                                            Thread.currentThread().getStackTrace()[2].getLineNumber());
+                                }).doOnSubscribe(s->{
+                                    // TODO: 11.04.2025
+                            КнопкаЗАгрузкиПО.getHandler().post( new Runnable() {
+                                        @Override
+                                        public void run() {
 
+                                            КнопкаЗАгрузкиПО.setEnabled(false);
+                                            КнопкаЗАгрузкиПО.setBackgroundColor(Color.GRAY);
+                                            КнопкаЗАгрузкиПО.requestLayout();
+                                            КнопкаЗАгрузкиПО.refreshDrawableState();
+                                            // TODO: 06.05.2023 делаем кнопки не активныйе
+                                            Vibrator v2 = (Vibrator) context.getSystemService(Context.VIBRATOR_SERVICE);
+                                            v2.vibrate(VibrationEffect.createOneShot(100, VibrationEffect.DEFAULT_AMPLITUDE));
 
-                                Log.w(context.getClass().getName(), Thread.currentThread().getStackTrace()[2].getMethodName() +
-                                        " ЛокальнаяВерсияПО " );
-                            }
-
-                            @Override
-                            public void onError(@io.reactivex.rxjava3.annotations.NonNull Throwable e) {
-                                Log.w(context.getClass().getName(), Thread.currentThread().getStackTrace()[2].getMethodName() + " СервернаяВерсияПОВнутри  "
-                                        + СервернаяВерсияПОВнутри + " POOLS");
-                            }
-
-                            @Override
-                            public void onComplete() {
-
-                                методПослеАнализаПО();
-
-                                Log.w(context.getClass().getName(), Thread.currentThread().getStackTrace()[2].getMethodName() + " СервернаяВерсияПОВнутри  "
-                                        + СервернаяВерсияПОВнутри + " POOLS");
-                            }
-                        });
-
+                                            PrograssBarЗагрузкиПО.setVisibility(View.VISIBLE);
+                                            PrograssBarЗагрузкиПО.setIndeterminate(true);
+                                            PrograssBarЗагрузкиПО.requestLayout();
+                                            PrograssBarЗагрузкиПО.refreshDrawableState();
+                                            Log.d(context.getClass().getName(), "\n"
+                                                    + " время: " + new Date() + "\n+" +
+                                                    " Класс в процессе... " + this.getClass().getName() + "\n" +
+                                                    " метод в процессе... " + Thread.currentThread().getStackTrace()[2].getMethodName()  + " FileAPK " +FileAPK);
+                                        }
+                                    });
+                                    
+                                    
+                                    
+                                }).subscribeOn(Schedulers.single()).observeOn(AndroidSchedulers.mainThread()).subscribe();
+                        Log.d(context.getClass().getName(), "\n"
+                                + " время: " + new Date() + "\n+" +
+                                " Класс в процессе... " + this.getClass().getName() + "\n" +
+                                " метод в процессе... " + Thread.currentThread().getStackTrace()[2].getMethodName()  + " FileAPK " +FileAPK);
                     } catch (Exception e) {
                         e.printStackTrace();
                         Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() + " Линия  :"
@@ -346,7 +360,7 @@ public     void МетодСообщениеАнализПО( ) {
                     МетодЗагрузкиОбновлениеПОсСервера(new PUBLIC_CONTENT(context).getСсылкаНаРежимСервераОбновлениеПО(),
                            context, ИмяСерверИзХранилица ,ПортСерверИзХранилица,
                             "FileAPKUpdatePO","update_dsu1.apk",
-                            "application/octet-stream",500,getsslSocketFactory2);
+                            "application/octet-stream",getsslSocketFactory2);
 
             Log.w(context.getClass().getName(),    Thread.currentThread().getStackTrace()[2].getMethodName()
                     + Thread.currentThread().getName()+" FileAPK" + FileAPK);

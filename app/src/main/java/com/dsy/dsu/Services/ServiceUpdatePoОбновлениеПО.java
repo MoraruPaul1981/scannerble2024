@@ -323,7 +323,7 @@ public class ServiceUpdatePoОбновлениеПО extends IntentService {////
             File ФайлJsonОтСервера = new Class_MODEL_synchronized(getApplicationContext()).
                     МетодЗагрузкиОбновлениеПОсСервера(new PUBLIC_CONTENT(getApplicationContext()).getСсылкаНаРежимСервераОбновлениеПО(),
                             getApplicationContext(), ИмяСерверИзХранилица ,ПортСерверИзХранилица,"FileJsonUpdatePO",
-                            "update_dsu1.json","application/json",10,getsslSocketFactory2);
+                            "update_dsu1.json","application/json",getsslSocketFactory2);
 
             Log.w(getApplicationContext().getClass().getName(),    Thread.currentThread().getStackTrace()[2].getMethodName()
                     + Thread.currentThread().getName()+" ФайлJsonОтСервера" + ФайлJsonОтСервера);

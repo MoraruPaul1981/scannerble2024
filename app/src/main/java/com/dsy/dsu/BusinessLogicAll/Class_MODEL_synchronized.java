@@ -3113,7 +3113,6 @@ Class_GRUD_SQL_Operations classGrudSqlOperationsУдалениеДанныхЧе
                                                   @NonNull String ЗаданиеЗагрузки,
                                                   @NonNull String ИмяФайлаЗагрузки ,
                                                   @NonNull String ВозвращяемыйТип,
-                                                  @NonNull  Integer ВремяНАReadFile,
                                                   @NonNull SSLSocketFactory getsslSocketFactory2) {
         // TODO: 24.09.2024
          AtomicReference<File>  getFileAPKandJson=new AtomicReference<>();

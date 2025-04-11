@@ -6,6 +6,7 @@ import android.os.Environment;
 import android.util.Log;
 
 import com.dsy.dsu.Errors.WriteErrorForAll.RecordNewErros;
+import com.google.common.io.ByteStreams;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -35,8 +36,10 @@ public class GetBinessLogicDownloadFiles implements  GetBinessLogicDwonloadFiles
           ПутькФайлу = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS+ File.separator + PatchDeleteJsonAnalitic);
       }
 
-      ПутькФайлу.mkdirs();
-      ПутькФайлу.getParentFile().mkdirs();
+      if (!ПутькФайлу.isDirectory()) {
+          ПутькФайлу.mkdirs();
+          ПутькФайлу.getParentFile().mkdirs();
+      }
       // TODO: 12.02.2025 удаление
       // TODO: 12.02.2025  второе удаление файла самого
 
@@ -47,7 +50,9 @@ public class GetBinessLogicDownloadFiles implements  GetBinessLogicDwonloadFiles
           СамкФайлу = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS+ File.separator + PatchDeleteJsonAnalitic+File.separator + ИмяФайлаЗагрузки);
       }
 
-      СамкФайлу.delete();
+      if (СамкФайлу.exists()) {
+          СамкФайлу.delete();
+      }
       Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
               " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
               " line " + Thread.currentThread().getStackTrace()[2].getLineNumber());
@@ -55,8 +60,10 @@ public class GetBinessLogicDownloadFiles implements  GetBinessLogicDwonloadFiles
 
 
         getNewFile=new File(String.valueOf(СамкФайлу)) ;
+      getNewFile.setReadable(true);
       getNewFile.setWritable(true);
       getNewFile.setExecutable(true);
+      getNewFile.getParentFile().mkdirs();
 
       // TODO: 24.09.2024
       Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
@@ -71,7 +78,7 @@ public class GetBinessLogicDownloadFiles implements  GetBinessLogicDwonloadFiles
           {
               // Not sure where to go here
 
-              byte[] buffer = new byte[2048];
+       /*       byte[] buffer = new byte[2048];
               ByteArrayOutputStream out = new ByteArrayOutputStream();
               int len;
               while ((len = gzipper.read(buffer)) > 0) {
@@ -80,8 +87,14 @@ public class GetBinessLogicDownloadFiles implements  GetBinessLogicDwonloadFiles
 
               gzipper.close();
               out.flush();
-              out.close();
+              out.close();*/
               //out.toByteArray();
+              ByteArrayOutputStream out = new ByteArrayOutputStream(2048);
+             ByteStreams.copy(gzipper , out);
+
+              gzipper.close();
+              out.flush();
+              out.close();
 
               try (FileOutputStream outputStream = new FileOutputStream(getNewFile)) {
                   outputStream.write(out.toByteArray());
