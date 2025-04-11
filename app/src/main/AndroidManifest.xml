@@ -422,7 +422,7 @@
             android:grantUriPermissions="true"
             android:label="Союз-Автодор"
             android:requestLegacyExternalStorage="true"
-            android:launchMode="singleInstance"
+            android:launchMode="singleTop"
             android:excludeFromRecents="true"
             android:clearTaskOnLaunch="true"
             android:showOnLockScreen="true"

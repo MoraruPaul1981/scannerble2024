@@ -26,7 +26,7 @@ private Activity activity;
         try {
             Intent Интент_ЗапускаетDashboard=new Intent();
             Интент_ЗапускаетDashboard.setClass(activity, MainActivity_Dashboard.class);
-            Интент_ЗапускаетDashboard.setFlags(  Intent.FLAG_ACTIVITY_SINGLE_TOP|Intent.FLAG_ACTIVITY_CLEAR_TOP);
+             Интент_ЗапускаетDashboard.setFlags(  Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_CLEAR_TOP);
             Bundle bundle=new Bundle();
             Интент_ЗапускаетDashboard.putExtras(bundle);
             Интент_ЗапускаетDashboard.  addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);

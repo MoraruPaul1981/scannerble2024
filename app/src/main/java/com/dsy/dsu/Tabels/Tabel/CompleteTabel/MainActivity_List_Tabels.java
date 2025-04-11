@@ -281,7 +281,7 @@ public class MainActivity_List_Tabels extends AppCompatActivity  {
                     Log.d(this.getClass().getName(), " кликнем для созданни новго сотрдника при нажатии  ");
                     ///todo код которыц возврящет предыдущий актвитики кнопка back
                     Intent Интент_ЗапускаетDashboard = new Intent();
-                    Интент_ЗапускаетDashboard.setFlags(  Intent.FLAG_ACTIVITY_SINGLE_TOP);
+                    Интент_ЗапускаетDashboard.setFlags(  Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_CLEAR_TOP);
                     Интент_ЗапускаетDashboard.setAction("MainActivity_Dashboard.class");
                     Интент_ЗапускаетDashboard.  addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
                     Интент_ЗапускаетDashboard.  addFlags(Intent.FLAG_GRANT_WRITE_URI_PERMISSION);

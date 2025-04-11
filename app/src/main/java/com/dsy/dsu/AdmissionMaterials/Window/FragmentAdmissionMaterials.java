@@ -540,9 +540,9 @@ public class FragmentAdmissionMaterials extends Fragment {
                         МетодЗапускаАнимацииКнопок(v);//todo только анимауия
                         Intent Интент_BackВозвращаемАктивти = getActivity().getIntent();
                         Интент_BackВозвращаемАктивти.setClass(getContext(), MainActivity_Dashboard.class); // Т
+                        Интент_BackВозвращаемАктивти.setFlags(  Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_CLEAR_TOP);
                         Интент_BackВозвращаемАктивти.  addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
                         Интент_BackВозвращаемАктивти.  addFlags(Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
-                        Интент_BackВозвращаемАктивти.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
                         Bundle gameData = new Bundle();
                         gameData.putString("ФлагСтатусИзФрагментаСканирования", "ЗакрываетИзСканирования");
                         gameData.putBinder("binder", binderДляПолучениеМатериалов);
