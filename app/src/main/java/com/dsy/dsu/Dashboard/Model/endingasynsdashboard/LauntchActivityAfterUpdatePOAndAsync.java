@@ -23,7 +23,7 @@ public class LauntchActivityAfterUpdatePOAndAsync {
 
             Intent Интент_ЗапускаетDashboard=new Intent();
             Интент_ЗапускаетDashboard.setClass(context, MainActivity_Dashboard.class);
-            Интент_ЗапускаетDashboard.setFlags( Intent.FLAG_ACTIVITY_CLEAR_TOP |Intent.FLAG_ACTIVITY_SINGLE_TOP);
+            Интент_ЗапускаетDashboard.setFlags( Intent.FLAG_ACTIVITY_NEW_TASK |Intent.FLAG_ACTIVITY_SINGLE_TOP);
             Bundle bundle=new Bundle();
             Интент_ЗапускаетDashboard.putExtras(bundle);
             Интент_ЗапускаетDashboard.  addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
@@ -54,7 +54,7 @@ public class LauntchActivityAfterUpdatePOAndAsync {
         try{
             Intent Интент_ЗапускаетPasswords=new Intent();
             Интент_ЗапускаетPasswords.setClass(context, MainActivityPasswords.class);
-            Интент_ЗапускаетPasswords.setFlags( Intent.FLAG_ACTIVITY_CLEAR_TOP |Intent.FLAG_ACTIVITY_SINGLE_TOP);
+            Интент_ЗапускаетPasswords.setFlags( Intent.FLAG_ACTIVITY_NEW_TASK |Intent.FLAG_ACTIVITY_SINGLE_TOP);
             Bundle bundle=new Bundle();
             Интент_ЗапускаетPasswords.putExtras(bundle);
             Интент_ЗапускаетPasswords.  addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);

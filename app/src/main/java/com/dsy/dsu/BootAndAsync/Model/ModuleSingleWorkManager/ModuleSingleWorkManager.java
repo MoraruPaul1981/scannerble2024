@@ -8,11 +8,24 @@ import com.dsy.dsu.WorkManagers.binesslogic.CreateSingleWorkManager;
 
 import java.util.Date;
 
+import javax.inject.Inject;
+import javax.inject.Named;
+
+import dagger.Module;
+import dagger.hilt.InstallIn;
+import dagger.hilt.android.qualifiers.ApplicationContext;
+import dagger.hilt.components.SingletonComponent;
+
+
+@Module
+@InstallIn(SingletonComponent.class)
+@Named
 public class ModuleSingleWorkManager {
 
     Context context;
 
-    public ModuleSingleWorkManager(Context context) {
+    public  @Inject ModuleSingleWorkManager(@ApplicationContext Context context) {
+
         this.context = context;
     }
 

@@ -16,8 +16,10 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentContainerView;
 import androidx.fragment.app.FragmentManager;
 
-import com.dsy.dsu.BootAndAsync.ViewModelBoot.View.Componets.GetComponentActivityBootService;
-import com.dsy.dsu.BootAndAsync.ViewModelBoot.Model.DowloadUpdatePO.DownLoadPO;
+import com.dsy.dsu.BootAndAsync.Model.DowloadUpdatePO.DownLoadPO;
+
+
+import com.dsy.dsu.BootAndAsync.View.ComponetsUI.GetComponentActivityBootService;
 import com.dsy.dsu.BootAndAsync.ViewModelBoot.Model.EventsBus.MessageEvensBusNetworkStatuses;
 import com.dsy.dsu.BootAndAsync.ViewModelBoot.Model.EventsBus.MessageEvensBusUpdatePO;
 import com.dsy.dsu.BroadcastRecievers.Bl.RegisterBroadcastForWorkManager;

@@ -1,4 +1,4 @@
-package com.dsy.dsu.BootAndAsync.ViewModelBoot.Model.DowloadUpdatePO;
+package com.dsy.dsu.BootAndAsync.Model.DowloadUpdatePO;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
@@ -22,7 +22,8 @@ import androidx.annotation.UiThread;
 import androidx.appcompat.app.AlertDialog;
 import androidx.core.content.FileProvider;
 
-import com.dsy.dsu.BootAndAsync.ViewModelBoot.Model.DowloadUpdatePO.DeletingFiles.GetDeletingFilesJsonAndApk;
+
+import com.dsy.dsu.BootAndAsync.Model.DowloadUpdatePO.DeletingFiles.GetDeletingFilesJsonAndApk;
 import com.dsy.dsu.BusinessLogicAll.Class_MODEL_synchronized;
 import com.dsy.dsu.CnangeServers.PUBLIC_CONTENT;
 import com.dsy.dsu.Errors.WriteErrorForAll.RecordNewErros;

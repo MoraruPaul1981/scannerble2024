@@ -31,8 +31,8 @@ import androidx.appcompat.app.AppCompatActivity;
 
 
 import com.dsy.dsu.AllDatabases.SQLTE.GetSQLiteDatabase;
+import com.dsy.dsu.BootAndAsync.View.MainActivityBootAndAsync;
 import com.dsy.dsu.BootAndAsync.ViewModelBoot.Model.EventsBus.MessageEvensBusNetworkStatuses;
-import com.dsy.dsu.BootAndAsync.ViewModelBoot.View.MainActivityBootAndAsync;
 import com.dsy.dsu.BusinessLogicAll.Class_Clears_Tables;
 import com.dsy.dsu.BusinessLogicAll.Class_Connections_Server;
 
@@ -422,19 +422,18 @@ public class MainActivityPasswords extends AppCompatActivity {
     }
 
 
-    private void методВходВFaceApp(@NonNull Integer PublicID) {
+    private void exitForActivityPassword(@NonNull Integer PublicID) {
         try {
             // TODO: 01.12.2022 записываем режим синъронизации
                 Intent IntentStartFaceApp = new Intent();
                 IntentStartFaceApp.putExtra("ID", PublicID);
                 IntentStartFaceApp.putExtra("ПубличноеИмяПользовательДлСервлета", ПубличноеЛогин);
                 IntentStartFaceApp.putExtra("ПубличноеПарольДлСервлета", ПубличноеПароль);
-                IntentStartFaceApp.setClass(getApplication(), MainActivityBootAndAsync.class);
-                IntentStartFaceApp.setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY | Intent.FLAG_ACTIVITY_NEW_TASK);
-
+                IntentStartFaceApp.setClass(getApplicationContext(), MainActivityBootAndAsync.class);
+                IntentStartFaceApp.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(IntentStartFaceApp);
-                finishAffinity();
-
+               // TODO: 11.04.2025 exit
+               finishAffinity();
             Log.d(getApplicationContext().getClass().getName(), "\n"
                     + " время: " + new Date()+"\n+" +
                     " Класс в процессе... " +  this.getClass().getName()+"\n"+
@@ -760,7 +759,7 @@ public class MainActivityPasswords extends AppCompatActivity {
 
                      методЗаписываемПубличныйID(PublicID);
 
-                     методВходВFaceApp(PublicID);
+                     exitForActivityPassword(PublicID);
                  }
 
              }else {

@@ -1,4 +1,4 @@
-package com.dsy.dsu.BootAndAsync.ViewModelBoot.View;
+package com.dsy.dsu.BootAndAsync.View;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
@@ -15,16 +15,14 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.FragmentManager;
 import androidx.lifecycle.LifecycleOwner;
-import androidx.lifecycle.LiveData;
-import androidx.lifecycle.Observer;
-import androidx.lifecycle.ViewModelProvider;
 
-import com.dsy.dsu.BootAndAsync.ViewModelBoot.View.Componets.GetComponentActivityBootService;
+
+import com.dsy.dsu.BootAndAsync.Model.ModuleSingleWorkManager.ModuleSingleWorkManager;
+import com.dsy.dsu.BootAndAsync.View.ComponetsUI.GetComponentActivityBootService;
 import com.dsy.dsu.BootAndAsync.ViewModelBoot.View.Componets.GetComponentPrograssbar;
 import com.dsy.dsu.BootAndAsync.ViewModelBoot.Model.EventsBus.MessageEvensBusNetworkStatuses;
 import com.dsy.dsu.BootAndAsync.ViewModelBoot.Model.EventsBus.MessageEvensBusPrograssBar;
 import com.dsy.dsu.BootAndAsync.ViewModelBoot.Model.EventsBus.MessageEvensBusUpdatePO;
-import com.dsy.dsu.BootAndAsync.ViewModelBoot.ViewModel.ViewModel;
 
 import com.dsy.dsu.BusinessLogicAll.Permissions.GrandPermissions;
 import com.dsy.dsu.CoreApp.Model.BunessLogicCoreApp;
@@ -67,8 +65,12 @@ public class MainActivityBootAndAsync extends AppCompatActivity {
 
     private ImageView imageView_faceapp_settings;
 
-    private ViewModel getviewModel;
+
    private FragmentManager fragmentManager;
+
+
+   @Inject
+    ModuleSingleWorkManager moduleSingleWorkManager;
 
     @SuppressLint("MissingInflatedId")
     @Override
@@ -108,8 +110,9 @@ public class MainActivityBootAndAsync extends AppCompatActivity {
             new BunessLogicCoreApp(getApplicationContext()).getBunessLogicCoreApp();
 
 
-            registeEventBusFirst();
 
+
+            registeEventBusFirst();
 
 
             blInnerMainActivityBootAndAsync=new GetComponentActivityBootService(getsslSocketFactory2,
@@ -118,17 +121,14 @@ public class MainActivityBootAndAsync extends AppCompatActivity {
 
 
             // TODO: 19.01.2024  запускаем бизнес логики автивити boot and async
-            blInnerMainActivityBootAndAsync.  startBl_inner();
             blInnerMainActivityBootAndAsync .  МетодБоковаяПанельОткрытьЗАкрыть();
-
             blInnerMainActivityBootAndAsync .listerNavigationViewAsyncApp();
-
             blInnerMainActivityBootAndAsync .  workerNavigationViewAsyncApp(fragmentManager);
-
             blInnerMainActivityBootAndAsync .  workerImageViewsettings();
 
-            // TODO: 03.03.2025  call BAck with Data Ot ViewModel
-            getViewModelProvider();
+
+
+
             Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                     " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
                     " line " + Thread.currentThread().getStackTrace()[2].getLineNumber());
@@ -144,7 +144,26 @@ public class MainActivityBootAndAsync extends AppCompatActivity {
     }
 
 
+    @Override
+    protected void onStart() {
+        super.onStart();
+        try {
+            moduleSingleWorkManager.startingSingleWorkManger();;
 
+            Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                    " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                    " line " + Thread.currentThread().getStackTrace()[2].getLineNumber());
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() + " Линия  :"
+                    + Thread.currentThread().getStackTrace()[2].getLineNumber());
+            new RecordNewErros(getApplicationContext()).recordnewerror(e.toString(),
+                    this.getClass().getName(), Thread.currentThread().getStackTrace()[2].getMethodName(),
+                    Thread.currentThread().getStackTrace()[2].getLineNumber());
+        }
+
+    }
 
     @Override
     protected void onRestart() {
@@ -215,46 +234,6 @@ public class MainActivityBootAndAsync extends AppCompatActivity {
 
 
 
-    private void getViewModelProvider() {
-        try {
-            // TODO: 03.03.2025 подключаем Viemodell
-            getviewModel = new ViewModelProvider(this).get(ViewModel.class);
-
-            LiveData liveDataBootService= getviewModel.getWorkInfo();
-
-            if (!liveDataBootService.hasObservers()) {
-                liveDataBootService.observe(getlifecycleOwner, new Observer() {
-                    @Override
-                    public void onChanged(Object getlocalBinderBootSericeViewModel) {
-                        // TODO: 03.03.2025
-
-
-                        Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
-                                " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                                " line " + Thread.currentThread().getStackTrace()[2].getLineNumber());
-                    }
-                });
-                Log.d(getApplicationContext().getClass().getName(), "\n"
-                        + " время: " + new Date() + "\n+" +
-                        " Класс в процессе... " + this.getClass().getName() + "\n" +
-                        " метод в процессе... " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n");
-
-            }
-
-
-            Log.d(getApplicationContext().getClass().getName(), "\n"
-                    + " время: " + new Date() + "\n+" +
-                    " Класс в процессе... " + this.getClass().getName() + "\n" +
-                    " метод в процессе... " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n");
-
-        } catch (Exception e) {
-            e.printStackTrace();
-            Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() + " Линия  :"
-                    + Thread.currentThread().getStackTrace()[2].getLineNumber());
-            new RecordNewErros(getApplicationContext()).recordnewerror(e.toString(), this.getClass().getName(), Thread.currentThread().getStackTrace()[2].getMethodName(),
-                    Thread.currentThread().getStackTrace()[2].getLineNumber());
-        }
-    }
 
 
 

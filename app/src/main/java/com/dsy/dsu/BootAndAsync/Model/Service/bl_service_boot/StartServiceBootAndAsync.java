@@ -1,4 +1,4 @@
-package com.dsy.dsu.BootAndAsync.ViewModelBoot.Model.Service.bl_service_boot;
+package com.dsy.dsu.BootAndAsync.Model.Service.bl_service_boot;
 
 import android.content.Context;
 import android.content.Intent;
@@ -7,7 +7,9 @@ import android.util.Log;
 
 import androidx.core.content.ContextCompat;
 
-import com.dsy.dsu.BootAndAsync.ViewModelBoot.Model.Service.IntentServiceBoot;
+
+import com.dsy.dsu.BootAndAsync.Model.Service.IntentServiceBoot;
+import com.dsy.dsu.BootAndAsync.ViewModelBoot.Model.Service.bl_service_boot.QualifierEventAsyncOrUpdatePOUsers;
 import com.dsy.dsu.Errors.WriteErrorForAll.RecordNewErros;
 
 import javax.inject.Inject;

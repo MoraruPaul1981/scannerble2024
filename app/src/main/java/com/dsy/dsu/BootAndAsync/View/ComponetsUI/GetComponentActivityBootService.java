@@ -1,4 +1,4 @@
-package com.dsy.dsu.BootAndAsync.ViewModelBoot.View.Componets;
+package com.dsy.dsu.BootAndAsync.View.ComponetsUI;
 
 import android.app.Activity;
 import android.content.ComponentName;
@@ -24,8 +24,10 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.FragmentManager;
 import androidx.lifecycle.LifecycleOwner;
 
-import com.dsy.dsu.BootAndAsync.ViewModelBoot.Model.Service.bl_service_boot.StartServiceBootAndAsync;
-import com.dsy.dsu.BootAndAsync.ViewModelBoot.Model.DowloadUpdatePO.DownLoadPO;
+import com.dsy.dsu.BootAndAsync.Model.DowloadUpdatePO.DownLoadPO;
+
+
+import com.dsy.dsu.BootAndAsync.Model.Service.bl_service_boot.StartServiceBootAndAsync;
 import com.dsy.dsu.BootAndAsync.ViewModelBoot.Model.EventsBus.MessageEvensBusNetworkStatuses;
 import com.dsy.dsu.BootAndAsync.ViewModelBoot.Model.EventsBus.MessageEvensBusUpdatePO;
 
@@ -288,24 +290,6 @@ public class GetComponentActivityBootService {
 
 
 
-      public void startBl_inner(){
-
-        try{
-
-
-
-            Log.d(context.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
-                    " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                    " line " + Thread.currentThread().getStackTrace()[2].getLineNumber());
-        } catch (Exception e) {
-            e.printStackTrace();
-            Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() + " Линия  :"
-                    + Thread.currentThread().getStackTrace()[2].getLineNumber());
-            new RecordNewErros(context).recordnewerror(e.toString(),
-                    this.getClass().getName(), Thread.currentThread().getStackTrace()[2].getMethodName(),
-                    Thread.currentThread().getStackTrace()[2].getLineNumber());
-        }
-    }
 
 
 

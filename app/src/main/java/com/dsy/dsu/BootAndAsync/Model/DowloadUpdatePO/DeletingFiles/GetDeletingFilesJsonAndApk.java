@@ -1,15 +1,16 @@
-package com.dsy.dsu.BootAndAsync.ViewModelBoot.Model.DowloadUpdatePO.DeletingFiles;
+package com.dsy.dsu.BootAndAsync.Model.DowloadUpdatePO.DeletingFiles;
 
 import android.content.Context;
 import android.os.Build;
 import android.os.Environment;
 import android.util.Log;
 
+import com.dsy.dsu.BootAndAsync.Model.DowloadUpdatePO.DeletingFiles.InDeletingFile;
 import com.dsy.dsu.Errors.WriteErrorForAll.RecordNewErros;
 
 import java.io.File;
 
-public class GetDeletingFilesJsonAndApk   implements  InDeletingFile {
+public class GetDeletingFilesJsonAndApk   implements InDeletingFile {
 
 Context context;
 

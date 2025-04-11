@@ -38,41 +38,4 @@ public class ViewModel extends AndroidViewModel {
 
 
 
-
-    public LiveData getWorkInfo() {
-        try{
-            mutableLiveData = new MutableLiveData<WorkInfo>();
-
-            ModuleSingleWorkManager moduleSingleWorkManager =new ModuleSingleWorkManager(context);
-
-            moduleSingleWorkManager.startingSingleWorkManger();
-
-            mutableLiveData.postValue("startingSingleWorker");
-
-            Log.d(context.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
-                    " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                    " line " + Thread.currentThread().getStackTrace()[2].getLineNumber());
-
-        } catch (Exception e) {
-            e.printStackTrace();
-            Log.e(context.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() + " Линия  :"
-                    + Thread.currentThread().getStackTrace()[2].getLineNumber());
-            new RecordNewErros(getApplication().getApplicationContext()).recordnewerror(e.toString(),
-                    this.getClass().getName(), Thread.currentThread().getStackTrace()[2].getMethodName(),
-                    Thread.currentThread().getStackTrace()[2].getLineNumber());
-        }
-        return mutableLiveData;
-    }
-
-
-
-
-
-
-
-
-
-
-
-
 }

@@ -1,4 +1,4 @@
-package com.dsy.dsu.BootAndAsync.ViewModelBoot.Model.Service.bl_service_boot;
+package com.dsy.dsu.BootAndAsync.Model.Service.bl_service_boot;
 
 import android.annotation.SuppressLint;
 import android.content.ComponentName;

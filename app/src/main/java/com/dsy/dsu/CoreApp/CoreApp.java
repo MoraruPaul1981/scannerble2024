@@ -6,7 +6,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 
 
-import com.dsy.dsu.BootAndAsync.ViewModelBoot.Model.Service.bl_service_boot.BinessLogicIntentServiceBoot;
+import com.dsy.dsu.BootAndAsync.Model.Service.bl_service_boot.BinessLogicIntentServiceBoot;
 import com.dsy.dsu.BusinessLogicAll.DeviceName.hilt.QualifiergetDeviceName;
 import com.dsy.dsu.BusinessLogicAll.DeviceName.hilt.QualifiergetDeviceVersionBack;
 import com.dsy.dsu.Errors.WriteErrorForAll.RecordNewErros;
