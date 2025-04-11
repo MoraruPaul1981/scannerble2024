@@ -1,4 +1,4 @@
-package com.dsy.dsu.BootAndAsync.BlBootAsync;
+package com.dsy.dsu.BootAndAsync.ViewModelBoot.Model.Service.bl_service_boot;
 
 import android.annotation.SuppressLint;
 import android.content.ComponentName;
@@ -12,8 +12,9 @@ import android.util.Log;
 
 import androidx.annotation.NonNull;
 
-import com.dsy.dsu.BootAndAsync.EventsBus.MessageEvensBusNetworkStatuses;
-import com.dsy.dsu.BootAndAsync.EventsBus.MessageEvensBusUpdatePO;
+import com.dsy.dsu.BootAndAsync.ViewModelBoot.Model.DowloadUpdatePO.CallBackBusUpdatePO;
+import com.dsy.dsu.BootAndAsync.ViewModelBoot.Model.EventsBus.MessageEvensBusNetworkStatuses;
+import com.dsy.dsu.BootAndAsync.ViewModelBoot.Model.EventsBus.MessageEvensBusUpdatePO;
 import com.dsy.dsu.BusinessLogicAll.AnalysisUserAuthenticated.GetAnalysisUserAuthenticated;
 import com.dsy.dsu.BusinessLogicAll.Class_Connections_Server;
 import com.dsy.dsu.Dashboard.Model.endingasynsdashboard.LauntchActivityAfterUpdatePOAndAsync;

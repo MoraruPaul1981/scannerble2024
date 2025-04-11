@@ -5,7 +5,7 @@ import android.content.Intent;
 import android.net.Uri;
 import android.util.Log;
 
-import com.dsy.dsu.BootAndAsync.Service.IntentServiceBoot;
+import com.dsy.dsu.BootAndAsync.ViewModelBoot.Model.Service.IntentServiceBoot;
 import com.dsy.dsu.BusinessLogicAll.GetConnectivityManagerAndroid;
 import com.dsy.dsu.Errors.WriteErrorForAll.RecordNewErros;
 import com.dsy.dsu.Hilt.JbossAdrress.getHiltPortJbossInterface;

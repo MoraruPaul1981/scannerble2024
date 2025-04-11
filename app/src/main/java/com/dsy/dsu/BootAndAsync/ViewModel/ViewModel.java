@@ -1,4 +1,4 @@
-package com.dsy.dsu.BootAndAsync.ViewModelBoot.ViewModel;
+package com.dsy.dsu.BootAndAsync.ViewModel;
 
 import android.app.Application;
 import android.content.Context;
@@ -10,7 +10,7 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.work.WorkInfo;
 
-import com.dsy.dsu.BootAndAsync.ViewModelBoot.Model.ModelBootService;
+import com.dsy.dsu.BootAndAsync.Model.ModuleSingleWorkManager.ModuleSingleWorkManager;
 import com.dsy.dsu.Errors.WriteErrorForAll.RecordNewErros;
 
 import javax.inject.Inject;
@@ -43,9 +43,9 @@ public class ViewModel extends AndroidViewModel {
         try{
             mutableLiveData = new MutableLiveData<WorkInfo>();
 
-            ModelBootService modelBootService=new ModelBootService(context);
+            ModuleSingleWorkManager moduleSingleWorkManager =new ModuleSingleWorkManager(context);
 
-            modelBootService.startingSingleWorkManger();
+            moduleSingleWorkManager.startingSingleWorkManger();
 
             mutableLiveData.postValue("startingSingleWorker");
 

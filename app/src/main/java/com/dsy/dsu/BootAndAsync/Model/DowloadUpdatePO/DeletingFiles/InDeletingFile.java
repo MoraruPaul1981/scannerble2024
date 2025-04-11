@@ -1,4 +1,4 @@
-package com.dsy.dsu.BootAndAsync.BlBootAsync.DeletingFiles;
+package com.dsy.dsu.BootAndAsync.ViewModelBoot.Model.DowloadUpdatePO.DeletingFiles;
 
 import androidx.annotation.NonNull;
 

@@ -1,4 +1,4 @@
-package com.dsy.dsu.BootAndAsync.Componets;
+package com.dsy.dsu.BootAndAsync.ViewModelBoot.View.Componets;
 
 import android.app.Activity;
 import android.content.ComponentName;
@@ -24,10 +24,10 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.FragmentManager;
 import androidx.lifecycle.LifecycleOwner;
 
-import com.dsy.dsu.BootAndAsync.BlBootAsync.Hilts.ServiceBootBinessLogic;
-import com.dsy.dsu.BootAndAsync.DowloadUpdatePO.DownLoadPO;
-import com.dsy.dsu.BootAndAsync.EventsBus.MessageEvensBusNetworkStatuses;
-import com.dsy.dsu.BootAndAsync.EventsBus.MessageEvensBusUpdatePO;
+import com.dsy.dsu.BootAndAsync.ViewModelBoot.Model.Service.bl_service_boot.StartServiceBootAndAsync;
+import com.dsy.dsu.BootAndAsync.ViewModelBoot.Model.DowloadUpdatePO.DownLoadPO;
+import com.dsy.dsu.BootAndAsync.ViewModelBoot.Model.EventsBus.MessageEvensBusNetworkStatuses;
+import com.dsy.dsu.BootAndAsync.ViewModelBoot.Model.EventsBus.MessageEvensBusUpdatePO;
 
 import com.dsy.dsu.CallNavigarlaout.CallNavigarlaout;
 import com.dsy.dsu.Errors.WriteErrorForAll.RecordNewErros;
@@ -418,7 +418,7 @@ public class GetComponentActivityBootService {
                                 item.setChecked(true);
                                 try {
 // TODO: 10.07.2023  запуск обновление ПО
-                                    new ServiceBootBinessLogic(context).startServiceBootAndAsync("lanchUpdatePO");
+                                    new StartServiceBootAndAsync(context).startServiceBootAndAsync("lanchUpdatePO");
 
                                     Log.d(context.getClass().getName(), "\n"
                                             + " время: " + new Date() + "\n+" +

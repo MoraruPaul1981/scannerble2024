@@ -1,4 +1,4 @@
-package com.dsy.dsu.BootAndAsync.BlBootAsync;
+package com.dsy.dsu.BootAndAsync.ViewModelBoot.Model.DowloadUpdatePO;
 
 import android.content.Context;
 import android.util.Log;

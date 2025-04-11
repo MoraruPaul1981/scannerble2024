@@ -1,4 +1,4 @@
-package com.dsy.dsu.BootAndAsync.Service;
+package com.dsy.dsu.BootAndAsync.ViewModelBoot.Model.Service;
 
 import android.annotation.SuppressLint;
 import android.app.IntentService;
@@ -17,7 +17,7 @@ import androidx.annotation.Nullable;
 import androidx.core.app.NotificationCompat;
 import androidx.core.app.ServiceCompat;
 
-import com.dsy.dsu.BootAndAsync.BlBootAsync.BinessLogicIntentServiceBoot;
+import com.dsy.dsu.BootAndAsync.ViewModelBoot.Model.Service.bl_service_boot.BinessLogicIntentServiceBoot;
 import com.dsy.dsu.BusinessLogicAll.AnalysisUserAuthenticated.GetAnalysisUserAuthenticated;
 import com.dsy.dsu.Errors.WriteErrorForAll.RecordNewErros;
 import com.dsy.dsu.Hilt.JbossAdrress.qualifiers.QualifierJbossServer3;

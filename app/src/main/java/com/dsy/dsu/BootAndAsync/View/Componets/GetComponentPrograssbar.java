@@ -1,4 +1,4 @@
-package com.dsy.dsu.BootAndAsync.Componets;
+package com.dsy.dsu.BootAndAsync.ViewModelBoot.View.Componets;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
@@ -12,7 +12,7 @@ import android.widget.ProgressBar;
 import androidx.annotation.MainThread;
 import androidx.annotation.NonNull;
 
-import com.dsy.dsu.BootAndAsync.EventsBus.MessageEvensBusPrograssBar;
+import com.dsy.dsu.BootAndAsync.ViewModelBoot.Model.EventsBus.MessageEvensBusPrograssBar;
 import com.dsy.dsu.Errors.WriteErrorForAll.RecordNewErros;
 
 import java.util.Optional;

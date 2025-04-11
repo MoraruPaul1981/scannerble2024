@@ -33,10 +33,10 @@ import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.LifecycleOwner;
 import androidx.multidex.BuildConfig;
 
-import com.dsy.dsu.BootAndAsync.BlBootAsync.Hilts.ServiceBootBinessLogic;
+import com.dsy.dsu.BootAndAsync.ViewModelBoot.Model.Service.bl_service_boot.StartServiceBootAndAsync;
 
-import com.dsy.dsu.BootAndAsync.Componets.GetComponentActivityBootService;
-import com.dsy.dsu.BootAndAsync.EventsBus.MessageEvensBusUpdatePO;
+import com.dsy.dsu.BootAndAsync.ViewModelBoot.View.Componets.GetComponentActivityBootService;
+import com.dsy.dsu.BootAndAsync.ViewModelBoot.Model.EventsBus.MessageEvensBusUpdatePO;
 import com.dsy.dsu.BusinessLogicAll.Class_Clears_Tables;
 import com.dsy.dsu.BusinessLogicAll.Class_Connections_Server;
 import com.dsy.dsu.Dashboard.Model.bl_launchFragmentSettingsandDashbord.LaunchActivityDashboard;
@@ -109,7 +109,7 @@ public class DashboardFragmentSettings extends  DialogFragment {
 
     GetComponentActivityBootService blInnerMainActivityBootAndAsync;
     @Inject
-    ServiceBootBinessLogic serviceBootBinessLogic;
+    StartServiceBootAndAsync startServiceBootAndAsync;
 
 
     @Inject
@@ -646,7 +646,7 @@ public class DashboardFragmentSettings extends  DialogFragment {
                             });
 
                             // TODO: 10.07.2023  запуск Синхрониаию
-                            serviceBootBinessLogic.startServiceBootAndAsync("lanchAsync");
+                            startServiceBootAndAsync.startServiceBootAndAsync("lanchAsync");
                             // TODO: 26.06.2022
                             Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                                     " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
@@ -871,7 +871,7 @@ public class DashboardFragmentSettings extends  DialogFragment {
 // TODO: 10.07.2023  запуск обновление ПО
 
 // TODO: 10.07.2023  запуск обновление ПО
-                               serviceBootBinessLogic.startServiceBootAndAsync("lanchUpdatePO");
+                               startServiceBootAndAsync.startServiceBootAndAsync("lanchUpdatePO");
 
                                Log.i(this.getClass().getName(), " Из меню установкаОбновление ПО "
                                        + Thread.currentThread().getStackTrace()[2].getMethodName()

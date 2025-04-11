@@ -12,7 +12,7 @@ import androidx.annotation.NonNull;
 import androidx.work.Worker;
 import androidx.work.WorkerParameters;
 
-import com.dsy.dsu.BootAndAsync.Service.IntentServiceBoot;
+import com.dsy.dsu.BootAndAsync.ViewModelBoot.Model.Service.IntentServiceBoot;
 import com.dsy.dsu.Errors.WriteErrorForAll.RecordNewErros;
 import com.dsy.dsu.WorkManagers.binesslogic.GetWorker;
 

@@ -1,4 +1,4 @@
-package com.dsy.dsu.BootAndAsync.BlBootAsync.Hilts;
+package com.dsy.dsu.BootAndAsync.ViewModelBoot.Model.Service.bl_service_boot;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;

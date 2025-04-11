@@ -1,4 +1,4 @@
-package com.dsy.dsu.BootAndAsync.ViewModelBoot.Model;
+package com.dsy.dsu.BootAndAsync.Model.ModuleSingleWorkManager;
 
 import android.content.Context;
 import android.util.Log;
@@ -8,11 +8,11 @@ import com.dsy.dsu.WorkManagers.binesslogic.CreateSingleWorkManager;
 
 import java.util.Date;
 
-public class ModelBootService {
+public class ModuleSingleWorkManager {
 
     Context context;
 
-    public ModelBootService(Context context) {
+    public ModuleSingleWorkManager(Context context) {
         this.context = context;
     }
 

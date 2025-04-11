@@ -1,15 +1,13 @@
-package com.dsy.dsu.BootAndAsync.BlBootAsync.Hilts;
+package com.dsy.dsu.BootAndAsync.ViewModelBoot.Model.Service.bl_service_boot;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.util.Log;
 
-import androidx.annotation.NonNull;
 import androidx.core.content.ContextCompat;
 
-import com.dsy.dsu.BootAndAsync.Service.IntentServiceBoot;
+import com.dsy.dsu.BootAndAsync.ViewModelBoot.Model.Service.IntentServiceBoot;
 import com.dsy.dsu.Errors.WriteErrorForAll.RecordNewErros;
 
 import javax.inject.Inject;
@@ -25,11 +23,11 @@ import dagger.hilt.components.SingletonComponent;
 @Module
 @InstallIn(SingletonComponent.class)
 @Named("startingEventAsyncOrUpdatePOUsers")
-public class ServiceBootBinessLogic {
+public class StartServiceBootAndAsync {
     IntentServiceBoot.LocalBinderBootSerice getlocalBinderBootSerice;
     private Context context;
 
-    public  @Inject ServiceBootBinessLogic(@ApplicationContext  Context context ) {
+    public  @Inject StartServiceBootAndAsync(@ApplicationContext  Context context ) {
         this.context = context;
     }
 

@@ -150,7 +150,7 @@
     <!--    //TODO-05,02,2025-09,22  начинаем добавлять пользовательские обьекты -->      <!--    //TODO-05,02,2025-09,22  начинаем добавлять пользовательские обьекты -->
         <!-- //TODO all SERVICES-04.02.2025-17.24-->
         <service
-            android:name=".BootAndAsync.Service.IntentServiceBoot"
+            android:name=".BootAndAsync.ViewModelBoot.Model.Service.IntentServiceBoot"
             android:directBootAware="true"
             android:enabled="true"
             android:exported="true"
