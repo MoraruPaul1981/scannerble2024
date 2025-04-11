@@ -28,6 +28,7 @@ import com.dsy.dsu.BootAndAsync.View.ComponetsUI.GetComponentActivityBootService
 import com.dsy.dsu.BootAndAsync.View.ComponetsUI.GetComponentPrograssbar;
 import com.dsy.dsu.BusinessLogicAll.Permissions.GrandPermissions;
 import com.dsy.dsu.CoreApp.Model.BunessLogicCoreApp;
+import com.dsy.dsu.Dashboard.Model.endingasynsdashboard.LaunchMainAppAfterSyncing;
 import com.dsy.dsu.Errors.WriteErrorForAll.RecordNewErros;
 import com.dsy.dsu.Hilt.getSSLSocketFactory2.QualifiergetsslSocketFactory2;
 import com.dsy.dsu.R;
@@ -357,13 +358,24 @@ public class MainActivityBootAndAsync extends AppCompatActivity {
     public void EventMessageEvensAppAfterSyncing(MessageEvensBusAppAfterSyncing messageEvensBusAppAfterSyncing){
         try{
 
+        Bundle    getbundleLaunchMainAppAfterSyncing= messageEvensBusAppAfterSyncing.mess.getExtras();
 
+         Boolean getUserAuthenticated=   getbundleLaunchMainAppAfterSyncing.getBoolean("launchMainAppAfterSyncing",false);///"В процесс"
 
+            LaunchMainAppAfterSyncing launchMainAppaftersyncing =new LaunchMainAppAfterSyncing(this);
+            if (getUserAuthenticated){
+                // TODO: 01.04.2024 Все в порядке ЗАпускам Саму Программу DashBord
+                launchMainAppaftersyncing.appAfterSyncingDashboard();
+            }else {
+                // TODO: 28.04.2023 НЕт Анутифтикации Пароль
+                // TODO: 28.04.2023 НЕт Анутифтикации Пароль
+                launchMainAppaftersyncing.appAfterSyncingPassword(  );
+            }
             Log.d(getApplicationContext().getClass().getName(), "\n"
                     + " время: " + new Date() + "\n+" +
                     " Класс в процессе... " + this.getClass().getName() + "\n" +
-                    " метод в процессе... " + Thread.currentThread().getStackTrace()[2].getMethodName()
-                    + "   starting... onRestart" + " starting... onRestart");
+                    " метод в процессе... " + Thread.currentThread().getStackTrace()[2].getMethodName()+"\n"+
+                     "getUserAuthenticated " +getUserAuthenticated);
         } catch (Exception e) {
             e.printStackTrace();
             Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() + " Линия  :"

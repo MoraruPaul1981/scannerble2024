@@ -360,7 +360,7 @@ public class DashboardFragmentMaterialDesign extends  DialogFragment  {
                             ИнтентЗаявкаНаТранспорт.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                             startActivity(ИнтентЗаявкаНаТранспорт);
                             // TODO: 10.03.2025
-                            getActivity().finish();
+
                         } catch (Exception e) {
                             e.printStackTrace();
                             Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() + " Линия  :"
@@ -386,7 +386,7 @@ public class DashboardFragmentMaterialDesign extends  DialogFragment  {
                             intentЗапускСогласования1C.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                             startActivity(intentЗапускСогласования1C);
                             // TODO: 10.03.2025
-                            getActivity().finish();
+
                         } catch (Exception e) {
                             e.printStackTrace();
                             Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() + " Линия  :"
@@ -414,7 +414,7 @@ public class DashboardFragmentMaterialDesign extends  DialogFragment  {
                             ИнтентЗаявкаНаТранспорт.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                             startActivity(ИнтентЗаявкаНаТранспорт);
                             // TODO: 10.03.2025
-                            getActivity().finish();
+
                         } catch (Exception e) {
                             e.printStackTrace();
                             Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() + " Линия  :"
@@ -464,7 +464,7 @@ public class DashboardFragmentMaterialDesign extends  DialogFragment  {
                             intentЗапускСогласования.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                             startActivity(intentЗапускСогласования);
                             // TODO: 10.03.2025
-                            getActivity().finish();
+
                             Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                                     " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
                                     " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n");
@@ -493,7 +493,7 @@ public class DashboardFragmentMaterialDesign extends  DialogFragment  {
                             intentЗапускСогласованиеЦены1С.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                             startActivity(intentЗапускСогласованиеЦены1С);
                             // TODO: 10.03.2025
-                            getActivity().finish();
+
                             Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                                     " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
                                     " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n");

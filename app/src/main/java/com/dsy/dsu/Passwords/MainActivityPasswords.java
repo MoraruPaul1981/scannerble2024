@@ -166,7 +166,7 @@ public class MainActivityPasswords extends AppCompatActivity {
             ПарольДляВходаСистему = (TextInputEditText) findViewById(R.id.ПарольДляВходавПрограмму); ////програссбар при аунтификации при входе в системму
 
 
-            registeEventBusFirst();
+
 
             // TODO: 02.08.2023 БИЗНЕС КОД
             методЗаписываемПервыйЭтапСинхрогниазции();
@@ -212,22 +212,7 @@ public class MainActivityPasswords extends AppCompatActivity {
 
     }
 
-    @Override
-    protected void onStop() {
-        super.onStop();
-        try{
 
-            unregisterEventBusFirst();
-
-    } catch (Exception e) {
-        ПрогрессБарДляВходаСистему.setVisibility(View.INVISIBLE);// при нажатии делаем видимый програсссбар
-        Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
-                " Линия  :" + Thread.currentThread().getStackTrace()[2].getLineNumber());
-        new RecordNewErros(getApplicationContext()).recordnewerror(e.toString(), this.getClass().getName(),
-                Thread.currentThread().getStackTrace()[2].getMethodName(), Thread.currentThread().getStackTrace()[2].getLineNumber());
-    }
-
-    }
 
     @Override
     protected void onStart() {
@@ -235,7 +220,6 @@ public class MainActivityPasswords extends AppCompatActivity {
 
 
         } catch (Exception e) {
-            ПрогрессБарДляВходаСистему.setVisibility(View.INVISIBLE);// при нажатии делаем видимый програсссбар
             Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
                     " Линия  :" + Thread.currentThread().getStackTrace()[2].getLineNumber());
             new RecordNewErros(getApplicationContext()).recordnewerror(e.toString(), this.getClass().getName(),
@@ -430,7 +414,7 @@ public class MainActivityPasswords extends AppCompatActivity {
                 IntentStartFaceApp.putExtra("ПубличноеИмяПользовательДлСервлета", ПубличноеЛогин);
                 IntentStartFaceApp.putExtra("ПубличноеПарольДлСервлета", ПубличноеПароль);
                 IntentStartFaceApp.setClass(getApplicationContext(), MainActivityBootAndAsync.class);
-                IntentStartFaceApp.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                IntentStartFaceApp.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP|Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(IntentStartFaceApp);
                // TODO: 11.04.2025 exit
                finishAffinity();
@@ -781,35 +765,7 @@ public class MainActivityPasswords extends AppCompatActivity {
 
     }
 
-// TODO: 07.10.2023  Class дополнительно проверки камеры и место располежения
 
-
-    // TODO: 23.01.2024 EventBus for Async
-
-
-
-    private void registeEventBusFirst() {
-
-        if (  !EventBus.getDefault().isRegistered(this)) {
-            EventBus.getDefault().register(this);
-        }
-        Log.d(getApplicationContext().getClass().getName(), "\n"
-                + " время: " + new Date() + "\n+" +
-                " Класс в процессе... " + this.getClass().getName() + "\n" +
-                " метод в процессе... " + Thread.currentThread().getStackTrace()[2].getMethodName()
-                + "   starting... onRestart" + " starting... onRestart");
-    }
-
-    private void unregisterEventBusFirst() {
-        if (  EventBus.getDefault().isRegistered(this)) {
-            EventBus.getDefault().unregister(this);
-        }
-        Log.d(getApplicationContext().getClass().getName(), "\n"
-                + " время: " + new Date() + "\n+" +
-                " Класс в процессе... " + this.getClass().getName() + "\n" +
-                " метод в процессе... " + Thread.currentThread().getStackTrace()[2].getMethodName()
-                + "   starting... onRestart" + " starting... onRestart");
-    }
 
     // TODO: 23.01.2024 EventBus for Update PO
 

@@ -397,7 +397,7 @@
             android:exported="true"
             android:grantUriPermissions="true"
             android:label="@string/name_dsu"
-            android:launchMode="singleTask"
+            android:launchMode="singleInstance"
             android:finishOnTaskLaunch="true"
             android:taskAffinity=""
             android:excludeFromRecents="true"
@@ -422,7 +422,8 @@
             android:grantUriPermissions="true"
             android:label="Союз-Автодор"
             android:requestLegacyExternalStorage="true"
-            android:launchMode="singleTask"
+            android:launchMode="singleInstance"
+            android:excludeFromRecents="true"
             android:clearTaskOnLaunch="true"
             android:showOnLockScreen="true"
             android:theme="@style/Theme.MaterialComponents.DayNight.DarkActionBar">

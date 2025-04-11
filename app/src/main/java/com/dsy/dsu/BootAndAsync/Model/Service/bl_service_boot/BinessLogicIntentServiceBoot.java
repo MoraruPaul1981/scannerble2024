@@ -14,6 +14,7 @@ import androidx.annotation.NonNull;
 
 
 import com.dsy.dsu.BootAndAsync.Model.DowloadUpdatePO.CallBackBusUpdatePO;
+import com.dsy.dsu.BootAndAsync.Model.EventsBus.MessageEvensBusAppAfterSyncing;
 import com.dsy.dsu.BootAndAsync.Model.EventsBus.MessageEvensBusNetworkStatuses;
 import com.dsy.dsu.BootAndAsync.Model.EventsBus.MessageEvensBusUpdatePO;
 import com.dsy.dsu.BusinessLogicAll.AnalysisUserAuthenticated.GetAnalysisUserAuthenticated;
@@ -228,20 +229,13 @@ public class BinessLogicIntentServiceBoot {
     public void afterUpdatePOandAsynclaunchActivity(@NonNull Context context) {
         try {
      Boolean UserAuthenticated=       new GetAnalysisUserAuthenticated(context).analysisUserAuthenticated(240);
-
-            LaunchMainAppAfterSyncing launchMainAppaftersyncing =new LaunchMainAppAfterSyncing();
-                if (UserAuthenticated){
-                    // TODO: 01.04.2024 Все в порядке ЗАпускам Саму Программу DashBord
-                    launchMainAppaftersyncing.appAfterSyncingDashboard(context);
-                }else {
-                    // TODO: 28.04.2023 НЕт Анутифтикации Пароль
-                    // TODO: 28.04.2023 НЕт Анутифтикации Пароль
-                    launchMainAppaftersyncing.appAfterSyncingDashboard(  context);
-                }
-
-
-
-
+          Intent intentLaunchMainAppAfterSyncing=new Intent();
+            intentLaunchMainAppAfterSyncing.setAction("LaunchMainAppAfterSyncing");
+            Bundle setbundleLaunchMainAppAfterSyncing=new Bundle();
+            setbundleLaunchMainAppAfterSyncing.putBoolean("launchMainAppAfterSyncing",  UserAuthenticated);///"В процесс"
+            intentLaunchMainAppAfterSyncing.putExtras(setbundleLaunchMainAppAfterSyncing);
+// TODO: 11.04.2025  Запускаем Основное Приложение после как прошда Синхронизация
+            EventBus.getDefault().post(new MessageEvensBusAppAfterSyncing(intentLaunchMainAppAfterSyncing));
 
             // TODO: 28.04.2023
             Log.d(this.getClass().getName(), "\n" + " class " +

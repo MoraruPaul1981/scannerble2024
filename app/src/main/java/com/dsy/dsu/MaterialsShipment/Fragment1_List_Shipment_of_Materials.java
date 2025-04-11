@@ -457,7 +457,7 @@ public class Fragment1_List_Shipment_of_Materials extends Fragment    {
                         Intent Интент_BackВозвращаемАктивти = new Intent();
                         Интент_BackВозвращаемАктивти.setClass(getContext(), MainActivity_Dashboard.class); // Т
                         ////todo запускаем активти
-                        Интент_BackВозвращаемАктивти.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_SINGLE_TOP);
+                        Интент_BackВозвращаемАктивти.setFlags(  Intent.FLAG_ACTIVITY_SINGLE_TOP);
                         Интент_BackВозвращаемАктивти.setAction("MainActivity_Dashboard.class");
                         Интент_BackВозвращаемАктивти.  addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
                         Интент_BackВозвращаемАктивти.  addFlags(Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
