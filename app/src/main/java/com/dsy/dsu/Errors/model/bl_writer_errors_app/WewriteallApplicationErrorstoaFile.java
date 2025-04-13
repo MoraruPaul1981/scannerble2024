@@ -19,6 +19,7 @@ import java.io.BufferedWriter;
 import java.io.File;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
+import java.io.PrintWriter;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Paths;
@@ -42,7 +43,7 @@ public class WewriteallApplicationErrorstoaFile {
    public void    launtchWewriteallApplicationErrorstoaFile(@NonNull ArrayList<String> linkedBlockingQueueВскеОшибкиДляЗаписи) {
         try {
 
-            String СгенерированованныйДатаВремениСейчаcДляУдаления = new Class_Generation_Data(context).ГлавнаяДатаИВремяОперацийСБазойДанных();
+            String GeneratorNewDate = new Class_Generation_Data(context).ГлавнаяДатаИВремяОперацийСБазойДанных();
             String СамаОшибка = null;
             boolean ДлинаСтрокивСпиноре = linkedBlockingQueueВскеОшибкиДляЗаписи.get(0).toString().length() > 40;
             if (ДлинаСтрокивСпиноре) {
@@ -59,66 +60,43 @@ public class WewriteallApplicationErrorstoaFile {
 
                     Uri uriInsertNewError=     FileProvider.getUriForFile(context.getApplicationContext(), "com.dsy.dsu.provider" ,file );
                     ContentResolver contentResolver = context.getContentResolver();
-                    OutputStream outputStreamInsertnewError = contentResolver.openOutputStream(uriInsertNewError);
+                 
+                try(OutputStream outputStreamInsertnewError = contentResolver.openOutputStream(uriInsertNewError);
+                    BufferedWriter  bufferedWriter = new BufferedWriter(new OutputStreamWriter(outputStreamInsertnewError, StandardCharsets.UTF_16));
+                    PrintWriter printWriterWriteError = new PrintWriter(bufferedWriter,true);) {
+                    
+              
 
-                BufferedWriter bufferedWriter = new BufferedWriter(new OutputStreamWriter(outputStreamInsertnewError, StandardCharsets.UTF_16));
+                    printWriterWriteError.println("\n");
+                    printWriterWriteError.println("\n");
+                    printWriterWriteError.println("##### ОШИБКИ ##### "+GeneratorNewDate);
+                    printWriterWriteError.println("\n");
+                    printWriterWriteError.println("Ошибка");
+                    printWriterWriteError.println("\n");
+                    printWriterWriteError.println(СамаОшибка);
+                    printWriterWriteError.println("\n");
+                    printWriterWriteError.println("Класс");
+                    printWriterWriteError.println("\n");
+                    printWriterWriteError.println(linkedBlockingQueueВскеОшибкиДляЗаписи.get(1).toString());
+                    printWriterWriteError.println("\n");
+                    printWriterWriteError.println("Метод");
+                    printWriterWriteError.println("\n");
+                    printWriterWriteError.println(linkedBlockingQueueВскеОшибкиДляЗаписи.get(2).toString());
+                    printWriterWriteError.println("\n");
+                    printWriterWriteError.println("Линия");
+                    printWriterWriteError.println("\n");
+                    printWriterWriteError.println(linkedBlockingQueueВскеОшибкиДляЗаписи.get(3).toString());
+                    // TODO: 13.04.2025
+                    Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                            " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                            " line " + Thread.currentThread().getStackTrace()[2].getLineNumber()  );
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    Log.e(context.getClass().getName(),
+                            "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
+                                    " Линия  :" + Thread.currentThread().getStackTrace()[2].getLineNumber());
+                }
 
-                bufferedWriter.newLine();
-                bufferedWriter.write("\n");
-                bufferedWriter.write("##### ERROR #####");
-                bufferedWriter.write("\n");
-                bufferedWriter.write("\n");
-                bufferedWriter.write("\n");
-                bufferedWriter.write("\n");
-                bufferedWriter.write(СгенерированованныйДатаВремениСейчаcДляУдаления);
-                bufferedWriter.write("\n");
-                bufferedWriter.write("\n");
-                bufferedWriter.write("\n");
-                bufferedWriter.write("\n");
-                bufferedWriter.write("error");
-                bufferedWriter.write("\n");
-                bufferedWriter.write("\n");
-                bufferedWriter.write("\n");
-                bufferedWriter.write("\n");
-                bufferedWriter.write("\n");
-                bufferedWriter.write(СамаОшибка);
-                bufferedWriter.write("\n");
-                bufferedWriter.write("\n");
-                bufferedWriter.write("\n");
-                bufferedWriter.write("\n");
-                bufferedWriter.write("Class");
-                bufferedWriter.write("\n");
-                bufferedWriter.write("\n");
-                bufferedWriter.write("\n");
-                bufferedWriter.write(linkedBlockingQueueВскеОшибкиДляЗаписи.get(1).toString());
-                bufferedWriter.write("\n");
-                bufferedWriter.write("\n");
-                bufferedWriter.write("\n");
-                bufferedWriter.write("\n");
-                bufferedWriter.write("Metod");
-                bufferedWriter.write("\n");
-                bufferedWriter.write("\n");
-                bufferedWriter.write("\n");
-                bufferedWriter.write(linkedBlockingQueueВскеОшибкиДляЗаписи.get(2).toString());
-                bufferedWriter.write("\n");
-                bufferedWriter.write("\n");
-                bufferedWriter.write("\n");
-                bufferedWriter.write("\n");
-                bufferedWriter.write("Line");
-                bufferedWriter.write("\n");
-                bufferedWriter.write("\n");
-                bufferedWriter.write("\n");
-                bufferedWriter.write(linkedBlockingQueueВскеОшибкиДляЗаписи.get(3).toString());
-                bufferedWriter.write("\n");
-                bufferedWriter.write("\n");
-
-
-                bufferedWriter.flush();
-                bufferedWriter.close();
-
-                Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
-                        " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                        " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"+ bufferedWriter.toString() );
             }
 
         Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +

@@ -114,7 +114,10 @@ public class RecordNewErros  implements RecordNewErrorsInterface {
 
 
     @Override
-      public void getWriteNewErrorNotePad(@NonNull String ТекстОшибки, @NonNull String КлассГнерацииОшибки, @NonNull String МетодаОшибки, @NonNull Integer ЛинияОшибки) {
+      public void getWriteNewErrorNotePad(@NonNull String ТекстОшибки,
+                                          @NonNull String КлассГнерацииОшибки,
+                                          @NonNull String МетодаОшибки,
+                                          @NonNull Integer ЛинияОшибки) {
         try{
         ArrayList<String> arrayListОшибкиДляЗаписивФайл = new ArrayList();
         arrayListОшибкиДляЗаписивФайл.add(ТекстОшибки);
@@ -133,7 +136,6 @@ public class RecordNewErros  implements RecordNewErrorsInterface {
                     " arrayListОшибкиДляЗаписивФайл " + arrayListОшибкиДляЗаписивФайл);
     } catch (Exception e) {
         e.printStackTrace();
-        System.err.println("  Ошибка в самом классе записи ошибок нет КОНТЕКСТА RecordNewBackErros");
         Log.e(context.getClass().getName(), "Ошибка в самом классе создание ОШИБКИ (записи новой ошибки) ERROR  inse ERROR" + e
                 + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
                 " Линия  :" + Thread.currentThread().getStackTrace()[2].getLineNumber());
