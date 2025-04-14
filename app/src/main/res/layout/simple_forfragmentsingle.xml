@@ -107,7 +107,7 @@
                         app:cardMaxElevation="2dp"
                         app:strokeWidth="3dp"
                         android:translationZ="50dp"
-                        app:iconTint="#686565"
+                        app:iconTint="@color/colorPrimary"
                         app:rippleColor="#F50057"
                         tools:ignore="SpeakableTextPresentCheck" />
 
