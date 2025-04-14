@@ -66,7 +66,7 @@ public class GettingExistingErrorFromFile  implements GettingExistingErrorsInter
                                        // TODO: 15.01.2025
                                        BufferedReader    BufferedReaderError = new BufferedReader(new InputStreamReader(inputStream, StandardCharsets.UTF_8));){
                         // TODO: 14.04.2025
-                        stringBuffergetFileError= BufferedReaderError.lines().collect(StringBuffer::new, (sb, i) -> sb.append(i), StringBuffer::append);
+                        stringBuffergetFileError= BufferedReaderError.lines().map(m->m+"\n").collect(StringBuffer::new, (sb, i) -> sb.append(i), StringBuffer::append);
                         // TODO: 10.04.2025
                         BufferedReaderError.close();
 
