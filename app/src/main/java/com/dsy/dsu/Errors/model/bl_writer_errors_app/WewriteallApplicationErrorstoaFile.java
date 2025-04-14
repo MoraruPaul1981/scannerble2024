@@ -63,11 +63,21 @@ public class WewriteallApplicationErrorstoaFile {
                  
                 try(OutputStream outputStreamInsertnewError = contentResolver.openOutputStream(uriInsertNewError);
                     BufferedWriter  bufferedWriter = new BufferedWriter(new OutputStreamWriter(outputStreamInsertnewError, StandardCharsets.UTF_16));
-                    PrintWriter printWriterWriteError = new PrintWriter(bufferedWriter,true);) {
-                    
-              
+                    ) {
+                    bufferedWriter.newLine();
+                    bufferedWriter.newLine();
+                    bufferedWriter.write("S"+GeneratorNewDate);
 
-                    printWriterWriteError.println("\n");
+                    bufferedWriter.newLine();
+                    bufferedWriter.write("T");
+
+
+                    bufferedWriter.newLine();
+                    bufferedWriter.write("K");
+                    bufferedWriter.flush();
+                    bufferedWriter.close();
+
+/*                    printWriterWriteError.println("\n");
                     printWriterWriteError.println("\n");
                     printWriterWriteError.println("##### ОШИБКИ ##### "+GeneratorNewDate);
                     printWriterWriteError.println("\n");
@@ -85,7 +95,7 @@ public class WewriteallApplicationErrorstoaFile {
                     printWriterWriteError.println("\n");
                     printWriterWriteError.println("Линия");
                     printWriterWriteError.println("\n");
-                    printWriterWriteError.println(linkedBlockingQueueВскеОшибкиДляЗаписи.get(3).toString());
+                    printWriterWriteError.println(linkedBlockingQueueВскеОшибкиДляЗаписи.get(3).toString());*/
                     // TODO: 13.04.2025
                     Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                             " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
