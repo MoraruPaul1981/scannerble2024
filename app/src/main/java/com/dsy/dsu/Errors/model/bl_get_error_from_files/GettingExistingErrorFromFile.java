@@ -61,15 +61,21 @@ public class GettingExistingErrorFromFile  implements GettingExistingErrorsInter
 
                         Uri uriGetErrors=     FileProvider.getUriForFile(context.getApplicationContext(), "com.dsy.dsu.provider" ,file );
                         ContentResolver contentResolverGetErrors = context.getContentResolver();
-                    InputStream inputStream = contentResolverGetErrors.openInputStream(uriGetErrors);
-                    // TODO: 15.01.2025
-                    BufferedReader     BufferedReaderError = new BufferedReader(new InputStreamReader(inputStream, StandardCharsets.UTF_16));
-                    stringBuffergetFileError= BufferedReaderError.lines().collect(StringBuffer::new, (sb, i) -> sb.append(i), StringBuffer::append);
-                    // TODO: 10.04.2025
-                    inputStream.close();
-                    Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
-                            " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                            " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"  +   " stringBuffergetFileError"+stringBuffergetFileError);
+
+                    try (              InputStream inputStream = contentResolverGetErrors.openInputStream(uriGetErrors);
+                                       // TODO: 15.01.2025
+                                       BufferedReader    BufferedReaderError = new BufferedReader(new InputStreamReader(inputStream, StandardCharsets.UTF_8));){
+                        // TODO: 14.04.2025
+                        stringBuffergetFileError= BufferedReaderError.lines().collect(StringBuffer::new, (sb, i) -> sb.append(i), StringBuffer::append);
+                        // TODO: 10.04.2025
+                        BufferedReaderError.close();
+
+                        Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                                " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                                " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"  +   " stringBuffergetFileError"+stringBuffergetFileError);
+
+                    }
+
 
 
                 }

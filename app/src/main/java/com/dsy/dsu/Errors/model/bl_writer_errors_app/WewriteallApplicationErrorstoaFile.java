@@ -5,6 +5,7 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.net.Uri;
 import android.os.Environment;
+import android.os.ParcelFileDescriptor;
 import android.provider.MediaStore;
 import android.util.Log;
 import android.view.Display;
@@ -17,9 +18,13 @@ import com.dsy.dsu.CallNavigarlaout.CallNavigarlaout;
 
 import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
+import java.io.UnsupportedEncodingException;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Paths;
@@ -58,55 +63,93 @@ public class WewriteallApplicationErrorstoaFile {
                     File.separator + patchFileName +File.separator+fileNameFull+".txt" );
             if (  file.exists()) {
 
-                    Uri uriInsertNewError=     FileProvider.getUriForFile(context.getApplicationContext(), "com.dsy.dsu.provider" ,file );
-                    ContentResolver contentResolver = context.getContentResolver();
-                 
-                try(OutputStream outputStreamInsertnewError = contentResolver.openOutputStream(uriInsertNewError);
-                    BufferedWriter  bufferedWriter = new BufferedWriter(new OutputStreamWriter(outputStreamInsertnewError, StandardCharsets.UTF_16));
-                    ) {
-                    bufferedWriter.newLine();
-                    bufferedWriter.newLine();
-                    bufferedWriter.write("S"+GeneratorNewDate);
-
-                    bufferedWriter.newLine();
-                    bufferedWriter.write("T");
+//                file.delete();
+//                file.setReadable(true);
+//                file.setWritable(true);
+//                file.createNewFile();
 
 
-                    bufferedWriter.newLine();
-                    bufferedWriter.write("K");
-                    bufferedWriter.flush();
-                    bufferedWriter.close();
+                try(FileOutputStream outputStream = new FileOutputStream(file.getAbsoluteFile(), true);
+                        BufferedWriter  bufferedWriterErrors = new BufferedWriter(new OutputStreamWriter(outputStream,
+                                StandardCharsets.UTF_8));) {
 
-/*                    printWriterWriteError.println("\n");
-                    printWriterWriteError.println("\n");
-                    printWriterWriteError.println("##### ОШИБКИ ##### "+GeneratorNewDate);
-                    printWriterWriteError.println("\n");
-                    printWriterWriteError.println("Ошибка");
-                    printWriterWriteError.println("\n");
-                    printWriterWriteError.println(СамаОшибка);
-                    printWriterWriteError.println("\n");
-                    printWriterWriteError.println("Класс");
-                    printWriterWriteError.println("\n");
-                    printWriterWriteError.println(linkedBlockingQueueВскеОшибкиДляЗаписи.get(1).toString());
-                    printWriterWriteError.println("\n");
-                    printWriterWriteError.println("Метод");
-                    printWriterWriteError.println("\n");
-                    printWriterWriteError.println(linkedBlockingQueueВскеОшибкиДляЗаписи.get(2).toString());
-                    printWriterWriteError.println("\n");
-                    printWriterWriteError.println("Линия");
-                    printWriterWriteError.println("\n");
-                    printWriterWriteError.println(linkedBlockingQueueВскеОшибкиДляЗаписи.get(3).toString());*/
-                    // TODO: 13.04.2025
-                    Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
-                            " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                            " line " + Thread.currentThread().getStackTrace()[2].getLineNumber()  );
-                } catch (Exception e) {
-                    e.printStackTrace();
-                    Log.e(context.getClass().getName(),
-                            "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
-                                    " Линия  :" + Thread.currentThread().getStackTrace()[2].getLineNumber());
-                }
 
+
+                    bufferedWriterErrors.newLine();
+                    bufferedWriterErrors.write("\n");
+                    bufferedWriterErrors.write("\n");
+                    bufferedWriterErrors.write("********ОШИБКИ********");
+                    bufferedWriterErrors.newLine();
+                    bufferedWriterErrors.write("\n");
+                    bufferedWriterErrors.write("\n");
+                    bufferedWriterErrors.write("\n");
+                    bufferedWriterErrors.write("\n");
+                    bufferedWriterErrors.write("Время");
+                    bufferedWriterErrors.newLine();
+                    bufferedWriterErrors.write("\n");
+                    bufferedWriterErrors.write("\n");
+                    bufferedWriterErrors.write("\n");
+                    bufferedWriterErrors.write("\n");
+                    bufferedWriterErrors.write(GeneratorNewDate);
+                    bufferedWriterErrors.newLine();
+                    bufferedWriterErrors.write("\n");
+                    bufferedWriterErrors.write("\n");
+                    bufferedWriterErrors.write("\n");
+                    bufferedWriterErrors.write("\n");
+                    bufferedWriterErrors.write("Ошибка");
+                    bufferedWriterErrors.newLine();
+                    bufferedWriterErrors.write("\n");
+                    bufferedWriterErrors.write("\n");
+                    bufferedWriterErrors.write("\n");
+                    bufferedWriterErrors.write("\n");
+                    bufferedWriterErrors.write(СамаОшибка);
+                    bufferedWriterErrors.newLine();
+                    bufferedWriterErrors.write("\n");
+                    bufferedWriterErrors.write("\n");
+                    bufferedWriterErrors.write("\n");
+                    bufferedWriterErrors.write("\n");
+                    bufferedWriterErrors.write("Класс");
+                    bufferedWriterErrors.newLine();
+                    bufferedWriterErrors.write("\n");
+                    bufferedWriterErrors.write("\n");
+                    bufferedWriterErrors.write("\n");
+                    bufferedWriterErrors.write("\n");
+                    bufferedWriterErrors.write(linkedBlockingQueueВскеОшибкиДляЗаписи.get(1).toString());
+                    bufferedWriterErrors.newLine();
+                    bufferedWriterErrors.write("Метод");
+                    bufferedWriterErrors.newLine();
+                    bufferedWriterErrors.write(linkedBlockingQueueВскеОшибкиДляЗаписи.get(2).toString());
+                    bufferedWriterErrors.newLine();
+                    bufferedWriterErrors.write("\n");
+                    bufferedWriterErrors.write("\n");
+                    bufferedWriterErrors.write("\n");
+                    bufferedWriterErrors.write("\n");
+                    bufferedWriterErrors.write("Линия");
+                    bufferedWriterErrors.newLine();
+                    bufferedWriterErrors.write("\n");
+                    bufferedWriterErrors.write("\n");
+                    bufferedWriterErrors.write("\n");
+                    bufferedWriterErrors.write("\n");
+                    bufferedWriterErrors.write(linkedBlockingQueueВскеОшибкиДляЗаписи.get(3).toString());
+                    bufferedWriterErrors.newLine();
+                    bufferedWriterErrors.write("\n");
+                    bufferedWriterErrors.write("\n");
+                    bufferedWriterErrors.write("\n");
+                    bufferedWriterErrors.write("\n");
+                    bufferedWriterErrors.write("\n");
+                    bufferedWriterErrors.write("\n");
+                    bufferedWriterErrors.write("\n");
+                    bufferedWriterErrors.newLine();
+                    // TODO: 14.04.2025
+                    bufferedWriterErrors.flush();
+                    outputStream.flush();
+
+                   }
+
+                // TODO: 13.04.2025
+                Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                        " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                        " line " + Thread.currentThread().getStackTrace()[2].getLineNumber());
             }
 
         Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
