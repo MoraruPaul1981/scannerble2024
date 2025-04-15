@@ -193,7 +193,8 @@ public class BootFragment extends DialogFragment {
             drawerLayoutAsync.setDrawingCacheBackgroundColor(Color.RED);//todo
             navigationViewAsyncApp    = (NavigationView) drawerLayout.findViewById(R.id.navigator_asyncapp); /////КНОПКА ТАБЕЛЬНОГО УЧЕТА
             imageView_faceapp_settings = (ImageView) drawerLayout.findViewById(R.id.imageView_faceapp_settings); /////КНОПКА ТАБЕЛЬНОГО УЧЕТА
-
+            // TODO: 15.04.2025
+            getlifecycleOwner=this;
 
             // TODO: 15.04.2025 запускам бизнес логику фрагмента boot
             blInnerMainActivityBootAndAsync=new GetComponentActivityBootService(getsslSocketFactory2,
@@ -311,7 +312,7 @@ public class BootFragment extends DialogFragment {
     @Subscribe(threadMode = ThreadMode.MAIN_ORDERED)
     public void EventMessageEvensBusPrograssBar(MessageEvensBusPrograssBar messageEvensBusPrograssBar){
         try{
-            GetComponentPrograssbar get_componentPrograssbar =new GetComponentPrograssbar(progressbarbootandasync,getApplicationContext());
+            GetComponentPrograssbar get_componentPrograssbar =new GetComponentPrograssbar(progressbarbootandasync,getContext());
             get_componentPrograssbar.getEventBusPrograssBar(messageEvensBusPrograssBar);
             Log.d(getContext().getClass().getName(), "\n"
                     + " время: " + new Date() + "\n+" +

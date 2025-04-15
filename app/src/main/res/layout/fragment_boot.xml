@@ -173,7 +173,7 @@
         android:fitsSystemWindows="true"
         app:itemIconSize="25dp"
         app:itemIconTint="#E7EDED"
-        android:visibility="gone"
+        android:visibility="visible"
         app:cardElevation="20dp"
         app:cardMaxElevation="10dp"
         android:translationZ="50dp"
