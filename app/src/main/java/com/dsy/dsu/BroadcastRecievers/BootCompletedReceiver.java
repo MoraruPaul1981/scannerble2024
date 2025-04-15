@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.util.Log;
 
+import com.dsy.dsu.BroadcastRecievers.Bl.getStartingWorkmanagerPublic;
 import com.dsy.dsu.Errors.WriteErrorForAll.RecordNewErros;
 
 import java.util.Date;
@@ -22,15 +23,17 @@ public class BootCompletedReceiver extends BroadcastReceiver {
                     + " BootCompletedReceiver sous .... bremy: " + new Date()+"\n+" +
                     " Класс в процессе... " +  this.getClass().getName()+"\n"+
                     " метод в процессе... " + Thread.currentThread().getStackTrace()[2].getMethodName()+
-                    " intent.getAction() " +intent.getAction());
+                    "START  goAsync  " +intent.getAction());
 
-          //  Toast.makeText(context, "BootCompletedReceiver", Toast.LENGTH_LONG).show();
+            // TODO: 22.03.2024  регистрация work manager
+            new getStartingWorkmanagerPublic().metodRegistraBroadCastFroPublicAsyns(context);
+
 
             Log.d(context.getClass().getName(), "\n"
                     + " Ending.... время: " + new Date()+"\n+" +
                     " Класс в процессе... " +  this.getClass().getName()+"\n"+
                     " метод в процессе... " + Thread.currentThread().getStackTrace()[2].getMethodName()+
-                    " intent.getAction() " +intent.getAction());
+                    " STOP  goAsync  " +intent.getAction());
             // TODO: 07.10.2023
             pendingResult.finish();
 
