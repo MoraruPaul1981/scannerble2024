@@ -32,12 +32,15 @@ import com.dsy.dsu.BootAndAsync.Model.EventsBus.MessageEvensBusUpdatePO;
 import com.dsy.dsu.BootAndAsync.Model.Service.bl_service_boot.StartServiceBootAndAsync;
 
 
+import com.dsy.dsu.BootAndAsync.View.BootFragment;
 import com.dsy.dsu.CallNavigarlaout.CallNavigarlaout;
 import com.dsy.dsu.Errors.WriteErrorForAll.RecordNewErros;
 import com.dsy.dsu.Errors.model.BinessLogicLaunchFragmenrError;
 import com.dsy.dsu.R;
 import com.dsy.dsu.Settings.View.MainActivity_Settings;
 import com.google.android.material.navigation.NavigationView;
+
+import org.greenrobot.eventbus.EventBus;
 
 import java.util.Date;
 
@@ -520,6 +523,29 @@ public class GetComponentActivityBootService {
     }
 
 
+    // TODO: 15.04.2025 подпись на EvenBus
+    public void registeEventBusFirst(@NonNull BootFragment bootFragment) {
+
+        if (  !EventBus.getDefault().isRegistered(this)) {
+            EventBus.getDefault().register(this);
+        }
+        Log.d(bootFragment.getContext().getClass().getName(), "\n"
+                + " время: " + new Date() + "\n+" +
+                " Класс в процессе... " + this.getClass().getName() + "\n" +
+                " метод в процессе... " + Thread.currentThread().getStackTrace()[2].getMethodName()
+                + "   starting... onRestart" + " starting... onRestart");
+    }
+
+    public void unregisterEventBusFirst(@NonNull BootFragment bootFragment) {
+        if (  EventBus.getDefault().isRegistered(this)) {
+            EventBus.getDefault().unregister(this);
+        }
+        Log.d(bootFragment.getContext().getClass().getName(), "\n"
+                + " время: " + new Date() + "\n+" +
+                " Класс в процессе... " + this.getClass().getName() + "\n" +
+                " метод в процессе... " + Thread.currentThread().getStackTrace()[2].getMethodName()
+                + "   starting... onRestart" + " starting... onRestart");
+    }
 
 
     // TODO: 04.04.2022  END CLASS

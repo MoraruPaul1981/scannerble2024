@@ -26,6 +26,7 @@
     <style name="Style.DSU1.2" parent="Theme.MaterialComponents.Light.Bridge">
         <!-- ... -->
     </style>
+
     <style name="fortasknavigator" parent="Theme.AppCompat.DayNight.DarkActionBar">
         <!-- Back color -->
 
@@ -34,17 +35,25 @@
         <item name="android:textColor">#FF0000</item>
 
     </style>
+
     <style name="Drawer">
         <item name="android:listPreferredItemPaddingLeft">10dp</item>
         <item name="android:paddingTop">50dp</item>
     </style>
+
     <style name="NavigationDrawerStyle" parent="Widget.MaterialComponents.NavigationView">
         <item name="android:layout_marginTop">100dp</item>
     </style>
+
     <style name="CustomNavigationView" parent="Widget.MaterialComponents.NavigationView">
         <item name="itemIconPadding">50dp</item>
         <item name="itemHorizontalPadding">50dp</item>
         <item name="itemShapeInsetStart">50dp</item>
+    </style>
+
+    <style name="Widget.Theme.MaterialComponents.DayNight.NoActionBar.Bridge.ButtonBar.Fullscreen" parent="">
+        <item name="android:background">@color/black_overlay</item>
+        <item name="android:buttonBarStyle">?android:attr/buttonBarStyle</item>
     </style>
 
 </resources>
