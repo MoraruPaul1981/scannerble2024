@@ -16,6 +16,7 @@ import androidx.lifecycle.LifecycleOwner;
 import androidx.viewpager2.widget.ViewPager2;
 
 import android.app.Activity;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
@@ -159,25 +160,11 @@ public class BootFragment extends DialogFragment {
         View view=null;
         try{
             view= inflater.inflate(R.layout.fragment_boot, container, false);
-
+            // TODO: 15.04.2025
             fragmentManager = getActivity(). getSupportFragmentManager();
             fragmentTransaction = fragmentManager.beginTransaction();
             // TODO: 22.08.2023  анимауия
             animation5 = AnimationUtils.loadAnimation(getContext(), R.anim.slide_in_row8);
-
-
-            // TODO: 15.04.2025 запускам бизнес логику фрагмента boot
-            blInnerMainActivityBootAndAsync=new GetComponentActivityBootService(getsslSocketFactory2,
-                    progressbarbootandasync, activity, drawerLayoutAsync,
-                    navigationViewAsyncApp,getContext(),  getlifecycleOwner,imageView_faceapp_settings);
-
-
-            // TODO: 19.01.2024  запускаем бизнес логики автивити boot and async
-            blInnerMainActivityBootAndAsync .  МетодБоковаяПанельОткрытьЗАкрыть();
-            blInnerMainActivityBootAndAsync .listerNavigationViewAsyncApp();
-            blInnerMainActivityBootAndAsync .  workerNavigationViewAsyncApp(fragmentManager);
-            blInnerMainActivityBootAndAsync .  workerImageViewsettings();
-
             // TODO: 21.06.2023
             Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                     " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
@@ -199,7 +186,27 @@ public class BootFragment extends DialogFragment {
         try{
             super.onViewCreated(view, savedInstanceState);
             // TODO: 03.04.2025
-          //  tableLayout_dashboard         = (TableLayout) view.findViewById(R.id.tableLayout_dashboard); /////КНОПКА ТАБЕЛЬНОГО УЧЕТА
+            DrawerLayout    drawerLayout         = (DrawerLayout) view.findViewById(R.id.drawerLayout_async_prograsser);
+            progressbarbootandasync = (ProgressBar) drawerLayout.findViewById(R.id.progressbarbootandasync); /////КНОПКА ТАБЕЛЬНОГО УЧЕТА/
+            drawerLayoutAsync = (DrawerLayout) drawerLayout.findViewById(R.id.drawerLayout_async_prograsser); /////КНОПКА ТАБЕЛЬНОГО УЧЕТА
+            drawerLayoutAsync.setBackgroundColor(Color.WHITE);         //TODO устанвливает цвета
+            drawerLayoutAsync.setDrawingCacheBackgroundColor(Color.RED);//todo
+            navigationViewAsyncApp    = (NavigationView) drawerLayout.findViewById(R.id.navigator_asyncapp); /////КНОПКА ТАБЕЛЬНОГО УЧЕТА
+            imageView_faceapp_settings = (ImageView) drawerLayout.findViewById(R.id.imageView_faceapp_settings); /////КНОПКА ТАБЕЛЬНОГО УЧЕТА
+
+
+            // TODO: 15.04.2025 запускам бизнес логику фрагмента boot
+            blInnerMainActivityBootAndAsync=new GetComponentActivityBootService(getsslSocketFactory2,
+                    progressbarbootandasync, activity, drawerLayoutAsync,
+                    navigationViewAsyncApp,getContext(),  getlifecycleOwner,imageView_faceapp_settings);
+
+
+            // TODO: 19.01.2024  запускаем бизнес логики автивити boot and async
+            blInnerMainActivityBootAndAsync .  МетодБоковаяПанельОткрытьЗАкрыть();
+            blInnerMainActivityBootAndAsync .listerNavigationViewAsyncApp();
+            blInnerMainActivityBootAndAsync .  workerNavigationViewAsyncApp(fragmentManager);
+            blInnerMainActivityBootAndAsync .  workerImageViewsettings();
+
 
             Log.d(this.getClass().getName(),"\n" + " class " +
                     Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
@@ -225,7 +232,10 @@ public class BootFragment extends DialogFragment {
     public void onStart() {
         super.onStart();
         try{
+            // TODO: 15.04.2025
             blInnerMainActivityBootAndAsync .  registeEventBusFirst(this);
+            // TODO: 15.04.2025  
+            moduleSingleWorkManager.startingSingleWorkManger();
             // TODO: 20.07.2023
             Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                     " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
@@ -303,7 +313,7 @@ public class BootFragment extends DialogFragment {
         try{
             GetComponentPrograssbar get_componentPrograssbar =new GetComponentPrograssbar(progressbarbootandasync,getApplicationContext());
             get_componentPrograssbar.getEventBusPrograssBar(messageEvensBusPrograssBar);
-            Log.d(getApplicationContext().getClass().getName(), "\n"
+            Log.d(getContext().getClass().getName(), "\n"
                     + " время: " + new Date() + "\n+" +
                     " Класс в процессе... " + this.getClass().getName() + "\n" +
                     " метод в процессе... " + Thread.currentThread().getStackTrace()[2].getMethodName()
@@ -312,7 +322,7 @@ public class BootFragment extends DialogFragment {
             e.printStackTrace();
             Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() + " Линия  :"
                     + Thread.currentThread().getStackTrace()[2].getLineNumber());
-            new RecordNewErros(getApplicationContext()).recordnewerror(e.toString(), this.getClass().getName(), Thread.currentThread().getStackTrace()[2].getMethodName(),
+            new RecordNewErros(getContext()).recordnewerror(e.toString(), this.getClass().getName(), Thread.currentThread().getStackTrace()[2].getMethodName(),
                     Thread.currentThread().getStackTrace()[2].getLineNumber());
         }
     }
@@ -325,7 +335,7 @@ public class BootFragment extends DialogFragment {
 
             blInnerMainActivityBootAndAsync   .getEventBusUpdatePo(messageEvensBusUpdatePO);
 
-            Log.d(getApplicationContext().getClass().getName(), "\n"
+            Log.d(getContext().getClass().getName(), "\n"
                     + " время: " + new Date() + "\n+" +
                     " Класс в процессе... " + this.getClass().getName() + "\n" +
                     " метод в процессе... " + Thread.currentThread().getStackTrace()[2].getMethodName()
@@ -334,7 +344,7 @@ public class BootFragment extends DialogFragment {
             e.printStackTrace();
             Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() + " Линия  :"
                     + Thread.currentThread().getStackTrace()[2].getLineNumber());
-            new RecordNewErros(getApplicationContext()).recordnewerror(e.toString(), this.getClass().getName(), Thread.currentThread().getStackTrace()[2].getMethodName(),
+            new RecordNewErros(getContext()).recordnewerror(e.toString(), this.getClass().getName(), Thread.currentThread().getStackTrace()[2].getMethodName(),
                     Thread.currentThread().getStackTrace()[2].getLineNumber());
         }
 
@@ -347,7 +357,7 @@ public class BootFragment extends DialogFragment {
 
             blInnerMainActivityBootAndAsync .getEventBusNetworkStatuses(messageEvensBusNetworkStatuses);
 
-            Log.d(getApplicationContext().getClass().getName(), "\n"
+            Log.d(getContext().getClass().getName(), "\n"
                     + " время: " + new Date() + "\n+" +
                     " Класс в процессе... " + this.getClass().getName() + "\n" +
                     " метод в процессе... " + Thread.currentThread().getStackTrace()[2].getMethodName()
@@ -356,7 +366,7 @@ public class BootFragment extends DialogFragment {
             e.printStackTrace();
             Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() + " Линия  :"
                     + Thread.currentThread().getStackTrace()[2].getLineNumber());
-            new RecordNewErros(getApplicationContext()).recordnewerror(e.toString(), this.getClass().getName(), Thread.currentThread().getStackTrace()[2].getMethodName(),
+            new RecordNewErros(getContext()).recordnewerror(e.toString(), this.getClass().getName(), Thread.currentThread().getStackTrace()[2].getMethodName(),
                     Thread.currentThread().getStackTrace()[2].getLineNumber());
         }
     }
@@ -380,7 +390,7 @@ public class BootFragment extends DialogFragment {
                 // TODO: 28.04.2023 НЕт Анутифтикации Пароль
                 launchMainAppaftersyncing.appAfterSyncingPassword(  );
             }
-            Log.d(getApplicationContext().getClass().getName(), "\n"
+            Log.d(getContext().getClass().getName(), "\n"
                     + " время: " + new Date() + "\n+" +
                     " Класс в процессе... " + this.getClass().getName() + "\n" +
                     " метод в процессе... " + Thread.currentThread().getStackTrace()[2].getMethodName()+"\n"+
@@ -389,7 +399,7 @@ public class BootFragment extends DialogFragment {
             e.printStackTrace();
             Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() + " Линия  :"
                     + Thread.currentThread().getStackTrace()[2].getLineNumber());
-            new RecordNewErros(getApplicationContext()).recordnewerror(e.toString(), this.getClass().getName(), Thread.currentThread().getStackTrace()[2].getMethodName(),
+            new RecordNewErros(getContext()).recordnewerror(e.toString(), this.getClass().getName(), Thread.currentThread().getStackTrace()[2].getMethodName(),
                     Thread.currentThread().getStackTrace()[2].getLineNumber());
         }
     }
