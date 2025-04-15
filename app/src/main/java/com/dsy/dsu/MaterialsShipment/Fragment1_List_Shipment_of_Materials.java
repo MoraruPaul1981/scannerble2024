@@ -41,7 +41,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.dsy.dsu.BusinessLogicAll.GetPublicID.GetPublicID;
-import com.dsy.dsu.Dashboard.View.MainActivity_Dashboard;
+import com.dsy.dsu.Dashboard.Model.bl_launchFragmentSettingsandDashbord.LaunchActivityDashboard;
 import com.dsy.dsu.Errors.WriteErrorForAll.RecordNewErros;
 import com.dsy.dsu.Gsons.SubClass_JSON_B_P_GET_1C_shipment_of_materials;
 import com.dsy.dsu.R;
@@ -454,40 +454,15 @@ public class Fragment1_List_Shipment_of_Materials extends Fragment    {
                 bottomNavigationКонкретноКнопкаКонтролируемыеНазад.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        Intent Интент_BackВозвращаемАктивти = new Intent();
-                        Интент_BackВозвращаемАктивти.setClass(getContext(), MainActivity_Dashboard.class); // Т
-                        ////todo запускаем активти
-                        Интент_BackВозвращаемАктивти.setFlags(  Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                        Интент_BackВозвращаемАктивти.setAction("MainActivity_Dashboard.class");
-                        Интент_BackВозвращаемАктивти.  addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
-                        Интент_BackВозвращаемАктивти.  addFlags(Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
-                        Интент_BackВозвращаемАктивти.setClass(getContext(), MainActivity_Dashboard.class);
 
-                        Bundle bundleBinderUpdate=new Bundle();
-                        bundleBinderUpdate.putBoolean("CallBackMainActivityBootAndAsync", true);
-                        Интент_BackВозвращаемАктивти.putExtras(bundleBinderUpdate);
+                        LaunchActivityDashboard launchActivityDashboard=new LaunchActivityDashboard( fragmentManager,getContext());
+                        // TODO: 27.03.2024 в зависомсти кто вызвает
+                        launchActivityDashboard.     launchADashboardFragment();
 
 
-
-                        Log.d(this.getClass().getName(), "  выходим из задания МетодКпопкаВозвращениеНазадИзСогласованиии" );
-                        startActivity( Интент_BackВозвращаемАктивти);
-
-/*
-                        // TODO Запусукаем Фргамент НАстройки  dashbord
-                        DashboardFragmentSettings dashboardFragmentSettings = DashboardFragmentSettings.newInstance();
-                        Bundle data=new Bundle();
-                        dashboardFragmentSettings.setArguments(data);
-                        fragmentTransaction.remove(dashboardFragmentSettings);
-                        String fragmentNewImageNameaddToBackStack=   dashboardFragmentSettings.getClass().getName();
-                        fragmentTransaction.addToBackStack(fragmentNewImageNameaddToBackStack);
-                        Fragment FragmentУжеЕСтьИлиНЕт=     fragmentManager.findFragmentByTag(fragmentNewImageNameaddToBackStack);
-                        if (FragmentУжеЕСтьИлиНЕт==null) {
-                            dashboardFragmentSettings.show(fragmentManager, "DashboardFragmentSettings");
-                            // TODO: 01.08.2023
-
-                        }*/
-
-
+                        Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                                " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                                " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n");
 
                     }
                 });

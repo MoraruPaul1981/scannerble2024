@@ -44,11 +44,11 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.dsy.dsu.AdmissionMaterials.bl_admissonmaterils.PesssionCameta;
+import com.dsy.dsu.Dashboard.Model.bl_launchFragmentSettingsandDashbord.LaunchActivityDashboard;
 import com.dsy.dsu.Errors.WriteErrorForAll.RecordNewErros;
 import com.dsy.dsu.BusinessLogicAll.GetPublicID.GetPublicID;
 import com.dsy.dsu.Services.ServiceUpdatePoОбновлениеПО;
 import com.dsy.dsu.Services.Service_for_AdminissionMaterial;
-import com.dsy.dsu.Dashboard.View.MainActivity_Dashboard;
 import com.dsy.dsu.R;
 import com.google.android.material.bottomnavigation.BottomNavigationItemView;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -538,35 +538,15 @@ public class FragmentAdmissionMaterials extends Fragment {
                 public void onClick(View v) {
                     try {
                         МетодЗапускаАнимацииКнопок(v);//todo только анимауия
-                        Intent Интент_BackВозвращаемАктивти = getActivity().getIntent();
-                        Интент_BackВозвращаемАктивти.setClass(getContext(), MainActivity_Dashboard.class); // Т
-                        Интент_BackВозвращаемАктивти.setFlags(  Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                        Интент_BackВозвращаемАктивти.  addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
-                        Интент_BackВозвращаемАктивти.  addFlags(Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
-                        Bundle gameData = new Bundle();
-                        gameData.putString("ФлагСтатусИзФрагментаСканирования", "ЗакрываетИзСканирования");
-                        gameData.putBinder("binder", binderДляПолучениеМатериалов);
-                        Интент_BackВозвращаемАктивти.putExtras(gameData);
-                        message.getTarget().postDelayed(()->{ startActivity(Интент_BackВозвращаемАктивти); },500);
 
-              /*          // TODO Запусукаем Фргамент НАстройки  dashbord
-                        DashboardFragmentSettings dashboardFragmentSettings = DashboardFragmentSettings.newInstance();
-                        Bundle data=new Bundle();
-                        dashboardFragmentSettings.setArguments(data);
-                        fragmentTransaction.remove(dashboardFragmentSettings);
-                        String fragmentNewImageNameaddToBackStack=   dashboardFragmentSettings.getClass().getName();
-                        fragmentTransaction.addToBackStack(fragmentNewImageNameaddToBackStack);
-                        Fragment FragmentУжеЕСтьИлиНЕт=     fragmentManager.findFragmentByTag(fragmentNewImageNameaddToBackStack);
-                        if (FragmentУжеЕСтьИлиНЕт==null) {
-                            dashboardFragmentSettings.show(fragmentManager, "DashboardFragmentSettings");
-                            // TODO: 01.08.2023
-
-                        }*/
+                        LaunchActivityDashboard launchActivityDashboard=new LaunchActivityDashboard( fragmentManager,getContext());
+                        // TODO: 27.03.2024 в зависомсти кто вызвает
+                        launchActivityDashboard.     launchADashboardFragment();
 
 
-
-
-                        Log.d(this.getClass().getName(), "  v  " + v);
+                        Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                                " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                                " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n");
                     } catch (Exception e) {
                         e.printStackTrace();
                         Log.e(getContext().getClass().getName(),
