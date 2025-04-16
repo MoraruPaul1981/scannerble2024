@@ -393,7 +393,13 @@ public class ContentProviderForSystemTables extends ContentProvider  {
             Log.d(this.getClass().getName(), " uri"+uri  + "selection "+selection );
             String table = МетодОпределяемТаблицу(uri);
                         cursor=     sqliteManager.rawQuery(selection,selectionArgs);
-                        Log.w(getContext().getClass().getName(), " Полученый для Получение Материалов cursor  " + cursor);/////
+            // TODO: 16.04.2025
+            // TODO: 17.04.2023
+            Log.d(this.getClass().getName(),"\n" + " class FaceAPp "
+                    + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                    " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                    " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" +
+                    "cursor  " +cursor);
         } catch (Exception e) {
             e.printStackTrace();
             Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() + " Линия  :"

@@ -77,7 +77,7 @@ import okhttp3.Response;
 import okio.BufferedSink;
 
 ///////Универсальный Класс Обмена Данными  Два Стачичных Метода и Плюс Сттичный Курсор
- public class Class_MODEL_synchronized extends GetSQLiteDatabase {
+ public class Class_MODEL_synchronized   {
   public     Context context;
     private PUBLIC_CONTENT Class_Engine_SQLГдеНаходитьсяМенеджерПотоков =null;
     private Class_MODEL_synchronized ссылка_MODELsynchronized = null;
@@ -91,7 +91,6 @@ import okio.BufferedSink;
 
 
     public Class_MODEL_synchronized(  @NotNull Context context) {
-        super(context);
        this. context=context;
         //TODO контроль потоков
         Class_Engine_SQLГдеНаходитьсяМенеджерПотоков =new PUBLIC_CONTENT(context);
