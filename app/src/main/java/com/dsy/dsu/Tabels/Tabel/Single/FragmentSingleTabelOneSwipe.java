@@ -3176,8 +3176,8 @@ public class FragmentSingleTabelOneSwipe extends Fragment {
             protected  Cursor МетодКурсорДляНовогоПосика(@NonNull String  ФлагКакаяТаблицаОбработки, @NotNull String Фильтр){
                 Cursor КурсорТаблицаПрофесииLike = null;
                 try{
-                    Integer   ПубличныйIDДляФрагмента     = new GetPublicID().
-                            getPublicIDAllApp(getContext());
+                    Integer   ПубличныйIDДляФрагмента     = new GetPublicID(getContext()).
+                            getPublicIDAllApp();
                     Log.d(getContext().getClass().getName(), "\n"
                             + " ПубличныйIDДляФрагмента: " + ПубличныйIDДляФрагмента + " Фильтр " +Фильтр);
                     Bundle bundleНовыйПоиск=new Bundle();

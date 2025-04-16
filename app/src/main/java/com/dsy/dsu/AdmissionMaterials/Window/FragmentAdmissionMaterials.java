@@ -590,7 +590,7 @@ public class FragmentAdmissionMaterials extends Fragment {
                                 progressBarСканирование.setVisibility(View.VISIBLE);
                                 МетодЗапускаАнимацииКнопок(v);
                                 Integer ПубличныйIDДляФрагмента =
-                                        new GetPublicID().getPublicIDAllApp(getContext());
+                                        new GetPublicID(getContext()).getPublicIDAllApp( );
                                 // TODO: 16.11.2022  запуск синхронизации однорозовая
                                 Log.d(this.getClass().getName(), "  v  " + v);
                             } catch (Exception e) {
@@ -966,7 +966,7 @@ public class FragmentAdmissionMaterials extends Fragment {
     // TODO: 02.08.2022
     protected   Cursor методGetCFOCursorFirst(@NonNull String  ФлагКакиеДанныеНужныПолучениеМатериалов, @NonNull Integer ТекущаяЦФО ){
         try{
-            ПубличныйIDДляФрагмента     = new GetPublicID().getPublicIDAllApp(getContext());
+            ПубличныйIDДляФрагмента     = new GetPublicID(getContext()).getPublicIDAllApp( );
             Log.d(getContext().getClass().getName(), "\n"
                     + " ПубличныйIDДляФрагмента: " + ПубличныйIDДляФрагмента);
             Bundle bundleДляПЕредачи=new Bundle();

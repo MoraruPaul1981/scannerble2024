@@ -21,26 +21,22 @@ import dagger.hilt.components.SingletonComponent;
 @Module
 @InstallIn(SingletonComponent.class)
 public class DataModuleSqlite {
-
-
-
     @Singleton
     @Provides
     public SQLiteDatabase metodHiltSqlite (@ApplicationContext Context context) {
         SQLiteDatabase getSQLites=null;
         try{
-        getSQLites=       new GetSQLiteDatabase(context).методinitDatbase(context);
-        // TODO: 17.04.2023
+
+            getSQLites =  SQLiteDatabase.openDatabase("/data/user/0/com.dsy.dsu/databases/Database DSU-1.db",null, SQLiteDatabase.CREATE_IF_NECESSARY);
+            if (getSQLites==null) {
+              getSQLites=       new GetSQLiteDatabase(context).getSqliteDatabase();
+            }
+            // TODO: 17.04.2023
         Log.d(this.getClass().getName(),"\n" + " class FaceAPp "
                 + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                 " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
                 " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" +
-                " SQLiteDatabase " +getSQLites);
-       // ROOMDatabase ROOM = null;
-        Log.d(this.getClass().getName(),"\n" + " class FaceAPp " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
-                " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"+
-                " getSQLites " +getSQLites);
+                " getSQLites.isOpen() " +getSQLites.isOpen());
     } catch (Exception e) {
         e.printStackTrace();
         Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" +

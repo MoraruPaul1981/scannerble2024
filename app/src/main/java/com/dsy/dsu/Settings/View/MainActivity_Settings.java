@@ -40,6 +40,7 @@ import com.dsy.dsu.Dashboard.Model.LaunchActivityDiaologSettings;
 import com.dsy.dsu.Errors.WriteErrorForAll.RecordNewErros;
 import com.dsy.dsu.BusinessLogicAll.Class_MODEL_synchronized;
 import com.dsy.dsu.CnangeServers.PUBLIC_CONTENT;
+import com.dsy.dsu.Hilt.Sqlitehilt.HiltInterfacesqlite;
 import com.dsy.dsu.R;
 import com.dsy.dsu.Settings.Model.ChangeSSLForSettings;
 
@@ -54,6 +55,7 @@ import java.util.Map;
 import java.util.Random;
 import java.util.stream.Collectors;
 
+import dagger.hilt.EntryPoints;
 import dagger.hilt.android.AndroidEntryPoint;
 
 
@@ -106,7 +108,15 @@ public class MainActivity_Settings extends AppCompatActivity {
             getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
             getSupportActionBar().hide(); ///скрывать тул бар
             context =this;
-            sqLiteDatabase=    GetSQLiteDatabase.SqliteDatabase();
+            // TODO: 16.04.2025
+            sqLiteDatabase = EntryPoints.get(context, HiltInterfacesqlite.class).getHiltSqlite();
+            Log.d(context.getClass().getName(), "\n"
+                    + " время: " + new Date() + "\n+" +
+                    " Класс в процессе... " + this.getClass().getName() + "\n" +
+                    " метод в процессе... " + Thread.currentThread().getStackTrace()[2].getMethodName() + " sqLiteDatabase " +sqLiteDatabase);
+
+
+
             setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LOCKED);
             imageViewСтрелкаВнутриНастроек = (Button) findViewById(R.id.imageViewСтрелкаВнутриНастроек);
             СпинерДляСозданииОрганизации= (Spinner) findViewById(R.id.СпинерДляСозданииОрганизации);

@@ -27,7 +27,7 @@ public class ModulePublicId {
         Integer ПубличныйID = 0;
         try {
             ПубличныйID =
-                    new GetPublicID().getPublicIDAllApp(context);
+                    new GetPublicID(context).getPublicIDAllApp();
             // TODO: 29.01.2024
    ///// ПубличныйID=96;
         /////   ПубличныйID=8;

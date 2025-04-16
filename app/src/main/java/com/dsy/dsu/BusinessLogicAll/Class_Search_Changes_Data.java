@@ -8,6 +8,11 @@ import android.util.Log;
 import com.dsy.dsu.AllDatabases.SQLTE.GetSQLiteDatabase;
 import com.dsy.dsu.CnangeServers.PUBLIC_CONTENT;
 import com.dsy.dsu.Errors.WriteErrorForAll.RecordNewErros;
+import com.dsy.dsu.Hilt.Sqlitehilt.HiltInterfacesqlite;
+
+import java.util.Date;
+
+import dagger.hilt.EntryPoints;
 
 
 public class Class_Search_Changes_Data {
@@ -17,7 +22,12 @@ public class Class_Search_Changes_Data {
     ////
     public Class_Search_Changes_Data(Context context) {
         this.context =context;
-        sqLiteDatabase=    GetSQLiteDatabase.SqliteDatabase();
+        // TODO: 16.04.2025
+        sqLiteDatabase = EntryPoints.get(context, HiltInterfacesqlite.class).getHiltSqlite();
+        Log.d(context.getClass().getName(), "\n"
+                + " время: " + new Date() + "\n+" +
+                " Класс в процессе... " + this.getClass().getName() + "\n" +
+                " метод в процессе... " + Thread.currentThread().getStackTrace()[2].getMethodName() + " sqLiteDatabase " +sqLiteDatabase);
     }
     //функция получающая время операции ДАННАЯ ФУНКЦИЯ ВРЕМЯ ПРИМЕНЯЕТЬСЯ ВО ВСЕЙ ПРОГРАММЕ
 

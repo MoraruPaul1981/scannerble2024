@@ -35,12 +35,13 @@ public class VersionCurentTable {
         this.context = context;
         // TODO: 11.02.2025
         try {
-            try {
+
+                // TODO: 16.04.2025
                 sqLiteDatabase = EntryPoints.get(context, HiltInterfacesqlite.class).getHiltSqlite();
-            } catch (Exception e) {
-                //throw new RuntimeException(e);
-                sqLiteDatabase  =    GetSQLiteDatabase.SqliteDatabase();
-            }
+                Log.d(context.getClass().getName(), "\n"
+                        + " время: " + new Date() + "\n+" +
+                        " Класс в процессе... " + this.getClass().getName() + "\n" +
+                        " метод в процессе... " + Thread.currentThread().getStackTrace()[2].getMethodName() + " sqLiteDatabase " +sqLiteDatabase);
 
             // TODO: 11.02.2025
             Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +

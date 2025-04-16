@@ -162,8 +162,7 @@ public class RecordNewErros  implements RecordNewErrorsInterface {
             Long getVersionForError  = new VersionCurentTable(context).upVersionCurentTable("errordsu1");
             Long UUIDForError = (Long)
                     new Class_Generation_UUID(context).МетодГенерацииUUID();
-            Integer getPublicIdForError = new GetPublicID().
-                    getPublicIDAllApp(context);
+            Integer getPublicIdForError = new GetPublicID(context).getPublicIDAllApp();
 
 
             String getNewDateForError = new Class_Generation_Data(context).ГлавнаяДатаИВремяОперацийСБазойДанных();

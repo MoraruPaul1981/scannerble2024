@@ -15,6 +15,7 @@ import com.dsy.dsu.BusinessLogicAll.Class_GRUD_SQL_Operations;
 import com.dsy.dsu.CnangeServers.PUBLIC_CONTENT;
 import com.dsy.dsu.Errors.WriteErrorForAll.RecordNewErros;
 import com.dsy.dsu.FirebaseAndOneSignal.Firebase.MyFirebaseInstanceIDService;
+import com.dsy.dsu.Hilt.Sqlitehilt.HiltInterfacesqlite;
 import com.google.firebase.messaging.FirebaseMessagingService;
 import com.onesignal.OneSignal;
 
@@ -23,6 +24,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
+import dagger.hilt.EntryPoints;
 import io.reactivex.rxjava3.core.BackpressureStrategy;
 import io.reactivex.rxjava3.core.Observable;
 import io.reactivex.rxjava3.functions.Action;
@@ -38,7 +40,12 @@ public class ClassOneSingnalGenerator {
         this.context=context;
         try{
         if (context!=null) {
-            sqLiteDatabase=    GetSQLiteDatabase.SqliteDatabase();
+            // TODO: 16.04.2025
+            sqLiteDatabase = EntryPoints.get(context, HiltInterfacesqlite.class).getHiltSqlite();
+            Log.d(context.getClass().getName(), "\n"
+                    + " время: " + new Date() + "\n+" +
+                    " Класс в процессе... " + this.getClass().getName() + "\n" +
+                    " метод в процессе... " + Thread.currentThread().getStackTrace()[2].getMethodName() + " sqLiteDatabase " +sqLiteDatabase);
             Log.d(this.getClass().getName(), "sqLiteDatabase"+sqLiteDatabase);
         }
 

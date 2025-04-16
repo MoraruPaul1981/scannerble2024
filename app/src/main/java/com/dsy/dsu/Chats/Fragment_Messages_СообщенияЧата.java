@@ -41,6 +41,7 @@ import com.dsy.dsu.BusinessLogicAll.GetPublicID.GetPublicID;
 import com.dsy.dsu.BusinessLogicAll.SubClassGET_FIO;
 
 import com.dsy.dsu.CnangeServers.PUBLIC_CONTENT;
+import com.dsy.dsu.Hilt.Sqlitehilt.HiltInterfacesqlite;
 import com.dsy.dsu.R;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
@@ -53,6 +54,8 @@ import java.util.Locale;
 import java.util.TimeZone;
 import java.util.concurrent.ExecutionException;
 import java.util.stream.Collectors;
+
+import dagger.hilt.EntryPoints;
 
 
 public class Fragment_Messages_СообщенияЧата extends Fragment {
@@ -94,7 +97,12 @@ public class Fragment_Messages_СообщенияЧата extends Fragment {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         try{
-        sqLiteDatabase=    GetSQLiteDatabase.SqliteDatabase();
+            // TODO: 16.04.2025
+            sqLiteDatabase = EntryPoints.get(getContext(), HiltInterfacesqlite.class).getHiltSqlite();
+            Log.d(getContext().getClass().getName(), "\n"
+                    + " время: " + new Date() + "\n+" +
+                    " Класс в процессе... " + this.getClass().getName() + "\n" +
+                    " метод в процессе... " + Thread.currentThread().getStackTrace()[2].getMethodName() + " sqLiteDatabase " +sqLiteDatabase);
     } catch (Exception e) {
         e.printStackTrace();
         Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
@@ -1650,7 +1658,7 @@ try {
                 ////
                 // TODO: 30.09.2021 МЕТОД ЗАПУСКА СИНХРОНИЗАЦИИ ЧАТА ПО РАСПИСАНИЮ , НЕ ВЗАВИСИМОСТИ ОТ СОЗДАВАЛ ЛИ СООБЩЕНИЕ ИЛИ НЕТ
 
-                Integer ПубличныйIDДляФрагмента = new GetPublicID().getPublicIDAllApp(getContext());
+                Integer ПубличныйIDДляФрагмента = new GetPublicID(getContext()).getPublicIDAllApp();
 
 
                 Log.d(this.getClass().getName(), "ПубличныйIDДляФрагмента " + ПубличныйIDДляФрагмента);

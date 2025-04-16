@@ -49,6 +49,7 @@ import com.dsy.dsu.Errors.WriteErrorForAll.RecordNewErros;
 import com.dsy.dsu.BusinessLogicAll.Class_Generation_UUID;
 import com.dsy.dsu.BusinessLogicAll.Class_MODEL_synchronized;
 import com.dsy.dsu.CnangeServers.PUBLIC_CONTENT;
+import com.dsy.dsu.Hilt.Sqlitehilt.HiltInterfacesqlite;
 import com.dsy.dsu.Services.Service_for_AdminissionMaterial;
 import com.dsy.dsu.R;
 import com.dsy.dsu.Tabels.Tabel.CompleteTabel.MainActivity_List_Tabels;
@@ -68,6 +69,7 @@ import java.util.concurrent.CompletionService;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.TimeoutException;
 
+import dagger.hilt.EntryPoints;
 import dagger.hilt.android.AndroidEntryPoint;
 
 
@@ -115,8 +117,17 @@ public class MainActivity_New_Tabely extends AppCompatActivity {
             СпинерВыборДата=(MaterialTextView) findViewById(R.id.ЗначениеДатаСоздаваемогоТабеля);////СЮДА ДАТА ПРИШЛА ОТ ДРУГОВВА АКТИВ
             progressBar =  findViewById(R.id.ProgressBar);
             progressBar.setVisibility(View.VISIBLE);
+
             // TODO: 01.11.2022 методы до начало запуска
-            sqLiteDatabase=    GetSQLiteDatabase.SqliteDatabase();
+            // TODO: 16.04.2025
+            sqLiteDatabase = EntryPoints.get(getApplicationContext(), HiltInterfacesqlite.class).getHiltSqlite();
+            Log.d(getApplicationContext().getClass().getName(), "\n"
+                    + " время: " + new Date() + "\n+" +
+                    " Класс в процессе... " + this.getClass().getName() + "\n" +
+                    " метод в процессе... " + Thread.currentThread().getStackTrace()[2].getMethodName() + " sqLiteDatabase " +sqLiteDatabase);
+
+
+
             МетодHandlerCallBack();
             МетодСозданиеКодBACK();
             методБиндингСлужбы();
@@ -1076,7 +1087,7 @@ while(iterator.hasNext()){
 
 
                 // TODO: 09.10.2024 Public ID
-                Long getPublicID=  new GetPublicID().gettingSettingTableVersion(getApplicationContext()," SELECT publicid FROM successlogin "  ,"successlogin");
+                Long getPublicID=  new GetPublicID(getApplicationContext()).gettingSettingTableVersion(getApplicationContext()," SELECT publicid FROM successlogin "  ,"successlogin");
                 // TODO: 14.12.2022  
                 АдаптерВставкиНовгоТабеля.put("user_update", getPublicID);
 
@@ -1168,8 +1179,8 @@ while(iterator.hasNext()){
     protected   Cursor МетодДляНовогоТабеляПолучаемДанные(@NonNull String  ФлагКакаяТаблицаОбработки){
         Cursor cursor = null;
         try{
-         Integer   ПубличныйIDДляФрагмента     = new GetPublicID().
-                 getPublicIDAllApp(getApplicationContext());
+         Integer   ПубличныйIDДляФрагмента     = new GetPublicID(getApplicationContext()).
+                 getPublicIDAllApp();
             Log.d(getApplicationContext().getClass().getName(), "\n"
                     + " ПубличныйIDДляФрагмента: " + ПубличныйIDДляФрагмента);
             Bundle bundleДляПЕредачи=new Bundle();
@@ -1200,8 +1211,7 @@ while(iterator.hasNext()){
     protected   Cursor МетодДляНовогоТабеляПолучаемДанные(@NonNull String  ФлагКакаяТаблицаОбработки, @NotNull String Фильтр){
         Cursor cursor = null;
         try{
-            Integer   ПубличныйIDДляФрагмента     = new GetPublicID().
-                    getPublicIDAllApp(getApplicationContext());
+            Integer   ПубличныйIDДляФрагмента     = new GetPublicID(getApplicationContext()).getPublicIDAllApp();
             Log.d(getApplicationContext().getClass().getName(), "\n"
                     + " ПубличныйIDДляФрагмента: " + ПубличныйIDДляФрагмента);
             Bundle bundleДляПЕредачи=new Bundle();
@@ -1230,8 +1240,8 @@ while(iterator.hasNext()){
     protected  Cursor МетодДляНовогоТабеляПолучаемДанныеИзНовогоПоиска(@NonNull String  ФлагКакаяТаблицаОбработки, @NotNull String Фильтр){
         Cursor cursor = null;
         try{
-            Integer   ПубличныйIDДляФрагмента     = new GetPublicID().
-                    getPublicIDAllApp(getApplicationContext());
+            Integer   ПубличныйIDДляФрагмента     = new GetPublicID(getApplicationContext()).
+                    getPublicIDAllApp();
             Log.d(getApplicationContext().getClass().getName(), "\n"
                     + " ПубличныйIDДляФрагмента: " + ПубличныйIDДляФрагмента);
             Bundle bundleДляПЕредачи=new Bundle();

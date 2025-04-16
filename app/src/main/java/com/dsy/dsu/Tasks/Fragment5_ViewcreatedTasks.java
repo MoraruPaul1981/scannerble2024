@@ -41,6 +41,7 @@ import com.dsy.dsu.BusinessLogicAll.Class_GRUD_SQL_Operations;
 import com.dsy.dsu.Errors.WriteErrorForAll.RecordNewErros;
 import com.dsy.dsu.BusinessLogicAll.GetPublicID.GetPublicID;
 import com.dsy.dsu.CnangeServers.PUBLIC_CONTENT;
+import com.dsy.dsu.Hilt.Sqlitehilt.HiltInterfacesqlite;
 import com.dsy.dsu.Services.Service_For_Task_Для_Задания_СменаСатуса;
 import com.dsy.dsu.R;
 import com.google.android.material.bottomnavigation.BottomNavigationItemView;
@@ -55,6 +56,8 @@ import java.text.ParseException;
 import java.util.Date;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.LinkedBlockingQueue;
+
+import dagger.hilt.EntryPoints;
 
 
 public class Fragment5_ViewcreatedTasks extends Fragment {
@@ -113,7 +116,15 @@ public class Fragment5_ViewcreatedTasks extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         try {
-            sqLiteDatabase=    GetSQLiteDatabase.SqliteDatabase();
+            // TODO: 16.04.2025
+            sqLiteDatabase = EntryPoints.get(context, HiltInterfacesqlite.class).getHiltSqlite();
+            Log.d(context.getClass().getName(), "\n"
+                    + " время: " + new Date() + "\n+" +
+                    " Класс в процессе... " + this.getClass().getName() + "\n" +
+                    " метод в процессе... " + Thread.currentThread().getStackTrace()[2].getMethodName() + " sqLiteDatabase " +sqLiteDatabase);
+
+
+
             context=getContext();
 
             fragmentManagerДляЗадачи = getActivity().getSupportFragmentManager();
@@ -261,13 +272,13 @@ public class Fragment5_ViewcreatedTasks extends Fragment {
 
 
             // TODO: 12.03.2022
-            getPublic_id =new GetPublicID();
+            getPublic_id =new GetPublicID(getContext());
 
             Log.d(this.getClass().getName(), " отработоатл  subClassBuccessLogin_главныйКлассБизнесЛогикиФрагмент3ЗаполенияЗадачиДляРедактирования " +
                     "" + subClassBuccessLogin_главныйКлассБизнесЛогикиФрагмент5ЗаполенияЗадачиДляСозданияНовойЗадачи);
 
             // TODO: 02.03.2022
-            ПубличныйIDДляФрагмента = getPublic_id.getPublicIDAllApp(getContext());
+            ПубличныйIDДляФрагмента = getPublic_id.getPublicIDAllApp();
             
 
             // TODO: 15.03.2022

@@ -26,6 +26,7 @@ import com.dsy.dsu.Errors.WriteErrorForAll.RecordNewErros;
 import com.dsy.dsu.BusinessLogicAll.Class_Generation_UUID;
 import com.dsy.dsu.BusinessLogicAll.Class_MODEL_synchronized;
 import com.dsy.dsu.CnangeServers.PUBLIC_CONTENT;
+import com.dsy.dsu.Hilt.Sqlitehilt.HiltInterfacesqlite;
 import com.google.android.material.button.MaterialButton;
 
 import java.io.FileDescriptor;
@@ -43,8 +44,13 @@ import java.util.concurrent.LinkedBlockingQueue;
 import java.util.concurrent.TimeoutException;
 
 import javax.crypto.NoSuchPaddingException;
+import javax.inject.Inject;
+
+import dagger.hilt.EntryPoints;
+import dagger.hilt.android.AndroidEntryPoint;
 
 
+@AndroidEntryPoint
 public class Service_Для_ЧатаСменаСтатусаПрочитаноИлиНет extends IntentService {
 
     // Binder given to clients
@@ -54,7 +60,9 @@ public class Service_Для_ЧатаСменаСтатусаПрочитаноИ
 
     private Class_GRUD_SQL_Operations    class_grud_sql_operations ;
 
-    private SQLiteDatabase sqLiteDatabase ;
+
+    @Inject
+    public   SQLiteDatabase sqLiteDatabase;
     private  Class_MODEL_synchronized  modelДляФрагментаДляОперацииЗаписиНовгоСтатусаПрочитанного ;
     private PUBLIC_CONTENT   Class_Engine_SQLГдеНаходитьсяМенеджерПотоков ;
     private RecordNewErros recordNewErros;
@@ -93,7 +101,12 @@ public class Service_Для_ЧатаСменаСтатусаПрочитаноИ
    @Override
     public void onCreate() {
         super.onCreate();
-       sqLiteDatabase=    GetSQLiteDatabase.SqliteDatabase();
+       // TODO: 16.04.2025
+       //sqLiteDatabase = EntryPoints.get(context, HiltInterfacesqlite.class).getHiltSqlite();
+       Log.d(context.getClass().getName(), "\n"
+               + " время: " + new Date() + "\n+" +
+               " Класс в процессе... " + this.getClass().getName() + "\n" +
+               " метод в процессе... " + Thread.currentThread().getStackTrace()[2].getMethodName() + " sqLiteDatabase " +sqLiteDatabase);
         Log.i(getApplicationContext().getClass().getName(), " public class Service_Для_ЧатаСменаСтатусаПрочитаноИлиНет extends JobIntentService { " + new Date()+"\n"+
                 " Thread.currentThread().getName()  " +Thread.currentThread().getName());
     }

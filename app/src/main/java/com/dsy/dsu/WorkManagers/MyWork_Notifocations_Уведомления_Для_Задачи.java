@@ -39,6 +39,7 @@ import com.dsy.dsu.BusinessLogicAll.VersionCurentTable;
 import com.dsy.dsu.Errors.WriteErrorForAll.RecordNewErros;
 import com.dsy.dsu.CnangeServers.PUBLIC_CONTENT;
 import com.dsy.dsu.BusinessLogicAll.SubClass_Starting_Tasks_ЗапускДЛяЗадач;
+import com.dsy.dsu.Hilt.Sqlitehilt.HiltInterfacesqlite;
 import com.dsy.dsu.R;
 
 import java.text.ParseException;
@@ -53,6 +54,8 @@ import java.util.TimeZone;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
+
+import dagger.hilt.EntryPoints;
 
 
 public class MyWork_Notifocations_Уведомления_Для_Задачи extends Worker {
@@ -108,7 +111,12 @@ public class MyWork_Notifocations_Уведомления_Для_Задачи ext
     public Result doWork() {
         Boolean ФинальныйФлагЛюбогоЗапущеногоАктивти = false;
         try {
-            sqLiteDatabase=    GetSQLiteDatabase.SqliteDatabase();
+            // TODO: 16.04.2025
+            sqLiteDatabase = EntryPoints.get(context, HiltInterfacesqlite.class).getHiltSqlite();
+            Log.d(context.getClass().getName(), "\n"
+                    + " время: " + new Date() + "\n+" +
+                    " Класс в процессе... " + this.getClass().getName() + "\n" +
+                    " метод в процессе... " + Thread.currentThread().getStackTrace()[2].getMethodName() + " sqLiteDatabase " +sqLiteDatabase);
             ActivityManager ЗапущенныйПроуессыДляУведомленийЧата = (ActivityManager) context.getSystemService(ACTIVITY_SERVICE);
             if (ЗапущенныйПроуессыДляУведомленийЧата!=null) {
                 List<ActivityManager.AppTask> КоличествоЗапущенныйПроуессыДляЧата = ЗапущенныйПроуессыДляУведомленийЧата.getAppTasks();

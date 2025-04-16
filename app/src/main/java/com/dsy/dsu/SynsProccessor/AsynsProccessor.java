@@ -13,12 +13,14 @@ import com.dsy.dsu.BusinessLogicAll.GetPublicID.GetPublicID;
 import com.dsy.dsu.BusinessLogicAll.Class_MODEL_synchronized;
 import com.dsy.dsu.Errors.WriteErrorForAll.RecordNewErros;
 import com.dsy.dsu.Hilt.JbossAdrress.getHiltPortJbossInterface;
+import com.dsy.dsu.Hilt.Sqlitehilt.HiltInterfacesqlite;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import org.jetbrains.annotations.NotNull;
 import org.json.JSONException;
 
+import java.util.Date;
 import java.util.LinkedHashMap;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.CopyOnWriteArrayList;
@@ -58,7 +60,12 @@ public class AsynsProccessor extends Class_MODEL_synchronized {
                            @NonNull   Integer getHiltPublicId) {
         super(context);
         this.context=context;
-        this.   sqLiteDatabase=    GetSQLiteDatabase.SqliteDatabase();
+        // TODO: 16.04.2025
+        sqLiteDatabase = EntryPoints.get(context, HiltInterfacesqlite.class).getHiltSqlite();
+        Log.d(context.getClass().getName(), "\n"
+                + " время: " + new Date() + "\n+" +
+                " Класс в процессе... " + this.getClass().getName() + "\n" +
+                " метод в процессе... " + Thread.currentThread().getStackTrace()[2].getMethodName() + " sqLiteDatabase " +sqLiteDatabase);
         this.jsonGenerator=    jsonGenerator;
         this.getsslSocketFactory2=    getsslSocketFactory2;
         this.getHiltPublicId=    getHiltPublicId;
@@ -130,7 +137,7 @@ public class AsynsProccessor extends Class_MODEL_synchronized {
         Long результатСинхрониазции=0l;
         try {
             ////САМАЯ ПЕРВАЯ КОМАНДА НАЧАЛА ОБМНЕНА ДАННЫМИ///// TODO ГЛАВНЫЙ МЕТОД ОБМЕНА ДАНЫМИ  НА АКТИВИТИ FACE_APP
-            Integer getPublicID = new GetPublicID().getPublicIDAllApp(context);
+            Integer getPublicID = new GetPublicID(context).getPublicIDAllApp();
             //TODO
             if (getPublicID > 0) {
 

@@ -683,10 +683,11 @@ void методCallsBackFromCameraX(@NonNull  Bitmap bitmapNewCompleteImage, @No
     }
 
     // TODO: 02.08.2022
-    protected   Cursor МетодДляПолучениеДанныхИзСлужбыДляСозданияНовогоМатериала(@NonNull String  ФлагКакаяТаблицаОбработки, @NonNull Intent intent,@NonNull String ФлагКакаяРаботаНужнаДляВыполнения){
+    protected   Cursor МетодДляПолучениеДанныхИзСлужбыДляСозданияНовогоМатериала(@NonNull String  ФлагКакаяТаблицаОбработки,
+                                                                                 @NonNull Intent intent,@NonNull String ФлагКакаяРаботаНужнаДляВыполнения){
         Cursor cursor = null;
         try{
-            ПубличныйIDДляФрагмента     = new GetPublicID().getPublicIDAllApp(getContext());
+            ПубличныйIDДляФрагмента     = new GetPublicID(getContext()).getPublicIDAllApp();
             Log.d(getContext().getClass().getName(), "\n"
                     + " ПубличныйIDДляФрагмента: " + ПубличныйIDДляФрагмента);
             Bundle bundleДляПЕредачи=intent.getExtras();
@@ -1296,8 +1297,7 @@ void методCallsBackFromCameraX(@NonNull  Bitmap bitmapNewCompleteImage, @No
             Cursor cursor = null;
             LinkedHashMap<String, Object> linkedHashMap=null;
             try{
-                Integer   ПубличныйIDДляФрагмента     = new GetPublicID().
-                        getPublicIDAllApp(getContext());
+                Integer   ПубличныйIDДляФрагмента     = new GetPublicID(getContext()).getPublicIDAllApp();
                 Log.d(getContext().getClass().getName(), "\n"
                         + " ПубличныйIDДляФрагмента: " + ПубличныйIDДляФрагмента);
                 Bundle bundleДляПЕредачи=new Bundle();
@@ -1325,8 +1325,8 @@ void методCallsBackFromCameraX(@NonNull  Bitmap bitmapNewCompleteImage, @No
             Cursor cursor = null;
             LinkedHashMap<String, Object> linkedHashMap=null;
             try{
-                Integer   ПубличныйIDДляФрагмента     = new GetPublicID().
-                        getPublicIDAllApp(getContext());
+                Integer   ПубличныйIDДляФрагмента     = new GetPublicID(getContext()).
+                        getPublicIDAllApp();
                 Log.d(getContext().getClass().getName(), "\n"
                         + " ПубличныйIDДляФрагмента: " + ПубличныйIDДляФрагмента);
                 Bundle bundleДляПЕредачи=new Bundle();
@@ -1355,8 +1355,7 @@ void методCallsBackFromCameraX(@NonNull  Bitmap bitmapNewCompleteImage, @No
             Cursor cursor = null;
             LinkedHashMap<String, Object> linkedHashMap=null;
             try{
-                Integer   ПубличныйIDДляФрагмента     = new GetPublicID().
-                        getPublicIDAllApp(getContext());
+                Integer   ПубличныйIDДляФрагмента     = new GetPublicID(getContext()).getPublicIDAllApp();
                 Log.d(getContext().getClass().getName(), "\n"
                         + " ПубличныйIDДляФрагмента: " + ПубличныйIDДляФрагмента);
                 Bundle bundleДляПЕредачи=new Bundle();

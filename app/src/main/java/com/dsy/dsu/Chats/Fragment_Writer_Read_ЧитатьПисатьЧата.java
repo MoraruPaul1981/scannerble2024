@@ -46,6 +46,7 @@ import com.dsy.dsu.BusinessLogicAll.SubClass_RetryGEtRowInChatsКлассПро�
 
 import com.dsy.dsu.BusinessLogicAll.Class_MODEL_synchronized;
 import com.dsy.dsu.CnangeServers.PUBLIC_CONTENT;
+import com.dsy.dsu.Hilt.Sqlitehilt.HiltInterfacesqlite;
 import com.dsy.dsu.Services.Service_Для_ЧатаСменаСтатусаПрочитаноИлиНет;
 import com.dsy.dsu.R;
 import com.google.android.material.card.MaterialCardView;
@@ -63,6 +64,8 @@ import java.util.concurrent.ExecutionException;
 import java.util.concurrent.LinkedBlockingQueue;
 
 import javax.crypto.NoSuchPaddingException;
+
+import dagger.hilt.EntryPoints;
 
 
 public class Fragment_Writer_Read_ЧитатьПисатьЧата extends Fragment {
@@ -100,7 +103,12 @@ public class Fragment_Writer_Read_ЧитатьПисатьЧата extends Fragm
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         try{
-        sqLiteDatabase=    GetSQLiteDatabase.SqliteDatabase();
+            // TODO: 16.04.2025
+            sqLiteDatabase = EntryPoints.get(getContext(), HiltInterfacesqlite.class).getHiltSqlite();
+            Log.d(getContext().getClass().getName(), "\n"
+                    + " время: " + new Date() + "\n+" +
+                    " Класс в процессе... " + this.getClass().getName() + "\n" +
+                    " метод в процессе... " + Thread.currentThread().getStackTrace()[2].getMethodName() + " sqLiteDatabase " +sqLiteDatabase);
         Log.d(this.getClass().getName(), " " + " viewДляСообщений" + viewДляСообщенийЧата);
     } catch (Exception e) {
         e.printStackTrace();
@@ -182,7 +190,7 @@ public class Fragment_Writer_Read_ЧитатьПисатьЧата extends Fragm
             ПолученыйIDДляЧата = getArguments().getLong("ПолученыйIDДляЧата", 0);
             ПолученыйФИОIDДляЧата = new String();
             ПолученыйФИОIDДляЧата = getArguments().getString("ПолученыйФИОIDДляЧата", "");
-            ПубличныйIDДляФрагмента = new GetPublicID().getPublicIDAllApp(getContext());
+            ПубличныйIDДляФрагмента = new GetPublicID(getContext()).getPublicIDAllApp();
             ПолученыйУжеСуществующийUUIDИзПерепискиДляЧата = getArguments().getLong("ПолученыйUUIDУжеСуществующийПерепискиПользоватлейДляЧата", 0);
 
 

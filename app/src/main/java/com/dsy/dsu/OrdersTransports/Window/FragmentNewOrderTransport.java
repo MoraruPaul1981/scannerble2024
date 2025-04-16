@@ -111,7 +111,7 @@ public class FragmentNewOrderTransport extends Fragment {
             // TODO: 27.04.2023  Запускаем  Новый Заказ Транпорта
             subClassNewOrderTransport    =new SubClassNewOrderTransport(getActivity());
             subClassSetAllSprabochnik=           new SubClassSetAllSprabochnik();
-            ПубличныйID = new GetPublicID().getPublicIDAllApp(getContext());
+            ПубличныйID = new GetPublicID(getContext()).getPublicIDAllApp();
             localBinderNewOrderTransport =  (ServiceOrserTransportService.  LocalBinderOrderTransport) getArguments().getBinder("binder");
             animationvibr1 = AnimationUtils.loadAnimation(getContext(),R.anim.slide_singletable2);//
             preferencesМатериалы = getContext().getSharedPreferences("sharedPreferencesХранилище", Context.MODE_MULTI_PROCESS);
@@ -934,7 +934,7 @@ public class FragmentNewOrderTransport extends Fragment {
                 subClassNewOrderTransport.     методЗаписьВыбраногоЦФО(getId,getName);
                 // TODO: 06.06.2023 запускаем сихорнизацию одноразовую
                 Integer ПубличныйIDДляФрагмента =
-                        new GetPublicID().getPublicIDAllApp(getContext());
+                        new GetPublicID(getContext()).getPublicIDAllApp();
             } catch (Exception e) {
                 e.printStackTrace();
                 Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +

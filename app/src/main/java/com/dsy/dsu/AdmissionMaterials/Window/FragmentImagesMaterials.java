@@ -516,7 +516,7 @@ public class FragmentImagesMaterials extends Fragment {
                         МетодЗапускаАнимацииКнопок(v);
                         message.getTarget().postDelayed(()->{
                                     Integer ПубличныйIDДляФрагмента =
-                                            new GetPublicID().getPublicIDAllApp(getContext());
+                                            new GetPublicID(getContext()).getPublicIDAllApp();
                                     // TODO: 16.11.2022  запуск синхронизации однорозовая
                                     },
                                 500);
@@ -842,7 +842,7 @@ public class FragmentImagesMaterials extends Fragment {
     , @NonNull Integer ТекущаяНомерМатериала ){
         Cursor cursorДетализацияМатериала = null;
         try{
-            ПубличныйIDДляФрагмента     = new GetPublicID().getPublicIDAllApp(getContext());
+            ПубличныйIDДляФрагмента     = new GetPublicID(getContext()).getPublicIDAllApp();
             Log.d(getContext().getClass().getName(), "\n"
                     + " ПубличныйIDДляФрагмента: " + ПубличныйIDДляФрагмента);
             Bundle bundleДляПЕредачи=new Bundle();

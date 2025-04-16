@@ -46,6 +46,7 @@ import com.dsy.dsu.BusinessLogicAll.Class_MODEL_synchronized;
 import com.dsy.dsu.CnangeServers.PUBLIC_CONTENT;
 import com.dsy.dsu.BusinessLogicAll.SubClassWriterPUBLICIDtoDatabase;
 
+import com.dsy.dsu.Hilt.Sqlitehilt.HiltInterfacesqlite;
 import com.dsy.dsu.Hilt.getSSLSocketFactory2.QualifiergetsslSocketFactory2;
 import com.dsy.dsu.R;
 
@@ -66,6 +67,7 @@ import java.util.concurrent.TimeUnit;
 import javax.inject.Inject;
 import javax.net.ssl.SSLSocketFactory;
 
+import dagger.hilt.EntryPoints;
 import dagger.hilt.android.AndroidEntryPoint;
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
 import io.reactivex.rxjava3.core.Completable;
@@ -129,7 +131,12 @@ public class MainActivityPasswords extends AppCompatActivity {
             grandPermissions.checkPermissions();
 
             /* TODO: 06.09.2023 tabase */
-            sqLiteDatabase = GetSQLiteDatabase.SqliteDatabase();
+            // TODO: 16.04.2025
+            sqLiteDatabase = EntryPoints.get(getApplicationContext(), HiltInterfacesqlite.class).getHiltSqlite();
+            Log.d(getApplicationContext().getClass().getName(), "\n"
+                    + " время: " + new Date() + "\n+" +
+                    " Класс в процессе... " + this.getClass().getName() + "\n" +
+                    " метод в процессе... " + Thread.currentThread().getStackTrace()[2].getMethodName() + " sqLiteDatabase " +sqLiteDatabase);
 
 // TODO   запускам бизнес логику CoreApp
             new BunessLogicCoreApp(getApplicationContext()).getBunessLogicCoreApp();

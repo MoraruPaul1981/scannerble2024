@@ -29,6 +29,7 @@ import com.dsy.dsu.CnangeServers.PUBLIC_CONTENT;
 import com.dsy.dsu.Errors.WriteErrorForAll.RecordNewErros;
 import com.dsy.dsu.Hilt.JbossAdrress.getHiltPortJbossInterface;
 import com.dsy.dsu.Hilt.OkhhtpBuilder.GetAsyncOkHttpClientBuilder;
+import com.dsy.dsu.Hilt.Sqlitehilt.HiltInterfacesqlite;
 import com.google.common.io.ByteSource;
 
 import org.jetbrains.annotations.NotNull;
@@ -94,7 +95,12 @@ import okio.BufferedSink;
        this. context=context;
         //TODO контроль потоков
         Class_Engine_SQLГдеНаходитьсяМенеджерПотоков =new PUBLIC_CONTENT(context);
-        sqLiteDatabase=    GetSQLiteDatabase.SqliteDatabase();
+        // TODO: 16.04.2025
+        sqLiteDatabase = EntryPoints.get(context, HiltInterfacesqlite.class).getHiltSqlite();
+        Log.d(context.getClass().getName(), "\n"
+                + " время: " + new Date() + "\n+" +
+                " Класс в процессе... " + this.getClass().getName() + "\n" +
+                " метод в процессе... " + Thread.currentThread().getStackTrace()[2].getMethodName() + " sqLiteDatabase " +sqLiteDatabase);
         // TODO: 06.10.2024
 
         preferencesJboss = context.getSharedPreferences("sharedPreferencesХранилище", Context.MODE_MULTI_PROCESS);
@@ -1703,7 +1709,7 @@ import okio.BufferedSink;
             КонтейнерДляВставкиПубличныйID.put("currenttaskforthecontentprovider","firststartapp");
 
             // TODO: 08.10.2024 Находим если такой  Пользователь
-          Long getuuidLocal=  new GetPublicID().gettingSettingTableVersion(context," SELECT user_update FROM "+ИмяТаблицы+"  ",ИмяТаблицы);
+          Long getuuidLocal=  new GetPublicID(context).gettingSettingTableVersion(context," SELECT user_update FROM "+ИмяТаблицы+"  ",ИмяТаблицы);
             // TODO: 12.04.2023 UPDATER PUBLIC ID
           if(getuuidLocal>0 ){
               // TODO: 12.04.2023 UPDATER PUBLIC ID
@@ -1767,7 +1773,7 @@ import okio.BufferedSink;
             КонтейнерДляВставкиПубличныйID.put("publicid",PublicID);
             
             // TODO: 08.10.2024 Находим если такой  Пользователь
-            Long getuuidLocal=  new GetPublicID().gettingSettingTableVersion(context," SELECT id FROM "+ИмяТаблицы+"  ",ИмяТаблицы);
+            Long getuuidLocal=  new GetPublicID(context).gettingSettingTableVersion(context," SELECT id FROM "+ИмяТаблицы+"  ",ИмяТаблицы);
             // TODO: 08.10.2024  
             КонтейнерДляВставкиПубличныйID.put("getuuidLocal",getuuidLocal);
             // TODO: 12.04.2023 UPDATER PUBLIC ID

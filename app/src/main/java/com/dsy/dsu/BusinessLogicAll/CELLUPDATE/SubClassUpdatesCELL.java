@@ -17,10 +17,13 @@ import com.dsy.dsu.BusinessLogicAll.GetPublicID.GetPublicID;
 import com.dsy.dsu.Errors.WriteErrorForAll.RecordNewErros;
 import com.dsy.dsu.BusinessLogicAll.DATE.Class_Generation_Data;
 import com.dsy.dsu.BusinessLogicAll.VersionCurentTable;
+import com.dsy.dsu.Hilt.Sqlitehilt.HiltInterfacesqlite;
 import com.google.android.material.textview.MaterialTextView;
 
 import java.util.Date;
 import java.util.function.LongToIntFunction;
+
+import dagger.hilt.EntryPoints;
 
 //TODO класс обновление Ячеек
 public class SubClassUpdatesCELL {
@@ -30,7 +33,12 @@ public class SubClassUpdatesCELL {
     public SubClassUpdatesCELL(Context context) {
 
         this.context = context;
-        sqLiteDatabase=    GetSQLiteDatabase.SqliteDatabase();
+        // TODO: 16.04.2025
+        sqLiteDatabase = EntryPoints.get(context, HiltInterfacesqlite.class).getHiltSqlite();
+        Log.d(context.getClass().getName(), "\n"
+                + " время: " + new Date() + "\n+" +
+                " Класс в процессе... " + this.getClass().getName() + "\n" +
+                " метод в процессе... " + Thread.currentThread().getStackTrace()[2].getMethodName() + " sqLiteDatabase " +sqLiteDatabase);
     }
 
 
@@ -133,7 +141,7 @@ public class SubClassUpdatesCELL {
 
 
 
-            Long getPublicID=  new GetPublicID().gettingSettingTableVersion(context," SELECT publicid FROM successlogin "  ,"successlogin");
+            Long getPublicID=  new GetPublicID(context).gettingSettingTableVersion(context," SELECT publicid FROM successlogin "  ,"successlogin");
             contentValuesОбноленияЯчейкиSingleTanel.put("user_update", getPublicID);
 
 

@@ -16,7 +16,7 @@ public class SubClass_Connection_BroadcastReceiver_Sous_Asyns_Glassfish  {
 
         try {
             // TODO: 30.09.2021 МЕТОД ЗАПУСКА СИНХРОНИЗАЦИИ ЧАТА ПО РАСПИСАНИЮ , НЕ ВЗАВИСИМОСТИ ОТ СОЗДАВАЛ ЛИ СООБЩЕНИЕ ИЛИ НЕТ
-            ПубличныйIDДляФрагмента = new GetPublicID().getPublicIDAllApp(context);
+            ПубличныйIDДляФрагмента = new GetPublicID(context).getPublicIDAllApp();
             Log.d(this.getClass().getName(), "ПубличныйIDДляФрагмента " + ПубличныйIDДляФрагмента);
             if (ПубличныйIDДляФрагмента == null) {
                 // TODO: 03.02.2022

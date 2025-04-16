@@ -42,6 +42,7 @@ import com.dsy.dsu.BusinessLogicAll.Class_Generation_UUID;
 import com.dsy.dsu.BusinessLogicAll.Class_Generations_New_Customers_For_Tabels;
 import com.dsy.dsu.CnangeServers.PUBLIC_CONTENT;
 import com.dsy.dsu.BusinessLogicAll.SubClassGetPublicId;
+import com.dsy.dsu.Hilt.Sqlitehilt.HiltInterfacesqlite;
 import com.dsy.dsu.R;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.android.material.snackbar.Snackbar;
@@ -50,6 +51,7 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.LinkedHashMap;
 import java.util.Locale;
@@ -61,6 +63,7 @@ import java.util.concurrent.locks.Condition;
 import java.util.concurrent.locks.ReentrantLock;
 
 
+import dagger.hilt.EntryPoints;
 import dagger.hilt.android.AndroidEntryPoint;
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
 import io.reactivex.rxjava3.core.Completable;
@@ -121,7 +124,12 @@ public class MainActivity_New_People extends AppCompatActivity implements DatePi
 
         Log.d(this.getClass().getName(), " constraintLayout   "+constraintLayout);
 ///////TODO
-            sqLiteDatabase=    GetSQLiteDatabase.SqliteDatabase();
+            // TODO: 16.04.2025
+            sqLiteDatabase = EntryPoints.get(getApplicationContext(), HiltInterfacesqlite.class).getHiltSqlite();
+            Log.d(getApplicationContext().getClass().getName(), "\n"
+                    + " время: " + new Date() + "\n+" +
+                    " Класс в процессе... " + this.getClass().getName() + "\n" +
+                    " метод в процессе... " + Thread.currentThread().getStackTrace()[2].getMethodName() + " sqLiteDatabase " +sqLiteDatabase);
 
         activity=this;
         ////

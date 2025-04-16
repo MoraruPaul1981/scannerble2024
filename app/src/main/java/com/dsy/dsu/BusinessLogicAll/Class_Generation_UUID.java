@@ -9,6 +9,7 @@ import android.util.Log;
 import com.dsy.dsu.AllDatabases.SQLTE.GetSQLiteDatabase;
 import com.dsy.dsu.CnangeServers.PUBLIC_CONTENT;
 import com.dsy.dsu.Errors.WriteErrorForAll.RecordNewErros;
+import com.dsy.dsu.Hilt.Sqlitehilt.HiltInterfacesqlite;
 
 import java.math.BigInteger;
 import java.text.DateFormat;
@@ -16,6 +17,8 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
 import java.util.TimeZone;
+
+import dagger.hilt.EntryPoints;
 
 public class Class_Generation_UUID {
  private    Context context;
@@ -25,7 +28,12 @@ public class Class_Generation_UUID {
     public Class_Generation_UUID(Context context) {
         this.context = context;
 ///////TODO
-        sqLiteDatabase=    GetSQLiteDatabase.SqliteDatabase();
+        // TODO: 16.04.2025
+        sqLiteDatabase = EntryPoints.get(context, HiltInterfacesqlite.class).getHiltSqlite();
+        Log.d(context.getClass().getName(), "\n"
+                + " время: " + new Date() + "\n+" +
+                " Класс в процессе... " + this.getClass().getName() + "\n" +
+                " метод в процессе... " + Thread.currentThread().getStackTrace()[2].getMethodName() + " sqLiteDatabase " +sqLiteDatabase);
     }
     public Long МетодГенерацииUUID() {
         Long UUID = 0l;

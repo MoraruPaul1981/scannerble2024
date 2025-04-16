@@ -27,6 +27,7 @@ import com.dsy.dsu.Errors.WriteErrorForAll.RecordNewErros;
 
 import com.dsy.dsu.CnangeServers.PUBLIC_CONTENT;
 import com.dsy.dsu.BusinessLogicAll.SubClass_ДляСменыСтатусаНаЗадачиВыполненыйОтказОтмененный;
+import com.dsy.dsu.Hilt.Sqlitehilt.HiltInterfacesqlite;
 import com.dsy.dsu.Tasks.MainActivity_Tasks;
 
 import java.io.FileDescriptor;
@@ -34,7 +35,13 @@ import java.io.PrintWriter;
 import java.util.Date;
 import java.util.HashMap;
 
+import javax.inject.Inject;
 
+import dagger.hilt.EntryPoints;
+import dagger.hilt.android.AndroidEntryPoint;
+
+
+@AndroidEntryPoint
 public class Service_For_Task_Для_Задания_СменаСатуса extends IntentService {////Service
 
     ////////
@@ -57,7 +64,11 @@ public class Service_For_Task_Для_Задания_СменаСатуса exten
 
     private Service_For_Task_Для_Задания_СменаСатуса.LocalBinderДляСлужбыСменаСтатуса binder = new Service_For_Task_Для_Задания_СменаСатуса.LocalBinderДляСлужбыСменаСтатуса();
     private Context context;
-    private SQLiteDatabase sqLiteDatabase ;
+
+
+    @Inject
+    public   SQLiteDatabase sqLiteDatabase;
+
     public Service_For_Task_Для_Задания_СменаСатуса() {
         //TODO
         super("Service_For_Task_Для_Задания_СменаСатуса");
@@ -67,7 +78,12 @@ public class Service_For_Task_Для_Задания_СменаСатуса exten
     @Override
     public void onCreate() {
         super.onCreate();
-        sqLiteDatabase=    GetSQLiteDatabase.SqliteDatabase();
+        // TODO: 16.04.2025
+        ///sqLiteDatabase = EntryPoints.get(context, HiltInterfacesqlite.class).getHiltSqlite();
+        Log.d(context.getClass().getName(), "\n"
+                + " время: " + new Date() + "\n+" +
+                " Класс в процессе... " + this.getClass().getName() + "\n" +
+                " метод в процессе... " + Thread.currentThread().getStackTrace()[2].getMethodName() + " sqLiteDatabase " +sqLiteDatabase);
         Log.d(context.getClass().getName(), "\n"
                 + " время: " + new Date()+"\n+" +
                 " Класс в процессе... " +  this.getClass().getName()+"\n"+

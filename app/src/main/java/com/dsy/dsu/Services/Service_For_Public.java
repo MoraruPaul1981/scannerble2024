@@ -30,6 +30,7 @@ import com.dsy.dsu.BusinessLogicAll.Class_Generation_UUID;
 import com.dsy.dsu.BusinessLogicAll.Class_Generation_Weekend_For_Tabels;
 import com.dsy.dsu.BusinessLogicAll.DATE.Class_Generation_Data;
 import com.dsy.dsu.BusinessLogicAll.DATE.SubClassCursorLoader;
+import com.dsy.dsu.Hilt.Sqlitehilt.HiltInterfacesqlite;
 import com.dsy.dsu.Tabels.Tabel.CompleteTabel.MainActivity_List_Tabels;
 
 import org.reactivestreams.Subscription;
@@ -43,6 +44,10 @@ import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Stream;
 
+import javax.inject.Inject;
+
+import dagger.hilt.EntryPoints;
+import dagger.hilt.android.AndroidEntryPoint;
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
 import io.reactivex.rxjava3.core.Flowable;
 import io.reactivex.rxjava3.core.Observable;
@@ -61,6 +66,9 @@ import io.reactivex.rxjava3.schedulers.Schedulers;
  * TODO: Customize class - update intent actions, extra parameters and static
  * helper methods.
  */
+
+
+@AndroidEntryPoint
 public class Service_For_Public extends IntentService {
     // TODO: Rename actions, choose action names that describe tasks that this
     private String ПолученныйПоследнийМесяцДляСортировкиЕгоВСпиноре;
@@ -68,16 +76,20 @@ public class Service_For_Public extends IntentService {
     protected         SibClassApplyFromBackPeriodof_ЗаполененияТабеляИзПрошлогоМесяца sibClassApplyFromBackPeriodof_заполененияТабеляИзПрошлогоМесяца;
     private Context context;
     private  Intent intentОтActivityListPeoples;
-    private  SQLiteDatabase sqLiteDatabase ;
+
     public Service_For_Public() {
         super("Service_For_Public");
     }
 
+
+    @Inject
+    public   SQLiteDatabase getSqlLiteCoreApp;
     @Override
     public void onCreate() {
         super.onCreate();
         try{
-            sqLiteDatabase=    GetSQLiteDatabase.SqliteDatabase();
+            // TODO: 16.04.2025
+          //  sqLiteDatabase = EntryPoints.get(context, HiltInterfacesqlite.class).getHiltSqlite();
         Log.d(context.getClass().getName(), "\n"
                 + " время: " + new Date()+"\n+" +
                 " Класс в процессе... " +  this.getClass().getName()+"\n"+

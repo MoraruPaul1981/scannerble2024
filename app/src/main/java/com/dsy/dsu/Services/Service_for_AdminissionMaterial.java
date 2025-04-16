@@ -38,6 +38,7 @@ import com.dsy.dsu.BusinessLogicAll.DATE.SubClassYEARONLY;
 import com.dsy.dsu.BusinessLogicAll.DATE.SubClassYearHONLY_ТолькоАнализ;
 import com.dsy.dsu.CnangeServers.PUBLIC_CONTENT;
 import com.dsy.dsu.BusinessLogicAll.DATE.SubClassMONTHONLY;
+import com.dsy.dsu.Hilt.Sqlitehilt.HiltInterfacesqlite;
 
 
 import java.io.ByteArrayOutputStream;
@@ -53,6 +54,10 @@ import java.util.concurrent.locks.Condition;
 import java.util.concurrent.locks.ReentrantLock;
 import java.util.stream.Collectors;
 
+import javax.inject.Inject;
+
+import dagger.hilt.EntryPoints;
+import dagger.hilt.android.AndroidEntryPoint;
 import io.reactivex.rxjava3.core.Flowable;
 import io.reactivex.rxjava3.functions.Action;
 import io.reactivex.rxjava3.functions.Consumer;
@@ -67,11 +72,16 @@ import io.reactivex.rxjava3.schedulers.Schedulers;
  * TODO: Customize class - update intent actions, extra parameters and static
  * helper methods.
  */
+
+@AndroidEntryPoint
 public class Service_for_AdminissionMaterial extends IntentService {
     public LocalBinderДляПолучениеМатериалов binder = new LocalBinderДляПолучениеМатериалов();
     private Context context;
     private String ПолученныйПоследнийМесяцДляСортировкиЕгоВСпиноре;
-    private SQLiteDatabase sqLiteDatabase ;
+
+    @Inject
+    public   SQLiteDatabase sqLiteDatabase;
+
     public Service_for_AdminissionMaterial() {
         super(
                 "Service_for_AdminissionMaterial");
@@ -81,7 +91,8 @@ public class Service_for_AdminissionMaterial extends IntentService {
     @Override
     public void onCreate() {
         super.onCreate();
-        sqLiteDatabase=    GetSQLiteDatabase.SqliteDatabase();
+        // TODO: 16.04.2025
+       // sqLiteDatabase = EntryPoints.get(context, HiltInterfacesqlite.class).getHiltSqlite();
         Log.d(context.getClass().getName(), "\n"
                 + " время: " + new Date() + "\n+" +
                 " Класс в процессе... " + this.getClass().getName() + "\n" +
@@ -437,7 +448,7 @@ public class Service_for_AdminissionMaterial extends IntentService {
         private void МетодЗапускЗаполенеияИзПрошлыхМесяцев(@NonNull Context context, @NonNull Intent intent) {
             try {
                 Log.w(this.getClass().getName(), "   context  " + context);
-                Integer ПубличныйIDДляЗаполененияИзПрошлогоМесяца = new GetPublicID().getPublicIDAllApp(getApplicationContext());
+                Integer ПубличныйIDДляЗаполененияИзПрошлогоМесяца = new GetPublicID(getApplicationContext()).getPublicIDAllApp();
                 Bundle bundleПолучаемДанных = intent.getExtras();
                 Long UUIDРОДИТЕЛЬСКАЯУжеСозданогоТАбеля = bundleПолучаемДанных.getLong("UUIDРОДИТЕЛЬСКАЯУжеСозданогоТАбеля", 0l);
                 Integer СФОУжеСозданогоТАбеля = bundleПолучаемДанных.getInt("СФО", 0);
@@ -864,7 +875,7 @@ public class Service_for_AdminissionMaterial extends IntentService {
                         contentValuesСозданиеНовогоМатериала.put("count", data.getLong("count"));
                         contentValuesСозданиеНовогоМатериала.put("ttn", data.getString("ttn"));
                         contentValuesСозданиеНовогоМатериала.put("datattn", data.getString("datattn"));
-                        Integer  ПубличныйIDДляФрагмента = new GetPublicID().getPublicIDAllApp(context);
+                        Integer  ПубличныйIDДляФрагмента = new GetPublicID(context).getPublicIDAllApp();
                         contentValuesСозданиеНовогоМатериала.put("user_update", ПубличныйIDДляФрагмента);
                         String СгенерированованныйДатаДляДаннойОперации = new Class_Generation_Data(getApplicationContext()).ГлавнаяДатаИВремяОперацийСБазойДанных();
                         contentValuesСозданиеНовогоМатериала.put("date_update", СгенерированованныйДатаДляДаннойОперации);
@@ -952,7 +963,7 @@ public class Service_for_AdminissionMaterial extends IntentService {
                                     // TODO: 21.10.2022 Записываем Новые ФОтографии Image CAmera
                                     ContentValues contentValuesСозданиеНовогоМатериала = new ContentValues();
 
-                                    Integer  ПубличныйIDДляФрагмента = new GetPublicID().getPublicIDAllApp(context);
+                                    Integer  ПубличныйIDДляФрагмента = new GetPublicID(context).getPublicIDAllApp();
                                     contentValuesСозданиеНовогоМатериала.put("user_update", ПубличныйIDДляФрагмента);
 
                                     String СгенерированованныйДатаДляДаннойОперации = new Class_Generation_Data(getApplicationContext()).ГлавнаяДатаИВремяОперацийСБазойДанных();
