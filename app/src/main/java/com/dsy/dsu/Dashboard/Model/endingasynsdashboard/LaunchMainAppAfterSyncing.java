@@ -5,6 +5,9 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 
+import androidx.annotation.NonNull;
+import androidx.fragment.app.FragmentManager;
+
 import com.dsy.dsu.Dashboard.Model.bl_launchFragmentSettingsandDashbord.LaunchActivityDashboard;
 import com.dsy.dsu.Errors.WriteErrorForAll.RecordNewErros;
 import com.dsy.dsu.Passwords.MainActivityPasswords;
@@ -14,16 +17,18 @@ import java.util.Date;
 public class LaunchMainAppAfterSyncing {
 
 private Activity activity;
+private FragmentManager fragmentManager;
 
-    public LaunchMainAppAfterSyncing(Activity activity) {
+    public LaunchMainAppAfterSyncing(Activity activity, @NonNull FragmentManager fragmentManager) {
         this.activity = activity;
+        this.fragmentManager = fragmentManager;
     }
 
     public void appAfterSyncingDashboard( ){
         try {
-           /* LaunchActivityDashboard launchActivityDashboard=new LaunchActivityDashboard( fragmentManager,activity);
+          LaunchActivityDashboard launchActivityDashboard=new LaunchActivityDashboard( fragmentManager,activity);
             // TODO: 27.03.2024 в зависомсти кто вызвает
-            launchActivityDashboard.     launchADashboardFragment();*/
+            launchActivityDashboard.     launchADashboardFragment();
 
 
             Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +

@@ -35,7 +35,6 @@ public class VersionCurentTable {
         this.context = context;
         // TODO: 11.02.2025
         try {
-
                 // TODO: 16.04.2025
                 sqLiteDatabase = EntryPoints.get(context, HiltInterfacesqlite.class).getHiltSqlite();
                 Log.d(context.getClass().getName(), "\n"

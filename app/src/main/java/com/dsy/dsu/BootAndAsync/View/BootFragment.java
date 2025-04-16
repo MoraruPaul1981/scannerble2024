@@ -372,7 +372,7 @@ public class BootFragment extends DialogFragment {
 
             Boolean getUserAuthenticated=   getbundleLaunchMainAppAfterSyncing.getBoolean("launchMainAppAfterSyncing",false);///"В процесс"
 
-            LaunchMainAppAfterSyncing launchMainAppaftersyncing =new LaunchMainAppAfterSyncing(getActivity());
+            LaunchMainAppAfterSyncing launchMainAppaftersyncing =new LaunchMainAppAfterSyncing(getActivity(),fragmentManager);
             if (getUserAuthenticated){
                 // TODO: 01.04.2024 Все в порядке ЗАпускам Саму Программу DashBord
                 launchMainAppaftersyncing.appAfterSyncingDashboard();

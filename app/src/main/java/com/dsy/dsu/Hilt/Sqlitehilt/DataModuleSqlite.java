@@ -9,6 +9,8 @@ import android.util.Log;
 import com.dsy.dsu.AllDatabases.SQLTE.GetSQLiteDatabase;
 import com.dsy.dsu.Errors.WriteErrorForAll.RecordNewErros;
 
+import java.io.File;
+
 import javax.inject.Singleton;
 
 import dagger.Module;
@@ -27,10 +29,20 @@ public class DataModuleSqlite {
         SQLiteDatabase getSQLites=null;
         try{
 
-            getSQLites =  SQLiteDatabase.openDatabase("/data/user/0/com.dsy.dsu/databases/Database DSU-1.db",null, SQLiteDatabase.CREATE_IF_NECESSARY);
-            if (getSQLites==null) {
-              getSQLites=       new GetSQLiteDatabase(context).getSqliteDatabase();
-            }
+
+
+          File fileDatabese = new File("/data/data/com.dsy.dsu/databases", "Database DSU-1.db");
+
+  if(fileDatabese.exists()){
+      //getSQLites =  SQLiteDatabase.openDatabase("/data/user/0/com.dsy.dsu/databases/Database DSU-1.db",null, SQLiteDatabase.CREATE_IF_NECESSARY);
+      getSQLites =  SQLiteDatabase.openDatabase(fileDatabese.getAbsolutePath(),null,
+              SQLiteDatabase.OPEN_READWRITE|SQLiteDatabase.CREATE_IF_NECESSARY);
+  }else {
+
+         GetSQLiteDatabase getSQLiteDatabase=new GetSQLiteDatabase(context);
+      getSQLites=       getSQLiteDatabase.getSqliteDatabase();
+  }
+
             // TODO: 17.04.2023
         Log.d(this.getClass().getName(),"\n" + " class FaceAPp "
                 + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +

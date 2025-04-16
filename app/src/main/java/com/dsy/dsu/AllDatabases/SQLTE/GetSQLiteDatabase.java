@@ -28,7 +28,7 @@ public class GetSQLiteDatabase extends SQLiteOpenHelper{ ///SQLiteOpenHelper
 
 
 
-    private static AtomicReference<SQLiteDatabase> sqliteDatabase=new AtomicReference<>();
+    private   AtomicReference<SQLiteDatabase> sqliteDatabase=new AtomicReference<>();
     private     CopyOnWriteArrayList<String> ИменаТаблицыОтАндройда;
 
 
@@ -99,8 +99,6 @@ public class GetSQLiteDatabase extends SQLiteOpenHelper{ ///SQLiteOpenHelper
     public void onCreate(SQLiteDatabase ССылкаНаСозданнуюБазу) {
         try {
             Log.d(this.getClass().getName(), "сработала ... НАЧАЛО  СОЗДАНИЯ ТАЛИЦ ");
-
-            initDatabase(context);
             // TODO: 24.10.2022 Генерируем Список Таблиц
             ИменаТаблицыОтАндройда=    new SubClassCreatingMainAllTables().getWorkerTablesALl(context);
 
@@ -1338,7 +1336,7 @@ public class GetSQLiteDatabase extends SQLiteOpenHelper{ ///SQLiteOpenHelper
         }
     }
 
-    public static  SQLiteDatabase  getSqliteDatabase() {
+    public    SQLiteDatabase  getSqliteDatabase() {
         System.out.printf("\n" + " class " +
                 Thread.currentThread().getStackTrace()[2].getClassName()
                 + "\n" +
