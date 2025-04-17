@@ -3,7 +3,7 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/drawerLayout_fragment_bootasync"
+    android:id="@+id/drawerLayout_async_prograsser"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:openDrawer="left"
@@ -157,7 +157,7 @@
 
 
 
-    <!--//TODO Начало Основного Экрана Boot Screen -->
+<!--//TODO Начало Основного Экрана Boot Screen -->
 
 
     <!--TODO НАчало Боллоковой Панели-->
@@ -184,4 +184,15 @@
         tools:ignore="ExtraText">
 
     </com.google.android.material.navigation.NavigationView>
+
+
+
+
+
+
+
+
+
+
+
 </androidx.drawerlayout.widget.DrawerLayout>

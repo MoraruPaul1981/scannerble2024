@@ -170,7 +170,7 @@ public class MainActivityBootAndAsync extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        super.onBackPressed();
+      super.onBackPressed();
     }
 
     // TODO: 22.01.2024 END

@@ -75,6 +75,14 @@ public class CoreApp extends Application {
       setTheme(R.style.Theme_AppCompat_DayNight_DarkActionBar);
 
 
+      Log.d(this.getClass().getName(),"\n" + " class CoreApp    " + Thread.currentThread().getStackTrace()[2].getClassName()
+              + "\n" +
+              " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+              " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"+
+              " \n" +
+              "      getSqlLiteCoreApp.isOpen(); " +
+              getSqlLiteCoreApp.isOpen() );
+
      // new BunessLogicCoreApp(getApplicationContext()).getBunessLogicCoreApp();
 
 

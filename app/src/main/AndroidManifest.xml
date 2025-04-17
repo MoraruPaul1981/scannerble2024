@@ -416,18 +416,7 @@
         <!-- активити прикложения ДСУ-1 -->
         <!-- активити прикложения ДСУ-1 -->
         <!-- активити прикложения ДСУ-1  singleTask  singleTask   standard -->
-        <activity
-            android:name=".Dashboard.View.MainActivity_Dashboard"
-            android:exported="true"
-            android:grantUriPermissions="true"
-            android:label="Союз-Автодор"
-            android:requestLegacyExternalStorage="true"
-            android:launchMode="singleTop"
-            android:excludeFromRecents="true"
-            android:clearTaskOnLaunch="true"
-            android:showOnLockScreen="true"
-            android:theme="@style/Theme.MaterialComponents.DayNight.DarkActionBar">
-        </activity>
+
 
 
         <activity
@@ -516,9 +505,6 @@
             android:exported="true"
             android:label="Выбор ЦФО"
             android:theme="@style/Theme.MaterialComponents.DayNight.DarkActionBar">
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value=".Dashboard.View.MainActivity_Dashboard" />
         </activity>
 
 

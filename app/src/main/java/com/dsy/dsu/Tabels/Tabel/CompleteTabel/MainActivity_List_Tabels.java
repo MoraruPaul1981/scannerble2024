@@ -49,14 +49,12 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
 
-import com.dsy.dsu.AllDatabases.SQLTE.GetSQLiteDatabase;
 import com.dsy.dsu.BusinessLogicAll.Class_GRUD_SQL_Operations;
 import com.dsy.dsu.Dashboard.Model.bl_launchFragmentSettingsandDashbord.LaunchActivityDashboard;
 import com.dsy.dsu.Errors.WriteErrorForAll.RecordNewErros;
 import com.dsy.dsu.BusinessLogicAll.Class_MODEL_synchronized;
 import com.dsy.dsu.BusinessLogicAll.DATE.SubClassCursorLoader;
 import com.dsy.dsu.CnangeServers.PUBLIC_CONTENT;
-import com.dsy.dsu.Hilt.Sqlitehilt.HiltInterfacesqlite;
 import com.dsy.dsu.Services.Service_For_Public;
 import com.dsy.dsu.R;
 import com.dsy.dsu.Tabels.Peoples.MainActivity_List_Peoples;
@@ -84,7 +82,8 @@ import java.util.Optional;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.TimeUnit;
 
-import dagger.hilt.EntryPoints;
+import javax.inject.Inject;
+
 import dagger.hilt.android.AndroidEntryPoint;
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
 import io.reactivex.rxjava3.core.Observable;
@@ -111,7 +110,7 @@ public class MainActivity_List_Tabels extends AppCompatActivity  {
 
     private   Context context;
 
-    private   Button КонопкаНазадСтрелкаВсеТабеля;
+    private   Button backFaceApp;
     private SQLiteDatabase sqLiteDatabase ;
 
     private  TextView textViewКоличествоТабелей;
@@ -139,10 +138,13 @@ public class MainActivity_List_Tabels extends AppCompatActivity  {
 
     private FragmentManager fragmentManager;
     private FragmentTransaction fragmentTransaction;
-    private   Cursor    Курсор_Main_ListTabelsFinal;
+
     private    SimpleCursorAdapter simpleCursorAdapterAllTAbels;
 
     private   Cursor Курсор_ДанныеСпиннера;
+
+    @Inject
+    public   SQLiteDatabase getSqlLiteCoreApp;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -153,11 +155,8 @@ public class MainActivity_List_Tabels extends AppCompatActivity  {
             context =this;
             getSupportActionBar().hide(); ///скрывать тул бар
             subClassCursorLoader=      new SubClassCursorLoader();
-
             class_grud_sql_operationsДляАктивтиТабель      = new Class_GRUD_SQL_Operations(getApplicationContext());
-
             // TODO: 16.04.2025
-            sqLiteDatabase = EntryPoints.get(context, HiltInterfacesqlite.class).getHiltSqlite();
             Log.d(context.getClass().getName(), "\n"
                     + " время: " + new Date() + "\n+" +
                     " Класс в процессе... " + this.getClass().getName() + "\n" +
@@ -178,7 +177,7 @@ public class MainActivity_List_Tabels extends AppCompatActivity  {
             fragmentTransaction = fragmentManager.beginTransaction();
 
         //todo кнопка назад
-        КонопкаНазадСтрелкаВсеТабеля = findViewById(R.id.КонопкаНазадСтрелкаВсеТабеля);
+        backFaceApp = findViewById(R.id.КонопкаНазадСтрелкаВсеТабеля);
         textViewКоличествоТабелей= findViewById(R.id.textViewКоличествоТабелей);
         СпинерВыборДату=(Spinner) findViewById(R.id.СпинерТабельМесяцИсториииТабелей);
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LOCKED);
@@ -283,7 +282,7 @@ public class MainActivity_List_Tabels extends AppCompatActivity  {
     }
 
     private void МетодНазадBACKНААктивти() {
-        КонопкаНазадСтрелкаВсеТабеля.setOnClickListener(new View.OnClickListener() {
+        backFaceApp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 try{
@@ -492,8 +491,8 @@ public class MainActivity_List_Tabels extends AppCompatActivity  {
                                     " ПолученныйПоследнийМесяцДляСортировкиЕгоВСпиноре " + ИмесяцвИГодСразу+
                                     " МассивДляВыбораВСпинерДатаArray " +МассивДляВыбораВСпинерДатаArray  +
                                     " МассивДляВыбораВСпинореMainUUID " + МассивДляВыбораВСпинореMainUUID+
-                                    "  ((TextView) parent.getChildAt(0)) " +((TextView) parent.getChildAt(0)).getTag()  + " MainParentUUID " + MainParentUUIDFromTabel +
-                                    " Курсор_Main_ListTabelsFinal "+Курсор_Main_ListTabelsFinal);
+                                    "  ((TextView) parent.getChildAt(0)) " +((TextView) parent.getChildAt(0)).getTag()
+                                    + " MainParentUUID " + MainParentUUIDFromTabel );
 
                         }else {
                             // TODO: 19.04.2023  Когда ДАННЫХ НЕТ

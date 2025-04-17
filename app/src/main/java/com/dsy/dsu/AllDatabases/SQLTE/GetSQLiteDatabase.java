@@ -1312,6 +1312,11 @@ public class GetSQLiteDatabase extends SQLiteOpenHelper{ ///SQLiteOpenHelper
             if (context !=null) {
                 if (sqliteDatabase.get() == null) {
                     sqliteDatabase.getAndSet(this.getWritableDatabase()) ; //ссылка на схему базы данных;//ссылка на схему базы данных ГЛАВНАЯ ВСТАВКА НА БАЗУ ДСУ-
+
+                    // TODO: 17.04.2025  
+                    new SqlLitePRAGMA(context).launchsqlLitePRAGMA(sqliteDatabase.get());
+                    
+                    
                     Log.d(this.getClass().getName(),"\n" + " class " +
                             Thread.currentThread().getStackTrace()[2].getClassName()
                             + "\n" +

@@ -175,30 +175,30 @@ public class BootFragment extends DialogFragment {
         try{
             super.onViewCreated(view, savedInstanceState);
             // TODO: 03.04.2025
-            DrawerLayout    drawerLayout         = (DrawerLayout) view.findViewById(R.id.drawerLayout_async_prograsser);
-            progressbarbootandasync = (ProgressBar) drawerLayout.findViewById(R.id.progressbarbootandasync); /////КНОПКА ТАБЕЛЬНОГО УЧЕТА/
-            drawerLayoutAsync = (DrawerLayout) drawerLayout.findViewById(R.id.drawerLayout_async_prograsser); /////КНОПКА ТАБЕЛЬНОГО УЧЕТА
-            drawerLayoutAsync.setBackgroundColor(Color.WHITE);         //TODO устанвливает цвета
-            drawerLayoutAsync.setDrawingCacheBackgroundColor(Color.RED);//todo
-            navigationViewAsyncApp    = (NavigationView) drawerLayout.findViewById(R.id.navigator_asyncapp); /////КНОПКА ТАБЕЛЬНОГО УЧЕТА
-            imageView_faceapp_settings = (ImageView) drawerLayout.findViewById(R.id.imageView_faceapp_settings); /////КНОПКА ТАБЕЛЬНОГО УЧЕТА
-            // TODO: 15.04.2025
-            getlifecycleOwner=this;
+                // TODO: 17.04.2025
+                drawerLayoutAsync       = (DrawerLayout) view.findViewById(R.id.drawerLayout_fragment_bootasync);
+                progressbarbootandasync = (ProgressBar) drawerLayoutAsync.findViewById(R.id.progressbarbootandasync); /////КНОПКА ТАБЕЛЬНОГО УЧЕТА//////КНОПКА ТАБЕЛЬНОГО УЧЕТА
+                drawerLayoutAsync.setBackgroundColor(Color.WHITE);         //TODO устанвливает цвета
+                drawerLayoutAsync.setDrawingCacheBackgroundColor(Color.RED);//todo
+                navigationViewAsyncApp    = (NavigationView) drawerLayoutAsync.findViewById(R.id.navigator_asyncapp); /////КНОПКА ТАБЕЛЬНОГО УЧЕТА
+                imageView_faceapp_settings = (ImageView) drawerLayoutAsync.findViewById(R.id.imageView_faceapp_settings); /////КНОПКА ТАБЕЛЬНОГО УЧЕТА
+                // TODO: 15.04.2025
+                getlifecycleOwner=this;
 
-            // TODO: 15.04.2025 запускам бизнес логику фрагмента boot
-            blInnerMainActivityBootAndAsync=new GetComponentActivityBootService(getsslSocketFactory2,
-                    progressbarbootandasync, getActivity(), drawerLayoutAsync,
-                    navigationViewAsyncApp,getContext(),  getlifecycleOwner,imageView_faceapp_settings);
+                // TODO: 15.04.2025 запускам бизнес логику фрагмента boot
+                blInnerMainActivityBootAndAsync=new GetComponentActivityBootService(getsslSocketFactory2,
+                        progressbarbootandasync, getActivity(), drawerLayoutAsync,
+                        navigationViewAsyncApp,getContext(),  getlifecycleOwner,imageView_faceapp_settings);
 
 
-            // TODO: 19.01.2024  запускаем бизнес логики автивити boot and async
-            // TODO: 15.04.2025
-            blInnerMainActivityBootAndAsync .  registeEventBusFirst(this);
+                // TODO: 19.01.2024  запускаем бизнес логики автивити boot and async
+                // TODO: 15.04.2025
+                blInnerMainActivityBootAndAsync .  registeEventBusFirst(this);
 
-            blInnerMainActivityBootAndAsync .  МетодБоковаяПанельОткрытьЗАкрыть();
-            blInnerMainActivityBootAndAsync .listerNavigationViewAsyncApp();
-            blInnerMainActivityBootAndAsync .  workerNavigationViewAsyncApp(fragmentManager);
-            blInnerMainActivityBootAndAsync .  workerImageViewsettings();
+                blInnerMainActivityBootAndAsync .  МетодБоковаяПанельОткрытьЗАкрыть();
+                blInnerMainActivityBootAndAsync .listerNavigationViewAsyncApp();
+                blInnerMainActivityBootAndAsync .  workerNavigationViewAsyncApp(fragmentManager);
+                blInnerMainActivityBootAndAsync .  workerImageViewsettings();
 
 
             Log.d(this.getClass().getName(),"\n" + " class " +
@@ -267,6 +267,7 @@ public class BootFragment extends DialogFragment {
         super.onStop();
         try{
             blInnerMainActivityBootAndAsync .  unregisterEventBusFirst(this);
+            // TODO: 17.04.2025
             Log.d(this.getClass().getName(),"\n" + " class "
                     + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                     " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +

@@ -34,7 +34,6 @@ public class LaunchActivityDiaologSettings {
             fragmentTransaction.addToBackStack(null);
             fragmentManager.popBackStack();
             dashboardFragmentSettings.setArguments(data);
-            fragmentTransaction.setPrimaryNavigationFragment(dashboardFragmentSettings);
             dashboardFragmentSettings.setEnterTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
             fragmentTransaction.setCustomAnimations(android.R.anim.slide_in_left, android.R.anim.slide_out_right);
             dashboardFragmentSettings.show(fragmentManager, "DashboardFragmentMaterialDesign");
@@ -64,11 +63,10 @@ public class LaunchActivityDiaologSettings {
             fragmentTransaction.addToBackStack(null);
             fragmentManager.popBackStack();
             dashboardFragmentSettings.setArguments(data);
-            fragmentTransaction.setPrimaryNavigationFragment(dashboardFragmentSettings);
             dashboardFragmentSettings.setEnterTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
             fragmentTransaction.setCustomAnimations(android.R.anim.slide_in_left, android.R.anim.slide_out_right);
             dashboardFragmentSettings.show(fragmentManager, "DashboardFragmentMaterialDesign");
-
+            fragmentTransaction.commit();
 
             Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                     " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +

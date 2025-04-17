@@ -32,13 +32,12 @@ public class LaunchActivityFragmentBoot {
             Bundle data = new Bundle();
             FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
             fragmentTransaction.addToBackStack(null);
+            fragmentManager.popBackStack();
             bootFragment.setArguments(data);
-            fragmentTransaction.setPrimaryNavigationFragment(bootFragment);
             bootFragment.setEnterTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
             fragmentTransaction.setCustomAnimations(android.R.anim.slide_in_left, android.R.anim.slide_out_right);
             bootFragment.show(fragmentManager, "BootFragment");
             fragmentTransaction.commit();
-
             Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                     " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
                     " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n");
@@ -67,7 +66,7 @@ public class LaunchActivityFragmentBoot {
             bootFragment.setEnterTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
             fragmentTransaction.setCustomAnimations(android.R.anim.slide_in_left, android.R.anim.slide_out_right);
             bootFragment.show(fragmentManager, "BootFragment");
-
+            fragmentTransaction.commit();
 
             Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                     " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
