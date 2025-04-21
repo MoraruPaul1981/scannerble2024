@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.ServiceConnection;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.os.IBinder;
 import android.util.Log;
@@ -25,6 +26,7 @@ import androidx.lifecycle.LifecycleOwner;
 import androidx.viewpager2.widget.ViewPager2;
 
 import com.dsy.dsu.AdmissionMaterials.Window.MainActivity_AdmissionMaterials;
+import com.dsy.dsu.BootAndAsync.Model.BinesslogicActivityBoot.GetFinishAffinityFragment;
 import com.dsy.dsu.CommitPrices.View.Window.MainActivityCommitingPrices;
 
 import com.dsy.dsu.Dashboard.Model.LaunchActivityDiaologSettings;
@@ -53,7 +55,7 @@ public class DashboardFaceApp extends  DialogFragment  {
     private  BuniccessLogicFra4gmentDashboard buniccessLogicFra4gmentDashboard;
     private MaterialCardView materialcardview_dashboard=null;
     private FragmentManager fragmentManager;
-    private FragmentTransaction fragmentTransaction;
+
 
 
     private   TableLayout tableLayout_dashboard;
@@ -80,6 +82,7 @@ public class DashboardFaceApp extends  DialogFragment  {
         Integer getHiltPublicId;
 
   public    ViewPager2 pagerdachbord;
+    protected LifecycleOwner getlifecycleOwner  ;
 
 
     // TODO: Rename and change types and number of parameters
@@ -98,14 +101,9 @@ public class DashboardFaceApp extends  DialogFragment  {
         super.onCreate(savedInstanceState);
         try{
             fragmentManager = getActivity(). getSupportFragmentManager();
-            fragmentTransaction = fragmentManager.beginTransaction();
-
             buniccessLogicFra4gmentDashboard=new BuniccessLogicFra4gmentDashboard();
-            // TODO: 17.08.2023 inizial message
-            lifecycleOwner=getActivity();
-
             // TODO: 22.08.2023  анимауия
-            animation5 = AnimationUtils.loadAnimation(getContext(),R.anim.slide_in_row8);
+            animation5 = AnimationUtils.loadAnimation(getContext(),R.anim.slide_in_row_tabel);
             // TODO: 21.08.2023 насйтироки Разые дизайна Фрагмента
             /*setStyle(DialogFragment.STYLE_NORMAL,android.R.style.Theme_Material_Dialog_Alert);//Theme_Dialog*/
             // setStyle(DialogFragment.STYLE_NORMAL,android.R.style.Theme_DeviceDefault_Light_NoActionBar_Fullscreen);//Theme_Dialog
@@ -146,9 +144,8 @@ public class DashboardFaceApp extends  DialogFragment  {
            // setStyle(   DialogFragment.STYLE_NORMAL ,android.R.style.Theme_Material_Light_NoActionBar_Fullscreen);
           // setStyle(   DialogFragment.STYLE_NORMAL ,android.R.style.Theme_DeviceDefault_NoActionBar_Fullscreen );
             setShowsDialog(true);
-
-
-
+            // TODO: 15.04.2025
+            getlifecycleOwner=this;
             // TODO: 15.08.2023
             Log.d(this.getClass().getName(),"\n" + " class "
                     + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
@@ -181,16 +178,10 @@ public class DashboardFaceApp extends  DialogFragment  {
             // ViewDashboart= inflater.inflate(R.layout.simple_dashbord_fragment_blue, container, false);
             //view= inflater.inflate(R.layout.simple_dashbord_fragment_grey, container, false);
             // view= inflater.inflate(R.layout.simple_dashbord_fragment_green, container, false);
-            getDialog().setOnCancelListener(new DialogInterface.OnCancelListener() {
-                @Override
-                public void onCancel(DialogInterface dialog) {
-                    // TODO: 21.06.2023
-                    requireActivity().finishAffinity();
-                    Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
-                            " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                            " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n");
-                }
-            });
+
+            getDialog().getWindow().setStatusBarColor(Color.BLACK);
+
+
             // TODO: 21.06.2023
             Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                     " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
@@ -247,10 +238,6 @@ public class DashboardFaceApp extends  DialogFragment  {
 
 
 
-            buniccessLogicFra4gmentDashboard.new ClassButtonsApp().методStartingAllButtonApp();
-
-            buniccessLogicFra4gmentDashboard.new ClassAnimatilBackButton().методToSettingsFragment();
-
 
             Log.d(this.getClass().getName(),"\n" + " class " +
                     Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
@@ -293,15 +280,21 @@ public class DashboardFaceApp extends  DialogFragment  {
     // TODO: 07.10.2023  метод первой запуска Work Manager Public и его перввая регистарция
 
 
-
-
-
-
     @Override
-    public void onDestroyView() {
-        super.onDestroyView();
+    public void onStart() {
+        super.onStart();
         try{
-            fragmentManager.setFragmentResult(     "CallBackDashborndFragment",new Bundle());
+
+
+            buniccessLogicFra4gmentDashboard.new ClassButtonsApp().методStartingAllButtonApp();
+
+            buniccessLogicFra4gmentDashboard.new ClassAnimatilBackButton().методToSettingsFragment();
+
+
+            new GetFinishAffinityFragment(getContext()).  finishAffinityFragment(this);
+
+
+
             Log.d(this.getClass().getName(),"\n" + " class "
                     + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                     " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +

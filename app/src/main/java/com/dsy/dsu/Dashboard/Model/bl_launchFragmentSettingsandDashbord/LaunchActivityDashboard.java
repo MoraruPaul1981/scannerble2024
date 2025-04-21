@@ -32,14 +32,10 @@ public class LaunchActivityDashboard {
             Bundle data = new Bundle();
             dashboardFaceApp.setArguments(data);
             fragmentTransaction.addToBackStack(null);
-            //dashboardFaceApp.setEnterTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
+            fragmentManager.popBackStack(dashboardFaceApp.getTag(),FragmentManager.POP_BACK_STACK_INCLUSIVE);
+             dashboardFaceApp.setEnterTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
              fragmentTransaction.setPrimaryNavigationFragment(dashboardFaceApp).setCustomAnimations(android.R.anim.slide_in_left, android.R.anim.slide_out_right);
             dashboardFaceApp.show(fragmentManager, "DashboardFaceApp");
-
-            fragmentManager.getFragments().forEach(frag->{
-                fragmentManager.popBackStack(dashboardFaceApp.getTag(),FragmentManager.POP_BACK_STACK_INCLUSIVE);
-                fragmentTransaction.remove(frag);
-            });
             // TODO: 17.04.2025
             fragmentTransaction.commit();
 
