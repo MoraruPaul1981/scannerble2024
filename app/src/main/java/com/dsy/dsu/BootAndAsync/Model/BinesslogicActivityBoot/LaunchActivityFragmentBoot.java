@@ -34,8 +34,8 @@ public class LaunchActivityFragmentBoot {
             Bundle data = new Bundle();
             bootFragment.setArguments(data);
             fragmentTransaction.addToBackStack(null);
-            fragmentManager.clearBackStack(null);
-           bootFragment.setEnterTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
+            bootFragment.setEnterTransition(FragmentTransaction.TRANSIT_FRAGMENT_CLOSE
+                    | FragmentTransaction.TRANSIT_FRAGMENT_FADE);
             fragmentTransaction.setCustomAnimations(android.R.anim.slide_in_left, android.R.anim.slide_out_right);
             bootFragment.show(fragmentManager, "BootFragment");
             // TODO: 17.04.2025

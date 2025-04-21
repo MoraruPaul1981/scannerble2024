@@ -74,7 +74,7 @@ public class BootFragment extends DialogFragment {
     @Inject
     @QualifiergetsslSocketFactory2
     public SSLSocketFactory getsslSocketFactory2;
-    private  Animation animationboot;
+
 
 
     // TODO: Rename and change types and number of parameters
@@ -95,7 +95,6 @@ public class BootFragment extends DialogFragment {
             // TODO: 15.04.2025
             fragmentManager = getActivity(). getSupportFragmentManager();
             // TODO: 22.08.2023  анимауия
-            animationboot = AnimationUtils.loadAnimation(getContext(), R.anim.slide_in_row_tabel);
             /*setStyle(DialogFragment.STYLE_NORMAL,android.R.style.Theme_Material_Dialog_Alert);//Theme_Dialog*/
             // setStyle(DialogFragment.STYLE_NORMAL,android.R.style.Theme_DeviceDefault_Light_NoActionBar_Fullscreen);//Theme_Dialog
             //  setStyle(DialogFragment.STYLE_NORMAL,android.R.style.Theme_DeviceDefault_Light_NoActionBar_TranslucentDecor);//Theme_Dialog
@@ -199,7 +198,7 @@ public class BootFragment extends DialogFragment {
                 navigationViewAsyncApp    = (NavigationView) drawerLayoutAsync.findViewById(R.id.navigator_asyncapp); /////КНОПКА ТАБЕЛЬНОГО УЧЕТА
                 imageView_faceapp_settings = (ImageView) drawerLayoutAsync.findViewById(R.id.imageView_faceapp_settings); /////КНОПКА ТАБЕЛЬНОГО УЧЕТА
                 imageviewbootlogo = (ImageView) drawerLayoutAsync.findViewById(R.id.imageviewbootlogo); /////КНОПКА ТАБЕЛЬНОГО УЧЕТА
-                imageviewbootlogo.startAnimation(animationboot);
+
 
                 // TODO: 15.04.2025 запускам бизнес логику фрагмента boot
                 blInnerMainActivityBootAndAsync=new GetComponentActivityBootService(getsslSocketFactory2,

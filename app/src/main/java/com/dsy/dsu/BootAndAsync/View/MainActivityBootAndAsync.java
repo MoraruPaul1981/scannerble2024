@@ -85,10 +85,7 @@ public class MainActivityBootAndAsync extends AppCompatActivity {
     // TODO: 26.10.2022 сохраняет данные
 
 
-    @Override
-    public void onBackPressed() {
-        super.onBackPressed();
-    }
+
 
     @Override
     public void onRequestPermissionsResult(int requestCode, String permissions[], int[] grantResults) {

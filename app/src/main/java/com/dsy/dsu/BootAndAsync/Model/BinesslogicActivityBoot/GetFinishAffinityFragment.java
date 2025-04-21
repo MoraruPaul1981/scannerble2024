@@ -6,7 +6,9 @@ import android.util.Log;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.DialogFragment;
+import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 
 import com.dsy.dsu.Errors.WriteErrorForAll.RecordNewErros;
 
@@ -58,7 +60,6 @@ public class GetFinishAffinityFragment {
             public void onCancel(DialogInterface dialog) {
                 // TODO: 21.06.2023
                 try{
-                    // TODO: 18.04.2025
                     // TODO: 21.04.2025
                     dialogFragment.requireActivity().finishAffinity();
                     Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName()
@@ -77,5 +78,6 @@ public class GetFinishAffinityFragment {
                 }
             }
         });
+        // TODO: 21.04.2025
     }
 }
