@@ -393,14 +393,11 @@
 
         <activity
             android:name=".BootAndAsync.View.MainActivityBootAndAsync"
-            android:configChanges="orientation|screenSize|keyboardHidden|screenSize|screenLayout"
             android:exported="true"
             android:grantUriPermissions="true"
             android:label="@string/name_dsu"
             android:launchMode="singleInstance"
-            android:finishOnTaskLaunch="true"
-            android:taskAffinity=""
-            android:excludeFromRecents="true"
+            android:clearTaskOnLaunch="true"
             android:noHistory="true"
             android:requestLegacyExternalStorage="true"
             android:showOnLockScreen="true"

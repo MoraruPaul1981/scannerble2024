@@ -2,6 +2,7 @@ package com.dsy.dsu.Dashboard.View.Fragments;
 
 import android.content.ComponentName;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.ServiceConnection;
 import android.os.Bundle;
@@ -10,10 +11,12 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.TableLayout;
 
+import androidx.activity.OnBackPressedCallback;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.widget.AppCompatImageButton;
@@ -24,6 +27,7 @@ import androidx.lifecycle.LifecycleOwner;
 import androidx.viewpager2.widget.ViewPager2;
 
 import com.dsy.dsu.AdmissionMaterials.Window.MainActivity_AdmissionMaterials;
+import com.dsy.dsu.BootAndAsync.View.MainActivityBootAndAsync;
 import com.dsy.dsu.CommitPrices.View.Window.MainActivityCommitingPrices;
 
 import com.dsy.dsu.Dashboard.Model.LaunchActivityDiaologSettings;
@@ -105,7 +109,6 @@ public class DashboardFragmentMaterialDesign extends  DialogFragment  {
 
             // TODO: 22.08.2023  анимауия
             animation5 = AnimationUtils.loadAnimation(getContext(),R.anim.slide_in_row8);
-
             // TODO: 21.08.2023 насйтироки Разые дизайна Фрагмента
             /*setStyle(DialogFragment.STYLE_NORMAL,android.R.style.Theme_Material_Dialog_Alert);//Theme_Dialog*/
             // setStyle(DialogFragment.STYLE_NORMAL,android.R.style.Theme_DeviceDefault_Light_NoActionBar_Fullscreen);//Theme_Dialog
@@ -146,6 +149,9 @@ public class DashboardFragmentMaterialDesign extends  DialogFragment  {
            // setStyle(   DialogFragment.STYLE_NORMAL ,android.R.style.Theme_Material_Light_NoActionBar_Fullscreen);
           // setStyle(   DialogFragment.STYLE_NORMAL ,android.R.style.Theme_DeviceDefault_NoActionBar_Fullscreen );
             setShowsDialog(true);
+
+
+
             // TODO: 15.08.2023
             Log.d(this.getClass().getName(),"\n" + " class "
                     + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
@@ -164,53 +170,6 @@ public class DashboardFragmentMaterialDesign extends  DialogFragment  {
 
 
 
-    @Override
-    public void onStop() {
-        super.onStop();
-        try{
-
-            Log.d(this.getClass().getName(),"\n" + " class "
-                    + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
-                    " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                    " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n");
-        } catch (Exception e) {
-            e.printStackTrace();
-            Log.e(getContext().getClass().getName(),
-                    "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
-                            " Линия  :" + Thread.currentThread().getStackTrace()[2].getLineNumber());
-            new RecordNewErros(getContext()).recordnewerror(e.toString(),
-                    this.getClass().getName().toString(), Thread.currentThread().getStackTrace()[2].getMethodName().toString(),
-                    Thread.currentThread().getStackTrace()[2].getLineNumber());
-        }
-
-    }
-
-    // TODO: 07.10.2023  метод первой запуска Work Manager Public и его перввая регистарция
-
-
-
-
-
-
-    @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-        try{
-            fragmentManager.setFragmentResult(     "CallBackDashborndFragment",new Bundle());
-            Log.d(this.getClass().getName(),"\n" + " class "
-                    + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
-                    " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                    " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n");
-        } catch (Exception e) {
-            e.printStackTrace();
-            Log.e(getContext().getClass().getName(),
-                    "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
-                            " Линия  :" + Thread.currentThread().getStackTrace()[2].getLineNumber());
-            new RecordNewErros(getContext()).recordnewerror(e.toString(),
-                    this.getClass().getName().toString(), Thread.currentThread().getStackTrace()[2].getMethodName().toString(),
-                    Thread.currentThread().getStackTrace()[2].getLineNumber());
-        }
-    }
 
      @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -218,7 +177,16 @@ public class DashboardFragmentMaterialDesign extends  DialogFragment  {
         View view=null;
         try{
             view= inflater.inflate(R.layout.simple_dashbord_fragment_scroll, container, false);
-
+            getDialog().setOnCancelListener(new DialogInterface.OnCancelListener() {
+                @Override
+                public void onCancel(DialogInterface dialog) {
+                    // TODO: 21.06.2023
+                    requireActivity().finishAffinity();
+                    Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                            " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                            " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n");
+                }
+            });
             // TODO: 21.06.2023
             Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                     " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
@@ -274,6 +242,12 @@ public class DashboardFragmentMaterialDesign extends  DialogFragment  {
 
 
 
+
+            buniccessLogicFra4gmentDashboard.new ClassButtonsApp().методStartingAllButtonApp();
+
+            buniccessLogicFra4gmentDashboard.new ClassAnimatilBackButton().методToSettingsFragment();
+
+
             Log.d(this.getClass().getName(),"\n" + " class " +
                     Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                     " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
@@ -291,21 +265,43 @@ public class DashboardFragmentMaterialDesign extends  DialogFragment  {
     }
 
 
+    @Override
+    public void onStop() {
+        super.onStop();
+        try{
+
+            Log.d(this.getClass().getName(),"\n" + " class "
+                    + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                    " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                    " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n");
+        } catch (Exception e) {
+            e.printStackTrace();
+            Log.e(getContext().getClass().getName(),
+                    "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
+                            " Линия  :" + Thread.currentThread().getStackTrace()[2].getLineNumber());
+            new RecordNewErros(getContext()).recordnewerror(e.toString(),
+                    this.getClass().getName().toString(), Thread.currentThread().getStackTrace()[2].getMethodName().toString(),
+                    Thread.currentThread().getStackTrace()[2].getLineNumber());
+        }
+
+    }
+
+    // TODO: 07.10.2023  метод первой запуска Work Manager Public и его перввая регистарция
+
+
+
 
 
 
     @Override
-    public void onStart() {
-        super.onStart();
+    public void onDestroyView() {
+        super.onDestroyView();
         try{
-            buniccessLogicFra4gmentDashboard.new ClassButtonsApp().методStartingAllButtonApp();
-
-            buniccessLogicFra4gmentDashboard.new ClassAnimatilBackButton().методToSettingsFragment();
-
-            // TODO: 20.07.2023
-            Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+            fragmentManager.setFragmentResult(     "CallBackDashborndFragment",new Bundle());
+            Log.d(this.getClass().getName(),"\n" + " class "
+                    + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                     " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                    " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"  );
+                    " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n");
         } catch (Exception e) {
             e.printStackTrace();
             Log.e(getContext().getClass().getName(),
@@ -317,15 +313,7 @@ public class DashboardFragmentMaterialDesign extends  DialogFragment  {
         }
     }
 
-
-
-
-
-
-
-
     // TODO: 15.08.2023  Бизнес ЛОгика Bunecees Logic Dashboard Fragment
-
     class BuniccessLogicFra4gmentDashboard{
 
 

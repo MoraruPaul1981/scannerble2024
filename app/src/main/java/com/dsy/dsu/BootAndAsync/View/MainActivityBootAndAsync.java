@@ -5,13 +5,16 @@ import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.WindowManager;
+import android.window.OnBackInvokedDispatcher;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentManager;
 
 import com.dsy.dsu.BootAndAsync.Model.BinesslogicActivityBoot.LaunchActivityFragmentBoot;
 import com.dsy.dsu.BusinessLogicAll.Permissions.GrandPermissions;
 import com.dsy.dsu.CoreApp.Model.BunessLogicCoreApp;
+import com.dsy.dsu.Dashboard.Model.endingasynsdashboard.LaunchMainAppAfterSyncing;
 import com.dsy.dsu.Errors.WriteErrorForAll.RecordNewErros;
 import com.dsy.dsu.R;
 
@@ -22,8 +25,9 @@ import dagger.hilt.android.AndroidEntryPoint;
 @AndroidEntryPoint
 public class MainActivityBootAndAsync extends AppCompatActivity {
     // TODO: 15.04.2025
-    
-    private  FragmentManager fragmentManagerBoot;
+
+    private FragmentManager fragmentManagerBoot;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         try {
@@ -38,35 +42,20 @@ public class MainActivityBootAndAsync extends AppCompatActivity {
 
             fragmentManagerBoot = getSupportFragmentManager();
             // TODO: 04.10.2023 разрешения для всего
-            GrandPermissions grandPermissions=   new GrandPermissions(this );
+            GrandPermissions grandPermissions = new GrandPermissions(this);
             grandPermissions.checkPermissions();
 
 
             // TODO   запускам бизнес логику CoreApp
             new BunessLogicCoreApp(getApplicationContext()).getBunessLogicCoreApp();
 
-            Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
-                    " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                    " line " + Thread.currentThread().getStackTrace()[2].getLineNumber());
-
-        } catch (Exception e) {
-            e.printStackTrace();
-            Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() + " Линия  :"
-                    + Thread.currentThread().getStackTrace()[2].getLineNumber());
-            new RecordNewErros(getApplicationContext()).recordnewerror(e.toString(),
-                    this.getClass().getName(), Thread.currentThread().getStackTrace()[2].getMethodName(),
-                    Thread.currentThread().getStackTrace()[2].getLineNumber());
-        }
-    }
 
 
-    @Override
-    protected void onStart() {
-        super.onStart();
-        try {
-            LaunchActivityFragmentBoot launchActivityDashboard=new LaunchActivityFragmentBoot( fragmentManagerBoot,getApplicationContext());
+            LaunchActivityFragmentBoot launchActivityDashboard = new LaunchActivityFragmentBoot(fragmentManagerBoot, getApplicationContext());
             // TODO: 27.03.2024 в зависомсти кто вызвает
-            launchActivityDashboard.     launchBootFragment();
+            launchActivityDashboard.launchBootFragment();
+
+
             Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                     " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
                     " line " + Thread.currentThread().getStackTrace()[2].getLineNumber());
@@ -79,8 +68,10 @@ public class MainActivityBootAndAsync extends AppCompatActivity {
                     this.getClass().getName(), Thread.currentThread().getStackTrace()[2].getMethodName(),
                     Thread.currentThread().getStackTrace()[2].getLineNumber());
         }
-
     }
+
+
+
 
     @Override
     protected void onRestart() {
@@ -92,40 +83,11 @@ public class MainActivityBootAndAsync extends AppCompatActivity {
     }
 
     // TODO: 26.10.2022 сохраняет данные
-    protected void onSaveInstanceState(Bundle outState) {
-        try {
-            super.onSaveInstanceState(outState);
-            // TODO: 23.08.203 статуст поворта экрана
-            Log.d(getApplicationContext().getClass().getName(), "\n"
-                    + " время: " + new Date() + "\n+" +
-                    " Класс в процессе... " + this.getClass().getName() + "\n" +
-                    " метод в процессе... " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n");
-
-        } catch (Exception e) {
-            e.printStackTrace();
-            Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() + " Линия  :"
-                    + Thread.currentThread().getStackTrace()[2].getLineNumber());
-            new RecordNewErros(getApplicationContext()).recordnewerror(e.toString(), this.getClass().getName(), Thread.currentThread().getStackTrace()[2].getMethodName(),
-                    Thread.currentThread().getStackTrace()[2].getLineNumber());
-        }
-    }
 
 
-    // TODO: 26.10.2022 воставливает данные
-    protected void onRestoreInstanceState(Bundle savedInstanceState) {
-        super.onRestoreInstanceState(savedInstanceState);
-        try {
-            Log.d(getApplicationContext().getClass().getName(), "\n"
-                    + " время: " + new Date() + "\n+" +
-                    " Класс в процессе... " + this.getClass().getName() + "\n" +
-                    " метод в процессе... " + Thread.currentThread().getStackTrace()[2].getMethodName());
-        } catch (Exception e) {
-            e.printStackTrace();
-            Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() + " Линия  :"
-                    + Thread.currentThread().getStackTrace()[2].getLineNumber());
-            new RecordNewErros(getApplicationContext()).recordnewerror(e.toString(), this.getClass().getName(), Thread.currentThread().getStackTrace()[2].getMethodName(),
-                    Thread.currentThread().getStackTrace()[2].getLineNumber());
-        }
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
     }
 
     @Override
@@ -136,19 +98,18 @@ public class MainActivityBootAndAsync extends AppCompatActivity {
                 if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                     // permissions granted.
                     Log.d(this.getClass().getName(), " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
-                            " Линия  :" + Thread.currentThread().getStackTrace()[2].getLineNumber()+
+                            " Линия  :" + Thread.currentThread().getStackTrace()[2].getLineNumber() +
                             " Класс  :" + Thread.currentThread().getStackTrace()[2].getClassName());
                 } else {
                     // no permissions granted.
                     Log.d(this.getClass().getName(), " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
-                            " Линия  :" + Thread.currentThread().getStackTrace()[2].getLineNumber()+
+                            " Линия  :" + Thread.currentThread().getStackTrace()[2].getLineNumber() +
                             " Класс  :" + Thread.currentThread().getStackTrace()[2].getClassName());
                 }
                 return;
             }
         }
     }
-
 
 
     // TODO: 17.08.2023  запуск обновленея ПО и синхрониазции
@@ -167,12 +128,6 @@ public class MainActivityBootAndAsync extends AppCompatActivity {
                     Thread.currentThread().getStackTrace()[2].getLineNumber());
         }
     }
-
-    @Override
-    public void onBackPressed() {
-      super.onBackPressed();
-    }
-
-    // TODO: 22.01.2024 END
+    // TODO: 21.04.2025 end class
 }
 

@@ -1,5 +1,6 @@
 package com.dsy.dsu.BootAndAsync.View;
 
+import androidx.activity.OnBackPressedCallback;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.drawerlayout.widget.DrawerLayout;
@@ -9,17 +10,22 @@ import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.LifecycleOwner;
 
 import android.app.Activity;
+import android.content.Context;
+import android.content.DialogInterface;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
+import android.view.WindowManager;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 
+import com.dsy.dsu.BootAndAsync.Model.BinesslogicActivityBoot.GetFinishAffinityFragment;
 import com.dsy.dsu.BootAndAsync.Model.EventsBus.MessageEvensBusAppAfterSyncing;
 import com.dsy.dsu.BootAndAsync.Model.EventsBus.MessageEvensBusNetworkStatuses;
 import com.dsy.dsu.BootAndAsync.Model.EventsBus.MessageEvensBusPrograssBar;
@@ -52,16 +58,14 @@ import dagger.hilt.android.AndroidEntryPoint;
  */
 @AndroidEntryPoint
 public class BootFragment extends DialogFragment {
-
     private FragmentManager fragmentManager;
-    private FragmentTransaction fragmentTransaction;
-    private Animation animation5;
     protected ProgressBar progressbarbootandasync;
     protected DrawerLayout drawerLayoutAsync;
     protected NavigationView navigationViewAsyncApp;
     protected LifecycleOwner getlifecycleOwner  ;
     protected GetComponentActivityBootService blInnerMainActivityBootAndAsync;
     private ImageView imageView_faceapp_settings;
+    private ImageView imageviewbootlogo;
 
 
     @Inject
@@ -70,6 +74,7 @@ public class BootFragment extends DialogFragment {
     @Inject
     @QualifiergetsslSocketFactory2
     public SSLSocketFactory getsslSocketFactory2;
+    private  Animation animationboot;
 
 
     // TODO: Rename and change types and number of parameters
@@ -88,6 +93,9 @@ public class BootFragment extends DialogFragment {
         super.onCreate(savedInstanceState);
         try{
             // TODO: 15.04.2025
+            fragmentManager = getActivity(). getSupportFragmentManager();
+            // TODO: 22.08.2023  анимауия
+            animationboot = AnimationUtils.loadAnimation(getContext(), R.anim.slide_in_row_tabel);
             /*setStyle(DialogFragment.STYLE_NORMAL,android.R.style.Theme_Material_Dialog_Alert);//Theme_Dialog*/
             // setStyle(DialogFragment.STYLE_NORMAL,android.R.style.Theme_DeviceDefault_Light_NoActionBar_Fullscreen);//Theme_Dialog
             //  setStyle(DialogFragment.STYLE_NORMAL,android.R.style.Theme_DeviceDefault_Light_NoActionBar_TranslucentDecor);//Theme_Dialog
@@ -123,10 +131,18 @@ public class BootFragment extends DialogFragment {
             // setStyle(   DialogFragment.STYLE_NORMAL ,android.R.style.Theme_DeviceDefault_Light_NoActionBar_Fullscreen);//Theme_Dialog  Без Часов
             // setStyle(   DialogFragment.STYLE_NORMAL ,android.R.style.Theme_Black_NoTitleBar );
             //  setStyle(   DialogFragment.STYLE_NORMAL ,android.R.style.Theme_Material_Light_Dialog_Presentation);
-            setStyle(   DialogFragment.STYLE_NORMAL ,android.R.style.Theme_Material_Light_NoActionBar );
+/*            setStyle(   DialogFragment.STYLE_NORMAL ,android.R.style.Theme_DeviceDefault_NoActionBar_Fullscreen  );
+            setStyle(   DialogFragment.STYLE_NO_TITLE,android.R.style.Theme_DeviceDefault_Wallpaper_NoTitleBar);*/
             // setStyle(   DialogFragment.STYLE_NORMAL ,android.R.style.Theme_Material_Light_NoActionBar_Fullscreen);
             // setStyle(   DialogFragment.STYLE_NORMAL ,android.R.style.Theme_DeviceDefault_NoActionBar_Fullscreen );
+         //   setStyle(DialogFragment.STYLE_NO_TITLE, android.R.style.Theme_NoTitleBar_Fullscreen);
+            setStyle(   DialogFragment.STYLE_NORMAL ,android.R.style.Theme_DeviceDefault_NoActionBar_Fullscreen  );
+
             setShowsDialog(true);
+
+            // TODO: 15.04.2025
+            getlifecycleOwner=this;
+
             // TODO: 15.08.2023
             Log.d(this.getClass().getName(),"\n" + " class "
                     + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
@@ -150,10 +166,10 @@ public class BootFragment extends DialogFragment {
         try{
             view= inflater.inflate(R.layout.fragment_boot, container, false);
             // TODO: 15.04.2025
-            fragmentManager = getActivity(). getSupportFragmentManager();
-            fragmentTransaction = fragmentManager.beginTransaction();
-            // TODO: 22.08.2023  анимауия
-            animation5 = AnimationUtils.loadAnimation(getContext(), R.anim.slide_in_row8);
+         getDialog().setCancelable(false);
+
+            getDialog().getWindow().setStatusBarColor(Color.BLACK);
+
             // TODO: 21.06.2023
             Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                     " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
@@ -182,8 +198,8 @@ public class BootFragment extends DialogFragment {
                 drawerLayoutAsync.setDrawingCacheBackgroundColor(Color.RED);//todo
                 navigationViewAsyncApp    = (NavigationView) drawerLayoutAsync.findViewById(R.id.navigator_asyncapp); /////КНОПКА ТАБЕЛЬНОГО УЧЕТА
                 imageView_faceapp_settings = (ImageView) drawerLayoutAsync.findViewById(R.id.imageView_faceapp_settings); /////КНОПКА ТАБЕЛЬНОГО УЧЕТА
-                // TODO: 15.04.2025
-                getlifecycleOwner=this;
+                imageviewbootlogo = (ImageView) drawerLayoutAsync.findViewById(R.id.imageviewbootlogo); /////КНОПКА ТАБЕЛЬНОГО УЧЕТА
+                imageviewbootlogo.startAnimation(animationboot);
 
                 // TODO: 15.04.2025 запускам бизнес логику фрагмента boot
                 blInnerMainActivityBootAndAsync=new GetComponentActivityBootService(getsslSocketFactory2,
@@ -191,15 +207,20 @@ public class BootFragment extends DialogFragment {
                         navigationViewAsyncApp,getContext(),  getlifecycleOwner,imageView_faceapp_settings);
 
 
-                // TODO: 19.01.2024  запускаем бизнес логики автивити boot and async
-                // TODO: 15.04.2025
-                blInnerMainActivityBootAndAsync .  registeEventBusFirst(this);
 
-                blInnerMainActivityBootAndAsync .  МетодБоковаяПанельОткрытьЗАкрыть();
-                blInnerMainActivityBootAndAsync .listerNavigationViewAsyncApp();
-                blInnerMainActivityBootAndAsync .  workerNavigationViewAsyncApp(fragmentManager);
-                blInnerMainActivityBootAndAsync .  workerImageViewsettings();
+            blInnerMainActivityBootAndAsync .  МетодБоковаяПанельОткрытьЗАкрыть();
+            blInnerMainActivityBootAndAsync .listerNavigationViewAsyncApp();
+            blInnerMainActivityBootAndAsync .  workerNavigationViewAsyncApp(fragmentManager);
+            blInnerMainActivityBootAndAsync .  workerImageViewsettings();
+             new GetFinishAffinityFragment(getContext()).  finishAffinityFragment(this);
 
+            // TODO: 15.04.2025
+            moduleSingleWorkManager.startingSingleWorkManger();
+
+            Log.d(this.getClass().getName(),"\n" + " class " +
+                    Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                    " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                    " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n");
 
             Log.d(this.getClass().getName(),"\n" + " class " +
                     Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
@@ -221,32 +242,12 @@ public class BootFragment extends DialogFragment {
 
 
 
+
     @Override
     public void onStart() {
         super.onStart();
         try{
-            // TODO: 15.04.2025  
-            moduleSingleWorkManager.startingSingleWorkManger();
-            // TODO: 20.07.2023
-            Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
-                    " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                    " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"  );
-        } catch (Exception e) {
-            e.printStackTrace();
-            Log.e(getContext().getClass().getName(),
-                    "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
-                            " Линия  :" + Thread.currentThread().getStackTrace()[2].getLineNumber());
-            new RecordNewErros(getContext()).recordnewerror(e.toString(),
-                    this.getClass().getName().toString(), Thread.currentThread().getStackTrace()[2].getMethodName().toString(),
-                    Thread.currentThread().getStackTrace()[2].getLineNumber());
-        }
-    }
-
-
-    @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-        try{
+            blInnerMainActivityBootAndAsync .  registeEventBusFirst(this);
             Log.d(this.getClass().getName(),"\n" + " class "
                     + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                     " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
@@ -260,6 +261,7 @@ public class BootFragment extends DialogFragment {
                     this.getClass().getName().toString(), Thread.currentThread().getStackTrace()[2].getMethodName().toString(),
                     Thread.currentThread().getStackTrace()[2].getLineNumber());
         }
+
     }
 
     @Override
@@ -267,33 +269,22 @@ public class BootFragment extends DialogFragment {
         super.onStop();
         try{
             blInnerMainActivityBootAndAsync .  unregisterEventBusFirst(this);
-            // TODO: 17.04.2025
-            Log.d(this.getClass().getName(),"\n" + " class "
-                    + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
-                    " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                    " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n");
-        } catch (Exception e) {
-            e.printStackTrace();
-            Log.e(getContext().getClass().getName(),
-                    "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
-                            " Линия  :" + Thread.currentThread().getStackTrace()[2].getLineNumber());
-            new RecordNewErros(getContext()).recordnewerror(e.toString(),
-                    this.getClass().getName().toString(), Thread.currentThread().getStackTrace()[2].getMethodName().toString(),
-                    Thread.currentThread().getStackTrace()[2].getLineNumber());
-        }
 
+        Log.d(this.getClass().getName(),"\n" + " class "
+                + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n");
+    } catch (Exception e) {
+        e.printStackTrace();
+        Log.e(getContext().getClass().getName(),
+                "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
+                        " Линия  :" + Thread.currentThread().getStackTrace()[2].getLineNumber());
+        new RecordNewErros(getContext()).recordnewerror(e.toString(),
+                this.getClass().getName().toString(), Thread.currentThread().getStackTrace()[2].getMethodName().toString(),
+                Thread.currentThread().getStackTrace()[2].getLineNumber());
     }
 
-
-
-
-
-
-
-
-
-
-
+    }
 
 
 
@@ -369,7 +360,7 @@ public class BootFragment extends DialogFragment {
     public void EventMessageEvensAppAfterSyncing(MessageEvensBusAppAfterSyncing messageEvensBusAppAfterSyncing){
         try{
 
-            Bundle    getbundleLaunchMainAppAfterSyncing= messageEvensBusAppAfterSyncing.mess.getExtras();
+/*            Bundle    getbundleLaunchMainAppAfterSyncing= messageEvensBusAppAfterSyncing.mess.getExtras();
 
             Boolean getUserAuthenticated=   getbundleLaunchMainAppAfterSyncing.getBoolean("launchMainAppAfterSyncing",false);///"В процесс"
 
@@ -381,12 +372,12 @@ public class BootFragment extends DialogFragment {
                 // TODO: 28.04.2023 НЕт Анутифтикации Пароль
                 // TODO: 28.04.2023 НЕт Анутифтикации Пароль
                 launchMainAppaftersyncing.appAfterSyncingPassword(  );
-            }
+            }*/
             Log.d(getContext().getClass().getName(), "\n"
                     + " время: " + new Date() + "\n+" +
                     " Класс в процессе... " + this.getClass().getName() + "\n" +
                     " метод в процессе... " + Thread.currentThread().getStackTrace()[2].getMethodName()+"\n"+
-                    "getUserAuthenticated " +getUserAuthenticated);
+                    "messageEvensBusAppAfterSyncing " +messageEvensBusAppAfterSyncing);
         } catch (Exception e) {
             e.printStackTrace();
             Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() + " Линия  :"

@@ -28,26 +28,18 @@ public class LaunchActivityDashboard {
 
   public   void launchADashboardFragment() {
         try {
-            FragmentTransaction   fragmentTransaction = fragmentManager.beginTransaction();
-            fragmentTransaction.remove(fragmentManager.getFragments().get(0));
-            fragmentTransaction.addToBackStack(null);
-            fragmentTransaction.commit();
-
-
-
-            fragmentTransaction = fragmentManager.beginTransaction();
             // TODO Запусукаем Фргамент DdshBoard
+            FragmentTransaction  fragmentTransaction = fragmentManager.beginTransaction();
             DashboardFragmentMaterialDesign dashboardFragmentMaterialDesign = DashboardFragmentMaterialDesign.newInstance();
             Bundle data = new Bundle();
-
-
-
-            fragmentTransaction.addToBackStack(null);
-            fragmentManager.popBackStack();
             dashboardFragmentMaterialDesign.setArguments(data);
+            fragmentTransaction.addToBackStack(null);
             dashboardFragmentMaterialDesign.setEnterTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
              fragmentTransaction.setPrimaryNavigationFragment(dashboardFragmentMaterialDesign).setCustomAnimations(android.R.anim.slide_in_left, android.R.anim.slide_out_right);
             dashboardFragmentMaterialDesign.show(fragmentManager, "DashboardFragmentMaterialDesign");
+            fragmentManager.getFragments().forEach(frag->{
+                fragmentManager.popBackStack(dashboardFragmentMaterialDesign.getTag(),FragmentManager.POP_BACK_STACK_INCLUSIVE);
+            });
             // TODO: 17.04.2025
             fragmentTransaction.commit();
 
