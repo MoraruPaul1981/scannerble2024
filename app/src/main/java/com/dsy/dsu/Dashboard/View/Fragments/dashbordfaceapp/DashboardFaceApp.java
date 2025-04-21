@@ -1,4 +1,4 @@
-package com.dsy.dsu.Dashboard.View.Fragments;
+package com.dsy.dsu.Dashboard.View.Fragments.dashbordfaceapp;
 
 import android.content.ComponentName;
 import android.content.Context;
@@ -11,12 +11,10 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.Window;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.TableLayout;
 
-import androidx.activity.OnBackPressedCallback;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.widget.AppCompatImageButton;
@@ -27,7 +25,6 @@ import androidx.lifecycle.LifecycleOwner;
 import androidx.viewpager2.widget.ViewPager2;
 
 import com.dsy.dsu.AdmissionMaterials.Window.MainActivity_AdmissionMaterials;
-import com.dsy.dsu.BootAndAsync.View.MainActivityBootAndAsync;
 import com.dsy.dsu.CommitPrices.View.Window.MainActivityCommitingPrices;
 
 import com.dsy.dsu.Dashboard.Model.LaunchActivityDiaologSettings;
@@ -50,7 +47,7 @@ import javax.inject.Inject;
 import dagger.hilt.android.AndroidEntryPoint;
 
 @AndroidEntryPoint
-public class DashboardFragmentMaterialDesign extends  DialogFragment  {
+public class DashboardFaceApp extends  DialogFragment  {
     // TODO: Rename parameter arguments, choose names that match
 
     private  BuniccessLogicFra4gmentDashboard buniccessLogicFra4gmentDashboard;
@@ -87,8 +84,8 @@ public class DashboardFragmentMaterialDesign extends  DialogFragment  {
 
     // TODO: Rename and change types and number of parameters
     // TODO: Rename and change types and number of parameters
-    public static DashboardFragmentMaterialDesign newInstance( ) {
-        DashboardFragmentMaterialDesign fragment = new DashboardFragmentMaterialDesign();
+    public static DashboardFaceApp newInstance( ) {
+        DashboardFaceApp fragment = new DashboardFaceApp();
         Bundle args = new Bundle();
         fragment.setArguments(args);
         return fragment;
@@ -177,6 +174,13 @@ public class DashboardFragmentMaterialDesign extends  DialogFragment  {
         View view=null;
         try{
             view= inflater.inflate(R.layout.simple_dashbord_fragment_scroll, container, false);
+                   /*     ViewDashboart= inflater.inflate(R.layout.simple_dashbord_fragment_grey, container, false);
+            ViewDashboart= inflater.inflate(R.layout.simple_dashbord_fragment_grey, container, false);
+            ViewDashboart= inflater.inflate(R.layout.simple_dashbord_fragment_grey, container, false);*/
+            // ViewDashboart= inflater.inflate(R.layout.simple_dashbord_fragment_grey, container, false);
+            // ViewDashboart= inflater.inflate(R.layout.simple_dashbord_fragment_blue, container, false);
+            //view= inflater.inflate(R.layout.simple_dashbord_fragment_grey, container, false);
+            // view= inflater.inflate(R.layout.simple_dashbord_fragment_green, container, false);
             getDialog().setOnCancelListener(new DialogInterface.OnCancelListener() {
                 @Override
                 public void onCancel(DialogInterface dialog) {

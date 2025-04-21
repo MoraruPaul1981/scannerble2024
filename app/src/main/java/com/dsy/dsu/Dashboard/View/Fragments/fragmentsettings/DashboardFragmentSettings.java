@@ -1,4 +1,4 @@
-package com.dsy.dsu.Dashboard.View.Fragments;
+package com.dsy.dsu.Dashboard.View.Fragments.fragmentsettings;
 
 import android.app.ProgressDialog;
 import android.content.ComponentName;

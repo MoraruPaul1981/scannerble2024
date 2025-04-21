@@ -311,7 +311,7 @@ public class BootFragment extends DialogFragment {
     }
 
     // TODO: 23.01.2024 EventBus for Update PO
-    @Subscribe (threadMode = ThreadMode.MAIN)
+    @Subscribe (threadMode =  ThreadMode.MAIN_ORDERED)
     public void EventMessageEvensBusUpdatePO(MessageEvensBusUpdatePO messageEvensBusUpdatePO){
         try{
 
@@ -334,7 +334,7 @@ public class BootFragment extends DialogFragment {
     }
 
     // TODO: 23.01.2024 EventBus for Status
-    @Subscribe (threadMode = ThreadMode.MAIN)
+    @Subscribe (threadMode = ThreadMode.MAIN_ORDERED)
     public void EventMessageEvensBusAyns(MessageEvensBusNetworkStatuses messageEvensBusNetworkStatuses){
         try{
 
@@ -356,11 +356,11 @@ public class BootFragment extends DialogFragment {
 
 
     // TODO: 23.01.2024 EventBus for AppAfterSyncing
-    @Subscribe (threadMode = ThreadMode.MAIN)
+    @Subscribe (threadMode = ThreadMode.MAIN_ORDERED)
     public void EventMessageEvensAppAfterSyncing(MessageEvensBusAppAfterSyncing messageEvensBusAppAfterSyncing){
         try{
 
-/*            Bundle    getbundleLaunchMainAppAfterSyncing= messageEvensBusAppAfterSyncing.mess.getExtras();
+            Bundle    getbundleLaunchMainAppAfterSyncing= messageEvensBusAppAfterSyncing.mess.getExtras();
 
             Boolean getUserAuthenticated=   getbundleLaunchMainAppAfterSyncing.getBoolean("launchMainAppAfterSyncing",false);///"В процесс"
 
@@ -372,7 +372,7 @@ public class BootFragment extends DialogFragment {
                 // TODO: 28.04.2023 НЕт Анутифтикации Пароль
                 // TODO: 28.04.2023 НЕт Анутифтикации Пароль
                 launchMainAppaftersyncing.appAfterSyncingPassword(  );
-            }*/
+            }
             Log.d(getContext().getClass().getName(), "\n"
                     + " время: " + new Date() + "\n+" +
                     " Класс в процессе... " + this.getClass().getName() + "\n" +

@@ -1,20 +1,21 @@
-package com.dsy.dsu.Dashboard.View.Fragments.swipeCars;
+package com.dsy.dsu.Dashboard.View.Fragments.fragmentlogoswipes;
 
 import android.os.Bundle;
+
+import androidx.fragment.app.Fragment;
+
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-
-import androidx.fragment.app.Fragment;
 
 import com.dsy.dsu.R;
 
 /**
  * A simple {@link Fragment} subclass.
- * Use the {@link LogoFragmentTwo#newInstance} factory method to
+ * Use the {@link LogoFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class LogoFragmentTwo extends Fragment {
+public class LogoFragment extends Fragment {
 
     // TODO: Rename parameter arguments, choose names that match
 
@@ -28,8 +29,8 @@ public class LogoFragmentTwo extends Fragment {
      * @return A new instance of fragment LogoFragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static LogoFragmentTwo newInstance(String param1, String param2) {
-        LogoFragmentTwo fragment = new LogoFragmentTwo();
+    public static LogoFragment newInstance(String param1, String param2) {
+        LogoFragment fragment = new LogoFragment();
         Bundle args = new Bundle();
 
         fragment.setArguments(args);
@@ -48,6 +49,6 @@ public class LogoFragmentTwo extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_logotwo, container, false);
+        return inflater.inflate(R.layout.fragment_logo, container, false);
     }
 }

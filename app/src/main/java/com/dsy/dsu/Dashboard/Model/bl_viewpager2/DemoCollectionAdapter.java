@@ -6,9 +6,9 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.viewpager2.adapter.FragmentStateAdapter;
 
-import com.dsy.dsu.Dashboard.View.Fragments.swipeCars.LogoFragment;
-import com.dsy.dsu.Dashboard.View.Fragments.swipeCars.LogoFragmentTree;
-import com.dsy.dsu.Dashboard.View.Fragments.swipeCars.LogoFragmentTwo;
+import com.dsy.dsu.Dashboard.View.Fragments.fragmentlogoswipes.LogoFragment;
+import com.dsy.dsu.Dashboard.View.Fragments.fragmentlogoswipes.LogoFragmentTree;
+import com.dsy.dsu.Dashboard.View.Fragments.fragmentlogoswipes.LogoFragmentTwo;
 
 public class DemoCollectionAdapter extends FragmentStateAdapter {
     public DemoCollectionAdapter(Fragment fragment) {

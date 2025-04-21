@@ -4,13 +4,11 @@ import android.content.Context;
 import android.os.Bundle;
 import android.util.Log;
 
-import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
-import com.dsy.dsu.Dashboard.View.Fragments.DashboardFragmentMaterialDesign;
+import com.dsy.dsu.Dashboard.View.Fragments.dashbordfaceapp.DashboardFaceApp;
 import com.dsy.dsu.Errors.WriteErrorForAll.RecordNewErros;
-import com.dsy.dsu.R;
 import com.dsy.dsu.Services.ServiceUpdatePoОбновлениеПО;
 
 import org.jetbrains.annotations.NotNull;
@@ -30,15 +28,17 @@ public class LaunchActivityDashboard {
         try {
             // TODO Запусукаем Фргамент DdshBoard
             FragmentTransaction  fragmentTransaction = fragmentManager.beginTransaction();
-            DashboardFragmentMaterialDesign dashboardFragmentMaterialDesign = DashboardFragmentMaterialDesign.newInstance();
+            DashboardFaceApp dashboardFaceApp = DashboardFaceApp.newInstance();
             Bundle data = new Bundle();
-            dashboardFragmentMaterialDesign.setArguments(data);
+            dashboardFaceApp.setArguments(data);
             fragmentTransaction.addToBackStack(null);
-            dashboardFragmentMaterialDesign.setEnterTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
-             fragmentTransaction.setPrimaryNavigationFragment(dashboardFragmentMaterialDesign).setCustomAnimations(android.R.anim.slide_in_left, android.R.anim.slide_out_right);
-            dashboardFragmentMaterialDesign.show(fragmentManager, "DashboardFragmentMaterialDesign");
+            //dashboardFaceApp.setEnterTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
+             fragmentTransaction.setPrimaryNavigationFragment(dashboardFaceApp).setCustomAnimations(android.R.anim.slide_in_left, android.R.anim.slide_out_right);
+            dashboardFaceApp.show(fragmentManager, "DashboardFaceApp");
+
             fragmentManager.getFragments().forEach(frag->{
-                fragmentManager.popBackStack(dashboardFragmentMaterialDesign.getTag(),FragmentManager.POP_BACK_STACK_INCLUSIVE);
+                fragmentManager.popBackStack(dashboardFaceApp.getTag(),FragmentManager.POP_BACK_STACK_INCLUSIVE);
+                fragmentTransaction.remove(frag);
             });
             // TODO: 17.04.2025
             fragmentTransaction.commit();
@@ -61,15 +61,15 @@ public class LaunchActivityDashboard {
     public   void launchADashboardFragment(     @NotNull  ServiceUpdatePoОбновлениеПО.localBinderОбновлениеПО localBinderОбновлениеПО) {
         try {
             // TODO Запусукаем Фргамент DdshBoard
-            DashboardFragmentMaterialDesign dashboardFragmentMaterialDesign = DashboardFragmentMaterialDesign.newInstance();
+            DashboardFaceApp dashboardFaceApp = DashboardFaceApp.newInstance();
             Bundle data = new Bundle();
             FragmentTransaction   fragmentTransaction = fragmentManager.beginTransaction();
             fragmentTransaction.addToBackStack(null);
             fragmentManager.popBackStack();
-            dashboardFragmentMaterialDesign.setArguments(data);
-            dashboardFragmentMaterialDesign.setEnterTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
+            dashboardFaceApp.setArguments(data);
+            dashboardFaceApp.setEnterTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
             fragmentTransaction.setCustomAnimations(android.R.anim.slide_in_left, android.R.anim.slide_out_right);
-            dashboardFragmentMaterialDesign.show(fragmentManager, "DashboardFragmentMaterialDesign");
+            dashboardFaceApp.show(fragmentManager, "DashboardFaceApp");
             fragmentTransaction.commit();
 
             Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
