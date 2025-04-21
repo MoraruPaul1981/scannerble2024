@@ -180,8 +180,7 @@ public class DashboardFaceApp extends  DialogFragment  {
             // view= inflater.inflate(R.layout.simple_dashbord_fragment_green, container, false);
 
             getDialog().getWindow().setStatusBarColor(Color.BLACK);
-
-
+            getDialog().setCancelable(false);
             // TODO: 21.06.2023
             Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                     " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
@@ -291,7 +290,7 @@ public class DashboardFaceApp extends  DialogFragment  {
             buniccessLogicFra4gmentDashboard.new ClassAnimatilBackButton().методToSettingsFragment();
 
 
-            new GetFinishAffinityFragment(getContext()).  finishAffinityFragment(this);
+            new GetFinishAffinityFragment(getContext()).  finishAffinityFragment(this,fragmentManager);
 
 
 

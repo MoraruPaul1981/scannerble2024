@@ -30,8 +30,8 @@ public class LaunchActivityFragmentBoot {
         try {
             // TODO Запусукаем Фргамент DdshBoard
             BootFragment bootFragment = BootFragment.newInstance();
-            Bundle data = new Bundle();
             FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+            Bundle data = new Bundle();
             bootFragment.setArguments(data);
             fragmentTransaction.addToBackStack(null);
             fragmentManager.clearBackStack(null);
