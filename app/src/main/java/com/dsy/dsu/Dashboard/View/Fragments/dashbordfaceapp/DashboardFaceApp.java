@@ -260,6 +260,8 @@ public class DashboardFaceApp extends  DialogFragment  {
         super.onStop();
         try{
 
+
+
             Log.d(this.getClass().getName(),"\n" + " class "
                     + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                     " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +

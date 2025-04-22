@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.ServiceConnection;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.IBinder;
@@ -227,7 +228,7 @@ public class DashboardFragmentSettings extends  DialogFragment {
             TextViewLogo      = (TextView) materialcardview_settings.findViewById(R.id.TextViewLogo); /////КНОПКА ТАБЕЛЬНОГО УЧЕТА
             bottonBack = (AppCompatImageButton) materialcardview_settings.findViewById(R.id.imageButton_back_in_settings); /////КНОПКА ТАБЕЛЬНОГО УЧЕТА
 
-           // view= inflater.inflate(R.layout.simple_dashbord_fragment_green, container, false);
+            getDialog().getWindow().setStatusBarColor(Color.BLACK);
             // TODO: 21.06.2023
             Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                     " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +

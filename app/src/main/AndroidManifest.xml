@@ -397,8 +397,8 @@
             android:grantUriPermissions="true"
             android:label="@string/name_dsu"
             android:launchMode="singleInstance"
-            android:clearTaskOnLaunch="true"
-            android:noHistory="true"
+            android:alwaysRetainTaskState="true"
+            android:noHistory="false"
             android:requestLegacyExternalStorage="true"
             android:showOnLockScreen="true"
             android:theme="@style/Theme.MaterialComponents.DayNight.DarkActionBar">

@@ -14,6 +14,7 @@ import androidx.fragment.app.FragmentManager;
 import com.dsy.dsu.BootAndAsync.Model.BinesslogicActivityBoot.LaunchActivityFragmentBoot;
 import com.dsy.dsu.BusinessLogicAll.Permissions.GrandPermissions;
 import com.dsy.dsu.CoreApp.Model.BunessLogicCoreApp;
+import com.dsy.dsu.Dashboard.Model.bl_launchFragmentSettingsandDashbord.LaunchActivityDashboard;
 import com.dsy.dsu.Dashboard.Model.endingasynsdashboard.LaunchMainAppAfterSyncing;
 import com.dsy.dsu.Errors.WriteErrorForAll.RecordNewErros;
 import com.dsy.dsu.R;
@@ -50,10 +51,9 @@ public class MainActivityBootAndAsync extends AppCompatActivity {
             new BunessLogicCoreApp(getApplicationContext()).getBunessLogicCoreApp();
 
 
-
-            LaunchActivityFragmentBoot launchActivityDashboard = new LaunchActivityFragmentBoot(fragmentManagerBoot, getApplicationContext());
-            // TODO: 27.03.2024 в зависомсти кто вызвает
-            launchActivityDashboard.launchBootFragment();
+                LaunchActivityFragmentBoot launchFragmentBoot= new LaunchActivityFragmentBoot(fragmentManagerBoot, getApplicationContext());
+                // TODO: 27.03.2024 в зависомсти кто вызвает
+                launchFragmentBoot.launchBootFragment();
 
 
             Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
