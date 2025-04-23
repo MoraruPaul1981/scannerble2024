@@ -38,6 +38,7 @@ import androidx.work.WorkManager;
 
 import com.dsy.dsu.AllDatabases.SQLTE.GetSQLiteDatabase;
 import com.dsy.dsu.BusinessLogicAll.Class_GRUD_SQL_Operations;
+import com.dsy.dsu.BusinessLogicAll.GetPublicID.HiltInterfacesPublicID;
 import com.dsy.dsu.Errors.WriteErrorForAll.RecordNewErros;
 import com.dsy.dsu.BusinessLogicAll.GetPublicID.GetPublicID;
 
@@ -75,7 +76,7 @@ public class Fragment1_One_Tasks extends Fragment {
     private View viewДляПервойКнопкиHome_Задания;
     private SQLiteCursor Курсор_ГлавныйКурсорДляЗадач;
     private SQLiteCursor Курсор_ДляПолученияДАнныхТОлькоДляЗадачВработе = null;
-    private GetPublicID getPublic_id;;
+
     private Bundle BungleДанныеДляViewCard;
     private Bundle BungleДанныеДляViewCardBungle;
     private Bundle BungleДанныеДляViewCardBungleID;
@@ -166,7 +167,7 @@ public class Fragment1_One_Tasks extends Fragment {
 
          // TODO: 04.03.2022 инициализацуия ссылок на кассы
          subClassBuccessLogin_главныйКлассБизнесЛогикиФрагмент1 = new SubClassBuccessLogin_ГлавныйКлассБизнесЛогикиФрагмент1(getContext(), getActivity());
-         getPublic_id =      new GetPublicID(getContext());
+
         // TODO: 02.08.2022  иницциализирован два work manager
         subClassBuccessLogin_главныйКлассБизнесЛогикиФрагмент1.МетодСоздаенияСлушателяДляЧатаWorkMAnager();
         // TODO: 04.03.2022 создаем слушатель    третий класс создаем ЗАПУСКАЕМ СЛУШАТЕЛЬ КУРСОРРА туту запускам два слушателя дялнаших work manager
@@ -210,7 +211,7 @@ public class Fragment1_One_Tasks extends Fragment {
     public void onStart() {
         super.onStart();
         try{
-            ПубличныйIDДляФрагмента = getPublic_id.getPublicIDAllApp( );
+            ПубличныйIDДляФрагмента = EntryPoints.get(getContext(), HiltInterfacesPublicID.class).getPublicIDAllApp();
             Курсор_ГлавныйКурсорДляЗадач=        subClassBuccessLogin_главныйКлассБизнесЛогикиФрагмент1.МетодПолучаемГлавныеДанныеДляЗадач(ПубличныйIDДляФрагмента);
             Log.d(this.getClass().getName(), "ПубличныйIDДляФрагмента " + ПубличныйIDДляФрагмента+ " Курсор_ГлавныйКурсорДляЗадач " +Курсор_ГлавныйКурсорДляЗадач);
             Курсор_ДляПолученияДАнныхТОлькоДляЗадачВработе=    subClassBuccessLogin_главныйКлассБизнесЛогикиФрагмент1.МетодПолученимТОлькоКоличествоЗадач(ПубличныйIDДляФрагмента);

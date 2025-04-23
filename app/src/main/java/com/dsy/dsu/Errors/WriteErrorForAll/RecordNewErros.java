@@ -13,6 +13,7 @@ import com.dsy.dsu.BusinessLogicAll.Class_Generation_UUID;
 import com.dsy.dsu.BusinessLogicAll.GetPublicID.GetPublicID;
 import com.dsy.dsu.BusinessLogicAll.DATE.Class_Generation_Data;
 import com.dsy.dsu.BusinessLogicAll.DeviceName.ModulegetDeviceName;
+import com.dsy.dsu.BusinessLogicAll.GetPublicID.HiltInterfacesPublicID;
 import com.dsy.dsu.BusinessLogicAll.VersionCurentTable;
 import com.dsy.dsu.Errors.model.bl_writer_errors_app.WewriteallApplicationErrorstoaFile;
 import com.dsy.dsu.Errors.model.interfaces.RecordNewErrorsInterface;
@@ -29,6 +30,7 @@ import java.util.ArrayList;
 import javax.inject.Inject;
 
 import dagger.Module;
+import dagger.hilt.EntryPoints;
 import dagger.hilt.InstallIn;
 import dagger.hilt.android.qualifiers.ApplicationContext;
 import dagger.hilt.components.SingletonComponent;
@@ -162,7 +164,7 @@ public class RecordNewErros  implements RecordNewErrorsInterface {
             Long getVersionForError  = new VersionCurentTable(context).upVersionCurentTable("errordsu1");
             Long UUIDForError = (Long)
                     new Class_Generation_UUID(context).МетодГенерацииUUID();
-            Integer getPublicIdForError = new GetPublicID(context).getPublicIDAllApp();
+            Integer getPublicIdForError = EntryPoints.get(context, HiltInterfacesPublicID.class).getPublicIDAllApp();
 
 
             String getNewDateForError = new Class_Generation_Data(context).ГлавнаяДатаИВремяОперацийСБазойДанных();

@@ -1708,7 +1708,7 @@ import okio.BufferedSink;
             КонтейнерДляВставкиПубличныйID.put("currenttaskforthecontentprovider","firststartapp");
 
             // TODO: 08.10.2024 Находим если такой  Пользователь
-          Long getuuidLocal=  new GetPublicID(context).gettingSettingTableVersion(context," SELECT user_update FROM "+ИмяТаблицы+"  ",ИмяТаблицы);
+          Long getuuidLocal=  new GetPublicID( ).gettingSettingTableVersion(context," SELECT user_update FROM "+ИмяТаблицы+"  ",ИмяТаблицы);
             // TODO: 12.04.2023 UPDATER PUBLIC ID
           if(getuuidLocal>0 ){
               // TODO: 12.04.2023 UPDATER PUBLIC ID
@@ -1772,7 +1772,7 @@ import okio.BufferedSink;
             КонтейнерДляВставкиПубличныйID.put("publicid",PublicID);
             
             // TODO: 08.10.2024 Находим если такой  Пользователь
-            Long getuuidLocal=  new GetPublicID(context).gettingSettingTableVersion(context," SELECT id FROM "+ИмяТаблицы+"  ",ИмяТаблицы);
+            Long getuuidLocal=  new GetPublicID( ).gettingSettingTableVersion(context," SELECT id FROM "+ИмяТаблицы+"  ",ИмяТаблицы);
             // TODO: 08.10.2024  
             КонтейнерДляВставкиПубличныйID.put("getuuidLocal",getuuidLocal);
             // TODO: 12.04.2023 UPDATER PUBLIC ID

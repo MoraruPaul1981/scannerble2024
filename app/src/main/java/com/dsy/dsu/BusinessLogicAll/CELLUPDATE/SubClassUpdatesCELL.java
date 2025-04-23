@@ -141,7 +141,7 @@ public class SubClassUpdatesCELL {
 
 
 
-            Long getPublicID=  new GetPublicID(context).gettingSettingTableVersion(context," SELECT publicid FROM successlogin "  ,"successlogin");
+            Long getPublicID=  new GetPublicID( ).gettingSettingTableVersion(context," SELECT publicid FROM successlogin "  ,"successlogin");
             contentValuesОбноленияЯчейкиSingleTanel.put("user_update", getPublicID);
 
 

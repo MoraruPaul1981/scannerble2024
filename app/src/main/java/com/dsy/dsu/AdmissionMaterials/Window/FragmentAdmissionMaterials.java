@@ -44,6 +44,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.dsy.dsu.AdmissionMaterials.bl_admissonmaterils.PesssionCameta;
+import com.dsy.dsu.BusinessLogicAll.GetPublicID.HiltInterfacesPublicID;
 import com.dsy.dsu.Dashboard.Model.bl_launchFragmentSettingsandDashbord.LaunchActivityDashboard;
 import com.dsy.dsu.Errors.WriteErrorForAll.RecordNewErros;
 import com.dsy.dsu.BusinessLogicAll.GetPublicID.GetPublicID;
@@ -63,6 +64,8 @@ import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 import java.util.Random;
+
+import dagger.hilt.EntryPoints;
 
 
 // TODO: 29.09.2022 фрагмент для получение материалов
@@ -589,8 +592,7 @@ public class FragmentAdmissionMaterials extends Fragment {
                             try {
                                 progressBarСканирование.setVisibility(View.VISIBLE);
                                 МетодЗапускаАнимацииКнопок(v);
-                                Integer ПубличныйIDДляФрагмента =
-                                        new GetPublicID(getContext()).getPublicIDAllApp( );
+                                Integer ПубличныйIDДляФрагмента = EntryPoints.get(getContext(), HiltInterfacesPublicID.class).getPublicIDAllApp();
                                 // TODO: 16.11.2022  запуск синхронизации однорозовая
                                 Log.d(this.getClass().getName(), "  v  " + v);
                             } catch (Exception e) {
@@ -966,7 +968,7 @@ public class FragmentAdmissionMaterials extends Fragment {
     // TODO: 02.08.2022
     protected   Cursor методGetCFOCursorFirst(@NonNull String  ФлагКакиеДанныеНужныПолучениеМатериалов, @NonNull Integer ТекущаяЦФО ){
         try{
-            ПубличныйIDДляФрагмента     = new GetPublicID(getContext()).getPublicIDAllApp( );
+            ПубличныйIDДляФрагмента     = EntryPoints.get(getContext(), HiltInterfacesPublicID.class).getPublicIDAllApp();
             Log.d(getContext().getClass().getName(), "\n"
                     + " ПубличныйIDДляФрагмента: " + ПубличныйIDДляФрагмента);
             Bundle bundleДляПЕредачи=new Bundle();

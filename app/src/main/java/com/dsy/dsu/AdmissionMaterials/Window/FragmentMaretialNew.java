@@ -61,6 +61,7 @@ import android.widget.ScrollView;
 import android.widget.SimpleAdapter;
 import android.widget.TextView;
 
+import com.dsy.dsu.BusinessLogicAll.GetPublicID.HiltInterfacesPublicID;
 import com.dsy.dsu.Errors.WriteErrorForAll.RecordNewErros;
 import com.dsy.dsu.BusinessLogicAll.GetPublicID.GetPublicID;
 import com.dsy.dsu.AdmissionMaterials.Service.ServiceCameraTake;
@@ -92,6 +93,8 @@ import java.util.Locale;
 import java.util.Random;
 import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.concurrent.ExecutionException;
+
+import dagger.hilt.EntryPoints;
 
 
 public class FragmentMaretialNew extends Fragment implements CameraXInterface{
@@ -687,7 +690,7 @@ void методCallsBackFromCameraX(@NonNull  Bitmap bitmapNewCompleteImage, @No
                                                                                  @NonNull Intent intent,@NonNull String ФлагКакаяРаботаНужнаДляВыполнения){
         Cursor cursor = null;
         try{
-            ПубличныйIDДляФрагмента     = new GetPublicID(getContext()).getPublicIDAllApp();
+            ПубличныйIDДляФрагмента     = EntryPoints.get(getContext(), HiltInterfacesPublicID.class).getPublicIDAllApp();
             Log.d(getContext().getClass().getName(), "\n"
                     + " ПубличныйIDДляФрагмента: " + ПубличныйIDДляФрагмента);
             Bundle bundleДляПЕредачи=intent.getExtras();
@@ -1297,7 +1300,7 @@ void методCallsBackFromCameraX(@NonNull  Bitmap bitmapNewCompleteImage, @No
             Cursor cursor = null;
             LinkedHashMap<String, Object> linkedHashMap=null;
             try{
-                Integer   ПубличныйIDДляФрагмента     = new GetPublicID(getContext()).getPublicIDAllApp();
+                Integer   ПубличныйIDДляФрагмента     =EntryPoints.get(getContext(), HiltInterfacesPublicID.class).getPublicIDAllApp();
                 Log.d(getContext().getClass().getName(), "\n"
                         + " ПубличныйIDДляФрагмента: " + ПубличныйIDДляФрагмента);
                 Bundle bundleДляПЕредачи=new Bundle();
@@ -1325,8 +1328,7 @@ void методCallsBackFromCameraX(@NonNull  Bitmap bitmapNewCompleteImage, @No
             Cursor cursor = null;
             LinkedHashMap<String, Object> linkedHashMap=null;
             try{
-                Integer   ПубличныйIDДляФрагмента     = new GetPublicID(getContext()).
-                        getPublicIDAllApp();
+                Integer   ПубличныйIDДляФрагмента  =EntryPoints.get(getContext(), HiltInterfacesPublicID.class).getPublicIDAllApp();
                 Log.d(getContext().getClass().getName(), "\n"
                         + " ПубличныйIDДляФрагмента: " + ПубличныйIDДляФрагмента);
                 Bundle bundleДляПЕредачи=new Bundle();
@@ -1355,7 +1357,7 @@ void методCallsBackFromCameraX(@NonNull  Bitmap bitmapNewCompleteImage, @No
             Cursor cursor = null;
             LinkedHashMap<String, Object> linkedHashMap=null;
             try{
-                Integer   ПубличныйIDДляФрагмента     = new GetPublicID(getContext()).getPublicIDAllApp();
+                Integer   ПубличныйIDДляФрагмента     = EntryPoints.get(getContext(), HiltInterfacesPublicID.class).getPublicIDAllApp();
                 Log.d(getContext().getClass().getName(), "\n"
                         + " ПубличныйIDДляФрагмента: " + ПубличныйIDДляФрагмента);
                 Bundle bundleДляПЕредачи=new Bundle();

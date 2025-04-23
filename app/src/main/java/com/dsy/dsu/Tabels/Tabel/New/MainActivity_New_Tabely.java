@@ -44,6 +44,7 @@ import com.dsy.dsu.AllDatabases.SQLTE.GetSQLiteDatabase;
 import com.dsy.dsu.BusinessLogicAll.Class_GRUD_SQL_Operations;
 import com.dsy.dsu.BusinessLogicAll.GetPublicID.GetPublicID;
 import com.dsy.dsu.BusinessLogicAll.DATE.Class_Generation_Data;
+import com.dsy.dsu.BusinessLogicAll.GetPublicID.HiltInterfacesPublicID;
 import com.dsy.dsu.BusinessLogicAll.VersionCurentTable;
 import com.dsy.dsu.Errors.WriteErrorForAll.RecordNewErros;
 import com.dsy.dsu.BusinessLogicAll.Class_Generation_UUID;
@@ -1087,7 +1088,7 @@ while(iterator.hasNext()){
 
 
                 // TODO: 09.10.2024 Public ID
-                Long getPublicID=  new GetPublicID(getApplicationContext()).gettingSettingTableVersion(getApplicationContext()," SELECT publicid FROM successlogin "  ,"successlogin");
+                Long getPublicID=  new GetPublicID( ).gettingSettingTableVersion(getApplicationContext()," SELECT publicid FROM successlogin "  ,"successlogin");
                 // TODO: 14.12.2022  
                 АдаптерВставкиНовгоТабеля.put("user_update", getPublicID);
 
@@ -1179,8 +1180,7 @@ while(iterator.hasNext()){
     protected   Cursor МетодДляНовогоТабеляПолучаемДанные(@NonNull String  ФлагКакаяТаблицаОбработки){
         Cursor cursor = null;
         try{
-         Integer   ПубличныйIDДляФрагмента     = new GetPublicID(getApplicationContext()).
-                 getPublicIDAllApp();
+         Integer   ПубличныйIDДляФрагмента     =EntryPoints.get(getApplicationContext(), HiltInterfacesPublicID.class).getPublicIDAllApp();
             Log.d(getApplicationContext().getClass().getName(), "\n"
                     + " ПубличныйIDДляФрагмента: " + ПубличныйIDДляФрагмента);
             Bundle bundleДляПЕредачи=new Bundle();
@@ -1211,7 +1211,7 @@ while(iterator.hasNext()){
     protected   Cursor МетодДляНовогоТабеляПолучаемДанные(@NonNull String  ФлагКакаяТаблицаОбработки, @NotNull String Фильтр){
         Cursor cursor = null;
         try{
-            Integer   ПубличныйIDДляФрагмента     = new GetPublicID(getApplicationContext()).getPublicIDAllApp();
+            Integer   ПубличныйIDДляФрагмента     = EntryPoints.get(getApplicationContext(), HiltInterfacesPublicID.class).getPublicIDAllApp();
             Log.d(getApplicationContext().getClass().getName(), "\n"
                     + " ПубличныйIDДляФрагмента: " + ПубличныйIDДляФрагмента);
             Bundle bundleДляПЕредачи=new Bundle();
@@ -1240,8 +1240,7 @@ while(iterator.hasNext()){
     protected  Cursor МетодДляНовогоТабеляПолучаемДанныеИзНовогоПоиска(@NonNull String  ФлагКакаяТаблицаОбработки, @NotNull String Фильтр){
         Cursor cursor = null;
         try{
-            Integer   ПубличныйIDДляФрагмента     = new GetPublicID(getApplicationContext()).
-                    getPublicIDAllApp();
+            Integer   ПубличныйIDДляФрагмента     = EntryPoints.get(getApplicationContext(), HiltInterfacesPublicID.class).getPublicIDAllApp();
             Log.d(getApplicationContext().getClass().getName(), "\n"
                     + " ПубличныйIDДляФрагмента: " + ПубличныйIDДляФрагмента);
             Bundle bundleДляПЕредачи=new Bundle();

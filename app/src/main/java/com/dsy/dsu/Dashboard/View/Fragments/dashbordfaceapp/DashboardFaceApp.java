@@ -29,13 +29,14 @@ import androidx.viewpager2.widget.ViewPager2;
 
 import com.dsy.dsu.AdmissionMaterials.Window.MainActivity_AdmissionMaterials;
 import com.dsy.dsu.BootAndAsync.Model.BinesslogicActivityBoot.GetFinishAffinityFragment;
+import com.dsy.dsu.BusinessLogicAll.GetPublicID.QualifierPublicID;
 import com.dsy.dsu.CommitPrices.View.Window.MainActivityCommitingPrices;
 
 import com.dsy.dsu.Dashboard.Model.LaunchActivityDiaologSettings;
 import com.dsy.dsu.Dashboard.Model.bl_viewpager2.BunesslogicViewPager2;
 import com.dsy.dsu.Dashboard.Model.changeaccessrights.DashboardGRANTorREVOKE;
 import com.dsy.dsu.Errors.WriteErrorForAll.RecordNewErros;
-import com.dsy.dsu.Hilt.PublicId.QualifierPublicId;
+
 import com.dsy.dsu.OrdersTransports.Window.MainActivityOrdersTransports;
 import com.dsy.dsu.PaysCommit.View.Window.MainActivity_CommitPay;
 import com.dsy.dsu.R;
@@ -80,7 +81,7 @@ public class DashboardFaceApp extends  DialogFragment  {
         DashboardGRANTorREVOKE dashboardGRANTorREVOKE;
 
     @Inject
-    @QualifierPublicId
+    @QualifierPublicID
         Integer getHiltPublicId;
 
   public    ViewPager2 pagerdachbord;

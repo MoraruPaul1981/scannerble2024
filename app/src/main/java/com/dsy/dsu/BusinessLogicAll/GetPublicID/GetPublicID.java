@@ -13,27 +13,31 @@ import com.dsy.dsu.AllDatabases.SQLTE.GetSQLiteDatabase;
 import com.dsy.dsu.Errors.WriteErrorForAll.RecordNewErros;
 import com.dsy.dsu.Hilt.Sqlitehilt.HiltInterfacesqlite;
 
+
 import java.util.Date;
 
+import javax.inject.Singleton;
+
+import dagger.Module;
+import dagger.Provides;
 import dagger.hilt.EntryPoints;
+import dagger.hilt.InstallIn;
+import dagger.hilt.android.qualifiers.ApplicationContext;
+import dagger.hilt.components.SingletonComponent;
 
 
+
+@Module
+@InstallIn(SingletonComponent.class)
 public class GetPublicID {
     Context context;
-    private SQLiteDatabase sqLiteDatabase ;
 
-    public GetPublicID( @NonNull Context context) {
-        // TODO: 16.04.2025
-        this.context =context;
-        sqLiteDatabase = EntryPoints.get(context, HiltInterfacesqlite.class).getHiltSqlite();
-        Log.d(context.getClass().getName(), "\n"
-                + " время: " + new Date() + "\n+" +
-                " Класс в процессе... " + this.getClass().getName() + "\n" +
-                " метод в процессе... " + Thread.currentThread().getStackTrace()[2].getMethodName() + " sqLiteDatabase " +sqLiteDatabase);
-    }
 
-    //todo функция получающая время операции ДАННАЯ ФУНКЦИЯ ВРЕМЯ ПРИМЕНЯЕТЬСЯ ВО ВСЕЙ ПРОГРАММЕ
-    public Integer getPublicIDAllApp( ) {
+
+    @Singleton
+    @Provides
+    @QualifierPublicID
+    public Integer getPublicIDAllApp(@ApplicationContext Context context  ) {
         ///TODO --первая вставка
 
         Integer PublicID = 0;

@@ -67,6 +67,7 @@ import androidx.work.WorkInfo;
 import androidx.work.WorkManager;
 
 import com.dsy.dsu.BusinessLogicAll.CELLUPDATE.SubClassUpdatesCELL;
+import com.dsy.dsu.BusinessLogicAll.GetPublicID.HiltInterfacesPublicID;
 import com.dsy.dsu.BusinessLogicAll.VersionCurentTable;
 import com.dsy.dsu.Errors.WriteErrorForAll.RecordNewErros;
 import com.dsy.dsu.BusinessLogicAll.GetPublicID.GetPublicID;
@@ -103,6 +104,7 @@ import java.util.function.IntConsumer;
 import java.util.function.ToIntFunction;
 import java.util.stream.IntStream;
 
+import dagger.hilt.EntryPoints;
 import dagger.hilt.android.AndroidEntryPoint;
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
 import io.reactivex.rxjava3.core.Flowable;
@@ -3176,8 +3178,7 @@ public class FragmentSingleTabelOneSwipe extends Fragment {
             protected  Cursor МетодКурсорДляНовогоПосика(@NonNull String  ФлагКакаяТаблицаОбработки, @NotNull String Фильтр){
                 Cursor КурсорТаблицаПрофесииLike = null;
                 try{
-                    Integer   ПубличныйIDДляФрагмента     = new GetPublicID(getContext()).
-                            getPublicIDAllApp();
+                    Integer   ПубличныйIDДляФрагмента     = EntryPoints.get(getContext(), HiltInterfacesPublicID.class).getPublicIDAllApp();
                     Log.d(getContext().getClass().getName(), "\n"
                             + " ПубличныйIDДляФрагмента: " + ПубличныйIDДляФрагмента + " Фильтр " +Фильтр);
                     Bundle bundleНовыйПоиск=new Bundle();
