@@ -43,6 +43,7 @@ import com.dsy.dsu.CnangeServers.PUBLIC_CONTENT;
 import com.dsy.dsu.Hilt.Sqlitehilt.HiltInterfacesqlite;
 import com.dsy.dsu.R;
 import com.dsy.dsu.Settings.Model.ChangeSSLForSettings;
+import com.google.android.material.button.MaterialButton;
 
 
 import org.jetbrains.annotations.NotNull;
@@ -55,6 +56,8 @@ import java.util.Map;
 import java.util.Random;
 import java.util.stream.Collectors;
 
+import javax.inject.Inject;
+
 import dagger.hilt.EntryPoints;
 import dagger.hilt.android.AndroidEntryPoint;
 
@@ -65,11 +68,13 @@ public class MainActivity_Settings extends AppCompatActivity {
 
      private      Map<String, String> ХэшДанныеИзБазыДляЗАполенияСпинеровыОрганизация = Collections.synchronizedMap(new LinkedHashMap<String, String>());
 
-    private SQLiteDatabase sqLiteDatabase ;
+
+     @Inject
+      SQLiteDatabase sqLiteDatabase ;
     private Spinner СпинерВыборОрганизации;
     private     Cursor Курсор_СамиДанные_Logins=null;
             private int ЕстьСтроки;
-    private      Button  imageViewСтрелкаВнутриНастроек,КнопкаСохранениеОрганизации;
+    private MaterialButton imageViewСтрелкаВнутриНастроек,КнопкаСохранениеОрганизации;
     private    Spinner СпинерДляСозданииОрганизации;
     private       Switch СвичДляWIFI ,switchАвтоЗаполенияВТАбелеВыходных,switchСкрытыеПоляПолучениеМатериалов,switchsslcomunications;
     private    Context context;
@@ -85,6 +90,10 @@ public class MainActivity_Settings extends AppCompatActivity {
     private FragmentTransaction fragmentTransaction;
     // TODO: 12.10.2021  Ссылка Менеджер Потоков
     PUBLIC_CONTENT Class_Engine_SQLГдеНаходитьсяМенеджерПотоков =null;
+
+
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         try {
@@ -109,7 +118,7 @@ public class MainActivity_Settings extends AppCompatActivity {
             getSupportActionBar().hide(); ///скрывать тул бар
             context =this;
             // TODO: 16.04.2025
-            sqLiteDatabase = EntryPoints.get(context, HiltInterfacesqlite.class).getHiltSqlite();
+
             Log.d(context.getClass().getName(), "\n"
                     + " время: " + new Date() + "\n+" +
                     " Класс в процессе... " + this.getClass().getName() + "\n" +
@@ -118,7 +127,7 @@ public class MainActivity_Settings extends AppCompatActivity {
 
 
             setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LOCKED);
-            imageViewСтрелкаВнутриНастроек = (Button) findViewById(R.id.imageViewСтрелкаВнутриНастроек);
+            imageViewСтрелкаВнутриНастроек = (MaterialButton) findViewById(R.id.imageViewСтрелкаВнутриНастроек);
             СпинерДляСозданииОрганизации= (Spinner) findViewById(R.id.СпинерДляСозданииОрганизации);
             textViewВерсияПрограммы=(TextView) findViewById(R.id.textViewВерсияПрограммы);
 

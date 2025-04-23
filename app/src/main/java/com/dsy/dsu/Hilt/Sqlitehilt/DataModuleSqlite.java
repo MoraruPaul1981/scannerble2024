@@ -6,6 +6,8 @@ import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 
+import androidx.annotation.NonNull;
+
 import com.dsy.dsu.AllDatabases.SQLTE.GetSQLiteDatabase;
 import com.dsy.dsu.Errors.WriteErrorForAll.RecordNewErros;
 import com.google.common.util.concurrent.AtomicDouble;
@@ -28,26 +30,54 @@ public class DataModuleSqlite {
     @Singleton
     @Provides
 public SQLiteDatabase metodHiltSqlite (@ApplicationContext Context context){
-       AtomicReference<SQLiteDatabase>  getSQLites=new AtomicReference<>();
+        // TODO: 23.04.2025
+        SQLiteDatabase getSQLites=null;
         try{
           File fileDatabeseOpenParametrs = new File("/data/user/0/com.dsy.dsu/databases", "Database DSU-1.db");
 
   if(fileDatabeseOpenParametrs.exists()){
-      //getSQLites =  SQLiteDatabase.openDatabase("/data/user/0/com.dsy.dsu/databases/Database DSU-1.db",null, SQLiteDatabase.CREATE_IF_NECESSARY);
-      getSQLites.getAndSet( SQLiteDatabase.openDatabase(fileDatabeseOpenParametrs.getAbsolutePath(),null,
-              SQLiteDatabase.OPEN_READWRITE|SQLiteDatabase.CREATE_IF_NECESSARY));
+      // TODO: 23.04.2025  GET()
+        getSQLites = getOpenDatabase( fileDatabeseOpenParametrs,context);
       // TODO: 16.04.2025
-      if (!getSQLites.get().isOpen()) {
+      if (!getSQLites.isOpen()) {
           GetSQLiteDatabase getSQLiteDatabase=new GetSQLiteDatabase(context);
-          getSQLites.getAndSet(       getSQLiteDatabase.getSqliteDatabase());
+          getSQLiteDatabase.getDatabaseName();
+          // TODO: 23.04.2025  GET()
+          getSQLites = getOpenDatabase( fileDatabeseOpenParametrs,context);
       }
 
   }else {
          GetSQLiteDatabase getSQLiteDatabase=new GetSQLiteDatabase(context);
-      getSQLites.getAndSet(        getSQLiteDatabase.getSqliteDatabase());
+      getSQLiteDatabase.getDatabaseName();
+      // TODO: 23.04.2025  GET()
+        getSQLites = getOpenDatabase( fileDatabeseOpenParametrs,context);
   }
 
             // TODO: 17.04.2023
+        Log.d(this.getClass().getName(),"\n" + " class FaceAPp "
+                + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" +
+                " getSQLites.get().isOpen() " +getSQLites.isOpen());
+    } catch (Exception e) {
+        e.printStackTrace();
+        Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" +
+                Thread.currentThread().getStackTrace()[2].getMethodName() + " Линия  :"
+                + Thread.currentThread().getStackTrace()[2].getLineNumber());
+        new RecordNewErros(context.getApplicationContext()).recordnewerror(e.toString(),
+                this.getClass().getName(), Thread.currentThread().getStackTrace()[2].getMethodName(),
+                Thread.currentThread().getStackTrace()[2].getLineNumber());
+    }
+        return getSQLites;
+    }
+
+    private   SQLiteDatabase getOpenDatabase(  File fileDatabeseOpenParametrs, @NonNull Context context) {
+        AtomicReference<SQLiteDatabase>  getSQLites=new AtomicReference<>();
+        try{
+        //getSQLites =  SQLiteDatabase.openDatabase("/data/user/0/com.dsy.dsu/databases/Database DSU-1.db",null, SQLiteDatabase.CREATE_IF_NECESSARY);
+        getSQLites.getAndSet( SQLiteDatabase.openDatabase(fileDatabeseOpenParametrs.getAbsolutePath(),null,
+                SQLiteDatabase.OPEN_READWRITE|SQLiteDatabase.CREATE_IF_NECESSARY));
+        // TODO: 17.04.2023
         Log.d(this.getClass().getName(),"\n" + " class FaceAPp "
                 + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                 " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
@@ -62,7 +92,7 @@ public SQLiteDatabase metodHiltSqlite (@ApplicationContext Context context){
                 this.getClass().getName(), Thread.currentThread().getStackTrace()[2].getMethodName(),
                 Thread.currentThread().getStackTrace()[2].getLineNumber());
     }
-        return getSQLites.get();
+        return  getSQLites.get();
     }
 
 
