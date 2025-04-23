@@ -99,7 +99,7 @@ public class DashboardFragmentSettings extends  DialogFragment {
     private Animation  animation6;
     private TextView TextViewLogo;
     private LifecycleOwner lifecycleOwner;
-    private AppCompatImageButton bottonBack;
+    private MaterialButton bottonBack;
 
     private ServiceUpdatePoОбновлениеПО.localBinderОбновлениеПО localBinderОбновлениеПО;//TODO новаЯ
 
@@ -226,7 +226,7 @@ public class DashboardFragmentSettings extends  DialogFragment {
             КнопкаОшибки          = (MaterialButton) materialcardview_settings.findViewById(R.id.КнопкаОшибки); /////КНОПКА ТАБЕЛЬНОГО УЧЕТА
             КнопкаШаблоны          = (MaterialButton) materialcardview_settings.findViewById(R.id.КнопкаШаблоны); /////КНОПКА ТАБЕЛЬНОГО УЧЕТА
             TextViewLogo      = (TextView) materialcardview_settings.findViewById(R.id.TextViewLogo); /////КНОПКА ТАБЕЛЬНОГО УЧЕТА
-            bottonBack = (AppCompatImageButton) materialcardview_settings.findViewById(R.id.imageButton_back_in_settings); /////КНОПКА ТАБЕЛЬНОГО УЧЕТА
+            bottonBack = (MaterialButton) materialcardview_settings.findViewById(R.id.imageButton_back_in_settings); /////КНОПКА ТАБЕЛЬНОГО УЧЕТА
 
             getDialog().getWindow().setStatusBarColor(Color.BLACK);
             // TODO: 21.06.2023

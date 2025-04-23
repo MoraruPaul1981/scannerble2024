@@ -63,7 +63,7 @@ public class LaunchActivityDashboard {
             Bundle data = new Bundle();
             FragmentTransaction   fragmentTransaction = fragmentManager.beginTransaction();
             fragmentTransaction.addToBackStack(null);
-            fragmentManager.popBackStack();
+            fragmentManager.popBackStack(dashboardFaceApp.getTag(),FragmentManager.POP_BACK_STACK_INCLUSIVE);
             dashboardFaceApp.setArguments(data);
             dashboardFaceApp.setEnterTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
             fragmentTransaction.setCustomAnimations(android.R.anim.slide_in_left, android.R.anim.slide_out_right);
