@@ -19,11 +19,10 @@ public class getStartingWorkmanagerPublic {
 
     public void metodRegistraBroadCastFroPublicAsyns(@NonNull Context context) {
         try {
-            // TODO: 08.10.2023
-            Integer ПубличныйIDДляФрагмента = EntryPoints.get(context, HiltInterfacesPublicID.class).getPublicIDAllApp();
+
 
             // TODO: 14.12.2023 REPLACE
-            new CreatePublicWorkManager(context).getcreatePublicWorkManager(context,ПубличныйIDДляФрагмента );
+            new CreatePublicWorkManager(context).getcreatePublicWorkManager(context );
 
             Log.d(context.getClass().getName(), "\n"
                     + " время: " + new Date() + "\n+" +

@@ -9,6 +9,7 @@ import android.util.Log;
 import com.dsy.dsu.BootAndAsync.Model.Service.bl_service_boot.BinessLogicIntentServiceBoot;
 import com.dsy.dsu.BusinessLogicAll.DeviceName.hilt.QualifiergetDeviceName;
 import com.dsy.dsu.BusinessLogicAll.DeviceName.hilt.QualifiergetDeviceVersionBack;
+import com.dsy.dsu.BusinessLogicAll.GetPublicID.QualifierPublicID;
 import com.dsy.dsu.Errors.WriteErrorForAll.RecordNewErros;
 import com.dsy.dsu.Hilt.JbossAdrress.qualifiers.QualifierJbossServer3;
 import com.dsy.dsu.R;
@@ -66,6 +67,9 @@ public class CoreApp extends Application {
 
 
 
+  @Inject
+  @QualifierPublicID
+  Integer getHiltPublicId;
   @Override
   public void onCreate() {
     super.onCreate();

@@ -13,8 +13,11 @@ import com.dsy.dsu.WorkManagers.binesslogic.CreatePublicWorkManager;
 
 import java.util.Date;
 
+import dagger.hilt.EntryPoint;
 import dagger.hilt.EntryPoints;
 import dagger.hilt.android.AndroidEntryPoint;
+import dagger.hilt.android.HiltAndroidApp;
+
 
 
 public class BroadCastMyReceiverPublic extends BroadcastReceiver {
@@ -33,14 +36,14 @@ public class BroadCastMyReceiverPublic extends BroadcastReceiver {
 
           //  Toast.makeText(context, "background sous-avtodor !!! ", Toast.LENGTH_LONG).show();
 
-
-         Integer PublicIDWorkMangerPubluc= EntryPoints.get(context, HiltInterfacesPublicID.class).getPublicIDAllApp();
+/*
+         Integer PublicIDWorkMangerPubluc= EntryPoints.get(context, HiltInterfacesPublicID.class).getPublicIDAllApp();*/
 
 
             // Toast.makeText(context, "ООО Союз-Автодор work Background !!! "+"\n"+new Date().toLocaleString().toString(), Toast.LENGTH_LONG).show();
 
              // TODO: 14.12.2023 REPLACE
-             new CreatePublicWorkManager(context).getcreatePublicWorkManager(context,PublicIDWorkMangerPubluc );
+             new CreatePublicWorkManager(context).getcreatePublicWorkManager(context  );
 
 
             Log.d(context.getClass().getName(), "\n"
@@ -48,7 +51,7 @@ public class BroadCastMyReceiverPublic extends BroadcastReceiver {
                     " Класс в процессе... " +  this.getClass().getName()+"\n"+
                     " метод в процессе... " + Thread.currentThread().getStackTrace()[2].getMethodName()+
                     " intent.getAction() " +intent.getAction() +"background sous-avtodor !!! "
-                    +new Date().toLocaleString() + " PublicIDWorkMangerPubluc " +PublicIDWorkMangerPubluc);
+                    +new Date().toLocaleString() + " pendingResult.getResultData() "+pendingResult.getResultData());
             // TODO: 07.10.2023
             pendingResult.finish();
 

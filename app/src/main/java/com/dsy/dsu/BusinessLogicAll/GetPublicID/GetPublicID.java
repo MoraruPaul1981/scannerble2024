@@ -30,7 +30,7 @@ import dagger.hilt.components.SingletonComponent;
 @Module
 @InstallIn(SingletonComponent.class)
 public class GetPublicID {
-    Context context;
+
 
 
 
@@ -42,7 +42,7 @@ public class GetPublicID {
 
         Integer PublicID = 0;
         try{
-            if (this.context !=null) {
+            if (context !=null) {
                 //TODO SELECT getpublic id
                 Uri uri = Uri.parse("content://com.dsy.dsu.providerforsystemtables/" + "successLogin" + "");
                 ContentResolver contentResolverPublicID = context.getContentResolver();
@@ -70,7 +70,7 @@ public class GetPublicID {
             e.printStackTrace();
             Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
                     " Линия  :" + Thread.currentThread().getStackTrace()[2].getLineNumber());
-            new RecordNewErros(this.context).recordnewerror(e.toString(),
+            new RecordNewErros(context).recordnewerror(e.toString(),
                     this.getClass().getName(), Thread.currentThread().getStackTrace()[2].getMethodName(),
                     Thread.currentThread().getStackTrace()[2].getLineNumber());
         }
@@ -80,10 +80,9 @@ public class GetPublicID {
 
     public Long gettingSettingTableVersion(@NonNull  Context context,@NonNull String getSql,@NonNull String ИмяТаблицы) {
         ///TODO --первая вставка
-        this.context =context;
         Long getsettingTableVersion = 0l;
         try{
-            if (this.context !=null) {
+            if (context !=null) {
                 //TODO SELECT getpublic id
                 Uri uri = Uri.parse("content://com.dsy.dsu.providerforsystemtables/" + ИмяТаблицы + "");
                 ContentResolver contentResolverPublicID = context.getContentResolver();
@@ -111,7 +110,7 @@ public class GetPublicID {
             e.printStackTrace();
             Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
                     " Линия  :" + Thread.currentThread().getStackTrace()[2].getLineNumber());
-            new RecordNewErros(this.context).recordnewerror(e.toString(),
+            new RecordNewErros(context).recordnewerror(e.toString(),
                     this.getClass().getName(), Thread.currentThread().getStackTrace()[2].getMethodName(),
                     Thread.currentThread().getStackTrace()[2].getLineNumber());
         }
