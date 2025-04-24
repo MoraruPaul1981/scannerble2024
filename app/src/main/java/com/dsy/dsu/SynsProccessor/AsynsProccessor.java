@@ -17,6 +17,7 @@ import com.dsy.dsu.Hilt.JbossAdrress.getHiltPortJbossInterface;
 import com.dsy.dsu.Hilt.Sqlitehilt.HiltInterfacesqlite;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.util.TokenBuffer;
 
 import org.jetbrains.annotations.NotNull;
 import org.json.JSONException;
@@ -241,8 +242,6 @@ public class AsynsProccessor extends Class_MODEL_synchronized {
                         && ! BufferGetVersionData.toString().trim().matches("(.*)Server Running...... Don't Login(.*)")) {
                     Log.d(this.getClass().getName(), "  getHiltPublicId  " + getHiltPublicId +
                             " BufferGetVersionData " + BufferGetVersionData.toString());
-
-
                     //TODO Таблицы ОТ  Сервера
                     CopyOnWriteArrayList<ConcurrentHashMap<String, String>> getBufferFromJbossServerAllTables =
                             jsonGenerator.readValue(BufferGetVersionData.toString(),
