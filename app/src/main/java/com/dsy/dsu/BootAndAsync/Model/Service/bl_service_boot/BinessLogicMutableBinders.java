@@ -12,15 +12,12 @@ import android.util.Log;
 
 import androidx.annotation.NonNull;
 
-
 import com.dsy.dsu.BootAndAsync.Model.DowloadUpdatePO.CallBackBusUpdatePO;
 import com.dsy.dsu.BootAndAsync.Model.EventsBus.MessageEvensBusAppAfterSyncing;
 import com.dsy.dsu.BootAndAsync.Model.EventsBus.MessageEvensBusNetworkStatuses;
 import com.dsy.dsu.BootAndAsync.Model.EventsBus.MessageEvensBusUpdatePO;
 import com.dsy.dsu.BusinessLogicAll.AnalysisUserAuthenticated.GetAnalysisUserAuthenticated;
 import com.dsy.dsu.BusinessLogicAll.Class_Connections_Server;
-import com.dsy.dsu.Dashboard.Model.endingasynsdashboard.LaunchMainAppAfterSyncing;
-
 import com.dsy.dsu.Errors.WriteErrorForAll.RecordNewErros;
 import com.dsy.dsu.Services.ServiceUpdatePoОбновлениеПО;
 import com.dsy.dsu.Services.Service_For_Remote_Async_Binary;
@@ -39,24 +36,17 @@ import dagger.hilt.android.qualifiers.ApplicationContext;
 import dagger.hilt.components.SingletonComponent;
 import io.reactivex.rxjava3.core.Maybe;
 
-@Module
-@InstallIn(SingletonComponent.class)
-@SuppressLint("Range")
-public class BinessLogicIntentServiceBoot {
+
+public class BinessLogicMutableBinders {
 
     private    Service_For_Remote_Async_Binary.LocalBinderAsync localBinderAsync;//TODO нова\
     private    ServiceUpdatePoОбновлениеПО.localBinderОбновлениеПО localBinderОбновлениеПО;//TODO нова
 
 
 
-    public  @Inject BinessLogicIntentServiceBoot(@ApplicationContext Context contextBounding) {
+    public   BinessLogicMutableBinders(@NonNull Context contextBounding) {
         //TODO сомо имя json
         try{
-        // TODO: 14.08.2023 методЗапукска Синхрониазйиии
-           МетодБиндингаОбновлениеПО(  contextBounding);
-
-            // TODO: 14.08.2023 методЗапукска Синхрониазйиии
-            МетодБиндингаRemoteAsync(contextBounding);
 
         Log.d(contextBounding.getClass().getName(), "\n"
                 + " время: " + new Date() + "\n+" +

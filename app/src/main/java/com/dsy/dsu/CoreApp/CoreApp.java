@@ -21,6 +21,7 @@ import com.sous.backasync.launch.ModuleQuety;
 import com.sous.backasync.launch.ModuleUpdating;
 
 
+import java.util.Date;
 import java.util.LinkedHashMap;
 import java.util.concurrent.CopyOnWriteArrayList;
 
@@ -33,6 +34,11 @@ import dagger.hilt.android.HiltAndroidApp;
 public class CoreApp extends Application {
 
   @Inject
+  public   SQLiteDatabase getSqlLiteCoreApp;
+  @Inject
+  public BinessLogicIntentServiceBoot binessLogicIntentServiceBoot;
+
+/*  @Inject
   public   SQLiteDatabase getSqlLiteCoreApp;
   @Inject
   @QualifiergetDeviceName
@@ -58,8 +64,7 @@ public class CoreApp extends Application {
   ModulegetDeviceNameBack modulegetDeviceNameBack;
 
 
-  @Inject
-  BinessLogicIntentServiceBoot binessLogicIntentServiceBoot;
+
 
   @Inject
    @QualifierJbossServer3
@@ -69,7 +74,7 @@ public class CoreApp extends Application {
 
   @Inject
   @QualifierPublicID
-  Integer getHiltPublicId;
+  Integer getHiltPublicId;*/
   @Override
   public void onCreate() {
     super.onCreate();
@@ -84,8 +89,8 @@ public class CoreApp extends Application {
               " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
               " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"+
               " \n" +
-              "      getSqlLiteCoreApp.isOpen(); " +
-              getSqlLiteCoreApp.isOpen() );
+              " STARTED    COREAPP   getSqlLiteCoreApp.isOpen(); " +
+              getSqlLiteCoreApp.isOpen() +" BREMY " +new Date().toLocaleString());
 
      // new BunessLogicCoreApp(getApplicationContext()).getBunessLogicCoreApp();
 
@@ -150,14 +155,6 @@ public class CoreApp extends Application {
 
       // TODO: 04.10.2023 разрешения для всего
       // TODO: 24.03.2025 test
-
-
-
-      Log.d(this.getClass().getName(),"\n" + " class CoreApp    " + Thread.currentThread().getStackTrace()[2].getClassName()
-              + "\n" +
-              " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-              " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"+
-              " sqlite " + getSqlLiteCoreApp );
 
     } catch (Exception e) {
       e.printStackTrace();

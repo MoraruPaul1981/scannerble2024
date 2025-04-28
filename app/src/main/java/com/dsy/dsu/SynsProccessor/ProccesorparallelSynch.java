@@ -87,7 +87,7 @@ public class ProccesorparallelSynch   {
     }
 
     public Long startingAsyncParallels() {
-        AtomicLong coutSucceessItemAsycnTablesComplete=new AtomicLong(0);
+        ConcurrentSkipListSet<Long> concurrentSkipListSetCompleteTable=new ConcurrentSkipListSet();
         try{
             // TODO: 30.09.2024
             preferences =context. getSharedPreferences("sharedPreferencesХранилище", Context.MODE_MULTI_PROCESS);
@@ -95,7 +95,7 @@ public class ProccesorparallelSynch   {
             // TODO: 20.01.2025 сама синхрониаиця
             switch (РежимЗапускаСинхронизации){
 // TODO: 20.01.2025 сама синхрониаиця
-                case  "СамыйПервыйЗапускСинхронизации":
+                case  "1СамыйПервыйЗапускСинхронизации":
                     Flowable.fromIterable(getBufferFromJbossServerAllTables)
                             .parallel().runOn(Schedulers.io())
                             .doOnNext(new Consumer<ConcurrentHashMap<String, String>>() {
@@ -103,7 +103,7 @@ public class ProccesorparallelSynch   {
                                 public void accept(ConcurrentHashMap<String, String> stringStringMapMultiPotoks) throws Throwable {
                                     // TODO: 28.12.2024
                                     // TODO: 06.12.2023  запуск синхризуции по таблице конктерной
-                                    coutSucceessItemAsycnTablesComplete.getAndSet(getLooTablesPOSTANDGET(stringStringMapMultiPotoks));      ;
+                                    concurrentSkipListSetCompleteTable.add(getLooTablesPOSTANDGET(stringStringMapMultiPotoks));
                                     // TODO: 30.09.2024
                                     // TODO: 15.09.2023
                                     Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
@@ -111,7 +111,9 @@ public class ProccesorparallelSynch   {
                                             " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"
                                             + " getBufferFromJbossServerAllTables.size() " + getBufferFromJbossServerAllTables.size()
                                             +"\n" +" POOL NAMES "+Thread.currentThread().getName()+"\n"+
-                                            " coutSucceessItemAsycnTablesComplete.get() " +coutSucceessItemAsycnTablesComplete.get());
+                                            " concurrentSkipListSetCompleteTable.get() "
+                                            +concurrentSkipListSetCompleteTable.stream().mapToLong(Long::new).reduce(0, (a, b) -> a + b)
+                                            +"\n" +" POOL NAMES "+Thread.currentThread().getName());
                                 }
                             }).doOnError(new Consumer<Throwable>() {
                                 @Override
@@ -141,6 +143,7 @@ public class ProccesorparallelSynch   {
 
                 // TODO: 20.01.2025 сама синхрониаиця
                 case "ПовторныйЗапускСинхронизации":
+                case  "СамыйПервыйЗапускСинхронизации":
 // TODO: 20.01.2025 сама синхрониаиця
                     Flowable.fromIterable(getBufferFromJbossServerAllTables)
                             .onBackpressureBuffer(1)
@@ -149,13 +152,15 @@ public class ProccesorparallelSynch   {
                                 public void accept(ConcurrentHashMap<String, String> stringStringMapMultiPotoks) throws Throwable {
                                     // TODO: 28.12.2024
                                     // TODO: 06.12.2023  запуск синхризуции по таблице конктерной
-                                    coutSucceessItemAsycnTablesComplete.getAndSet(getLooTablesPOSTANDGET(stringStringMapMultiPotoks));      ;
+                                    concurrentSkipListSetCompleteTable.add(getLooTablesPOSTANDGET(stringStringMapMultiPotoks));
                                     // TODO: 30.09.2024
                                     // TODO: 15.09.2023
                                     Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                                             " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
                                             " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"
                                             + " getBufferFromJbossServerAllTables.size() " + getBufferFromJbossServerAllTables.size()
+                                            +"\n" +" POOL NAMES "+Thread.currentThread().getName()+"\n"+
+                                            " concurrentSkipListSetCompleteTable.get() " +concurrentSkipListSetCompleteTable.stream().mapToLong(Long::new).reduce(0, (a, b) -> a + b)+"\n"
                                             +"\n" +" POOL NAMES "+Thread.currentThread().getName());
                                 }
                             }).doOnError(new Consumer<Throwable>() {
@@ -173,7 +178,7 @@ public class ProccesorparallelSynch   {
                                 Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                                         " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
                                         " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"
-                                        + " coutSucceessItemAsycnTablesComplete.size() " + coutSucceessItemAsycnTablesComplete.get()
+                                        + " concurrentSkipListSetCompleteTable " + concurrentSkipListSetCompleteTable
                                         +"\n");
 
                             })
@@ -200,7 +205,7 @@ public class ProccesorparallelSynch   {
             Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
             " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
             " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" + "РежимЗапускаСинхронизации  " +РежимЗапускаСинхронизации);
-} catch (Exception e) {
+      } catch (Exception e) {
         e.printStackTrace();
         Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() + " Линия  :"
         + Thread.currentThread().getStackTrace()[2].getLineNumber());
@@ -208,7 +213,7 @@ public class ProccesorparallelSynch   {
         this.getClass().getName(), Thread.currentThread().getStackTrace()[2].getMethodName(),
         Thread.currentThread().getStackTrace()[2].getLineNumber()  );
         }
-        return coutSucceessItemAsycnTablesComplete.get();
+        return concurrentSkipListSetCompleteTable.stream().mapToLong(Long::new).reduce(0, (a, b) -> a + b);
         }
 
 // TODO: 07.04.2024
@@ -240,8 +245,7 @@ public Long getLooTablesPOSTANDGET(@NonNull ConcurrentHashMap<String, String> st
 
 
         /////////////TODO ИДЕМ ПО ШАГАМ К ЗАПУСКИ СИНХРОГНИАЗЦИИ
-        РезультатТаблицыОбмена= TwoOfaKindGetAndPostJboss(getNameTable,
-        getVersionserverversion, PublicID,getParserVersionserver);
+        РезультатТаблицыОбмена= TwoOfaKindGetAndPostJboss(getNameTable, getVersionserverversion, PublicID,getParserVersionserver);
         // TODO: 12.07.2023
 
         Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
@@ -447,10 +451,10 @@ try{
                                                                  @NonNull Date   ВремяОтSqlServer) {
 
 // TODO: 07.04.2025
-        AtomicLong atomicLongInsertsUpdatesOperations=new AtomicLong(0);
+
+        ConcurrentSkipListSet<Long>  getInsertsUpdatesOperationsFinal=new ConcurrentSkipListSet<>();
         try{
-
-
+            AtomicLong atomicLongInsertsUpdatesOperations=new AtomicLong(0);
             // TODO: 02.11.2023  ПРИНИМАЕМ ДАННЫЕ ОТ СЕРВЕРА ПО ЧАСТЯМ
             IntStream.range(0,Integer.MAX_VALUE).noneMatch(new IntPredicate() {
                 @Override
@@ -469,10 +473,15 @@ try{
                     Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                             " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
                             " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" +
-                            "atomicLongInsertsUpdatesOperations.get() " + atomicLongInsertsUpdatesOperations.get()
-                            + "\n" );
+                            "atomicLongInsertsUpdatesOperations.get() " + atomicLongInsertsUpdatesOperations.get() + "\n" );
                     // TODO: 06.04.2025 EXIT  
                     if (atomicLongInsertsUpdatesOperations.get()>0) {
+                        // TODO: 28.04.2025
+                        getInsertsUpdatesOperationsFinal.add(atomicLongInsertsUpdatesOperations.get());
+                        Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                                " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                                " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" +
+                                " getInsertsUpdatesOperationsFinal " + getInsertsUpdatesOperationsFinal + "\n" );
                         return false;
                     } else {
                         return true;
@@ -481,15 +490,12 @@ try{
             });
 
 
-    
-
-
-
-                      
             Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                     " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
                     " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"+ "atomicLongInsertsUpdatesOperations.get() "
-                    + atomicLongInsertsUpdatesOperations.get()  );
+                    + atomicLongInsertsUpdatesOperations.get() +"\n"
+                    + " getInsertsUpdatesOperationsFinal.stream().mapToLong(Long::new).reduce(0, (a, b) -> a + b) "
+                    +getInsertsUpdatesOperationsFinal.stream().mapToLong(Long::new).reduce(0, (a, b) -> a + b)  );
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -498,9 +504,7 @@ try{
             new RecordNewErros(context).recordnewerror(e.toString(), this.getClass().getName(),
                     Thread.currentThread().getStackTrace()[2].getMethodName(), Thread.currentThread().getStackTrace()[2].getLineNumber());
         }
-
-
-        return atomicLongInsertsUpdatesOperations.get();
+        return getInsertsUpdatesOperationsFinal.stream().mapToLong(Long::new).reduce(0, (a, b) -> a + b);
     }
 
 
