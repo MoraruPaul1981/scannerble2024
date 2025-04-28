@@ -284,56 +284,74 @@
             android:orientation="vertical">
 
 
-            <TextView
+    "
+
+
+            <com.google.android.material.textview.MaterialTextView
                 android:id="@+id/textViewВерсияПрограммы"
                 android:layout_width="match_parent"
                 android:layout_height="30dp"
-                android:layout_marginStart="50dp"
-                android:layout_marginEnd="50dp"
-                android:layout_marginBottom="10dp"
-                android:fontFamily="sans-serif-condensed-light"
+                android:layout_margin="5dp"
+                android:padding="2dp"
+                android:background="@drawable/style_settings22"
                 android:gravity="center_horizontal"
+                android:textStyle="bold"
                 android:textAlignment="gravity"
-                android:textStyle="bold" />
+                android:textColor="#000000"
+                android:textColorHint="#454542"
+                android:textSize="16sp"
+                app:fontFamily="@font/average_sans" />
 
-            <TextView
+
+            <com.google.android.material.textview.MaterialTextView
                 android:id="@+id/textViewТекущийПользователь"
                 android:layout_width="match_parent"
                 android:layout_height="30dp"
-                android:layout_marginStart="50dp"
-                android:layout_marginEnd="50dp"
-                android:layout_marginBottom="5dp"
-                android:fontFamily="sans-serif-condensed-light"
+                android:layout_margin="5dp"
+                android:padding="2dp"
+                android:background="@drawable/style_settings22"
                 android:gravity="center_horizontal"
+                android:textStyle="bold"
                 android:textAlignment="gravity"
-                android:textStyle="bold"/>
+                android:textColor="#000000"
+                android:textColorHint="#454542"
+                android:textSize="16sp"
+                app:fontFamily="@font/average_sans" />
 
-            <TextView
+
+            <com.google.android.material.textview.MaterialTextView
                 android:id="@+id/textViewВремяПоследнееСинхронизации"
                 android:layout_width="match_parent"
                 android:layout_height="30dp"
-                android:layout_marginStart="50dp"
-                android:layout_marginEnd="50dp"
-                android:layout_marginBottom="5dp"
-                android:fontFamily="sans-serif-condensed-light"
+                android:layout_margin="5dp"
+                android:padding="2dp"
+                android:background="@drawable/style_settings22"
                 android:gravity="center_horizontal"
+                android:textStyle="bold"
                 android:textAlignment="gravity"
-                android:textStyle="bold" />
+                android:textColor="#000000"
+                android:textColorHint="#454542"
+                android:textSize="16sp"
+                app:fontFamily="@font/average_sans" />
 
 
-
-            <TextView
+            <com.google.android.material.textview.MaterialTextView
                 android:id="@+id/textViewРазрабочикПрогрммы"
                 android:layout_width="match_parent"
                 android:layout_height="30dp"
-                android:layout_marginStart="50dp"
-                android:layout_marginEnd="50dp"
-                android:layout_marginBottom="10dp"
-                android:fontFamily="sans-serif-condensed-light"
+                android:layout_margin="5dp"
+                android:padding="2dp"
+                android:text="Собственость: ООО Союз-Автодор, 2025г."
+                android:background="@drawable/style_settings22"
                 android:gravity="center_horizontal"
+                android:textStyle="normal"
                 android:textAlignment="gravity"
-                android:textStyle="bold"
-                android:text="Собственость: ООО Союз-Автодор"/>
+                android:textColor="#000000"
+                android:textColorHint="#454542"
+                android:textSize="16sp"
+                app:fontFamily="@font/average_sans" />
+
+
 
         </LinearLayout>
     </com.google.android.material.card.MaterialCardView>

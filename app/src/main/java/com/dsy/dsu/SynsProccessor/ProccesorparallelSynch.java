@@ -1202,8 +1202,18 @@ try{
             //TODO БУфер JSON от Сервера
             //  ObjectMapper jsonGenerator = new PUBLIC_CONTENT(context).getGeneratorJackson();
 
-            final JsonParser jsonParser= jsonGenerator.createParser(БуферGetByteJson);
+            final JsonParser jsonParser= jsonGenerator.createParser(БуферGetByteJson,0,БуферGetByteJson.length);
             JsonNode jsonNodeParentMAP= jsonParser.readValueAsTree();
+
+
+            Log.d(this.getClass().getName(),"\n" + " class " +
+                    Thread.currentThread().getStackTrace()[2].getClassName()
+                    + "\n" +
+                    " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                    " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"+
+                    " jsonNodeParentMAP " +jsonNodeParentMAP );
+
+
             if (jsonNodeParentMAP!=null && jsonNodeParentMAP.size()>0) {
                 Log.d(this.getClass().getName(),"\n" + " class " +
                         Thread.currentThread().getStackTrace()[2].getClassName()

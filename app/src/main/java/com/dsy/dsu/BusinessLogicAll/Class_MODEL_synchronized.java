@@ -19,6 +19,7 @@ import com.dsy.dsu.BusinessLogicAll.DownloadsJBOSS.BunessLogicDownloadBufferRead
 import com.dsy.dsu.BusinessLogicAll.DownloadsJBOSS.BunessLogicDownloadBufferReader.GetBinessLogicDownloadReader;
 import com.dsy.dsu.BusinessLogicAll.DownloadsJBOSS.BunessLogicDownloadByte.DownloadByte;
 import com.dsy.dsu.BusinessLogicAll.DownloadsJBOSS.BunessLogicDownloadByte.GetBinessLogicDownloadByte;
+import com.dsy.dsu.BusinessLogicAll.DownloadsJBOSS.BunessLogicDownloadByte.GetBinessLogicDownloadByteBuffer;
 import com.dsy.dsu.BusinessLogicAll.DownloadsJBOSS.BunessLogicDownloadFiles.DownloadFiles;
 import com.dsy.dsu.BusinessLogicAll.DownloadsJBOSS.BunessLogicDownloadFiles.GetBinessLogicDownloadFiles;
 import com.dsy.dsu.BusinessLogicAll.DATE.Class_Generation_Data;
@@ -413,7 +414,7 @@ import okio.BufferedSink;
                                 // TODO: 07.04.2025  получаем STEAM  от сервера и обрабоатываем его для READER
                                 DownloadByte downloadByte=new DownloadByte();
                                 // TODO: 07.04.2025 обрабоатываем пршедщий файл
-                                inputStreamJaksonByte.set(downloadByte.downloadByte(context, new GetBinessLogicDownloadByte(), response.body().bytes())); ;
+                                inputStreamJaksonByte.set(downloadByte.downloadByte(context, new GetBinessLogicDownloadByteBuffer(), response.body().bytes())); ;
 
                                 Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                                         " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +

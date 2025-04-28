@@ -34,7 +34,7 @@ public class GetPublicID {
 
 
 
-    @Singleton
+
     @Provides
     @QualifierPublicID
     public Integer getPublicIDAllApp(@ApplicationContext Context context  ) {
