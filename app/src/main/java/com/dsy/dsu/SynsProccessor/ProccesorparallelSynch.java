@@ -14,6 +14,7 @@ import androidx.annotation.NonNull;
 import com.dsy.dsu.BusinessLogicAll.Class_MODEL_synchronized;
 import com.dsy.dsu.BusinessLogicAll.Jakson.GeneratorBinarySONSerializer;
 import com.dsy.dsu.BusinessLogicAll.Jakson.GeneratorJSONSerializer;
+import com.dsy.dsu.BusinessLogicAll.SharedPreferences.GetSharedPreferences;
 import com.dsy.dsu.BusinessLogicAll.VersionCurentTable;
 import com.dsy.dsu.Errors.WriteErrorForAll.RecordNewErros;
 import com.dsy.dsu.SynsProccessor.PrograsBarAsync.GetPrograssbarChangeIndicator;
@@ -47,6 +48,7 @@ import javax.net.ssl.SSLSocketFactory;
 
 import io.reactivex.rxjava3.core.Flowable;
 import io.reactivex.rxjava3.core.Single;
+import io.reactivex.rxjava3.functions.Action;
 import io.reactivex.rxjava3.functions.Consumer;
 import io.reactivex.rxjava3.schedulers.Schedulers;
 
@@ -133,7 +135,21 @@ public class ProccesorparallelSynch   {
                                         " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"
                                         +"\n" + "POOL NAME  " +Thread.currentThread().getName());
 
-                            }).sequentialDelayError() .blockingSubscribe();
+                            }).sequentialDelayError().doOnComplete(new Action() {
+                                @Override
+                                public void run() throws Throwable {
+                                    // TODO: 29.04.2025
+                                    if (getstartingAsyncParallels.get()>0) {
+                                        new GetSharedPreferences(context).writinganewvaluePreferences();
+                                    }
+                                    // TODO: 03.04.2025
+                                    Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                                            " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                                            " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"
+                                            +"\n" + "POOL NAME  " +Thread.currentThread().getName()+"\n"+
+                                            " concurrentSkipListSetCompleteTable.get() " +getstartingAsyncParallels.get()+"\n");
+                                }
+                            }) .blockingSubscribe();
                     // TODO: 15.09.2023
                     Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                             " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
@@ -176,11 +192,16 @@ public class ProccesorparallelSynch   {
                                             Thread.currentThread().getStackTrace()[2].getLineNumber()  );
                                 }
                             }).doOnComplete(()->{
+                                // TODO: 29.04.2025
+                                if (getstartingAsyncParallels.get()>0) {
+                                    new GetSharedPreferences(context).writinganewvaluePreferences();
+                                }
+                                // TODO: 03.04.2025
                                 Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                                         " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
                                         " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"
-                                        + " getstartingAsyncParallels.get() " + getstartingAsyncParallels.get()
-                                        +"\n");
+                                        +"\n" + "POOL NAME  " +Thread.currentThread().getName()+"\n"+
+                                        " concurrentSkipListSetCompleteTable.get() " +getstartingAsyncParallels.get()+"\n");
 
                             })
                             .blockingSubscribe();

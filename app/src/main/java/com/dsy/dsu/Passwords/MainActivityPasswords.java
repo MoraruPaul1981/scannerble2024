@@ -466,7 +466,7 @@ public class MainActivityPasswords extends AppCompatActivity {
             // TODO: 02.08.2023 БИЗНЕС КОД
             SharedPreferences.Editor editor = preferences.edit();
             editor.putString("РежимЗапускаСинхронизации", "СамыйПервыйЗапускСинхронизации");
-            editor.apply();
+            editor.commit();
             Log.d(getApplicationContext().getClass().getName(), "\n"
                     + " время: " + new Date()+"\n+" +
                     " Класс в процессе... " +  this.getClass().getName()+"\n"+
