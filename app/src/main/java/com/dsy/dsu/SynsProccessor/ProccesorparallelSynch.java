@@ -88,7 +88,7 @@ public class ProccesorparallelSynch   {
     }
 
     public Long startingAsyncParallels() {
-        ConcurrentSkipListSet<Long> concurrentSkipListSetCompleteTable=new ConcurrentSkipListSet();
+        AtomicLong getstartingAsyncParallels=new AtomicLong(0l);
         try{
             // TODO: 30.09.2024
             preferences =context. getSharedPreferences("sharedPreferencesХранилище", Context.MODE_MULTI_PROCESS);
@@ -96,15 +96,15 @@ public class ProccesorparallelSynch   {
             // TODO: 20.01.2025 сама синхрониаиця
             switch (РежимЗапускаСинхронизации){
 // TODO: 20.01.2025 сама синхрониаиця
-                case  "1СамыйПервыйЗапускСинхронизации":
+                case  "СамыйПервыйЗапускСинхронизации":
                     Flowable.fromIterable(getBufferFromJbossServerAllTables)
                             .parallel().runOn(Schedulers.io())
                             .doOnNext(new Consumer<ConcurrentHashMap<String, String>>() {
                                 @Override
-                                public void accept(ConcurrentHashMap<String, String> stringStringMapMultiPotoks) throws Throwable {
+                                public void accept(ConcurrentHashMap<String, String> operationMulti) throws Throwable {
                                     // TODO: 28.12.2024
                                     // TODO: 06.12.2023  запуск синхризуции по таблице конктерной
-                                    concurrentSkipListSetCompleteTable.add(getLooTablesPOSTANDGET(stringStringMapMultiPotoks));
+                                    getstartingAsyncParallels.addAndGet(getLooTablesPOSTANDGET(operationMulti));
                                     // TODO: 30.09.2024
                                     // TODO: 15.09.2023
                                     Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
@@ -113,7 +113,7 @@ public class ProccesorparallelSynch   {
                                             + " getBufferFromJbossServerAllTables.size() " + getBufferFromJbossServerAllTables.size()
                                             +"\n" +" POOL NAMES "+Thread.currentThread().getName()+"\n"+
                                             " concurrentSkipListSetCompleteTable.get() "
-                                            +concurrentSkipListSetCompleteTable.stream().mapToLong(Long::new).reduce(0, (a, b) -> a + b)
+                                            +getstartingAsyncParallels.get()
                                             +"\n" +" POOL NAMES "+Thread.currentThread().getName());
                                 }
                             }).doOnError(new Consumer<Throwable>() {
@@ -144,16 +144,16 @@ public class ProccesorparallelSynch   {
 
                 // TODO: 20.01.2025 сама синхрониаиця
                 case "ПовторныйЗапускСинхронизации":
-                case  "СамыйПервыйЗапускСинхронизации":
 // TODO: 20.01.2025 сама синхрониаиця
                     Flowable.fromIterable(getBufferFromJbossServerAllTables)
                             .onBackpressureBuffer(1)
                             .doOnNext(new Consumer<ConcurrentHashMap<String, String>>() {
                                 @Override
-                                public void accept(ConcurrentHashMap<String, String> stringStringMapMultiPotoks) throws Throwable {
+                                public void accept(ConcurrentHashMap<String, String> operationSingle) throws Throwable {
                                     // TODO: 28.12.2024
                                     // TODO: 06.12.2023  запуск синхризуции по таблице конктерной
-                                    concurrentSkipListSetCompleteTable.add(getLooTablesPOSTANDGET(stringStringMapMultiPotoks));
+                                    // TODO: 06.12.2023  запуск синхризуции по таблице конктерной
+                                    getstartingAsyncParallels.addAndGet(getLooTablesPOSTANDGET(operationSingle));
                                     // TODO: 30.09.2024
                                     // TODO: 15.09.2023
                                     Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
@@ -161,7 +161,7 @@ public class ProccesorparallelSynch   {
                                             " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"
                                             + " getBufferFromJbossServerAllTables.size() " + getBufferFromJbossServerAllTables.size()
                                             +"\n" +" POOL NAMES "+Thread.currentThread().getName()+"\n"+
-                                            " concurrentSkipListSetCompleteTable.get() " +concurrentSkipListSetCompleteTable.stream().mapToLong(Long::new).reduce(0, (a, b) -> a + b)+"\n"
+                                            " concurrentSkipListSetCompleteTable.get() " +getstartingAsyncParallels.get()+"\n"
                                             +"\n" +" POOL NAMES "+Thread.currentThread().getName());
                                 }
                             }).doOnError(new Consumer<Throwable>() {
@@ -179,7 +179,7 @@ public class ProccesorparallelSynch   {
                                 Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                                         " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
                                         " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"
-                                        + " concurrentSkipListSetCompleteTable " + concurrentSkipListSetCompleteTable
+                                        + " getstartingAsyncParallels.get() " + getstartingAsyncParallels.get()
                                         +"\n");
 
                             })
@@ -214,7 +214,7 @@ public class ProccesorparallelSynch   {
         this.getClass().getName(), Thread.currentThread().getStackTrace()[2].getMethodName(),
         Thread.currentThread().getStackTrace()[2].getLineNumber()  );
         }
-        return concurrentSkipListSetCompleteTable.stream().mapToLong(Long::new).reduce(0, (a, b) -> a + b);
+        return getstartingAsyncParallels.get();
         }
 
 // TODO: 07.04.2024
@@ -455,7 +455,7 @@ try{
 
         AtomicLong getCompleteInsertsUpdatesOperations=new AtomicLong(0);
         try{
-            AtomicLong getInsertsUpdatesOperation=new AtomicLong(0);
+            AtomicLong getInsertsUpdatesCurrentOperation=new AtomicLong(0);
             // TODO: 02.11.2023  ПРИНИМАЕМ ДАННЫЕ ОТ СЕРВЕРА ПО ЧАСТЯМ
             IntStream.range(0,Integer.MAX_VALUE).noneMatch(new IntPredicate() {
                 @Override
@@ -464,20 +464,20 @@ try{
                     // TODO: 06.04.2025  
                     // TODO: 08.04.2024 выполения операции  GET ()
                     // TODO: 13.02.2025  сабираем все ответы при GET
-                    getInsertsUpdatesOperation.getAndSet( getCursorWithVersionGET(ИмяТаблицы, ВерсияДанныхсSqlServer, PublicID, ВремяОтSqlServer));
+                    getInsertsUpdatesCurrentOperation.getAndSet( getCursorWithVersionGET(ИмяТаблицы, ВерсияДанныхсSqlServer, PublicID, ВремяОтSqlServer));
                     // TODO: 06.04.2025
                     Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                             " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
                             " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" +
-                            "getInsertsUpdatesOperation.get() " + getInsertsUpdatesOperation.get() + "\n" );
+                            "getInsertsUpdatesCurrentOperation.get() " + getInsertsUpdatesCurrentOperation.get() + "\n" );
                     // TODO: 06.04.2025 EXIT  
-                    if (getInsertsUpdatesOperation.get()>0) {
+                    if (getInsertsUpdatesCurrentOperation.get()>0) {
                         // TODO: 29.04.2025
                         // TODO: 13.02.2025  Повышаем версию данных только для GET
                         workerUpVersionDataOnlyGETAsyncBack(ИмяТаблицы);
                         // TODO: 29.04.2025
                         LongBinaryOperator ibo = (x, y) -> (x + y);
-                        getCompleteInsertsUpdatesOperations.accumulateAndGet(getInsertsUpdatesOperation.get(),  ibo);
+                        getCompleteInsertsUpdatesOperations.accumulateAndGet(getInsertsUpdatesCurrentOperation.get(),  ibo);
                         return false;
                     } else {
                         return true;
@@ -489,9 +489,9 @@ try{
             Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                     " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
                     " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"+ "atomicLongInsertsUpdatesOperations.get() "
-                    + getInsertsUpdatesOperation.get() +"\n"
+                    + getInsertsUpdatesCurrentOperation.get() +"\n"
                     + "atomicLongInsertsUpdatesOperations.get()"
-                    +getInsertsUpdatesOperation.get()) ;
+                    +getInsertsUpdatesCurrentOperation.get()) ;
 
         } catch (Exception e) {
             e.printStackTrace();
