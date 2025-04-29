@@ -27,7 +27,6 @@ import org.jetbrains.annotations.NotNull;
 import org.json.JSONException;
 
 import java.io.ByteArrayOutputStream;
-import java.io.InputStream;
 import java.io.Serializable;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -39,7 +38,9 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentSkipListSet;
 import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.concurrent.atomic.AtomicLong;
+import java.util.function.IntBinaryOperator;
 import java.util.function.IntPredicate;
+import java.util.function.LongBinaryOperator;
 import java.util.stream.IntStream;
 
 import javax.net.ssl.SSLSocketFactory;
@@ -245,7 +246,7 @@ public Long getLooTablesPOSTANDGET(@NonNull ConcurrentHashMap<String, String> st
 
 
         /////////////TODO ИДЕМ ПО ШАГАМ К ЗАПУСКИ СИНХРОГНИАЗЦИИ
-        РезультатТаблицыОбмена= TwoOfaKindGetAndPostJboss(getNameTable, getVersionserverversion, PublicID,getParserVersionserver);
+        РезультатТаблицыОбмена= twoOfaKindGetAndPostJboss(getNameTable, getVersionserverversion, PublicID,getParserVersionserver);
         // TODO: 12.07.2023
 
         Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
@@ -292,12 +293,12 @@ public Long getLooTablesPOSTANDGET(@NonNull ConcurrentHashMap<String, String> st
 
 
 @SuppressLint("Range")
-    Long TwoOfaKindGetAndPostJboss(@NonNull String ИмяТаблицы,
+    Long twoOfaKindGetAndPostJboss(@NonNull String ИмяТаблицы,
                                    @NonNull  Long ВерсияДанныхсSqlServer,
                                    @NonNull  Integer PublicID,
                                    @NonNull Date     ВремяОтSqlServer) throws  Exception{
 
-      ConcurrentSkipListSet<Long>  completedPostAndGetInsertorUpdateOperations=new ConcurrentSkipListSet<>();
+    AtomicLong getTwoOfaKindGetAndPostJboss=new AtomicLong(0);
         try  {
                 Log.d(this.getClass().getName(), "\n"
                         + " время: " + new Date() + "\n+" +
@@ -316,7 +317,7 @@ public Long getLooTablesPOSTANDGET(@NonNull ConcurrentHashMap<String, String> st
 
 // TODO: 24.09.2024 Запускаем Отправление и или ПОлучение данных  сервера JBoss
                 // TODO: 08.04.2024 SEND SERVERR JBOSS POST
-                Long getSendingDatatoTheServerOnjboss =startSendingDatatoTheServerOnjboss(ИмяТаблицы,
+                Long getSendingToJboss =startSendingDatatoTheServerOnjboss(ИмяТаблицы,
                         ВерсияДанныхсSqlServer,
                         PublicID,
                         ВремяОтSqlServer);
@@ -327,33 +328,33 @@ public Long getLooTablesPOSTANDGET(@NonNull ConcurrentHashMap<String, String> st
                         + " время: " + new Date() + "\n+" +
                         " Класс в процессе... " + this.getClass().getName() + "\n" +
                         " метод в процессе... " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n"
-                        + " getSendingDatatoTheServerOnjboss "+getSendingDatatoTheServerOnjboss);
+                        + " getSendingToJboss "+getSendingToJboss);
 
 
-                if (getSendingDatatoTheServerOnjboss>0) {
-                    completedPostAndGetInsertorUpdateOperations.add(getSendingDatatoTheServerOnjboss);
+                if (getSendingToJboss>0) {
+                    getTwoOfaKindGetAndPostJboss.addAndGet(getSendingToJboss);
                 }
 
                 // TODO: 17.03.2025 Если Положительный ответ POST
-                if (getSendingDatatoTheServerOnjboss>0) {
+                if (getSendingToJboss>0) {
                     // TODO: 13.02.2025 ПОСЛЕ ПОВЫШАЕМ ВЕРИСЮ ДАННЫХ ТОЛЬКО ДЛЯ POST после всей синхрониахции
-                    workerUpVersionDataOnlyPOSTAsyncBack(   getSendingDatatoTheServerOnjboss, ИмяТаблицы);
+                    workerUpVersionDataOnlyPOSTAsyncBack(   getSendingToJboss, ИмяТаблицы);
                 }
                 // TODO: 24.09.2024
                 Log.d(this.getClass().getName(), "\n"
                         + " время: " + new Date() + "\n+" +
                         " Класс в процессе... " + this.getClass().getName() + "\n" +
                         " метод в процессе... " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                        "  + getSendingDatatoTheServerOnjboss) " + getSendingDatatoTheServerOnjboss);
+                        "  + getSendingToJboss) " + getSendingToJboss);
 
 
 
 
-                return getSendingDatatoTheServerOnjboss;
+                return getSendingToJboss;
 
             }).doOnSuccess(result->{
                 // TODO: 08.04.2024 через Retry Obsever множественое ображение  к серверу GET
-                Long getcompletedInsertorUpdateOperationsForEachWhile=completedInsertorUpdateOperationsForEachWhile(ИмяТаблицы,
+                Long getsettingOtJboss =completedInsertorUpdateOperationsForEachWhile(ИмяТаблицы,
                         ВерсияДанныхсSqlServer,
                         PublicID,
                         ВремяОтSqlServer);
@@ -363,12 +364,12 @@ public Long getLooTablesPOSTANDGET(@NonNull ConcurrentHashMap<String, String> st
                         + " время: " + new Date() + "\n+" +
                         " Класс в процессе... " + this.getClass().getName() + "\n" +
                         " метод в процессе... " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                        "  + getcompletedInsertorUpdateOperationsForEachWhile" + getcompletedInsertorUpdateOperationsForEachWhile +"\n"
-                        + " getcompletedInsertorUpdateOperationsForEachWhile "+getcompletedInsertorUpdateOperationsForEachWhile);
+                        "  + " + getsettingOtJboss +"\n"
+                        + " getsettingOtJboss "+getsettingOtJboss);
 
                 // TODO: 17.03.2025 Если Положительный ответ GET
-                if (getcompletedInsertorUpdateOperationsForEachWhile>0) {
-                    completedPostAndGetInsertorUpdateOperations.add(getcompletedInsertorUpdateOperationsForEachWhile);
+                if (getsettingOtJboss>0) {
+                    getTwoOfaKindGetAndPostJboss.addAndGet(getsettingOtJboss);
                 }
 
                 // TODO: 17.03.2025
@@ -376,7 +377,7 @@ public Long getLooTablesPOSTANDGET(@NonNull ConcurrentHashMap<String, String> st
                         + " время: " + new Date() + "\n+" +
                         " Класс в процессе... " + this.getClass().getName() + "\n" +
                         " метод в процессе... " + Thread.currentThread().getStackTrace()[2].getMethodName()
-                        + "\n" + " getcompletedInsertorUpdateOperationsForEachWhile " +getcompletedInsertorUpdateOperationsForEachWhile);
+                        + "\n" + " getsettingOtJboss " +getsettingOtJboss);
             }).blockingSubscribe();
 
 
@@ -386,7 +387,7 @@ public Long getLooTablesPOSTANDGET(@NonNull ConcurrentHashMap<String, String> st
                     + " время: " + new Date() + "\n+" +
                     " Класс в процессе... " + this.getClass().getName() + "\n" +
                     " метод в процессе... " + Thread.currentThread().getStackTrace()[2].getMethodName()
-                    + "completedPostAndGetInsertorUpdateOperations " +completedPostAndGetInsertorUpdateOperations);
+                    + "getTwoOfaKindGetAndPostJboss " +getTwoOfaKindGetAndPostJboss.get());
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -395,7 +396,7 @@ public Long getLooTablesPOSTANDGET(@NonNull ConcurrentHashMap<String, String> st
             new RecordNewErros(context).recordnewerror(e.toString(), this.getClass().getName(),
                     Thread.currentThread().getStackTrace()[2].getMethodName(), Thread.currentThread().getStackTrace()[2].getLineNumber());
         }
-        return   completedPostAndGetInsertorUpdateOperations.stream().mapToLong(Long::new).reduce(0, (a, b) -> a + b);
+        return  getTwoOfaKindGetAndPostJboss.get();
     }
 
 
@@ -452,9 +453,9 @@ try{
 
 // TODO: 07.04.2025
 
-        ConcurrentSkipListSet<Long>  getInsertsUpdatesOperationsFinal=new ConcurrentSkipListSet<>();
+        AtomicLong getCompleteInsertsUpdatesOperations=new AtomicLong(0);
         try{
-            AtomicLong atomicLongInsertsUpdatesOperations=new AtomicLong(0);
+            AtomicLong getInsertsUpdatesOperation=new AtomicLong(0);
             // TODO: 02.11.2023  ПРИНИМАЕМ ДАННЫЕ ОТ СЕРВЕРА ПО ЧАСТЯМ
             IntStream.range(0,Integer.MAX_VALUE).noneMatch(new IntPredicate() {
                 @Override
@@ -463,25 +464,20 @@ try{
                     // TODO: 06.04.2025  
                     // TODO: 08.04.2024 выполения операции  GET ()
                     // TODO: 13.02.2025  сабираем все ответы при GET
-                    atomicLongInsertsUpdatesOperations.getAndSet( getCursorWithVersionGET(ИмяТаблицы, ВерсияДанныхсSqlServer, PublicID, ВремяОтSqlServer));
+                    getInsertsUpdatesOperation.getAndSet( getCursorWithVersionGET(ИмяТаблицы, ВерсияДанныхсSqlServer, PublicID, ВремяОтSqlServer));
                     // TODO: 06.04.2025
-                    if (atomicLongInsertsUpdatesOperations.get()>0) {
-                        // TODO: 13.02.2025  Повышаем версию данных только для GET
-                        workerUpVersionDataOnlyGETAsyncBack(ИмяТаблицы);
-                    }
-
                     Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                             " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
                             " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" +
-                            "atomicLongInsertsUpdatesOperations.get() " + atomicLongInsertsUpdatesOperations.get() + "\n" );
+                            "getInsertsUpdatesOperation.get() " + getInsertsUpdatesOperation.get() + "\n" );
                     // TODO: 06.04.2025 EXIT  
-                    if (atomicLongInsertsUpdatesOperations.get()>0) {
-                        // TODO: 28.04.2025
-                        getInsertsUpdatesOperationsFinal.add(atomicLongInsertsUpdatesOperations.get());
-                        Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
-                                " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                                " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" +
-                                " getInsertsUpdatesOperationsFinal " + getInsertsUpdatesOperationsFinal + "\n" );
+                    if (getInsertsUpdatesOperation.get()>0) {
+                        // TODO: 29.04.2025
+                        // TODO: 13.02.2025  Повышаем версию данных только для GET
+                        workerUpVersionDataOnlyGETAsyncBack(ИмяТаблицы);
+                        // TODO: 29.04.2025
+                        LongBinaryOperator ibo = (x, y) -> (x + y);
+                        getCompleteInsertsUpdatesOperations.accumulateAndGet(getInsertsUpdatesOperation.get(),  ibo);
                         return false;
                     } else {
                         return true;
@@ -493,9 +489,9 @@ try{
             Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                     " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
                     " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"+ "atomicLongInsertsUpdatesOperations.get() "
-                    + atomicLongInsertsUpdatesOperations.get() +"\n"
-                    + " getInsertsUpdatesOperationsFinal.stream().mapToLong(Long::new).reduce(0, (a, b) -> a + b) "
-                    +getInsertsUpdatesOperationsFinal.stream().mapToLong(Long::new).reduce(0, (a, b) -> a + b)  );
+                    + getInsertsUpdatesOperation.get() +"\n"
+                    + "atomicLongInsertsUpdatesOperations.get()"
+                    +getInsertsUpdatesOperation.get()) ;
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -504,7 +500,7 @@ try{
             new RecordNewErros(context).recordnewerror(e.toString(), this.getClass().getName(),
                     Thread.currentThread().getStackTrace()[2].getMethodName(), Thread.currentThread().getStackTrace()[2].getLineNumber());
         }
-        return getInsertsUpdatesOperationsFinal.stream().mapToLong(Long::new).reduce(0, (a, b) -> a + b);
+        return getCompleteInsertsUpdatesOperations.get();
     }
 
 
@@ -684,7 +680,7 @@ try{
                                           @NonNull  Integer  PublicID,
                                           @NonNull Date   ВремяОтSqlServer) {
         // TODO: 08.04.2024 get and post
-        ConcurrentSkipListSet<Long> ResultatAndGET=new ConcurrentSkipListSet<>();
+        Long  ResultatAndGET=0l;
         // TODO: 13.02.2025
         try (Cursor КурсорДляАнализаВерсииДанныхАндройда = new VersionCurentTable(context).getVersionMODIFITATION_ClientTable(ИмяТаблицы); ){
             // TODO: 07.04.2024  получаем данные локалные лдля сравенния
@@ -720,24 +716,20 @@ try{
 
 
                 //TODO СЛЕДУЮЩИЙ ЭТАМ РАБОТЫ ОПРЕДЕЛЯЕМ ЧТО МЫ ДЕЛАЕМ ПОЛУЧАЕМ ДАННЫЕ С СЕВРЕРА ИЛИ НА ОБОРОТ  ОТПРАВЛЯЕМ ДАННЫЕ НА СЕРВЕР  GET  #2
-                ResultatAndGET.add( workerAsyncBackGET(
+                ResultatAndGET= workerAsyncBackGET(
                         ИмяТаблицы,
                         ВерсияДанныхсSqlServer,
                         PublicID,
                         ВерсииНаАндройдеЛокальная,
                         ВерсииНаАндройдеСерверная,
                         ВремяДанныхНаАндройде,
-                        ВремяОтSqlServer));
+                        ВремяОтSqlServer);
                 // TODO: 07.04.2024
                 Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                         " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
                         " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"+
                         "ResultatAndGET " + ResultatAndGET+
-                        "\n"+" ResultatAndGETANDPOST.stream().mapToLong(l->l)  .reduce(0, Long::sum) " +ResultatAndGET.stream().mapToLong(l->l)  .reduce(0, Long::sum));
-
-
-
-
+                        "\n"+" ResultatAndGET " +ResultatAndGET);
 
             }
         } catch (Exception e) {
@@ -747,7 +739,7 @@ try{
             new RecordNewErros(context).recordnewerror(e.toString(), this.getClass().getName(),
                     Thread.currentThread().getStackTrace()[2].getMethodName(), Thread.currentThread().getStackTrace()[2].getLineNumber());
         }
-        return  ResultatAndGET.stream().mapToLong(l->l)  .reduce(0, Long::sum);
+        return  ResultatAndGET;
     }
 // TODO: 07.04.2024
 
