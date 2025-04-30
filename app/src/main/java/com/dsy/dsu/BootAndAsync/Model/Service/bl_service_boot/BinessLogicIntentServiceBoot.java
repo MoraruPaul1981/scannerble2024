@@ -30,6 +30,7 @@ import org.greenrobot.eventbus.EventBus;
 
 import java.util.Date;
 import java.util.LinkedHashMap;
+import java.util.concurrent.Executors;
 
 import javax.inject.Inject;
 import javax.inject.Singleton;
@@ -40,7 +41,10 @@ import dagger.hilt.InstallIn;
 import dagger.hilt.android.qualifiers.ApplicationContext;
 import dagger.hilt.components.SingletonComponent;
 import io.reactivex.rxjava3.core.Maybe;
+import io.reactivex.rxjava3.core.Observer;
+import io.reactivex.rxjava3.disposables.Disposable;
 import io.reactivex.rxjava3.functions.Consumer;
+import io.reactivex.rxjava3.internal.observers.BlockingBaseObserver;
 import io.reactivex.rxjava3.subjects.PublishSubject;
 
 @Module
@@ -52,10 +56,31 @@ public class BinessLogicIntentServiceBoot {
     public    ServiceUpdatePoОбновлениеПО.localBinderОбновлениеПО localBinderОбновлениеПО;//TODO нова
     private  Context context;
 
+ PublishSubject<  ServiceUpdatePoОбновлениеПО.localBinderОбновлениеПО> publishSubject=PublishSubject.create();
+
 
     public  @Inject BinessLogicIntentServiceBoot(@ApplicationContext Context contextBounding) {
         //TODO сомо имя json
         try{
+
+            publishSubject.doOnNext(new Consumer<  ServiceUpdatePoОбновлениеПО.localBinderОбновлениеПО>() {
+                @Override
+                public void accept(  ServiceUpdatePoОбновлениеПО.localBinderОбновлениеПО ser) throws Throwable {
+                    // TODO: 29.04.2025
+
+
+                    Log.d(contextBounding.getClass().getName(), "\n"
+                            + " время: " + new Date() + "\n+" +
+                            " Класс в процессе... " + this.getClass().getName() + "\n" +
+                            " метод в процессе... " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n");
+
+                    publishSubject.hasComplete();
+
+                }
+            }).subscribe();
+
+
+
             // TODO: 28.04.2025
             this.context=contextBounding;
         // TODO: 14.08.2023 методЗапукска Синхрониазйиии
@@ -616,7 +641,8 @@ public class BinessLogicIntentServiceBoot {
                     }};
 
             if (localBinderAsync==null) {
-                contextBounding. bindService(intentAsync ,connectionAsync ,Context.BIND_AUTO_CREATE);
+                //contextBounding. bindService(intentAsync ,connectionAsync ,Context.BIND_AUTO_CREATE);
+                contextBounding. bindService(intentAsync,Context.BIND_AUTO_CREATE , Executors.newSingleThreadExecutor(),connectionAsync );
             }
 
 
@@ -652,6 +678,11 @@ public class BinessLogicIntentServiceBoot {
 
                             // TODO: 28.07.2023  Update
                             localBinderОбновлениеПО = (ServiceUpdatePoОбновлениеПО.localBinderОбновлениеПО) service;
+
+
+
+                            publishSubject.onNext(localBinderОбновлениеПО);
+                            publishSubject.onComplete();;
                             // TODO: 28.04.2025
                             // TODO: 25.03.2023
                             Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
@@ -696,7 +727,8 @@ public class BinessLogicIntentServiceBoot {
             intentЗапускСлужбыОбновлениеПО.setAction("com.ServiceUpdatePoОбновлениеПО");
 
             if (localBinderОбновлениеПО==null) {
-                contextBounding. bindService(intentЗапускСлужбыОбновлениеПО,connectionОбновлениеПО,Context.BIND_AUTO_CREATE  );
+                //contextBounding. bindService(intentЗапускСлужбыОбновлениеПО,connectionОбновлениеПО,Context.BIND_AUTO_CREATE  );
+                contextBounding. bindService(intentЗапускСлужбыОбновлениеПО,Context.BIND_AUTO_CREATE , Executors.newSingleThreadExecutor(),connectionОбновлениеПО );
             }
             // TODO: 28.04.2023
             Log.d(this.getClass().getName(), "\n" + " class " +

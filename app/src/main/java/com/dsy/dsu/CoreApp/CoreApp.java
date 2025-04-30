@@ -33,10 +33,10 @@ import dagger.hilt.android.HiltAndroidApp;
 @HiltAndroidApp
 public class CoreApp extends Application {
 
-  @Inject
-  public   SQLiteDatabase getSqlLiteCoreApp;
-  @Inject
-  public BinessLogicIntentServiceBoot binessLogicIntentServiceBoot;
+/*  @Inject
+  public   SQLiteDatabase getSqlLiteCoreApp;*/
+  /*@Inject
+  public BinessLogicIntentServiceBoot binessLogicIntentServiceBoot;*/
 
 /*  @Inject
   public   SQLiteDatabase getSqlLiteCoreApp;
@@ -89,8 +89,7 @@ public class CoreApp extends Application {
               " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
               " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"+
               " \n" +
-              " STARTED    COREAPP   getSqlLiteCoreApp.isOpen(); " +
-              getSqlLiteCoreApp.isOpen() +" BREMY " +new Date().toLocaleString());
+              " STARTED    COREAPP    " +" BREMY " +new Date().toLocaleString());
 
      // new BunessLogicCoreApp(getApplicationContext()).getBunessLogicCoreApp();
 
