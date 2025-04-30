@@ -150,7 +150,8 @@ public class MainActivity_List_Tabels extends AppCompatActivity  {
     protected void onCreate(Bundle savedInstanceState) {
         try{
         super.onCreate(savedInstanceState);
-            setContentView(R.layout.activity_main__historytabely);
+           // setContentView(R.layout.activity_main__historytabely);
+            setContentView(R.layout.activity_main__historytabely_materialview);
             activity=this;
             context =this;
             getSupportActionBar().hide(); ///скрывать тул бар
@@ -1140,15 +1141,9 @@ public class MainActivity_List_Tabels extends AppCompatActivity  {
             ДатаДляКалендаря.getWindow().setAttributes(params);
 
 
-            Drawable drawabledown=context.getDrawable(R.drawable.style_for_calendar1);
-            ДатаДляКалендаря.getWindow().setBackgroundDrawable(drawabledown);
+         /*   Drawable drawabledown=context.getDrawable(R.drawable.style_for_calendar1);
+            ДатаДляКалендаря.getWindow().setBackgroundDrawable(drawabledown);*/
             //todo:
-
-           /* ДатаДляКалендаря.getWindow().setNavigationBarColor(Color.RED);
-            ДатаДляКалендаря.getWindow().setStatusBarColor(Color.RED);
-            ДатаДляКалендаря.getWindow().setNavigationBarDividerColor(Color.RED);*/
-
-
             if (!ДатаДляКалендаря.isShowing()) {
                 ДатаДляКалендаря.show();
             }
