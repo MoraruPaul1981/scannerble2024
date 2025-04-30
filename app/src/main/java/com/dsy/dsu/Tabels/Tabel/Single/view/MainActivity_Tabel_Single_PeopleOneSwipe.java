@@ -1,4 +1,4 @@
-package com.dsy.dsu.Tabels.Tabel.Single;
+package com.dsy.dsu.Tabels.Tabel.Single.view;
 
 
 import android.content.Intent;

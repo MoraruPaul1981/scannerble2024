@@ -93,6 +93,7 @@ import okio.BufferedSink;
 
     public Class_MODEL_synchronized(  @NotNull Context context) {
        this. context=context;
+       try{
         //TODO контроль потоков
         Class_Engine_SQLГдеНаходитьсяМенеджерПотоков =new PUBLIC_CONTENT(context);
         // TODO: 16.04.2025
@@ -104,6 +105,15 @@ import okio.BufferedSink;
         // TODO: 06.10.2024
 
         preferencesJboss = context.getSharedPreferences("sharedPreferencesХранилище", Context.MODE_MULTI_PROCESS);
+
+    } catch (Exception e) {
+        e.printStackTrace();
+        Log.e(this.getClass().getName(), "Ошибка " +e + " Метод :"+Thread.currentThread().getStackTrace()[2].getMethodName()
+                + " Линия  :"+Thread.currentThread().getStackTrace()[2].getLineNumber());
+        new RecordNewErros(context).recordnewerror(e.toString(),  this.getClass().getName(), Thread.currentThread().getStackTrace()[2].getMethodName(),
+                Thread.currentThread().getStackTrace()[2].getLineNumber());
+    }
+
     }
 
 
@@ -3536,34 +3546,6 @@ Class_GRUD_SQL_Operations classGrudSqlOperationsУдалениеДанныхЧе
         return  ЗначениеДляПовышениеВерсии;
     }
 
-
-    public Integer МетодПосчётаЧасовПоСотруднику(Cursor курсор_ЗагружаемТабеляСозданный) {
-        Integer СуммаЧасов = 0;
-        try{
-            if (курсор_ЗагружаемТабеляСозданный.getCount()>0) {
-                for (int ИндексДляИзмененияДней = 1; ИндексДляИзмененияДней < 32; ИндексДляИзмененияДней++) {
-                    int ИндексЧассыСотрудника = курсор_ЗагружаемТабеляСозданный.getColumnIndex("d" + ИндексДляИзмененияДней);
-                    if (  курсор_ЗагружаемТабеляСозданный.getType(ИндексЧассыСотрудника)==Cursor.FIELD_TYPE_INTEGER) {
-                        int ЧассыСотрудника = курсор_ЗагружаемТабеляСозданный.getInt(ИндексЧассыСотрудника);
-                        СуммаЧасов = СуммаЧасов + ЧассыСотрудника;
-                        Log.d(this.getClass().getName(), "    СуммаЧасов " + СуммаЧасов);
-                    }
-                }
-            }
-            Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
-                    " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                    " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"
-                    + " СуммаЧасов "+СуммаЧасов );
-        } catch (Exception e) {
-        e.printStackTrace();
-        Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName()
-                + " Линия  :" + Thread.currentThread().getStackTrace()[2].getLineNumber());
-        new RecordNewErros(context).recordnewerror(e.toString(),
-                this.getClass().getName(), Thread.currentThread().getStackTrace()[2].getMethodName(),
-                Thread.currentThread().getStackTrace()[2].getLineNumber());
-    }
-        return СуммаЧасов;
-    }
 
 
 

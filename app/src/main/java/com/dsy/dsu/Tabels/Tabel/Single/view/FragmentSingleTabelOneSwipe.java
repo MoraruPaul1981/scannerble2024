@@ -1,4 +1,4 @@
-package com.dsy.dsu.Tabels.Tabel.Single;
+package com.dsy.dsu.Tabels.Tabel.Single.view;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
@@ -54,28 +54,22 @@ import androidx.appcompat.widget.SearchView;
 import androidx.cursoradapter.widget.CursorAdapter;
 import androidx.cursoradapter.widget.SimpleCursorAdapter;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.Lifecycle;
-import androidx.lifecycle.LifecycleEventObserver;
-import androidx.lifecycle.LifecycleOwner;
-import androidx.lifecycle.Observer;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.RecyclerView;
-import androidx.work.WorkInfo;
-import androidx.work.WorkManager;
 
 import com.dsy.dsu.BusinessLogicAll.CELLUPDATE.SubClassUpdatesCELL;
 import com.dsy.dsu.BusinessLogicAll.GetPublicID.HiltInterfacesPublicID;
 import com.dsy.dsu.BusinessLogicAll.VersionCurentTable;
 import com.dsy.dsu.Errors.WriteErrorForAll.RecordNewErros;
-import com.dsy.dsu.BusinessLogicAll.GetPublicID.GetPublicID;
 import com.dsy.dsu.BusinessLogicAll.Class_MODEL_synchronized;
 import com.dsy.dsu.BusinessLogicAll.DATE.Class_Generation_Data;
 import com.dsy.dsu.BusinessLogicAll.DATE.SubClassCursorLoader;
 import com.dsy.dsu.Tabels.Peoples.MainActivity_List_Peoples;
 import com.dsy.dsu.R;
+import com.dsy.dsu.Tabels.Tabel.Single.model.BunesslogicSingleTabel;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.android.material.snackbar.Snackbar;
@@ -2529,7 +2523,7 @@ public class FragmentSingleTabelOneSwipe extends Fragment {
                 Integer ПозицуияВыбраногоСОтрудника=      cursor.getPosition();
                 ПозицуияВыбраногоСОтрудника=ПозицуияВыбраногоСОтрудника+1;
                 //TODO ЗАПОЛЯНЕМ ПОЛУЧЕННЫЙ МЕСЯ Ц ПЛУС КОЛИЧЕСТВО ЧАСОВ СОТРУДНИКА КОНКРЕТНОГО
-                Integer   ЧасыТекущегоСОтрудника = new Class_MODEL_synchronized(getContext()).МетодПосчётаЧасовПоСотруднику(cursor);
+                Integer   ЧасыТекущегоСОтрудника = new BunesslogicSingleTabel(getContext()).getemployeeHoursCounting(cursor);
                 Log.d(this.getClass().getName(), "  ЧасыТекущегоСОтрудника " + ЧасыТекущегоСОтрудника);
 
                 String ЧасыТекущегоСотрудника="(" + ЧасыТекущегоСОтрудника + "/часы) "

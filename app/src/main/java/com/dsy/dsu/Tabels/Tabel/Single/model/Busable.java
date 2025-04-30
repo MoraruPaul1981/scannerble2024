@@ -1,4 +1,4 @@
-package com.dsy.dsu.Tabels.Tabel.Single;
+package com.dsy.dsu.Tabels.Tabel.Single.model;
 
 import androidx.viewpager.widget.ViewPager;
 

@@ -34,6 +34,7 @@ public class LaunchActivityDashboard {
             Bundle data = new Bundle();
             dashboardFaceApp.setArguments(data);
             fragmentTransaction.addToBackStack(null);
+            fragmentManager.popBackStack();
              dashboardFaceApp.setEnterTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN
              | FragmentTransaction.TRANSIT_FRAGMENT_FADE);
              fragmentTransaction.setPrimaryNavigationFragment(dashboardFaceApp)

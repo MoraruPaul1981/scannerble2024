@@ -452,13 +452,13 @@
                 android:value="com.dsy.dsu.Tabels.Templates.MainActivity_Find_Templates" />
         </activity>
         <activity
-            android:name=".Tabels.Tabel.Single.MainActivity_Metki_Tabel"
+            android:name=".Tabels.Tabel.Single.view.MainActivity_Metki_Tabel"
             android:exported="true"
             android:label="Список Контант Слов Для Табеля"
             android:theme="@style/Theme.MaterialComponents.DayNight.DarkActionBar">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.dsy.dsu.Tabels.Tabel.Single.MainActivity_Metki_Tabel" />
+                android:value="com.dsy.dsu.Tabels.Tabel.Single.view.MainActivity_Metki_Tabel" />
         </activity> <!-- TODO НАЧИНАЮТЬСЯ РАБОЧИЕ АКТИВИТИ ПРИЛОЖЕНИЯ -->
         <activity
             android:name=".Tabels.Peoples.MainActivity_Find_Peoples"
@@ -479,7 +479,7 @@
                 android:value="com.dsy.dsu.Tabels.Peoples.MainActivity_New_People" />
         </activity>
         <activity
-            android:name=".Tabels.Tabel.Single.MainActivity_Tabel_Single_PeopleOneSwipe"
+            android:name=".Tabels.Tabel.Single.view.MainActivity_Tabel_Single_PeopleOneSwipe"
             android:exported="true"
             android:label="Табель"
             android:theme="@style/Theme.MaterialComponents.DayNight.DarkActionBar"
