@@ -32,6 +32,7 @@ import java.util.Date;
 import java.util.LinkedHashMap;
 import java.util.concurrent.Executors;
 import java.util.concurrent.atomic.AtomicInteger;
+import java.util.concurrent.atomic.AtomicLong;
 
 import javax.inject.Inject;
 import javax.inject.Singleton;
@@ -60,6 +61,7 @@ public class BinessLogicIntentServiceBoot {
     private  Context context;
 
  Subject<  ServiceUpdatePoОбновлениеПО.localBinderОбновлениеПО> publishSubjectlocalBinderОбновлениеПО= ReplaySubject.create();
+ Subject< Service_For_Remote_Async_Binary.LocalBinderAsync> publishSubjectLocalBinderAsync= ReplaySubject.create();
 
 
     public  @Inject BinessLogicIntentServiceBoot(@ApplicationContext Context contextBounding) {
@@ -67,6 +69,8 @@ public class BinessLogicIntentServiceBoot {
         try{
 // TODO: 30.04.2025  слуушатели на всякий случай
             publishSubjectlocalBinderОбновлениеПО.subscribe();
+            // TODO: 30.04.2025
+            publishSubjectLocalBinderAsync.subscribe();
 
             // TODO: 28.04.2025
             this.context=contextBounding;
@@ -415,7 +419,7 @@ public class BinessLogicIntentServiceBoot {
     Integer getVersionServicePO(@NonNull LinkedHashMap<Integer,String> getHiltPortJboss, @NonNull Context context) {
         AtomicInteger СервернаяВерсия=new AtomicInteger(0);
         try {
-            if (localBinderОбновлениеПО==null) {
+            if (localBinderОбновлениеПО!=null) {
                 СервернаяВерсия.getAndSet(localBinderОбновлениеПО.getService().МетодГлавныйОбновленияПОДоAsync(true,
                         context,getHiltPortJboss ));
 
@@ -489,11 +493,38 @@ public class BinessLogicIntentServiceBoot {
 
     Long completeAsync( @NonNull Context context  ){
         // TODO: 28.03.2025
-        Long completeAsync=0l;
+        AtomicLong completeAsync=new AtomicLong(0l);
         try{
             // TODO: 03.10.2023
 
-            completeAsync=  localBinderAsync.getService().metodStartingSync(context);
+            if (localBinderAsync!=null) {
+                completeAsync.getAndSet(localBinderAsync.getService().metodStartingSync(context)) ;
+
+                Log.d(context.getClass().getName(), "\n"
+                        + " время: " + new Date() + "\n+" +
+                        " Класс в процессе... " + this.getClass().getName() + "\n" +
+                        " метод в процессе... " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n"+ "\n" + "completeAsync " +completeAsync);
+            } else {
+                // TODO: 30.04.2025
+
+                publishSubjectLocalBinderAsync.doOnNext(new Consumer<   Service_For_Remote_Async_Binary.LocalBinderAsync>() {
+                    @Override
+                    public void accept(  Service_For_Remote_Async_Binary.LocalBinderAsync asy) throws Throwable {
+                        // TODO: 29.04.2025
+
+                        completeAsync.getAndSet(  localBinderAsync.getService().metodStartingSync(context));
+
+                        Log.d(context.getClass().getName(), "\n"
+                                + " время: " + new Date() + "\n+" +
+                                " Класс в процессе... " + this.getClass().getName() + "\n" +
+                                " метод в процессе... " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n"+ "\n" + "completeAsync " +completeAsync);
+
+                    }
+                }).subscribe();
+
+            }
+
+
 
             Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                     " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
@@ -508,7 +539,7 @@ public class BinessLogicIntentServiceBoot {
                     this.getClass().getName(), Thread.currentThread().getStackTrace()[2].getMethodName(),
                     Thread.currentThread().getStackTrace()[2].getLineNumber());
         }
-        return  completeAsync;
+        return  completeAsync.get();
     }
 
 
@@ -630,6 +661,13 @@ public class BinessLogicIntentServiceBoot {
                             if (service.isBinderAlive()) {
                                 // TODO: 29.09.2023
                                  localBinderAsync = (Service_For_Remote_Async_Binary.LocalBinderAsync) service;
+
+                                // TODO: 30.04.2025
+
+                                publishSubjectLocalBinderAsync.onNext(localBinderAsync);
+                                // TODO: 30.04.2025
+                                publishSubjectLocalBinderAsync.onComplete();
+
                                 // TODO: 28.04.2025
                                 Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                                         " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
