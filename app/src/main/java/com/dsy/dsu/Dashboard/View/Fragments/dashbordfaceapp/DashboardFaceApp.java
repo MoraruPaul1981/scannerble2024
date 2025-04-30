@@ -456,7 +456,6 @@ public class DashboardFaceApp extends  DialogFragment  {
                             Интент_ЗапускТабельногоУчётаПервыйШаг.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK  );
                             Log.d(this.getClass().getName(), "" + "    КнопкаТабельныйУчёт.setOnClickListener(new View.OnClickListener() {");
                             startActivity(Интент_ЗапускТабельногоУчётаПервыйШаг);
-                            getActivity().finish();
                             // TODO: 10.03.2025
                         } catch (Exception e) {
                             e.printStackTrace();
