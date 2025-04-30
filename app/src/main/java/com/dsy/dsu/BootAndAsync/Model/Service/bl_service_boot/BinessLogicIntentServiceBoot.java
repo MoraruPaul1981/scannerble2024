@@ -31,6 +31,7 @@ import org.greenrobot.eventbus.EventBus;
 import java.util.Date;
 import java.util.LinkedHashMap;
 import java.util.concurrent.Executors;
+import java.util.concurrent.atomic.AtomicInteger;
 
 import javax.inject.Inject;
 import javax.inject.Singleton;
@@ -46,6 +47,8 @@ import io.reactivex.rxjava3.disposables.Disposable;
 import io.reactivex.rxjava3.functions.Consumer;
 import io.reactivex.rxjava3.internal.observers.BlockingBaseObserver;
 import io.reactivex.rxjava3.subjects.PublishSubject;
+import io.reactivex.rxjava3.subjects.ReplaySubject;
+import io.reactivex.rxjava3.subjects.Subject;
 
 @Module
 @InstallIn(SingletonComponent.class)
@@ -56,30 +59,14 @@ public class BinessLogicIntentServiceBoot {
     public    ServiceUpdatePoОбновлениеПО.localBinderОбновлениеПО localBinderОбновлениеПО;//TODO нова
     private  Context context;
 
- PublishSubject<  ServiceUpdatePoОбновлениеПО.localBinderОбновлениеПО> publishSubject=PublishSubject.create();
+ Subject<  ServiceUpdatePoОбновлениеПО.localBinderОбновлениеПО> publishSubjectlocalBinderОбновлениеПО= ReplaySubject.create();
 
 
     public  @Inject BinessLogicIntentServiceBoot(@ApplicationContext Context contextBounding) {
         //TODO сомо имя json
         try{
-
-            publishSubject.doOnNext(new Consumer<  ServiceUpdatePoОбновлениеПО.localBinderОбновлениеПО>() {
-                @Override
-                public void accept(  ServiceUpdatePoОбновлениеПО.localBinderОбновлениеПО ser) throws Throwable {
-                    // TODO: 29.04.2025
-
-
-                    Log.d(contextBounding.getClass().getName(), "\n"
-                            + " время: " + new Date() + "\n+" +
-                            " Класс в процессе... " + this.getClass().getName() + "\n" +
-                            " метод в процессе... " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n");
-
-                    publishSubject.hasComplete();
-
-                }
-            }).subscribe();
-
-
+// TODO: 30.04.2025  слуушатели на всякий случай
+            publishSubjectlocalBinderОбновлениеПО.subscribe();
 
             // TODO: 28.04.2025
             this.context=contextBounding;
@@ -426,10 +413,37 @@ public class BinessLogicIntentServiceBoot {
 
     ///////todo ФИНАЛЬНЫЙ МЕТОД КТО ВХОДИЛ ДО 7 ДНЕЙ ИЛИ ПОСЫЛАЕМ НА АУНТИФИКАЦИЮ
     Integer getVersionServicePO(@NonNull LinkedHashMap<Integer,String> getHiltPortJboss, @NonNull Context context) {
-        Integer СервернаяВерсия=0;
+        AtomicInteger СервернаяВерсия=new AtomicInteger(0);
         try {
-            СервернаяВерсия = localBinderОбновлениеПО.getService().МетодГлавныйОбновленияПОДоAsync(true,
-                    context,getHiltPortJboss );
+            if (localBinderОбновлениеПО==null) {
+                СервернаяВерсия.getAndSet(localBinderОбновлениеПО.getService().МетодГлавныйОбновленияПОДоAsync(true,
+                        context,getHiltPortJboss ));
+
+                Log.d(context.getClass().getName(), "\n"
+                        + " время: " + new Date() + "\n+" +
+                        " Класс в процессе... " + this.getClass().getName() + "\n" +
+                        " метод в процессе... " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" + "СервернаяВерсия " +СервернаяВерсия);
+            } else {
+
+
+
+            publishSubjectlocalBinderОбновлениеПО.doOnNext(new Consumer<  ServiceUpdatePoОбновлениеПО.localBinderОбновлениеПО>() {
+                @Override
+                public void accept(  ServiceUpdatePoОбновлениеПО.localBinderОбновлениеПО ser) throws Throwable {
+                    // TODO: 29.04.2025
+                    СервернаяВерсия.getAndSet( ser.getService().МетодГлавныйОбновленияПОДоAsync(true,
+                            context,getHiltPortJboss ));
+
+
+                    Log.d(context.getClass().getName(), "\n"
+                            + " время: " + new Date() + "\n+" +
+                            " Класс в процессе... " + this.getClass().getName() + "\n" +
+                            " метод в процессе... " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n"+ "\n" + "СервернаяВерсия " +СервернаяВерсия);
+
+                }
+            }).subscribe();
+            }
+
 
             Log.i(this.getClass().getName(), " Атоманически установкаОбновление ПО " +
                     Thread.currentThread().getStackTrace()[2].getMethodName() + " время " + new Date().toLocaleString());
@@ -445,7 +459,7 @@ public class BinessLogicIntentServiceBoot {
                     Thread.currentThread().getStackTrace()[2].getMethodName(), Thread.currentThread().getStackTrace()[2].getLineNumber());
         }
 
-        return  СервернаяВерсия;
+        return  СервернаяВерсия.get();
     }
 
     Integer getVersionLocalPO(@NonNull LinkedHashMap<Integer,String> getHiltPortJboss, @NonNull Context context) {
@@ -678,11 +692,10 @@ public class BinessLogicIntentServiceBoot {
 
                             // TODO: 28.07.2023  Update
                             localBinderОбновлениеПО = (ServiceUpdatePoОбновлениеПО.localBinderОбновлениеПО) service;
+                            // TODO: 30.04.2025
+                            publishSubjectlocalBinderОбновлениеПО.onNext(localBinderОбновлениеПО);
+                            publishSubjectlocalBinderОбновлениеПО.onComplete();
 
-
-
-                            publishSubject.onNext(localBinderОбновлениеПО);
-                            publishSubject.onComplete();;
                             // TODO: 28.04.2025
                             // TODO: 25.03.2023
                             Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
