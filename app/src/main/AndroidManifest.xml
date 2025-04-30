@@ -396,7 +396,7 @@
             android:exported="true"
             android:grantUriPermissions="true"
             android:label="@string/name_dsu"
-            android:launchMode="singleInstance"
+            android:launchMode="singleTask"
             android:alwaysRetainTaskState="true"
             android:noHistory="false"
             android:requestLegacyExternalStorage="true"
@@ -519,6 +519,9 @@
         <activity
             android:name=".Settings.View.MainActivity_Settings"
             android:exported="true"
+            android:launchMode="singleTask"
+            android:alwaysRetainTaskState="true"
+            android:noHistory="false"
             android:label="Форма просмотр Логин"
             android:theme="@style/Theme.MaterialComponents.DayNight.DarkActionBar">
         </activity>

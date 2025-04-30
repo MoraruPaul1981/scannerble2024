@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#FFFFFF"
-    android:gravity="center"
+    android:gravity="bottom"
     android:foregroundGravity="top"
     android:layout_gravity="center"
     android:layout_alignParentBottom="true"
@@ -107,11 +107,16 @@
 <ScrollView
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_weight="1"
     android:layout_gravity="center"
+    android:layout_weight="1"
     android:foregroundGravity="center"
-    android:outlineAmbientShadowColor="@color/actionbar_text_color"
-    android:fillViewport="true">
+    android:fillViewport="true"
+    android:scrollbars="horizontal|vertical"
+    android:stackFromBottom="true"
+    android:transcriptMode="alwaysScroll"
+    android:scrollbarThumbVertical="@color/divider"
+    android:outlineAmbientShadowColor="@color/actionbar_text_color">
+
     <com.google.android.material.card.MaterialCardView
         android:id="@+id/materialcardviewrow1"
         android:layout_width="match_parent"
@@ -132,11 +137,10 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:foregroundGravity="top"
-            android:layout_gravity="center"
+            android:layout_height="500dp"
+            android:layout_gravity="top"
             android:baselineAligned="true"
+            android:dividerPadding="@dimen/car_ui_padding_5"
             android:divider="@color/accent"
             android:measureWithLargestChild="true"
             android:orientation="vertical">
@@ -149,6 +153,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="40dp"
         android:layout_marginEnd="40dp"
+        android:layout_marginTop="50dp"
         android:checked="true"
         android:hint="режим передача данных "
         android:showText="false"
@@ -158,13 +163,9 @@
         android:textColorHighlight="#651FFF"
         android:textOff="выкл."
         android:textOn="вкл."
-        android:textSize="16sp"
+        android:textSize="14sp"
         android:textStyle="normal|bold"
         android:trackTint="#FFD5D9DA"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/СпинерДляСозданииОрганизации"
         tools:checked="true" />
 
     <Switch
@@ -183,13 +184,9 @@
         android:textColorHighlight="#651FFF"
         android:textOff="выкл."
         android:textOn="вкл."
-        android:textSize="16sp"
+        android:textSize="14sp"
         android:textStyle="normal|bold"
         android:trackTint="#FFD5D9DA"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/switchWIFI"
         tools:checked="true" />
 
     <Switch
@@ -208,13 +205,9 @@
         android:textColorHighlight="#651FFF"
         android:textOff="выкл."
         android:textOn="вкл."
-        android:textSize="16sp"
+        android:textSize="14sp"
         android:textStyle="normal|bold"
         android:trackTint="#FFD5D9DA"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/switchАвтоЗаполенияВТАбелеВыходных"
         tools:checked="true" />
 
 
@@ -236,13 +229,9 @@
         android:textColorHighlight="#651FFF"
         android:textOff="выкл."
         android:textOn="вкл."
-        android:textSize="16sp"
+        android:textSize="14sp"
         android:textStyle="normal|bold"
         android:trackTint="#FFD5D9DA"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/switchСкрытыеПоляПолучениеМатериалов"
         tools:checked="true" />
         </LinearLayout>
     </com.google.android.material.card.MaterialCardView>
@@ -284,8 +273,6 @@
             android:orientation="vertical">
 
 
-    "
-
 
             <com.google.android.material.textview.MaterialTextView
                 android:id="@+id/textViewВерсияПрограммы"
@@ -299,7 +286,7 @@
                 android:textAlignment="gravity"
                 android:textColor="#000000"
                 android:textColorHint="#454542"
-                android:textSize="16sp"
+                android:textSize="14sp"
                 app:fontFamily="@font/average_sans" />
 
 
@@ -315,7 +302,7 @@
                 android:textAlignment="gravity"
                 android:textColor="#000000"
                 android:textColorHint="#454542"
-                android:textSize="16sp"
+                android:textSize="14sp"
                 app:fontFamily="@font/average_sans" />
 
 
@@ -331,7 +318,7 @@
                 android:textAlignment="gravity"
                 android:textColor="#000000"
                 android:textColorHint="#454542"
-                android:textSize="16sp"
+                android:textSize="14sp"
                 app:fontFamily="@font/average_sans" />
 
 
@@ -344,11 +331,11 @@
                 android:text="Собственость: ООО Союз-Автодор, 2025г."
                 android:background="@drawable/style_settings22"
                 android:gravity="center_horizontal"
-                android:textStyle="normal"
+                android:textStyle="bold"
                 android:textAlignment="gravity"
                 android:textColor="#000000"
                 android:textColorHint="#454542"
-                android:textSize="16sp"
+                android:textSize="14sp"
                 app:fontFamily="@font/average_sans" />
 
 
