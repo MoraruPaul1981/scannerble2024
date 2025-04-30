@@ -453,9 +453,10 @@ public class DashboardFaceApp extends  DialogFragment  {
                             Bundle data = new Bundle();
                             Интент_ЗапускТабельногоУчётаПервыйШаг.putExtras(data);
                             Интент_ЗапускТабельногоУчётаПервыйШаг.setClass(getContext(), MainActivity_List_Tabels.class); //  ТЕСТ КОД КОТОРЫЙ ЗАПУСКАЕТ ACTIVITY VIEWDATA  ПРОВЕРИТЬ ОБМЕН
-                            Интент_ЗапускТабельногоУчётаПервыйШаг.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_SINGLE_TOP);
+                            Интент_ЗапускТабельногоУчётаПервыйШаг.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK  );
                             Log.d(this.getClass().getName(), "" + "    КнопкаТабельныйУчёт.setOnClickListener(new View.OnClickListener() {");
                             startActivity(Интент_ЗапускТабельногоУчётаПервыйШаг);
+                            getActivity().finish();
                             // TODO: 10.03.2025
                         } catch (Exception e) {
                             e.printStackTrace();
