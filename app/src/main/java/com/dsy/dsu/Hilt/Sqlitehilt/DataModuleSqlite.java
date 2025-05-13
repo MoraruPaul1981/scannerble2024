@@ -10,11 +10,11 @@ import androidx.annotation.NonNull;
 
 import com.dsy.dsu.AllDatabases.SQLTE.GetSQLiteDatabase;
 import com.dsy.dsu.Errors.WriteErrorForAll.RecordNewErros;
-import com.google.common.util.concurrent.AtomicDouble;
 
 import java.io.File;
 import java.util.concurrent.atomic.AtomicReference;
 
+import javax.inject.Named;
 import javax.inject.Singleton;
 
 import dagger.Module;
@@ -23,9 +23,11 @@ import dagger.hilt.InstallIn;
 import dagger.hilt.android.qualifiers.ApplicationContext;
 import dagger.hilt.components.SingletonComponent;
 
-@QualifiertEnd
+
 @Module
 @InstallIn(SingletonComponent.class)
+@Named
+@QualifiertEnd
 public class DataModuleSqlite {
     @Singleton
     @Provides

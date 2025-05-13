@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.ServiceConnection;
+import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
@@ -26,7 +27,6 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.UiThread;
 import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.widget.AppCompatImageButton;
 import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
@@ -42,7 +42,7 @@ import com.dsy.dsu.BootAndAsync.Model.BinesslogicActivityBoot.GetComponentActivi
 
 
 import com.dsy.dsu.BusinessLogicAll.Class_Clears_Tables;
-import com.dsy.dsu.BusinessLogicAll.Class_Connections_Server;
+import com.dsy.dsu.BusinessLogicAll.GetPingServers.GetPingServerJboss;
 import com.dsy.dsu.Dashboard.Model.bl_launchFragmentSettingsandDashbord.LaunchActivityDashboard;
 import com.dsy.dsu.Errors.WriteErrorForAll.RecordNewErros;
 
@@ -59,6 +59,7 @@ import com.dsy.dsu.R;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.card.MaterialCardView;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
+import com.google.android.material.snackbar.Snackbar;
 import com.jakewharton.rxbinding4.view.RxView;
 
 import org.greenrobot.eventbus.Subscribe;
@@ -125,6 +126,9 @@ public class DashboardFragmentSettings extends  DialogFragment {
     @Inject
     @QualifierJbossServer3
     public LinkedHashMap<Integer,String> getHiltPortJboss;
+
+    @Inject
+    protected SQLiteDatabase getsqLiteDatabase;
 
     // TODO: Rename and change types and number of parameters
     public static DashboardFragmentSettings newInstance( ) {
@@ -635,9 +639,11 @@ public class DashboardFragmentSettings extends  DialogFragment {
                     ProgressDialog  progressDialogДляСинхронизации = new ProgressDialog(getActivity());
 
                         // TODO: 22.12.2022  сама запуска синхронищации из workmanager ОБЩЕГО
-                    /*    boolean ВыбранныйРежимСети =
-                                new GetConnectivityManagerAndroid(getContext()).сonnectivityManageruserselection();
-                        if (ВыбранныйРежимСети == true) {*/
+                        // TODO: 16.12.2021 НЕПОСРЕДСТВЕННЫЙ ПИНГ СИСТЕНМ ИНТРЕНАТ НА НАЛИЧЕНИ СВАЗИ С БАЗОЙ SQL SERVER
+                        Boolean   СтатусРаботыСервера =
+                                new GetPingServerJboss(getContext()).
+                                        pingServerJbossSuccessfulOrNot( getsslSocketFactory2, getsqLiteDatabase,getHiltPortJboss);
+                        if (СтатусРаботыСервера) {
                             handlerAsync.post(() -> {
                                 progressDialogДляСинхронизации.setTitle("Обмен данными");
                                 progressDialogДляСинхронизации.setProgressStyle(ProgressDialog.STYLE_SPINNER);
@@ -656,25 +662,15 @@ public class DashboardFragmentSettings extends  DialogFragment {
                                     " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
                                     " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n");
 
+                            // TODO: 14.12.2023
 
-
-                   /*     } else {
-                            getActivity().runOnUiThread(new Runnable() {
-                                @Override
-                                public void run() {
-                                    Toast toast = Toast.makeText(getContext(), "Сервер выкл. !!!", Toast.LENGTH_LONG);
-                                    toast.setGravity(Gravity.BOTTOM, 0, 40);
-                                    toast.show();
-                                }
-                            });
-                        }*/
-                        // TODO: 14.12.2023
-
-                        handlerAsync.postDelayed(() -> {
-                            progressDialogДляСинхронизации.dismiss();
-                            progressDialogДляСинхронизации.cancel();
-                        }, 3000);
-
+                            handlerAsync.postDelayed(() -> {
+                                progressDialogДляСинхронизации.dismiss();
+                                progressDialogДляСинхронизации.cancel();
+                            }, 3000);
+                        }else {
+                            Snackbar.make(КнопкаОбменДанными, "Нет сети !!!",Snackbar.LENGTH_LONG).setAction("Action",null).show();
+                        }
 
 
                     } catch (Exception e) {
@@ -702,10 +698,11 @@ public class DashboardFragmentSettings extends  DialogFragment {
                             try {
                                 // TODO: 16.12.2021 НЕПОСРЕДСТВЕННЫЙ ПИНГ СИСТЕНМ ИНТРЕНАТ НА НАЛИЧЕНИ СВАЗИ С БАЗОЙ SQL SERVER
                          Boolean   СтатусРаботыСервера =
-                                        new Class_Connections_Server(). pingServerJbossSuccessfulOrNot(getActivity(),getsslSocketFactory2,getHiltPortJboss);
+                                        new GetPingServerJboss(getContext()).
+                                                pingServerJbossSuccessfulOrNot( getsslSocketFactory2, getsqLiteDatabase,getHiltPortJboss);
 
                                 if (СтатусРаботыСервера == true) {
-                                    String ПолученыйТекущееИмяПользователя = new Class_MODEL_synchronized(getContext())
+                                    String ПолученыйТекущееИмяПользователя = new Class_MODEL_synchronized(getContext(),getsqLiteDatabase)
                                             .МетодПолучениеИмяСистемыДляСменыПользователя(getActivity());
 
                                 MaterialAlertDialogBuilder materialAlertDialogBuilder = new MaterialAlertDialogBuilder(getActivity())
@@ -719,8 +716,7 @@ public class DashboardFragmentSettings extends  DialogFragment {
                                         Intent Интент_Меню = new Intent();
                                         try {
                                             // TODO: 24.04.2023  запуск смены Пользоватедя Данные
-                                            ProgressDialog prograssbarСменаДанныхПользователя;
-                                            prograssbarСменаДанныхПользователя = new ProgressDialog(getActivity());
+                                            ProgressDialog    prograssbarСменаДанныхПользователя = new ProgressDialog(getActivity());
                                             prograssbarСменаДанныхПользователя.setTitle("Смена данных");
                                             prograssbarСменаДанныхПользователя.setProgressStyle(ProgressDialog.STYLE_SPINNER);
                                             prograssbarСменаДанныхПользователя.setProgress(0);
@@ -738,7 +734,8 @@ public class DashboardFragmentSettings extends  DialogFragment {
                                                         handlerAsync,
                                                         prograssbarСменаДанныхПользователя);
 
-                                                  class_clears_tables.методСменаДанныхПользователя(getActivity(), Class_Engine_SQLГдеНаходитьсяМенеджерПотоков.МенеджерПотоков, getActivity());
+                                                  class_clears_tables.методСменаДанныхПользователя(getActivity(),
+                                                          Class_Engine_SQLГдеНаходитьсяМенеджерПотоков.МенеджерПотоков, getActivity());
 
 
 
@@ -873,11 +870,18 @@ public class DashboardFragmentSettings extends  DialogFragment {
 
 
 // TODO: 10.07.2023  запуск обновление ПО
-
+                           // TODO: 16.12.2021 НЕПОСРЕДСТВЕННЫЙ ПИНГ СИСТЕНМ ИНТРЕНАТ НА НАЛИЧЕНИ СВАЗИ С БАЗОЙ SQL SERVER
+                           Boolean   СтатусРаботыСервера =
+                                   new GetPingServerJboss(getContext()).
+                                           pingServerJbossSuccessfulOrNot( getsslSocketFactory2, getsqLiteDatabase,getHiltPortJboss);
 // TODO: 10.07.2023  запуск обновление ПО
+                           if (СтатусРаботыСервера) {
                                startServiceBootAndAsync.startServiceBootAndAsync("lanchUpdatePO");
+                           } else {
+                               Snackbar.make(КнопкаОбновление, "Нет сети !!!",Snackbar.LENGTH_LONG).setAction("Action",null).show();
+                           }
 
-                               Log.i(this.getClass().getName(), " Из меню установкаОбновление ПО "
+                           Log.i(this.getClass().getName(), " Из меню установкаОбновление ПО "
                                        + Thread.currentThread().getStackTrace()[2].getMethodName()
                                        + " время " + new Date().toLocaleString());
 

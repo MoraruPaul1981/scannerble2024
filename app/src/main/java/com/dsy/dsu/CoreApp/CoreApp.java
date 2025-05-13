@@ -2,28 +2,15 @@ package com.dsy.dsu.CoreApp;
 
 
 import android.app.Application;
+import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 
-
-import com.dsy.dsu.BootAndAsync.Model.Service.bl_service_boot.BinessLogicIntentServiceBoot;
-import com.dsy.dsu.BusinessLogicAll.DeviceName.hilt.QualifiergetDeviceName;
-import com.dsy.dsu.BusinessLogicAll.DeviceName.hilt.QualifiergetDeviceVersionBack;
-import com.dsy.dsu.BusinessLogicAll.GetPublicID.QualifierPublicID;
 import com.dsy.dsu.Errors.WriteErrorForAll.RecordNewErros;
-import com.dsy.dsu.Hilt.JbossAdrress.qualifiers.QualifierJbossServer3;
 import com.dsy.dsu.R;
-import com.sous.backasync.businesslogic.errors.RecordNewErroBack;
-import com.sous.backasync.devicename.ModulegetDeviceNameBack;
-import com.sous.backasync.launch.ModuleDeleting;
-import com.sous.backasync.launch.ModuleInserting;
-import com.sous.backasync.launch.ModuleQuety;
-import com.sous.backasync.launch.ModuleUpdating;
-
+import com.example.tabels.model.launtch.ModuleTabels;
 
 import java.util.Date;
-import java.util.LinkedHashMap;
-import java.util.concurrent.CopyOnWriteArrayList;
 
 import javax.inject.Inject;
 
@@ -75,6 +62,17 @@ public class CoreApp extends Application {
   @Inject
   @QualifierPublicID
   Integer getHiltPublicId;*/
+
+
+/*  @Inject
+  ModuleTabels moduleTabels;*/
+
+
+//  @Inject
+// public SQLiteDatabase coreAppSqLiteDatabase ;
+
+
+
   @Override
   public void onCreate() {
     super.onCreate();
@@ -82,8 +80,6 @@ public class CoreApp extends Application {
       // TODO: 04.10.2023 разрешения для всего
       // TODO   запускам бизнес логику CoreApp
       setTheme(R.style.Theme_AppCompat_DayNight_DarkActionBar);
-
-
       Log.d(this.getClass().getName(),"\n" + " class CoreApp    " + Thread.currentThread().getStackTrace()[2].getClassName()
               + "\n" +
               " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +

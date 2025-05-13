@@ -12,12 +12,11 @@ import android.widget.EditText;
 
 import androidx.annotation.NonNull;
 
-import com.dsy.dsu.AllDatabases.SQLTE.GetSQLiteDatabase;
 import com.dsy.dsu.BusinessLogicAll.GetPublicID.GetPublicID;
 import com.dsy.dsu.Errors.WriteErrorForAll.RecordNewErros;
 import com.dsy.dsu.BusinessLogicAll.DATE.Class_Generation_Data;
 import com.dsy.dsu.BusinessLogicAll.VersionCurentTable;
-import com.dsy.dsu.Hilt.Sqlitehilt.HiltInterfacesqlite;
+import com.dsy.dsu.Hilt.Sqlitehilt.AppModuleSQLlite;
 import com.google.android.material.textview.MaterialTextView;
 
 import java.util.Date;
@@ -30,11 +29,12 @@ public class SubClassUpdatesCELL {
     Context context;
     private LongToIntFunction longToIntFunction;
     private SQLiteDatabase sqLiteDatabase ;
-    public SubClassUpdatesCELL(Context context) {
+    public SubClassUpdatesCELL( @NonNull  Context context,@NonNull SQLiteDatabase sqLiteDatabase ) {
 
         this.context = context;
+        this.sqLiteDatabase = sqLiteDatabase;
         // TODO: 16.04.2025
-        sqLiteDatabase = EntryPoints.get(context, HiltInterfacesqlite.class).getHiltSqlite();
+
         Log.d(context.getClass().getName(), "\n"
                 + " время: " + new Date() + "\n+" +
                 " Класс в процессе... " + this.getClass().getName() + "\n" +

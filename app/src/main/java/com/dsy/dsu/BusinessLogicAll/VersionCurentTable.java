@@ -1,5 +1,7 @@
 package com.dsy.dsu.BusinessLogicAll;
 
+import static com.dsy.dsu.CoreApp.CoreApp.contextCoreApp;
+
 import android.annotation.SuppressLint;
 import android.content.ContentResolver;
 import android.content.ContentValues;
@@ -14,29 +16,31 @@ import android.util.Log;
 
 import androidx.annotation.NonNull;
 
-import com.dsy.dsu.AllDatabases.SQLTE.GetSQLiteDatabase;
 import com.dsy.dsu.BusinessLogicAll.DATE.Class_Generation_Data;
+import com.dsy.dsu.CoreApp.CoreApp;
 import com.dsy.dsu.Errors.WriteErrorForAll.RecordNewErros;
-import com.dsy.dsu.Hilt.Sqlitehilt.HiltInterfacesqlite;
+import com.dsy.dsu.Hilt.Sqlitehilt.AppModuleSQLlite;
 
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Date;
 import java.util.concurrent.ExecutionException;
 
+import javax.inject.Inject;
+
 import dagger.hilt.EntryPoints;
 
 public class VersionCurentTable {
-
-    SQLiteDatabase sqLiteDatabase ;
+    SQLiteDatabase   sqLiteDatabase;
     Context context;
 
-    public VersionCurentTable(Context context) {
-        this.context = context;
+    public VersionCurentTable(@NonNull Context context) {
+
         // TODO: 11.02.2025
         try {
-                // TODO: 16.04.2025
-                sqLiteDatabase = EntryPoints.get(context, HiltInterfacesqlite.class).getHiltSqlite();
+            this.context = context;
+                // TODO: 16.04.
+                sqLiteDatabase = EntryPoints.get(context, AppModuleSQLlite.class).getAppModuleSQLlite();
                 Log.d(context.getClass().getName(), "\n"
                         + " время: " + new Date() + "\n+" +
                         " Класс в процессе... " + this.getClass().getName() + "\n" +

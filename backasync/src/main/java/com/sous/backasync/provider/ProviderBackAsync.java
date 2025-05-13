@@ -11,7 +11,6 @@ import android.content.UriMatcher;
 import android.database.Cursor;
 
 import android.database.sqlite.SQLiteDatabase;
-import android.database.sqlite.SQLiteQueryBuilder;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.CancellationSignal;
@@ -24,7 +23,7 @@ import androidx.annotation.Nullable;
 import com.sous.backasync.businesslogic.errors.RecordNewErroBack;
 import com.sous.backasync.businesslogic.hill.HiltWorkerTableBarckAync;
 
-import com.sous.backasync.businesslogic.hill.HiltInterfacesqliteBack;
+import com.sous.backasync.businesslogic.hill.ModuleBackAsyncSQLlite;
 
 
 import java.util.ArrayList;
@@ -60,7 +59,8 @@ public class ProviderBackAsync extends ContentProvider  {
     @Override
     public boolean onCreate() {
         try{
-             sqliteBAck = EntryPoints.get(getContext(), HiltInterfacesqliteBack.class).getHiltSqliteBAck();
+            // TODO: 13.05.2025 ПРОВАЙДЕР   фор ProviderBackAsync
+             sqliteBAck = EntryPoints.get(getContext(), ModuleBackAsyncSQLlite.class).getModuleBackAsyncSQLlite();
             // TODO: 17.01.2025
             // TODO: 17.01.2025
             CopyOnWriteArrayList<String> getWorkerTablesALl=     EntryPoints.get(getContext(), HiltWorkerTableBarckAync.class).getWorkerTablesALl();

@@ -25,7 +25,7 @@ import androidx.annotation.Nullable;
 import com.dsy.dsu.AllDatabases.bl_SettingandSucceesLogin.SettingAndLoginBinesslogicSettingsTabels;
 import com.dsy.dsu.AllDatabases.bl_SettingandSucceesLogin.SettingAndLoginBinesslogicSuccessLogin;
 import com.dsy.dsu.Errors.WriteErrorForAll.RecordNewErros;
-import com.dsy.dsu.Hilt.Sqlitehilt.HiltInterfacesqlite;
+import com.dsy.dsu.Hilt.Sqlitehilt.AppModuleSQLlite;
 
 import java.util.ArrayList;
 import java.util.Optional;
@@ -41,11 +41,31 @@ public class ContentProviderForSystemTables extends ContentProvider  {
 
     private  SQLiteDatabase sqliteManager;
 
-
-    private Handler handler;
-    private     ContentResolvers contentResolvers;
     public ContentProviderForSystemTables() throws InterruptedException {
         try{
+
+            Log.d(this.getClass().getName(),"\n"
+                    + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                    " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                    " line " + Thread.currentThread().getStackTrace()[2].getLineNumber());
+
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() + " Линия  :"
+                    + Thread.currentThread().getStackTrace()[2].getLineNumber());
+            new RecordNewErros(getContext()).recordnewerror(e.toString(), this.getClass().getName(), Thread.currentThread().getStackTrace()[2].getMethodName(),
+                    Thread.currentThread().getStackTrace()[2].getLineNumber());
+        }
+    }
+
+
+    @Override
+    public boolean onCreate() {
+        try{
+            // TODO: 02.09.2023  CREATE get SQLITE
+            sqliteManager = EntryPoints.get(getContext(), AppModuleSQLlite.class).getAppModuleSQLlite();
+
             uriMatcherДЛяПровайдераКонтентБазаДанных=new UriMatcher(1);
 
             uriMatcherДЛяПровайдераКонтентБазаДанных.addURI("com.dsy.dsu.providerforsystemtables","successlogin",0);
@@ -57,80 +77,18 @@ public class ContentProviderForSystemTables extends ContentProvider  {
                     " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" +
                     " uriMatcherДЛяПровайдераКонтентБазаДанных " +uriMatcherДЛяПровайдераКонтентБазаДанных);
 
-
-            handler=          new Handler(Looper.getMainLooper(),new Handler.Callback(){
-                @Override
-                public boolean handleMessage(@NonNull android.os.Message  msg) {
-                    try{
-                        Log.d(this.getClass().getName(), " msg  "+msg);
-                        Bundle bundle=        msg.getData();
-                        Log.d(this.getClass().getName(), " bundle  "+bundle);
-
-                        Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
-                                " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                                " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"  );
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                        System.err.println("  Ошибка в самом классе записи ошибок нет КОНТЕКСТА RecordNewBackErros");
-                        ///метод запись ошибок в таблицу
-                        Log.e(getContext().getClass().getName(),
-                                "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
-                                        " Линия  :" + Thread.currentThread().getStackTrace()[2].getLineNumber());
-                    }
-                    return true;
-                }
-            });
-            // TODO: 04.10.2022
-            contentResolvers=new ContentResolvers(getContext());
         } catch (Exception e) {
             e.printStackTrace();
             Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() + " Линия  :"
                     + Thread.currentThread().getStackTrace()[2].getLineNumber());
-            new RecordNewErros(getContext()).recordnewerror(e.toString(), this.getClass().getName(), Thread.currentThread().getStackTrace()[2].getMethodName(),
+            new RecordNewErros(getContext()).recordnewerror(e.toString(), this.getClass().getName(),
+                    Thread.currentThread().getStackTrace()[2].getMethodName(),
                     Thread.currentThread().getStackTrace()[2].getLineNumber());
         }
+        return  true;
     }
 
-    /*@Override
-    public int delete(@NonNull Uri uri, @Nullable Bundle extras) {
-        Integer РезультатУдалениеСтатуса=0;
-        try{
-            sqLiteDatabase=new CREATE_DATABASE(getContext()).getССылкаНаСозданнуюБазуORM();
-            if (!sqLiteDatabase.inTransaction()) {
-                sqLiteDatabase.beginTransaction();
-            }
-      String selection =      extras.getString("selection");
-      String[] selectionArgs =      extras.getStringArray("selectionArgs");
-            Log.d(this.getClass().getName(), " uri"+uri );
-            // TODO: 14.10.2022 метод определения текущней таблицы
-            String table = МетодОпределяемТаблицу(uri);
-            if (table!=null) {
-                Integer РезультатУдаления  = sqLiteDatabase.delete(table, selection, selectionArgs);
-                // TODO: 30.10.2021
-                Log.w(getContext().getClass().getName(), " РезультатУдаления  " + РезультатУдаления);/////
-                Uri ОтветВставкиДанных  = Uri.parse("content://"+РезультатУдаления.toString());
-                String ответОперцииВставки=    Optional.ofNullable(ОтветВставкиДанных).map(Emmeter->Emmeter.toString().replace("content://","")).get();
-                РезультатУдалениеСтатуса= Integer.parseInt(ответОперцииВставки);
-                    if (РезультатУдалениеСтатуса>0) {
-                        getContext().getContentResolver().notifyChange(uri, null);
-                    }
-            }else {
-                Log.w(getContext().getClass().getName(), " table  " + table);/////
-            }
-            if (sqLiteDatabase.inTransaction()) {
-                sqLiteDatabase.setTransactionSuccessful();
-                sqLiteDatabase.endTransaction();
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-            sqLiteDatabase.endTransaction();
-            Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() + " Линия  :"
-                    + Thread.currentThread().getStackTrace()[2].getLineNumber());
-            new RecordNewBackErros(getContext()).recordnewerror(e.toString(), this.getClass().getName(), Thread.currentThread().getStackTrace()[2].getMethodName(),
-                    Thread.currentThread().getStackTrace()[2].getLineNumber());
-        }
-        return РезультатУдалениеСтатуса;
-    }*/
+
 
 
 
@@ -361,27 +319,7 @@ public class ContentProviderForSystemTables extends ContentProvider  {
 
 
 
-    @Override
-    public boolean onCreate() {
-        try{
-            // TODO: 02.09.2023  CREATE get SQLITE
-            sqliteManager = EntryPoints.get(getContext(), HiltInterfacesqlite.class).getHiltSqlite();
 
-
-            Log.d(this.getClass().getName(),"\n"
-                    + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
-                    " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                    " line " + Thread.currentThread().getStackTrace()[2].getLineNumber());
-    } catch (Exception e) {
-        e.printStackTrace();
-        Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() + " Линия  :"
-                + Thread.currentThread().getStackTrace()[2].getLineNumber());
-        new RecordNewErros(getContext()).recordnewerror(e.toString(), this.getClass().getName(),
-                Thread.currentThread().getStackTrace()[2].getMethodName(),
-                Thread.currentThread().getStackTrace()[2].getLineNumber());
-    }
-   return  true;
-    }
 
 
 
@@ -596,42 +534,46 @@ public class ContentProviderForSystemTables extends ContentProvider  {
     */
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    class ContentResolvers extends  ContentResolver{
-
-        /**
-         * Note: passing a {@code null} context here could lead to unexpected behavior in certain
-         * ContentResolver APIs so it is highly recommended to pass a non-null context here.
-         *
-         * @param context
-         */
-        public ContentResolvers(@Nullable Context context) {
-            super(context);
+        /*@Override
+    public int delete(@NonNull Uri uri, @Nullable Bundle extras) {
+        Integer РезультатУдалениеСтатуса=0;
+        try{
+            sqLiteDatabase=new CREATE_DATABASE(getContext()).getССылкаНаСозданнуюБазуORM();
+            if (!sqLiteDatabase.inTransaction()) {
+                sqLiteDatabase.beginTransaction();
+            }
+      String selection =      extras.getString("selection");
+      String[] selectionArgs =      extras.getStringArray("selectionArgs");
+            Log.d(this.getClass().getName(), " uri"+uri );
+            // TODO: 14.10.2022 метод определения текущней таблицы
+            String table = МетодОпределяемТаблицу(uri);
+            if (table!=null) {
+                Integer РезультатУдаления  = sqLiteDatabase.delete(table, selection, selectionArgs);
+                // TODO: 30.10.2021
+                Log.w(getContext().getClass().getName(), " РезультатУдаления  " + РезультатУдаления);/////
+                Uri ОтветВставкиДанных  = Uri.parse("content://"+РезультатУдаления.toString());
+                String ответОперцииВставки=    Optional.ofNullable(ОтветВставкиДанных).map(Emmeter->Emmeter.toString().replace("content://","")).get();
+                РезультатУдалениеСтатуса= Integer.parseInt(ответОперцииВставки);
+                    if (РезультатУдалениеСтатуса>0) {
+                        getContext().getContentResolver().notifyChange(uri, null);
+                    }
+            }else {
+                Log.w(getContext().getClass().getName(), " table  " + table);/////
+            }
+            if (sqLiteDatabase.inTransaction()) {
+                sqLiteDatabase.setTransactionSuccessful();
+                sqLiteDatabase.endTransaction();
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            sqLiteDatabase.endTransaction();
+            Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() + " Линия  :"
+                    + Thread.currentThread().getStackTrace()[2].getLineNumber());
+            new RecordNewBackErros(getContext()).recordnewerror(e.toString(), this.getClass().getName(), Thread.currentThread().getStackTrace()[2].getMethodName(),
+                    Thread.currentThread().getStackTrace()[2].getLineNumber());
         }
+        return РезультатУдалениеСтатуса;
+    }*/
 
-        @NonNull
-        @Override
-        public ContentProviderResult[] applyBatch(@NonNull String authority, @NonNull ArrayList<ContentProviderOperation> operations) throws OperationApplicationException, RemoteException {
-            return new ContentProviderResult[]{};
-        }
-    }
 }
 

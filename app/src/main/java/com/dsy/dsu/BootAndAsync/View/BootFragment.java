@@ -135,8 +135,8 @@ public class BootFragment extends DialogFragment {
             // setStyle(   DialogFragment.STYLE_NORMAL ,android.R.style.Theme_Material_Light_NoActionBar_Fullscreen);
             // setStyle(   DialogFragment.STYLE_NORMAL ,android.R.style.Theme_DeviceDefault_NoActionBar_Fullscreen );
          //   setStyle(DialogFragment.STYLE_NO_TITLE, android.R.style.Theme_NoTitleBar_Fullscreen);
-            setStyle(   DialogFragment.STYLE_NORMAL ,android.R.style.Theme_DeviceDefault_NoActionBar_Fullscreen  );
-
+            //setStyle(   DialogFragment.STYLE_NORMAL ,android.R.style.Theme_DeviceDefault_NoActionBar_Fullscreen  );
+            setStyle(   DialogFragment.STYLE_NORMAL ,android.R.style.Theme_Material_Light_NoActionBar );
             setShowsDialog(true);
 
             // TODO: 15.04.2025

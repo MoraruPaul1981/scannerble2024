@@ -1,15 +1,16 @@
 package com.dsy.dsu.BusinessLogicAll;
 
+import static com.dsy.dsu.CoreApp.CoreApp.contextCoreApp;
 import static java.util.Calendar.getInstance;
 
 import android.content.Context;
 import android.database.sqlite.SQLiteCursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
-import com.dsy.dsu.AllDatabases.SQLTE.GetSQLiteDatabase;
+
 import com.dsy.dsu.CnangeServers.PUBLIC_CONTENT;
 import com.dsy.dsu.Errors.WriteErrorForAll.RecordNewErros;
-import com.dsy.dsu.Hilt.Sqlitehilt.HiltInterfacesqlite;
+import com.dsy.dsu.Hilt.Sqlitehilt.AppModuleSQLlite;
 
 import java.math.BigInteger;
 import java.text.DateFormat;
@@ -29,7 +30,7 @@ public class Class_Generation_UUID {
         this.context = context;
 ///////TODO
         // TODO: 16.04.2025
-        sqLiteDatabase = EntryPoints.get(context, HiltInterfacesqlite.class).getHiltSqlite();
+        sqLiteDatabase = EntryPoints.get(context, AppModuleSQLlite.class).getAppModuleSQLlite();
         Log.d(context.getClass().getName(), "\n"
                 + " время: " + new Date() + "\n+" +
                 " Класс в процессе... " + this.getClass().getName() + "\n" +

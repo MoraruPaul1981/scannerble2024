@@ -14,11 +14,9 @@ import android.util.Log;
 
 import androidx.annotation.NonNull;
 
-import com.dsy.dsu.AllDatabases.SQLTE.GetSQLiteDatabase;
 import com.dsy.dsu.BusinessLogicAll.DownloadsJBOSS.BunessLogicDownloadBufferReader.DownloadReader;
 import com.dsy.dsu.BusinessLogicAll.DownloadsJBOSS.BunessLogicDownloadBufferReader.GetBinessLogicDownloadReader;
 import com.dsy.dsu.BusinessLogicAll.DownloadsJBOSS.BunessLogicDownloadByte.DownloadByte;
-import com.dsy.dsu.BusinessLogicAll.DownloadsJBOSS.BunessLogicDownloadByte.GetBinessLogicDownloadByte;
 import com.dsy.dsu.BusinessLogicAll.DownloadsJBOSS.BunessLogicDownloadByte.GetBinessLogicDownloadByteBuffer;
 import com.dsy.dsu.BusinessLogicAll.DownloadsJBOSS.BunessLogicDownloadFiles.DownloadFiles;
 import com.dsy.dsu.BusinessLogicAll.DownloadsJBOSS.BunessLogicDownloadFiles.GetBinessLogicDownloadFiles;
@@ -30,19 +28,15 @@ import com.dsy.dsu.CnangeServers.PUBLIC_CONTENT;
 import com.dsy.dsu.Errors.WriteErrorForAll.RecordNewErros;
 import com.dsy.dsu.Hilt.JbossAdrress.getHiltPortJbossInterface;
 import com.dsy.dsu.Hilt.OkhhtpBuilder.GetAsyncOkHttpClientBuilder;
-import com.dsy.dsu.Hilt.Sqlitehilt.HiltInterfacesqlite;
-import com.google.common.io.ByteSource;
+import com.dsy.dsu.Hilt.Sqlitehilt.AppModuleSQLlite;
+import com.sous.backasync.launch.ModuleInserting;
 
 import org.jetbrains.annotations.NotNull;
 import org.json.JSONObject;
 
-import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.net.URL;
-import java.nio.charset.StandardCharsets;
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
 import java.text.SimpleDateFormat;
@@ -59,7 +53,6 @@ import java.util.concurrent.ExecutionException;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.TimeoutException;
 import java.util.concurrent.atomic.AtomicReference;
-import java.util.zip.GZIPInputStream;
 import java.util.zip.GZIPOutputStream;
 
 import javax.crypto.NoSuchPaddingException;
@@ -97,7 +90,7 @@ import okio.BufferedSink;
         //TODO контроль потоков
         Class_Engine_SQLГдеНаходитьсяМенеджерПотоков =new PUBLIC_CONTENT(context);
         // TODO: 16.04.2025
-        sqLiteDatabase = EntryPoints.get(context, HiltInterfacesqlite.class).getHiltSqlite();
+        sqLiteDatabase = EntryPoints.get(context, AppModuleSQLlite.class).getAppModuleSQLlite();
         Log.d(context.getClass().getName(), "\n"
                 + " время: " + new Date() + "\n+" +
                 " Класс в процессе... " + this.getClass().getName() + "\n" +
@@ -115,7 +108,30 @@ import okio.BufferedSink;
     }
 
     }
+    public Class_MODEL_synchronized(  @NotNull Context context,@NonNull SQLiteDatabase sqLiteDatabase) {
+        this. context=context;
+        try{
+            //TODO контроль потоков
+            Class_Engine_SQLГдеНаходитьсяМенеджерПотоков =new PUBLIC_CONTENT(context);
+            // TODO: 16.04.2025
+           this.sqLiteDatabase=sqLiteDatabase;
+            Log.d(context.getClass().getName(), "\n"
+                    + " время: " + new Date() + "\n+" +
+                    " Класс в процессе... " + this.getClass().getName() + "\n" +
+                    " метод в процессе... " + Thread.currentThread().getStackTrace()[2].getMethodName() + " sqLiteDatabase " +sqLiteDatabase);
+            // TODO: 06.10.2024
 
+            preferencesJboss = context.getSharedPreferences("sharedPreferencesХранилище", Context.MODE_MULTI_PROCESS);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            Log.e(this.getClass().getName(), "Ошибка " +e + " Метод :"+Thread.currentThread().getStackTrace()[2].getMethodName()
+                    + " Линия  :"+Thread.currentThread().getStackTrace()[2].getLineNumber());
+            new RecordNewErros(context).recordnewerror(e.toString(),  this.getClass().getName(), Thread.currentThread().getStackTrace()[2].getMethodName(),
+                    Thread.currentThread().getStackTrace()[2].getLineNumber());
+        }
+
+    }
 
     //todo #GET    //#GET    //#GET    //#GET    //#GET    //#GET    //#GET    //#GET    //#GET    //#GET    //#GET    //#GET    //#GET    //#GET    //#GET    //#GET    //#GET    //#GET    //#GET    //#GET    //#GET    //#GET    //#GET    //#GET    //#GET    //#GET    //#GET    //#GET
 
@@ -1307,29 +1323,24 @@ import okio.BufferedSink;
 
 
     /////////КОНТЕЙНЕР ВСТВКИ ДАННЫХ УНИВЕРСАЛЬНЫЙ
-    public Long ВставкаДанныхЧерезКонтейнерТолькоПриСозданииНовогоСотрудникаУниверсальная(String ТаблицаКудаВставляем, ContentValues КонтейнерДляВставкиНовогоСотрудника)  {
+    public Integer ВставкаДанныхЧерезКонтейнерТолькоПриСозданииНовогоСотрудникаУниверсальная(@NonNull  String ТаблицаКудаВставляем,
+                                                                                          @NonNull  ContentValues КонтейнерДляВставкиНовогоСотрудника)  {
 
 
-        Long Результат_ВставкиДанныхТолькоДляСотрудникаНового = 0l;
+        Integer getcreatingAnewEmployee = 0;
         Integer Результат_ПриписиИзменнийВерсииДанных = 0;
         Class_GRUD_SQL_Operations class_grud_sql_operationsВставкаСотрудника;
             try {
-                Long ВытаскиваемПОвышенуюВерисюДанныхВнутриПоля_CurrenTable=КонтейнерДляВставкиНовогоСотрудника.getAsLong("current_table");
-                    class_grud_sql_operationsВставкаСотрудника=new Class_GRUD_SQL_Operations(context);
-                    /////TODO параменты для вставки
-                    class_grud_sql_operationsВставкаСотрудника.concurrentHashMapНабор.put("НазваниеОбрабоатываемойТаблицы",ТаблицаКудаВставляем);
-                    /////TODO контейнер для вставки
-                    class_grud_sql_operationsВставкаСотрудника.contentValuesДляSQLBuilder_Для_GRUD_Операций.putAll(КонтейнерДляВставкиНовогоСотрудника);
-                    ///TODO РЕЗУЛЬТА изменения версии данных
-                    Результат_ВставкиДанныхТолькоДляСотрудникаНового= (Long)  class_grud_sql_operationsВставкаСотрудника.
-                            new InsertData(context).insertdata(class_grud_sql_operationsВставкаСотрудника.concurrentHashMapНабор,
-                            class_grud_sql_operationsВставкаСотрудника.contentValuesДляSQLBuilder_Для_GRUD_Операций ,
-                            Class_Engine_SQLГдеНаходитьсяМенеджерПотоков.МенеджерПотоков,
-                            sqLiteDatabase);
-                    Log.d(this.getClass().getName(), " Результат_ВставкиДанныхТолькоДляСотрудникаНового  "+Результат_ВставкиДанныхТолькоДляСотрудникаНового);
-                    if(Результат_ВставкиДанныхТолькоДляСотрудникаНового==null){
-                        Результат_ВставкиДанныхТолькоДляСотрудникаНового=0l;
-                    }
+
+                ModuleInserting moduleInserting=new ModuleInserting(context);
+
+                getcreatingAnewEmployee =    moduleInserting.getModuleInsert(ТаблицаКудаВставляем,КонтейнерДляВставкиНовогоСотрудника);
+
+
+                Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                        " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                        " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" + " getcreatingAnewEmployee "+getcreatingAnewEmployee );
+
             } catch (Exception e) {///////ошибки
                 e.printStackTrace();
                 Log.e(Class_MODEL_synchronized.class.getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
@@ -1337,7 +1348,7 @@ import okio.BufferedSink;
                 new RecordNewErros(context).recordnewerror(e.toString(), Class_MODEL_synchronized.class.getName(),
                         Thread.currentThread().getStackTrace()[2].getMethodName(), Thread.currentThread().getStackTrace()[2].getLineNumber());
             }
-        return Результат_ВставкиДанныхТолькоДляСотрудникаНового;
+        return getcreatingAnewEmployee;
     }
 
 
