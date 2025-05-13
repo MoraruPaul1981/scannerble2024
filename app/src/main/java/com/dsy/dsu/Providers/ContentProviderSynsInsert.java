@@ -50,7 +50,7 @@ public class ContentProviderSynsInsert extends ContentProvider {
     private AsyncTaskLoader<?> asyncTaskLoader;
     private Handler handler;
 
-    @Inject
+
      SQLiteDatabase sqlite;
     private Integer ТекущаяСтрокаПриДОбавлениииURL=0;
     public ContentProviderSynsInsert() throws InterruptedException {
