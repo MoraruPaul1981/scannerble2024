@@ -24,7 +24,7 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
 
-import com.dsy.dsu.BusinessLogicAll.BinessLogicsAllPublics;
+import com.dsy.dsu.BusinessLogicAll.CoreBinessLogic;
 import com.dsy.dsu.BusinessLogicAll.Class_GRUD_SQL_Operations;
 import com.dsy.dsu.BusinessLogicAll.DATE.Class_Generation_Data;
 import com.dsy.dsu.CnangeServers.BinessLogicPublicContent;
@@ -117,7 +117,7 @@ public class MainActivity_Settings extends AppCompatActivity {
 
             Log.d(this.getClass().getName(), "  textViewВерсияПрограммы " + textViewВерсияПрограммы.getText());
             textViewТекущийПользователь  =(TextView) findViewById(R.id.textViewТекущийПользователь);
-            String ПолученыйТекущееИмяПользователя=new BinessLogicsAllPublics(getApplicationContext()).МетодПолучениеИмяСистемыДляСменыПользователя(getApplicationContext());
+            String ПолученыйТекущееИмяПользователя=new CoreBinessLogic(getApplicationContext()).МетодПолучениеИмяСистемыДляСменыПользователя(getApplicationContext());
             Log.d(this.getClass().getName(), "  ПолученыйТекущееИмяПользователя  "+ПолученыйТекущееИмяПользователя);
             textViewТекущийПользователь.setText("Пользователь: "+ПолученыйТекущееИмяПользователя.toUpperCase());
             textViewВремяПоследнееСинхронизации =(TextView) findViewById(R.id.textViewВремяПоследнееСинхронизации);
@@ -409,7 +409,7 @@ Class_GRUD_SQL_Operations class_grud_sql_operationsВычисляетПосле�
                 //////TODO ЕСЛИ РЕЖИМ TRUE  MOBILE ВПИСЫВАЕМ КАК В БАЗУ MOBILE
                 if (isChecked) {
                     // The toggle is enabled mobile
-         Integer РезультатЗаписиНовогоРЕжима=    new BinessLogicsAllPublics(getApplicationContext())
+         Integer РезультатЗаписиНовогоРЕжима=    new CoreBinessLogic(getApplicationContext())
                  .МетодКоторыйЗаписываемВыбранныйРежимИнтрернетаWifiИлиMobile("Mobile", getApplicationContext()
                      ,"SuccessLogin","mode_connection" );
                     Log.d(this.getClass().getName(), "РезультатЗаписиНовогоРЕжима " +РезультатЗаписиНовогоРЕжима );
@@ -425,7 +425,7 @@ Class_GRUD_SQL_Operations class_grud_sql_operationsВычисляетПосле�
                         }});
                 } else {
                     // The toggle is disabled
-                    Integer РезультатЗаписиНовогоРЕжима=            new BinessLogicsAllPublics(getApplicationContext()).МетодКоторыйЗаписываемВыбранныйРежимИнтрернетаWifiИлиMobile("WIFI", getApplicationContext()
+                    Integer РезультатЗаписиНовогоРЕжима=            new CoreBinessLogic(getApplicationContext()).МетодКоторыйЗаписываемВыбранныйРежимИнтрернетаWifiИлиMobile("WIFI", getApplicationContext()
                             ,"SuccessLogin","mode_connection" );
                     Log.d(this.getClass().getName(), "РезультатЗаписиНовогоРЕжима " +РезультатЗаписиНовогоРЕжима );
                     ///TODO принудительно устанвливаем редим работы синхронизации
@@ -456,7 +456,7 @@ Class_GRUD_SQL_Operations class_grud_sql_operationsВычисляетПосле�
             //TODO флажек WIFI MObile /// =  МетодПолучениеЗначенияРежимаРаботыИнтернетаWifiИлиInternet(КонтекстКоторыйДляСинхронизации);
           String РезультатКакойРежимЗаписанвБазеВЫходныеДни = new String();
 
-        /*    РезультатКакойРежимЗаписанвБазеВЫходныеДни =  new BinessLogicsAllPublics(getApplicationContext()).
+        /*    РезультатКакойРежимЗаписанвБазеВЫходныеДни =  new CoreBinessLogic(getApplicationContext()).
                     МетодПолучениеЗначенияРежимаРаботыИнтернетаWifiИлиInternet(getApplicationContext() ,"SuccessLogin","mode_weekend");*/
             Class_GRUD_SQL_Operations concurrentHashMapНаборПараментовSQLBuilder_Для_GRUD_ОперацийДляПолучениеСтатусаВключенРЕжимВыходныхДней;
 
@@ -553,7 +553,7 @@ Class_GRUD_SQL_Operations class_grud_sql_operationsВычисляетПосле�
                     //////TODO ЕСЛИ РЕЖИМ TRUE  MOBILE ВПИСЫВАЕМ КАК В БАЗУ MOBILE
                     if (isChecked) {
                         // The toggle is enabled mobile
-                        new BinessLogicsAllPublics(getApplicationContext()).МетодКоторыйЗаписываемВыбранныйРежимИнтрернетаWifiИлиMobile("Включить", getApplicationContext()
+                        new CoreBinessLogic(getApplicationContext()).МетодКоторыйЗаписываемВыбранныйРежимИнтрернетаWifiИлиMobile("Включить", getApplicationContext()
                                 ,"SuccessLogin","mode_weekend");
 
                         ///TODO принудительно устанвливаем редим работы синхронизации
@@ -573,7 +573,7 @@ Class_GRUD_SQL_Operations class_grud_sql_operationsВычисляетПосле�
                         //////TODO ЕСЛИ РЕЖИМ TRUE  MOBILE ВПИСЫВАЕМ КАК В БАЗУ ТОЛЬКО WIFI
                     } else {
                         // The toggle is disabled
-                        new BinessLogicsAllPublics(getApplicationContext()).МетодКоторыйЗаписываемВыбранныйРежимИнтрернетаWifiИлиMobile("Выключить", getApplicationContext()
+                        new CoreBinessLogic(getApplicationContext()).МетодКоторыйЗаписываемВыбранныйРежимИнтрернетаWifiИлиMobile("Выключить", getApplicationContext()
                                 ,"SuccessLogin","mode_weekend");
 
                         ///TODO принудительно устанвливаем редим работы синхронизации
@@ -654,7 +654,7 @@ Class_GRUD_SQL_Operations class_grud_sql_operationsВычисляетПосле�
 
 ///TODO ВСТАВКА НОВГО ТАБЕЛЯ В ТАБЛИЦУ
 
-                        РезультатВставкиНовогоСотрудникарезКонтрейнер[0] = new BinessLogicsAllPublics(getApplicationContext()).
+                        РезультатВставкиНовогоСотрудникарезКонтрейнер[0] = new CoreBinessLogic(getApplicationContext()).
                                 ВставкаДанныхЧерезКонтейнерОрганизацияДляТекущегоСотрудникаУниверсальная("settings_tabels",
                                         АдаптерВставкиВыбраноеОрганизации[0], "settings_tabels",
                                         "",
@@ -792,7 +792,7 @@ return (int) РезультатВставкиНовогоСотрудникар�
 
             // TODO: 07.09.2021  _______________old
             Курсор_ИщемПУбличныйIDКогдаегоНетВстатике =
-                    new BinessLogicsAllPublics(getApplicationContext()).КурсорУниверсальныйДляБазыДанных("SuccessLogin",
+                    new CoreBinessLogic(getApplicationContext()).КурсорУниверсальныйДляБазыДанных("SuccessLogin",
                             new String[]{"id"}, " id IS NOT NULL", null, null, null, "date_update", "1");//
 */
 
@@ -1014,7 +1014,7 @@ return (int) РезультатВставкиНовогоСотрудникар�
 
     /*        // TODO: 07.09.2021       _______________old
 
-            Курсор_ЗагружаетДанныеПриСозданииТабеля =  new BinessLogicsAllPublics(getApplicationContext()).КурсорУниверсальныйДляБазыДанных(ИмяТаблицыДляСпинера, new String[]
+            Курсор_ЗагружаетДанныеПриСозданииТабеля =  new CoreBinessLogic(getApplicationContext()).КурсорУниверсальныйДляБазыДанных(ИмяТаблицыДляСпинера, new String[]
                                         {СтолбикДляЗагурзкиВСпинер}, null,
                                 null, null, null,null, null);///"SELECT name  FROM MODIFITATION_Client WHERE name=?",НазваниеТаблицНаСервере
 
@@ -1222,7 +1222,7 @@ return (int) РезультатВставкиНовогоСотрудникар�
             // TODO: 07.09.2021     _______________old
 
                         ////TODO ИЩЕМ ОРГАНИЗАЦИЮ КОТРОУЮ ВЫБРАЛ СОТРУДНИК УЖЕ ЗАХОДИЛ И ВЫБРАЛ НА АКТИВТИ цифра один ставитсья всегда каторую выбрали
-            Курсор_ИщемВыбраннуюОрганизацию =  new BinessLogicsAllPublics(getApplicationContext()).КурсорУниверсальныйДляБазыДанных("organization", new String[]
+            Курсор_ИщемВыбраннуюОрганизацию =  new CoreBinessLogic(getApplicationContext()).КурсорУниверсальныйДляБазыДанных("organization", new String[]
                                 {"name","chosen_organization"}, "chosen_organization=?",new String[] {"1"}, null, null,null, null);///"SELECT name  FROM MODIFITATION_Client WHERE name=?",НазваниеТаблицНаСервере
 
 */

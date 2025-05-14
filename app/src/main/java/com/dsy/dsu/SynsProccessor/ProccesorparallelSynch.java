@@ -11,7 +11,7 @@ import android.util.Log;
 
 import androidx.annotation.NonNull;
 
-import com.dsy.dsu.BusinessLogicAll.BinessLogicsAllPublics;
+import com.dsy.dsu.BusinessLogicAll.CoreBinessLogic;
 import com.dsy.dsu.BusinessLogicAll.Jakson.GeneratorBinarySONSerializer;
 import com.dsy.dsu.BusinessLogicAll.Jakson.GeneratorJSONSerializer;
 import com.dsy.dsu.BusinessLogicAll.SharedPreferences.GetSharedPreferences;
@@ -1170,7 +1170,7 @@ try{
                     + " ИмяСерверИзХранилица " + ИмяСерверИзХранилица+
                     " ПортСерверИзХранилица " +ПортСерверИзХранилица+"\n"+ " ВерсииНаАндройдеСерверная " +ВерсииНаАндройдеСерверная );
             // TODO: 10.11.2022  Получение JSON-потока
-            byte[] BufferGetData =new BinessLogicsAllPublics(context). методGetByteFromServerAsync(
+            byte[] BufferGetData =new CoreBinessLogic(context). методGetByteFromServerAsync(
                     ИмяТаблицы,
                     "application/gzip",
                     "Хотим Получить  JSON"

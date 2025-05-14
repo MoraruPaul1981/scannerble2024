@@ -22,7 +22,7 @@ import androidx.appcompat.app.AlertDialog;
 import com.dsy.dsu.BootAndAsync.Model.DowloadUpdatePO.DeletingFiles.GetDeletingFilesJsonAndApk;
 
 import com.dsy.dsu.BootAndAsync.Model.EventsBus.MessageEvensBusNetworkStatuses;
-import com.dsy.dsu.BusinessLogicAll.BinessLogicsAllPublics;
+import com.dsy.dsu.BusinessLogicAll.CoreBinessLogic;
 import com.dsy.dsu.Errors.WriteErrorForAll.RecordNewErros;
 import com.dsy.dsu.CnangeServers.BinessLogicPublicContent;
 import com.dsy.dsu.Hilt.getSSLSocketFactory2.QualifiergetsslSocketFactory2;
@@ -274,12 +274,12 @@ public class ServiceUpdatePoОбновлениеПО extends IntentService {////
             ConnectivityManager cm = (ConnectivityManager) КонтекстКоторыйДляСинхронизации.getSystemService(Context.CONNECTIVITY_SERVICE);
             NetworkInfo wifiInfo = cm.getNetworkInfo(ConnectivityManager.TYPE_WIFI);
             if ( wifiInfo.isConnected()) {
-                Log.d(BinessLogicsAllPublics.class.getName(), " подключние к интренту через wifi");
+                Log.d(CoreBinessLogic.class.getName(), " подключние к интренту через wifi");
                 return "WIFI";
             }else{
                 NetworkInfo wifiInfoMObile = cm.getNetworkInfo(ConnectivityManager.TYPE_MOBILE);
                 if (wifiInfoMObile.isConnected()) {
-                    Log.d(BinessLogicsAllPublics.class.getName(), " подключние к интренту через mobile");
+                    Log.d(CoreBinessLogic.class.getName(), " подключние к интренту через mobile");
                     return "Mobile";
                 }
             }
@@ -320,7 +320,7 @@ public class ServiceUpdatePoОбновлениеПО extends IntentService {////
             Integer    ПортСерверИзХранилица = getHiltPortJboss.keySet().stream().mapToInt(m->m).findFirst().getAsInt();
 
             // TODO: 08.01.2022 Полученм JSON File  для анализа
-            File ФайлJsonОтСервера = new BinessLogicsAllPublics(getApplicationContext()).
+            File ФайлJsonОтСервера = new CoreBinessLogic(getApplicationContext()).
                     МетодЗагрузкиОбновлениеПОсСервера(new BinessLogicPublicContent(getApplicationContext()).getСсылкаНаРежимСервераОбновлениеПО(),
                             getApplicationContext(), ИмяСерверИзХранилица ,ПортСерверИзХранилица,"FileJsonUpdatePO",
                             "update_dsu1.json","application/json",getsslSocketFactory2);

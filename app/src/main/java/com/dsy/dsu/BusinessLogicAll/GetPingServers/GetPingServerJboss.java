@@ -6,7 +6,7 @@ import android.util.Log;
 
 import androidx.annotation.NonNull;
 
-import com.dsy.dsu.BusinessLogicAll.BinessLogicsAllPublics;
+import com.dsy.dsu.BusinessLogicAll.CoreBinessLogic;
 import com.dsy.dsu.BusinessLogicAll.Class_GRUD_SQL_Operations;
 import com.dsy.dsu.BusinessLogicAll.GetConnectivityManagerAndroid;
 import com.dsy.dsu.Errors.WriteErrorForAll.RecordNewErros;
@@ -102,7 +102,7 @@ public class GetPingServerJboss implements  GetPingServer {
 
             }else{
                 результатПрозвонаСокетом = false;
-                Log.e(BinessLogicsAllPublics.class.getName(), " ОШИБКА НЕТ СВЯЗИ С СЕВРЕРОМ  результатПрозвонаСокетом[0] " + результатПрозвонаСокетом);
+                Log.e(CoreBinessLogic.class.getName(), " ОШИБКА НЕТ СВЯЗИ С СЕВРЕРОМ  результатПрозвонаСокетом[0] " + результатПрозвонаСокетом);
             }
 
             //todo old code
@@ -136,7 +136,7 @@ public class GetPingServerJboss implements  GetPingServer {
             // TODO: 12.01.2024
             // TODO: 10.11.2022  пинг к сервера
             БуферПолучениеДанныхРЕальныйСтатусРАботыSQLServer =
-                    new BinessLogicsAllPublics(context).
+                    new CoreBinessLogic(context).
                             МетодУниверсальногоПинга(new String(), "application/gzip",
                                     "Хотим Получить Статус Реальной Работы SQL SERVER"
                                     ,0l,

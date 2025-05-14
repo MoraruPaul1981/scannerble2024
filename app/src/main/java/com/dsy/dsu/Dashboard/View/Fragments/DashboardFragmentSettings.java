@@ -38,7 +38,7 @@ import com.dsy.dsu.BootAndAsync.Model.Service.bl_service_boot.StartServiceBootAn
 import com.dsy.dsu.BootAndAsync.Model.BinesslogicActivityBoot.GetComponentActivityBootService;
 
 
-import com.dsy.dsu.BusinessLogicAll.BinessLogicsAllPublics;
+import com.dsy.dsu.BusinessLogicAll.CoreBinessLogic;
 import com.dsy.dsu.BusinessLogicAll.Class_Clears_Tables;
 import com.dsy.dsu.BusinessLogicAll.GetPingServers.GetPingServerJboss;
 import com.dsy.dsu.CnangeServers.BinessLogicPublicContent;
@@ -704,7 +704,7 @@ public class DashboardFragmentSettings extends  DialogFragment {
                                                 pingServerJbossSuccessfulOrNot(getsslSocketFactory2, getsqLiteDatabase,getHiltPortJboss);
 
                                 if (СтатусРаботыСервера == true) {
-                                    String ПолученыйТекущееИмяПользователя = new BinessLogicsAllPublics(getContext())
+                                    String ПолученыйТекущееИмяПользователя = new CoreBinessLogic(getContext())
                                             .МетодПолучениеИмяСистемыДляСменыПользователя(getActivity());
 
                                 MaterialAlertDialogBuilder materialAlertDialogBuilder = new MaterialAlertDialogBuilder(getActivity())

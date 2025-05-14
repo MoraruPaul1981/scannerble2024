@@ -27,6 +27,7 @@ import com.dsy.dsu.CnangeServers.BinessLogicPublicContent;
 import com.dsy.dsu.Errors.WriteErrorForAll.RecordNewErros;
 import com.dsy.dsu.Hilt.JbossAdrress.getHiltPortJbossInterface;
 import com.dsy.dsu.Hilt.OkhhtpBuilder.GetAsyncOkHttpClientBuilder;
+import com.google.common.util.concurrent.AtomicDouble;
 import com.sous.backasync.launch.ModuleInserting;
 import com.sous.backasync.launch.ModuleQuety;
 import com.sous.backasync.launch.ModuleUpdating;
@@ -68,7 +69,7 @@ import okhttp3.Response;
 import okio.BufferedSink;
 
 ///////todo Универсальный Код Логики
- public class BinessLogicsAllPublics {
+ public class CoreBinessLogic {
   public     Context context;
     private BinessLogicPublicContent binessLogicPublicContent =null;
 
@@ -77,7 +78,7 @@ import okio.BufferedSink;
     private SharedPreferences preferencesJboss;
 
 
-    public BinessLogicsAllPublics(@NotNull Context context) {
+    public CoreBinessLogic(@NotNull Context context) {
        this. context=context;
        try{
         //TODO контроль потоков
@@ -188,9 +189,9 @@ import okio.BufferedSink;
                 @Override
                 public void onFailure(@NonNull Call call, @NonNull IOException e) {
                     Log.e(this.getClass().getName(), "  ERROR call  " + call + "  e" + e.toString());
-                    Log.e(BinessLogicsAllPublics.class.getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
+                    Log.e(CoreBinessLogic.class.getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
                             " Линия  :" + Thread.currentThread().getStackTrace()[2].getLineNumber() + " ОшибкаТекущегоМетода " + e.getMessage());
-                    new RecordNewErros(context).recordnewerror(e.toString(), BinessLogicsAllPublics.class.getName(),
+                    new RecordNewErros(context).recordnewerror(e.toString(), CoreBinessLogic.class.getName(),
                             Thread.currentThread().getStackTrace()[2].getMethodName(), Thread.currentThread().getStackTrace()[2].getLineNumber());
                     // TODO: 28.12.2024
                     // TODO: 31.05.2022
@@ -252,9 +253,9 @@ import okio.BufferedSink;
                     !ОшибкаТекущегоМетода.toString().trim().trim().matches("(.*)java.net.sockettimeoutexception(.*)")
                     &&
                     !ОшибкаТекущегоМетода.toString().trim().matches("(.*)SocketTimeout(.*)")) {
-                Log.e(BinessLogicsAllPublics.class.getName(), "Ошибка " + ОшибкаТекущегоМетода + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
+                Log.e(CoreBinessLogic.class.getName(), "Ошибка " + ОшибкаТекущегоМетода + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
                         " Линия  :" + Thread.currentThread().getStackTrace()[2].getLineNumber() + " ОшибкаТекущегоМетода " + ОшибкаТекущегоМетода.toString());
-                new RecordNewErros(context).recordnewerror(e.toString(), BinessLogicsAllPublics.class.getName(),
+                new RecordNewErros(context).recordnewerror(e.toString(), CoreBinessLogic.class.getName(),
                         Thread.currentThread().getStackTrace()[2].getMethodName(), Thread.currentThread().getStackTrace()[2].getLineNumber());
             }
         }
@@ -288,14 +289,9 @@ import okio.BufferedSink;
             СтрокаСвязиСсервером = СтрокаСвязиСсервером.replace(" ", "%20");
             URL Adress = new URL(СтрокаСвязиСсервером);
             Log.d(this.getClass().getName(), " СтрокаСвязиСсервером " + СтрокаСвязиСсервером);
-
-
-
-
-
+            // TODO: 14.05.2025
+            
             OkHttpClient.Builder builderokhtttp=   new GetAsyncOkHttpClientBuilder(context,getsslSocketFactory2).GetAsyncOkHttpClientBuilder(enableSSl);
-
-
             OkHttpClient okHttpClientДанныеОтСервера = builderokhtttp.addInterceptor(new Interceptor() {// " SELECT success_users,success_login  FROM successlogin  ORDER BY date_update DESC ;"
                         @Override
                         public Response intercept(Chain chain) throws IOException {
@@ -350,9 +346,9 @@ import okio.BufferedSink;
                 @Override
                 public void onFailure(@NonNull Call call, @NonNull IOException e) {
                     Log.e(this.getClass().getName(), "  ERROR call  " + call + "  e" + e.toString());
-                    Log.e(BinessLogicsAllPublics.class.getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
+                    Log.e(CoreBinessLogic.class.getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
                             " Линия  :" + Thread.currentThread().getStackTrace()[2].getLineNumber() + " ОшибкаТекущегоМетода " + e.getMessage());
-                    new RecordNewErros(context).recordnewerror(e.toString(), BinessLogicsAllPublics.class.getName(),
+                    new RecordNewErros(context).recordnewerror(e.toString(), CoreBinessLogic.class.getName(),
                             Thread.currentThread().getStackTrace()[2].getMethodName(), Thread.currentThread().getStackTrace()[2].getLineNumber());
                     // TODO: 31.05.2022
                     dispatcherДанныеОтСервера.executorService().shutdown();
@@ -403,9 +399,9 @@ import okio.BufferedSink;
                     !ОшибкаТекущегоМетода.toString().trim().matches("(.*)java.net.sockettimeoutexception(.*)")
                     &&
                     !ОшибкаТекущегоМетода.toString().trim().matches("(.*)SocketTimeout(.*)")) {
-                Log.e(BinessLogicsAllPublics.class.getName(), "Ошибка " + ОшибкаТекущегоМетода + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
+                Log.e(CoreBinessLogic.class.getName(), "Ошибка " + ОшибкаТекущегоМетода + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
                         " Линия  :" + Thread.currentThread().getStackTrace()[2].getLineNumber() + " ОшибкаТекущегоМетода " + ОшибкаТекущегоМетода.toString());
-                new RecordNewErros(context).recordnewerror(e.toString(), BinessLogicsAllPublics.class.getName(),
+                new RecordNewErros(context).recordnewerror(e.toString(), CoreBinessLogic.class.getName(),
                         Thread.currentThread().getStackTrace()[2].getMethodName(), Thread.currentThread().getStackTrace()[2].getLineNumber());
             }
         }
@@ -514,9 +510,9 @@ import okio.BufferedSink;
                 @Override
                 public void onFailure(@NonNull Call call, @NonNull IOException e) {
                     Log.e(this.getClass().getName(), "  ERROR call  " + call + "  e" + e.toString());
-                    Log.e(BinessLogicsAllPublics.class.getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
+                    Log.e(CoreBinessLogic.class.getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
                             " Линия  :" + Thread.currentThread().getStackTrace()[2].getLineNumber() + " ОшибкаТекущегоМетода " + e.getMessage());
-                    new RecordNewErros(context).recordnewerror(e.toString(), BinessLogicsAllPublics.class.getName(),
+                    new RecordNewErros(context).recordnewerror(e.toString(), CoreBinessLogic.class.getName(),
                             Thread.currentThread().getStackTrace()[2].getMethodName(), Thread.currentThread().getStackTrace()[2].getLineNumber());
                     // TODO: 31.05.2022
                     dispatcherПинг.executorService().shutdown();
@@ -571,9 +567,9 @@ import okio.BufferedSink;
                     &&
                     !ОшибкаТекущегоМетода.toString().trim().matches("(.*)SocketTimeout(.*)")) {
 
-                Log.e(BinessLogicsAllPublics.class.getName(), "Ошибка " + ОшибкаТекущегоМетода + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
+                Log.e(CoreBinessLogic.class.getName(), "Ошибка " + ОшибкаТекущегоМетода + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
                         " Линия  :" + Thread.currentThread().getStackTrace()[2].getLineNumber() + " ОшибкаТекущегоМетода " + ОшибкаТекущегоМетода.toString());
-                new RecordNewErros(context).recordnewerror(ex.toString(), BinessLogicsAllPublics.class.getName(),
+                new RecordNewErros(context).recordnewerror(ex.toString(), CoreBinessLogic.class.getName(),
                         Thread.currentThread().getStackTrace()[2].getMethodName(), Thread.currentThread().getStackTrace()[2].getLineNumber());
             }
         }
@@ -698,9 +694,9 @@ import okio.BufferedSink;
                         @Override
                         public void onFailure(@NonNull Call call, @NonNull IOException e) {
                             Log.e(this.getClass().getName(), "  ERROR call  " + call + "  e" + e.toString());
-                            Log.e(BinessLogicsAllPublics.class.getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
+                            Log.e(CoreBinessLogic.class.getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
                                     " Линия  :" + Thread.currentThread().getStackTrace()[2].getLineNumber() + " ОшибкаТекущегоМетода " + e.getMessage());
-                            new RecordNewErros(context).recordnewerror(e.toString(), BinessLogicsAllPublics.class.getName(),
+                            new RecordNewErros(context).recordnewerror(e.toString(), CoreBinessLogic.class.getName(),
                                     Thread.currentThread().getStackTrace()[2].getMethodName(), Thread.currentThread().getStackTrace()[2].getLineNumber());
                             // TODO: 31.05.2022
                             dispatcherCallsBackСервера.executorService().shutdown();
@@ -756,9 +752,9 @@ import okio.BufferedSink;
                     if (!ОшибкаТекущегоМетода.toString().trim().matches("(.*)java.io.EOFException(.*)") &&
                             !ОшибкаТекущегоМетода.toString().trim().matches("(.*)java.net.sockettimeoutexception(.*)") &&
                             !ОшибкаТекущегоМетода.toString().trim().matches("(.*)SocketTimeout(.*)")) {
-                        Log.e(BinessLogicsAllPublics.class.getName(), "Ошибка " + ex + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
+                        Log.e(CoreBinessLogic.class.getName(), "Ошибка " + ex + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
                                 " Линия  :" + Thread.currentThread().getStackTrace()[2].getLineNumber());
-                        new RecordNewErros(context).recordnewerror(ex.toString(), BinessLogicsAllPublics.class.getName(),
+                        new RecordNewErros(context).recordnewerror(ex.toString(), CoreBinessLogic.class.getName(),
                                 Thread.currentThread().getStackTrace()[2].getMethodName(), Thread.currentThread().getStackTrace()[2].getLineNumber());
                     }
                 }
@@ -790,9 +786,9 @@ import okio.BufferedSink;
 
         } catch (Exception e) {
             e.printStackTrace();
-            Log.e(BinessLogicsAllPublics.class.getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
+            Log.e(CoreBinessLogic.class.getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
                     " Линия  :" + Thread.currentThread().getStackTrace()[2].getLineNumber());
-            new RecordNewErros(context).recordnewerror(e.toString(), BinessLogicsAllPublics.class.getName(),
+            new RecordNewErros(context).recordnewerror(e.toString(), CoreBinessLogic.class.getName(),
                     Thread.currentThread().getStackTrace()[2].getMethodName(), Thread.currentThread().getStackTrace()[2].getLineNumber());
         }
         return Результат_ВставкиДанных;
@@ -822,9 +818,9 @@ import okio.BufferedSink;
         } catch (Exception e) {///////ошибки
             e.printStackTrace();
             ///метод запись ошибок в таблицу
-            Log.e(BinessLogicsAllPublics.class.getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
+            Log.e(CoreBinessLogic.class.getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
                     " Линия  :" + Thread.currentThread().getStackTrace()[2].getLineNumber());
-            new RecordNewErros(context).recordnewerror(e.toString(), BinessLogicsAllPublics.class.getName(),
+            new RecordNewErros(context).recordnewerror(e.toString(), CoreBinessLogic.class.getName(),
                     Thread.currentThread().getStackTrace()[2].getMethodName(), Thread.currentThread().getStackTrace()[2].getLineNumber());
         }
         return Результат_ОбновлениеДанных;
@@ -850,9 +846,9 @@ import okio.BufferedSink;
 
             } catch (Exception e) {
                 e.printStackTrace();
-                Log.e(BinessLogicsAllPublics.class.getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
+                Log.e(CoreBinessLogic.class.getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
                         " Линия  :" + Thread.currentThread().getStackTrace()[2].getLineNumber());
-                new RecordNewErros(context).recordnewerror(e.toString(), BinessLogicsAllPublics.class.getName(),
+                new RecordNewErros(context).recordnewerror(e.toString(), CoreBinessLogic.class.getName(),
                         Thread.currentThread().getStackTrace()[2].getMethodName(), Thread.currentThread().getStackTrace()[2].getLineNumber());
 
             }
@@ -874,9 +870,9 @@ import okio.BufferedSink;
 
             } catch (Exception e) {///////ошибки
                 e.printStackTrace();
-                Log.e(BinessLogicsAllPublics.class.getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
+                Log.e(CoreBinessLogic.class.getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
                         " Линия  :" + Thread.currentThread().getStackTrace()[2].getLineNumber());
-                new RecordNewErros(context).recordnewerror(e.toString(), BinessLogicsAllPublics.class.getName(),
+                new RecordNewErros(context).recordnewerror(e.toString(), CoreBinessLogic.class.getName(),
                         Thread.currentThread().getStackTrace()[2].getMethodName(), Thread.currentThread().getStackTrace()[2].getLineNumber());
             }
         return getcreatingAnewEmployee;
@@ -913,9 +909,9 @@ import okio.BufferedSink;
                             " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" + " Результат_ВставкиДанныхПриСозданииНСообщенияДЛЯЧата "+Результат_ВставкиДанныхПриСозданииНСообщенияДЛЯЧата );
             } catch (Exception e) {
                 e.printStackTrace();
-                Log.e(BinessLogicsAllPublics.class.getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
+                Log.e(CoreBinessLogic.class.getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
                         " Линия  :" + Thread.currentThread().getStackTrace()[2].getLineNumber());
-                new RecordNewErros(context).recordnewerror(e.toString(), BinessLogicsAllPublics.class.getName(),
+                new RecordNewErros(context).recordnewerror(e.toString(), CoreBinessLogic.class.getName(),
                         Thread.currentThread().getStackTrace()[2].getMethodName(), Thread.currentThread().getStackTrace()[2].getLineNumber());
             }
         return Результат_ВставкиДанныхПриСозданииНСообщенияДЛЯЧата;
@@ -959,9 +955,9 @@ import okio.BufferedSink;
 
             } catch (Exception e) {
                 e.printStackTrace();
-                Log.e(BinessLogicsAllPublics.class.getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
+                Log.e(CoreBinessLogic.class.getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
                         " Линия  :" + Thread.currentThread().getStackTrace()[2].getLineNumber());
-                new RecordNewErros(context).recordnewerror(e.toString(), BinessLogicsAllPublics.class.getName(),
+                new RecordNewErros(context).recordnewerror(e.toString(), CoreBinessLogic.class.getName(),
                         Thread.currentThread().getStackTrace()[2].getMethodName(), Thread.currentThread().getStackTrace()[2].getLineNumber());
 
             }
@@ -975,42 +971,44 @@ import okio.BufferedSink;
     public Integer wewillsetupanewPublicidaftersuccessfulsynchronizationSettingsTabels(
             @NonNull String ИмяТаблицы,
             @NonNull   ContentValues КонтейнерДляВставкиПубличныйID,
-            @NonNull Integer PublicID )
-            throws ExecutionException,
-            InterruptedException, TimeoutException {
+            @NonNull Integer PublicID ) {
         // TODO: 08.10.2024
         Integer   UpdatingPublicID=0;
         try {
 // TODO: 08.10.2024 Update PUBLIC ID AFTER SYNnc
             Uri uri = Uri.parse("content://com.dsy.dsu.providerforsystemtables/" + ИмяТаблицы + "");
             // TODO: 08.10.2024 Дополнительное добавление данных
-            ContentResolver contentProviderNewPubicID = context.getContentResolver();
             КонтейнерДляВставкиПубличныйID.put("publicid",PublicID);
             // TODO: 09.10.2024 task for current poeration
             КонтейнерДляВставкиПубличныйID.put("currenttaskforthecontentprovider","firststartapp");
+
+
 
             // TODO: 08.10.2024 Находим если такой  Пользователь
           Long getuuidLocal=  new GetPublicID( ).gettingSettingTableVersion(context," SELECT user_update FROM "+ИмяТаблицы+"  ",ИмяТаблицы);
             // TODO: 12.04.2023 UPDATER PUBLIC ID
           if(getuuidLocal>0 ){
               // TODO: 12.04.2023 UPDATER PUBLIC ID
-                 UpdatingPublicID=  contentProviderNewPubicID.update(uri, КонтейнерДляВставкиПубличныйID,null,null);
+              ModuleUpdating moduleUpdating = new ModuleUpdating(context);
+              // TODO: 03.02.2025 update new back
+              UpdatingPublicID=   moduleUpdating.getModuleUpdate(ИмяТаблицы,КонтейнерДляВставкиПубличныйID);
               Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                       " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
                       " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"+ "  UpdatingPublicID " +UpdatingPublicID);
 
 
-              // TODO: 08.10.2024 UNSERT PUBLIC ID
+              // TODO: 08.10.2024 Insert PUBLIC ID
           }else {
               // TODO: 12.04.2023 INSERT PUBLIC ID
-              Uri insertData = contentProviderNewPubicID.insert(uri, КонтейнерДляВставкиПубличныйID);
-              if (insertData != null) {
-                  String InsertingPublicID = Optional.ofNullable(insertData).map(Emmeter -> Emmeter.toString().replace("content://", "")).get();
-                  UpdatingPublicID=Integer.parseInt(InsertingPublicID);
-                  Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
-                          " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                          " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" + "  InsertingPublicID " + InsertingPublicID);
-              }
+              // TODO: 14.05.2025
+              ModuleInserting moduleInserting=new ModuleInserting(context);
+              // TODO: 14.05.2025
+              UpdatingPublicID =    moduleInserting.getModuleInsert(ИмяТаблицы,КонтейнерДляВставкиПубличныйID);
+
+              Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                      " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                      " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"+ "  UpdatingPublicID " +UpdatingPublicID);
+
           }
 
 
@@ -1020,7 +1018,6 @@ import okio.BufferedSink;
 
         } catch (Exception e) {
             e.printStackTrace();
-            ///метод запись ошибок в таблицу
             Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() + " Линия  :"
                     + Thread.currentThread().getStackTrace()[2].getLineNumber());
             new RecordNewErros(context).recordnewerror(e.toString(),
@@ -1211,9 +1208,9 @@ Class_GRUD_SQL_Operations class_grud_sql_operationsОбвовлениеСозд�
             } catch (Exception e) {///////ошибки
                 e.printStackTrace();
                 ///метод запись ошибок в таблицу
-                Log.e(BinessLogicsAllPublics.class.getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
+                Log.e(CoreBinessLogic.class.getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
                         " Линия  :" + Thread.currentThread().getStackTrace()[2].getLineNumber());
-                new RecordNewErros(context).recordnewerror(e.toString(), BinessLogicsAllPublics.class.getName(),
+                new RecordNewErros(context).recordnewerror(e.toString(), CoreBinessLogic.class.getName(),
                         Thread.currentThread().getStackTrace()[2].getMethodName(), Thread.currentThread().getStackTrace()[2].getLineNumber());
             }
             ////
@@ -1314,9 +1311,9 @@ Class_GRUD_SQL_Operations class_grud_sql_operationsОбвовлениеСозд�
             } catch (Exception e) {///////ошибки
                 e.printStackTrace();
                 ///метод запись ошибок в таблицу
-                Log.e(BinessLogicsAllPublics.class.getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
+                Log.e(CoreBinessLogic.class.getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
                         " Линия  :" + Thread.currentThread().getStackTrace()[2].getLineNumber());
-                new RecordNewErros(context).recordnewerror(e.toString(), BinessLogicsAllPublics.class.getName(),
+                new RecordNewErros(context).recordnewerror(e.toString(), CoreBinessLogic.class.getName(),
                         Thread.currentThread().getStackTrace()[2].getMethodName(), Thread.currentThread().getStackTrace()[2].getLineNumber());
             }
 
@@ -1368,9 +1365,9 @@ Class_GRUD_SQL_Operations classGrudSqlOperationsУдалениеДанныхЧе
                 Log.d(this.getClass().getName(), "Результат_УдалениеДанных " + Результат_УдалениеДанных);
                 } catch (Exception e) {///////ошибки
                     e.printStackTrace();
-                    Log.e(BinessLogicsAllPublics.class.getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
+                    Log.e(CoreBinessLogic.class.getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
                             " Линия  :" + Thread.currentThread().getStackTrace()[2].getLineNumber());
-                    new RecordNewErros(context).recordnewerror(e.toString(), BinessLogicsAllPublics.class.getName(),
+                    new RecordNewErros(context).recordnewerror(e.toString(), CoreBinessLogic.class.getName(),
                             Thread.currentThread().getStackTrace()[2].getMethodName(), Thread.currentThread().getStackTrace()[2].getLineNumber());
                 }
         return Результат_УдалениеДанных;
@@ -1470,9 +1467,9 @@ Class_GRUD_SQL_Operations classGrudSqlOperationsУдалениеДанныхЧе
                     Log.d(this.getClass().getName(), " Результат_ОбновлениеДанных   " + Результат_ОбновлениеДанных);
             } catch (Exception e) {///////ошибки
                 e.printStackTrace();
-                Log.e(BinessLogicsAllPublics.class.getName(), "Ошибка " + e.toString() + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
+                Log.e(CoreBinessLogic.class.getName(), "Ошибка " + e.toString() + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
                         " Линия  :" + Thread.currentThread().getStackTrace()[2].getLineNumber());
-                new RecordNewErros(context).recordnewerror(e.toString(), BinessLogicsAllPublics.class.getName(),
+                new RecordNewErros(context).recordnewerror(e.toString(), CoreBinessLogic.class.getName(),
                         Thread.currentThread().getStackTrace()[2].getMethodName(), Thread.currentThread().getStackTrace()[2].getLineNumber());
             }
 
@@ -1617,9 +1614,9 @@ Class_GRUD_SQL_Operations classGrudSqlOperationsУдалениеДанныхЧе
                 } catch (Exception e) {///////ошибки
                 e.printStackTrace();
                 ///метод запись ошибок в таблицу
-                Log.e(BinessLogicsAllPublics.class.getName(), "Ошибка " + e.toString() + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
+                Log.e(CoreBinessLogic.class.getName(), "Ошибка " + e.toString() + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
                         " Линия  :" + Thread.currentThread().getStackTrace()[2].getLineNumber());
-                new RecordNewErros(context).recordnewerror(e.toString(), BinessLogicsAllPublics.class.getName(),
+                new RecordNewErros(context).recordnewerror(e.toString(), CoreBinessLogic.class.getName(),
                         Thread.currentThread().getStackTrace()[2].getMethodName(), Thread.currentThread().getStackTrace()[2].getLineNumber());
             }
         return Результат_УдалениеТолькоШАблон;
@@ -1777,7 +1774,7 @@ Class_GRUD_SQL_Operations classGrudSqlOperationsУдалениеДанныхЧе
 
 /*
 
-            Cursor Курсор_ЗагружаетДанныеПриСозданииТабеля = new BinessLogicsAllPublics(contextСозданиеБАзы).КурсорУниверсальныйДляБазыДанных("SuccessLogin", new String[]
+            Cursor Курсор_ЗагружаетДанныеПриСозданииТабеля = new CoreBinessLogic(contextСозданиеБАзы).КурсорУниверсальныйДляБазыДанных("SuccessLogin", new String[]
                             {"success_users"}, null,
                     null, null, null, "date_update", null);///"SELECT name  FROM MODIFITATION_Client WHERE name=?",НазваниеТаблицНаСервере
 */
@@ -1889,7 +1886,7 @@ Class_GRUD_SQL_Operations classGrudSqlOperationsУдалениеДанныхЧе
 
 
 /*
-            Курсор_ДляЗагрузкиСотрудниковНепостредственнов = new BinessLogicsAllPublics(контекстLIstView).КурсорУниверсальныйДляБазыДанных("viewtabel",
+            Курсор_ДляЗагрузкиСотрудниковНепостредственнов = new CoreBinessLogic(контекстLIstView).КурсорУниверсальныйДляБазыДанных("viewtabel",
                     new String[]{"name,uuid,BirthDate,snils,_id,status_carried_out"},//     new String[]{"name,id,uuid,BirthDate,snils},
                     " user_update= ?  AND  month_tabels=?  AND year_tabels=? AND nametabel=? AND organizations=? AND status_send!=?  AND nametabel_typename=? AND name IS NOT NULL",//AND status_send IS NULL//"Удаленная" //AND status_send!=?" /AND status_send IS NULL AND  name IS NOT NULL AND fio IS NOT NULL
                     new String[]{String.valueOf(IDЧьиДанныеДляСотрудников), String.valueOf(МЕсяцДляКурсораТабелей), String.valueOf(ГодДляКурсораТабелей),
@@ -1952,7 +1949,7 @@ Class_GRUD_SQL_Operations classGrudSqlOperationsУдалениеДанныхЧе
 
         Cursor Курсор_ДляЗагрузкиСотрудниковНепостредственновИзШаблона = null;
         try {
-            Курсор_ДляЗагрузкиСотрудниковНепостредственновИзШаблона = new BinessLogicsAllPublics(контекстLIstView).КурсорУниверсальныйДляБазыДанных("viewtabel",
+            Курсор_ДляЗагрузкиСотрудниковНепостредственновИзШаблона = new CoreBinessLogic(контекстLIstView).КурсорУниверсальныйДляБазыДанных("viewtabel",
                     new String[]{"*"},//     new String[]{"name,id,uuid,BirthDate,snils},
                     "status_send!=?  AND cfo=? AND fio !=?  AND month_tabels=? AND  year_tabels =?  AND fio IS NOT NULL AND name IS NOT NULL",//  nametabel_typename  AND nametabel IS NOT NULL",//AND status_send IS NULL//"Удаленная" //AND status_send!=?" /AND status_send IS NULL AND  name IS NOT NULL AND fio IS NOT NULL
                     new String[]{"Удаленная", String.valueOf(ЦифровоеИмяНовгоТабеля), "", String.valueOf(месяцДляПермещенияПоТабелю), String.valueOf(годДляПермещенияПоТабелю)},
@@ -1960,7 +1957,7 @@ Class_GRUD_SQL_Operations classGrudSqlOperationsУдалениеДанныхЧе
 
             // TODO: 07.05.2021  данный курсор с датой показывает какой сотрудника изменили такой и сверху
 *//*
-            Курсор_ДляЗагрузкиСотрудниковНепостредственновИзШаблона = new BinessLogicsAllPublics(контекстLIstView).КурсорУниверсальныйДляБазыДанных("viewtabel",
+            Курсор_ДляЗагрузкиСотрудниковНепостредственновИзШаблона = new CoreBinessLogic(контекстLIstView).КурсорУниверсальныйДляБазыДанных("viewtabel",
                     new String[]{"*"},//     new String[]{"name,id,uuid,BirthDate,snils},
                     "status_send!=?  AND nametabel_typename=? AND uuid !=? AND uuid IS NOT NULL AND name IS NOT NULL",// AND nametabel IS NOT NULL",//AND status_send IS NULL//"Удаленная" //AND status_send!=?" /AND status_send IS NULL AND  name IS NOT NULL AND fio IS NOT NULL
                     new String[]{ "Удаленная",String.valueOf(ЦифровоеИмяНовгоТабеля),""},
@@ -2091,7 +2088,7 @@ Class_GRUD_SQL_Operations classGrudSqlOperationsУдалениеДанныхЧе
 
 
         /*    // TODO: 06.09.2021  old
-            Курсор_ЗагружаетАрайдистЗначенийНовогоШаблонаВнутри = new BinessLogicsAllPublics(КонтекстДЛяСотрудника).КурсорУниверсальныйДляБазыДанных("Templates", new String[]
+            Курсор_ЗагружаетАрайдистЗначенийНовогоШаблонаВнутри = new CoreBinessLogic(КонтекстДЛяСотрудника).КурсорУниверсальныйДляБазыДанных("Templates", new String[]
                             {"*"}, "user_update=?",
                     new String[]{String.valueOf(полученнаяUUIDОрганизациидДляКурсораСпинераДаты)},
                     null, null, "date_update DESC", null);
@@ -2129,7 +2126,7 @@ Class_GRUD_SQL_Operations classGrudSqlOperationsУдалениеДанныхЧе
             class_grud_sql_operationsУжеготовыеТабеля = new Class_GRUD_SQL_Operations(context);
 
 
-                /*    Курсор_ЗагружаетНазваниеТабеляНАОснованииСФО = new BinessLogicsAllPublics(КонтекстДляРежимаИнтрента).КурсорУниверсальныйДляБазыДанных("cfo", new String[]
+                /*    Курсор_ЗагружаетНазваниеТабеляНАОснованииСФО = new CoreBinessLogic(КонтекстДляРежимаИнтрента).КурсорУниверсальныйДляБазыДанных("cfo", new String[]
                                     {"name"}, "id=?",
                             new String[]{String.valueOf(ТекущееСФО)}, null, null, "date_update DESC", "1");///"SELECT name  FROM MODIFITATION_Client WHERE name=?",НазваниеТаблицНаСервере
                     // TODO: 02.09.2021
@@ -2474,9 +2471,9 @@ Class_GRUD_SQL_Operations classGrudSqlOperationsУдалениеДанныхЧе
                 public void onFailure(@NonNull Call call, @NonNull IOException e) {
                     try{
                         Log.e(this.getClass().getName(), "  ERROR call  " + call + "  e" + e.toString());
-                        Log.e(BinessLogicsAllPublics.class.getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
+                        Log.e(CoreBinessLogic.class.getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
                                 " Линия  :" + Thread.currentThread().getStackTrace()[2].getLineNumber() + " ОшибкаТекущегоМетода " + e.getMessage());
-                        new RecordNewErros(context).recordnewerror(e.toString(), BinessLogicsAllPublics.class.getName(),
+                        new RecordNewErros(context).recordnewerror(e.toString(), CoreBinessLogic.class.getName(),
                                 Thread.currentThread().getStackTrace()[2].getMethodName(), Thread.currentThread().getStackTrace()[2].getLineNumber());
                         // TODO: 31.05.2022
                     } catch (Exception ex) {
@@ -2555,9 +2552,9 @@ Class_GRUD_SQL_Operations classGrudSqlOperationsУдалениеДанныхЧе
                     !ОшибкаТекущегоМетода.toString().trim().matches("(.*)SocketTimeout(.*)") &&
                     !ОшибкаТекущегоМетода.toString().trim().matches("(.*)java.net.ConnectException(.*)")
                     && !ОшибкаТекущегоМетода.toString().trim().matches("(.*)FileNotFoundException(.*)"))  {
-                Log.e(BinessLogicsAllPublics.class.getName(), "Ошибка " + ОшибкаТекущегоМетода + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
+                Log.e(CoreBinessLogic.class.getName(), "Ошибка " + ОшибкаТекущегоМетода + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
                         " Линия  :" + Thread.currentThread().getStackTrace()[2].getLineNumber() + " ОшибкаТекущегоМетода " + ОшибкаТекущегоМетода.toString());
-                new RecordNewErros(this.context).recordnewerror(ex.toString(), BinessLogicsAllPublics.class.getName(),
+                new RecordNewErros(this.context).recordnewerror(ex.toString(), CoreBinessLogic.class.getName(),
                         Thread.currentThread().getStackTrace()[2].getMethodName(), Thread.currentThread().getStackTrace()[2].getLineNumber());
 
             }
@@ -2910,9 +2907,9 @@ Class_GRUD_SQL_Operations classGrudSqlOperationsУдалениеДанныхЧе
                     public void onFailure(@NonNull Call call, @NonNull IOException e) {
                         Log.e(this.getClass().getName(), "  ERROR call  " + call + "  e" + e.toString());
                         БуферПубличныйIDОтСервера[0]=0;
-                        Log.e(BinessLogicsAllPublics.class.getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
+                        Log.e(CoreBinessLogic.class.getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
                                 " Линия  :" + Thread.currentThread().getStackTrace()[2].getLineNumber() + " ОшибкаТекущегоМетода " + e.getMessage());
-                        new RecordNewErros(context).recordnewerror(e.toString(), BinessLogicsAllPublics.class.getName(),
+                        new RecordNewErros(context).recordnewerror(e.toString(), CoreBinessLogic.class.getName(),
                                 Thread.currentThread().getStackTrace()[2].getMethodName(), Thread.currentThread().getStackTrace()[2].getLineNumber());
                         // TODO: 31.05.2022
                         dispatcherПроверкаЛогиниПароль.executorService().shutdown();

@@ -161,7 +161,7 @@ public class Class_Search_Changes_Data {
             // TODO: 09.09.2021  ___old
 
            Курсор_ВычислемБылиЛиИзмененияВТаблицеТабель=
-                    new BinessLogicsAllPublics(Контекст).КурсорУниверсальныйБазыДанных("SELECT localversionandroid,versionserveraandroid FROM MODIFITATION_Client WHERE name = 'tabels' ");
+                    new CoreBinessLogic(Контекст).КурсорУниверсальныйБазыДанных("SELECT localversionandroid,versionserveraandroid FROM MODIFITATION_Client WHERE name = 'tabels' ");
 
 
 */

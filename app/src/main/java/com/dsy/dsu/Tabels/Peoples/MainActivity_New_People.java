@@ -274,7 +274,7 @@ public class MainActivity_New_People extends AppCompatActivity implements DatePi
 
 // TODO: 07.09.2021    _old
                 Курсор_ИщемВсеОрганизации =
-                        new BinessLogicsAllPublics(getApplicationContext()).КурсорУниверсальныйДляБазыДанных("organization",
+                        new CoreBinessLogic(getApplicationContext()).КурсорУниверсальныйДляБазыДанных("organization",
                                 new String[]{"*"}, " name IS NOT NULL", null, null, null, null, null);//
 
 
@@ -789,7 +789,7 @@ private void МетодВозврещениеНаПредыдущуюАктив�
 
             // TODO: 07.09.2021   _old
  Курсор_КоторыйПроверяетЭтоПустаяЯчейкаUUIDЕслиПустоеНоЭтоНовыйТабельБезСотрудниковиМыНеВставляемАОбновлем =
-                new BinessLogicsAllPublics(this).КурсорУниверсальныйДляБазыДанных("tabels",
+                new CoreBinessLogic(this).КурсорУниверсальныйДляБазыДанных("tabels",
                         new String[]{"fio"}, "uuid=?", new String[]{УниверсальныйUUIDДляСОзданиеНовогоСотрудникаНаКонкретныйТабель}, null, null, null, null);//"SuccessLogin", "date_update","id=","1",null,null,null,null
         ///TODO УДАЛЕМ ПАМЯТЬ*/
 

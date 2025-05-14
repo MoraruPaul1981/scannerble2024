@@ -61,7 +61,7 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.dsy.dsu.BusinessLogicAll.BinessLogicsAllPublics;
+import com.dsy.dsu.BusinessLogicAll.CoreBinessLogic;
 import com.dsy.dsu.BusinessLogicAll.CELLUPDATE.SubClassUpdatesCELL;
 import com.dsy.dsu.BusinessLogicAll.VersionCurentTable;
 import com.dsy.dsu.Errors.WriteErrorForAll.RecordNewErros;
@@ -1409,7 +1409,7 @@ public class FragmentSingleTabelOneSwipe extends Fragment {
 
 
 
-                Log.d(BinessLogicsAllPublics.class.getName()," RowNumber  " + " cursorForViewPager " +cursor.getPosition()
+                Log.d(CoreBinessLogic.class.getName()," RowNumber  " + " cursorForViewPager " +cursor.getPosition()
                         +"myViewHolder.getLayoutPosition()   "+myViewHolder.getLayoutPosition() +
                         "CurrentFragmentMaxItem  " + CurrentFragmentMaxItem);
 

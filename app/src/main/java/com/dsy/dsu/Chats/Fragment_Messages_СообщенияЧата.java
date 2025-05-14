@@ -1594,7 +1594,7 @@ try {
 
 
        /*         // TODO: 08.09.2021  _old
-                Курсор_ВычисляемПУбличныйID=new BinessLogicsAllPublics(getContext()).КурсорУниверсальныйБазыДанных("SELECT id FROM SuccessLogin LIMIT 1 ");
+                Курсор_ВычисляемПУбличныйID=new CoreBinessLogic(getContext()).КурсорУниверсальныйБазыДанных("SELECT id FROM SuccessLogin LIMIT 1 ");
                 /////
 */
                 // TODO: 08.09.2021 resultat

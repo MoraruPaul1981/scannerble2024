@@ -39,7 +39,7 @@ import androidx.cursoradapter.widget.SimpleCursorAdapter;
 import androidx.loader.content.AsyncTaskLoader;
 
 
-import com.dsy.dsu.BusinessLogicAll.BinessLogicsAllPublics;
+import com.dsy.dsu.BusinessLogicAll.CoreBinessLogic;
 import com.dsy.dsu.BusinessLogicAll.Class_GRUD_SQL_Operations;
 import com.dsy.dsu.BusinessLogicAll.GetPublicID.GetPublicID;
 import com.dsy.dsu.BusinessLogicAll.DATE.Class_Generation_Data;
@@ -1103,7 +1103,7 @@ while(iterator.hasNext()){
             //    АдаптерВставкиНовгоТабеля.  putNull("_id");
 
                 // TODO: 14.12.2022  само создание нового табеля 
-            long   РезультатВставкиНовогоТабеляЧерезКонтрейнер = new BinessLogicsAllPublics(Контекст).
+            long   РезультатВставкиНовогоТабеляЧерезКонтрейнер = new CoreBinessLogic(Контекст).
                             ВставкаДанныхЧерезКонтейнерТолькоПриСозданииНовогоСотрудникаУниверсальная("tabel",
                                     АдаптерВставкиНовгоТабеля );
 
