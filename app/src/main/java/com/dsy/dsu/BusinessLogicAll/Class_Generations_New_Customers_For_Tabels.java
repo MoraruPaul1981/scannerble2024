@@ -20,18 +20,14 @@ public class Class_Generations_New_Customers_For_Tabels {
 
     Context context;
     ///
-    private SQLiteDatabase sqLiteDatabase ;
+
 
     public Class_Generations_New_Customers_For_Tabels(Context context) {
-
         this.context =context;
-
-        // TODO: 16.04.2025
-        sqLiteDatabase = EntryPoints.get(context, AppModuleSQLlite.class).getAppModuleSQLlite();
         Log.d(context.getClass().getName(), "\n"
                 + " время: " + new Date() + "\n+" +
                 " Класс в процессе... " + this.getClass().getName() + "\n" +
-                " метод в процессе... " + Thread.currentThread().getStackTrace()[2].getMethodName() + " sqLiteDatabase " +sqLiteDatabase);
+                " метод в процессе... " + Thread.currentThread().getStackTrace()[2].getMethodName()  );
     }
 
 
@@ -41,8 +37,7 @@ public class Class_Generations_New_Customers_For_Tabels {
     // TODO: 26.03.2021 финальная вствка данных новго сотружника
 
     public Integer МетодЗаписиСозданогоСотрудникаВБазуПоТаблицы_ФИО(ContentValues АдаптерДляСозданиеНовогоСотрудаТАблицаФИО,
-                                                                    Activity activity,
-                                                                    SQLiteDatabase sqLiteDatabase) {
+                                                                    Activity activity) {
         ///todo САМА ВСТВКА ТАБЛИЦА ФИО
         Integer getcreatingAnewEmployee = 0;
         try {

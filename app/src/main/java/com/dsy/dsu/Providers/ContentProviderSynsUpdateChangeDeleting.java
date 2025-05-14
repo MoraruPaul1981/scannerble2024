@@ -79,9 +79,7 @@ public class ContentProviderSynsUpdateChangeDeleting extends ContentProvider {
     @Override
     public boolean onCreate() {
         try {
-            // TODO: 02.09.2023  CREATE get SQLITE
-            // TODO: 02.09.2023  CREATE get SQLITE
-// TODO: 13.05.2025 ПРОВАЙДЕР   ContentProviderForAdminissionMaterial
+            // TODO: 13.05.2025 ПРОВАЙДЕР
             sqlite = EntryPoints.get(getContext(), AppModuleSQLlite.class).getAppModuleSQLlite();
 
             preferences =getContext(). getSharedPreferences("sharedPreferencesХранилище", Context.MODE_MULTI_PROCESS);

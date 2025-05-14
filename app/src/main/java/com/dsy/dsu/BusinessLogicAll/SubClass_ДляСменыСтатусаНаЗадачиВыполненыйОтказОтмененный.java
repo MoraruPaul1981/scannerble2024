@@ -18,7 +18,6 @@ import dagger.hilt.EntryPoints;
 
 public class SubClass_ДляСменыСтатусаНаЗадачиВыполненыйОтказОтмененный {
     // TODO: 07.02.2022
-    private SQLiteDatabase sqLiteDatabase ;
     public Boolean МетодСменыСтатусаНаОзкомленныйЗадениеСамимПользователем(
             @NonNull Context context,
    @NonNull Long UUID_ПоКоторомуМыИИщменимСтатусОзнакомлнныйВТаблицыУведомления,
@@ -27,13 +26,10 @@ public class SubClass_ДляСменыСтатусаНаЗадачиВыполн
         // TODO: 07.02.2022
         Boolean РезультатСменыСтатусаНАОзнакомленый = false;
         try {
-
-            // TODO: 16.04.2025
-            sqLiteDatabase = EntryPoints.get(context, AppModuleSQLlite.class).getAppModuleSQLlite();
             Log.d(context.getClass().getName(), "\n"
                     + " время: " + new Date() + "\n+" +
                     " Класс в процессе... " + this.getClass().getName() + "\n" +
-                    " метод в процессе... " + Thread.currentThread().getStackTrace()[2].getMethodName() + " sqLiteDatabase " +sqLiteDatabase);
+                    " метод в процессе... " + Thread.currentThread().getStackTrace()[2].getMethodName() );
 
 
             Log.d(context.getClass().getName(), "ПримечанияОтКлинетаВыполнилИлиНетЗадачу "

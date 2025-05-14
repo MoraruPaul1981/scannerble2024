@@ -107,8 +107,7 @@ public class MainActivity_New_People extends AppCompatActivity implements DatePi
     private  LinkedHashMap<String,Integer> ЛистДляАдаптераСпинерОрганизацияСамоЗначениеIDДляЗаписи;
     private   Activity activity;
 
-   @Inject
-    protected SQLiteDatabase sqLiteDatabase ;
+
     private Context КонтекстДляАктивтиСозданиеНовогоСотрудника;
     private  Spinner СпинерВыборОрганизацииПриСозданииНовогоСотрудника;/////спинеры для создание табеля
     private    String ПолученноеТекущееЗначениеСпинераОрганизация;
@@ -134,12 +133,11 @@ public class MainActivity_New_People extends AppCompatActivity implements DatePi
 
         Log.d(this.getClass().getName(), " constraintLayout   "+constraintLayout);
 ///////TODO
-            // TODO: 16.04.2025
-            sqLiteDatabase = EntryPoints.get(context, AppModuleSQLlite.class).getAppModuleSQLlite();
+
             Log.d(getApplicationContext().getClass().getName(), "\n"
                     + " время: " + new Date() + "\n+" +
                     " Класс в процессе... " + this.getClass().getName() + "\n" +
-                    " метод в процессе... " + Thread.currentThread().getStackTrace()[2].getMethodName() + " sqLiteDatabase " +sqLiteDatabase);
+                    " метод в процессе... " + Thread.currentThread().getStackTrace()[2].getMethodName() );
 
         activity=this;
         ////
@@ -1102,7 +1100,7 @@ private void МетодВозврещениеНаПредыдущуюАктив�
                 SQLiteCursor     Курсор_ИщемЕслиТАкойСнилсУже = (SQLiteCursor) class_grud_sql_operationsИщемВТАблицеФИОНЕтЛИСлучайноТАковожеСотрудника.
                         new GetData(getApplicationContext()).getdata(class_grud_sql_operationsИщемВТАблицеФИОНЕтЛИСлучайноТАковожеСотрудника.
                                 concurrentHashMapНабор,
-                        Class_Engine_SQLГдеНаходитьсяМенеджерПотоков.МенеджерПотоков, sqLiteDatabase);
+                        Class_Engine_SQLГдеНаходитьсяМенеджерПотоков.МенеджерПотоков);
                 Log.d(this.getClass().getName(), "Курсор_ИщемЕслиТАкойСнилсУже " + Курсор_ИщемЕслиТАкойСнилсУже);
                 // TODO: 01.11.2021
                 if( Курсор_ИщемЕслиТАкойСнилсУже.getCount()==0){

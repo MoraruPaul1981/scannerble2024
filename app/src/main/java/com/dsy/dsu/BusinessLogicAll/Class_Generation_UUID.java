@@ -25,16 +25,13 @@ public class Class_Generation_UUID {
  private    Context context;
     private  Integer ПубличныйID =0;
 
-    private SQLiteDatabase sqLiteDatabase ;
+
     public Class_Generation_UUID(Context context) {
         this.context = context;
-///////TODO
-        // TODO: 16.04.2025
-        sqLiteDatabase = EntryPoints.get(context, AppModuleSQLlite.class).getAppModuleSQLlite();
         Log.d(context.getClass().getName(), "\n"
                 + " время: " + new Date() + "\n+" +
                 " Класс в процессе... " + this.getClass().getName() + "\n" +
-                " метод в процессе... " + Thread.currentThread().getStackTrace()[2].getMethodName() + " sqLiteDatabase " +sqLiteDatabase);
+                " метод в процессе... " + Thread.currentThread().getStackTrace()[2].getMethodName());
     }
     public Long МетодГенерацииUUID() {
         Long UUID = 0l;

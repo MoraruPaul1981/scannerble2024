@@ -72,7 +72,7 @@ public class Class_GRUD_SQL_Operations {
         }
         // TODO: 30.08.2021  НИЖЕ  УКАЗАНЫ ВСЕ МЕТОДЫ ПОЛУЧЕНИЕ ОБНОВЛЕНИЯ ВСТАВКИ УДАЛЕНИЕ ДАННЫХ
         // TODO: 27.08.2021 МЕТОД  ПОЛУЧЕНИЯ ДАННЫХ
-        public Object getdata(Map<String, Object> concurrentHashMap, CompletionService МенеджерПотоков, SQLiteDatabase getБазаДанныхДЛяОперацийВнутри) throws ExecutionException, InterruptedException {
+        public Object getdata(Map<String, Object> concurrentHashMap, CompletionService МенеджерПотоков) throws ExecutionException, InterruptedException {
             Object Getdata=null;
         ЛистДляGRUDопераций=new Callable<Object>() {
                 @Override
@@ -323,8 +323,7 @@ Context context;
 
         // TODO: 27.08.2021 МЕТОД  ВСТАВКИ ДАННЫХ
         public Object insertdata(Map<String, Object> concurrentHashMap, ContentValues contentValuesВставкаДанных,
-                                 CompletionService МенеджерПотоков,
-                                 SQLiteDatabase getБазаДанныхДЛяОперацийВнутри) throws ExecutionException, InterruptedException {
+                                 CompletionService МенеджерПотоков) throws ExecutionException, InterruptedException {
             Object InsertData = null;
             try {
                 ЛистДляGRUDопераций = new Callable<Object>() {
@@ -396,8 +395,7 @@ Context context;
         // TODO: 27.08.2021 МЕТОД  ВСТАВКИ ДАННЫХ
         Object insertdataContentResolver(Map<String,Object> concurrentHashMap,
                                          ContentValues[] contentValuesВставкаДанных ,
-                          CompletionService МенеджерПотоков,
-                          SQLiteDatabase getБазаДанныхДЛяОперацийВнутри) throws ExecutionException, InterruptedException {
+                          CompletionService МенеджерПотоков) throws ExecutionException, InterruptedException {
             Object InsertData=null;
             try {
                 ЛистДляGRUDопераций = new Callable<Object>() {
@@ -473,7 +471,7 @@ Context context;
 
 
         // TODO: 27.08.2021 МЕТОД  ПОЛУЧЕНИЯ ДАННЫХ
-        public Object updatedata(Map<String, Object> concurrentHashMap, ContentValues contentValuesДляОбновленияДАнных, CompletionService МенеджерПотоков, SQLiteDatabase getБазаДанныхДЛяОперацийВнутри) throws ExecutionException, InterruptedException {
+        public Object updatedata(Map<String, Object> concurrentHashMap, ContentValues contentValuesДляОбновленияДАнных, CompletionService МенеджерПотоков) throws ExecutionException, InterruptedException {
             ///////////
             Object Updatedata=null;
             //////// TODO запуск менеджера потоков
@@ -660,7 +658,7 @@ Context context;
             SQLBuilder_Для_GRUD_Операций = new SQLiteQueryBuilder();
         }
         // TODO: 27.08.2021 МЕТОД  ПОЛУЧЕНИЯ ДАННЫХ
-        public Object sleepdata(Map<String, Object> concurrentHashMap, ContentValues contentValuesДляСнаДанных, CompletionService МенеджерПотоков, SQLiteDatabase getБазаДанныхДЛяОперацийВнутри) throws ExecutionException, InterruptedException {
+        public Object sleepdata(Map<String, Object> concurrentHashMap, ContentValues contentValuesДляСнаДанных, CompletionService МенеджерПотоков) throws ExecutionException, InterruptedException {
             Object Sleepdata = null;
             try {
                 ЛистДляGRUDопераций = new Callable<Object>() {
@@ -744,8 +742,7 @@ Context context;
 
         // TODO: 27.08.2021 МЕТОД  ПОЛУЧЕНИЯ ДАННЫХ
         public Object deletedata(Map<String, Object> concurrentHashMap
-                , CompletionService МенеджерПотоков,
-                                 SQLiteDatabase getБазаДанныхДЛяОперацийВнутри) throws ExecutionException, InterruptedException {
+                , CompletionService МенеджерПотоков) throws ExecutionException, InterruptedException {
             /////
             Object Deletedata = null;
             //////// TODO запуск менеджера потоков
@@ -975,8 +972,7 @@ Context context;
 
         // TODO: 27.08.2021 МЕТОД  ПОЛУЧЕНИЯ ДАННЫХ
         Object deletedataAlltable(Map<String,Object> concurrentHashMap
-                ,CompletionService МенеджерПотоков,
-                          SQLiteDatabase getБазаДанныхДЛяОперацийВнутри) throws ExecutionException, InterruptedException {
+                ,CompletionService МенеджерПотоков) throws ExecutionException, InterruptedException {
             /////
             Object deletedataAlltable=null;
             //////// TODO запуск менеджера потоков
@@ -1207,8 +1203,7 @@ Context context;
         }
         // TODO: 27.08.2021 МЕТОД  ИЗМЕНЕНИЯ ПОВЫШЕНИЯ ВЕРСИИ ДЛЯ  ТЕКУЩЕЙ ТАБЛИЦЫ ТАБЛИЦЫ
         public Object changesvesiondata(Map<String, Object> concurrentHashMap,
-                                        CompletionService МенеджерПотоков,
-                                        SQLiteDatabase getБазаДанныхДЛяОперацийВнутри) throws ExecutionException, InterruptedException {
+                                        CompletionService МенеджерПотоков) throws ExecutionException, InterruptedException {
             ///////
             Object Changesvesiondata = null;
             //////// TODO запуск менеджера потоков
@@ -1503,7 +1498,7 @@ Context context;
         }
         // TODO: 30.08.2021  НИЖЕ  УКАЗАНЫ ВСЕ МЕТОДЫ ПОЛУЧЕНИЕ ОБНОВЛЕНИЯ ВСТАВКИ УДАЛЕНИЕ ДАННЫХ
         // TODO: 27.08.2021 МЕТОД  ПОЛУЧЕНИЯ ДАННЫХ
-        public Object getfreedata(Map<String, Object> concurrentHashMap, CompletionService МенеджерПотоков, SQLiteDatabase getБазаДанныхДЛяОперацийВнутри) throws ExecutionException, InterruptedException {
+        public Object getfreedata(Map<String, Object> concurrentHashMap, CompletionService МенеджерПотоков) throws ExecutionException, InterruptedException {
             ///////
             Object GetFreedata=null;
             //////// TODO запуск менеджера потоков

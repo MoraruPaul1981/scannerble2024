@@ -111,7 +111,7 @@ public class MainActivity_List_Tabels extends AppCompatActivity  {
     private   Context context;
 
     private   Button backFaceApp;
-    private SQLiteDatabase sqLiteDatabase ;
+
 
     private  TextView textViewКоличествоТабелей;
     private  FloatingActionButton КруглаяКнопкаСамТабель;
@@ -143,8 +143,7 @@ public class MainActivity_List_Tabels extends AppCompatActivity  {
 
     private   Cursor Курсор_ДанныеСпиннера;
 
-    @Inject
-    public   SQLiteDatabase getSqlLiteCoreApp;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -161,7 +160,7 @@ public class MainActivity_List_Tabels extends AppCompatActivity  {
             Log.d(context.getClass().getName(), "\n"
                     + " время: " + new Date() + "\n+" +
                     " Класс в процессе... " + this.getClass().getName() + "\n" +
-                    " метод в процессе... " + Thread.currentThread().getStackTrace()[2].getMethodName() + " sqLiteDatabase " +sqLiteDatabase);
+                    " метод в процессе... " + Thread.currentThread().getStackTrace()[2].getMethodName()  );
 
 
             Class_Engine_SQLГдеНаходитьсяМенеджерПотоков =new PUBLIC_CONTENT (getApplicationContext());
@@ -1052,7 +1051,7 @@ public class MainActivity_List_Tabels extends AppCompatActivity  {
                     Курсор_КоторыйЗагружаетГотовыеТабеляМаксимальнаяДатаДляСпинера= (SQLiteCursor) class_grud_sql_operationsДляАктивтиТабель.
                             new GetData(getApplicationContext()).getdata(class_grud_sql_operationsДляАктивтиТабель.
                                     concurrentHashMapНабор,
-                            Class_Engine_SQLГдеНаходитьсяМенеджерПотоков.МенеджерПотоков, sqLiteDatabase);
+                            Class_Engine_SQLГдеНаходитьсяМенеджерПотоков.МенеджерПотоков,  );
                     Log.d(this.getClass().getName(), "GetData " +Курсор_КоторыйЗагружаетГотовыеТабеляМаксимальнаяДатаДляСпинера );
                 } catch (Exception e) {
                     e.printStackTrace();

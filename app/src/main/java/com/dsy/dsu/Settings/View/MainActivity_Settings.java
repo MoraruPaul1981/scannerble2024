@@ -57,8 +57,7 @@ public class MainActivity_Settings extends AppCompatActivity {
      private      Map<String, String> ХэшДанныеИзБазыДляЗАполенияСпинеровыОрганизация = Collections.synchronizedMap(new LinkedHashMap<String, String>());
 
 
-     @Inject
-      SQLiteDatabase sqLiteDatabase ;
+
     private Spinner СпинерВыборОрганизации;
     private     Cursor Курсор_СамиДанные_Logins=null;
             private int ЕстьСтроки;
@@ -110,7 +109,7 @@ public class MainActivity_Settings extends AppCompatActivity {
             Log.d(context.getClass().getName(), "\n"
                     + " время: " + new Date() + "\n+" +
                     " Класс в процессе... " + this.getClass().getName() + "\n" +
-                    " метод в процессе... " + Thread.currentThread().getStackTrace()[2].getMethodName() + " sqLiteDatabase " +sqLiteDatabase);
+                    " метод в процессе... " + Thread.currentThread().getStackTrace()[2].getMethodName()  );
 
 
 

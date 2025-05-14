@@ -19,19 +19,15 @@ public class Class_Send_Generation_Errors {
     Context context;
     Activity activity;
     //
-    private SQLiteDatabase sqLiteDatabase ;
 
     public Class_Send_Generation_Errors(Context context, String СамаОшибка, Activity activityВнутри) {
-
         this.context =context;
-
         activity=   activityВнутри;
         // TODO: 16.04.2025
-        sqLiteDatabase = EntryPoints.get(context, AppModuleSQLlite.class).getAppModuleSQLlite();
         Log.d(context.getClass().getName(), "\n"
                 + " время: " + new Date() + "\n+" +
                 " Класс в процессе... " + this.getClass().getName() + "\n" +
-                " метод в процессе... " + Thread.currentThread().getStackTrace()[2].getMethodName() + " sqLiteDatabase " +sqLiteDatabase);
+                " метод в процессе... " + Thread.currentThread().getStackTrace()[2].getMethodName() );
 
         StringBuffer БуферОшибкаПриПодключениекСерверуДляАунтификацииПользователяПриВходе=new StringBuffer(СамаОшибка);
 

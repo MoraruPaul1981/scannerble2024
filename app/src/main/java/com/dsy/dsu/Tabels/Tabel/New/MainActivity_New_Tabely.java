@@ -80,7 +80,6 @@ public class MainActivity_New_Tabely extends AppCompatActivity {
     private Button КнопкаСозданиеТабеля;
     private  Button КнопкаНазадПриСозданииНовогоТабеля;
     private  Context Контекст;
-    private SQLiteDatabase sqLiteDatabase ;
     private  PUBLIC_CONTENT Class_Engine_SQLГдеНаходитьсяМенеджерПотоков = null;
     private  Service_for_AdminissionMaterial.LocalBinderДляПолучениеМатериалов binderДляПолучениеМатериалов;
     private   Cursor CursorДляСпиноровЦФО;
@@ -119,12 +118,11 @@ public class MainActivity_New_Tabely extends AppCompatActivity {
             progressBar.setVisibility(View.VISIBLE);
 
             // TODO: 01.11.2022 методы до начало запуска
-            // TODO: 16.04.2025
-            sqLiteDatabase = EntryPoints.get(context, AppModuleSQLlite.class).getAppModuleSQLlite();
+
             Log.d(getApplicationContext().getClass().getName(), "\n"
                     + " время: " + new Date() + "\n+" +
                     " Класс в процессе... " + this.getClass().getName() + "\n" +
-                    " метод в процессе... " + Thread.currentThread().getStackTrace()[2].getMethodName() + " sqLiteDatabase " +sqLiteDatabase);
+                    " метод в процессе... " + Thread.currentThread().getStackTrace()[2].getMethodName()  );
 
 
 
@@ -412,7 +410,7 @@ public class MainActivity_New_Tabely extends AppCompatActivity {
                     new GetData(getApplicationContext()).getdata(class_grud_sql_operationsПроверяемЕслиТакойНазваниеТабеляВБазеУжеЕсть.
                             concurrentHashMapНабор,
                     МенеджерПотоковВнутри
-                    ,  sqLiteDatabase);
+                    ,   );
             Log.d(this.getClass().getName(), "GetData "  +Курсор_ПроверяемЕслиТакоеНазваниеТабеляУжеЕстьИлиНет);
         if (   Курсор_ПроверяемЕслиТакоеНазваниеТабеляУжеЕстьИлиНет.getCount() > 0) {
             Курсор_ПроверяемЕслиТакоеНазваниеТабеляУжеЕстьИлиНет.close();

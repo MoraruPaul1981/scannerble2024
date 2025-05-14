@@ -127,8 +127,7 @@ public class DashboardFragmentSettings extends  DialogFragment {
     @QualifierJbossServer3
     public LinkedHashMap<Integer,String> getHiltPortJboss;
 
-    @Inject
-    protected SQLiteDatabase getsqLiteDatabase;
+
 
     // TODO: Rename and change types and number of parameters
     public static DashboardFragmentSettings newInstance( ) {

@@ -119,8 +119,7 @@ import io.reactivex.rxjava3.schedulers.Schedulers;
 @AndroidEntryPoint
 public class FragmentSingleTabelOneSwipe extends Fragment {
 
-    @Inject
-    SQLiteDatabase sqLiteDatabaseSingle;
+
     private MaterialTextView spinnerchasy,spinnermesazyear,spinnerdepartament;/////спинеры для создание табеля
     private    String Профессия;
     private  Integer DigitalNameCFO=0;

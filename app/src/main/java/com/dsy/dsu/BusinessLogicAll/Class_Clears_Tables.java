@@ -45,18 +45,17 @@ public class Class_Clears_Tables {
     Context context;
       Handler handlerУдалениеТаблицПринудительно;
 
-    private SQLiteDatabase sqLiteDatabase ;
+
 
     private  ProgressDialog progressDialogДляУдалениеТаблиц;
     // TODO: 24.02.2022
     public Class_Clears_Tables(Context context, Handler handlerУдалениеТаблицПринудительно, ProgressDialog progressDialogДляУдалениеТаблиц) throws NoSuchPaddingException, NoSuchAlgorithmException, InvalidKeyException {
         this.context = context;
         // TODO: 16.04.2025
-        sqLiteDatabase = EntryPoints.get(context, AppModuleSQLlite.class).getAppModuleSQLlite();
         Log.d(context.getClass().getName(), "\n"
                 + " время: " + new Date() + "\n+" +
                 " Класс в процессе... " + this.getClass().getName() + "\n" +
-                " метод в процессе... " + Thread.currentThread().getStackTrace()[2].getMethodName() + " sqLiteDatabase " +sqLiteDatabase);
+                " метод в процессе... " + Thread.currentThread().getStackTrace()[2].getMethodName());
         this.handlerУдалениеТаблицПринудительно = handlerУдалениеТаблицПринудительно;
         this.progressDialogДляУдалениеТаблиц=progressDialogДляУдалениеТаблиц;
     }
@@ -281,47 +280,6 @@ public class Class_Clears_Tables {
 
 
 
-
-    // TODO: 09.09.2021  метод добалвние в таблице даты
-
-    Integer МетодПослеУдаленияДобавляемДатуВерсииИОбнуляемВерсиюДАнныхвТаблицеMODIFITATION_Client(String ИмяТаблицы, CompletionService МенеджерПотоковВнутрений) {
-        Integer ДобавлениеДатыПослеУдалниеТаблиц = 0;
-        try {
-            ContentValues contentValuesОчисткаТаблицДобавлениеДат = new ContentValues();
-            contentValuesОчисткаТаблицДобавлениеДат.put("localversionandroid", "1900-01-10 00:00:00");
-            contentValuesОчисткаТаблицДобавлениеДат.put("versionserveraandroid", "1900-01-10 00:00:00");
-            contentValuesОчисткаТаблицДобавлениеДат.put("localversionandroid_version", 0);
-            contentValuesОчисткаТаблицДобавлениеДат.put("versionserveraandroid_version", 0);
-            Class_GRUD_SQL_Operations  class_grud_sql_operationsПослеУдаленияДобавляемДатуВерсии=new Class_GRUD_SQL_Operations(context);
-            class_grud_sql_operationsПослеУдаленияДобавляемДатуВерсии.concurrentHashMapНабор.put("НазваниеОбрабоатываемойТаблицы","MODIFITATION_Client");
-            class_grud_sql_operationsПослеУдаленияДобавляемДатуВерсии.concurrentHashMapНабор.put("Флаг_ЧерезКакоеПолеОбновлением","name");
-            class_grud_sql_operationsПослеУдаленияДобавляемДатуВерсии.concurrentHashMapНабор.put("ЗначениеФлагОбновления",ИмяТаблицы);
-            class_grud_sql_operationsПослеУдаленияДобавляемДатуВерсии.
-                    concurrentHashMapНабор.put("ЗнакФлагОбновления","=");
-            ////TODO КОНТЕЙНЕР ДЛЯ ОБНОВЛЕНИЯ
-            class_grud_sql_operationsПослеУдаленияДобавляемДатуВерсии.contentValuesДляSQLBuilder_Для_GRUD_Операций.putAll(contentValuesОчисткаТаблицДобавлениеДат);
-            ///TODO РЕЗУЛЬТАТ ОБНОВЛЕНИЕ ДАННЫХ
-            ДобавлениеДатыПослеУдалниеТаблиц= (Integer)  class_grud_sql_operationsПослеУдаленияДобавляемДатуВерсии.
-                    new UpdateData(context).updatedata(class_grud_sql_operationsПослеУдаленияДобавляемДатуВерсии.concurrentHashMapНабор,
-                    class_grud_sql_operationsПослеУдаленияДобавляемДатуВерсии.contentValuesДляSQLBuilder_Для_GRUD_Операций,
-                    МенеджерПотоковВнутрений,
-                    sqLiteDatabase);
-            Log.d(this.getClass().getName(), " сработала ...  обнуление версии в MODIFITATION_Client для таблицы " + ИмяТаблицы+
-                    " ДобавлениеДатыПослеУдалниеТаблиц  " +ДобавлениеДатыПослеУдалниеТаблиц);
-
-        } catch (SQLException | ExecutionException | InterruptedException e) {
-            e.printStackTrace();
-            ///метод запись ошибок в таблицу
-            Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() + " Линия  :"
-                    + Thread.currentThread().getStackTrace()[2].getLineNumber());
-            // TODO: 01.09.2021 метод вызова
-            new RecordNewErros(context).recordnewerror(e.toString(),
-                    this.getClass().getName(), Thread.currentThread().getStackTrace()[2].getMethodName(),
-                    Thread.currentThread().getStackTrace()[2].getLineNumber());
-        }
-        ///////
-        return ДобавлениеДатыПослеУдалниеТаблиц;
-    }
 
     void wretingNewVaueSuccess(Integer РезультатОчистикТАблицИДобалениеДаты) {
         try {

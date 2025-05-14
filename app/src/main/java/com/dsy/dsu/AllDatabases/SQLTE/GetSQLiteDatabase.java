@@ -1341,20 +1341,8 @@ public class GetSQLiteDatabase extends SQLiteOpenHelper{ ///SQLiteOpenHelper
         }
     }
 
-/*
-    public    SQLiteDatabase  getSqliteDatabase() {
-        System.out.printf("\n" + " class " +
-                Thread.currentThread().getStackTrace()[2].getClassName()
-                + "\n" +
-                " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"+
-                " sqliteDatabase.get() " + sqliteDatabase.get());
-        return sqliteDatabase.get();
-    }
-*/
 
-
-}// конец public class CREATE_DATABASE extends SQLiteOpenHelper
+}//TODO END CLASS
 
 
 

@@ -53,7 +53,6 @@ public class GetPingServerJboss implements  GetPingServer {
 
     @Override
     public Boolean pingServerJbossSuccessfulOrNot(@NotNull SSLSocketFactory getsslSocketFactory2,
-                                                  @NotNull SQLiteDatabase sqLiteDatabase,
                                                   @NotNull  LinkedHashMap<Integer,String> getHiltPortJboss) {
         Boolean результатПрозвонаСокетом = false;
         try {
@@ -137,15 +136,14 @@ public class GetPingServerJboss implements  GetPingServer {
 
     @Override
     public Long pingingJbossServer(@NonNull SSLSocketFactory getsslSocketFactory2,
-                                   Integer ИмяПорта, String ИмяСервера,
-                                   @NotNull SQLiteDatabase sqLiteDatabase) {
+                                   Integer ИмяПорта, String ИмяСервера) {
         // TODO: 12.01.2024
         Long  БуферПолучениеДанныхРЕальныйСтатусРАботыSQLServer =0l ;
         try{
             // TODO: 12.01.2024
             // TODO: 10.11.2022  пинг к сервера
             БуферПолучениеДанныхРЕальныйСтатусРАботыSQLServer =
-                    new Class_MODEL_synchronized(context,sqLiteDatabase).
+                    new Class_MODEL_synchronized(context).
                             МетодУниверсальногоПинга(new String(), "application/gzip",
                                     "Хотим Получить Статус Реальной Работы SQL SERVER"
                                     ,0l,

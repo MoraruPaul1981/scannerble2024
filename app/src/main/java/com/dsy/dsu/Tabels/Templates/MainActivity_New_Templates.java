@@ -117,7 +117,6 @@ public class MainActivity_New_Templates extends AppCompatActivity {
     protected View КонтентТабеляКоторыйМыИБудемЗаполнятьВнутриЦикла;
     private  LinkedHashMap<Integer, String> ХЭШНазваниеДнейНедели = new LinkedHashMap<>();
     private  int ПолученыеКоличествоСторочек = 0;
-    private SQLiteDatabase sqLiteDatabase ;
     private  String МесяцДляЗагрузкиТабелей = "";
     private  String ГодДляЗагрузкиТабелей = "";
     private  String ПубличноеIDЗагрузкиТабелей = "";
@@ -1387,7 +1386,7 @@ public class MainActivity_New_Templates extends AppCompatActivity {
 
                 Курсор_КоторыйВЫгружемНазваниеОрганизацииДляЭтогоСотркдникаТекущего= (SQLiteCursor)  class_grud_sql_operationsОрганизацииНепосрдственодляДанногоСОтрудника.
                         new GetData(getApplicationContext()).getdata(class_grud_sql_operationsОрганизацииНепосрдственодляДанногоСОтрудника.concurrentHashMapНабор,
-                        Class_Engine_SQLГдеНаходитьсяМенеджерПотоков.МенеджерПотоков,  sqLiteDatabase);
+                        Class_Engine_SQLГдеНаходитьсяМенеджерПотоков.МенеджерПотоков,   );
                 ///////
 
                 Log.d(this.getClass().getName(), "GetData "+Курсор_КоторыйВЫгружемНазваниеОрганизацииДляЭтогоСотркдникаТекущего  );
@@ -1505,7 +1504,7 @@ public class MainActivity_New_Templates extends AppCompatActivity {
             Cursor  Курсор_ИщемПроведенЛиТАбельИлиНЕт= (SQLiteCursor)  class_grud_sql_operations.
                     new GetData(getApplicationContext()).getdata(class_grud_sql_operations.
                             concurrentHashMapНабор,
-                    Class_Engine_SQLГдеНаходитьсяМенеджерПотоков.МенеджерПотоков,  sqLiteDatabase);
+                    Class_Engine_SQLГдеНаходитьсяМенеджерПотоков.МенеджерПотоков,   );
             Log.d(this.getClass().getName(), "GetData " +Курсор_ИщемПроведенЛиТАбельИлиНЕт );
             if(Курсор_ИщемПроведенЛиТАбельИлиНЕт.getCount()>0){
                 Курсор_ИщемПроведенЛиТАбельИлиНЕт.moveToFirst();

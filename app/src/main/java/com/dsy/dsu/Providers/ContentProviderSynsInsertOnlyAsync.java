@@ -71,7 +71,7 @@ public class ContentProviderSynsInsertOnlyAsync extends ContentProvider {
     @Override
     public boolean onCreate() {
         try {
-            // TODO: 02.09.2023  CREATE get SQLITE
+            // TODO: 13.05.2025 ПРОВАЙДЕР
             sqlite = EntryPoints.get(getContext(), AppModuleSQLlite.class).getAppModuleSQLlite();
 
             CopyOnWriteArrayList<String> getWorkerTablesALl=     EntryPoints.get(getContext(), HiltWorkerTableCoreApp.class).getWorkerTablesALl();

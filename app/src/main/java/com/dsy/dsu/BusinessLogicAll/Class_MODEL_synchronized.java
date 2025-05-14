@@ -79,7 +79,7 @@ import okio.BufferedSink;
     private  String ПубличноеПароль =   new String();
 
 
-    private SQLiteDatabase sqLiteDatabase ;
+
 
     private SharedPreferences preferencesJboss;
 
@@ -90,11 +90,11 @@ import okio.BufferedSink;
         //TODO контроль потоков
         Class_Engine_SQLГдеНаходитьсяМенеджерПотоков =new PUBLIC_CONTENT(context);
         // TODO: 16.04.2025
-        sqLiteDatabase = EntryPoints.get(context, AppModuleSQLlite.class).getAppModuleSQLlite();
+
         Log.d(context.getClass().getName(), "\n"
                 + " время: " + new Date() + "\n+" +
                 " Класс в процессе... " + this.getClass().getName() + "\n" +
-                " метод в процессе... " + Thread.currentThread().getStackTrace()[2].getMethodName() + " sqLiteDatabase " +sqLiteDatabase);
+                " метод в процессе... " + Thread.currentThread().getStackTrace()[2].getMethodName()  );
         // TODO: 06.10.2024
 
         preferencesJboss = context.getSharedPreferences("sharedPreferencesХранилище", Context.MODE_MULTI_PROCESS);
@@ -108,30 +108,7 @@ import okio.BufferedSink;
     }
 
     }
-    public Class_MODEL_synchronized(  @NotNull Context context,@NonNull SQLiteDatabase sqLiteDatabase) {
-        this. context=context;
-        try{
-            //TODO контроль потоков
-            Class_Engine_SQLГдеНаходитьсяМенеджерПотоков =new PUBLIC_CONTENT(context);
-            // TODO: 16.04.2025
-           this.sqLiteDatabase=sqLiteDatabase;
-            Log.d(context.getClass().getName(), "\n"
-                    + " время: " + new Date() + "\n+" +
-                    " Класс в процессе... " + this.getClass().getName() + "\n" +
-                    " метод в процессе... " + Thread.currentThread().getStackTrace()[2].getMethodName() + " sqLiteDatabase " +sqLiteDatabase);
-            // TODO: 06.10.2024
 
-            preferencesJboss = context.getSharedPreferences("sharedPreferencesХранилище", Context.MODE_MULTI_PROCESS);
-
-        } catch (Exception e) {
-            e.printStackTrace();
-            Log.e(this.getClass().getName(), "Ошибка " +e + " Метод :"+Thread.currentThread().getStackTrace()[2].getMethodName()
-                    + " Линия  :"+Thread.currentThread().getStackTrace()[2].getLineNumber());
-            new RecordNewErros(context).recordnewerror(e.toString(),  this.getClass().getName(), Thread.currentThread().getStackTrace()[2].getMethodName(),
-                    Thread.currentThread().getStackTrace()[2].getLineNumber());
-        }
-
-    }
 
     //todo #GET    //#GET    //#GET    //#GET    //#GET    //#GET    //#GET    //#GET    //#GET    //#GET    //#GET    //#GET    //#GET    //#GET    //#GET    //#GET    //#GET    //#GET    //#GET    //#GET    //#GET    //#GET    //#GET    //#GET    //#GET    //#GET    //#GET    //#GET
 
@@ -751,7 +728,7 @@ import okio.BufferedSink;
                                         Курсор_ПолучаемИмяСотрудникаИзТаблицыФИО = (SQLiteCursor) grudSqlOperations.
                                                 new GetаFreeData(context).getfreedata(grudSqlOperations.
                                                         concurrentHashMapНабор,
-                                                publicContent.МенеджерПотоков, sqLiteDatabase);
+                                                publicContent.МенеджерПотоков,  );
                                     } catch (ExecutionException e) {
                                         throw new RuntimeException(e);
                                     } catch (InterruptedException e) {
@@ -918,7 +895,7 @@ import okio.BufferedSink;
                                                             boolean СинхронизациюВизуализировать,
                                                             Context КонтекстСинхроДляКонтроллера,
                                                             @NotNull CompletionService МенеджерПотоков,
-                                                            @NotNull SQLiteDatabase getБазаДанныхДЛяОперацийВнутри,
+
                                                             Integer ИндексТекущейОперацииJSONДляВизуальнойОбработки)
             throws ExecutionException, InterruptedException, TimeoutException, NoSuchPaddingException, NoSuchAlgorithmException, InvalidKeyException {
         ///////////////////////////////////////////////////////////////
@@ -1040,7 +1017,7 @@ import okio.BufferedSink;
                                                                                 boolean СинхронизациюВизуализировать,
                                                                                 Context context,
                                                                                 @NotNull CompletionService МенеджерПотоков,
-                                                                                @NotNull SQLiteDatabase getБазаДанныхДЛяОперацийВнутри,
+
                                                                                 Integer СколькоСтрочекJSON,
                                                                                 Integer ИндексТекущейОперацииJSONДляВизуальнойОбработки)
             throws ExecutionException, InterruptedException, TimeoutException, NoSuchPaddingException, NoSuchAlgorithmException, InvalidKeyException {
@@ -1164,7 +1141,7 @@ import okio.BufferedSink;
                                                                   Context КонтекстСинхроДляКонтроллера,
                                                                   String ИндификаторЧерезЧегоОбнолвяемсяUUIDИлиID,
                                                                   CompletionService МенеджерПотоков,
-                                                                  SQLiteDatabase getБазаДанныхДЛяОперацийВнутри,
+
                                                                   Integer СколькоСтрочекJSON,
                                                                   Integer ИндексТекущейОперацииJSONДляВизуальнойОбработки)
             throws ExecutionException, InterruptedException, TimeoutException, NoSuchPaddingException, NoSuchAlgorithmException, InvalidKeyException {
@@ -1276,7 +1253,7 @@ import okio.BufferedSink;
                             new UpdateData(context).updatedata(class_grud_sql_operationsЛокальноеОбновление.concurrentHashMapНабор,
                             class_grud_sql_operationsЛокальноеОбновление.contentValuesДляSQLBuilder_Для_GRUD_Операций,
                             Class_Engine_SQLГдеНаходитьсяМенеджерПотоков.МенеджерПотоков,
-                            sqLiteDatabase);
+                             );
 
 
                     Log.d(this.getClass().getName(), "Результат_ЛокальногоОбновлениеДанных   " + Результат_ЛокальногоОбновлениеДанных);
@@ -1418,7 +1395,7 @@ import okio.BufferedSink;
                             new InsertData(context).insertdata(class_grud_sql_operationsВставкаЧата.concurrentHashMapНабор,
                             class_grud_sql_operationsВставкаЧата.contentValuesДляSQLBuilder_Для_GRUD_Операций,
                             Class_Engine_SQLГдеНаходитьсяМенеджерПотоков.МенеджерПотоков,
-                            sqLiteDatabase);
+                             );
 //
 
                     Log.d(this.getClass().getName(), "Результат_ВставкиДанныхПриСозданииНСообщенияДЛЯЧата   " + Результат_ВставкиДанныхПриСозданииНСообщенияДЛЯЧата);
@@ -1593,7 +1570,7 @@ import okio.BufferedSink;
                             new UpdateData(context).updatedata(class_grud_sql_operationsВставкаИлиОбвновлениеНовойОрганизации.concurrentHashMapНабор,
                             class_grud_sql_operationsВставкаИлиОбвновлениеНовойОрганизации.contentValuesДляSQLBuilder_Для_GRUD_Операций,
                             Class_Engine_SQLГдеНаходитьсяМенеджерПотоков.МенеджерПотоков,
-                            sqLiteDatabase);
+                             );
 
                 Log.d(this.getClass().getName(), "Результат_ОбновленияДанныхОрганизация   " + Результат_ОбновленияДанныхОрганизация);
 
@@ -1642,7 +1619,7 @@ import okio.BufferedSink;
                                 new InsertData(context).insertdata(class_grud_sql_operationsВставкаИлиОбвновлениеНовойОрганизации.concurrentHashMapНабор,
                                 class_grud_sql_operationsВставкаИлиОбвновлениеНовойОрганизации.contentValuesДляSQLBuilder_Для_GRUD_Операций ,
                                 Class_Engine_SQLГдеНаходитьсяМенеджерПотоков.МенеджерПотоков,
-                                sqLiteDatabase);
+                                 );
 
                         Log.d(this.getClass().getName(), "Результат_ВставкиДанныхОрганизация   " + Результат_ВставкиДанныхОрганизация);
 /*
@@ -1915,7 +1892,7 @@ Class_GRUD_SQL_Operations class_grud_sql_operationsОбвовлениеСозд�
                         new UpdateData(context).updatedata(class_grud_sql_operationsОбвовлениеСозданииНовогоСотрудника.concurrentHashMapНабор,
                         class_grud_sql_operationsОбвовлениеСозданииНовогоСотрудника.contentValuesДляSQLBuilder_Для_GRUD_Операций ,
                         Class_Engine_SQLГдеНаходитьсяМенеджерПотоков.МенеджерПотоков,
-                        sqLiteDatabase);
+                         );
 
                 Log.d(this.getClass().getName(), "Результат_ОбновлениеДанныхОбновлениеСозданииНового   " + Результат_ОбновлениеДанныхОбновлениеСозданииНового);
 /*
@@ -2027,7 +2004,7 @@ Class_GRUD_SQL_Operations class_grud_sql_operationsОбвовлениеСозд�
                         new InsertData(context).insertdata(class_grud_sql_operationsДляВставкиОшибок.concurrentHashMapНабор,
                         class_grud_sql_operationsДляВставкиОшибок.contentValuesДляSQLBuilder_Для_GRUD_Операций,
                         Class_Engine_SQLГдеНаходитьсяМенеджерПотоков.МенеджерПотоков,
-                        sqLiteDatabase);
+                         );
 
                 Log.d(this.getClass().getName(), "Результат_ВставкиДанныхДляЗаписиОшибки   " + Результат_ВставкиДанныхДляЗаписиОшибки);
               /*      ///////
@@ -2104,7 +2081,7 @@ Class_GRUD_SQL_Operations classGrudSqlOperationsУдалениеДанныхЧе
                         new UpdateData(context).updatedata(classGrudSqlOperationsУдалениеДанныхЧерезКонтейнерУниверсальная.
                                 concurrentHashMapНабор,
                         classGrudSqlOperationsУдалениеДанныхЧерезКонтейнерУниверсальная.contentValuesДляSQLBuilder_Для_GRUD_Операций,
-                        Class_Engine_SQLГдеНаходитьсяМенеджерПотоков.МенеджерПотоков, sqLiteDatabase);
+                        Class_Engine_SQLГдеНаходитьсяМенеджерПотоков.МенеджерПотоков,  );
                 Log.d(this.getClass().getName(), "Результат_УдалениеДанных " + Результат_УдалениеДанных);
                 } catch (Exception e) {///////ошибки
                     e.printStackTrace();
@@ -3170,7 +3147,7 @@ Class_GRUD_SQL_Operations classGrudSqlOperationsУдалениеДанныхЧе
                                 Курсор_ПолучаемИмяСотрудникаИзТаблицыФИО = (SQLiteCursor) grudSqlOperations.
                                         new GetаFreeData(context).getfreedata(grudSqlOperations.
                                                 concurrentHashMapНабор,
-                                        publicContent.МенеджерПотоков, sqLiteDatabase);
+                                        publicContent.МенеджерПотоков,  );
                             } catch (ExecutionException e) {
                                 throw new RuntimeException(e);
                             } catch (InterruptedException e) {
