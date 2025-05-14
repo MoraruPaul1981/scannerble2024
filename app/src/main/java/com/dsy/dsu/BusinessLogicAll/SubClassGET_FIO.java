@@ -3,16 +3,12 @@ package com.dsy.dsu.BusinessLogicAll;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteCursor;
-import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 
-import com.dsy.dsu.CnangeServers.PUBLIC_CONTENT;
+import com.dsy.dsu.CnangeServers.BinessLogicPublicContent;
 import com.dsy.dsu.Errors.WriteErrorForAll.RecordNewErros;
-import com.dsy.dsu.Hilt.Sqlitehilt.AppModuleSQLlite;
 
 import java.util.Date;
-
-import dagger.hilt.EntryPoints;
 
 
 public class SubClassGET_FIO {
@@ -33,7 +29,7 @@ public class SubClassGET_FIO {
         /////
         Class_GRUD_SQL_Operations class_grud_sql_operationsПолучениеФИОНАОснованииIDВыбранногоСотрудникаЧетвертаяЧасть;
 
-        PUBLIC_CONTENT Class_Engine_SQLГдеНаходитьсяМенеджерПотоков=new PUBLIC_CONTENT(context);
+        BinessLogicPublicContent Class_Engine_SQLГдеНаходитьсяМенеджерПотоков=new BinessLogicPublicContent(context);
 
         Log.d(context.getClass().getName(), "\n"
                 + " время: " + new Date() + "\n+" +

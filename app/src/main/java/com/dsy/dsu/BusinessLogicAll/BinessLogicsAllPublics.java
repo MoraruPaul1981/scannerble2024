@@ -7,7 +7,6 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteCursor;
-import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
 import android.os.Build;
 import android.util.Log;
@@ -24,12 +23,13 @@ import com.dsy.dsu.BusinessLogicAll.DATE.Class_Generation_Data;
 
 import com.dsy.dsu.BusinessLogicAll.DeviceName.ModulegetDeviceName;
 import com.dsy.dsu.BusinessLogicAll.GetPublicID.GetPublicID;
-import com.dsy.dsu.CnangeServers.PUBLIC_CONTENT;
+import com.dsy.dsu.CnangeServers.BinessLogicPublicContent;
 import com.dsy.dsu.Errors.WriteErrorForAll.RecordNewErros;
 import com.dsy.dsu.Hilt.JbossAdrress.getHiltPortJbossInterface;
 import com.dsy.dsu.Hilt.OkhhtpBuilder.GetAsyncOkHttpClientBuilder;
-import com.dsy.dsu.Hilt.Sqlitehilt.AppModuleSQLlite;
 import com.sous.backasync.launch.ModuleInserting;
+import com.sous.backasync.launch.ModuleQuety;
+import com.sous.backasync.launch.ModuleUpdating;
 
 import org.jetbrains.annotations.NotNull;
 import org.json.JSONObject;
@@ -37,8 +37,6 @@ import org.json.JSONObject;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
-import java.security.InvalidKeyException;
-import java.security.NoSuchAlgorithmException;
 import java.text.SimpleDateFormat;
 import java.time.YearMonth;
 import java.util.ArrayList;
@@ -48,14 +46,13 @@ import java.util.Date;
 import java.util.LinkedHashMap;
 import java.util.Locale;
 import java.util.Optional;
-import java.util.concurrent.CompletionService;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.TimeoutException;
+import java.util.concurrent.atomic.AtomicLong;
 import java.util.concurrent.atomic.AtomicReference;
 import java.util.zip.GZIPOutputStream;
 
-import javax.crypto.NoSuchPaddingException;
 import javax.net.ssl.SSLSocketFactory;
 
 import dagger.hilt.EntryPoints;
@@ -70,35 +67,30 @@ import okhttp3.RequestBody;
 import okhttp3.Response;
 import okio.BufferedSink;
 
-///////Универсальный Класс Обмена Данными  Два Стачичных Метода и Плюс Сттичный Курсор
- public class Class_MODEL_synchronized   {
+///////todo Универсальный Код Логики
+ public class BinessLogicsAllPublics {
   public     Context context;
-    private PUBLIC_CONTENT Class_Engine_SQLГдеНаходитьсяМенеджерПотоков =null;
-    private Class_MODEL_synchronized ссылка_MODELsynchronized = null;
+    private BinessLogicPublicContent binessLogicPublicContent =null;
+
     private String ПубличноеЛогин =      new String();
     private  String ПубличноеПароль =   new String();
-
-
-
-
     private SharedPreferences preferencesJboss;
 
 
-    public Class_MODEL_synchronized(  @NotNull Context context) {
+    public BinessLogicsAllPublics(@NotNull Context context) {
        this. context=context;
        try{
         //TODO контроль потоков
-        Class_Engine_SQLГдеНаходитьсяМенеджерПотоков =new PUBLIC_CONTENT(context);
+           binessLogicPublicContent =new BinessLogicPublicContent(context);
         // TODO: 16.04.2025
+           preferencesJboss = context.getSharedPreferences("sharedPreferencesХранилище", Context.MODE_MULTI_PROCESS);
+
 
         Log.d(context.getClass().getName(), "\n"
                 + " время: " + new Date() + "\n+" +
                 " Класс в процессе... " + this.getClass().getName() + "\n" +
                 " метод в процессе... " + Thread.currentThread().getStackTrace()[2].getMethodName()  );
         // TODO: 06.10.2024
-
-        preferencesJboss = context.getSharedPreferences("sharedPreferencesХранилище", Context.MODE_MULTI_PROCESS);
-
     } catch (Exception e) {
         e.printStackTrace();
         Log.e(this.getClass().getName(), "Ошибка " +e + " Метод :"+Thread.currentThread().getStackTrace()[2].getMethodName()
@@ -111,13 +103,6 @@ import okio.BufferedSink;
 
 
     //todo #GET    //#GET    //#GET    //#GET    //#GET    //#GET    //#GET    //#GET    //#GET    //#GET    //#GET    //#GET    //#GET    //#GET    //#GET    //#GET    //#GET    //#GET    //#GET    //#GET    //#GET    //#GET    //#GET    //#GET    //#GET    //#GET    //#GET    //#GET
-
-
-
-
-    // TODO: 04.08.2021 HEAD HEAD
-
-    ///МЕТОД ПОЛУЧЕНИЕ ДАННЫХ С СЕРВЕРА
     public StringBuffer МетодУниверсальныйСервернаяВерсияДанныхДанныесСервера(String ИмяТаблицы,
                                                                               String Тип,
                                                                               String JobForServer,
@@ -130,7 +115,7 @@ import okio.BufferedSink;
         final StringBuffer[] БуферСамиДанныеОтСервера = {new StringBuffer()};
         try {
             String enableSSl = preferencesJboss.getString("enablesll","http");
-            String СтрокаСвязиСсервером =enableSSl+"://"+ИмяСервера+":"+ИмяПорта+"/"+new PUBLIC_CONTENT(context).getСсылкаНаРежимСервераТабель();;
+            String СтрокаСвязиСсервером =enableSSl+"://"+ИмяСервера+":"+ИмяПорта+"/"+new BinessLogicPublicContent(context).getСсылкаНаРежимСервераТабель();;
             СтрокаСвязиСсервером = СтрокаСвязиСсервером.replace(" ", "%20");
             Log.d(this.getClass().getName(), "   СтрокаСвязиСсервером "+  СтрокаСвязиСсервером);
             String Params = "?" + "NameTable= " + ИмяТаблицы.trim() +
@@ -150,29 +135,25 @@ import okio.BufferedSink;
             OkHttpClient okHttpClientДанныеОтСервера = builderokhtttp.addInterceptor(new Interceptor() {
                         @Override
                         public Response intercept(Chain chain) throws IOException {
-                            Class_GRUD_SQL_Operations grudSqlOperations= new Class_GRUD_SQL_Operations(context);
-                            grudSqlOperations.concurrentHashMapНабор.put("СамFreeSQLКОд",
-                                    " SELECT success_users,success_login  FROM successlogin  ORDER BY date_update DESC ;");
-                            PUBLIC_CONTENT  classEngineSQLГдеНаходитьсяМенеджерПотоков =new PUBLIC_CONTENT (context);
-                            SQLiteCursor            Курсор_ПолучаемИмяСотрудникаИзТаблицыФИО= null;
-                            try {
-                                Курсор_ПолучаемИмяСотрудникаИзТаблицыФИО = (SQLiteCursor) grudSqlOperations.
-                                        new GetаFreeData(context).getfreedata(grudSqlOperations.
-                                                concurrentHashMapНабор,
-                                        classEngineSQLГдеНаходитьсяМенеджерПотоков.МенеджерПотоков,sqLiteDatabase);
-                            } catch (ExecutionException e) {
-                                throw new RuntimeException(e);
-                            } catch (InterruptedException e) {
-                                throw new RuntimeException(e);
-                            }
+                              // TODO: 14.05.2025
+                            String Текущаятаблицы="successlogin";
+                            // TODO: 14.05.2025  получение данных
+                            ModuleQuety moduleQuety=new ModuleQuety(context);
+                            Cursor Курсор_ПолучаемИмяСотрудникаИзТаблицыФИО   =moduleQuety.getModuleQueryForceLoad(Текущаятаблицы,
+                                    "  SELECT success_users,success_login  FROM "+Текущаятаблицы+"  ORDER BY date_update DESC " , null);
 
                             if(Курсор_ПолучаемИмяСотрудникаИзТаблицыФИО.getCount()>0){
                                 Курсор_ПолучаемИмяСотрудникаИзТаблицыФИО.moveToFirst();
                                 ПубличноеЛогин =         Курсор_ПолучаемИмяСотрудникаИзТаблицыФИО.getString(0).trim();
                                 ПубличноеПароль =           Курсор_ПолучаемИмяСотрудникаИзТаблицыФИО.getString(1).trim();
+
                             }
-                            Log.d(this.getClass().getName(), "  PUBLIC_CONTENT.ПубличноеИмяПользовательДлСервлета  " + ПубличноеЛогин +
-                                    " PUBLIC_CONTENT.ПубличноеПарольДлСервлета " + ПубличноеПароль);
+                            // TODO: 14.05.2025
+                            Курсор_ПолучаемИмяСотрудникаИзТаблицыФИО.close();
+                            Log.d(this.getClass().getName(), "\n"
+                                    + " время: " + new Date() + "\n+" +
+                                    " Класс в процессе... " + this.getClass().getName() + "\n" +
+                                    " метод в процессе... " + Thread.currentThread().getStackTrace()[2].getMethodName() + " ПубличноеЛогин " +ПубличноеЛогин + " ПубличноеПароль " +ПубличноеПароль);
 
                             // TODO: 18.02.2025 get name Device
                             String ANDROID_ID =new ModulegetDeviceName().getDeviceName(context);
@@ -207,9 +188,9 @@ import okio.BufferedSink;
                 @Override
                 public void onFailure(@NonNull Call call, @NonNull IOException e) {
                     Log.e(this.getClass().getName(), "  ERROR call  " + call + "  e" + e.toString());
-                    Log.e(Class_MODEL_synchronized.class.getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
+                    Log.e(BinessLogicsAllPublics.class.getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
                             " Линия  :" + Thread.currentThread().getStackTrace()[2].getLineNumber() + " ОшибкаТекущегоМетода " + e.getMessage());
-                    new RecordNewErros(context).recordnewerror(e.toString(), Class_MODEL_synchronized.class.getName(),
+                    new RecordNewErros(context).recordnewerror(e.toString(), BinessLogicsAllPublics.class.getName(),
                             Thread.currentThread().getStackTrace()[2].getMethodName(), Thread.currentThread().getStackTrace()[2].getLineNumber());
                     // TODO: 28.12.2024
                     // TODO: 31.05.2022
@@ -241,26 +222,7 @@ import okio.BufferedSink;
                                     " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "     БуферСамиДанныеОтСервера[0] " +    БуферСамиДанныеОтСервера[0]
                                     +  " РазмерПришедшегоПотока " + РазмерПришедшегоПотока);
 
-
-
-/*
-
-                            InputStream inputStreamОтПинга = new GZIPInputStream(response.body().source().inputStream(),2048);////4096
-                            // TODO: 07.10.2023 end
-                            BufferedReader РидерОтСервераМетодаGET;//
-                            if (КакаяКодировка==8) {
-                                РидерОтСервераМетодаGET = new BufferedReader(new InputStreamReader(inputStreamОтПинга, StandardCharsets.UTF_8));
-                            } else {
-                                РидерОтСервераМетодаGET = new BufferedReader(new InputStreamReader(inputStreamОтПинга, StandardCharsets.UTF_16));
-                            }
-                                БуферСамиДанныеОтСервера[0] = РидерОтСервераМетодаGET.lines().collect(StringBuffer::new, (sb, i) -> sb.append(i),
-                                        StringBuffer::append);
-                                Log.d(this.getClass().getName(), "БуферСамиДанныеОтСервера " + БуферСамиДанныеОтСервера[0] +  " РазмерПришедшегоПотока " +РазмерПришедшегоПотока);*/
-
-
                         }
-
-
 
                         Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                                 " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
@@ -290,9 +252,9 @@ import okio.BufferedSink;
                     !ОшибкаТекущегоМетода.toString().trim().trim().matches("(.*)java.net.sockettimeoutexception(.*)")
                     &&
                     !ОшибкаТекущегоМетода.toString().trim().matches("(.*)SocketTimeout(.*)")) {
-                Log.e(Class_MODEL_synchronized.class.getName(), "Ошибка " + ОшибкаТекущегоМетода + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
+                Log.e(BinessLogicsAllPublics.class.getName(), "Ошибка " + ОшибкаТекущегоМетода + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
                         " Линия  :" + Thread.currentThread().getStackTrace()[2].getLineNumber() + " ОшибкаТекущегоМетода " + ОшибкаТекущегоМетода.toString());
-                new RecordNewErros(context).recordnewerror(e.toString(), Class_MODEL_synchronized.class.getName(),
+                new RecordNewErros(context).recordnewerror(e.toString(), BinessLogicsAllPublics.class.getName(),
                         Thread.currentThread().getStackTrace()[2].getMethodName(), Thread.currentThread().getStackTrace()[2].getLineNumber());
             }
         }
@@ -315,7 +277,7 @@ import okio.BufferedSink;
         AtomicReference<byte[]>  inputStreamJaksonByte = new AtomicReference();
         try {
             String enableSSl = preferencesJboss.getString("enablesll","http");
-            String СтрокаСвязиСсервером =enableSSl+"://"+ИмяСервера+":"+ИмяПорта+"/"+new PUBLIC_CONTENT(context).getСсылкаНаРежимСервераТабель();;
+            String СтрокаСвязиСсервером =enableSSl+"://"+ИмяСервера+":"+ИмяПорта+"/"+new BinessLogicPublicContent(context).getСсылкаНаРежимСервераТабель();;
             СтрокаСвязиСсервером = СтрокаСвязиСсервером.replace(" ", "%20");
             Log.d(this.getClass().getName(), "   СтрокаСвязиСсервером "+  СтрокаСвязиСсервером);
             String Params = "?" + "NameTable= " + ИмяТаблицы.trim() +
@@ -334,33 +296,31 @@ import okio.BufferedSink;
             OkHttpClient.Builder builderokhtttp=   new GetAsyncOkHttpClientBuilder(context,getsslSocketFactory2).GetAsyncOkHttpClientBuilder(enableSSl);
 
 
-            OkHttpClient okHttpClientДанныеОтСервера = builderokhtttp.addInterceptor(new Interceptor() {
+            OkHttpClient okHttpClientДанныеОтСервера = builderokhtttp.addInterceptor(new Interceptor() {// " SELECT success_users,success_login  FROM successlogin  ORDER BY date_update DESC ;"
                         @Override
                         public Response intercept(Chain chain) throws IOException {
-                            Class_GRUD_SQL_Operations grudSqlOperations= new Class_GRUD_SQL_Operations(context);
-                            grudSqlOperations.concurrentHashMapНабор.put("СамFreeSQLКОд",
-                                    " SELECT success_users,success_login  FROM successlogin  ORDER BY date_update DESC ;");
-                            PUBLIC_CONTENT  classEngineSQLГдеНаходитьсяМенеджерПотоков =new PUBLIC_CONTENT (context);
-                            SQLiteCursor            Курсор_ПолучаемИмяСотрудникаИзТаблицыФИО= null;
-                            try {
-                                Курсор_ПолучаемИмяСотрудникаИзТаблицыФИО = (SQLiteCursor) grudSqlOperations.
-                                        new GetаFreeData(context).getfreedata(grudSqlOperations.
-                                                concurrentHashMapНабор,
-                                        classEngineSQLГдеНаходитьсяМенеджерПотоков.МенеджерПотоков,sqLiteDatabase);
-                            } catch (ExecutionException e) {
-                                throw new RuntimeException(e);
-                            } catch (InterruptedException e) {
-                                throw new RuntimeException(e);
-                            }
+                            // TODO: 14.05.2025
+
+
+                            // TODO: 14.05.2025
+                            String Текущаятаблицы="successlogin";
+                            // TODO: 14.05.2025  получение данных
+                            ModuleQuety moduleQuety=new ModuleQuety(context);
+                            Cursor Курсор_ПолучаемИмяСотрудникаИзТаблицыФИО   =moduleQuety.getModuleQueryForceLoad(Текущаятаблицы,
+                                    "  SELECT success_users,success_login  FROM "+Текущаятаблицы+"  ORDER BY date_update DESC " , null);
 
                             if(Курсор_ПолучаемИмяСотрудникаИзТаблицыФИО.getCount()>0){
                                 Курсор_ПолучаемИмяСотрудникаИзТаблицыФИО.moveToFirst();
                                 ПубличноеЛогин =         Курсор_ПолучаемИмяСотрудникаИзТаблицыФИО.getString(0).trim();
                                 ПубличноеПароль =           Курсор_ПолучаемИмяСотрудникаИзТаблицыФИО.getString(1).trim();
+
                             }
+                            // TODO: 14.05.2025
                             Курсор_ПолучаемИмяСотрудникаИзТаблицыФИО.close();
-                            Log.d(this.getClass().getName(), "  PUBLIC_CONTENT.ПубличноеИмяПользовательДлСервлета  " + ПубличноеЛогин +
-                                    " PUBLIC_CONTENT.ПубличноеПарольДлСервлета " + ПубличноеПароль);
+                            Log.d(this.getClass().getName(), "\n"
+                                    + " время: " + new Date() + "\n+" +
+                                    " Класс в процессе... " + this.getClass().getName() + "\n" +
+                                    " метод в процессе... " + Thread.currentThread().getStackTrace()[2].getMethodName() + " ПубличноеЛогин " +ПубличноеЛогин + " ПубличноеПароль " +ПубличноеПароль);
                             // TODO: 18.02.2025 get name Device
                             String ANDROID_ID =new ModulegetDeviceName().getDeviceName(context);
                             // TODO: 26.08.2021 НОВЫЙ ВЫЗОВ НОВОГО КЛАСС GRUD - ОПЕРАЦИИ
@@ -390,9 +350,9 @@ import okio.BufferedSink;
                 @Override
                 public void onFailure(@NonNull Call call, @NonNull IOException e) {
                     Log.e(this.getClass().getName(), "  ERROR call  " + call + "  e" + e.toString());
-                    Log.e(Class_MODEL_synchronized.class.getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
+                    Log.e(BinessLogicsAllPublics.class.getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
                             " Линия  :" + Thread.currentThread().getStackTrace()[2].getLineNumber() + " ОшибкаТекущегоМетода " + e.getMessage());
-                    new RecordNewErros(context).recordnewerror(e.toString(), Class_MODEL_synchronized.class.getName(),
+                    new RecordNewErros(context).recordnewerror(e.toString(), BinessLogicsAllPublics.class.getName(),
                             Thread.currentThread().getStackTrace()[2].getMethodName(), Thread.currentThread().getStackTrace()[2].getLineNumber());
                     // TODO: 31.05.2022
                     dispatcherДанныеОтСервера.executorService().shutdown();
@@ -410,10 +370,6 @@ import okio.BufferedSink;
                             Boolean ФлагgZIPOutputStream =Boolean.parseBoolean (  Optional.ofNullable(response.header("GZIPOutputStream")).map(String::new).orElse("false"));
                             if (РазмерПришедшегоПотока>0l) {
                                 // TODO: 07.10.2023  gzip
-                          /*      byte[] asByteBuffer=    response.body().source().readByteArray();
-                                // TODO: 25.09.2024
-                                inputStreamJaksonByte.set(new GZIPInputStream(ByteSource.wrap(asByteBuffer).openBufferedStream(),2048)); ;//4096*/
-
                                 // TODO: 07.04.2025  получаем STEAM  от сервера и обрабоатываем его для READER
                                 DownloadByte downloadByte=new DownloadByte();
                                 // TODO: 07.04.2025 обрабоатываем пршедщий файл
@@ -447,9 +403,9 @@ import okio.BufferedSink;
                     !ОшибкаТекущегоМетода.toString().trim().matches("(.*)java.net.sockettimeoutexception(.*)")
                     &&
                     !ОшибкаТекущегоМетода.toString().trim().matches("(.*)SocketTimeout(.*)")) {
-                Log.e(Class_MODEL_synchronized.class.getName(), "Ошибка " + ОшибкаТекущегоМетода + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
+                Log.e(BinessLogicsAllPublics.class.getName(), "Ошибка " + ОшибкаТекущегоМетода + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
                         " Линия  :" + Thread.currentThread().getStackTrace()[2].getLineNumber() + " ОшибкаТекущегоМетода " + ОшибкаТекущегоМетода.toString());
-                new RecordNewErros(context).recordnewerror(e.toString(), Class_MODEL_synchronized.class.getName(),
+                new RecordNewErros(context).recordnewerror(e.toString(), BinessLogicsAllPublics.class.getName(),
                         Thread.currentThread().getStackTrace()[2].getMethodName(), Thread.currentThread().getStackTrace()[2].getLineNumber());
             }
         }
@@ -483,11 +439,12 @@ import okio.BufferedSink;
                                             String ИмяСервера,
                                             Integer ИмяПорта,
                                          @NotNull SSLSocketFactory getsslSocketFactory2)  {
-        final Long[] РазмерПришедшегоПотока = {0l};
+        // TODO: 14.05.2025
+       AtomicLong РазмерПришедшегоПотока = new AtomicLong(0l);
         try {
             String enableSSl = preferencesJboss.getString("enablesll","http");
             StringBuffer БуферРезультатПингасСервером = null;
-            String СтрокаСвязиСсервером = enableSSl+"://" + ИмяСервера + ":" + ИмяПорта + "/"+ new PUBLIC_CONTENT(context).getСсылкаНаРежимСервераRuntime();
+            String СтрокаСвязиСсервером = enableSSl+"://" + ИмяСервера + ":" + ИмяПорта + "/"+ new BinessLogicPublicContent(context).getСсылкаНаРежимСервераRuntime();
             СтрокаСвязиСсервером = СтрокаСвязиСсервером.replace(" ", "%20");
             Log.d(this.getClass().getName(), "   СтрокаСвязиСсервером " + СтрокаСвязиСсервером);
             String Params  = "?" + "NameTable= " + NameTable.trim() +
@@ -500,44 +457,38 @@ import okio.BufferedSink;
             URL Adress = new URL(СтрокаСвязиСсервером);
             Log.d(this.getClass().getName(), " СтрокаСвязиСсервером " + СтрокаСвязиСсервером);
             // TODO: 11.03.2023 новый тест коде
-
             // TODO: 25.12.2024 Какой тип okhhtp подключить
-
-
             OkHttpClient.Builder builderokhtttp=   new GetAsyncOkHttpClientBuilder(context,getsslSocketFactory2).GetAsyncOkHttpClientBuilder(enableSSl);
 
             // TODO: 15.12.2023 end test
-            OkHttpClient okHttpClientПинг = builderokhtttp.addInterceptor(new Interceptor() {
+            OkHttpClient okHttpClientПинг = builderokhtttp.addInterceptor(new Interceptor() {///" SELECT success_users,success_login  FROM successlogin  ORDER BY date_update DESC ;"
                         @Override
                         public Response intercept(Chain chain) throws IOException {
-                            // TODO: 26.08.2021 НОВЫЙ ВЫЗОВ НОВОГО КЛАСС GRUD - ОПЕРАЦИИ
-                            Class_GRUD_SQL_Operations grudSqlOperations = new Class_GRUD_SQL_Operations(context);
-                            grudSqlOperations.concurrentHashMapНабор.put("СамFreeSQLКОд",
-                                    " SELECT success_users,success_login  FROM successlogin  ORDER BY date_update DESC ;");
-                            // TODO: 12.10.2021  Ссылка Менеджер Потоков
-                            PUBLIC_CONTENT publicContent = new PUBLIC_CONTENT(context);
-                            SQLiteCursor Курсор_ПолучаемИмяСотрудникаИзТаблицыФИО = null;
-                            try {
-                                Курсор_ПолучаемИмяСотрудникаИзТаблицыФИО = (SQLiteCursor) grudSqlOperations.
-                                        new GetаFreeData(context).getfreedata(grudSqlOperations.
-                                                concurrentHashMapНабор,
-                                        publicContent.МенеджерПотоков,sqLiteDatabase);
-                            } catch (ExecutionException e) {
-                                throw new RuntimeException(e);
-                            } catch (InterruptedException e) {
-                                throw new RuntimeException(e);
-                            }
-                            if (Курсор_ПолучаемИмяСотрудникаИзТаблицыФИО.getCount() > 0) {
-                                Курсор_ПолучаемИмяСотрудникаИзТаблицыФИО.moveToFirst();
-                                ПубличноеЛогин = Курсор_ПолучаемИмяСотрудникаИзТаблицыФИО.getString(0).trim();
-                                ПубличноеПароль = Курсор_ПолучаемИмяСотрудникаИзТаблицыФИО.getString(1).trim();
-                            }
-                            Курсор_ПолучаемИмяСотрудникаИзТаблицыФИО.close();
+                            // TODO: 14.05.2025
 
+                            // TODO: 14.05.2025
+                            String Текущаятаблицы="successlogin";
+                            // TODO: 14.05.2025  получение данных
+                            ModuleQuety moduleQuety=new ModuleQuety(context);
+                            Cursor Курсор_ПолучаемИмяСотрудникаИзТаблицыФИО   =moduleQuety.getModuleQueryForceLoad(Текущаятаблицы,
+                                    "  SELECT success_users,success_login  FROM "+Текущаятаблицы+"  ORDER BY date_update DESC " , null);
+
+                            if(Курсор_ПолучаемИмяСотрудникаИзТаблицыФИО.getCount()>0){
+                                Курсор_ПолучаемИмяСотрудникаИзТаблицыФИО.moveToFirst();
+                                ПубличноеЛогин =         Курсор_ПолучаемИмяСотрудникаИзТаблицыФИО.getString(0).trim();
+                                ПубличноеПароль =           Курсор_ПолучаемИмяСотрудникаИзТаблицыФИО.getString(1).trim();
+
+                            }
+                            // TODO: 14.05.2025
+                            Курсор_ПолучаемИмяСотрудникаИзТаблицыФИО.close();
+                            Log.d(this.getClass().getName(), "\n"
+                                    + " время: " + new Date() + "\n+" +
+                                    " Класс в процессе... " + this.getClass().getName() + "\n" +
+                                    " метод в процессе... " + Thread.currentThread().getStackTrace()[2].getMethodName() + " ПубличноеЛогин " +ПубличноеЛогин + " ПубличноеПароль " +ПубличноеПароль);
                             // TODO: 18.02.2025 get name Device
                             String ANDROID_ID =new ModulegetDeviceName().getDeviceName(context);
-                            Log.d(this.getClass().getName(), "  PUBLIC_CONTENT.ПубличноеИмяПользовательДлСервлета  " + ПубличноеЛогин +
-                                    " PUBLIC_CONTENT.ПубличноеПарольДлСервлета " + ПубличноеПароль);
+                            Log.d(this.getClass().getName(), "  BinessLogicPublicContent.ПубличноеИмяПользовательДлСервлета  " + ПубличноеЛогин +
+                                    " BinessLogicPublicContent.ПубличноеПарольДлСервлета " + ПубличноеПароль);
                             Request originalRequest = chain.request();
                             Request.Builder builder = originalRequest.newBuilder()
                                     .header("Content-Type", Тип + " ;charset=UTF-8")
@@ -563,9 +514,9 @@ import okio.BufferedSink;
                 @Override
                 public void onFailure(@NonNull Call call, @NonNull IOException e) {
                     Log.e(this.getClass().getName(), "  ERROR call  " + call + "  e" + e.toString());
-                    Log.e(Class_MODEL_synchronized.class.getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
+                    Log.e(BinessLogicsAllPublics.class.getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
                             " Линия  :" + Thread.currentThread().getStackTrace()[2].getLineNumber() + " ОшибкаТекущегоМетода " + e.getMessage());
-                    new RecordNewErros(context).recordnewerror(e.toString(), Class_MODEL_synchronized.class.getName(),
+                    new RecordNewErros(context).recordnewerror(e.toString(), BinessLogicsAllPublics.class.getName(),
                             Thread.currentThread().getStackTrace()[2].getMethodName(), Thread.currentThread().getStackTrace()[2].getLineNumber());
                     // TODO: 31.05.2022
                     dispatcherПинг.executorService().shutdown();
@@ -578,15 +529,13 @@ import okio.BufferedSink;
                     if (response.isSuccessful()) {
                         String  ПришедшегоПотока =    response.header("stream_size");
                         ПришедшегоПотока =     Optional.ofNullable(ПришедшегоПотока).map(String::valueOf).orElse("0");
-                        РазмерПришедшегоПотока[0] = Long.parseLong(ПришедшегоПотока  );
+                        // TODO: 14.05.2025
+                        РазмерПришедшегоПотока.getAndSet(Long.parseLong(ПришедшегоПотока  ));
                         // TODO: 29.09.2023
-
                         Integer КакаяКодировка = Integer.parseInt(   Optional.ofNullable(response.header("getcharsets")).map(String::new).orElse("0"));
                         Boolean ФлагgZIPOutputStream =Boolean.parseBoolean (  Optional.ofNullable(response.header("GZIPOutputStream")).map(String::new).orElse("false"));
                         StringBuffer БуферРезультатПингасСервером = null;
-                        if (РазмерПришедшегоПотока[0] >0l) {
-
-
+                        if (РазмерПришедшегоПотока.get() >0l) {
                             // TODO: 07.04.2025  получаем STEAM  от сервера и обрабоатываем его для READER
                             DownloadReader downloadReader=new DownloadReader();
                             // TODO: 07.04.2025 обрабоатываем пршедщий файл
@@ -595,14 +544,10 @@ import okio.BufferedSink;
                             Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                                     " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
                                     " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + " РидерОтСервераМетодаGET " +РидерОтСервераМетодаGET
-                                    +  " РазмерПришедшегоПотока[0] " + РазмерПришедшегоПотока[0]);
-
-
-
+                                    +  " РазмерПришедшегоПотока.get() " +РазмерПришедшегоПотока.get());
                         }
-                        Log.d(this.getClass().getName(), "БуферРезультатПингасСервером " + БуферРезультатПингасСервером +  " РазмерПришедшегоПотока[0] " + РазмерПришедшегоПотока[0]);
+                        Log.d(this.getClass().getName(), "БуферРезультатПингасСервером " + БуферРезультатПингасСервером +  " РазмерПришедшегоПотока.get()" + РазмерПришедшегоПотока.get());
                     }
-
                         // TODO: 28.12.2024 closeting
                         response.close();
                         // TODO: 31.05.2022
@@ -618,8 +563,6 @@ import okio.BufferedSink;
                 }
             });
             dispatcherПинг.executorService().awaitTermination(1,TimeUnit.DAYS);
-
-            Log.i(context.getClass().getName(), "БуферРезультатПингасСервером" + БуферРезультатПингасСервером);
         } catch (IOException | InterruptedException ex) {
             ex.printStackTrace();
             String ОшибкаТекущегоМетода = ex.toString();
@@ -628,62 +571,14 @@ import okio.BufferedSink;
                     &&
                     !ОшибкаТекущегоМетода.toString().trim().matches("(.*)SocketTimeout(.*)")) {
 
-                Log.e(Class_MODEL_synchronized.class.getName(), "Ошибка " + ОшибкаТекущегоМетода + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
+                Log.e(BinessLogicsAllPublics.class.getName(), "Ошибка " + ОшибкаТекущегоМетода + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
                         " Линия  :" + Thread.currentThread().getStackTrace()[2].getLineNumber() + " ОшибкаТекущегоМетода " + ОшибкаТекущегоМетода.toString());
-                new RecordNewErros(context).recordnewerror(ex.toString(), Class_MODEL_synchronized.class.getName(),
+                new RecordNewErros(context).recordnewerror(ex.toString(), BinessLogicsAllPublics.class.getName(),
                         Thread.currentThread().getStackTrace()[2].getMethodName(), Thread.currentThread().getStackTrace()[2].getLineNumber());
             }
         }
-        return РазмерПришедшегоПотока[0];
+        return РазмерПришедшегоПотока.get();
     }
-
-
-////////////////////////////////16.15  новый метод ПИНГА
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 ///todo #POST///#POST///#POST///#POST///#POST///#POST///#POST///#POST///#POST///#POST///#POST///#POST///#POST///#POST///#POST///#POST///#POST///#POST///#POST///#POST///#POST///#POST///#POST///#POST///#POST///#POST///#POST///#POST///#POST///#POST///#POST///#POST///#POST///#POST
 
@@ -697,11 +592,11 @@ import okio.BufferedSink;
                                              @NonNull  Integer ИмяПорта,
                                              @NonNull SSLSocketFactory getsslSocketFactory2)  {
 
-        final StringBuffer[] БуферCallsBackОтСеврера = {new StringBuffer()};
+        AtomicReference<StringBuffer>  БуферCallsBackОтСеврера = new AtomicReference<>(new StringBuffer());
                 try {
                     String enableSSl = preferencesJboss.getString("enablesll","http");
                     // TODO: 12.03.2023  метод POST()
-                    String СтрокаСвязиСсервером =enableSSl+"://"+ИмяСервера+":"+ИмяПорта+"/"+new PUBLIC_CONTENT(context).getСсылкаНаРежимСервераТабель();
+                    String СтрокаСвязиСсервером =enableSSl+"://"+ИмяСервера+":"+ИмяПорта+"/"+new BinessLogicPublicContent(context).getСсылкаНаРежимСервераТабель();
                     СтрокаСвязиСсервером = СтрокаСвязиСсервером.replace(" ", "%20");
                     String Params = "?" + "NameTable=" + Таблица.trim() + "&"
                             + "IdUser=" + ID +
@@ -714,35 +609,32 @@ import okio.BufferedSink;
 
                     OkHttpClient.Builder builderokhtttp=   new GetAsyncOkHttpClientBuilder(context,getsslSocketFactory2).GetAsyncOkHttpClientBuilder(enableSSl);
 
-                    OkHttpClient okHttpClientОтправкиДанныхНаСервер =builderokhtttp.addInterceptor(new Interceptor() {
+                    OkHttpClient okHttpClientОтправкиДанныхНаСервер =builderokhtttp.addInterceptor(new Interceptor() {//" SELECT success_users,success_login  FROM successlogin  ORDER BY date_update DESC ;"
                                 @Override
                                 public Response intercept(Chain chain) throws IOException {
-                                    // TODO: 26.08.2021 НОВЫЙ ВЫЗОВ НОВОГО КЛАСС GRUD - ОПЕРАЦИИ
-                                    Class_GRUD_SQL_Operations grudSqlOperations = new Class_GRUD_SQL_Operations(context);
-                                    grudSqlOperations.concurrentHashMapНабор.put("СамFreeSQLКОд",
-                                            " SELECT success_users,success_login  FROM successlogin  ORDER BY date_update DESC ;");
-                                    // TODO: 12.10.2021  Ссылка Менеджер Потоков
-                                    PUBLIC_CONTENT publicContent = new PUBLIC_CONTENT(context);
-                                    SQLiteCursor Курсор_ПолучаемИмяСотрудникаИзТаблицыФИО = null;
-                                    try {
-                                        Курсор_ПолучаемИмяСотрудникаИзТаблицыФИО = (SQLiteCursor) grudSqlOperations.
-                                                new GetаFreeData(context).getfreedata(grudSqlOperations.
-                                                        concurrentHashMapНабор,
-                                                publicContent.МенеджерПотоков,  );
-                                    } catch (ExecutionException e) {
-                                        throw new RuntimeException(e);
-                                    } catch (InterruptedException e) {
-                                        throw new RuntimeException(e);
-                                    }
-                                    if (Курсор_ПолучаемИмяСотрудникаИзТаблицыФИО.getCount() > 0) {
+                                    // TODO: 14.05.2025
+                                    String Текущаятаблицы="successlogin";
+                                    // TODO: 14.05.2025  получение данных
+                                    ModuleQuety moduleQuety=new ModuleQuety(context);
+                                    Cursor Курсор_ПолучаемИмяСотрудникаИзТаблицыФИО   =moduleQuety.getModuleQueryForceLoad(Текущаятаблицы,
+                                            "  SELECT success_users,success_login  FROM "+Текущаятаблицы+"  ORDER BY date_update DESC " , null);
+
+                                    if(Курсор_ПолучаемИмяСотрудникаИзТаблицыФИО.getCount()>0){
                                         Курсор_ПолучаемИмяСотрудникаИзТаблицыФИО.moveToFirst();
-                                        ПубличноеЛогин = Курсор_ПолучаемИмяСотрудникаИзТаблицыФИО.getString(0).trim();
-                                        ПубличноеПароль = Курсор_ПолучаемИмяСотрудникаИзТаблицыФИО.getString(1).trim();
+                                        ПубличноеЛогин =         Курсор_ПолучаемИмяСотрудникаИзТаблицыФИО.getString(0).trim();
+                                        ПубличноеПароль =           Курсор_ПолучаемИмяСотрудникаИзТаблицыФИО.getString(1).trim();
+
                                     }
+                                    // TODO: 14.05.2025
+                                    Курсор_ПолучаемИмяСотрудникаИзТаблицыФИО.close();
+                                    Log.d(this.getClass().getName(), "\n"
+                                            + " время: " + new Date() + "\n+" +
+                                            " Класс в процессе... " + this.getClass().getName() + "\n" +
+                                            " метод в процессе... " + Thread.currentThread().getStackTrace()[2].getMethodName() + " ПубличноеЛогин " +ПубличноеЛогин + " ПубличноеПароль " +ПубличноеПароль);
                                     // TODO: 18.02.2025 get name Device
                                     String ANDROID_ID =new ModulegetDeviceName().getDeviceName(context);
-                                    Log.d(this.getClass().getName(), "  PUBLIC_CONTENT.ПубличноеИмяПользовательДлСервлета  " + ПубличноеЛогин +
-                                            " PUBLIC_CONTENT.ПубличноеПарольДлСервлета " + ПубличноеПароль);
+                                    Log.d(this.getClass().getName(), "  BinessLogicPublicContent.ПубличноеИмяПользовательДлСервлета  " + ПубличноеЛогин +
+                                            " BinessLogicPublicContent.ПубличноеПарольДлСервлета " + ПубличноеПароль);
                                     Request originalRequest = chain.request();
                                     Request.Builder builder = originalRequest.newBuilder()
                                             .header("Content-Type", "application/octet-stream ;charset=UTF-8")
@@ -764,13 +656,7 @@ import okio.BufferedSink;
                     Log.i(context.getClass().getName(), "ГенерацияJSONОтAndroid.toString()" + ГенерацияJSONОтAndroid.toString());
                     // MediaType JSON = MediaType.parse("application/json; charset=utf-16");
                       MediaType JSON = MediaType.parse("application/octet-stream; charset=utf-8");
-
-
-
-
-
                    // RequestBody body = RequestBody.create(JSON, СгенерированыйФайлJSONДляОтправкиНаСервер.toString());
-
                     RequestBody requestBody = new RequestBody() {
                         @Override
                         public MediaType contentType() {
@@ -812,9 +698,9 @@ import okio.BufferedSink;
                         @Override
                         public void onFailure(@NonNull Call call, @NonNull IOException e) {
                             Log.e(this.getClass().getName(), "  ERROR call  " + call + "  e" + e.toString());
-                            Log.e(Class_MODEL_synchronized.class.getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
+                            Log.e(BinessLogicsAllPublics.class.getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
                                     " Линия  :" + Thread.currentThread().getStackTrace()[2].getLineNumber() + " ОшибкаТекущегоМетода " + e.getMessage());
-                            new RecordNewErros(context).recordnewerror(e.toString(), Class_MODEL_synchronized.class.getName(),
+                            new RecordNewErros(context).recordnewerror(e.toString(), BinessLogicsAllPublics.class.getName(),
                                     Thread.currentThread().getStackTrace()[2].getMethodName(), Thread.currentThread().getStackTrace()[2].getLineNumber());
                             // TODO: 31.05.2022
                             dispatcherCallsBackСервера.executorService().shutdown();
@@ -834,19 +720,18 @@ import okio.BufferedSink;
                                     // TODO: 07.04.2025  получаем STEAM  от сервера и обрабоатываем его для READER
                                     DownloadReader downloadReader=new DownloadReader();
                                     // TODO: 07.04.2025 обрабоатываем пршедщий файл
-                                    // TODO: 07.04.2025 обрабоатываем пршедщий файл
-                                    БуферCallsBackОтСеврера[0] =downloadReader.downloadReader(context, new GetBinessLogicDownloadReader(),
-                                            response.body().bytes()) ;
+                                    БуферCallsBackОтСеврера.getAndSet(downloadReader.downloadReader(context, new GetBinessLogicDownloadReader(), response.body().bytes()) );
+                                    // TODO: 14.05.2025
                                     Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                                             " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                                            " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + " БуферCallsBackОтСеврера[0]  " +БуферCallsBackОтСеврера[0]
+                                            " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + " БуферCallsBackОтСеврера.get()  " +БуферCallsBackОтСеврера.get()
                                             +  " РазмерПришедшегоПотока" + РазмерПришедшегоПотока);
 
-                                        Log.d(this.getClass().getName(), " БуферCallsBackОтСеврера[0] " +  БуферCallsBackОтСеврера[0] +
+                                        Log.d(this.getClass().getName(), "БуферCallsBackОтСеврера.get() " + БуферCallsBackОтСеврера.get() +
                                                 " РазмерПришедшегоПотока " +РазмерПришедшегоПотока);
                                 }
 
-                                Log.d(this.getClass().getName(), " БуферCallsBackОтСеврера[0] " +  БуферCallsBackОтСеврера[0] +  " РазмерПришедшегоПотока " +РазмерПришедшегоПотока);
+                                Log.d(this.getClass().getName(), " БуферCallsBackОтСеврера.get()" +  БуферCallsBackОтСеврера.get() +  " РазмерПришедшегоПотока " +РазмерПришедшегоПотока);
 
                                 // TODO: 28.12.2024 closeting
                                 response.close();
@@ -864,8 +749,6 @@ import okio.BufferedSink;
                         }
                     });
                     dispatcherCallsBackСервера.executorService().awaitTermination(1, TimeUnit.DAYS);
-
-                    Log.i(context.getClass().getName(), "БуферCallsBackОтСеврера" + БуферCallsBackОтСеврера[0]);
                     // TODO: 12.03.2023  тест код конец
                 } catch (IOException | InterruptedException ex) {
                     ex.printStackTrace();
@@ -873,306 +756,75 @@ import okio.BufferedSink;
                     if (!ОшибкаТекущегоМетода.toString().trim().matches("(.*)java.io.EOFException(.*)") &&
                             !ОшибкаТекущегоМетода.toString().trim().matches("(.*)java.net.sockettimeoutexception(.*)") &&
                             !ОшибкаТекущегоМетода.toString().trim().matches("(.*)SocketTimeout(.*)")) {
-                        Log.e(Class_MODEL_synchronized.class.getName(), "Ошибка " + ex + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
+                        Log.e(BinessLogicsAllPublics.class.getName(), "Ошибка " + ex + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
                                 " Линия  :" + Thread.currentThread().getStackTrace()[2].getLineNumber());
-                        new RecordNewErros(context).recordnewerror(ex.toString(), Class_MODEL_synchronized.class.getName(),
+                        new RecordNewErros(context).recordnewerror(ex.toString(), BinessLogicsAllPublics.class.getName(),
                                 Thread.currentThread().getStackTrace()[2].getMethodName(), Thread.currentThread().getStackTrace()[2].getLineNumber());
                     }
                 }
-        return БуферCallsBackОтСеврера[0];
+        return БуферCallsBackОтСеврера.get();
     }
 
     ////--- TODO ТУТ НАХОДЯТЬСЯ КОНТЕРЙНЕРЫ ДЛЯ ВСТАВКИ И ОБНОВЛЕНИИ ДАННЫХ  ЧЕРЕЗ КОНТЕЙНЕРЫ
 
 
-    ///////// TODO УНИВЕРСАЛЬНЫЙ МЕТОД ВСТАВКИ ДАННЫХ
-    protected Long ВставкаДанныхЧерезКонтейнерУниверсальная(String ТаблицаКудаВставляем,
-                                                            ContentValues КонтейнерДляВставки,
-                                                            String ИмяТаблицыОтАндройда_Локальноая,
-                                                            String ПолученнаяДатаДляПониманияДатуСейчасВставляетьИлиНет,
-                                                            boolean ФлагОбновлятьДатуВерсииДанных,
-                                                            int ДляСинхронизацииОбщееКоличествоСколькоСтрочекJSON,
-                                                            boolean СинхронизациюВизуализировать,
-                                                            Context КонтекстСинхроДляКонтроллера,
-                                                            @NotNull CompletionService МенеджерПотоков,
-
-                                                            Integer ИндексТекущейОперацииJSONДляВизуальнойОбработки)
-            throws ExecutionException, InterruptedException, TimeoutException, NoSuchPaddingException, NoSuchAlgorithmException, InvalidKeyException {
-        ///////////////////////////////////////////////////////////////
-        ///////ПОПЫТКА ПОДКЛЮЧЧЕНИЕ К ИНТРЕНТУ
-        Long Результат_ВставкиДанных = 0l;
-        //
-        Integer Результат_ПриписиИзменнийВерсииДанных = 0;
-        //
-        Class_GRUD_SQL_Operations class_grud_sql_operationsВставка;
-        //
-        class_grud_sql_operationsВставка = new Class_GRUD_SQL_Operations(context);
-///
-
-/////
-        try {
-            //
-
-                try {
-
-                    // TODO: 06.09.2021 параметры для вствки
-                    class_grud_sql_operationsВставка.concurrentHashMapНабор.put("НазваниеОбрабоатываемойТаблицы",ТаблицаКудаВставляем);
-                    ////
 
 
 
-                    // TODO: 06.09.2021 контейнер для вставки
-                    class_grud_sql_operationsВставка.contentValuesДляSQLBuilder_Для_GRUD_Операций.putAll(КонтейнерДляВставки);
-
-
-                    ///TODO РЕЗУЛЬТА изменения версии данных
-                    Результат_ВставкиДанных= (Long)  class_grud_sql_operationsВставка.
-                            new InsertData(context).insertdata(class_grud_sql_operationsВставка.concurrentHashMapНабор,
-                            КонтейнерДляВставки,
-                            МенеджерПотоков,getБазаДанныхДЛяОперацийВнутри);
-
-                    Log.d(this.getClass().getName(), "Результат_ВставкиДанных   " + Результат_ВставкиДанных);
-//////////////////////todo old
-
-
-
-                    //////
-                    if (Результат_ВставкиДанных > 0) {
-                        ////успешная вставка данных
-                        ///TODO ПЕРОВЕ ТРАНЗАКЦИЯ ВСТАВКИ ДАННЫХ
-                        ///TODO ПЕРВАЯ ТРАНЗАКЦИЯ
-
-
-
-                        ///
-                        КонтейнерДляВставки.clear();
-                        ////
-                        Log.d(this.getClass().getName(), " Результат_ВставкиДанных   " + Результат_ВставкиДанных + "   PUBLIC_CONTENT.СколькоСтрочекJSONПоКонкретнойТаблице "
-                                +              ИндексТекущейОперацииJSONДляВизуальнойОбработки  );
-
-                        //метод анализируем стоит ли вставлять дату сейчас в таблицу модификацию версия данных локального
-                        ////////вторая часть операции после успешной вствки изменяем данные на дабоавляем дату в таблицу модификаци  клиент
-                        //////TODO ВАЖВАНО ПЕРВЫЙ ЗАПУСК БАЗЫ ВСЕГОДА FALSE ДЛЯ ПОНИМАНИЯ ЕСЛИ ЭТО НУЛЕВОЙ ЗАПУСК ТО НЕ НАДО В ТАБЛИЦУК МОДИФИКАФЕН КЛИЕНТ ВСТАЯЛТЬ ДАТУ СЕЙЧАС
-
-                    }
-
-
-
-                    /////
-                } catch (Exception e) {
-                    e.printStackTrace();
-                    ///метод запись ошибок в таблицу
-                    Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
-                            " Линия  :" + Thread.currentThread().getStackTrace()[2].getLineNumber());
-                    new RecordNewErros(context).recordnewerror(e.toString(), this.getClass().getName(),
-                            Thread.currentThread().getStackTrace()[2].getMethodName(), Thread.currentThread().getStackTrace()[2].getLineNumber());
-                    ////// начало запись в файл
-
-                }
-
-            ///////////TODO визуализация даных по строчно из НИЖНЕГО ПОТОКА ПОДМИНИМАЕМСЯ НА ВЕРХ ОПЕРЦИЯ ВСТАВКА
-
-            // TODO: 07.09.2021 ССЫЛКА НА КЛАСС КОТОРЫЙ ЗАНИМАЕТЬСЯ ОТПОБРАЖЕНИЕМ ВИЗУАЛЬНЫЙ СИЕНХОООНИАХЦИИ   ВСТАВКА
-
-
-  /*          //
-        new Class_Visible_Processing_Async(contextСозданиеБАзы).ГенерируемПРОЦЕНТЫДляAsync(
-                    ДляСинхронизацииОбщееКоличествоСколькоСтрочекJSON,
-                    СинхронизациюВизуализировать,
-                    (Activity) ActivityДляСинхронизацииОбмена,
-                ИндексТекущейОперацииJSONДляВизуальнойОбработки,
-                СколькоСтрочекJSON,ФиналПроценты);
-*/
-
-
-
-
-
-
-
-
-            //////
-        } catch (Exception e) {///////ошибки
-            e.printStackTrace();
-            ///метод запись ошибок в таблицу
-            Log.e(Class_MODEL_synchronized.class.getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
-                    " Линия  :" + Thread.currentThread().getStackTrace()[2].getLineNumber());
-            new RecordNewErros(context).recordnewerror(e.toString(), Class_MODEL_synchronized.class.getName(),
-                    Thread.currentThread().getStackTrace()[2].getMethodName(), Thread.currentThread().getStackTrace()[2].getLineNumber());
-            ////// начало запись в файл
-
-        }
-        ////TODO метод вставки
-        return Результат_ВставкиДанных;
-    }
 
 
     ///////// TODO УНИВЕРСАЛЬНЫЙ МЕТОД ВСТАВКИ ДАННЫХ
-    protected Long ВставкаДанныхЧерезКонтейнерУниверсальнаяЧерезContentResolver(String ТаблицаКудаВставляем,
-                                                                                ContentValues КонтейнерДляВставки,
-                                                                                String ИмяТаблицыОтАндройда_Локальноая,
-                                                                                String ПолученнаяДатаДляПониманияДатуСейчасВставляетьИлиНет,
-                                                                                boolean ФлагОбновлятьДатуВерсииДанных,
-                                                                                int ДляСинхронизацииОбщееКоличествоСколькоСтрочекJSON,
-                                                                                boolean СинхронизациюВизуализировать,
-                                                                                Context context,
-                                                                                @NotNull CompletionService МенеджерПотоков,
-
-                                                                                Integer СколькоСтрочекJSON,
-                                                                                Integer ИндексТекущейОперацииJSONДляВизуальнойОбработки)
-            throws ExecutionException, InterruptedException, TimeoutException, NoSuchPaddingException, NoSuchAlgorithmException, InvalidKeyException {
-        ///////////////////////////////////////////////////////////////
-        ///////ПОПЫТКА ПОДКЛЮЧЧЕНИЕ К ИНТРЕНТУ
-        Long Результат_ВставкиДанных = 0l;
-        //
-        Integer Результат_ПриписиИзменнийВерсииДанных = 0;
-        //
-        Class_GRUD_SQL_Operations class_grud_sql_operationsВставка;
-        //
-        class_grud_sql_operationsВставка = new Class_GRUD_SQL_Operations(this.context);
-///
-
-/////
+    protected Integer  ВставкаДанныхЧерезКонтейнерУниверсальная(String ТаблицаКудаВставляем,
+                                                            ContentValues КонтейнерДляВставки){
+        Integer Результат_ВставкиДанных = 0;
         try {
-            //
-
-            try {
-
-                // TODO: 06.09.2021 параметры для вствки
-                class_grud_sql_operationsВставка.concurrentHashMapНабор.put("НазваниеОбрабоатываемойТаблицы",ТаблицаКудаВставляем);
-                ////
+            // TODO: 14.05.2025
+            ModuleInserting moduleInserting=new ModuleInserting(context);
+           // TODO: 14.05.2025
+            Результат_ВставкиДанных =    moduleInserting.getModuleInsert(ТаблицаКудаВставляем,КонтейнерДляВставки);
 
 
+            Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                    " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                    " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" + " Результат_ВставкиДанных "+Результат_ВставкиДанных );
 
-                // TODO: 06.09.2021 контейнер для вставки
-                // class_grud_sql_operationsВставка.contentValuesДляSQLBuilder_Для_GRUD_Операций.putAll(КонтейнерДляВставки);
-
-
-                ///TODO РЕЗУЛЬТА изменения версии данных
-                Результат_ВставкиДанных= (Long)  class_grud_sql_operationsВставка.
-                        new InsertData(this.context).insertdata(class_grud_sql_operationsВставка.concurrentHashMapНабор,
-                        КонтейнерДляВставки,
-                        МенеджерПотоков,getБазаДанныхДЛяОперацийВнутри);
-
-                Log.d(this.getClass().getName(), "Результат_ВставкиДанных   " + Результат_ВставкиДанных);
-//////////////////////todo old
-
-
-
-                //////
-                if (Результат_ВставкиДанных > 0) {
-                    ////успешная вставка данных
-                    ///TODO ПЕРОВЕ ТРАНЗАКЦИЯ ВСТАВКИ ДАННЫХ
-                    ///TODO ПЕРВАЯ ТРАНЗАКЦИЯ
-
-
-
-                    ///
-                    КонтейнерДляВставки.clear();
-                    ////
-                    Log.d(this.getClass().getName(), " Результат_ВставкиДанных   " + Результат_ВставкиДанных + "   PUBLIC_CONTENT.СколькоСтрочекJSONПоКонкретнойТаблице "
-                            +              ИндексТекущейОперацииJSONДляВизуальнойОбработки  +  "  СколькоСтрочекJSON " +СколькоСтрочекJSON);
-
-                    //метод анализируем стоит ли вставлять дату сейчас в таблицу модификацию версия данных локального
-                    ////////вторая часть операции после успешной вствки изменяем данные на дабоавляем дату в таблицу модификаци  клиент
-                    //////TODO ВАЖВАНО ПЕРВЫЙ ЗАПУСК БАЗЫ ВСЕГОДА FALSE ДЛЯ ПОНИМАНИЯ ЕСЛИ ЭТО НУЛЕВОЙ ЗАПУСК ТО НЕ НАДО В ТАБЛИЦУК МОДИФИКАФЕН КЛИЕНТ ВСТАЯЛТЬ ДАТУ СЕЙЧАС
-
-                }
-
-
-
-                /////
-            } catch (Exception e) {
-                e.printStackTrace();
-                ///метод запись ошибок в таблицу
-                Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
-                        " Линия  :" + Thread.currentThread().getStackTrace()[2].getLineNumber());
-                new RecordNewErros(this.context).recordnewerror(e.toString(), this.getClass().getName(),
-                        Thread.currentThread().getStackTrace()[2].getMethodName(), Thread.currentThread().getStackTrace()[2].getLineNumber());
-                ////// начало запись в файл
-
-            }
-
-            ///////////TODO визуализация даных по строчно из НИЖНЕГО ПОТОКА ПОДМИНИМАЕМСЯ НА ВЕРХ ОПЕРЦИЯ ВСТАВКА
-
-            // TODO: 07.09.2021 ССЫЛКА НА КЛАСС КОТОРЫЙ ЗАНИМАЕТЬСЯ ОТПОБРАЖЕНИЕМ ВИЗУАЛЬНЫЙ СИЕНХОООНИАХЦИИ   ВСТАВКА
-
-
-  /*          //
-        new Class_Visible_Processing_Async(contextСозданиеБАзы).ГенерируемПРОЦЕНТЫДляAsync(
-                    ДляСинхронизацииОбщееКоличествоСколькоСтрочекJSON,
-                    СинхронизациюВизуализировать,
-                    (Activity) ActivityДляСинхронизацииОбмена,
-                ИндексТекущейОперацииJSONДляВизуальнойОбработки,
-                СколькоСтрочекJSON,ФиналПроценты);
-*/
-
-
-
-
-
-
-
-
-            //////
-        } catch (Exception e) {///////ошибки
+        } catch (Exception e) {
             e.printStackTrace();
-            ///метод запись ошибок в таблицу
-            Log.e(Class_MODEL_synchronized.class.getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
+            Log.e(BinessLogicsAllPublics.class.getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
                     " Линия  :" + Thread.currentThread().getStackTrace()[2].getLineNumber());
-            new RecordNewErros(this.context).recordnewerror(e.toString(), Class_MODEL_synchronized.class.getName(),
+            new RecordNewErros(context).recordnewerror(e.toString(), BinessLogicsAllPublics.class.getName(),
                     Thread.currentThread().getStackTrace()[2].getMethodName(), Thread.currentThread().getStackTrace()[2].getLineNumber());
-            ////// начало запись в файл
-
         }
-        ////TODO метод вставки
         return Результат_ВставкиДанных;
     }
 
-    //////TODO метод пребразует цифры из цикла в проценты
 
 
     /////////TODO  ОБНОВЛЕНИЕ КОНТЕЙНЕР ВСТВКИ ДАННЫХ УНИВЕРСАЛЬНЫЙ
     protected Integer ОбновлениеДанныхЧерезКонтейнерУниверсальная(String ТаблицаКудаОбновляем,
                                                                   ContentValues КонтейнерДляОбновления,
                                                                   String UUIDДляСостыковПриОбновления,
-                                                                  int ДляСинхронизацииОбщееКоличествоСколькоСтрочекJSON,
-                                                                  boolean СинхронизациюВизуализировать,
-                                                                  Context КонтекстСинхроДляКонтроллера,
-                                                                  String ИндификаторЧерезЧегоОбнолвяемсяUUIDИлиID,
-                                                                  CompletionService МенеджерПотоков,
-
-                                                                  Integer СколькоСтрочекJSON,
-                                                                  Integer ИндексТекущейОперацииJSONДляВизуальнойОбработки)
-            throws ExecutionException, InterruptedException, TimeoutException, NoSuchPaddingException, NoSuchAlgorithmException, InvalidKeyException {
+                                                                  String ИндификаторЧерезЧегоОбнолвяемсяUUIDИлиID) {
         Integer Результат_ОбновлениеДанных = 0;
-        int Результат_ПриписиИзменнийВерсииДанных = 0;
-        Class_GRUD_SQL_Operations class_grud_sql_operationsОбновление;
+
         try {
-            class_grud_sql_operationsОбновление=new Class_GRUD_SQL_Operations(context);
-            class_grud_sql_operationsОбновление.concurrentHashMapНабор.put("НазваниеОбрабоатываемойТаблицы",ТаблицаКудаОбновляем);
-            class_grud_sql_operationsОбновление.concurrentHashMapНабор.put("Флаг_ЧерезКакоеПолеОбновлением",ИндификаторЧерезЧегоОбнолвяемсяUUIDИлиID);
-            class_grud_sql_operationsОбновление.concurrentHashMapНабор.put("ЗначениеФлагОбновления",UUIDДляСостыковПриОбновления);
-            class_grud_sql_operationsОбновление.concurrentHashMapНабор.put("ЗнакФлагОбновления","=");
-            class_grud_sql_operationsОбновление.contentValuesДляSQLBuilder_Для_GRUD_Операций.putAll(КонтейнерДляОбновления);
-                    ///TODO РЕЗУЛЬТАТ ОБНОВЛЕНИЕ ДАННЫХ
-            Результат_ОбновлениеДанных= (Integer)  class_grud_sql_operationsОбновление.
-                    new UpdateData(context).updatedata(class_grud_sql_operationsОбновление.concurrentHashMapНабор,
-                    class_grud_sql_operationsОбновление.contentValuesДляSQLBuilder_Для_GRUD_Операций,
-                    МенеджерПотоков,getБазаДанныхДЛяОперацийВнутри);
-            Log.d(this.getClass().getName(), "Результат_ОбновлениеДанных   " + Результат_ОбновлениеДанных);
-                        if (Результат_ОбновлениеДанных > 0) {
-                            Log.d(this.getClass().getName(), " Результат_ВставкиДанных   "
-                                    + Результат_ОбновлениеДанных + "   PUBLIC_CONTENT.СколькоСтрочекJSONПоКонкретнойТаблице " + ИндексТекущейОперацииJSONДляВизуальнойОбработки+
-                                     "  СколькоСтрочекJSON " +СколькоСтрочекJSON);
-                        }
-            Log.d(this.getClass().getName(), "ИндексТекущейОперацииJSONДляВизуальнойОбработки   " +ИндексТекущейОперацииJSONДляВизуальнойОбработки+ " СколькоСтрочекJSON " +СколькоСтрочекJSON);
+
+            ModuleUpdating moduleUpdating = new ModuleUpdating(context);
+            // TODO: 03.02.2025 update new back
+            Результат_ОбновлениеДанных=   moduleUpdating.getModuleUpdate(ТаблицаКудаОбновляем,КонтейнерДляОбновления,ИндификаторЧерезЧегоОбнолвяемсяUUIDИлиID+"=?", new String[] {UUIDДляСостыковПриОбновления});
+
+            Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                    " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                    " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" + " Результат_ОбновлениеДанных "+Результат_ОбновлениеДанных );
+
+
+
         } catch (Exception e) {///////ошибки
             e.printStackTrace();
             ///метод запись ошибок в таблицу
-            Log.e(Class_MODEL_synchronized.class.getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
+            Log.e(BinessLogicsAllPublics.class.getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
                     " Линия  :" + Thread.currentThread().getStackTrace()[2].getLineNumber());
-            new RecordNewErros(context).recordnewerror(e.toString(), Class_MODEL_synchronized.class.getName(),
+            new RecordNewErros(context).recordnewerror(e.toString(), BinessLogicsAllPublics.class.getName(),
                     Thread.currentThread().getStackTrace()[2].getMethodName(), Thread.currentThread().getStackTrace()[2].getLineNumber());
         }
         return Результат_ОбновлениеДанных;
@@ -1180,156 +832,57 @@ import okio.BufferedSink;
 
 
 
-
-    ///-------TODO ДАННЫЕЙ МЕТОД ОБНОЛДЯЕТЬ ДАННЫЕ ТОЛЬКО ВЕРСИИ ДАННЫХ ИЗМЕНЯЕТЬ ПРОТО  ДАТЫ В MODIFICATION CLIENT
-
-
-
-    ///////// TODO  КОНЕЦ УНИВЕРСАЛЬНЫЙ МЕТОД ВСТАВКИ ДАННЫХ
-
-
-
-
-
-
-    // TODO: 11.08.2021  запись изменения ТОЛЬКО ДЛЯ ЧАТА СПИМИНЕНИЕМ ВЕРСИИ ДАННЫХ
-
-
-    ///////// TODO  КОНЕЦ УНИВЕРСАЛЬНЫЙ МЕТОД ВСТАВКИ ДАННЫХ
-
-
     /////////TODO КОНТЕЙНЕР ЛОКАЛЬНОГО ОБНОВЛЕНИЯ  ДАННЫХ УНИВЕРСАЛЬНЫЙ
     public Integer ЛокальногоОбновлениеДанныхЧерезКонтейнерУниверсальная(String ТаблицаКудаОбновляем,
                                                                         @NonNull ContentValues КонтейнерДляЛокальногоОбновления,
                                                                          Long UUIDДляСостыковПриОбновления,
-                                                                         String ФлагЧерезЧегоОбновляетьсяIDилиUUID) throws ExecutionException, InterruptedException, TimeoutException {
+                                                                         String ФлагЧерезЧегоОбновляетьсяIDилиUUID)  {
         //////////////////////////////////////////////////
-        ///////ПОПЫТКА ПОДКЛЮЧЧЕНИЕ К ИНТРЕНТУ
-
         Integer Результат_ЛокальногоОбновлениеДанных = 0;
-
-
-        System.out.println(" ОбновлениеДанныхЧерезКонтейнерУниверсальная ");
-
-        String ОшибкаТекущегоМетода;
-
-
-        Class_GRUD_SQL_Operations class_grud_sql_operationsЛокальноеОбновление;
-
             try {
+                ModuleUpdating moduleUpdating = new ModuleUpdating(context);
+                // TODO: 03.02.2025 update new back
+                Результат_ЛокальногоОбновлениеДанных=   moduleUpdating.getModuleUpdate(ТаблицаКудаОбновляем,КонтейнерДляЛокальногоОбновления,ФлагЧерезЧегоОбновляетьсяIDилиUUID+"=?", new String[] {String.valueOf(UUIDДляСостыковПриОбновления)});
 
+                Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                        " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                        " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" + " Результат_ЛокальногоОбновлениеДанных "+Результат_ЛокальногоОбновлениеДанных );
 
-
-                    class_grud_sql_operationsЛокальноеОбновление=new Class_GRUD_SQL_Operations(context);
-
-
-                    // TODO: 06.09.2021 ПАРАМЕТРЫ ДЛЯ ЛОКАЛЬНОГО ОБНОВЛЕНИЯ
-
-                    class_grud_sql_operationsЛокальноеОбновление.concurrentHashMapНабор.put("НазваниеОбрабоатываемойТаблицы",ТаблицаКудаОбновляем);
-                    ///
-
-                    class_grud_sql_operationsЛокальноеОбновление.concurrentHashMapНабор.put("Флаг_ЧерезКакоеПолеОбновлением",ФлагЧерезЧегоОбновляетьсяIDилиUUID);
-                    /////
-
-                    ///
-
-                    class_grud_sql_operationsЛокальноеОбновление.concurrentHashMapНабор.put("ЗначениеФлагОбновления",UUIDДляСостыковПриОбновления);
-
-//
-
-                    class_grud_sql_operationsЛокальноеОбновление.
-                            concurrentHashMapНабор.put("ЗнакФлагОбновления","=");
-
-                    // TODO: 06.09.2021  КОНТЕЙНЕР ДЛЯ ЛОКАЛЬНОГОМ ОБНОВЛЕНИЯ
-
-                    class_grud_sql_operationsЛокальноеОбновление.contentValuesДляSQLBuilder_Для_GRUD_Операций.putAll(КонтейнерДляЛокальногоОбновления);
-
-
-                            ///TODO РЕЗУЛЬТАТ ВСТАВКИ ДАННЫХ
-
-
-
-                    Результат_ЛокальногоОбновлениеДанных= (Integer) class_grud_sql_operationsЛокальноеОбновление.
-                            new UpdateData(context).updatedata(class_grud_sql_operationsЛокальноеОбновление.concurrentHashMapНабор,
-                            class_grud_sql_operationsЛокальноеОбновление.contentValuesДляSQLBuilder_Для_GRUD_Операций,
-                            Class_Engine_SQLГдеНаходитьсяМенеджерПотоков.МенеджерПотоков,
-                             );
-
-
-                    Log.d(this.getClass().getName(), "Результат_ЛокальногоОбновлениеДанных   " + Результат_ЛокальногоОбновлениеДанных);
-
-
-                    if(Результат_ЛокальногоОбновлениеДанных==null){
-                        ///
-                        Результат_ЛокальногоОбновлениеДанных=0;
-                    }
-
-
-
-
-
-                    if (Результат_ЛокальногоОбновлениеДанных > 0) {
-                        ///todo первое сохранение транзакции
-                        //ССылкаНаСозданнуюБазу.
-                        Log.d(this.getClass().getName(), "Результат_ЛокальногоОбновлениеДанных   " +Результат_ЛокальногоОбновлениеДанных);
-                    }
-
-                    Log.d(this.getClass().getName(), "Результат_ЛокальногоОбновлениеДанных   " +Результат_ЛокальногоОбновлениеДанных);
-
-
-                    ///
-
-
-            } catch (Exception e) {///////ошибки
+            } catch (Exception e) {
                 e.printStackTrace();
-                ///метод запись ошибок в таблицу
-                ОшибкаТекущегоМетода = e.toString();
-                Log.e(Class_MODEL_synchronized.class.getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
+                Log.e(BinessLogicsAllPublics.class.getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
                         " Линия  :" + Thread.currentThread().getStackTrace()[2].getLineNumber());
-                new RecordNewErros(context).recordnewerror(e.toString(), Class_MODEL_synchronized.class.getName(),
+                new RecordNewErros(context).recordnewerror(e.toString(), BinessLogicsAllPublics.class.getName(),
                         Thread.currentThread().getStackTrace()[2].getMethodName(), Thread.currentThread().getStackTrace()[2].getLineNumber());
 
             }
-
-
-        //   publishProgress(Результат_ПриписиИзменнийВерсииДанных);
-
         return Результат_ЛокальногоОбновлениеДанных;
     }
-    //////метод записывает данные о времени в таблицу модификации ерсии данных
 
 
-    /////////КОНТЕЙНЕР ВСТВКИ ДАННЫХ УНИВЕРСАЛЬНЫЙ
+
+
     public Integer ВставкаДанныхЧерезКонтейнерТолькоПриСозданииНовогоСотрудникаУниверсальная(@NonNull  String ТаблицаКудаВставляем,
                                                                                           @NonNull  ContentValues КонтейнерДляВставкиНовогоСотрудника)  {
-
-
         Integer getcreatingAnewEmployee = 0;
-        Integer Результат_ПриписиИзменнийВерсииДанных = 0;
-        Class_GRUD_SQL_Operations class_grud_sql_operationsВставкаСотрудника;
             try {
-
                 ModuleInserting moduleInserting=new ModuleInserting(context);
-
                 getcreatingAnewEmployee =    moduleInserting.getModuleInsert(ТаблицаКудаВставляем,КонтейнерДляВставкиНовогоСотрудника);
-
-
                 Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                         " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
                         " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" + " getcreatingAnewEmployee "+getcreatingAnewEmployee );
 
             } catch (Exception e) {///////ошибки
                 e.printStackTrace();
-                Log.e(Class_MODEL_synchronized.class.getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
+                Log.e(BinessLogicsAllPublics.class.getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
                         " Линия  :" + Thread.currentThread().getStackTrace()[2].getLineNumber());
-                new RecordNewErros(context).recordnewerror(e.toString(), Class_MODEL_synchronized.class.getName(),
+                new RecordNewErros(context).recordnewerror(e.toString(), BinessLogicsAllPublics.class.getName(),
                         Thread.currentThread().getStackTrace()[2].getMethodName(), Thread.currentThread().getStackTrace()[2].getLineNumber());
             }
         return getcreatingAnewEmployee;
     }
 
 
-    // TODO: 10.07.2021  для чата
 
 
 
@@ -1347,156 +900,24 @@ import okio.BufferedSink;
 
 
 
+  public Integer ВставкаДанныхЧерезКонтейнерТолькоПриСозданииНСообщенияДЛЯЧата(@NonNull  String ТаблицаКудаВставляем, @NonNull ContentValues КонтейнерДляВставкиДляЧата)  {
 
-  public Long ВставкаДанныхЧерезКонтейнерТолькоПриСозданииНСообщенияДЛЯЧата(String ТаблицаКудаВставляем, ContentValues КонтейнерДляВставкиДляЧата,
-                                                                            String ИмяТаблицыОтАндройда_Локальноая,
-                                                                            String ПолученнаяДатаДляПониманияДатуСейчасВставляетьИлиНет,
-                                                                            boolean ФлагОбновлятьДатуВерсииДанных) throws ExecutionException,
-            InterruptedException, TimeoutException {
-        ///////////////////////////////////////////////////////////////////////////
-        ///////ПОПЫТКА ПОДКЛЮЧЧЕНИЕ К ИНТРЕНТУ
-
-      Long Результат_ВставкиДанныхПриСозданииНСообщенияДЛЯЧата = 0l;
-        /////
-        Integer Результат_ПриписиИзменнийВерсииДанных = 0;
-
-        System.out.println(" Вставка Данных Через Контейнер Универсальная");
-
-        ////TOdo начинаем таранзакццию
-      Class_GRUD_SQL_Operations class_grud_sql_operationsВставкаЧата;
-
-
-
+      Integer Результат_ВставкиДанныхПриСозданииНСообщенияДЛЯЧата = 0;
             try {
-                try{
-
-                    ////
-                    class_grud_sql_operationsВставкаЧата=new Class_GRUD_SQL_Operations(context);
-
-                    // TODO: 06.09.2021 ПАРАМЕТРЫ ДЛЯ ВСТАВКИ ДАННЫХ ЧАТА
-
-                    class_grud_sql_operationsВставкаЧата.concurrentHashMapНабор.put("НазваниеОбрабоатываемойТаблицы",ТаблицаКудаВставляем);
-
-
-
-                    // TODO: 06.09.2021 КОНТЕЙНЕР ДЛЯ ВСТАВКИ ДАННЫХ ЧАТА
-
-
-                    class_grud_sql_operationsВставкаЧата.contentValuesДляSQLBuilder_Для_GRUD_Операций.putAll(КонтейнерДляВставкиДляЧата);
-
-                    // TODO: 12.10.2021  Ссылка Менеджер Потоков
-
-
-
-                    // TODO: 06.09.2021 САМА ВСТАВКА ДЛЯ ЧАТА ЧАТА
-
-                    ///TODO РЕЗУЛЬТА изменения версии данных
-                    Результат_ВставкиДанныхПриСозданииНСообщенияДЛЯЧата= (Long)  class_grud_sql_operationsВставкаЧата.
-                            new InsertData(context).insertdata(class_grud_sql_operationsВставкаЧата.concurrentHashMapНабор,
-                            class_grud_sql_operationsВставкаЧата.contentValuesДляSQLBuilder_Для_GRUD_Операций,
-                            Class_Engine_SQLГдеНаходитьсяМенеджерПотоков.МенеджерПотоков,
-                             );
-//
-
-                    Log.d(this.getClass().getName(), "Результат_ВставкиДанныхПриСозданииНСообщенияДЛЯЧата   " + Результат_ВставкиДанныхПриСозданииНСообщенияДЛЯЧата);
-
-         /*                  ВставкиДанных=new    ();
-                       ВставкиДанных.setTables(ТаблицаКудаВставляем);
-
-
-                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
-                            Результат_ВставкиДанныхТолькоДляСотрудникаНового =             ВставкиДанных.insert(ССылкаНаСозданнуюБазу, КонтейнерДляВставки);
-                        }else {
-
-                            Результат_ВставкиДанныхТолькоДляСотрудникаНового =     ССылкаНаСозданнуюБазу.insert(ТаблицаКудаВставляем,null,КонтейнерДляВставки);
-
-                        }
-
-*/
-
-                    //////////
-                    if (Результат_ВставкиДанныхПриСозданииНСообщенияДЛЯЧата > 0) {
-                        ////успешная вставка данных
-                        ///TODO ПЕРОВЕ ТРАНЗАКЦИЯ ВСТАВКИ ДАННЫХ
-
-                        Log.d(this.getClass().getName(), " Результат_ВставкиДанныхПриСозданииНСообщенияДЛЯЧата   " + Результат_ВставкиДанныхПриСозданииНСообщенияДЛЯЧата);
-                    }
-                    ///
-                } catch (Exception e) {///////ошибки
-                    e.printStackTrace();
-                    ///метод запись ошибок в таблицу
-                    Log.e(Class_MODEL_synchronized.class.getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
-                            " Линия  :" + Thread.currentThread().getStackTrace()[2].getLineNumber());
-                    new RecordNewErros(context).recordnewerror(e.toString(), Class_MODEL_synchronized.class.getName(),
-                            Thread.currentThread().getStackTrace()[2].getMethodName(), Thread.currentThread().getStackTrace()[2].getLineNumber());
-
-                }
-                //////
-
-
-
-        /*        //метод анализируем стоит ли вставлять дату сейчас в таблицу модификацию версия данных локального
-                ////////вторая часть операции после успешной вствки изменяем данные на дабоавляем дату в таблицу модификаци  клиент
-                //////ДЛЯ ПОНИМАНИЯ ЕСЛИ ЭТО НУЛЕВОЙ ЗАПУСК ТО НЕ НАДО В ТАБЛИЦУК МОДИФИКАФЕН КЛИЕНТ ВСТАЯЛТЬ ДАТУ СЕЙЧАС
-                if (ФлагОбновлятьДатуВерсииДанных == true && Результат_ВставкиДанныхПриСозданииНСообщенияДЛЯЧата > 0) {/////ПРИ УКАЗАНОЙ ДАТЕ ПОДТВЕРЖДАТЬ ВРЕМЯ НЕ НАДО
-                    /////запускаем втроую транзакцию
-
-
-                    ///todo ДАННЫЙ КОД ИЗМЕНЯЕТ ВЕРИСЮ ДАННЫХ
-
-                    ///ПослеУспешнойОперациии записать в табблицу версии данных на клиенте
-                    // TODO: 03.09.2021  получение ПО НОВОМУ ДВИЖКУ
-                    Class_GRUD_SQL_Operations  classGrudSqlOperationsВставкиДанныхПриСозданииНСообщенияДЛЯЧата;
-                    // TODO: 30.08.2021    КОД ОБНОВЛЕНИЕ   ДАННЫХ   ЧЕРЕЗ
-                    //////
-                    classGrudSqlOperationsВставкиДанныхПриСозданииНСообщенияДЛЯЧата=new Class_GRUD_SQL_Operations(contextСозданиеБАзы);
-                    ///
-                    classGrudSqlOperationsВставкиДанныхПриСозданииНСообщенияДЛЯЧата. concurrentHashMapНабор.put("НазваниеОбрабоатываемойТаблицы",ИмяТаблицыОтАндройда_Локальноая);
-                    ///
-                    classGrudSqlOperationsВставкиДанныхПриСозданииНСообщенияДЛЯЧата. concurrentHashMapНабор.put("ФлагТипИзменениеВерсииДанныхЛокальнаяСервернаяИлиОба","Локальное");
-                    ///
-
-                    ///TODO РЕЗУЛЬТА изменения версии данных
-                       Результат_ПриписиИзменнийВерсииДанных= (Integer) classGrudSqlOperationsВставкиДанныхПриСозданииНСообщенияДЛЯЧата.
-                            new ChangesVesionData(contextСозданиеБАзы).changesvesiondata(classGrudSqlOperationsВставкиДанныхПриСозданииНСообщенияДЛЯЧата. concurrentHashMapНабор);
-//
-
-                    ////
-                    if(Результат_ПриписиИзменнийВерсииДанных==null){
-                        ////
-                        Результат_ПриписиИзменнийВерсииДанных=0;
-                    }
-                    // TODO: 03.09.2021
-
-
-
-                    ///todo  конец  ДАННЫЙ КОД ИЗМЕНЯЕТ ВЕРИСЮ ДАННЫХ
-
-                    if (Результат_ПриписиИзменнийВерсииДанных > 0) {
-
-                        ///TODO ПЕРОВЕ ТРАНЗАКЦИЯ ВСТАВКИ ДАННЫХ
-                        Log.w(this.getClass().getName(), "  Результат_ПриписиИзменнийВерсииДанных  ПОСЛЕ ОПЕРАЦИИ ПОВЫШАЕМ ВЕРИСЮ ДАННЫХ....   " +Результат_ПриписиИзменнийВерсииДанных );
-                    }else{
-
-                        Log.e(this.getClass().getName(), " ОШибка  Результат_ПриписиИзменнийВерсииДанных  ПОСЛЕ ОПЕРАЦИИ ПОВЫШАЕМ ВЕРИСЮ ДАННЫХ....   " +Результат_ПриписиИзменнийВерсииДанных );
-                    }
-
-
-                }*/
-
-
-            } catch (Exception e) {///////ошибки
+                    // TODO: 14.05.2025
+                    ModuleInserting moduleInserting=new ModuleInserting(context);
+                    // TODO: 14.05.2025
+                    Результат_ВставкиДанныхПриСозданииНСообщенияДЛЯЧата =    moduleInserting.getModuleInsert(ТаблицаКудаВставляем,КонтейнерДляВставкиДляЧата);
+                    Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                            " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                            " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" + " Результат_ВставкиДанныхПриСозданииНСообщенияДЛЯЧата "+Результат_ВставкиДанныхПриСозданииНСообщенияДЛЯЧата );
+            } catch (Exception e) {
                 e.printStackTrace();
-                ///метод запись ошибок в таблицу
-                Log.e(Class_MODEL_synchronized.class.getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
+                Log.e(BinessLogicsAllPublics.class.getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
                         " Линия  :" + Thread.currentThread().getStackTrace()[2].getLineNumber());
-                new RecordNewErros(context).recordnewerror(e.toString(), Class_MODEL_synchronized.class.getName(),
+                new RecordNewErros(context).recordnewerror(e.toString(), BinessLogicsAllPublics.class.getName(),
                         Thread.currentThread().getStackTrace()[2].getMethodName(), Thread.currentThread().getStackTrace()[2].getLineNumber());
-                ///
-
             }
-
-        //// todo get ASYNtASK
         return Результат_ВставкиДанныхПриСозданииНСообщенияДЛЯЧата;
     }
 
@@ -1507,183 +928,45 @@ import okio.BufferedSink;
 
 
 
+    public Integer ВставкаДанныхЧерезКонтейнерОрганизацияДляТекущегоСотрудникаУниверсальная(@NonNull  String ТаблицаКудаВставляем,
+                                                                                            @NonNull ContentValues КонтейнерДляВставкиОрганизацияДляТекущегоСотрудника,
+                                                                                            @NonNull boolean ФлагОбновлятьДатуВерсииДанных,
+                                                                                            @NonNull int ПубличныйIDДляорганизацции) {
 
 
-
-    // TODO: 10.07.2021  для чата
-
-
-    /////////КОНТЕЙНЕР ВСТВКИ ДАННЫХ УНИВЕРСАЛЬНЫЙ
-    public Long ВставкаДанныхЧерезКонтейнерОрганизацияДляТекущегоСотрудникаУниверсальная(String ТаблицаКудаВставляем, ContentValues КонтейнерДляВставкиОрганизацияДляТекущегоСотрудника,
-                                                                                         String ИмяТаблицыОтАндройда_Локальноая,
-                                                                                         String ПолученнаяДатаДляПониманияДатуСейчасВставляетьИлиНет,
-                                                                                         boolean ФлагОбновлятьДатуВерсииДанных, int ПубличныйIDДляорганизацции,
-                                                                                         String ДатаДляОбновлениеОргназации) throws ExecutionException,
-            InterruptedException, TimeoutException {
-        ///////////////////////////////////////////////////////////////////////////
-        ///////ПОПЫТКА ПОДКЛЮЧЧЕНИЕ К ИНТРЕНТУ
-
-          Long Результат_ОбновленияДанныхОрганизация = 0l;
-        ///
-        Long Результат_ВставкиДанныхОрганизация = 0l;
-        ///
-        int Результат_ПриписиИзменнийВерсииДанных = 0;
-
-        Class_GRUD_SQL_Operations class_grud_sql_operationsВставкаИлиОбвновлениеНовойОрганизации;
+          Integer Результат_ОбновленияДанныхОрганизация = 0;
 
             try {
-                //
+                //TODO
+                ModuleUpdating moduleUpdating = new ModuleUpdating(context);
+                // TODO: 03.02.2025 update new back
+                Результат_ОбновленияДанныхОрганизация=   moduleUpdating.getModuleUpdate(ТаблицаКудаВставляем,КонтейнерДляВставкиОрганизацияДляТекущегоСотрудника,ФлагОбновлятьДатуВерсииДанных+"=?", new String[] {String.valueOf(ПубличныйIDДляорганизацции)});
 
-                    class_grud_sql_operationsВставкаИлиОбвновлениеНовойОрганизации=new Class_GRUD_SQL_Operations(context);
+                Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                        " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                        " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" + " Результат_ОбновленияДанныхОрганизация "+Результат_ОбновленияДанныхОрганизация );
 
-                    // TODO: 06.09.2021 ПАРАРМЕТРЫ ДЛЯ ВСТАВКИ НОВОЙ ОРГАНИЗАЦИИ
+             if(Результат_ОбновленияДанныхОрганизация==0) {
+                 // TODO: 14.05.2025
+                 ModuleInserting moduleInserting = new ModuleInserting(context);
+                 // TODO: 14.05.2025
+                 Результат_ОбновленияДанныхОрганизация = moduleInserting.getModuleInsert(ТаблицаКудаВставляем, КонтейнерДляВставкиОрганизацияДляТекущегоСотрудника);
+                 Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                         " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                         " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" + " Результат_ОбновленияДанныхОрганизация " + Результат_ОбновленияДанныхОрганизация);
 
+             }
 
-                    class_grud_sql_operationsВставкаИлиОбвновлениеНовойОрганизации.concurrentHashMapНабор.put("НазваниеОбрабоатываемойТаблицы",ТаблицаКудаВставляем);
-
-                    //
-                    class_grud_sql_operationsВставкаИлиОбвновлениеНовойОрганизации.concurrentHashMapНабор.put("Флаг_ЧерезКакоеПолеОбновлением","user_update");
-
-
-                    //
-                    class_grud_sql_operationsВставкаИлиОбвновлениеНовойОрганизации.concurrentHashMapНабор.put("ЗначениеФлагОбновления",ПубличныйIDДляорганизацции);
-
-
-//
-
-                class_grud_sql_operationsВставкаИлиОбвновлениеНовойОрганизации.
-                        concurrentHashMapНабор.put("ЗнакФлагОбновления","=");
-                    // TODO: 06.09.2021 КОНТЕЙНЕР ДЛЯ ВСТАВКИ НОВОЙ ОРГАНИЗАЦИИ
-
-                    class_grud_sql_operationsВставкаИлиОбвновлениеНовойОрганизации.contentValuesДляSQLBuilder_Для_GRUD_Операций.putAll(КонтейнерДляВставкиОрганизацияДляТекущегоСотрудника);
-
-
-                    // TODO: 06.09.2021 САМА ОПРАЦЙИЯ ОБНОВЛЕНИЯ ПЕРЫЙ ШАГ ЕСЛИ ВЫЙДЕТ, ТО ПОСЛЕДНИЙ
-
-                // TODO: 12.10.2021  Ссылка Менеджер Потоков
-
-
-
-
-                    ///TODO РЕЗУЛЬТА изменения версии данных
-                    Результат_ОбновленияДанныхОрганизация= (Long)  class_grud_sql_operationsВставкаИлиОбвновлениеНовойОрганизации.
-                            new UpdateData(context).updatedata(class_grud_sql_operationsВставкаИлиОбвновлениеНовойОрганизации.concurrentHashMapНабор,
-                            class_grud_sql_operationsВставкаИлиОбвновлениеНовойОрганизации.contentValuesДляSQLBuilder_Для_GRUD_Операций,
-                            Class_Engine_SQLГдеНаходитьсяМенеджерПотоков.МенеджерПотоков,
-                             );
-
-                Log.d(this.getClass().getName(), "Результат_ОбновленияДанныхОрганизация   " + Результат_ОбновленияДанныхОрганизация);
-
-           /*                ПриписиИзменнийВерсииДанных=new    ();
-                       ПриписиИзменнийВерсииДанных.setTables(ТаблицаКудаВставляем);
-
-                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
-                        Результат_ВставкиДанныхОрганизация  =             ПриписиИзменнийВерсииДанных.
-                                update(ССылкаНаСозданнуюБазу,КонтейнерДляВставки, "user_update=?",
-                                        new String[]{String.valueOf(ПубличныйIDДляорганизацции)});
-                    }*/
-
-
-                    ///TODO ПЕРОВЕ ТРАНЗАКЦИЯ ВСТАВКИ ДАННЫХ
-                    Log.d(this.getClass().getName(), " Результат_ОбновленияДанныхОрганизация   " + Результат_ОбновленияДанныхОрганизация);
-
-
-                    ///////TODO  ЕСЛИ ОПЕРАЦИЯ ОБНОВЛЕНИЯ НЕ ПРОШЛА ТО НИЖЕ ПРОИЗВОДИМ ВСТАВКИ УЖЕ ДАННЫХ -- ЭТО НУЖНО КОГДА ПЕРВЫЙ ЗАПЦУСК ПРОГРАММЫ И НЕТ ЫВООБЩЕ ДАННЫХ В БАЗЕ И ПРОИЗВХОДИТ РАЗНИЦА ВСТАВКА ИЛИ ОБНОВЛЕНИЕ
-                    if (Результат_ОбновленияДанныхОрганизация > 0) {
-                        ////успешная вставка данных
-                        ///TODO ПЕРОВЕ ТРАНЗАКЦИЯ ВСТАВКИ ДАННЫХ
-                        Log.d(this.getClass().getName(), " Результат_ВставкиДанныхОрганизация   " + Результат_ВставкиДанныхОрганизация);
-
-                    } else {
-
-
-
-
-                        ///TODO ВТОРАЯ ЧАТЬ ВСТАВКИ НОВОЙ ОРГАНИЗАЦИИ ПРОИХВОДИМ УЖЕ ВСТАВКУ ПОСЛЕ НЕ УДАЧНОГО ОБНВЛЕНИЯ
-
-
-
-
-
-                        class_grud_sql_operationsВставкаИлиОбвновлениеНовойОрганизации=new Class_GRUD_SQL_Operations(context);
-
-                        // TODO: 06.09.2021 ПАРАРМЕТРЫ ДЛЯ ВСТАВКИ НОВОЙ ОРГАНИЗАЦИИ
-
-
-                        class_grud_sql_operationsВставкаИлиОбвновлениеНовойОрганизации.concurrentHashMapНабор.put("НазваниеОбрабоатываемойТаблицы",ТаблицаКудаВставляем);
-
-
-
-
-                        Результат_ВставкиДанныхОрганизация= (Long)  class_grud_sql_operationsВставкаИлиОбвновлениеНовойОрганизации.
-                                new InsertData(context).insertdata(class_grud_sql_operationsВставкаИлиОбвновлениеНовойОрганизации.concurrentHashMapНабор,
-                                class_grud_sql_operationsВставкаИлиОбвновлениеНовойОрганизации.contentValuesДляSQLBuilder_Для_GRUD_Операций ,
-                                Class_Engine_SQLГдеНаходитьсяМенеджерПотоков.МенеджерПотоков,
-                                 );
-
-                        Log.d(this.getClass().getName(), "Результат_ВставкиДанныхОрганизация   " + Результат_ВставкиДанныхОрганизация);
-/*
-                               ВставкиДанных=new    ();
-                           ВставкиДанных.setTables(ТаблицаКудаВставляем);
-
-                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
-                            Результат_ВставкиДанныхОрганизация =             ВставкиДанных.insert(ССылкаНаСозданнуюБазу, КонтейнерДляВставки);
-                        }
-*/
-
-                        ///TODO ПЕРОВЕ ТРАНЗАКЦИЯ ВСТАВКИ ДАННЫХ
-                        Log.d(this.getClass().getName(), " Результат_ВставкиДанныхОрганизация   " + Результат_ВставкиДанныхОрганизация);
-                    }
-
-
-                    if (Результат_ВставкиДанныхОрганизация > 0) {
-
-                        ///TODO ПЕРОВЕ ТРАНЗАКЦИЯ ВСТАВКИ ДАННЫХ
-
-
-                        Log.d(this.getClass().getName(), " Результат_ВставкиДанныхОрганизация   " + Результат_ВставкиДанныхОрганизация);
-
-                    }
-
-
-                //////
-            } catch (Exception e) {///////ошибки
+            } catch (Exception e) {
                 e.printStackTrace();
-                ///метод запись ошибок в таблицу
-
-                Log.e(Class_MODEL_synchronized.class.getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
+                Log.e(BinessLogicsAllPublics.class.getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
                         " Линия  :" + Thread.currentThread().getStackTrace()[2].getLineNumber());
-                new RecordNewErros(context).recordnewerror(e.toString(), Class_MODEL_synchronized.class.getName(),
+                new RecordNewErros(context).recordnewerror(e.toString(), BinessLogicsAllPublics.class.getName(),
                         Thread.currentThread().getStackTrace()[2].getMethodName(), Thread.currentThread().getStackTrace()[2].getLineNumber());
-                //////
 
             }
-
-        return Результат_ВставкиДанныхОрганизация;
+        return Результат_ОбновленияДанныхОрганизация;
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-// TODO: 10.07.2021  только для чата
-
-
 
 
 
@@ -1928,9 +1211,9 @@ Class_GRUD_SQL_Operations class_grud_sql_operationsОбвовлениеСозд�
             } catch (Exception e) {///////ошибки
                 e.printStackTrace();
                 ///метод запись ошибок в таблицу
-                Log.e(Class_MODEL_synchronized.class.getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
+                Log.e(BinessLogicsAllPublics.class.getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
                         " Линия  :" + Thread.currentThread().getStackTrace()[2].getLineNumber());
-                new RecordNewErros(context).recordnewerror(e.toString(), Class_MODEL_synchronized.class.getName(),
+                new RecordNewErros(context).recordnewerror(e.toString(), BinessLogicsAllPublics.class.getName(),
                         Thread.currentThread().getStackTrace()[2].getMethodName(), Thread.currentThread().getStackTrace()[2].getLineNumber());
             }
             ////
@@ -2031,9 +1314,9 @@ Class_GRUD_SQL_Operations class_grud_sql_operationsОбвовлениеСозд�
             } catch (Exception e) {///////ошибки
                 e.printStackTrace();
                 ///метод запись ошибок в таблицу
-                Log.e(Class_MODEL_synchronized.class.getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
+                Log.e(BinessLogicsAllPublics.class.getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
                         " Линия  :" + Thread.currentThread().getStackTrace()[2].getLineNumber());
-                new RecordNewErros(context).recordnewerror(e.toString(), Class_MODEL_synchronized.class.getName(),
+                new RecordNewErros(context).recordnewerror(e.toString(), BinessLogicsAllPublics.class.getName(),
                         Thread.currentThread().getStackTrace()[2].getMethodName(), Thread.currentThread().getStackTrace()[2].getLineNumber());
             }
 
@@ -2085,9 +1368,9 @@ Class_GRUD_SQL_Operations classGrudSqlOperationsУдалениеДанныхЧе
                 Log.d(this.getClass().getName(), "Результат_УдалениеДанных " + Результат_УдалениеДанных);
                 } catch (Exception e) {///////ошибки
                     e.printStackTrace();
-                    Log.e(Class_MODEL_synchronized.class.getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
+                    Log.e(BinessLogicsAllPublics.class.getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
                             " Линия  :" + Thread.currentThread().getStackTrace()[2].getLineNumber());
-                    new RecordNewErros(context).recordnewerror(e.toString(), Class_MODEL_synchronized.class.getName(),
+                    new RecordNewErros(context).recordnewerror(e.toString(), BinessLogicsAllPublics.class.getName(),
                             Thread.currentThread().getStackTrace()[2].getMethodName(), Thread.currentThread().getStackTrace()[2].getLineNumber());
                 }
         return Результат_УдалениеДанных;
@@ -2187,9 +1470,9 @@ Class_GRUD_SQL_Operations classGrudSqlOperationsУдалениеДанныхЧе
                     Log.d(this.getClass().getName(), " Результат_ОбновлениеДанных   " + Результат_ОбновлениеДанных);
             } catch (Exception e) {///////ошибки
                 e.printStackTrace();
-                Log.e(Class_MODEL_synchronized.class.getName(), "Ошибка " + e.toString() + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
+                Log.e(BinessLogicsAllPublics.class.getName(), "Ошибка " + e.toString() + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
                         " Линия  :" + Thread.currentThread().getStackTrace()[2].getLineNumber());
-                new RecordNewErros(context).recordnewerror(e.toString(), Class_MODEL_synchronized.class.getName(),
+                new RecordNewErros(context).recordnewerror(e.toString(), BinessLogicsAllPublics.class.getName(),
                         Thread.currentThread().getStackTrace()[2].getMethodName(), Thread.currentThread().getStackTrace()[2].getLineNumber());
             }
 
@@ -2334,9 +1617,9 @@ Class_GRUD_SQL_Operations classGrudSqlOperationsУдалениеДанныхЧе
                 } catch (Exception e) {///////ошибки
                 e.printStackTrace();
                 ///метод запись ошибок в таблицу
-                Log.e(Class_MODEL_synchronized.class.getName(), "Ошибка " + e.toString() + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
+                Log.e(BinessLogicsAllPublics.class.getName(), "Ошибка " + e.toString() + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
                         " Линия  :" + Thread.currentThread().getStackTrace()[2].getLineNumber());
-                new RecordNewErros(context).recordnewerror(e.toString(), Class_MODEL_synchronized.class.getName(),
+                new RecordNewErros(context).recordnewerror(e.toString(), BinessLogicsAllPublics.class.getName(),
                         Thread.currentThread().getStackTrace()[2].getMethodName(), Thread.currentThread().getStackTrace()[2].getLineNumber());
             }
         return Результат_УдалениеТолькоШАблон;
@@ -2368,7 +1651,7 @@ Class_GRUD_SQL_Operations classGrudSqlOperationsУдалениеДанныхЧе
                     class_grud_sql_operationsПолучаемНаБазуUUIDфиоПолучаемИзТаблицыФИОИМЯ.concurrentHashMapНабор.put("СамFreeSQLКОд",
                             " SELECT id  FROM successlogin  ORDER BY date_update DESC ;");
                     // TODO: 12.10.2021  Ссылка Менеджер Потоков
-                    PUBLIC_CONTENT  Class_Engine_SQLГдеНаходитьсяМенеджерПотоков =new PUBLIC_CONTENT (context);
+                    BinessLogicPublicContent Class_Engine_SQLГдеНаходитьсяМенеджерПотоков =new BinessLogicPublicContent(context);
                     SQLiteCursor            Курсор_ПолучаемИмяСотрудникаИзТаблицыФИО=
                             (SQLiteCursor) class_grud_sql_operationsПолучаемНаБазуUUIDфиоПолучаемИзТаблицыФИОИМЯ.
                             new GetаFreeData(context).getfreedata(class_grud_sql_operationsПолучаемНаБазуUUIDфиоПолучаемИзТаблицыФИОИМЯ.concurrentHashMapНабор,
@@ -2494,7 +1777,7 @@ Class_GRUD_SQL_Operations classGrudSqlOperationsУдалениеДанныхЧе
 
 /*
 
-            Cursor Курсор_ЗагружаетДанныеПриСозданииТабеля = new Class_MODEL_synchronized(contextСозданиеБАзы).КурсорУниверсальныйДляБазыДанных("SuccessLogin", new String[]
+            Cursor Курсор_ЗагружаетДанныеПриСозданииТабеля = new BinessLogicsAllPublics(contextСозданиеБАзы).КурсорУниверсальныйДляБазыДанных("SuccessLogin", new String[]
                             {"success_users"}, null,
                     null, null, null, "date_update", null);///"SELECT name  FROM MODIFITATION_Client WHERE name=?",НазваниеТаблицНаСервере
 */
@@ -2606,7 +1889,7 @@ Class_GRUD_SQL_Operations classGrudSqlOperationsУдалениеДанныхЧе
 
 
 /*
-            Курсор_ДляЗагрузкиСотрудниковНепостредственнов = new Class_MODEL_synchronized(контекстLIstView).КурсорУниверсальныйДляБазыДанных("viewtabel",
+            Курсор_ДляЗагрузкиСотрудниковНепостредственнов = new BinessLogicsAllPublics(контекстLIstView).КурсорУниверсальныйДляБазыДанных("viewtabel",
                     new String[]{"name,uuid,BirthDate,snils,_id,status_carried_out"},//     new String[]{"name,id,uuid,BirthDate,snils},
                     " user_update= ?  AND  month_tabels=?  AND year_tabels=? AND nametabel=? AND organizations=? AND status_send!=?  AND nametabel_typename=? AND name IS NOT NULL",//AND status_send IS NULL//"Удаленная" //AND status_send!=?" /AND status_send IS NULL AND  name IS NOT NULL AND fio IS NOT NULL
                     new String[]{String.valueOf(IDЧьиДанныеДляСотрудников), String.valueOf(МЕсяцДляКурсораТабелей), String.valueOf(ГодДляКурсораТабелей),
@@ -2669,7 +1952,7 @@ Class_GRUD_SQL_Operations classGrudSqlOperationsУдалениеДанныхЧе
 
         Cursor Курсор_ДляЗагрузкиСотрудниковНепостредственновИзШаблона = null;
         try {
-            Курсор_ДляЗагрузкиСотрудниковНепостредственновИзШаблона = new Class_MODEL_synchronized(контекстLIstView).КурсорУниверсальныйДляБазыДанных("viewtabel",
+            Курсор_ДляЗагрузкиСотрудниковНепостредственновИзШаблона = new BinessLogicsAllPublics(контекстLIstView).КурсорУниверсальныйДляБазыДанных("viewtabel",
                     new String[]{"*"},//     new String[]{"name,id,uuid,BirthDate,snils},
                     "status_send!=?  AND cfo=? AND fio !=?  AND month_tabels=? AND  year_tabels =?  AND fio IS NOT NULL AND name IS NOT NULL",//  nametabel_typename  AND nametabel IS NOT NULL",//AND status_send IS NULL//"Удаленная" //AND status_send!=?" /AND status_send IS NULL AND  name IS NOT NULL AND fio IS NOT NULL
                     new String[]{"Удаленная", String.valueOf(ЦифровоеИмяНовгоТабеля), "", String.valueOf(месяцДляПермещенияПоТабелю), String.valueOf(годДляПермещенияПоТабелю)},
@@ -2677,7 +1960,7 @@ Class_GRUD_SQL_Operations classGrudSqlOperationsУдалениеДанныхЧе
 
             // TODO: 07.05.2021  данный курсор с датой показывает какой сотрудника изменили такой и сверху
 *//*
-            Курсор_ДляЗагрузкиСотрудниковНепостредственновИзШаблона = new Class_MODEL_synchronized(контекстLIstView).КурсорУниверсальныйДляБазыДанных("viewtabel",
+            Курсор_ДляЗагрузкиСотрудниковНепостредственновИзШаблона = new BinessLogicsAllPublics(контекстLIstView).КурсорУниверсальныйДляБазыДанных("viewtabel",
                     new String[]{"*"},//     new String[]{"name,id,uuid,BirthDate,snils},
                     "status_send!=?  AND nametabel_typename=? AND uuid !=? AND uuid IS NOT NULL AND name IS NOT NULL",// AND nametabel IS NOT NULL",//AND status_send IS NULL//"Удаленная" //AND status_send!=?" /AND status_send IS NULL AND  name IS NOT NULL AND fio IS NOT NULL
                     new String[]{ "Удаленная",String.valueOf(ЦифровоеИмяНовгоТабеля),""},
@@ -2808,7 +2091,7 @@ Class_GRUD_SQL_Operations classGrudSqlOperationsУдалениеДанныхЧе
 
 
         /*    // TODO: 06.09.2021  old
-            Курсор_ЗагружаетАрайдистЗначенийНовогоШаблонаВнутри = new Class_MODEL_synchronized(КонтекстДЛяСотрудника).КурсорУниверсальныйДляБазыДанных("Templates", new String[]
+            Курсор_ЗагружаетАрайдистЗначенийНовогоШаблонаВнутри = new BinessLogicsAllPublics(КонтекстДЛяСотрудника).КурсорУниверсальныйДляБазыДанных("Templates", new String[]
                             {"*"}, "user_update=?",
                     new String[]{String.valueOf(полученнаяUUIDОрганизациидДляКурсораСпинераДаты)},
                     null, null, "date_update DESC", null);
@@ -2846,7 +2129,7 @@ Class_GRUD_SQL_Operations classGrudSqlOperationsУдалениеДанныхЧе
             class_grud_sql_operationsУжеготовыеТабеля = new Class_GRUD_SQL_Operations(context);
 
 
-                /*    Курсор_ЗагружаетНазваниеТабеляНАОснованииСФО = new Class_MODEL_synchronized(КонтекстДляРежимаИнтрента).КурсорУниверсальныйДляБазыДанных("cfo", new String[]
+                /*    Курсор_ЗагружаетНазваниеТабеляНАОснованииСФО = new BinessLogicsAllPublics(КонтекстДляРежимаИнтрента).КурсорУниверсальныйДляБазыДанных("cfo", new String[]
                                     {"name"}, "id=?",
                             new String[]{String.valueOf(ТекущееСФО)}, null, null, "date_update DESC", "1");///"SELECT name  FROM MODIFITATION_Client WHERE name=?",НазваниеТаблицНаСервере
                     // TODO: 02.09.2021
@@ -3141,7 +2424,7 @@ Class_GRUD_SQL_Operations classGrudSqlOperationsУдалениеДанныхЧе
                             grudSqlOperations.concurrentHashMapНабор.put("СамFreeSQLКОд",
                                     " SELECT success_users,success_login  FROM successlogin  ORDER BY date_update DESC ;");
                             // TODO: 12.10.2021  Ссылка Менеджер Потоков
-                            PUBLIC_CONTENT publicContent = new PUBLIC_CONTENT(context);
+                            BinessLogicPublicContent publicContent = new BinessLogicPublicContent(context);
                             SQLiteCursor Курсор_ПолучаемИмяСотрудникаИзТаблицыФИО = null;
                             try {
                                 Курсор_ПолучаемИмяСотрудникаИзТаблицыФИО = (SQLiteCursor) grudSqlOperations.
@@ -3160,8 +2443,8 @@ Class_GRUD_SQL_Operations classGrudSqlOperationsУдалениеДанныхЧе
                             }
                             // TODO: 18.02.2025 get name Device
                             String ANDROID_ID =new ModulegetDeviceName().getDeviceName(context);
-                            Log.d(this.getClass().getName(), "  PUBLIC_CONTENT.ПубличноеИмяПользовательДлСервлета  " + ПубличноеЛогин +
-                                    " PUBLIC_CONTENT.ПубличноеПарольДлСервлета " + ПубличноеПароль);
+                            Log.d(this.getClass().getName(), "  BinessLogicPublicContent.ПубличноеИмяПользовательДлСервлета  " + ПубличноеЛогин +
+                                    " BinessLogicPublicContent.ПубличноеПарольДлСервлета " + ПубличноеПароль);
                             Request originalRequest = chain.request();
                             Request.Builder builder = originalRequest.newBuilder()
                                     .header("Content-Type", ВозвращяемыйТип)
@@ -3191,9 +2474,9 @@ Class_GRUD_SQL_Operations classGrudSqlOperationsУдалениеДанныхЧе
                 public void onFailure(@NonNull Call call, @NonNull IOException e) {
                     try{
                         Log.e(this.getClass().getName(), "  ERROR call  " + call + "  e" + e.toString());
-                        Log.e(Class_MODEL_synchronized.class.getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
+                        Log.e(BinessLogicsAllPublics.class.getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
                                 " Линия  :" + Thread.currentThread().getStackTrace()[2].getLineNumber() + " ОшибкаТекущегоМетода " + e.getMessage());
-                        new RecordNewErros(context).recordnewerror(e.toString(), Class_MODEL_synchronized.class.getName(),
+                        new RecordNewErros(context).recordnewerror(e.toString(), BinessLogicsAllPublics.class.getName(),
                                 Thread.currentThread().getStackTrace()[2].getMethodName(), Thread.currentThread().getStackTrace()[2].getLineNumber());
                         // TODO: 31.05.2022
                     } catch (Exception ex) {
@@ -3272,9 +2555,9 @@ Class_GRUD_SQL_Operations classGrudSqlOperationsУдалениеДанныхЧе
                     !ОшибкаТекущегоМетода.toString().trim().matches("(.*)SocketTimeout(.*)") &&
                     !ОшибкаТекущегоМетода.toString().trim().matches("(.*)java.net.ConnectException(.*)")
                     && !ОшибкаТекущегоМетода.toString().trim().matches("(.*)FileNotFoundException(.*)"))  {
-                Log.e(Class_MODEL_synchronized.class.getName(), "Ошибка " + ОшибкаТекущегоМетода + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
+                Log.e(BinessLogicsAllPublics.class.getName(), "Ошибка " + ОшибкаТекущегоМетода + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
                         " Линия  :" + Thread.currentThread().getStackTrace()[2].getLineNumber() + " ОшибкаТекущегоМетода " + ОшибкаТекущегоМетода.toString());
-                new RecordNewErros(this.context).recordnewerror(ex.toString(), Class_MODEL_synchronized.class.getName(),
+                new RecordNewErros(this.context).recordnewerror(ex.toString(), BinessLogicsAllPublics.class.getName(),
                         Thread.currentThread().getStackTrace()[2].getMethodName(), Thread.currentThread().getStackTrace()[2].getLineNumber());
 
             }
@@ -3576,7 +2859,7 @@ Class_GRUD_SQL_Operations classGrudSqlOperationsУдалениеДанныхЧе
 
 
             String ИмменоКакойСерверПодкючения =enableSSl+"://"+ИмяСерверИзХранилица+":"+ПортСерверИзХранилица+"/";
-          String  СтрокаСвязиСсервером = ИмменоКакойСерверПодкючения +new PUBLIC_CONTENT(context).getСсылкаНаРежимСервераТабель()+ "?"
+          String  СтрокаСвязиСсервером = ИмменоКакойСерверПодкючения +new BinessLogicPublicContent(context).getСсылкаНаРежимСервераТабель()+ "?"
                      + "JobForServer=" + "Хотим Получить ID для Генерации  UUID" + ""+
                   "&" + "IdUser=" + ПубличноеЛогин + "";
             СтрокаСвязиСсервером = СтрокаСвязиСсервером.replace(" ", "%20");
@@ -3627,9 +2910,9 @@ Class_GRUD_SQL_Operations classGrudSqlOperationsУдалениеДанныхЧе
                     public void onFailure(@NonNull Call call, @NonNull IOException e) {
                         Log.e(this.getClass().getName(), "  ERROR call  " + call + "  e" + e.toString());
                         БуферПубличныйIDОтСервера[0]=0;
-                        Log.e(Class_MODEL_synchronized.class.getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
+                        Log.e(BinessLogicsAllPublics.class.getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
                                 " Линия  :" + Thread.currentThread().getStackTrace()[2].getLineNumber() + " ОшибкаТекущегоМетода " + e.getMessage());
-                        new RecordNewErros(context).recordnewerror(e.toString(), Class_MODEL_synchronized.class.getName(),
+                        new RecordNewErros(context).recordnewerror(e.toString(), BinessLogicsAllPublics.class.getName(),
                                 Thread.currentThread().getStackTrace()[2].getMethodName(), Thread.currentThread().getStackTrace()[2].getLineNumber());
                         // TODO: 31.05.2022
                         dispatcherПроверкаЛогиниПароль.executorService().shutdown();

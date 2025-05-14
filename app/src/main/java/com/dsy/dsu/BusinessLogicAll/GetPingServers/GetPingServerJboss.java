@@ -2,28 +2,21 @@ package com.dsy.dsu.BusinessLogicAll.GetPingServers;
 
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 
 import androidx.annotation.NonNull;
-import androidx.loader.content.AsyncTaskLoader;
 
+import com.dsy.dsu.BusinessLogicAll.BinessLogicsAllPublics;
 import com.dsy.dsu.BusinessLogicAll.Class_GRUD_SQL_Operations;
-import com.dsy.dsu.BusinessLogicAll.Class_MODEL_synchronized;
 import com.dsy.dsu.BusinessLogicAll.GetConnectivityManagerAndroid;
 import com.dsy.dsu.Errors.WriteErrorForAll.RecordNewErros;
-import com.dsy.dsu.Hilt.JbossAdrress.getHiltPortJbossInterface;
-import com.dsy.dsu.Hilt.JbossAdrress.qualifiers.QualifierJbossServer3;
 
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Date;
 import java.util.LinkedHashMap;
 
-import javax.inject.Inject;
 import javax.net.ssl.SSLSocketFactory;
-
-import dagger.hilt.EntryPoints;
 
 
 public class GetPingServerJboss implements  GetPingServer {
@@ -109,7 +102,7 @@ public class GetPingServerJboss implements  GetPingServer {
 
             }else{
                 результатПрозвонаСокетом = false;
-                Log.e(Class_MODEL_synchronized.class.getName(), " ОШИБКА НЕТ СВЯЗИ С СЕВРЕРОМ  результатПрозвонаСокетом[0] " + результатПрозвонаСокетом);
+                Log.e(BinessLogicsAllPublics.class.getName(), " ОШИБКА НЕТ СВЯЗИ С СЕВРЕРОМ  результатПрозвонаСокетом[0] " + результатПрозвонаСокетом);
             }
 
             //todo old code
@@ -143,7 +136,7 @@ public class GetPingServerJboss implements  GetPingServer {
             // TODO: 12.01.2024
             // TODO: 10.11.2022  пинг к сервера
             БуферПолучениеДанныхРЕальныйСтатусРАботыSQLServer =
-                    new Class_MODEL_synchronized(context).
+                    new BinessLogicsAllPublics(context).
                             МетодУниверсальногоПинга(new String(), "application/gzip",
                                     "Хотим Получить Статус Реальной Работы SQL SERVER"
                                     ,0l,

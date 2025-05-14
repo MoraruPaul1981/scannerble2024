@@ -19,7 +19,7 @@ import dagger.hilt.components.SingletonComponent;
 @Module
 @InstallIn(SingletonComponent.class)
 @QualifierWorkerTable
-public class SubClassCreatingMainAllTables {
+public class GetWorkerTablesALl {
 
 
 

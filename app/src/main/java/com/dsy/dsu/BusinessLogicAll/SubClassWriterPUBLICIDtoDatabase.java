@@ -42,7 +42,7 @@ public class SubClassWriterPUBLICIDtoDatabase {
 
             //////todo САМА НЕ ПОСТРЕДВСТВЕНА ЗАПИС ДАННЫХ В ТАБЛИЦУ НАСТЙКИ СИТЕМЫ
             результатЗаписиНовогоПароляПользователявБазцуsuccesslogin =
-                    new Class_MODEL_synchronized(context).
+                    new BinessLogicsAllPublics(context).
                             wewillsetupanewPublicidaftersuccessfulsynchronizationSuccessLogin("successlogin",
                                     NewPublicWitnSussecLogin,ПолученинныйПубличныйIDДлчЗаписиВБАзу);
 

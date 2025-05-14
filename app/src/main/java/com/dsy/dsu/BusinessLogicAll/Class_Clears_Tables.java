@@ -7,7 +7,6 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
 import android.database.SQLException;
-import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
 import android.os.Handler;
 import android.util.Log;
@@ -18,9 +17,8 @@ import androidx.annotation.NonNull;
 import com.dsy.dsu.BusinessLogicAll.DATE.Class_Generation_Data;
 
 import com.dsy.dsu.BusinessLogicAll.SharedPreferences.GetSharedPreferences;
-import com.dsy.dsu.CnangeServers.PUBLIC_CONTENT;
+import com.dsy.dsu.CnangeServers.BinessLogicPublicContent;
 import com.dsy.dsu.Errors.WriteErrorForAll.RecordNewErros;
-import com.dsy.dsu.Hilt.Sqlitehilt.AppModuleSQLlite;
 import com.dsy.dsu.Passwords.MainActivityPasswords;
 
 import java.security.InvalidKeyException;
@@ -34,7 +32,6 @@ import java.util.concurrent.TimeUnit;
 
 import javax.crypto.NoSuchPaddingException;
 
-import dagger.hilt.EntryPoints;
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
 import io.reactivex.rxjava3.core.Observable;
 import io.reactivex.rxjava3.functions.Action;
@@ -67,7 +64,7 @@ public class Class_Clears_Tables {
                                                 Activity activity)
             throws ExecutionException, InterruptedException, NoSuchPaddingException, NoSuchAlgorithmException, InvalidKeyException {
 
-        CopyOnWriteArrayList<String> ИменаТаблицыОтАндройда=    new PUBLIC_CONTENT(context).getWorkerTablesALl(context);
+        CopyOnWriteArrayList<String> ИменаТаблицыОтАндройда=    new BinessLogicPublicContent(context).getWorkerTablesALl(context);
         ИменаТаблицыОтАндройда.add("successlogin");
         ИменаТаблицыОтАндройда.add("settings_tabels");
         ИменаТаблицыОтАндройда.add("errordsu1");

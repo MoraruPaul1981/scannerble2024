@@ -10,7 +10,6 @@ import android.content.Intent;
 import android.database.ContentObserver;
 import android.database.Cursor;
 import android.database.DataSetObserver;
-import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
@@ -62,11 +61,11 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.dsy.dsu.BusinessLogicAll.BinessLogicsAllPublics;
 import com.dsy.dsu.BusinessLogicAll.CELLUPDATE.SubClassUpdatesCELL;
 import com.dsy.dsu.BusinessLogicAll.VersionCurentTable;
 import com.dsy.dsu.Errors.WriteErrorForAll.RecordNewErros;
 import com.dsy.dsu.BusinessLogicAll.GetPublicID.GetPublicID;
-import com.dsy.dsu.BusinessLogicAll.Class_MODEL_synchronized;
 import com.dsy.dsu.BusinessLogicAll.DATE.Class_Generation_Data;
 import com.dsy.dsu.BusinessLogicAll.DATE.SubClassCursorLoader;
 import com.dsy.dsu.Tabels.Peoples.MainActivity_List_Peoples;
@@ -99,8 +98,6 @@ import java.util.concurrent.TimeUnit;
 import java.util.function.IntConsumer;
 import java.util.function.ToIntFunction;
 import java.util.stream.IntStream;
-
-import javax.inject.Inject;
 
 import dagger.hilt.android.AndroidEntryPoint;
 import io.reactivex.rxjava3.core.Flowable;
@@ -1412,7 +1409,7 @@ public class FragmentSingleTabelOneSwipe extends Fragment {
 
 
 
-                Log.d(Class_MODEL_synchronized.class.getName()," RowNumber  " + " cursorForViewPager " +cursor.getPosition()
+                Log.d(BinessLogicsAllPublics.class.getName()," RowNumber  " + " cursorForViewPager " +cursor.getPosition()
                         +"myViewHolder.getLayoutPosition()   "+myViewHolder.getLayoutPosition() +
                         "CurrentFragmentMaxItem  " + CurrentFragmentMaxItem);
 

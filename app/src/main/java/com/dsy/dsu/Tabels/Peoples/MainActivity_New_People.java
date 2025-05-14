@@ -11,9 +11,7 @@ import android.content.pm.ActivityInfo;
 import android.content.res.Configuration;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteCursor;
-import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Color;
-import android.graphics.Shader;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.util.Log;
@@ -41,9 +39,8 @@ import com.dsy.dsu.BusinessLogicAll.VersionCurentTable;
 import com.dsy.dsu.Errors.WriteErrorForAll.RecordNewErros;
 import com.dsy.dsu.BusinessLogicAll.Class_Generation_UUID;
 import com.dsy.dsu.BusinessLogicAll.Class_Generations_New_Customers_For_Tabels;
-import com.dsy.dsu.CnangeServers.PUBLIC_CONTENT;
+import com.dsy.dsu.CnangeServers.BinessLogicPublicContent;
 import com.dsy.dsu.BusinessLogicAll.SubClassGetPublicId;
-import com.dsy.dsu.Hilt.Sqlitehilt.AppModuleSQLlite;
 import com.dsy.dsu.R;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.android.material.snackbar.Snackbar;
@@ -58,20 +55,13 @@ import java.util.GregorianCalendar;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Locale;
-import java.util.Optional;
 import java.util.concurrent.CompletionService;
 import java.util.concurrent.ExecutionException;
-import java.util.concurrent.TimeUnit;
 import java.util.concurrent.TimeoutException;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.atomic.AtomicLong;
-import java.util.concurrent.locks.Condition;
-import java.util.concurrent.locks.ReentrantLock;
 
 
-import javax.inject.Inject;
-
-import dagger.hilt.EntryPoints;
 import dagger.hilt.android.AndroidEntryPoint;
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
 import io.reactivex.rxjava3.core.Completable;
@@ -115,7 +105,7 @@ public class MainActivity_New_People extends AppCompatActivity implements DatePi
     private   int Результат_ПриписиИзменнийВерсииДанныхВФонеПослеОбработкиТекущийТаблицыФИО;
 
 
-    private PUBLIC_CONTENT Class_Engine_SQLГдеНаходитьсяМенеджерПотоков =null;
+    private BinessLogicPublicContent Class_Engine_SQLГдеНаходитьсяМенеджерПотоков =null;
     private   ProgressDialog progressDialog;
     private      ConstraintLayout constraintLayout;
 
@@ -141,7 +131,7 @@ public class MainActivity_New_People extends AppCompatActivity implements DatePi
 
         activity=this;
         ////
-            Class_Engine_SQLГдеНаходитьсяМенеджерПотоков =new PUBLIC_CONTENT(getApplicationContext());
+            Class_Engine_SQLГдеНаходитьсяМенеджерПотоков =new BinessLogicPublicContent(getApplicationContext());
         /////todo данная настрока запрещает при запуке активти подскаваать клавиатуре вверх на компонеты eedittext
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_DISMISS_KEYGUARD
@@ -284,7 +274,7 @@ public class MainActivity_New_People extends AppCompatActivity implements DatePi
 
 // TODO: 07.09.2021    _old
                 Курсор_ИщемВсеОрганизации =
-                        new Class_MODEL_synchronized(getApplicationContext()).КурсорУниверсальныйДляБазыДанных("organization",
+                        new BinessLogicsAllPublics(getApplicationContext()).КурсорУниверсальныйДляБазыДанных("organization",
                                 new String[]{"*"}, " name IS NOT NULL", null, null, null, null, null);//
 
 
@@ -799,7 +789,7 @@ private void МетодВозврещениеНаПредыдущуюАктив�
 
             // TODO: 07.09.2021   _old
  Курсор_КоторыйПроверяетЭтоПустаяЯчейкаUUIDЕслиПустоеНоЭтоНовыйТабельБезСотрудниковиМыНеВставляемАОбновлем =
-                new Class_MODEL_synchronized(this).КурсорУниверсальныйДляБазыДанных("tabels",
+                new BinessLogicsAllPublics(this).КурсорУниверсальныйДляБазыДанных("tabels",
                         new String[]{"fio"}, "uuid=?", new String[]{УниверсальныйUUIDДляСОзданиеНовогоСотрудникаНаКонкретныйТабель}, null, null, null, null);//"SuccessLogin", "date_update","id=","1",null,null,null,null
         ///TODO УДАЛЕМ ПАМЯТЬ*/
 

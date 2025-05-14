@@ -4,16 +4,12 @@ import android.app.Activity;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.sqlite.SQLiteCursor;
-import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 
-import com.dsy.dsu.CnangeServers.PUBLIC_CONTENT;
+import com.dsy.dsu.CnangeServers.BinessLogicPublicContent;
 import com.dsy.dsu.Errors.WriteErrorForAll.RecordNewErros;
-import com.dsy.dsu.Hilt.Sqlitehilt.AppModuleSQLlite;
 
 import java.util.Date;
-
-import dagger.hilt.EntryPoints;
 
 
 public class Class_Generations_New_Customers_For_Tabels {
@@ -45,7 +41,7 @@ public class Class_Generations_New_Customers_For_Tabels {
 
 
             // TODO: 25.03.2021 вставка фио
-            getcreatingAnewEmployee = new Class_MODEL_synchronized(activity,sqLiteDatabase).
+            getcreatingAnewEmployee = new BinessLogicsAllPublics(activity,sqLiteDatabase).
                     ВставкаДанныхЧерезКонтейнерТолькоПриСозданииНовогоСотрудникаУниверсальная(ТекущаяТаблицаОбработки,
                             АдаптерДляСозданиеНовогоСотрудаТАблицаФИО  );
 
@@ -112,7 +108,7 @@ public class Class_Generations_New_Customers_For_Tabels {
         try{
             String ТекущаяОбрабатываемаяТаблица="data_tabels";
             // TODO: 25.03.2021 вставка табель
-            РезультатВставкиНовогоТабеляЧерезКонтрейнерТаблицыТабель = new Class_MODEL_synchronized(activity,sqLiteDatabase).
+            РезультатВставкиНовогоТабеляЧерезКонтрейнерТаблицыТабель = new BinessLogicsAllPublics(activity,sqLiteDatabase).
                     ВставкаДанныхЧерезКонтейнерТолькоПриСозданииНовогоСотрудникаУниверсальная(ТекущаяОбрабатываемаяТаблица,
                             АдаптерДляСозданиеНовогоСотрудаТАблицаТабель  );
 
@@ -128,7 +124,7 @@ public class Class_Generations_New_Customers_For_Tabels {
                 class_grud_sql_operationsУзнаемСохраненыйРежимРаботыССетью.concurrentHashMapНабор.put("СтолбцыОбработки","mode_weekend");
 
                 // TODO: 12.10.2021  Ссылка Менеджер Потоков
-                PUBLIC_CONTENT Class_Engine_SQLГдеНаходитьсяМенеджерПотоков = new PUBLIC_CONTENT(activity);
+                BinessLogicPublicContent Class_Engine_SQLГдеНаходитьсяМенеджерПотоков = new BinessLogicPublicContent(activity);
                 // TODO: 02.09.2021 exe sql
                 SQLiteCursor КурсорУзнаемСохраненыйРежимРаботыССетью= (SQLiteCursor) class_grud_sql_operationsУзнаемСохраненыйРежимРаботыССетью.
                         new GetData(activity).getdata(class_grud_sql_operationsУзнаемСохраненыйРежимРаботыССетью.concurrentHashMapНабор,
@@ -142,12 +138,12 @@ public class Class_Generations_New_Customers_For_Tabels {
                 // TODO: 24.05.2021 КОД ДЛЯ АВТОМАТИЧЕСКОГО ВЫСТАВЛЕНИЯ ВЫХОДНЫХ ДНЕЙ В ТАБЕЛЬ
                 if (РезультатКакойРежимЗаписанвБазеВЫходныеДни.contentEquals("Включить")) {
                     ContentValues КонтрейнерДляВставкиВВыходныеДниМЕткиВыходные=
-                            new Class_MODEL_synchronized(activity,sqLiteDatabase). МетодВычисляемВыходныеДниПриСозданииНовогоТабеляАвтоРЕжим(activity,
+                            new BinessLogicsAllPublics(activity,sqLiteDatabase). МетодВычисляемВыходныеДниПриСозданииНовогоТабеляАвтоРЕжим(activity,
                             ГодПриВставкеНовогоСотрудника,МЕсяцПриВставкеНовогоСотрудника);
                     Log.w(activity.getClass().getName(), " КонтрейнерДляВставкиВВыходныеДниМЕткиВыходные  " + "--"
                             +КонтрейнерДляВставкиВВыходныеДниМЕткиВыходные);/////
                         // TODO: 25.03.2021 вставка табель
-                    Integer          РезультатВставкиВЫходнихДнейЧерезКонтрейнерТаблицыТабель  = new Class_MODEL_synchronized(activity,sqLiteDatabase)
+                    Integer          РезультатВставкиВЫходнихДнейЧерезКонтрейнерТаблицыТабель  = new BinessLogicsAllPublics(activity,sqLiteDatabase)
                             .ЛокальногоОбновлениеДанныхЧерезКонтейнерУниверсальная(ТекущаяОбрабатываемаяТаблица,
                                 КонтрейнерДляВставкиВВыходныеДниМЕткиВыходные,
                                 UUIDgenetarForData_tabels,

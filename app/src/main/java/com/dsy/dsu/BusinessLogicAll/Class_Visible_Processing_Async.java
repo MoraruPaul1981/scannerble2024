@@ -32,7 +32,7 @@ public class Class_Visible_Processing_Async {
                                              Integer ОбщееКоличествоСтрокВJSON) {
         int Проценты = 0;
         try{
-                Log.d(Class_MODEL_synchronized.class.getName(),
+                Log.d(BinessLogicsAllPublics.class.getName(),
                         " Результат_Обновление_ИлиВставкиДанных  " + Результат_Обновление_ИлиВставкиДанных);
                 Log.d(this.getClass().getName(), " ПроцентыДляВизуализацииИхПриСинхронизации" + Результат_Обновление_ИлиВставкиДанных + " ОбщееКоличествоСтрокВJSON " + ОбщееКоличествоСтрокВJSON);
                 String ФиналПроцентыДляВизуализацииИхПриСинхронизации = null;
@@ -75,9 +75,9 @@ public class Class_Visible_Processing_Async {
                     Log.d(this.getClass().getName(), " Проценты " + Проценты);
         } catch (Exception e) {
             e.printStackTrace();
-            Log.e(Class_MODEL_synchronized.class.getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
+            Log.e(BinessLogicsAllPublics.class.getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
                     " Линия  :" + Thread.currentThread().getStackTrace()[2].getLineNumber());
-            new RecordNewErros(context).recordnewerror(e.toString(), Class_MODEL_synchronized.class.getName(),
+            new RecordNewErros(context).recordnewerror(e.toString(), BinessLogicsAllPublics.class.getName(),
                     Thread.currentThread().getStackTrace()[2].getMethodName(), Thread.currentThread().getStackTrace()[2].getLineNumber());
 
         }
