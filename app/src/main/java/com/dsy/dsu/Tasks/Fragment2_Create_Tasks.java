@@ -40,13 +40,13 @@ import androidx.work.WorkInfo;
 import androidx.work.WorkManager;
 
 import com.dsy.dsu.BusinessLogicAll.Class_GRUD_SQL_Operations;
+import com.dsy.dsu.BusinessLogicAll.CoreBinessLogics;
 import com.dsy.dsu.BusinessLogicAll.GetPublicID.HiltInterfacesPublicID;
 import com.dsy.dsu.CnangeServers.BinessLogicPublicContent;
 import com.dsy.dsu.Errors.WriteErrorForAll.RecordNewErros;
 
 import com.dsy.dsu.BusinessLogicAll.GetPublicID.GetPublicID;
 
-import com.dsy.dsu.BusinessLogicAll.CoreBinessLogic;
 import com.dsy.dsu.Hilt.Sqlitehilt.AppModuleSQLlite;
 import com.dsy.dsu.R;
 import com.google.android.material.bottomnavigation.BottomNavigationItemView;
@@ -1707,7 +1707,7 @@ public class Fragment2_Create_Tasks extends Fragment {
 
                                         Integer РезультатУдаленияСозданныйЗадач = null;
                                         try {
-                                            РезультатУдаленияСозданныйЗадач = new CoreBinessLogic(getContext())
+                                            РезультатУдаленияСозданныйЗадач = new CoreBinessLogics(getContext())
                                                     .УдалениеДанныхЧерезКонтейнерУниверсальная("data_notification",
                                                             "uuid", ПолучаемUUIDТекущйПозицииВRecyreView, "status_write", "5");
 

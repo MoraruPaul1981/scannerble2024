@@ -60,9 +60,7 @@ public class Class_Clears_Tables {
 
     // TODO: 24.04.2023 Метод Семны ДАнных Пользователя
     public Integer методСменаДанныхПользователя(Context context,
-                                                CompletionService МенеджерПотоковВнутрений,
-                                                Activity activity)
-            throws ExecutionException, InterruptedException, NoSuchPaddingException, NoSuchAlgorithmException, InvalidKeyException {
+                                                Activity activity) {
 
         CopyOnWriteArrayList<String> ИменаТаблицыОтАндройда=    new BinessLogicPublicContent(context).getWorkerTablesALl(context);
         ИменаТаблицыОтАндройда.add("successlogin");

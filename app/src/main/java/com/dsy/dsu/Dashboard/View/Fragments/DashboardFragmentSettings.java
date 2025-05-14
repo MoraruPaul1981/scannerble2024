@@ -38,7 +38,7 @@ import com.dsy.dsu.BootAndAsync.Model.Service.bl_service_boot.StartServiceBootAn
 import com.dsy.dsu.BootAndAsync.Model.BinesslogicActivityBoot.GetComponentActivityBootService;
 
 
-import com.dsy.dsu.BusinessLogicAll.CoreBinessLogic;
+import com.dsy.dsu.BusinessLogicAll.CoreBinessLogics;
 import com.dsy.dsu.BusinessLogicAll.Class_Clears_Tables;
 import com.dsy.dsu.BusinessLogicAll.GetPingServers.GetPingServerJboss;
 import com.dsy.dsu.CnangeServers.BinessLogicPublicContent;
@@ -701,10 +701,10 @@ public class DashboardFragmentSettings extends  DialogFragment {
                                 // TODO: 16.12.2021 НЕПОСРЕДСТВЕННЫЙ ПИНГ СИСТЕНМ ИНТРЕНАТ НА НАЛИЧЕНИ СВАЗИ С БАЗОЙ SQL SERVER
                          Boolean   СтатусРаботыСервера =
                                         new GetPingServerJboss(getContext()).
-                                                pingServerJbossSuccessfulOrNot(getsslSocketFactory2, getsqLiteDatabase,getHiltPortJboss);
+                                                pingServerJbossSuccessfulOrNot(getsslSocketFactory2,getHiltPortJboss);
 
                                 if (СтатусРаботыСервера == true) {
-                                    String ПолученыйТекущееИмяПользователя = new CoreBinessLogic(getContext())
+                                    String ПолученыйТекущееИмяПользователя = new CoreBinessLogics(getContext())
                                             .МетодПолучениеИмяСистемыДляСменыПользователя(getActivity());
 
                                 MaterialAlertDialogBuilder materialAlertDialogBuilder = new MaterialAlertDialogBuilder(getActivity())
@@ -732,12 +732,12 @@ public class DashboardFragmentSettings extends  DialogFragment {
 
 
 
-                                                BinessLogicPublicContent Class_Engine_SQLГдеНаходитьсяМенеджерПотоков = new BinessLogicPublicContent(getActivity());
+
                                                 Class_Clears_Tables class_clears_tables=     new Class_Clears_Tables(getActivity(),
                                                         handlerAsync,
                                                         prograssbarСменаДанныхПользователя);
 
-                                                  class_clears_tables.методСменаДанныхПользователя(getActivity(), Class_Engine_SQLГдеНаходитьсяМенеджерПотоков.МенеджерПотоков, getActivity());
+                                                  class_clears_tables.методСменаДанныхПользователя(getContext(),getActivity() );
 
 
 

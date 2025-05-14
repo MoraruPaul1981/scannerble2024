@@ -669,7 +669,7 @@ public class Fragment_Contacts_КонтактыЧата extends Fragment    {
 /*
 
                 // TODO: 08.09.2021  _____old
-                Курсор_ВычисляемПУбличныйID=new CoreBinessLogic(getContext()).КурсорУниверсальныйБазыДанных("SELECT id FROM SuccessLogin LIMIT 1 ");
+                Курсор_ВычисляемПУбличныйID=new CoreBinessLogics(getContext()).КурсорУниверсальныйБазыДанных("SELECT id FROM SuccessLogin LIMIT 1 ");
 */
 
                 /////todo  результат

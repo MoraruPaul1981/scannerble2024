@@ -32,7 +32,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.dsy.dsu.BootAndAsync.View.MainActivityBootAndAsync;
 
-import com.dsy.dsu.BusinessLogicAll.CoreBinessLogic;
+import com.dsy.dsu.BusinessLogicAll.CoreBinessLogics;
 import com.dsy.dsu.BusinessLogicAll.Class_Clears_Tables;
 import com.dsy.dsu.BusinessLogicAll.GetPingServers.GetPingServerJboss;
 
@@ -301,7 +301,7 @@ public class MainActivityPasswords extends AppCompatActivity {
         try{
         Integer PublicID;
         //TODO запукаем метод Афторизаиция по ЛОГИНУ И ПАРОЛЮ
-        PublicID = new CoreBinessLogic(getApplicationContext()).
+        PublicID = new CoreBinessLogics(getApplicationContext()).
                 методАвторизацииЛогинИПаполь(getApplicationContext(), preferences, ПубличноеЛогин, ПубличноеПароль,getsslSocketFactory2);
         Log.d(this.getClass().getName(), " PublicID " + PublicID);
 

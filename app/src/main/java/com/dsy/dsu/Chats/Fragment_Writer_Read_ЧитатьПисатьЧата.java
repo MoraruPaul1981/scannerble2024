@@ -37,7 +37,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import androidx.work.WorkInfo;
 import androidx.work.WorkManager;
 
-import com.dsy.dsu.BusinessLogicAll.CoreBinessLogic;
+import com.dsy.dsu.BusinessLogicAll.CoreBinessLogics;
 import com.dsy.dsu.BusinessLogicAll.Class_GRUD_SQL_Operations;
 import com.dsy.dsu.BusinessLogicAll.GetPublicID.HiltInterfacesPublicID;
 import com.dsy.dsu.Errors.WriteErrorForAll.RecordNewErros;
@@ -78,7 +78,7 @@ public class Fragment_Writer_Read_ЧитатьПисатьЧата extends Fragm
     protected Activity ActivityДляСинхронизацииОбмена = null;
     private SQLiteDatabase sqLiteDatabase ;
     protected String ПолученыйФИОIDДляЧата = new String();
-    protected CoreBinessLogic modelДляФрагментаДляОперацииЗаписиНовгоСтатусаПрочитанного;
+    protected CoreBinessLogics modelДляФрагментаДляОперацииЗаписиНовгоСтатусаПрочитанного;
     protected BinessLogicPublicContent Class_Engine_SQLГдеНаходитьсяМенеджерПотоков = null;
     protected LinkedBlockingQueue<String> ЛистЗапускаемТолькоТаблицыЧатаВСинхронизации = new LinkedBlockingQueue();
     protected WorkInfo WorkInfoИнформацияОЗапущенойСлужбеОдноразовая;
@@ -182,7 +182,7 @@ public class Fragment_Writer_Read_ЧитатьПисатьЧата extends Fragm
             recordNewErros =new RecordNewErros(getContext());
 
             Class_Engine_SQLГдеНаходитьсяМенеджерПотоков = new BinessLogicPublicContent(getContext());
-            modelДляФрагментаДляОперацииЗаписиНовгоСтатусаПрочитанного = new CoreBinessLogic(getContext());
+            modelДляФрагментаДляОперацииЗаписиНовгоСтатусаПрочитанного = new CoreBinessLogics(getContext());
 
 
 

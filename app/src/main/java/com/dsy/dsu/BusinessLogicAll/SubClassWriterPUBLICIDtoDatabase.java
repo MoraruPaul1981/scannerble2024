@@ -42,7 +42,7 @@ public class SubClassWriterPUBLICIDtoDatabase {
 
             //////todo САМА НЕ ПОСТРЕДВСТВЕНА ЗАПИС ДАННЫХ В ТАБЛИЦУ НАСТЙКИ СИТЕМЫ
             результатЗаписиНовогоПароляПользователявБазцуsuccesslogin =
-                    new CoreBinessLogic(context).
+                    new CoreBinessLogics(context).
                             wewillsetupanewPublicidaftersuccessfulsynchronizationSuccessLogin("successlogin",
                                     NewPublicWitnSussecLogin,ПолученинныйПубличныйIDДлчЗаписиВБАзу);
 

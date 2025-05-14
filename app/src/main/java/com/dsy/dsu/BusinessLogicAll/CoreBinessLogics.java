@@ -27,7 +27,7 @@ import com.dsy.dsu.CnangeServers.BinessLogicPublicContent;
 import com.dsy.dsu.Errors.WriteErrorForAll.RecordNewErros;
 import com.dsy.dsu.Hilt.JbossAdrress.getHiltPortJbossInterface;
 import com.dsy.dsu.Hilt.OkhhtpBuilder.GetAsyncOkHttpClientBuilder;
-import com.google.common.util.concurrent.AtomicDouble;
+import com.sous.backasync.launch.ModuleDeleting;
 import com.sous.backasync.launch.ModuleInserting;
 import com.sous.backasync.launch.ModuleQuety;
 import com.sous.backasync.launch.ModuleUpdating;
@@ -50,13 +50,20 @@ import java.util.Optional;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.TimeoutException;
+import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.atomic.AtomicLong;
 import java.util.concurrent.atomic.AtomicReference;
 import java.util.zip.GZIPOutputStream;
 
+import javax.inject.Inject;
+import javax.inject.Named;
 import javax.net.ssl.SSLSocketFactory;
 
+import dagger.Module;
 import dagger.hilt.EntryPoints;
+import dagger.hilt.InstallIn;
+import dagger.hilt.android.qualifiers.ApplicationContext;
+import dagger.hilt.components.SingletonComponent;
 import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.Dispatcher;
@@ -69,7 +76,13 @@ import okhttp3.Response;
 import okio.BufferedSink;
 
 ///////todo Универсальный Код Логики
- public class CoreBinessLogic {
+
+
+
+@Module
+@InstallIn(SingletonComponent.class)
+@Named
+ public class CoreBinessLogics {
   public     Context context;
     private BinessLogicPublicContent binessLogicPublicContent =null;
 
@@ -78,7 +91,7 @@ import okio.BufferedSink;
     private SharedPreferences preferencesJboss;
 
 
-    public CoreBinessLogic(@NotNull Context context) {
+    public  @Inject CoreBinessLogics(@ApplicationContext Context context) {
        this. context=context;
        try{
         //TODO контроль потоков
@@ -113,7 +126,7 @@ import okio.BufferedSink;
                                                                               Integer ИмяПорта,
                                                                               SSLSocketFactory getsslSocketFactory2) {
 
-        final StringBuffer[] БуферСамиДанныеОтСервера = {new StringBuffer()};
+        AtomicReference<StringBuffer>  БуферСамиДанныеОтСервера = new AtomicReference<>(new StringBuffer());
         try {
             String enableSSl = preferencesJboss.getString("enablesll","http");
             String СтрокаСвязиСсервером =enableSSl+"://"+ИмяСервера+":"+ИмяПорта+"/"+new BinessLogicPublicContent(context).getСсылкаНаРежимСервераТабель();;
@@ -127,12 +140,8 @@ import okio.BufferedSink;
             СтрокаСвязиСсервером = СтрокаСвязиСсервером.replace(" ", "%20");
             URL Adress = new URL(СтрокаСвязиСсервером);
             Log.d(this.getClass().getName(), " СтрокаСвязиСсервером " + СтрокаСвязиСсервером);
-
-
-
-
+            // TODO: 14.05.2025
             OkHttpClient.Builder builderokhtttp=   new GetAsyncOkHttpClientBuilder(context,getsslSocketFactory2).GetAsyncOkHttpClientBuilder(enableSSl);
-
             OkHttpClient okHttpClientДанныеОтСервера = builderokhtttp.addInterceptor(new Interceptor() {
                         @Override
                         public Response intercept(Chain chain) throws IOException {
@@ -189,9 +198,9 @@ import okio.BufferedSink;
                 @Override
                 public void onFailure(@NonNull Call call, @NonNull IOException e) {
                     Log.e(this.getClass().getName(), "  ERROR call  " + call + "  e" + e.toString());
-                    Log.e(CoreBinessLogic.class.getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
+                    Log.e(CoreBinessLogics.class.getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
                             " Линия  :" + Thread.currentThread().getStackTrace()[2].getLineNumber() + " ОшибкаТекущегоМетода " + e.getMessage());
-                    new RecordNewErros(context).recordnewerror(e.toString(), CoreBinessLogic.class.getName(),
+                    new RecordNewErros(context).recordnewerror(e.toString(), CoreBinessLogics.class.getName(),
                             Thread.currentThread().getStackTrace()[2].getMethodName(), Thread.currentThread().getStackTrace()[2].getLineNumber());
                     // TODO: 28.12.2024
                     // TODO: 31.05.2022
@@ -216,18 +225,18 @@ import okio.BufferedSink;
                             DownloadReader downloadReader=new DownloadReader();
                             // TODO: 07.04.2025 обрабоатываем пршедщий файл
                             // TODO: 07.04.2025 обрабоатываем пршедщий файл
-                            БуферСамиДанныеОтСервера[0]=downloadReader.downloadReader(context, new GetBinessLogicDownloadReader(),
-                                    response.body().bytes()) ;
+                            БуферСамиДанныеОтСервера.getAndSet(downloadReader.downloadReader(context, new GetBinessLogicDownloadReader(), response.body().bytes())) ;
                             Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                                     " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                                    " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "     БуферСамиДанныеОтСервера[0] " +    БуферСамиДанныеОтСервера[0]
+                                    " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "     БуферСамиДанныеОтСервера.get()" +   БуферСамиДанныеОтСервера.get()
                                     +  " РазмерПришедшегоПотока " + РазмерПришедшегоПотока);
 
                         }
 
                         Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                                 " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                                " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "   БуферСамиДанныеОтСервера[0] " +  БуферСамиДанныеОтСервера[0]);
+                                " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "     БуферСамиДанныеОтСервера.get()" +   БуферСамиДанныеОтСервера.get()
+                                +  " РазмерПришедшегоПотока " + РазмерПришедшегоПотока);
 
                         // TODO: 28.12.2024 closeting
                         response.close();
@@ -253,14 +262,14 @@ import okio.BufferedSink;
                     !ОшибкаТекущегоМетода.toString().trim().trim().matches("(.*)java.net.sockettimeoutexception(.*)")
                     &&
                     !ОшибкаТекущегоМетода.toString().trim().matches("(.*)SocketTimeout(.*)")) {
-                Log.e(CoreBinessLogic.class.getName(), "Ошибка " + ОшибкаТекущегоМетода + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
+                Log.e(CoreBinessLogics.class.getName(), "Ошибка " + ОшибкаТекущегоМетода + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
                         " Линия  :" + Thread.currentThread().getStackTrace()[2].getLineNumber() + " ОшибкаТекущегоМетода " + ОшибкаТекущегоМетода.toString());
-                new RecordNewErros(context).recordnewerror(e.toString(), CoreBinessLogic.class.getName(),
+                new RecordNewErros(context).recordnewerror(e.toString(), CoreBinessLogics.class.getName(),
                         Thread.currentThread().getStackTrace()[2].getMethodName(), Thread.currentThread().getStackTrace()[2].getLineNumber());
             }
         }
         //// todo get ASYNtASK
-        return БуферСамиДанныеОтСервера[0];
+        return БуферСамиДанныеОтСервера.get();
 
     }
 
@@ -346,9 +355,9 @@ import okio.BufferedSink;
                 @Override
                 public void onFailure(@NonNull Call call, @NonNull IOException e) {
                     Log.e(this.getClass().getName(), "  ERROR call  " + call + "  e" + e.toString());
-                    Log.e(CoreBinessLogic.class.getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
+                    Log.e(CoreBinessLogics.class.getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
                             " Линия  :" + Thread.currentThread().getStackTrace()[2].getLineNumber() + " ОшибкаТекущегоМетода " + e.getMessage());
-                    new RecordNewErros(context).recordnewerror(e.toString(), CoreBinessLogic.class.getName(),
+                    new RecordNewErros(context).recordnewerror(e.toString(), CoreBinessLogics.class.getName(),
                             Thread.currentThread().getStackTrace()[2].getMethodName(), Thread.currentThread().getStackTrace()[2].getLineNumber());
                     // TODO: 31.05.2022
                     dispatcherДанныеОтСервера.executorService().shutdown();
@@ -369,7 +378,7 @@ import okio.BufferedSink;
                                 // TODO: 07.04.2025  получаем STEAM  от сервера и обрабоатываем его для READER
                                 DownloadByte downloadByte=new DownloadByte();
                                 // TODO: 07.04.2025 обрабоатываем пршедщий файл
-                                inputStreamJaksonByte.set(downloadByte.downloadByte(context, new GetBinessLogicDownloadByteBuffer(), response.body().bytes())); ;
+                                inputStreamJaksonByte.getAndSet(downloadByte.downloadByte(context, new GetBinessLogicDownloadByteBuffer(), response.body().bytes())); ;
 
                                 Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                                         " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
@@ -399,9 +408,9 @@ import okio.BufferedSink;
                     !ОшибкаТекущегоМетода.toString().trim().matches("(.*)java.net.sockettimeoutexception(.*)")
                     &&
                     !ОшибкаТекущегоМетода.toString().trim().matches("(.*)SocketTimeout(.*)")) {
-                Log.e(CoreBinessLogic.class.getName(), "Ошибка " + ОшибкаТекущегоМетода + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
+                Log.e(CoreBinessLogics.class.getName(), "Ошибка " + ОшибкаТекущегоМетода + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
                         " Линия  :" + Thread.currentThread().getStackTrace()[2].getLineNumber() + " ОшибкаТекущегоМетода " + ОшибкаТекущегоМетода.toString());
-                new RecordNewErros(context).recordnewerror(e.toString(), CoreBinessLogic.class.getName(),
+                new RecordNewErros(context).recordnewerror(e.toString(), CoreBinessLogics.class.getName(),
                         Thread.currentThread().getStackTrace()[2].getMethodName(), Thread.currentThread().getStackTrace()[2].getLineNumber());
             }
         }
@@ -510,9 +519,9 @@ import okio.BufferedSink;
                 @Override
                 public void onFailure(@NonNull Call call, @NonNull IOException e) {
                     Log.e(this.getClass().getName(), "  ERROR call  " + call + "  e" + e.toString());
-                    Log.e(CoreBinessLogic.class.getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
+                    Log.e(CoreBinessLogics.class.getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
                             " Линия  :" + Thread.currentThread().getStackTrace()[2].getLineNumber() + " ОшибкаТекущегоМетода " + e.getMessage());
-                    new RecordNewErros(context).recordnewerror(e.toString(), CoreBinessLogic.class.getName(),
+                    new RecordNewErros(context).recordnewerror(e.toString(), CoreBinessLogics.class.getName(),
                             Thread.currentThread().getStackTrace()[2].getMethodName(), Thread.currentThread().getStackTrace()[2].getLineNumber());
                     // TODO: 31.05.2022
                     dispatcherПинг.executorService().shutdown();
@@ -567,9 +576,9 @@ import okio.BufferedSink;
                     &&
                     !ОшибкаТекущегоМетода.toString().trim().matches("(.*)SocketTimeout(.*)")) {
 
-                Log.e(CoreBinessLogic.class.getName(), "Ошибка " + ОшибкаТекущегоМетода + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
+                Log.e(CoreBinessLogics.class.getName(), "Ошибка " + ОшибкаТекущегоМетода + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
                         " Линия  :" + Thread.currentThread().getStackTrace()[2].getLineNumber() + " ОшибкаТекущегоМетода " + ОшибкаТекущегоМетода.toString());
-                new RecordNewErros(context).recordnewerror(ex.toString(), CoreBinessLogic.class.getName(),
+                new RecordNewErros(context).recordnewerror(ex.toString(), CoreBinessLogics.class.getName(),
                         Thread.currentThread().getStackTrace()[2].getMethodName(), Thread.currentThread().getStackTrace()[2].getLineNumber());
             }
         }
@@ -694,9 +703,9 @@ import okio.BufferedSink;
                         @Override
                         public void onFailure(@NonNull Call call, @NonNull IOException e) {
                             Log.e(this.getClass().getName(), "  ERROR call  " + call + "  e" + e.toString());
-                            Log.e(CoreBinessLogic.class.getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
+                            Log.e(CoreBinessLogics.class.getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
                                     " Линия  :" + Thread.currentThread().getStackTrace()[2].getLineNumber() + " ОшибкаТекущегоМетода " + e.getMessage());
-                            new RecordNewErros(context).recordnewerror(e.toString(), CoreBinessLogic.class.getName(),
+                            new RecordNewErros(context).recordnewerror(e.toString(), CoreBinessLogics.class.getName(),
                                     Thread.currentThread().getStackTrace()[2].getMethodName(), Thread.currentThread().getStackTrace()[2].getLineNumber());
                             // TODO: 31.05.2022
                             dispatcherCallsBackСервера.executorService().shutdown();
@@ -752,9 +761,9 @@ import okio.BufferedSink;
                     if (!ОшибкаТекущегоМетода.toString().trim().matches("(.*)java.io.EOFException(.*)") &&
                             !ОшибкаТекущегоМетода.toString().trim().matches("(.*)java.net.sockettimeoutexception(.*)") &&
                             !ОшибкаТекущегоМетода.toString().trim().matches("(.*)SocketTimeout(.*)")) {
-                        Log.e(CoreBinessLogic.class.getName(), "Ошибка " + ex + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
+                        Log.e(CoreBinessLogics.class.getName(), "Ошибка " + ex + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
                                 " Линия  :" + Thread.currentThread().getStackTrace()[2].getLineNumber());
-                        new RecordNewErros(context).recordnewerror(ex.toString(), CoreBinessLogic.class.getName(),
+                        new RecordNewErros(context).recordnewerror(ex.toString(), CoreBinessLogics.class.getName(),
                                 Thread.currentThread().getStackTrace()[2].getMethodName(), Thread.currentThread().getStackTrace()[2].getLineNumber());
                     }
                 }
@@ -786,9 +795,9 @@ import okio.BufferedSink;
 
         } catch (Exception e) {
             e.printStackTrace();
-            Log.e(CoreBinessLogic.class.getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
+            Log.e(CoreBinessLogics.class.getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
                     " Линия  :" + Thread.currentThread().getStackTrace()[2].getLineNumber());
-            new RecordNewErros(context).recordnewerror(e.toString(), CoreBinessLogic.class.getName(),
+            new RecordNewErros(context).recordnewerror(e.toString(), CoreBinessLogics.class.getName(),
                     Thread.currentThread().getStackTrace()[2].getMethodName(), Thread.currentThread().getStackTrace()[2].getLineNumber());
         }
         return Результат_ВставкиДанных;
@@ -818,9 +827,9 @@ import okio.BufferedSink;
         } catch (Exception e) {///////ошибки
             e.printStackTrace();
             ///метод запись ошибок в таблицу
-            Log.e(CoreBinessLogic.class.getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
+            Log.e(CoreBinessLogics.class.getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
                     " Линия  :" + Thread.currentThread().getStackTrace()[2].getLineNumber());
-            new RecordNewErros(context).recordnewerror(e.toString(), CoreBinessLogic.class.getName(),
+            new RecordNewErros(context).recordnewerror(e.toString(), CoreBinessLogics.class.getName(),
                     Thread.currentThread().getStackTrace()[2].getMethodName(), Thread.currentThread().getStackTrace()[2].getLineNumber());
         }
         return Результат_ОбновлениеДанных;
@@ -846,9 +855,9 @@ import okio.BufferedSink;
 
             } catch (Exception e) {
                 e.printStackTrace();
-                Log.e(CoreBinessLogic.class.getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
+                Log.e(CoreBinessLogics.class.getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
                         " Линия  :" + Thread.currentThread().getStackTrace()[2].getLineNumber());
-                new RecordNewErros(context).recordnewerror(e.toString(), CoreBinessLogic.class.getName(),
+                new RecordNewErros(context).recordnewerror(e.toString(), CoreBinessLogics.class.getName(),
                         Thread.currentThread().getStackTrace()[2].getMethodName(), Thread.currentThread().getStackTrace()[2].getLineNumber());
 
             }
@@ -870,9 +879,9 @@ import okio.BufferedSink;
 
             } catch (Exception e) {///////ошибки
                 e.printStackTrace();
-                Log.e(CoreBinessLogic.class.getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
+                Log.e(CoreBinessLogics.class.getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
                         " Линия  :" + Thread.currentThread().getStackTrace()[2].getLineNumber());
-                new RecordNewErros(context).recordnewerror(e.toString(), CoreBinessLogic.class.getName(),
+                new RecordNewErros(context).recordnewerror(e.toString(), CoreBinessLogics.class.getName(),
                         Thread.currentThread().getStackTrace()[2].getMethodName(), Thread.currentThread().getStackTrace()[2].getLineNumber());
             }
         return getcreatingAnewEmployee;
@@ -909,9 +918,9 @@ import okio.BufferedSink;
                             " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" + " Результат_ВставкиДанныхПриСозданииНСообщенияДЛЯЧата "+Результат_ВставкиДанныхПриСозданииНСообщенияДЛЯЧата );
             } catch (Exception e) {
                 e.printStackTrace();
-                Log.e(CoreBinessLogic.class.getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
+                Log.e(CoreBinessLogics.class.getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
                         " Линия  :" + Thread.currentThread().getStackTrace()[2].getLineNumber());
-                new RecordNewErros(context).recordnewerror(e.toString(), CoreBinessLogic.class.getName(),
+                new RecordNewErros(context).recordnewerror(e.toString(), CoreBinessLogics.class.getName(),
                         Thread.currentThread().getStackTrace()[2].getMethodName(), Thread.currentThread().getStackTrace()[2].getLineNumber());
             }
         return Результат_ВставкиДанныхПриСозданииНСообщенияДЛЯЧата;
@@ -955,9 +964,9 @@ import okio.BufferedSink;
 
             } catch (Exception e) {
                 e.printStackTrace();
-                Log.e(CoreBinessLogic.class.getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
+                Log.e(CoreBinessLogics.class.getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
                         " Линия  :" + Thread.currentThread().getStackTrace()[2].getLineNumber());
-                new RecordNewErros(context).recordnewerror(e.toString(), CoreBinessLogic.class.getName(),
+                new RecordNewErros(context).recordnewerror(e.toString(), CoreBinessLogics.class.getName(),
                         Thread.currentThread().getStackTrace()[2].getMethodName(), Thread.currentThread().getStackTrace()[2].getLineNumber());
 
             }
@@ -1044,38 +1053,41 @@ import okio.BufferedSink;
         Integer   UpdatingPublicID=0;
         try {
 // TODO: 08.10.2024 Update PUBLIC ID AFTER SYNnc
+// TODO: 08.10.2024 Update PUBLIC ID AFTER SYNnc
             Uri uri = Uri.parse("content://com.dsy.dsu.providerforsystemtables/" + ИмяТаблицы + "");
             // TODO: 08.10.2024 Дополнительное добавление данных
-            ContentResolver contentProviderNewPubicID = context.getContentResolver();
-            // TODO: 08.10.2024
             КонтейнерДляВставкиПубличныйID.put("publicid",PublicID);
-            
+            // TODO: 09.10.2024 task for current poeration
+            КонтейнерДляВставкиПубличныйID.put("currenttaskforthecontentprovider","firststartapp");
+
+
+
             // TODO: 08.10.2024 Находим если такой  Пользователь
-            Long getuuidLocal=  new GetPublicID( ).gettingSettingTableVersion(context," SELECT id FROM "+ИмяТаблицы+"  ",ИмяТаблицы);
-            // TODO: 08.10.2024  
-            КонтейнерДляВставкиПубличныйID.put("getuuidLocal",getuuidLocal);
+            Long getuuidLocal=  new GetPublicID( ).gettingSettingTableVersion(context," SELECT user_update FROM "+ИмяТаблицы+"  ",ИмяТаблицы);
             // TODO: 12.04.2023 UPDATER PUBLIC ID
             if(getuuidLocal>0 ){
                 // TODO: 12.04.2023 UPDATER PUBLIC ID
-                UpdatingPublicID=  contentProviderNewPubicID.update(uri, КонтейнерДляВставкиПубличныйID,null,null);
+                ModuleUpdating moduleUpdating = new ModuleUpdating(context);
+                // TODO: 03.02.2025 update new back
+                UpdatingPublicID=   moduleUpdating.getModuleUpdate(ИмяТаблицы,КонтейнерДляВставкиПубличныйID);
                 Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                         " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
                         " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"+ "  UpdatingPublicID " +UpdatingPublicID);
 
 
-                // TODO: 08.10.2024 UNSERT PUBLIC ID
+                // TODO: 08.10.2024 Insert PUBLIC ID
             }else {
                 // TODO: 12.04.2023 INSERT PUBLIC ID
-                Uri insertData = contentProviderNewPubicID.insert(uri, КонтейнерДляВставкиПубличныйID);
-                if (insertData != null) {
-                    String InsertingPublicID = Optional.ofNullable(insertData).map(Emmeter -> Emmeter.toString().replace("content://", "")).get();
-                    UpdatingPublicID=Integer.parseInt(InsertingPublicID);
-                    Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
-                            " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                            " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" + "  InsertingPublicID " + InsertingPublicID);
-                }
-            }
+                // TODO: 14.05.2025
+                ModuleInserting moduleInserting=new ModuleInserting(context);
+                // TODO: 14.05.2025
+                UpdatingPublicID =    moduleInserting.getModuleInsert(ИмяТаблицы,КонтейнерДляВставкиПубличныйID);
 
+                Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                        " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                        " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"+ "  UpdatingPublicID " +UpdatingPublicID);
+
+            }
 
             Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                     " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
@@ -1083,7 +1095,6 @@ import okio.BufferedSink;
 
         } catch (Exception e) {
             e.printStackTrace();
-            ///метод запись ошибок в таблицу
             Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() + " Линия  :"
                     + Thread.currentThread().getStackTrace()[2].getLineNumber());
             new RecordNewErros(context).recordnewerror(e.toString(),
@@ -1094,123 +1105,28 @@ import okio.BufferedSink;
     }
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
     /////////TODO  ОБНОВЛЕНИЕ КОНТЕЙНЕР ВСТВКИ ДАННЫХ УНИВЕРСАЛЬНЫЙ
     Long ОбновлениеДанныхЧерезКонтейнерТолькоПриСозданииСУниверсальная(String ТаблицаКудаОбновляем,
                                                                                       ContentValues КонтейнерДляОбновленияСозданииНовогоСотрудника,
-                                                                                      String UUIDДляСостыковПриОбновления)
-            throws ExecutionException,
-            InterruptedException, TimeoutException {
-        /////////////////////////////////////////////////////////
-        ///////ПОПЫТКА ПОДКЛЮЧЧЕНИЕ К ИНТРЕНТУ
+                                                                                      String UUIDДляСостыковПриОбновления) {
 
         long Результат_ОбновлениеДанныхОбновлениеСозданииНового = 0;
-        ///////
-        int Результат_ПриписиИзменнийВерсииДанных = 0;
 
-
-        System.out.println(" ОбновлениеДанныхЧерезКонтейнерУниверсальная ");
-//
-Class_GRUD_SQL_Operations class_grud_sql_operationsОбвовлениеСозданииНовогоСотрудника;
             try {
-                ///
-                class_grud_sql_operationsОбвовлениеСозданииНовогоСотрудника=new Class_GRUD_SQL_Operations(context);
+                ModuleUpdating moduleUpdating = new ModuleUpdating(context);
+                // TODO: 03.02.2025 update new back
+                Результат_ОбновлениеДанныхОбновлениеСозданииНового=   moduleUpdating.getModuleUpdate(ТаблицаКудаОбновляем,КонтейнерДляОбновленияСозданииНовогоСотрудника,
+                        "uuid"+"=?", new String[] {String.valueOf(UUIDДляСостыковПриОбновления)});
 
+                Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                        " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                        " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" + " Результат_ОбновлениеДанныхОбновлениеСозданииНового "+Результат_ОбновлениеДанныхОбновлениеСозданииНового );
 
-// TODO: 06.09.2021  ПАРАМЕНТЫ ДЛЯ ОБНОВЛЕНИЯ
-
-                class_grud_sql_operationsОбвовлениеСозданииНовогоСотрудника.concurrentHashMapНабор.put("НазваниеОбрабоатываемойТаблицы",ТаблицаКудаОбновляем);
-                ///
-                class_grud_sql_operationsОбвовлениеСозданииНовогоСотрудника.concurrentHashMapНабор.put("Флаг_ЧерезКакоеПолеОбновлением","uuid");
-                ///
-                class_grud_sql_operationsОбвовлениеСозданииНовогоСотрудника.concurrentHashMapНабор.put("ЗначениеФлагОбновления",UUIDДляСостыковПриОбновления);
-                ///
-//
-
-                class_grud_sql_operationsОбвовлениеСозданииНовогоСотрудника.
-                        concurrentHashMapНабор.put("ЗнакФлагОбновления","=");
-                // TODO: 06.09.2021  КОНТЕ  НЕР ДЛЯ ОБНОВЛЕНИЯ
-
-                class_grud_sql_operationsОбвовлениеСозданииНовогоСотрудника.contentValuesДляSQLBuilder_Для_GRUD_Операций.putAll(КонтейнерДляОбновленияСозданииНовогоСотрудника);
-
-
-                // TODO: 12.10.2021  Ссылка Менеджер Потоков
-
-
-                // TODO: 06.09.2021 CАМО ОБНОВЛЕНИЕ
-
-
-                Результат_ОбновлениеДанныхОбновлениеСозданииНового= (Long)  class_grud_sql_operationsОбвовлениеСозданииНовогоСотрудника.
-                        new UpdateData(context).updatedata(class_grud_sql_operationsОбвовлениеСозданииНовогоСотрудника.concurrentHashMapНабор,
-                        class_grud_sql_operationsОбвовлениеСозданииНовогоСотрудника.contentValuesДляSQLBuilder_Для_GRUD_Операций ,
-                        Class_Engine_SQLГдеНаходитьсяМенеджерПотоков.МенеджерПотоков,
-                         );
-
-                Log.d(this.getClass().getName(), "Результат_ОбновлениеДанныхОбновлениеСозданииНового   " + Результат_ОбновлениеДанныхОбновлениеСозданииНового);
-/*
-                           ПриписиИзменнийВерсииДанных=new    ();
-                       ПриписиИзменнийВерсииДанных.setTables(ТаблицаКудаОбновляем);
-
-                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
-                        Результат_ОбновлениеДанныхОбновлениеСозданииНового  =             ПриписиИзменнийВерсииДанных.
-                                update(contextСозданиеБАзы, КонтейнерДляОбновления, "uuid= ?",
-                                        new String[]{UUIDДляСостыковПриОбновления});
-                    }else{
-
-                        Результат_ОбновлениеДанныхОбновлениеСозданииНового  =        ССылкаНаСозданнуюБазу.update(ТаблицаКудаОбновляем, КонтейнерДляОбновления, "uuid= ?",
-                                new String[]{UUIDДляСостыковПриОбновления});
-
-                    }*/
-
-
-                    Log.d(this.getClass().getName(), "   Результат_ОбновлениеДанныхОбновлениеСозданииНового "+Результат_ОбновлениеДанныхОбновлениеСозданииНового);
-
-
-
-
-                    ///////
-                    if (Результат_ОбновлениеДанныхОбновлениеСозданииНового > 0) {
-                        ///TODO ПЕРВАЯ ТРАНЗАКЦИЯ
-                        // ССылкаНаСозданнуюБазу.
-
-                        Log.d(this.getClass().getName(), "   Результат_ОбновлениеДанныхОбновлениеСозданииНового "+Результат_ОбновлениеДанныхОбновлениеСозданииНового);
-                    }
-
-
-            } catch (Exception e) {///////ошибки
+            } catch (Exception e) {
                 e.printStackTrace();
-                ///метод запись ошибок в таблицу
-                Log.e(CoreBinessLogic.class.getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
+                Log.e(CoreBinessLogics.class.getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
                         " Линия  :" + Thread.currentThread().getStackTrace()[2].getLineNumber());
-                new RecordNewErros(context).recordnewerror(e.toString(), CoreBinessLogic.class.getName(),
+                new RecordNewErros(context).recordnewerror(e.toString(), CoreBinessLogics.class.getName(),
                         Thread.currentThread().getStackTrace()[2].getMethodName(), Thread.currentThread().getStackTrace()[2].getLineNumber());
             }
             ////
@@ -1219,104 +1135,25 @@ Class_GRUD_SQL_Operations class_grud_sql_operationsОбвовлениеСозд�
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
     ///////// todo КОНТЕЙНЕР ВСТВКИ ДАННЫХ УНИВЕРСАЛЬНЫЙ ТОЛЬКО ДЛЯ ЗАПИСИ ОШИБКИ
     Long ВставкаДанныхЧерезКонтейнерУниверсальнаяТолькоДляЗаписиОшибки(String ТаблицаКудаВставляем,
-                                                                       ContentValues КонтейнерДляВставкиЗаписиОшибки)
-            throws ExecutionException, InterruptedException, TimeoutException {
-        ////////////////////////////////////////////////////////////////////////
-
+                                                                       ContentValues КонтейнерДляВставкиЗаписиОшибки) {
         long Результат_ВставкиДанныхДляЗаписиОшибки = 0;
-        ///
-        int Результат_ПриписиИзменнийВерсииДанных = 0;
-
-
-        System.out.println(" ВставкаДанныхЧерезКонтейнерУниверсальная");
-
-        Class_GRUD_SQL_Operations class_grud_sql_operationsДляВставкиОшибок=new Class_GRUD_SQL_Operations(context);
-
-
             try {
-                // TODO: 06.09.2021  ПАРАСМЕТИРЫ ВСТАВКИ ОШИБКИ
-
-                class_grud_sql_operationsДляВставкиОшибок.concurrentHashMapНабор.put("НазваниеОбрабоатываемойТаблицы",ТаблицаКудаВставляем);
-
-
-                // TODO: 06.09.2021  КОНТЕЙНЕР ВСТАВКИ ОШИБКИ
-                class_grud_sql_operationsДляВставкиОшибок.contentValuesДляSQLBuilder_Для_GRUD_Операций.putAll(КонтейнерДляВставкиЗаписиОшибки);
-
-
-                // TODO: 06.09.2021 сама операция ВСТАВКИ ОШИБКИ
-                // TODO: 12.10.2021  Ссылка Менеджер Потоков
-
-
-
-                ///TODO РЕЗУЛЬТА изменения версии данных
-                Результат_ВставкиДанныхДляЗаписиОшибки= (Long)  class_grud_sql_operationsДляВставкиОшибок.
-                        new InsertData(context).insertdata(class_grud_sql_operationsДляВставкиОшибок.concurrentHashMapНабор,
-                        class_grud_sql_operationsДляВставкиОшибок.contentValuesДляSQLBuilder_Для_GRUD_Операций,
-                        Class_Engine_SQLГдеНаходитьсяМенеджерПотоков.МенеджерПотоков,
-                         );
-
-                Log.d(this.getClass().getName(), "Результат_ВставкиДанныхДляЗаписиОшибки   " + Результат_ВставкиДанныхДляЗаписиОшибки);
-              /*      ///////
-
-                           ВставкиДанных=new    ();
-                       ВставкиДанных.setTables(ТаблицаКудаВставляем);
-
-                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
-                        Результат_ВставкиДанныхДляЗаписиОшибки =             ВставкиДанных.insert(ССылкаНаСозданнуюБазу, КонтейнерДляВставки);
-                    }
-
-*/
-
-                    if (Результат_ВставкиДанныхДляЗаписиОшибки > 0) {
-                        // ССылкаНаСозданнуюБазу.
-
-                        Log.d(this.getClass().getName(), " Результат_ВставкиДанныхДляЗаписиОшибки  " + Результат_ВставкиДанныхДляЗаписиОшибки);
-
-                    }
-                //////
-                /////НАЗВАНИЕ ПОТОКА
-                Log.i(this.getClass().getName(), "НАЗВАНИЕ ПОТОКА В aSYNSTASK " + Thread.currentThread().getName().toUpperCase());
-                /////
-            } catch (Exception e) {///////ошибки
+// TODO: 14.05.2025
+                ModuleInserting moduleInserting=new ModuleInserting(context);
+                // TODO: 14.05.2025
+                Результат_ВставкиДанныхДляЗаписиОшибки =    moduleInserting.getModuleInsert(ТаблицаКудаВставляем,КонтейнерДляВставкиЗаписиОшибки);
+                Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                        " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                        " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" + " Результат_ВставкиДанныхДляЗаписиОшибки "+Результат_ВставкиДанныхДляЗаписиОшибки );
+            } catch (Exception e) {
                 e.printStackTrace();
-                ///метод запись ошибок в таблицу
-                Log.e(CoreBinessLogic.class.getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
+                Log.e(CoreBinessLogics.class.getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
                         " Линия  :" + Thread.currentThread().getStackTrace()[2].getLineNumber());
-                new RecordNewErros(context).recordnewerror(e.toString(), CoreBinessLogic.class.getName(),
+                new RecordNewErros(context).recordnewerror(e.toString(), CoreBinessLogics.class.getName(),
                         Thread.currentThread().getStackTrace()[2].getMethodName(), Thread.currentThread().getStackTrace()[2].getLineNumber());
             }
-
         return Результат_ВставкиДанныхДляЗаписиОшибки;
     }
 
@@ -1326,59 +1163,28 @@ Class_GRUD_SQL_Operations class_grud_sql_operationsОбвовлениеСозд�
                                                              String ЧерезКакоеПолеУдлаяемФлаг,
                                                              Long UUIDДляСостыковПриОбновления,
                                                              String ПолеКудаИзменятьСтатус,
-                                                             String ЗапоЗначенияУсменыСтатуса) throws ExecutionException,
-            InterruptedException, TimeoutException {
+                                                             String ЗапоЗначенияУсменыСтатуса) {
         Integer Результат_УдалениеДанных = 0;
-Class_GRUD_SQL_Operations classGrudSqlOperationsУдалениеДанныхЧерезКонтейнерУниверсальная;
             try {
-                //
-                Log.w(this.getClass().getName(), "РЕЗУЛЬТАТ УДАЛДЕНИЕ ОДНОГО СОТРУДНИКА ПолеКудаИзменятьСтатус  "
-                        + ПолеКудаИзменятьСтатус + " ЗапоЗначенияУсменыСтатуса " + ЗапоЗначенияУсменыСтатуса);
-                classGrudSqlOperationsУдалениеДанныхЧерезКонтейнерУниверсальная = new Class_GRUD_SQL_Operations(context);
-                classGrudSqlOperationsУдалениеДанныхЧерезКонтейнерУниверсальная.
-                        concurrentHashMapНабор.put("НазваниеОбрабоатываемойТаблицы", ТаблицаОткудаУдлаяемЗапись);
-                classGrudSqlOperationsУдалениеДанныхЧерезКонтейнерУниверсальная.
-                        concurrentHashMapНабор.put("Флаг_ЧерезКакоеПолеОбновлением",ЧерезКакоеПолеУдлаяемФлаг);
-                classGrudSqlOperationsУдалениеДанныхЧерезКонтейнерУниверсальная
-                        .concurrentHashMapНабор.put("ЗначениеФлагОбновления",UUIDДляСостыковПриОбновления);
-                classGrudSqlOperationsУдалениеДанныхЧерезКонтейнерУниверсальная.
-                        concurrentHashMapНабор.put("ЗнакФлагОбновления","="); //или =   или <   >
-                classGrudSqlOperationsУдалениеДанныхЧерезКонтейнерУниверсальная.contentValuesДляSQLBuilder_Для_GRUD_Операций
-                        .put(ПолеКудаИзменятьСтатус, ЗапоЗначенияУсменыСтатуса);//todo status_write   status_send
-                ///
-                Log.w(this.getClass().getName(), "РЕЗУЛЬТАТ УДАЛДЕНИЕ ОДНОГО СОТРУДНИКА РезультатУвеличинаяВерсияВнутриСамогоТабелСтрудника  "
-                        + " ТаблицаОткудаУдлаяемЗапись " + ТаблицаОткудаУдлаяемЗапись);
-                // TODO: 30.01.2022
-
-                // TODO: 19.11.2022 ПОДНИМАЕМ ВЕРИСЮ ДАННЫХ
-                Long РезультатУвеличинаяВерсияДАныхЧата = new VersionCurentTable(context).upVersionCurentTable(ТаблицаОткудаУдлаяемЗапись );
-                Log.d(this.getClass().getName(), " РезультатУвеличинаяВерсияДАныхЧата  " + РезультатУвеличинаяВерсияДАныхЧата);
-
-                classGrudSqlOperationsУдалениеДанныхЧерезКонтейнерУниверсальная.contentValuesДляSQLBuilder_Для_GRUD_Операций.put("current_table",
-                        РезультатУвеличинаяВерсияДАныхЧата);
-                ///TODO РЕЗУЛЬТА ОБНОВЛЕНИЯ
-                Результат_УдалениеДанных = (Integer) classGrudSqlOperationsУдалениеДанныхЧерезКонтейнерУниверсальная.
-                        new UpdateData(context).updatedata(classGrudSqlOperationsУдалениеДанныхЧерезКонтейнерУниверсальная.
-                                concurrentHashMapНабор,
-                        classGrudSqlOperationsУдалениеДанныхЧерезКонтейнерУниверсальная.contentValuesДляSQLBuilder_Для_GRUD_Операций,
-                        Class_Engine_SQLГдеНаходитьсяМенеджерПотоков.МенеджерПотоков,  );
-                Log.d(this.getClass().getName(), "Результат_УдалениеДанных " + Результат_УдалениеДанных);
+                ContentValues contentValuesDelete=new ContentValues();
+                contentValuesDelete.put(ПолеКудаИзменятьСтатус,ЗапоЗначенияУсменыСтатуса);
+                // TODO: 14.05.2025
+                ModuleUpdating moduleUpdating = new ModuleUpdating(context);
+                // TODO: 03.02.2025 update new back
+                Результат_УдалениеДанных=   moduleUpdating.getModuleUpdate(ТаблицаОткудаУдлаяемЗапись,contentValuesDelete,ЧерезКакоеПолеУдлаяемФлаг+"=?", new String[] {String.valueOf(UUIDДляСостыковПриОбновления)});
+                Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                        " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                        " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" + " Результат_УдалениеДанных "+Результат_УдалениеДанных );
                 } catch (Exception e) {///////ошибки
                     e.printStackTrace();
-                    Log.e(CoreBinessLogic.class.getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
+                    Log.e(CoreBinessLogics.class.getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
                             " Линия  :" + Thread.currentThread().getStackTrace()[2].getLineNumber());
-                    new RecordNewErros(context).recordnewerror(e.toString(), CoreBinessLogic.class.getName(),
+                    new RecordNewErros(context).recordnewerror(e.toString(), CoreBinessLogics.class.getName(),
                             Thread.currentThread().getStackTrace()[2].getMethodName(), Thread.currentThread().getStackTrace()[2].getLineNumber());
                 }
         return Результат_УдалениеДанных;
     }
 
-
-
-
-
-
-    /////TODO ЛОКАЛЬНАЯ ОБНОВЛЕНИЕ ВНУТРИ ТАБЕЛЯ
     public Long МетодЛокальноеОбновлениеВТабеле(ContentValues КонтейнерЗаполненияДаннымиПриЛокальномОбновлении,
                                                 String ПолучениеЗначениеСтолбикUUID,
                                                 Context КонтексДляЛокальногоОбновления,
@@ -1389,8 +1195,9 @@ Class_GRUD_SQL_Operations classGrudSqlOperationsУдалениеДанныхЧе
             результатОбновлениеЧерезКонтрейнер = ЛокальногоОбновлениеДанныхЧерезКонтейнерУниверсальная(таблицаДляЛокальногоОбонвления,
                     КонтейнерЗаполненияДаннымиПриЛокальномОбновлении,
                     Long.parseLong(ПолучениеЗначениеСтолбикUUID), "uuid");
-            Log.d(this.getClass().getName(),
-                    "  результатОбновлениеЧерезКонтрейнер[0] " + результатОбновлениеЧерезКонтрейнер);
+            Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                    " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                    " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" + " результатОбновлениеЧерезКонтрейнер "+результатОбновлениеЧерезКонтрейнер );
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -1406,284 +1213,79 @@ Class_GRUD_SQL_Operations classGrudSqlOperationsУдалениеДанныхЧе
     }
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    /////////TODO КОНТЕЙНЕР УДАЛЕНИЕ СОТРУДНИКА ИЗ ТАБЕЛЯ  ДАННЫХ УНИВЕРСАЛЬНЫЙ
     public Integer УдалениеТолькоПустогоТабеляЧерезКонтейнерУниверсальная(String ТаблицаОткудаУдлаяемЗапись,
                                                                           String ЧерезКакоеПолеУдлаяемФлаг,
-                                                                          Long UUIDДляСостыковПриОбновления)
-            throws ExecutionException,
-            InterruptedException, TimeoutException {
-        Integer Результат_ОбновлениеДанных = 0;
-        Integer Результат_ПриписиИзменнийВерсииДанных = 0;
-        // TODO: 03.09.2021  получение ПО НОВОМУ ДВИЖКУ
-        Class_GRUD_SQL_Operations  classGrudSqlOperationsДляУдаленияСотрудника;
+                                                                          Long UUIDДляСостыковПриОбновления) {
+        Integer Результат_УдалениеДанных = 0;
         // TODO: 30.08.2021    КОД ОБНОВЛЕНИЕ   ДАННЫХ   ЧЕРЕ
             try {
-                // TODO: 03.09.2021  получение ПО НОВОМУ ДВИЖКУ
-                classGrudSqlOperationsДляУдаленияСотрудника=new Class_GRUD_SQL_Operations(context);
-                classGrudSqlOperationsДляУдаленияСотрудника.concurrentHashMapНабор.put("НазваниеОбрабоатываемойТаблицы",ТаблицаОткудаУдлаяемЗапись);
-                classGrudSqlOperationsДляУдаленияСотрудника.concurrentHashMapНабор.put("Флаг_ЧерезКакоеПолеСнаДанных",ЧерезКакоеПолеУдлаяемФлаг);
-                classGrudSqlOperationsДляУдаленияСотрудника.concurrentHashMapНабор.put("ЗначениеФлагСнаДанных",UUIDДляСостыковПриОбновления);
-                // TODO: 06.09.2021  КОНТЕЙНЕР ДЛЯ УДАЛЕНИЯ
-                ContentValues АдаптерУстанавливаемФлагНазАписьЧтоОнаУдаленная=new ContentValues();
-                АдаптерУстанавливаемФлагНазАписьЧтоОнаУдаленная.put("status_send", "Удаленная");///ПОКА НЕ ОТКЛЮЧИЛИ
-                String СгенерированованныйДатаВремениСейчаcДляУдаления=     new Class_Generation_Data(context).ГлавнаяДатаИВремяОперацийСБазойДанных();
-                АдаптерУстанавливаемФлагНазАписьЧтоОнаУдаленная.put("date_update", СгенерированованныйДатаВремениСейчаcДляУдаления);///ПОКА НЕ ОТКЛЮЧИЛИ
-                Class_GRUD_SQL_Operations        class_grud_sql_operationsПовышаемВерсиюДанныхПриСозданеииИзШаблонаСотрудника=new Class_GRUD_SQL_Operations(context);
+                // TODO: 14.05.2025
+                ModuleDeleting moduleDeleting = new ModuleDeleting(context);
+                // TODO: 03.02.2025 update new back
+                Результат_УдалениеДанных=    moduleDeleting.getModuleDelete(ТаблицаОткудаУдлаяемЗапись,ЧерезКакоеПолеУдлаяемФлаг,new String[]{UUIDДляСостыковПриОбновления.toString()});
+                Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                        " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                        " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" + " Результат_УдалениеДанных "+Результат_УдалениеДанных );
 
-
-                // TODO: 18.03.2023  получаем ВЕСИЮ ДАННЫХ
-                Long РезультатУвеличинаяВерсияПриудалениеСотрудника = new VersionCurentTable(context).upVersionCurentTable(ТаблицаОткудаУдлаяемЗапись );
-                Log.d(this.getClass().getName(), " РезультатУвеличинаяВерсияПриудалениеСотрудника  " + РезультатУвеличинаяВерсияПриудалениеСотрудника);
-
-                //TODO  конец курант ча
-                АдаптерУстанавливаемФлагНазАписьЧтоОнаУдаленная.put("current_table", РезультатУвеличинаяВерсияПриудалениеСотрудника);
-                classGrudSqlOperationsДляУдаленияСотрудника.contentValuesДляSQLBuilder_Для_GRUD_Операций.putAll(АдаптерУстанавливаемФлагНазАписьЧтоОнаУдаленная);
-                Log.d(this.getClass().getName(), "UUIDДляСостыковПриОбновления   " +UUIDДляСостыковПриОбновления );
-                    if (UUIDДляСостыковПриОбновления > 0) {
-                        Результат_ОбновлениеДанных= (Integer)  classGrudSqlOperationsДляУдаленияСотрудника.
-                                new SleepData(context).sleepdata(classGrudSqlOperationsДляУдаленияСотрудника.concurrentHashMapНабор,
-                                classGrudSqlOperationsДляУдаленияСотрудника.contentValuesДляSQLBuilder_Для_GRUD_Операций,
-                                Class_Engine_SQLГдеНаходитьсяМенеджерПотоков.МенеджерПотоков,sqLiteDatabase);
-                        Log.d(this.getClass().getName(), "Результат_ОбновлениеДанных   " + Результат_ОбновлениеДанных);
-                    }
-                    Log.d(this.getClass().getName(), " Результат_ОбновлениеДанных   " + Результат_ОбновлениеДанных);
-            } catch (Exception e) {///////ошибки
+            } catch (Exception e) {
                 e.printStackTrace();
-                Log.e(CoreBinessLogic.class.getName(), "Ошибка " + e.toString() + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
+                Log.e(CoreBinessLogics.class.getName(), "Ошибка " + e.toString() + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
                         " Линия  :" + Thread.currentThread().getStackTrace()[2].getLineNumber());
-                new RecordNewErros(context).recordnewerror(e.toString(), CoreBinessLogic.class.getName(),
+                new RecordNewErros(context).recordnewerror(e.toString(), CoreBinessLogics.class.getName(),
                         Thread.currentThread().getStackTrace()[2].getMethodName(), Thread.currentThread().getStackTrace()[2].getLineNumber());
             }
-
-        return Результат_ОбновлениеДанных;
+        return Результат_УдалениеДанных;
     }
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    /////////TODO КОНТЕЙНЕР УДАЛЕНИЕ СОТРУДНИКА ИЗ ТАБЕЛЯ  ДАННЫХ УНИВЕРСАЛЬНЫЙ
     public Integer УдалениеТолькоШАблонЧерезКонтейнерУниверсальная(String ТаблицаОткудаУдлаяемЗапись,
                                                                    String ЧерезКакоеПолеУдлаяемФлаг,
-                                                                   String UUIDДляСостыковПриОбновления) throws ExecutionException,
-            InterruptedException, TimeoutException {
-        /////////////////////////////////////////////////////////////////////////////////////////////////////
-        ///////ПОПЫТКА ПОДКЛЮЧЧЕНИЕ К ИНТРЕНТУ
-
+                                                                   String UUIDДляСостыковПриОбновления) {
         Integer Результат_УдалениеТолькоШАблон = 0;
-        ////////
-        Integer Результат_ПриписиИзменнийВерсииДанных = 0;
-
-        System.out.println(" УдалениеДанныхЧерезКонтейнерУниверсальная ");
-
-        ///todo начинаем транзакцию
-
             try {
-                ///
-                /////
-                System.out.println(" УдалениеДанныхЧерезКонтейнерУниверсальная ");
-
-                // TODO: 03.09.2021  получение ПО НОВОМУ ДВИЖКУ
-                Class_GRUD_SQL_Operations  classGrudSqlOperationsДляУдаленияСотрудника;
-                // TODO: 30.08.2021    КОД ОБНОВЛЕНИЕ   ДАННЫХ   ЧЕРЕЗ
-                //////
-
-                    // TODO: 03.09.2021  получение ПО НОВОМУ ДВИЖКУ
-                    classGrudSqlOperationsДляУдаленияСотрудника=new Class_GRUD_SQL_Operations(context);
-
-
-                    ///todo ПРИ УДАЛЕНИ И СОТРУДНИКА ОЧИЩАЕМ ПОЛЯ ЧТОБЫ НЕБЛОЫ СВЯКЗКИ С ТАБЕЛЕМ
-
-                    // TODO: 06.09.2021  ПАРАМЕТРЫ ДЛЯ УДАЛЕНИЯ
-
-                    classGrudSqlOperationsДляУдаленияСотрудника.concurrentHashMapНабор.put("НазваниеОбрабоатываемойТаблицы",ТаблицаОткудаУдлаяемЗапись);
-                    /////////
-                    classGrudSqlOperationsДляУдаленияСотрудника.concurrentHashMapНабор.put("Флаг_ЧерезКакоеПолеОбновлением",ЧерезКакоеПолеУдлаяемФлаг);
-                    /////////
-                    classGrudSqlOperationsДляУдаленияСотрудника.concurrentHashMapНабор.put("ЗначениеФлагОбновления",UUIDДляСостыковПриОбновления);
-                    /////////
-
-                classGrudSqlOperationsДляУдаленияСотрудника.concurrentHashMapНабор.put("ЗнакФлагОбновления","=");
-                /////////
-
-
-
-                    // TODO: 06.09.2021  КОНТЕЙНЕР ДЛЯ УДАЛЕНИЯ
-                    ContentValues АдаптерУстанавливаемФлагНазАписьЧтоОнаУдаленная=new ContentValues();
-                    //
-                classGrudSqlOperationsДляУдаленияСотрудника.contentValuesДляSQLBuilder_Для_GRUD_Операций.put("status_send", "Удаленная");///ПОКА НЕ ОТКЛЮЧИЛИ
-                    //////
-                    ////TODO ДАТА
-                    String СгенерированованныйДатаВремениСейчаcДляУдаления=     new Class_Generation_Data(context).ГлавнаяДатаИВремяОперацийСБазойДанных();
-
-                    АдаптерУстанавливаемФлагНазАписьЧтоОнаУдаленная.put("date_update", СгенерированованныйДатаВремениСейчаcДляУдаления);///ПОКА НЕ ОТКЛЮЧИЛИ
-                    ///
-               // АдаптерУстанавливаемФлагНазАписьЧтоОнаУдаленная.putNull("id");///ПОКА НЕ ОТКЛЮЧИЛИ
-
-
-                // TODO: 18.03.2023  получаем ВЕСИЮ ДАННЫХ
-                Long РезультатУвеличинаяВерсияДАныхЧата = new VersionCurentTable(context).upVersionCurentTable(ТаблицаОткудаУдлаяемЗапись);
-                Log.d(this.getClass().getName(), " РезультатУвеличинаяВерсияДАныхЧата  " + РезультатУвеличинаяВерсияДАныхЧата);
-
-                //TODO  конец курант ча
-                АдаптерУстанавливаемФлагНазАписьЧтоОнаУдаленная.put("current_table", РезультатУвеличинаяВерсияДАныхЧата);
-
-                ///
-
-                    classGrudSqlOperationsДляУдаленияСотрудника.contentValuesДляSQLBuilder_Для_GRUD_Операций.putAll(АдаптерУстанавливаемФлагНазАписьЧтоОнаУдаленная);
-
-
-                    Log.d(this.getClass().getName(), "UUIDДляСостыковПриОбновления   " +UUIDДляСостыковПриОбновления  + " РезультатУвеличинаяВерсияДАныхЧата " +РезультатУвеличинаяВерсияДАныхЧата );
-
-
-                    if (Long.parseLong(UUIDДляСостыковПриОбновления) > 0) {
-
-
-                        // TODO: 06.09.2021 сама операция обновления через новый движок  удаление пустого табеля
-                        // TODO: 12.10.2021  Ссылка Менеджер Потоков
-
-
-
-                        ///TODO РЕЗУЛЬТА изменения версии данных
-                        Результат_УдалениеТолькоШАблон= (Integer)   classGrudSqlOperationsДляУдаленияСотрудника.
-                                new UpdateData(context).updatedata(classGrudSqlOperationsДляУдаленияСотрудника.concurrentHashMapНабор,
-                                classGrudSqlOperationsДляУдаленияСотрудника.contentValuesДляSQLBuilder_Для_GRUD_Операций ,
-                                Class_Engine_SQLГдеНаходитьсяМенеджерПотоков.МенеджерПотоков,sqLiteDatabase);
-
-
-                        Log.d(this.getClass().getName(), "Результат_УдалениеТолькоШАблон   " + Результат_УдалениеТолькоШАблон);
-//////////////////////////////////////////////////////////////////////
-
-                        if(Результат_УдалениеТолькоШАблон==null){
-
-                            //
-                            Результат_УдалениеТолькоШАблон=0;
-                        }
-
-
-
-             /*                  ПриписиИзменнийВерсииДанных=new    ();
-                           ПриписиИзменнийВерсииДанных.setTables(ТаблицаОткудаУдлаяемЗапись);
-
-                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
-                            Результат_ОбновлениеДанных  =             ПриписиИзменнийВерсииДанных.
-                                    update(ССылкаНаСозданнуюБазу,АдаптерУстанавливаемФлагНазАписьЧтоОнаУдаленная,
-                                            ЧерезКакоеПолеУдлаяемФлаг + "= ?", new String[]{String.valueOf(UUIDДляСостыковПриОбновления)});
-                        }
-*/
-
-                    }
-                    Log.d(this.getClass().getName(), " Результат_УдалениеТолькоШАблон   " + Результат_УдалениеТолькоШАблон);
+                // TODO: 14.05.2025
+                ModuleDeleting moduleDeleting = new ModuleDeleting(context);
+                // TODO: 03.02.2025 update new back
+                Результат_УдалениеТолькоШАблон=    moduleDeleting.getModuleDelete(ТаблицаОткудаУдлаяемЗапись,ЧерезКакоеПолеУдлаяемФлаг,new String[]{UUIDДляСостыковПриОбновления.toString()});
+                Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                        " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                        " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" + " Результат_УдалениеТолькоШАблон "+Результат_УдалениеТолькоШАблон );
                 } catch (Exception e) {///////ошибки
                 e.printStackTrace();
                 ///метод запись ошибок в таблицу
-                Log.e(CoreBinessLogic.class.getName(), "Ошибка " + e.toString() + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
+                Log.e(CoreBinessLogics.class.getName(), "Ошибка " + e.toString() + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
                         " Линия  :" + Thread.currentThread().getStackTrace()[2].getLineNumber());
-                new RecordNewErros(context).recordnewerror(e.toString(), CoreBinessLogic.class.getName(),
+                new RecordNewErros(context).recordnewerror(e.toString(), CoreBinessLogics.class.getName(),
                         Thread.currentThread().getStackTrace()[2].getMethodName(), Thread.currentThread().getStackTrace()[2].getLineNumber());
             }
         return Результат_УдалениеТолькоШАблон;
     }
 
 
-
-
-
-
-///todo записываем выбраную  ОРГАНИЗАЦИЮ В БАЗУ
-
     @SuppressLint("SuspiciousIndentation")
     public Integer МетодКоторыйЗаписываемВыбранныйРежимИнтрернетаWifiИлиMobile(String ПередаваемыйРежимИнтрентета,
-                                                                               Context КонтекстWIFI,
+                                                                               Context context,
                                                                                String Таблица,
                                                                                String Поля) {
 /////todo КОД ЗАПОЛЕНЕИЯ ДАННЫМИ В СПИНЕР ЦФО ДЕПАРТАМЕНТ МЕСЯЦ
         Integer РезультатОбновлениеЧерезКонтрейнер = 0;
-        Class_GRUD_SQL_Operations class_grud_sql_operationsЗаписываемВыбранныйРежимИнтрернетаWifiИлиMobil;
         long PublicId=0l;
                 try {
-                    Log.d(this.getClass().getName(), " ПередаваемыйРежимИнтрентета  " + ПередаваемыйРежимИнтрентета);
-                    ////TODO ОБНУЛЯЕМ КАКУЮ ОРГАНИЗАЦИЮ ВЫБРАЛИ ОЧИЩАЕМ ВСТАВЛЕМ ППАРАМЕТР WIF-FI
-                    class_grud_sql_operationsЗаписываемВыбранныйРежимИнтрернетаWifiИлиMobil=new Class_GRUD_SQL_Operations(context);
-
-                    // TODO: 26.08.2021 НОВЫЙ ВЫЗОВ НОВОГО КЛАСС GRUD - ОПЕРАЦИИ
-                    Class_GRUD_SQL_Operations class_grud_sql_operationsПолучаемНаБазуUUIDфиоПолучаемИзТаблицыФИОИМЯ= new Class_GRUD_SQL_Operations(context);
-                    class_grud_sql_operationsПолучаемНаБазуUUIDфиоПолучаемИзТаблицыФИОИМЯ.concurrentHashMapНабор.put("СамFreeSQLКОд",
-                            " SELECT id  FROM successlogin  ORDER BY date_update DESC ;");
-                    // TODO: 12.10.2021  Ссылка Менеджер Потоков
-                    BinessLogicPublicContent Class_Engine_SQLГдеНаходитьсяМенеджерПотоков =new BinessLogicPublicContent(context);
-                    SQLiteCursor            Курсор_ПолучаемИмяСотрудникаИзТаблицыФИО=
-                            (SQLiteCursor) class_grud_sql_operationsПолучаемНаБазуUUIDфиоПолучаемИзТаблицыФИОИМЯ.
-                            new GetаFreeData(context).getfreedata(class_grud_sql_operationsПолучаемНаБазуUUIDфиоПолучаемИзТаблицыФИОИМЯ.concurrentHashMapНабор,
-                            Class_Engine_SQLГдеНаходитьсяМенеджерПотоков.МенеджерПотоков,sqLiteDatabase);
-                    if(Курсор_ПолучаемИмяСотрудникаИзТаблицыФИО.getCount()>0){
-                        Курсор_ПолучаемИмяСотрудникаИзТаблицыФИО.moveToFirst();
-                      PublicId =         Курсор_ПолучаемИмяСотрудникаИзТаблицыФИО.getInt(0);
-                        Log.d(this.getClass().getName(), " PublicId  " + PublicId);
-                    }
-                    // TODO: 06.09.2021 ВТОРОЕ ДЕЙСТИВЕ ПОСЛЕ ОЧИСТКИ ВСТАВЛЯЕМ  ПОЛУЧЕНЫЙ СТАТУС   ДЛЯ WIFI MOBILE
-                    class_grud_sql_operationsЗаписываемВыбранныйРежимИнтрернетаWifiИлиMobil=new Class_GRUD_SQL_Operations(context);
-                    // TODO: 06.09.2021  ПАРАМЕТРЫ ДЛЯ ПЕРВОГО ДЕЙСТИЯ ОЧИЩЕНИЯ
-                    class_grud_sql_operationsЗаписываемВыбранныйРежимИнтрернетаWifiИлиMobil.concurrentHashMapНабор.put("НазваниеОбрабоатываемойТаблицы",Таблица);
-                    class_grud_sql_operationsЗаписываемВыбранныйРежимИнтрернетаWifiИлиMobil.concurrentHashMapНабор.put("Флаг_ЧерезКакоеПолеОбновлением","id");
-                    class_grud_sql_operationsЗаписываемВыбранныйРежимИнтрернетаWifiИлиMobil.concurrentHashMapНабор.put("ЗначениеФлагОбновления", PublicId);
-                    class_grud_sql_operationsЗаписываемВыбранныйРежимИнтрернетаWifiИлиMobil.
-                            concurrentHashMapНабор.put("ЗнакФлагОбновления","="); //или =   или <   >
-                    // TODO: 06.09.2021  КОНТЕРЙНЕР ДЛЯ ПЕРВОГО ДЕЙСТИЯ ОЧИЩЕНИЯ
                     ContentValues ВставляемВБАзуВыбранныйРежимИнтренета=new ContentValues();
-            ВставляемВБАзуВыбранныйРежимИнтренета = new ContentValues();
+                   ВставляемВБАзуВыбранныйРежимИнтренета = new ContentValues();
                     ВставляемВБАзуВыбранныйРежимИнтренета.put("id", PublicId);
                     ВставляемВБАзуВыбранныйРежимИнтренета.put(Поля, ПередаваемыйРежимИнтрентета);
                     ////TODO ДАТА
                     String СгенерированованныйДатаДляДаннойОперации=     new Class_Generation_Data(context).ГлавнаяДатаИВремяОперацийСБазойДанных();
                     ВставляемВБАзуВыбранныйРежимИнтренета.put("date_update", СгенерированованныйДатаДляДаннойОперации);
-                    class_grud_sql_operationsЗаписываемВыбранныйРежимИнтрернетаWifiИлиMobil.
-                            contentValuesДляSQLBuilder_Для_GRUD_Операций.putAll(ВставляемВБАзуВыбранныйРежимИнтренета);
-                    // TODO: 06.09.2021  САМА ОПАРАЦИИЯ ОБНОВЛЕНИЯ СТАТУ WIFI ИЛИ MOBILE
-                    // TODO: 12.10.2021  Ссылка Менеджер Потоков
-                    ///TODO РЕЗУЛЬТАТ ОБНОВЛЕНИЕ ДАННЫХ
-                    РезультатОбновлениеЧерезКонтрейнер= (Integer)  class_grud_sql_operationsЗаписываемВыбранныйРежимИнтрернетаWifiИлиMobil.
-                            new UpdateData(context).updatedata(class_grud_sql_operationsЗаписываемВыбранныйРежимИнтрернетаWifiИлиMobil.concurrentHashMapНабор,
-                            class_grud_sql_operationsЗаписываемВыбранныйРежимИнтрернетаWifiИлиMobil.contentValuesДляSQLBuilder_Для_GRUD_Операций ,
-                            Class_Engine_SQLГдеНаходитьсяМенеджерПотоков.МенеджерПотоков,sqLiteDatabase);
-                    Log.d(this.getClass().getName(), "РезультатОбновлениеЧерезКонтрейнер   " + РезультатОбновлениеЧерезКонтрейнер);
+
+                    ModuleUpdating moduleUpdating = new ModuleUpdating(context);
+                    // TODO: 03.02.2025 update new back
+                    РезультатОбновлениеЧерезКонтрейнер=   moduleUpdating.getModuleUpdate(Таблица,ВставляемВБАзуВыбранныйРежимИнтренета);
+
+                    Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                            " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                            " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" + " РезультатОбновлениеЧерезКонтрейнер "+РезультатОбновлениеЧерезКонтрейнер );
                 } catch (Exception e) {
                     e.printStackTrace();
                     Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
@@ -1695,649 +1297,26 @@ Class_GRUD_SQL_Operations classGrudSqlOperationsУдалениеДанныхЧе
     }
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    ////TODO КОТОТРЫЙ УЗНАЕТ ИЗ БАЗЫ КАКОЙ РЕЖИМ РАБОТЫ ИНТРЕНТА WIFI AND MOBILE
-    public String МетодПолучениеИмяСистемыДляСменыПользователя(Context КонтекстДляРежимаИнтрента) {
+    public String МетодПолучениеИмяСистемыДляСменыПользователя(Context context) {
         //
-        String ИмяУспешноВошедегоПользователья = new String();
-        ///
-
-        SQLiteCursor Курсор_ПолучениеИмяСистемы = null;
-        //
-        Class_GRUD_SQL_Operations class_grud_sql_operationsПолучениеИмяСистемы;
-        ////
+        String getSuccess_Users = new String();
         try {
+            // TODO: 14.05.2025
+            String Текущаятаблицы="successlogin";
+            // TODO: 14.05.2025  получение данных
+            ModuleQuety moduleQuety=new ModuleQuety(context);
+            Cursor Курсор_ПолучаемИмяСотрудникаИзТаблицыФИО   =moduleQuety.getModuleQueryForceLoad(Текущаятаблицы,
+                    "  SELECT success_users,success_login  FROM "+Текущаятаблицы+"  ORDER BY date_update DESC " , null);
 
-            // TODO: 26.08.2021 НОВЫЙ ВЫЗОВ НОВОГО КЛАСС GRUD - ОПЕРАЦИИ
-
-            ///
-            class_grud_sql_operationsПолучениеИмяСистемы=new Class_GRUD_SQL_Operations(context);
-
-            ///
-            class_grud_sql_operationsПолучениеИмяСистемы.concurrentHashMapНабор.put("НазваниеОбрабоатываемойТаблицы","SuccessLogin");
-            ///////
-            class_grud_sql_operationsПолучениеИмяСистемы.concurrentHashMapНабор.put("СтолбцыОбработки","success_users");
-            //
-            /*        class_grud_sql_operations. concurrentHashMapНабор.put("ФорматПосика","uuid=?    AND status_send !=? AND month_tabels=? AND  year_tabels =? AND fio IS NOT NULL ");
-                    ///"_id > ?   AND _id< ?"
-                    //////
-                    class_grud_sql_operations. concurrentHashMapНабор.put("УсловиеПоиска1",finalПолученныйUUID);
-                    ///
-                    class_grud_sql_operations. concurrentHashMapНабор.put("УсловиеПоиска2","Удаленная");
-                    ///
-                    class_grud_sql_operations. concurrentHashMapНабор.put("УсловиеПоиска3",МЕсяцДляКурсораТабелей);
-                    //
-                    class_grud_sql_operations. concurrentHashMapНабор.put("УсловиеПоиска4",ГодДляКурсораТабелей);////УсловиеПоискаv4,........УсловиеПоискаv5 .......
-*/
-            ////TODO другие поля
-
-            ///classGrudSqlOperations. concurrentHashMapНабор.put("ПоляГрупировки",null);
-            ////
-            //class_grud_sql_operations. concurrentHashMapНабор.put("УсловиеГрупировки",null);
-            ////
-            class_grud_sql_operationsПолучениеИмяСистемы.concurrentHashMapНабор.put("УсловиеСортировки","date_update");
-            ////
-           /// class_grud_sql_operations. concurrentHashMapНабор.put("УсловиеЛимита","1");
-            ////
-            // TODO: 12.10.2021  Ссылка Менеджер Потоков
-
-
-            // TODO: 27.08.2021  ПОЛУЧЕНИЕ ДАННЫХ ОТ КЛАССА GRUD-ОПЕРАЦИИ
-
-            Курсор_ПолучениеИмяСистемы= (SQLiteCursor)  class_grud_sql_operationsПолучениеИмяСистемы.
-                    new GetData(context).getdata(class_grud_sql_operationsПолучениеИмяСистемы.concurrentHashMapНабор,
-                    Class_Engine_SQLГдеНаходитьсяМенеджерПотоков.МенеджерПотоков,sqLiteDatabase);
-
-            Log.d(this.getClass().getName(), "GetData "  +Курсор_ПолучениеИмяСистемы);
-
-
-/*
-
-            Cursor Курсор_ЗагружаетДанныеПриСозданииТабеля = new CoreBinessLogic(contextСозданиеБАзы).КурсорУниверсальныйДляБазыДанных("SuccessLogin", new String[]
-                            {"success_users"}, null,
-                    null, null, null, "date_update", null);///"SELECT name  FROM MODIFITATION_Client WHERE name=?",НазваниеТаблицНаСервере
-*/
-
-            //////todo ПОЛУЧЕНИЕ ДАННЫХ
-            if (Курсор_ПолучениеИмяСистемы.getCount() > 0) {
-                //////
-                Курсор_ПолучениеИмяСистемы.moveToFirst();
-
-                //
-                ИмяУспешноВошедегоПользователья = Курсор_ПолучениеИмяСистемы.getString(0);
-                /////
-                Log.d(this.getClass().getName(), "ИмяУспешноВошедегоПользователья  " + ИмяУспешноВошедегоПользователья);
+            if(Курсор_ПолучаемИмяСотрудникаИзТаблицыФИО.getCount()>0){
+                Курсор_ПолучаемИмяСотрудникаИзТаблицыФИО.moveToFirst();
+                getSuccess_Users =           Курсор_ПолучаемИмяСотрудникаИзТаблицыФИО.getString(2).trim();
 
             }
-
-            ///поймать ошибку
-        } catch (Exception e) {
-            //  Block of code to handle errors
-            e.printStackTrace();
-            ///метод запись ошибок в таблицу
-            Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
-                    " Линия  :" + Thread.currentThread().getStackTrace()[2].getLineNumber());
-            new RecordNewErros(context).recordnewerror(e.toString(), this.getClass().getName(),
-                    Thread.currentThread().getStackTrace()[2].getMethodName(), Thread.currentThread().getStackTrace()[2].getLineNumber());
-            ///////
-        }
-      return  ИмяУспешноВошедегоПользователья;
-
-    }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    //////todo метод ДЛЯ ТАБЕЛЯ  ЗАГРУЖАЕТ СОТРУДНИКОВ В КОНТЕРТНЫЙ ТАБЕЛЬ
-    Cursor МетодЗагружаетСотрудниковListViewТабеля(int IDЧьиДанныеДляСотрудников, Long полученнаяUUIDНазванияОрганизации, String finalУниверсальноеИмяТабеля, Context контекстLIstView,
-                                                   int МЕсяцДляКурсораТабелей, int ГодДляКурсораТабелей, String ЦифровоеИмяНовгоТабеля) {
-        ////
-
-
-        SQLiteCursor Курсор_ДляЗагрузкиСотрудниковНепостредственнов = null;
-
-         Class_GRUD_SQL_Operations class_grud_sql_operationsСотрудниковListViewТабел;
-
-        try {
-            // TODO: 26.08.2021 НОВЫЙ ВЫЗОВ НОВОГО КЛАСС GRUD - ОПЕРАЦИИ
-
-            class_grud_sql_operationsСотрудниковListViewТабел=new Class_GRUD_SQL_Operations(контекстLIstView);
-
-            ///
-            class_grud_sql_operationsСотрудниковListViewТабел.concurrentHashMapНабор.put("НазваниеОбрабоатываемойТаблицы","viewtabel");
-            ///////
-            class_grud_sql_operationsСотрудниковListViewТабел.concurrentHashMapНабор.put("СтолбцыОбработки","name,uuid,BirthDate,snils,_id,status_carried_out");
-            //
-            ///////
-            class_grud_sql_operationsСотрудниковListViewТабел.concurrentHashMapНабор.put("ФорматПосика","user_update= ?  AND  month_tabels=?  AND year_tabels=?" +
-                    " AND nametabel=? AND organizations=? AND status_send!=?  AND nametabel_typename=? AND name IS NOT NULL");
-            ////
-            // TODO: 06.09.2021  значнеия для where
-
-            class_grud_sql_operationsСотрудниковListViewТабел.concurrentHashMapНабор.put("УсловиеПоиска1",IDЧьиДанныеДляСотрудников);
-
-            class_grud_sql_operationsСотрудниковListViewТабел.concurrentHashMapНабор.put("УсловиеПоиска2",МЕсяцДляКурсораТабелей);
-
-            class_grud_sql_operationsСотрудниковListViewТабел.concurrentHashMapНабор.put("УсловиеПоиска3",ГодДляКурсораТабелей);
-
-            class_grud_sql_operationsСотрудниковListViewТабел.concurrentHashMapНабор.put("УсловиеПоиска4", finalУниверсальноеИмяТабеля.trim());
-
-            class_grud_sql_operationsСотрудниковListViewТабел.concurrentHashMapНабор.put("УсловиеПоиска5",полученнаяUUIDНазванияОрганизации);
-
-            class_grud_sql_operationsСотрудниковListViewТабел.concurrentHashMapНабор.put("УсловиеПоиска6","Удаленная");
-
-            class_grud_sql_operationsСотрудниковListViewТабел.concurrentHashMapНабор.put("УсловиеПоиска7",ЦифровоеИмяНовгоТабеля);
-
-            // TODO: 06.09.2021 УСЛОВИЕ ДЛЯ СОРТИРОВКИ
-
-            class_grud_sql_operationsСотрудниковListViewТабел.concurrentHashMapНабор.put("УсловиеСортировки","date_update DESC");
-
-            ////
-            // TODO: 12.10.2021  Ссылка Менеджер Потоков
-
-            // TODO: 27.08.2021  ПОЛУЧЕНИЕ ДАННЫХ ОТ КЛАССА GRUD-ОПЕРАЦИИ
-
-
-            Курсор_ДляЗагрузкиСотрудниковНепостредственнов= (SQLiteCursor)  class_grud_sql_operationsСотрудниковListViewТабел.
-                    new GetData(контекстLIstView).getdata(class_grud_sql_operationsСотрудниковListViewТабел.concurrentHashMapНабор,
-                    Class_Engine_SQLГдеНаходитьсяМенеджерПотоков.МенеджерПотоков,sqLiteDatabase);
-
-            Log.d(this.getClass().getName(), "GetData "  );
-
-            ////
-
-
-/*
-            Курсор_ДляЗагрузкиСотрудниковНепостредственнов = new CoreBinessLogic(контекстLIstView).КурсорУниверсальныйДляБазыДанных("viewtabel",
-                    new String[]{"name,uuid,BirthDate,snils,_id,status_carried_out"},//     new String[]{"name,id,uuid,BirthDate,snils},
-                    " user_update= ?  AND  month_tabels=?  AND year_tabels=? AND nametabel=? AND organizations=? AND status_send!=?  AND nametabel_typename=? AND name IS NOT NULL",//AND status_send IS NULL//"Удаленная" //AND status_send!=?" /AND status_send IS NULL AND  name IS NOT NULL AND fio IS NOT NULL
-                    new String[]{String.valueOf(IDЧьиДанныеДляСотрудников), String.valueOf(МЕсяцДляКурсораТабелей), String.valueOf(ГодДляКурсораТабелей),
-                            finalУниверсальноеИмяТабеля.trim(), String.valueOf(полученнаяUUIDНазванияОрганизации), "Удаленная", String.valueOf(ЦифровоеИмяНовгоТабеля)}, null, null, "date_update DESC", null);
-
-
-
-*/
-
-
-
-
-            //////todo полученный
-            if (Курсор_ДляЗагрузкиСотрудниковНепостредственнов.getCount() > 0) {
-                ////////
-                Курсор_ДляЗагрузкиСотрудниковНепостредственнов.moveToFirst();
-
-
-
-
-                Log.i(this.getClass().getName(), " Курсор_ДляЗагрузкиСотрудниковНепостредственновListView.getCount() " + Курсор_ДляЗагрузкиСотрудниковНепостредственнов.getCount());
-            }
-
-            /////////
-        } catch (Exception e) {
-            e.printStackTrace();
-            ///метод запись ошибок в таблицу
-            Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
-                    " Линия  :" + Thread.currentThread().getStackTrace()[2].getLineNumber());
-        }
-        // new String[] { filter+"%" }, // new String[] {"%"+ filter+ "%" }, n
-        //todo КУРСОР ЧЕРЕЗ ПОИСК LIKE
-
-
-        return Курсор_ДляЗагрузкиСотрудниковНепостредственнов;
-
-    }
-
-
-
-
-
-
-
-
-
-
-
-
-// TODO: 12.03.2021 Метод который получает данные при возврате из ШАБЛОНОВ
-
-/*    //////todo метод ДЛЯ ТАБЕЛЯ  ЗАГРУЖАЕТ СОТРУДНИКОВ В КОНТЕРТНЫЙ ТАБЕЛЬ
-    Cursor МетодЗагружаетСотрудниковListViewТабеляПриВозвратеИЗШаблона(Context контекстLIstView, String ЦифровоеИмяНовгоТабеля, int месяцДляПермещенияПоТабелю, int годДляПермещенияПоТабелю) {
-        ////
-
-
-
-
-// TODO: 07.05.2021  ГЛАВНЫЙ КУРСОР СОГРУЗКИ СОТУРДНИКОВ В ТАБЕЛЬ
-
-        Cursor Курсор_ДляЗагрузкиСотрудниковНепостредственновИзШаблона = null;
-        try {
-            Курсор_ДляЗагрузкиСотрудниковНепостредственновИзШаблона = new CoreBinessLogic(контекстLIstView).КурсорУниверсальныйДляБазыДанных("viewtabel",
-                    new String[]{"*"},//     new String[]{"name,id,uuid,BirthDate,snils},
-                    "status_send!=?  AND cfo=? AND fio !=?  AND month_tabels=? AND  year_tabels =?  AND fio IS NOT NULL AND name IS NOT NULL",//  nametabel_typename  AND nametabel IS NOT NULL",//AND status_send IS NULL//"Удаленная" //AND status_send!=?" /AND status_send IS NULL AND  name IS NOT NULL AND fio IS NOT NULL
-                    new String[]{"Удаленная", String.valueOf(ЦифровоеИмяНовгоТабеля), "", String.valueOf(месяцДляПермещенияПоТабелю), String.valueOf(годДляПермещенияПоТабелю)},
-                    "name", null, "name", null);
-
-            // TODO: 07.05.2021  данный курсор с датой показывает какой сотрудника изменили такой и сверху
-*//*
-            Курсор_ДляЗагрузкиСотрудниковНепостредственновИзШаблона = new CoreBinessLogic(контекстLIstView).КурсорУниверсальныйДляБазыДанных("viewtabel",
-                    new String[]{"*"},//     new String[]{"name,id,uuid,BirthDate,snils},
-                    "status_send!=?  AND nametabel_typename=? AND uuid !=? AND uuid IS NOT NULL AND name IS NOT NULL",// AND nametabel IS NOT NULL",//AND status_send IS NULL//"Удаленная" //AND status_send!=?" /AND status_send IS NULL AND  name IS NOT NULL AND fio IS NOT NULL
-                    new String[]{ "Удаленная",String.valueOf(ЦифровоеИмяНовгоТабеля),""},
-                    "name", null, "date_update DESC", null);*//*
-
-            //////
-            if (Курсор_ДляЗагрузкиСотрудниковНепостредственновИзШаблона.getCount() > 0) {
-                Курсор_ДляЗагрузкиСотрудниковНепостредственновИзШаблона.moveToFirst();
-            }
-
-            /////////
-        } catch (Exception e) {
-            e.printStackTrace();
-            ///метод запись ошибок в таблицу
-            Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
-                    " Линия  :" + Thread.currentThread().getStackTrace()[2].getLineNumber());
-        }
-        // new String[] { filter+"%" }, // new String[] {"%"+ filter+ "%" }, n
-        //todo КУРСОР ЧЕРЕЗ ПОИСК LIKE
-        Log.i(this.getClass().getName(), " Курсор_ДляЗагрузкиСотрудниковНепостредственновИзШаблонаListView.getCount() " + Курсор_ДляЗагрузкиСотрудниковНепостредственновИзШаблона.getCount());
-
-        return Курсор_ДляЗагрузкиСотрудниковНепостредственновИзШаблона;
-
-    }*/
-
-//TODO МЕТОД ЗАГРУЗНИ НОВОГО СОТРУДНИКА
-    public Cursor МетодДанныеДЛяСпинераТАбеля() {
-                    SQLiteCursor            КурсорДляСпинераСамиМЕсяцы = null;
-                    try {
-                        Class_GRUD_SQL_Operations    class_grud_sql_operationsЗначенияНовгоСотрудник=new Class_GRUD_SQL_Operations(context);
-                            class_grud_sql_operationsЗначенияНовгоСотрудник.concurrentHashMapНабор.put("НазваниеОбрабоатываемойТаблицы","tabel");
-                            class_grud_sql_operationsЗначенияНовгоСотрудник.concurrentHashMapНабор.put("СтолбцыОбработки","month_tabels,year_tabels,cfo,uuid");
-                            class_grud_sql_operationsЗначенияНовгоСотрудник.concurrentHashMapНабор.put("ФорматПосика","status_send!=?  " +
-                                    " AND month_tabels IS NOT NULL  AND year_tabels IS NOT NULL");
-                            class_grud_sql_operationsЗначенияНовгоСотрудник.concurrentHashMapНабор.put("УсловиеПоиска1","Удаленная");
-                            class_grud_sql_operationsЗначенияНовгоСотрудник.concurrentHashMapНабор.put("ПоляГрупировки","month_tabels,year_tabels");
-                            class_grud_sql_operationsЗначенияНовгоСотрудник.concurrentHashMapНабор.put("УсловиеСортировки","year_tabels DESC " +
-                                    ",month_tabels DESC " );
-                            class_grud_sql_operationsЗначенияНовгоСотрудник.concurrentHashMapНабор.put("УсловиеЛимита","6");
-
-
-                            КурсорДляСпинераСамиМЕсяцы= (SQLiteCursor)  class_grud_sql_operationsЗначенияНовгоСотрудник.new GetData(context).getdata(class_grud_sql_operationsЗначенияНовгоСотрудник.
-                                            concurrentHashMapНабор,
-                                    Class_Engine_SQLГдеНаходитьсяМенеджерПотоков.МенеджерПотоков,sqLiteDatabase);
-
-                            Log.d(this.getClass().getName(), "КурсорДляСпинераСамиМЕсяцы " +КурсорДляСпинераСамиМЕсяцы );
-
-                } catch (Exception e) {
-                        e.printStackTrace();
-                        ///метод запись ошибок в таблицу
-                        Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
-                                " Линия  :" + Thread.currentThread().getStackTrace()[2].getLineNumber());
-                        new RecordNewErros(context).recordnewerror(e.toString(), this.getClass().getName(),
-                                Thread.currentThread().getStackTrace()[2].getMethodName(), Thread.currentThread().getStackTrace()[2].getLineNumber());
-                    }
-        return КурсорДляСпинераСамиМЕсяцы;
-    }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-//TODO МЕТОД ЗАГРУЗНИ НОВОГО шаблона
-
-    public Cursor МетодЗагружаетЗначенияШаблонов(int полученнаяUUIDОрганизациидДляКурсораСпинераДаты, Context КонтекстДЛяСотрудника) {
-     /*   Cursor asyncTaskLoader= (Cursor) new AsyncTaskLoader(КонтекстДЛяСотрудника) {
-            @Override
-            public Object loadInBackground() {*/
-
-        SQLiteCursor Курсор_ЗагружаетАрайдистЗначенийНовогоШаблонаВнутри = null;
-        ///
-        Class_GRUD_SQL_Operations class_grud_sql_operationsЗначенияШаблонов;
-        try {
-// TODO: 06.09.2021
-
-            class_grud_sql_operationsЗначенияШаблонов=new Class_GRUD_SQL_Operations(context);
-
-
-            // TODO: 26.08.2021 НОВЫЙ ВЫЗОВ НОВОГО КЛАСС GRUD - ОПЕРАЦИИ
-
-            ///
-            class_grud_sql_operationsЗначенияШаблонов.concurrentHashMapНабор.put("НазваниеОбрабоатываемойТаблицы","Templates");
-            ///////
-            class_grud_sql_operationsЗначенияШаблонов.concurrentHashMapНабор.put("СтолбцыОбработки","*");
-            //
-            class_grud_sql_operationsЗначенияШаблонов.concurrentHashMapНабор.put("ФорматПосика","user_update=?");
-            ///"_id > ?   AND _id< ?"
-            //////
-            class_grud_sql_operationsЗначенияШаблонов.concurrentHashMapНабор.put("УсловиеПоиска1",полученнаяUUIDОрганизациидДляКурсораСпинераДаты);
-            ///
-             /*       concurrentHashMapНабор. concurrentHashMapНабор.put("УсловиеПоиска2","12");
-                    //
-                    concurrentHashMapНабор. concurrentHashMapНабор.put("УсловиеПоиска3","13");////УсловиеПоискаv4,........УсловиеПоискаv5 .......*/
-
-            ////TODO другие поля
-
-            //class_grud_sql_operationsЗначенияШаблонов. concurrentHashMapНабор.put("ПоляГрупировки","month_tabels,year_tabels");
-            ////
-            ///  concurrentHashMapНабор. concurrentHashMapНабор.put("УсловиеГрупировки","date_update DESC");
-            ////
-            class_grud_sql_operationsЗначенияШаблонов.concurrentHashMapНабор.put("УсловиеСортировки","date_update DESC");
-            ////
-            /// class_grud_sql_operationsЗначенияНовгоСотрудник. concurrentHashMapНабор.put("УсловиеЛимита","1");
-            ////
-            // TODO: 12.10.2021  Ссылка Менеджер Потоков
-
-
-            // TODO: 27.08.2021  ПОЛУЧЕНИЕ ДАННЫХ ОТ КЛАССА GRUD-ОПЕРАЦИИ
-
-
-            Курсор_ЗагружаетАрайдистЗначенийНовогоШаблонаВнутри= (SQLiteCursor)  class_grud_sql_operationsЗначенияШаблонов.
-                    new GetData(context).getdata(class_grud_sql_operationsЗначенияШаблонов.concurrentHashMapНабор,
-                    Class_Engine_SQLГдеНаходитьсяМенеджерПотоков.МенеджерПотоков,sqLiteDatabase);
-
-            Log.d(this.getClass().getName(), "GetData " +Курсор_ЗагружаетАрайдистЗначенийНовогоШаблонаВнутри );
-
-
-        /*    // TODO: 06.09.2021  old
-            Курсор_ЗагружаетАрайдистЗначенийНовогоШаблонаВнутри = new CoreBinessLogic(КонтекстДЛяСотрудника).КурсорУниверсальныйДляБазыДанных("Templates", new String[]
-                            {"*"}, "user_update=?",
-                    new String[]{String.valueOf(полученнаяUUIDОрганизациидДляКурсораСпинераДаты)},
-                    null, null, "date_update DESC", null);
-            ////
-*/
-
-            ///
-        } catch (Exception e) {
-            e.printStackTrace();
-            ///метод запись ошибок в таблицу
-            Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
-                    " Линия  :" + Thread.currentThread().getStackTrace()[2].getLineNumber());
-            new RecordNewErros(context).recordnewerror(e.toString(), this.getClass().getName(),
-                    Thread.currentThread().getStackTrace()[2].getMethodName(), Thread.currentThread().getStackTrace()[2].getLineNumber());
-        }
-
-        return Курсор_ЗагружаетАрайдистЗначенийНовогоШаблонаВнутри;
-    }
-
-
-    //todo загружет уже готовые созданные табеля
-    public SQLiteCursor МетодЗагружетУжеготовыеТабеля(Context КонтекстДляЗагружемыхТАбелей,
-                                                      Long UUIDТабеляПослеУспешногоСозданиеСотрудникаВсехСотридников,
-                                                      int месяцДляПермещенияПоТабелю,
-                                                      int годДляПермещенияПоТабелю) {
-
-
-        //////TODO ГЛАВНЫЙ КУРСОР ДЛЯ НЕПОСРЕДТСВЕНОГО ЗАГРУЗКИ СОТРУДНИКА
-        ////
-        SQLiteCursor Курсор_ЗагружаемТабеляСозданныйВнутрений = null;
-        //////
-        Class_GRUD_SQL_Operations class_grud_sql_operationsУжеготовыеТабеля;
-        try {
-
-            class_grud_sql_operationsУжеготовыеТабеля = new Class_GRUD_SQL_Operations(context);
-
-
-                /*    Курсор_ЗагружаетНазваниеТабеляНАОснованииСФО = new CoreBinessLogic(КонтекстДляРежимаИнтрента).КурсорУниверсальныйДляБазыДанных("cfo", new String[]
-                                    {"name"}, "id=?",
-                            new String[]{String.valueOf(ТекущееСФО)}, null, null, "date_update DESC", "1");///"SELECT name  FROM MODIFITATION_Client WHERE name=?",НазваниеТаблицНаСервере
-                    // TODO: 02.09.2021
-*/
-
-
-            // TODO: 26.08.2021 НОВЫЙ ВЫЗОВ НОВОГО КЛАСС GRUD - ОПЕРАЦИИ
-
-            ///
-            class_grud_sql_operationsУжеготовыеТабеля.concurrentHashMapНабор.put("НазваниеОбрабоатываемойТаблицы","viewtabel");
-            ///////
-            class_grud_sql_operationsУжеготовыеТабеля.concurrentHashMapНабор.put("СтолбцыОбработки","*");
-            //
-            class_grud_sql_operationsУжеготовыеТабеля.concurrentHashMapНабор.put("ФорматПосика"," uuid=?    " +
-                    "AND status_send !=?" +
-                    " AND month_tabels=?" +
-                    " AND  year_tabels =? " +
-                    "AND fio IS NOT NULL");
-            ///"_id > ?   AND _id< ?"
-            //////
-            class_grud_sql_operationsУжеготовыеТабеля.concurrentHashMapНабор.put("УсловиеПоиска1",UUIDТабеляПослеУспешногоСозданиеСотрудникаВсехСотридников);
-            ///
-            class_grud_sql_operationsУжеготовыеТабеля.concurrentHashMapНабор.put("УсловиеПоиска2","Удаленная");
-            //
-            class_grud_sql_operationsУжеготовыеТабеля.concurrentHashMapНабор.put("УсловиеПоиска3",месяцДляПермещенияПоТабелю);
-            //
-            class_grud_sql_operationsУжеготовыеТабеля.concurrentHashMapНабор.put("УсловиеПоиска4",годДляПермещенияПоТабелю);
-            ///
-             /*       concurrentHashMapНабор. concurrentHashMapНабор.put("УсловиеПоиска2","12");
-                    //
-                    concurrentHashMapНабор. concurrentHashMapНабор.put("УсловиеПоиска3","13");////УсловиеПоискаv4,........УсловиеПоискаv5 .......*/
-
-            ////TODO другие поля
-
-            /////classGrudSqlOperations. concurrentHashMapНабор.put("ПоляГрупировки",null);
-            ////
-            ///  concurrentHashMapНабор. concurrentHashMapНабор.put("УсловиеГрупировки","date_update DESC");
-            ////
-        class_grud_sql_operationsУжеготовыеТабеля.concurrentHashMapНабор.put("УсловиеСортировки","uuid");//date_update
-            ////
-          class_grud_sql_operationsУжеготовыеТабеля.concurrentHashMapНабор.put("УсловиеЛимита","1");
-            ////
-
-            // TODO: 12.10.2021  Ссылка Менеджер Потоков
-
-
-
-            // TODO: 27.08.2021  ПОЛУЧЕНИЕ ДАННЫХ ОТ КЛАССА GRUD-ОПЕРАЦИИ
-
-
-            Курсор_ЗагружаемТабеляСозданныйВнутрений= (SQLiteCursor)  class_grud_sql_operationsУжеготовыеТабеля.
-                    new GetData(context).getdata(class_grud_sql_operationsУжеготовыеТабеля.concurrentHashMapНабор,
-                    Class_Engine_SQLГдеНаходитьсяМенеджерПотоков.МенеджерПотоков,sqLiteDatabase);
-
-            Log.d(this.getClass().getName(), "GetData " +Курсор_ЗагружаемТабеляСозданныйВнутрений );
-            ////
-        } catch (Exception e) {
-            e.printStackTrace();
-            ///метод запись ошибок в таблицу
-            Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
-                    " Линия  :" + Thread.currentThread().getStackTrace()[2].getLineNumber());
-            new RecordNewErros(context).recordnewerror(e.toString(), this.getClass().getName(),
-                    Thread.currentThread().getStackTrace()[2].getMethodName(), Thread.currentThread().getStackTrace()[2].getLineNumber());
-        }
-
-///TODO ЗАПУСКАЕМ  ПуллПамяти
-        return Курсор_ЗагружаемТабеляСозданныйВнутрений;
-
-    }
-
-
-
-
-
-
-
-
-
-
-    //todo загружет уже готовые созданные табеля
-    public SQLiteCursor МетодЗагружетУжеготовыеТабеляПриСмещенииДанныхСкроллПоДАнным(Context КонтекстДляЗагружемыхТАбелей,
-                                                                                     int ЦифровоеИмяНовгоТабеля,
-                                                                                     int месяцДляПермещенияПоТабелю,
-                                                                                     int годДляПермещенияПоТабелю) {
-        /*Cursor asyncTaskLoaderЗагружаемТабеляСозданный = (Cursor) new AsyncTaskLoader(КонтекстДляЗагружемыхТАбелей) {
-            @Override
-            public Object loadInBackground() {*/
-//////TODO ГЛАВНЫЙ КУРСОР ДЛЯ НЕПОСРЕДТСВЕНОГО ЗАГРУЗКИ СОТРУДНИКА
-        ////
-
-        SQLiteCursor Курсор_ЗагружаемТабеляСозданныйВнутрений = null;
-        ///
-        Class_GRUD_SQL_Operations class_grud_sql_operationsУжеготовыеТабеляДляСкролаПОТабелю;
-        try {
-
-
-            class_grud_sql_operationsУжеготовыеТабеляДляСкролаПОТабелю=new Class_GRUD_SQL_Operations(context);
-
-
-
-
-            // TODO: 26.08.2021 НОВЫЙ ВЫЗОВ НОВОГО КЛАСС GRUD - ОПЕРАЦИИ
-
-            ///
-            class_grud_sql_operationsУжеготовыеТабеляДляСкролаПОТабелю.concurrentHashMapНабор.put("НазваниеОбрабоатываемойТаблицы","viewtabel");
-            ///////
-            class_grud_sql_operationsУжеготовыеТабеляДляСкролаПОТабелю.concurrentHashMapНабор.put("СтолбцыОбработки","*");
-            //
-            class_grud_sql_operationsУжеготовыеТабеляДляСкролаПОТабелю.concurrentHashMapНабор.put("ФорматПосика","cfo=?  " +
-                    "AND status_send !=? " +
-                    " AND month_tabels=?  " +
-                    " AND  year_tabels=?" +
-                    " AND fio IS NOT NULL");
-            ///"_id > ?   AND _id< ?"
-            //////
-            class_grud_sql_operationsУжеготовыеТабеляДляСкролаПОТабелю.concurrentHashMapНабор.put("УсловиеПоиска1",ЦифровоеИмяНовгоТабеля);
-            ///
-            class_grud_sql_operationsУжеготовыеТабеляДляСкролаПОТабелю.concurrentHashMapНабор.put("УсловиеПоиска2","Удаленная");
-            //
-            class_grud_sql_operationsУжеготовыеТабеляДляСкролаПОТабелю.concurrentHashMapНабор.put("УсловиеПоиска3",месяцДляПермещенияПоТабелю);
-            //
-            class_grud_sql_operationsУжеготовыеТабеляДляСкролаПОТабелю.concurrentHashMapНабор.put("УсловиеПоиска4",годДляПермещенияПоТабелю);
-            ///
-             /*       concurrentHashMapНабор. concurrentHashMapНабор.put("УсловиеПоиска2","12");
-                    //
-                    concurrentHashMapНабор. concurrentHashMapНабор.put("УсловиеПоиска3","13");////УсловиеПоискаv4,........УсловиеПоискаv5 .......*/
-
-            ////TODO другие поля
-
-            /////classGrudSqlOperations. concurrentHashMapНабор.put("ПоляГрупировки",null);
-            ////
-            ///  concurrentHashMapНабор. concurrentHashMapНабор.put("УсловиеГрупировки","fio");
-            ////
-            class_grud_sql_operationsУжеготовыеТабеляДляСкролаПОТабелю.concurrentHashMapНабор.put("УсловиеСортировки","uuid");
-            ////
-     ////  class_grud_sql_operationsУжеготовыеТабеляДляСкролаПОТабелю. concurrentHashMapНабор.put("УсловиеЛимита","1");
-            ////
-
-
-            // TODO: 12.10.2021  Ссылка Менеджер Потоков
-
-
-
-            // TODO: 27.08.2021  ПОЛУЧЕНИЕ ДАННЫХ ОТ КЛАССА GRUD-ОПЕРАЦИИ
-
-
-            Курсор_ЗагружаемТабеляСозданныйВнутрений= (SQLiteCursor)  class_grud_sql_operationsУжеготовыеТабеляДляСкролаПОТабелю.
-                    new GetData(context).getdata(class_grud_sql_operationsУжеготовыеТабеляДляСкролаПОТабелю.concurrentHashMapНабор,
-                    Class_Engine_SQLГдеНаходитьсяМенеджерПотоков.МенеджерПотоков,sqLiteDatabase);
-
-            Log.d(this.getClass().getName(), "GetData " +Курсор_ЗагружаемТабеляСозданныйВнутрений );
-
-
-            ///////todo\
-        } catch (Exception e) {
-            e.printStackTrace();
-            ///метод запись ошибок в таблицу
-            Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
-                    " Линия  :" + Thread.currentThread().getStackTrace()[2].getLineNumber());
-            new RecordNewErros(context).recordnewerror(e.toString(), this.getClass().getName(),
-                    Thread.currentThread().getStackTrace()[2].getMethodName(), Thread.currentThread().getStackTrace()[2].getLineNumber());
-        }
-
-///TODO ЗАПУСКАЕМ  ПуллПамяти
-        return Курсор_ЗагружаемТабеляСозданныйВнутрений;
-
-    }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    //todo загружет уже готовые созданные табеля
-    public SQLiteCursor МетодЗагружетУжеготовыеТабеляДляСкролаПОТабелюТолькоКоличествоСТорочек(Context КонтекстДляЗагружемыхТАбелей,
-                                                                                               int ЦифровоеИмяНовгоТабеля,
-                                                                                               int месяцДляПермещенияПоТабелю,
-                                                                                               int годДляПермещенияПоТабелю) {
-
-        SQLiteCursor Курсор_ЗагружаемТабеляСозданный_ПервыйКурсорКоторыйСамЗагружаетьсяКогадМыЗаходимНААктивти = null;
-        Class_GRUD_SQL_Operations class_grud_sql_operationsТабеляДляСкролаПОТабелюТолькоКоличествоСТорочек_ПервыйЗапускаПриЗАгрузкеАктивти;
-        try {
-            class_grud_sql_operationsТабеляДляСкролаПОТабелюТолькоКоличествоСТорочек_ПервыйЗапускаПриЗАгрузкеАктивти=new Class_GRUD_SQL_Operations(context);
-            class_grud_sql_operationsТабеляДляСкролаПОТабелюТолькоКоличествоСТорочек_ПервыйЗапускаПриЗАгрузкеАктивти.concurrentHashMapНабор.put("НазваниеОбрабоатываемойТаблицы","viewtabel");
-            class_grud_sql_operationsТабеляДляСкролаПОТабелюТолькоКоличествоСТорочек_ПервыйЗапускаПриЗАгрузкеАктивти.concurrentHashMapНабор.put("СтолбцыОбработки","*");
-            class_grud_sql_operationsТабеляДляСкролаПОТабелюТолькоКоличествоСТорочек_ПервыйЗапускаПриЗАгрузкеАктивти.concurrentHashMapНабор.put("ФорматПосика",
-                    "cfo=? " +
-                    "AND status_send !=? AND" +
-                    " month_tabels=? AND" +
-                    "  year_tabels=? " +
-                            "AND fio IS NOT NULL");
-            ///"_id > ?   AND _id< ?"
-            class_grud_sql_operationsТабеляДляСкролаПОТабелюТолькоКоличествоСТорочек_ПервыйЗапускаПриЗАгрузкеАктивти.concurrentHashMapНабор.put("УсловиеПоиска1",ЦифровоеИмяНовгоТабеля);
-            class_grud_sql_operationsТабеляДляСкролаПОТабелюТолькоКоличествоСТорочек_ПервыйЗапускаПриЗАгрузкеАктивти.concurrentHashMapНабор.put("УсловиеПоиска2","Удаленная");
-            class_grud_sql_operationsТабеляДляСкролаПОТабелюТолькоКоличествоСТорочек_ПервыйЗапускаПриЗАгрузкеАктивти.concurrentHashMapНабор.put("УсловиеПоиска3",месяцДляПермещенияПоТабелю);
-            class_grud_sql_operationsТабеляДляСкролаПОТабелюТолькоКоличествоСТорочек_ПервыйЗапускаПриЗАгрузкеАктивти.concurrentHashMapНабор.put("УсловиеПоиска4",годДляПермещенияПоТабелю);
-            class_grud_sql_operationsТабеляДляСкролаПОТабелюТолькоКоличествоСТорочек_ПервыйЗапускаПриЗАгрузкеАктивти.concurrentHashMapНабор.put("УсловиеСортировки","date_update ");
-            Курсор_ЗагружаемТабеляСозданный_ПервыйКурсорКоторыйСамЗагружаетьсяКогадМыЗаходимНААктивти= (SQLiteCursor)
-                    class_grud_sql_operationsТабеляДляСкролаПОТабелюТолькоКоличествоСТорочек_ПервыйЗапускаПриЗАгрузкеАктивти.
-                    new GetData(context).getdata(class_grud_sql_operationsТабеляДляСкролаПОТабелюТолькоКоличествоСТорочек_ПервыйЗапускаПриЗАгрузкеАктивти.
-                                    concurrentHashMapНабор,
-                            Class_Engine_SQLГдеНаходитьсяМенеджерПотоков.МенеджерПотоков,sqLiteDatabase);
-            Log.d(this.getClass().getName(), "GetData "+Курсор_ЗагружаемТабеляСозданный_ПервыйКурсорКоторыйСамЗагружаетьсяКогадМыЗаходимНААктивти  );
+            Курсор_ПолучаемИмяСотрудникаИзТаблицыФИО.close();
+            Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                    " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                    " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" + " getSuccess_Users "+getSuccess_Users );
         } catch (Exception e) {
             e.printStackTrace();
             Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
@@ -2345,48 +1324,9 @@ Class_GRUD_SQL_Operations classGrudSqlOperationsУдалениеДанныхЧе
             new RecordNewErros(context).recordnewerror(e.toString(), this.getClass().getName(),
                     Thread.currentThread().getStackTrace()[2].getMethodName(), Thread.currentThread().getStackTrace()[2].getLineNumber());
         }
-        return Курсор_ЗагружаемТабеляСозданный_ПервыйКурсорКоторыйСамЗагружаетьсяКогадМыЗаходимНААктивти;
+      return  getSuccess_Users;
+
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
     // TODO: 09.04.2021 Метод Обновление Получение ПО с Сервера
     // TODO: 09.04.2021 Метод Обновление Получение ПО с Сервера
@@ -2416,28 +1356,21 @@ Class_GRUD_SQL_Operations classGrudSqlOperationsУдалениеДанныхЧе
             OkHttpClient okHttpClientЗагрузкаНовогоПО = builderokhtttp.addInterceptor(new Interceptor() {
                         @Override
                         public Response intercept(Chain chain) throws IOException {
-                            // TODO: 26.08.2021 НОВЫЙ ВЫЗОВ НОВОГО КЛАСС GRUD - ОПЕРАЦИИ
-                            Class_GRUD_SQL_Operations grudSqlOperations = new Class_GRUD_SQL_Operations(context);
-                            grudSqlOperations.concurrentHashMapНабор.put("СамFreeSQLКОд",
-                                    " SELECT success_users,success_login  FROM successlogin  ORDER BY date_update DESC ;");
-                            // TODO: 12.10.2021  Ссылка Менеджер Потоков
-                            BinessLogicPublicContent publicContent = new BinessLogicPublicContent(context);
-                            SQLiteCursor Курсор_ПолучаемИмяСотрудникаИзТаблицыФИО = null;
-                            try {
-                                Курсор_ПолучаемИмяСотрудникаИзТаблицыФИО = (SQLiteCursor) grudSqlOperations.
-                                        new GetаFreeData(context).getfreedata(grudSqlOperations.
-                                                concurrentHashMapНабор,
-                                        publicContent.МенеджерПотоков,  );
-                            } catch (ExecutionException e) {
-                                throw new RuntimeException(e);
-                            } catch (InterruptedException e) {
-                                throw new RuntimeException(e);
-                            }
-                            if (Курсор_ПолучаемИмяСотрудникаИзТаблицыФИО.getCount() > 0) {
+                            // TODO: 14.05.2025
+                            String Текущаятаблицы="successlogin";
+                            // TODO: 14.05.2025  получение данных
+                            ModuleQuety moduleQuety=new ModuleQuety(context);
+                            Cursor Курсор_ПолучаемИмяСотрудникаИзТаблицыФИО   =moduleQuety.getModuleQueryForceLoad(Текущаятаблицы,
+                                    "  SELECT success_users,success_login  FROM "+Текущаятаблицы+"  ORDER BY date_update DESC " , null);
+
+                            if(Курсор_ПолучаемИмяСотрудникаИзТаблицыФИО.getCount()>0){
                                 Курсор_ПолучаемИмяСотрудникаИзТаблицыФИО.moveToFirst();
-                                ПубличноеЛогин = Курсор_ПолучаемИмяСотрудникаИзТаблицыФИО.getString(0).trim();
-                                ПубличноеПароль = Курсор_ПолучаемИмяСотрудникаИзТаблицыФИО.getString(1).trim();
+                                ПубличноеЛогин =         Курсор_ПолучаемИмяСотрудникаИзТаблицыФИО.getString(0).trim();
+                                ПубличноеПароль =           Курсор_ПолучаемИмяСотрудникаИзТаблицыФИО.getString(1).trim();
+
                             }
+                            // TODO: 14.05.2025
+                            Курсор_ПолучаемИмяСотрудникаИзТаблицыФИО.close();
                             // TODO: 18.02.2025 get name Device
                             String ANDROID_ID =new ModulegetDeviceName().getDeviceName(context);
                             Log.d(this.getClass().getName(), "  BinessLogicPublicContent.ПубличноеИмяПользовательДлСервлета  " + ПубличноеЛогин +
@@ -2465,15 +1398,13 @@ Class_GRUD_SQL_Operations classGrudSqlOperationsУдалениеДанныхЧе
             Dispatcher  dispatcherЗагрузкаПО = okHttpClientЗагрузкаНовогоПО.dispatcher();
             okHttpClientЗагрузкаНовогоПО.newCall(requestGET).enqueue(new Callback() {
 
-
-
                 @Override
                 public void onFailure(@NonNull Call call, @NonNull IOException e) {
                     try{
                         Log.e(this.getClass().getName(), "  ERROR call  " + call + "  e" + e.toString());
-                        Log.e(CoreBinessLogic.class.getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
+                        Log.e(CoreBinessLogics.class.getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
                                 " Линия  :" + Thread.currentThread().getStackTrace()[2].getLineNumber() + " ОшибкаТекущегоМетода " + e.getMessage());
-                        new RecordNewErros(context).recordnewerror(e.toString(), CoreBinessLogic.class.getName(),
+                        new RecordNewErros(context).recordnewerror(e.toString(), CoreBinessLogics.class.getName(),
                                 Thread.currentThread().getStackTrace()[2].getMethodName(), Thread.currentThread().getStackTrace()[2].getLineNumber());
                         // TODO: 31.05.2022
                     } catch (Exception ex) {
@@ -2552,9 +1483,9 @@ Class_GRUD_SQL_Operations classGrudSqlOperationsУдалениеДанныхЧе
                     !ОшибкаТекущегоМетода.toString().trim().matches("(.*)SocketTimeout(.*)") &&
                     !ОшибкаТекущегоМетода.toString().trim().matches("(.*)java.net.ConnectException(.*)")
                     && !ОшибкаТекущегоМетода.toString().trim().matches("(.*)FileNotFoundException(.*)"))  {
-                Log.e(CoreBinessLogic.class.getName(), "Ошибка " + ОшибкаТекущегоМетода + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
+                Log.e(CoreBinessLogics.class.getName(), "Ошибка " + ОшибкаТекущегоМетода + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
                         " Линия  :" + Thread.currentThread().getStackTrace()[2].getLineNumber() + " ОшибкаТекущегоМетода " + ОшибкаТекущегоМетода.toString());
-                new RecordNewErros(this.context).recordnewerror(ex.toString(), CoreBinessLogic.class.getName(),
+                new RecordNewErros(this.context).recordnewerror(ex.toString(), CoreBinessLogics.class.getName(),
                         Thread.currentThread().getStackTrace()[2].getMethodName(), Thread.currentThread().getStackTrace()[2].getLineNumber());
 
             }
@@ -2563,287 +1494,62 @@ Class_GRUD_SQL_Operations classGrudSqlOperationsУдалениеДанныхЧе
 
     }
 
-
-
-
-
-
-
-
-
-
-
-
-    ////TODO ДАННЫЙ МЕТОД ВЫЧИСЛЯЕТ НУЖНО ЛИ ЗАПОЛЯНТЬ ВЫХОДНИЕ ДНИ БУКВОЙ Б
     public ContentValues МетодВычисляемВыходныеДниПриСозданииНовогоТабеляАвтоРЕжим(@NonNull Context КонтекстДляРежимаИнтрента,
                                                                                    @NonNull Integer Месяц ,
                                                                                     @NonNull Integer Год ) {
 
         ContentValues РезультатВычисленияВыходныхДней = new ContentValues();
-
         try {
-
-
-// create a Calendar for the 1st of the required month
-            ///
             Log.d(КонтекстДляРежимаИнтрента.getClass().getName(), " Год  " + "--" + Год + " Месяц " + Месяц);/////
 
-
-
             Calendar calendar1 = Calendar.getInstance(new Locale("ru"));
-            //TODO
-
-      //   calendar.set(Calendar.DAY_OF_MONTH,calendar.);
             YearMonth yearMonthObject = YearMonth.of(Год, Месяц);
-
             int daysInMonth = yearMonthObject.lengthOfMonth()+1; //28
-
             SimpleDateFormat СозданияВычисляемВыходные=null;
             // TODO: 29.04.2022  int ИндексДней
             int ИндексДней;
-
             ///////TODO сам цикл который заполняет месяцами
             for ( ИндексДней=1;ИндексДней<daysInMonth;ИндексДней++) {
-
-
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-                    //
                     СозданияВычисляемВыходные = new SimpleDateFormat("yyyy-MM-dd", new Locale("rus"));
-
                 } else {
-
                     СозданияВычисляемВыходные = new java.text.SimpleDateFormat("yyyy-MM-dd", new Locale("rus"));
 
                 }
-
-
                 Date   ДатаПосикаВыходныеДней       = СозданияВычисляемВыходные.parse (Год +"-"+Месяц+"-"+ИндексДней );
-
                 // Then get the day of week from the Date based on specific locale.
-
             // TODO: 29.01.2022  отдельно только название дня
             String РезультатДатыДляКонктетногоТабеляТолькоЗанвание = new SimpleDateFormat("EEE", new Locale("ru")).format(ДатаПосикаВыходныеДней );
-
-
                 if (РезультатДатыДляКонктетногоТабеляТолькоЗанвание.equalsIgnoreCase("сб")  ||
                         РезультатДатыДляКонктетногоТабеляТолькоЗанвание.equalsIgnoreCase("вс")) {
                     System.out.println("выходные дни при созадни тбалея полльзователь разрешмил авторежим" + ИндексДней);
-
                     String ОбьединяемДеньсЦифровдЛЯвСТАВКИ = "d" + String.valueOf(ИндексДней);
-
                     РезультатВычисленияВыходныхДней.put(ОбьединяемДеньсЦифровдЛЯвСТАВКИ, "В");
                 }
-
             }
-// stop when we reach the launch of the next month
+            Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                    " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                    " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" +
+                    "   РезультатВычисленияВыходныхДней  " + РезультатВычисленияВыходныхДней.valueSet() + " daysInMonth " + daysInMonth);
 
-
-            Log.d(this.getClass().getName(), "   РезультатВычисленияВыходныхДней  " + РезультатВычисленияВыходныхДней.valueSet() + " daysInMonth " + daysInMonth);
-
-
-            ///поймать ошибку
         } catch (Exception e) {
-            //  Block of code to handle errors
             e.printStackTrace();
-            ///метод запись ошибок в таблицу
             Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
                     " Линия  :" + Thread.currentThread().getStackTrace()[2].getLineNumber());
             new RecordNewErros(context).recordnewerror(e.toString(), this.getClass().getName(),
                     Thread.currentThread().getStackTrace()[2].getMethodName(), Thread.currentThread().getStackTrace()[2].getLineNumber());
-            ///////
         }
-
         return РезультатВычисленияВыходныхДней;
     }
 
-
-
-
-
-
-
-
-
-
-
-
-
-    ////TODO КОТОТРЫЙ УЗНАЕТ ИЗ БАЗЫ КАКОЙ РЕЖИМ РАБОТЫ ИНТРЕНТА WIFI AND MOBILE
-    public String МетодПолучениеНазваниеТабеляНаОснованииСФО(Context КонтекстДляРежимаИнтрента, Integer ТекущееСФО) throws InterruptedException {
-        //
-                String ПолученоеНазваниеТабеляНаОснованииСФО = null;
-                SQLiteCursor Курсор_ЗагружаетНазваниеТабеляНАОснованииСФО = null;
-                Class_GRUD_SQL_Operations concurrentHashMapНаборПараментовSQLBuilder_Для_GRUD_ОперацийпОЛУЧЕНИЯнАЗВАНИЕСФО;
-                try {
-                    concurrentHashMapНаборПараментовSQLBuilder_Для_GRUD_ОперацийпОЛУЧЕНИЯнАЗВАНИЕСФО=new Class_GRUD_SQL_Operations(КонтекстДляРежимаИнтрента);
-                    concurrentHashMapНаборПараментовSQLBuilder_Для_GRUD_ОперацийпОЛУЧЕНИЯнАЗВАНИЕСФО.concurrentHashMapНабор.put("НазваниеОбрабоатываемойТаблицы","cfo");
-                    concurrentHashMapНаборПараментовSQLBuilder_Для_GRUD_ОперацийпОЛУЧЕНИЯнАЗВАНИЕСФО.concurrentHashMapНабор.put("СтолбцыОбработки","name");
-                    concurrentHashMapНаборПараментовSQLBuilder_Для_GRUD_ОперацийпОЛУЧЕНИЯнАЗВАНИЕСФО.concurrentHashMapНабор.put("ФорматПосика","_id = ?");
-                    concurrentHashMapНаборПараментовSQLBuilder_Для_GRUD_ОперацийпОЛУЧЕНИЯнАЗВАНИЕСФО.concurrentHashMapНабор.put("УсловиеПоиска1",ТекущееСФО);
-                    concurrentHashMapНаборПараментовSQLBuilder_Для_GRUD_ОперацийпОЛУЧЕНИЯнАЗВАНИЕСФО.concurrentHashMapНабор.put("УсловиеЛимита","1");
-                    Курсор_ЗагружаетНазваниеТабеляНАОснованииСФО= (SQLiteCursor)  concurrentHashMapНаборПараментовSQLBuilder_Для_GRUD_ОперацийпОЛУЧЕНИЯнАЗВАНИЕСФО.
-                            new GetData(КонтекстДляРежимаИнтрента).getdata(concurrentHashMapНаборПараментовSQLBuilder_Для_GRUD_ОперацийпОЛУЧЕНИЯнАЗВАНИЕСФО.concurrentHashMapНабор,
-                            Class_Engine_SQLГдеНаходитьсяМенеджерПотоков.МенеджерПотоков,sqLiteDatabase);
-                    Log.d(this.getClass().getName(), "GetData "  +Курсор_ЗагружаетНазваниеТабеляНАОснованииСФО);
-                    if (Курсор_ЗагружаетНазваниеТабеляНАОснованииСФО.getCount() > 0) {
-                        Курсор_ЗагружаетНазваниеТабеляНАОснованииСФО.moveToFirst();
-                        ПолученоеНазваниеТабеляНаОснованииСФО = Курсор_ЗагружаетНазваниеТабеляНАОснованииСФО.getString(0).trim();
-                        Log.d(this.getClass().getName(), " ПолученоеНазваниеТабеляНаОснованииСФО  " + ПолученоеНазваниеТабеляНаОснованииСФО);
-                    }
-        } catch (Exception e) {
-            e.printStackTrace();
-            Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
-                    " Линия  :" + Thread.currentThread().getStackTrace()[2].getLineNumber());
-            new RecordNewErros(context).recordnewerror(e.toString(), this.getClass().getName(),
-                    Thread.currentThread().getStackTrace()[2].getMethodName(), Thread.currentThread().getStackTrace()[2].getLineNumber());
-        }
-        return ПолученоеНазваниеТабеляНаОснованииСФО;
-    }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    // TODO: 15.06.2021 метод вычислчет дни недели  в потоке для отправки и принятии d1,d2,d3
-
-    boolean МетодКоторыйВычисляетЕслиДНИвПотоке(String ПараметрИмяТаблицыОтАндройдаPostВнутриДляПоиска, JSONObject БуферСтолбикиДляВставкиВнутриВнутриДляПосика) {
-
-
-        boolean ЕслиТакойДень = false;
-        try{
-        ////
-        StringBuffer БУферИзJSONВБУФЕРАНАЛИЗА = new StringBuffer(БуферСтолбикиДляВставкиВнутриВнутриДляПосика.toString());
-
-        ArrayList<String> АрайЛистДниТабеля = new ArrayList<String>(Arrays.asList("d1", "d2", "d3", "d4", "d5", "d6", "d7", "d8", "d9", "d10", "d11", "d12", "d13", "d14"
-                , "d15", "d16", "d17", "d18", "d19", "d20", "d21", "d22", "d23", "d24", "d25", "d26", "d27", "d28", "d29", "d30", "d31"));
-
-
-            //////////
-            String ЗначенияИБуфераДляПосикаДней = БУферИзJSONВБУФЕРАНАЛИЗА.toString();
-
-
-            // TODO: 15.06.2021
-
-            for (String КлючИзАрайЛиста : АрайЛистДниТабеля) {
-
-                System.out.println(КлючИзАрайЛиста);
-
-                //
-                ЕслиТакойДень = ЗначенияИБуфераДляПосикаДней.contains(КлючИзАрайЛиста);
-                ///TODO ЕСЛИ СТРАБОТАЛО ТО ВЫХОДИМ ИЗ ЦИКЛА
-                if (ЕслиТакойДень == true) {
-
-                    System.out.println("   ЕслиТакойДень " + ЕслиТакойДень);
-                    /////////////
-                    break;
-
-                }
-
-
-            }
-
-
-            ///
-    } catch (Exception e) {
-        e.printStackTrace();
-        ///метод запись ошибок в таблицу
-        Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() + " Линия  :"
-                + Thread.currentThread().getStackTrace()[2].getLineNumber());
-        // TODO: 01.09.2021 метод вызова
-        new RecordNewErros(context.getApplicationContext()).recordnewerror(e.toString(),
-                this.getClass().getName(), Thread.currentThread().getStackTrace()[2].getMethodName(),
-                Thread.currentThread().getStackTrace()[2].getLineNumber());
-    }
-        return ЕслиТакойДень;
-    }
-
-// TODO: 11.08.2021  ПОЛУЧЕНИЕ ЛОКАЛЬНОЙ ВЕРИСИ ДАНННЫХ ЧАТА
-    // TODO: 10.08.2021  получение УВЕЛИЧИНОЙ ВЕРСИИ ДАННЫХ ДЛЯ ЧАТА
-    protected Long МетодПолученияЛокальнойВерсииДаныхЧатаДляОтправкиЕгоНАСервер(String Текущаятаблицы, String ТекущаяяКолонкаТаблицы, Context context, String ИмяТаблицыОтАндройда_Локальноая) {
-        Long ЗначениеДляПовышениеВерсии = 1l;
-        SQLiteCursor Курсор_КоторыйПолучаетМаксимальюнуВерсиюДанных = null;
-        Class_GRUD_SQL_Operations class_grud_sql_operationsВерсииДаныхЧатаДляОтправкиЕгоНАСервер;
-        try{
-            class_grud_sql_operationsВерсииДаныхЧатаДляОтправкиЕгоНАСервер=new Class_GRUD_SQL_Operations(this.context);
-            class_grud_sql_operationsВерсииДаныхЧатаДляОтправкиЕгоНАСервер.concurrentHashMapНабор.put("НазваниеОбрабоатываемойТаблицы",Текущаятаблицы);
-            class_grud_sql_operationsВерсииДаныхЧатаДляОтправкиЕгоНАСервер.concurrentHashMapНабор.put("СтолбцыОбработки",ТекущаяяКолонкаТаблицы);
-            class_grud_sql_operationsВерсииДаныхЧатаДляОтправкиЕгоНАСервер.concurrentHashMapНабор.put("ФорматПосика","name=? ");
-            class_grud_sql_operationsВерсииДаныхЧатаДляОтправкиЕгоНАСервер.concurrentHashMapНабор.put("УсловиеПоиска1",ИмяТаблицыОтАндройда_Локальноая);
-
-            Курсор_КоторыйПолучаетМаксимальюнуВерсиюДанных= (SQLiteCursor)  class_grud_sql_operationsВерсииДаныхЧатаДляОтправкиЕгоНАСервер.
-                    new GetData(this.context).getdata(class_grud_sql_operationsВерсииДаныхЧатаДляОтправкиЕгоНАСервер.concurrentHashMapНабор,
-                    Class_Engine_SQLГдеНаходитьсяМенеджерПотоков.МенеджерПотоков,sqLiteDatabase);
-
-            Log.d(this.getClass().getName(), "GetData " +Курсор_КоторыйПолучаетМаксимальюнуВерсиюДанных );
-            if(Курсор_КоторыйПолучаетМаксимальюнуВерсиюДанных.getCount()>0){
-                Курсор_КоторыйПолучаетМаксимальюнуВерсиюДанных.moveToFirst();
-                ЗначениеДляПовышениеВерсии=Курсор_КоторыйПолучаетМаксимальюнуВерсиюДанных.getLong(0);
-                Log.d(this.getClass().getName(), "ЗначениеДляПовышениеВерсии "+ЗначениеДляПовышениеВерсии);
-            }
-            Log.d(this.getClass().getName(), "ЗначениеДляПовышениеВерсии "+ЗначениеДляПовышениеВерсии);
-            Курсор_КоторыйПолучаетМаксимальюнуВерсиюДанных.close();
-            Log.d(this.getClass().getName(), " сработала ...  создание таблицы Data_Chat TRIGGER"+ЗначениеДляПовышениеВерсии);
-        } catch (Exception e) {
-            e.printStackTrace();
-            ///метод запись ошибок в таблицу
-            Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
-                    " Линия  :" + Thread.currentThread().getStackTrace()[2].getLineNumber());
-            // TODO: 01.09.2021 метод вызова
-            new RecordNewErros(context).recordnewerror(e.toString(),
-                    this.getClass().getName(), Thread.currentThread().getStackTrace()[2].getMethodName(),
-                    Thread.currentThread().getStackTrace()[2].getLineNumber());
-        }
-
-
-        // TODO: 06.09.2021 результат 
-        return  ЗначениеДляПовышениеВерсии;
-    }
-
-
-
-
-
-
-
-
-    ///todo являеться ли весь текст числом
-    public boolean МетодОпределениеВселиЦифрыВстроке(String ВселиЦифрыВтексе) {
-        boolean Результат = false;
-        try {
-            Long.parseLong(ВселиЦифрыВтексе);
-            return true;
-        } catch (NumberFormatException e) {
-            return false;
-        }
-
-    }
-
-
-
     ////TODO САМ МЕТОД АУНТИФИКАЦИИ С СЕРВЕРОМ
     public Integer методАвторизацииЛогинИПаполь(@NonNull Context context,
-                                                     @NonNull SharedPreferences preferences,
                                                      @NonNull String ПубличноеЛогин,
                                                      @NonNull String ПубличноеПароль,
                                                 @NotNull SSLSocketFactory getsslSocketFactory2) {
 
 
-        final Integer[] БуферПубличныйIDОтСервера = {0};
+       AtomicInteger БуферПубличныйIDОтСервера = new AtomicInteger(0);
         try {
             String enableSSl = preferencesJboss.getString("enablesll","http");
 
@@ -2906,10 +1612,9 @@ Class_GRUD_SQL_Operations classGrudSqlOperationsУдалениеДанныхЧе
                     @Override
                     public void onFailure(@NonNull Call call, @NonNull IOException e) {
                         Log.e(this.getClass().getName(), "  ERROR call  " + call + "  e" + e.toString());
-                        БуферПубличныйIDОтСервера[0]=0;
-                        Log.e(CoreBinessLogic.class.getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
+                        Log.e(CoreBinessLogics.class.getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
                                 " Линия  :" + Thread.currentThread().getStackTrace()[2].getLineNumber() + " ОшибкаТекущегоМетода " + e.getMessage());
-                        new RecordNewErros(context).recordnewerror(e.toString(), CoreBinessLogic.class.getName(),
+                        new RecordNewErros(context).recordnewerror(e.toString(), CoreBinessLogics.class.getName(),
                                 Thread.currentThread().getStackTrace()[2].getMethodName(), Thread.currentThread().getStackTrace()[2].getLineNumber());
                         // TODO: 31.05.2022
                         dispatcherПроверкаЛогиниПароль.executorService().shutdown();
@@ -2944,7 +1649,7 @@ Class_GRUD_SQL_Operations classGrudSqlOperationsУдалениеДанныхЧе
 
                                         if(     БуферПубличный.trim().matches("(.*)Server Running...... Don't Login(.*)")==true){
                                             БуферПубличный="-1";
-                                            БуферПубличныйIDОтСервера[0] =Integer.parseInt(БуферПубличный);
+                                            БуферПубличныйIDОтСервера.getAndSet(Integer.parseInt(БуферПубличный)) ;
                                         }else {
                                             БуферПубличный=   БуферПубличный .replaceAll("[^0-9]", "")
                                                     .replaceAll("]","")
@@ -2952,13 +1657,13 @@ Class_GRUD_SQL_Operations classGrudSqlOperationsУдалениеДанныхЧе
 
                                             boolean isNumeric = БуферПубличный.chars().allMatch( Character::isDigit );
                                             if (isNumeric) {
-                                                БуферПубличныйIDОтСервера[0] =Integer.parseInt(БуферПубличный);
+                                                БуферПубличныйIDОтСервера.getAndSet(Integer.parseInt(БуферПубличный));
                                             }
 
                                         }
-                                    Log.d(this.getClass().getName(), "БуферПубличныйIDОтСервера "
-                                            + БуферПубличныйIDОтСервера[0] +  " РазмерПришедшегоПотока " +РазмерПришедшегоПотока +
-                                            " БуферПубличный " +БуферПубличный);
+                                    Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                                            " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                                            " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" + " БуферПубличныйIDОтСервера.get() "+БуферПубличныйIDОтСервера.get() );
                                     // TODO: 31.05.2022
                                 }
 
@@ -2980,11 +1685,7 @@ Class_GRUD_SQL_Operations classGrudSqlOperationsУдалениеДанныхЧе
                     }
                 });
                 dispatcherПроверкаЛогиниПароль.executorService().awaitTermination(1,TimeUnit.DAYS);
-                dispatcherПроверкаЛогиниПароль.cancelAll();
             }
-            Log.i(this.getClass().getName(),  " java.security.cert.X509Certificate  "+
-                    Thread.currentThread().getStackTrace()[2].getMethodName()+
-                    " время " +new Date().toLocaleString()  );
         } catch (Exception e) {
             e.printStackTrace();
             Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
@@ -2992,9 +1693,12 @@ Class_GRUD_SQL_Operations classGrudSqlOperationsУдалениеДанныхЧе
             new RecordNewErros(context).recordnewerror(e.toString(), this.getClass().getName(),
                     Thread.currentThread().getStackTrace()[2].getMethodName(), Thread.currentThread().getStackTrace()[2].getLineNumber());
         }
-        return БуферПубличныйIDОтСервера[0];
+        return БуферПубличныйIDОтСервера.get();
     }
-}
+
+
+
+}//TODO END  CLASS
 
 
 

@@ -41,7 +41,7 @@ public class Class_Generations_New_Customers_For_Tabels {
 
 
             // TODO: 25.03.2021 вставка фио
-            getcreatingAnewEmployee = new CoreBinessLogic(activity,sqLiteDatabase).
+            getcreatingAnewEmployee = new CoreBinessLogics(activity,sqLiteDatabase).
                     ВставкаДанныхЧерезКонтейнерТолькоПриСозданииНовогоСотрудникаУниверсальная(ТекущаяТаблицаОбработки,
                             АдаптерДляСозданиеНовогоСотрудаТАблицаФИО  );
 
@@ -108,7 +108,7 @@ public class Class_Generations_New_Customers_For_Tabels {
         try{
             String ТекущаяОбрабатываемаяТаблица="data_tabels";
             // TODO: 25.03.2021 вставка табель
-            РезультатВставкиНовогоТабеляЧерезКонтрейнерТаблицыТабель = new CoreBinessLogic(activity,sqLiteDatabase).
+            РезультатВставкиНовогоТабеляЧерезКонтрейнерТаблицыТабель = new CoreBinessLogics(activity,sqLiteDatabase).
                     ВставкаДанныхЧерезКонтейнерТолькоПриСозданииНовогоСотрудникаУниверсальная(ТекущаяОбрабатываемаяТаблица,
                             АдаптерДляСозданиеНовогоСотрудаТАблицаТабель  );
 
@@ -138,12 +138,12 @@ public class Class_Generations_New_Customers_For_Tabels {
                 // TODO: 24.05.2021 КОД ДЛЯ АВТОМАТИЧЕСКОГО ВЫСТАВЛЕНИЯ ВЫХОДНЫХ ДНЕЙ В ТАБЕЛЬ
                 if (РезультатКакойРежимЗаписанвБазеВЫходныеДни.contentEquals("Включить")) {
                     ContentValues КонтрейнерДляВставкиВВыходныеДниМЕткиВыходные=
-                            new CoreBinessLogic(activity,sqLiteDatabase). МетодВычисляемВыходныеДниПриСозданииНовогоТабеляАвтоРЕжим(activity,
+                            new CoreBinessLogics(activity,sqLiteDatabase). МетодВычисляемВыходныеДниПриСозданииНовогоТабеляАвтоРЕжим(activity,
                             ГодПриВставкеНовогоСотрудника,МЕсяцПриВставкеНовогоСотрудника);
                     Log.w(activity.getClass().getName(), " КонтрейнерДляВставкиВВыходныеДниМЕткиВыходные  " + "--"
                             +КонтрейнерДляВставкиВВыходныеДниМЕткиВыходные);/////
                         // TODO: 25.03.2021 вставка табель
-                    Integer          РезультатВставкиВЫходнихДнейЧерезКонтрейнерТаблицыТабель  = new CoreBinessLogic(activity,sqLiteDatabase)
+                    Integer          РезультатВставкиВЫходнихДнейЧерезКонтрейнерТаблицыТабель  = new CoreBinessLogics(activity,sqLiteDatabase)
                             .ЛокальногоОбновлениеДанныхЧерезКонтейнерУниверсальная(ТекущаяОбрабатываемаяТаблица,
                                 КонтрейнерДляВставкиВВыходныеДниМЕткиВыходные,
                                 UUIDgenetarForData_tabels,

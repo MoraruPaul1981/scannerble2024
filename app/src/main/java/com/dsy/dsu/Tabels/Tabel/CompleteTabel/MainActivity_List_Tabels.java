@@ -48,7 +48,7 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
 
-import com.dsy.dsu.BusinessLogicAll.CoreBinessLogic;
+import com.dsy.dsu.BusinessLogicAll.CoreBinessLogics;
 import com.dsy.dsu.BusinessLogicAll.Class_GRUD_SQL_Operations;
 import com.dsy.dsu.CnangeServers.BinessLogicPublicContent;
 import com.dsy.dsu.Dashboard.Model.bl_launchFragmentSettingsandDashbord.LaunchActivityDashboard;
@@ -1555,7 +1555,7 @@ try{
 
         } catch (Exception e) {///////ошибки
             e.printStackTrace();
-            Log.e(CoreBinessLogic.class.getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
+            Log.e(CoreBinessLogics.class.getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
                     " Линия  :" + Thread.currentThread().getStackTrace()[2].getLineNumber());
             // TODO: 01.09.2021 метод вызова
             new RecordNewErros(getApplicationContext()).recordnewerror(e.toString(),
@@ -1897,7 +1897,7 @@ try{
                                     public void accept(Object o) throws Throwable {
                                         // TODO: 22.11.2022  первая часть
                                     Long    ДляУдалениеUUID=     cursor.getLong(0);
-                                   Integer     Удаление = new CoreBinessLogic(getApplicationContext()).УдалениеТолькоПустогоТабеляЧерезКонтейнерУниверсальная(ИзКакойТаблицыУдалять,
+                                   Integer     Удаление = new CoreBinessLogics(getApplicationContext()).УдалениеТолькоПустогоТабеляЧерезКонтейнерУниверсальная(ИзКакойТаблицыУдалять,
                                                     "uuid", ДляУдалениеUUID);
                                             Log.d(this.getClass().getName(), " ДляУдалениеUUID " + ДляУдалениеUUID);
                                         if (Удаление>0) {
@@ -1979,7 +1979,7 @@ try{
                         @Override
                         public void accept(Object o) throws Throwable {
                             // TODO: 22.11.2022  первая часть
-                            Integer     Удаление = new CoreBinessLogic(getApplicationContext()).УдалениеТолькоПустогоТабеляЧерезКонтейнерУниверсальная(ИзКакойТаблицыУдалять,
+                            Integer     Удаление = new CoreBinessLogics(getApplicationContext()).УдалениеТолькоПустогоТабеляЧерезКонтейнерУниверсальная(ИзКакойТаблицыУдалять,
                                     "uuid", ДляУдалениеUUID);
                             Log.d(this.getClass().getName(), " ДляУдалениеUUID " + ДляУдалениеUUID);
                             if (Удаление>0) {

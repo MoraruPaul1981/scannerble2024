@@ -5,7 +5,7 @@ import android.util.Log;
 
 import androidx.annotation.NonNull;
 
-import com.dsy.dsu.BusinessLogicAll.CoreBinessLogic;
+import com.dsy.dsu.BusinessLogicAll.CoreBinessLogics;
 import com.dsy.dsu.Errors.WriteErrorForAll.RecordNewErros;
 
 import org.jetbrains.annotations.NotNull;
@@ -45,7 +45,7 @@ public class SendJsonCompliteToJboss {
                     " ПортСерверИзХранилица " +ПортСерверИзХранилица );
 
             // TODO: 21.09.2022 ОТПРАВЯЛЕТ ДАННЫЕ НА СЕРВЕР
-            StringBuffer    BufferSendDataServer =new CoreBinessLogic(context). методSendByteToAsync(
+            StringBuffer    BufferSendDataServer =new CoreBinessLogics(context). методSendByteToAsync(
                     ГенерацияJSONОтAndroid,
                     PublicID,
                     Таблицы,

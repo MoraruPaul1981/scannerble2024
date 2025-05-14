@@ -47,7 +47,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 
 
-import com.dsy.dsu.BusinessLogicAll.CoreBinessLogic;
+import com.dsy.dsu.BusinessLogicAll.CoreBinessLogics;
 import com.dsy.dsu.BusinessLogicAll.Class_GRUD_SQL_Operations;
 import com.dsy.dsu.CnangeServers.BinessLogicPublicContent;
 import com.dsy.dsu.Errors.WriteErrorForAll.RecordNewErros;
@@ -1337,7 +1337,7 @@ public class MainActivity_New_Templates extends AppCompatActivity {
 
 
                /*         Курсор_КоторыйВЫгружемНазваниеОрганизацииДляЭтогоСотркдникаТекущего =
-                                new CoreBinessLogic(getApplicationContext()).КурсорУниверсальныйДляБазыДанных("settings_tabels",
+                                new CoreBinessLogics(getApplicationContext()).КурсорУниверсальныйДляБазыДанных("settings_tabels",
                                         new String[]{"organizations"}, "organizations IS NOT NULL", null,
                                         null, null, "date_update DESC", "1");//"settings_tabels", "date_update","id=","1",null,null,null,null
 */
@@ -1639,7 +1639,7 @@ public class MainActivity_New_Templates extends AppCompatActivity {
                             Log.w(this.getClass().getName(),   "РЕЗУЛЬТАТ УДАЛДЕНИЕ ОДНОГО СОТРУДНИКА РезультатУвеличинаяВерсияВнутриСамогоТабелСтрудника  "
                                     + РезультатУвеличинаяВерсияВнутриСамогоТабелСтрудника);
                             /////
-                            РезультатУдалениеСотрудникаИзТаблея[0] = new CoreBinessLogic(getApplicationContext()).
+                            РезультатУдалениеСотрудникаИзТаблея[0] = new CoreBinessLogics(getApplicationContext()).
                                     УдалениеДанныхЧерезКонтейнерУниверсальная(ТаблицыДляОбработкиУдалние, СтолбикУдалениея, СамоЗначениеUUID,
                                             "status_send", "Удаленная");
                             if (РезультатУдалениеСотрудникаИзТаблея[0] > 0) {

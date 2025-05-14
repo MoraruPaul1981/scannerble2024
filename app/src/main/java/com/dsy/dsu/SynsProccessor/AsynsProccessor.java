@@ -8,7 +8,7 @@ import android.util.Log;
 
 import androidx.annotation.NonNull;
 
-import com.dsy.dsu.BusinessLogicAll.CoreBinessLogic;
+import com.dsy.dsu.BusinessLogicAll.CoreBinessLogics;
 import com.dsy.dsu.BusinessLogicAll.GetPublicID.HiltInterfacesPublicID;
 import com.dsy.dsu.Errors.WriteErrorForAll.RecordNewErros;
 import com.dsy.dsu.Hilt.JbossAdrress.getHiltPortJbossInterface;
@@ -30,7 +30,7 @@ import javax.net.ssl.SSLSocketFactory;
 
 import dagger.hilt.EntryPoints;
 
-public class AsynsProccessor extends CoreBinessLogic {
+public class AsynsProccessor extends CoreBinessLogics {
     // TODO: 28.07.2022  переменые
     public Context context;
 

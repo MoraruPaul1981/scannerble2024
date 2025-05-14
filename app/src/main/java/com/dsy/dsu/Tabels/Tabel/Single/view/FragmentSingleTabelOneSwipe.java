@@ -61,7 +61,7 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.dsy.dsu.BusinessLogicAll.CoreBinessLogic;
+import com.dsy.dsu.BusinessLogicAll.CoreBinessLogics;
 import com.dsy.dsu.BusinessLogicAll.CELLUPDATE.SubClassUpdatesCELL;
 import com.dsy.dsu.BusinessLogicAll.VersionCurentTable;
 import com.dsy.dsu.Errors.WriteErrorForAll.RecordNewErros;
@@ -1409,7 +1409,7 @@ public class FragmentSingleTabelOneSwipe extends Fragment {
 
 
 
-                Log.d(CoreBinessLogic.class.getName()," RowNumber  " + " cursorForViewPager " +cursor.getPosition()
+                Log.d(CoreBinessLogics.class.getName()," RowNumber  " + " cursorForViewPager " +cursor.getPosition()
                         +"myViewHolder.getLayoutPosition()   "+myViewHolder.getLayoutPosition() +
                         "CurrentFragmentMaxItem  " + CurrentFragmentMaxItem);
 
@@ -2557,7 +2557,7 @@ public class FragmentSingleTabelOneSwipe extends Fragment {
                 Integer РезультатОбновлениеЯчейки=0;
                 try{
                         // TODO: 11.04.2023 Оперция Обновлнения ЯЧЕЕК
-                        SubClassUpdatesCELL subClassUpdateSingletabel = new SubClassUpdatesCELL(getContext(),sqLiteDatabaseSingle);
+                        SubClassUpdatesCELL subClassUpdateSingletabel = new SubClassUpdatesCELL(getContext());
                         // TODO: 10.05.2023  ЗАВПИСЫАЕМ НОВЫЕ ДАННЫВЕ В БАЗУ
                           РезультатОбновлениеЯчейки = subClassUpdateSingletabel.МетодВалидацияЯчеекSaveCell(editTextRowКликПоДАнными,getNewValueCell);
                         // TODO: 10.05.2023 После операции Сохранение в Ячкейке

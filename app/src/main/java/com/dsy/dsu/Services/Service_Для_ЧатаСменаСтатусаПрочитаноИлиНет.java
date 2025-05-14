@@ -18,7 +18,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 
-import com.dsy.dsu.BusinessLogicAll.CoreBinessLogic;
+import com.dsy.dsu.BusinessLogicAll.CoreBinessLogics;
 import com.dsy.dsu.BusinessLogicAll.Class_GRUD_SQL_Operations;
 import com.dsy.dsu.BusinessLogicAll.DATE.Class_Generation_Data;
 import com.dsy.dsu.BusinessLogicAll.VersionCurentTable;
@@ -60,7 +60,7 @@ public class Service_Для_ЧатаСменаСтатусаПрочитаноИ
 
     @Inject
     public   SQLiteDatabase sqLiteDatabase;
-    private CoreBinessLogic modelДляФрагментаДляОперацииЗаписиНовгоСтатусаПрочитанного ;
+    private CoreBinessLogics modelДляФрагментаДляОперацииЗаписиНовгоСтатусаПрочитанного ;
     private BinessLogicPublicContent Class_Engine_SQLГдеНаходитьсяМенеджерПотоков ;
     private RecordNewErros recordNewErros;
 
@@ -223,7 +223,7 @@ public class Service_Для_ЧатаСменаСтатусаПрочитаноИ
 
         try {
            class_grud_sql_operations = new Class_GRUD_SQL_Operations(context);
-         modelДляФрагментаДляОперацииЗаписиНовгоСтатусаПрочитанного = new CoreBinessLogic(context);
+         modelДляФрагментаДляОперацииЗаписиНовгоСтатусаПрочитанного = new CoreBinessLogics(context);
              Class_Engine_SQLГдеНаходитьсяМенеджерПотоков = new BinessLogicPublicContent(context);
             recordNewErros =new RecordNewErros(context);
 
@@ -269,7 +269,7 @@ public class Service_Для_ЧатаСменаСтатусаПрочитаноИ
         try {
             this.context=context;
             class_grud_sql_operations = new Class_GRUD_SQL_Operations(context);
-            modelДляФрагментаДляОперацииЗаписиНовгоСтатусаПрочитанного = new CoreBinessLogic(context);
+            modelДляФрагментаДляОперацииЗаписиНовгоСтатусаПрочитанного = new CoreBinessLogics(context);
             Class_Engine_SQLГдеНаходитьсяМенеджерПотоков = new BinessLogicPublicContent(context);
             recordNewErros =new RecordNewErros(context);
 
@@ -333,7 +333,7 @@ private Long МетодЗаписиНовогоСообщенияТольков�
     try {
         this.context=context;
         class_grud_sql_operations = new Class_GRUD_SQL_Operations(context);
-        modelДляФрагментаДляОперацииЗаписиНовгоСтатусаПрочитанного = new CoreBinessLogic(context);
+        modelДляФрагментаДляОперацииЗаписиНовгоСтатусаПрочитанного = new CoreBinessLogics(context);
         Class_Engine_SQLГдеНаходитьсяМенеджерПотоков = new BinessLogicPublicContent(context);
         recordNewErros =new RecordNewErros(context);
 
@@ -372,7 +372,7 @@ private Long МетодЗаписиНовогоСообщенияТольков�
 
        // TODO: 18.11.2022
             contentValuesЗаписьНовогоСообщения_ТаблицаЧат.put("current_table", РезультатУвеличинаяВерсияДАныхЧата);
-            РезультатВставки_НовойЗаписиРодительскуюТаблицыЧАТ[0] = new CoreBinessLogic(context)
+            РезультатВставки_НовойЗаписиРодительскуюТаблицыЧАТ[0] = new CoreBinessLogics(context)
                     .ВставкаДанныхЧерезКонтейнерТолькоПриСозданииНСообщенияДЛЯЧата(ПерваяТаблицыОбработкиТаблицаЧат,
                             contentValuesЗаписьНовогоСообщения_ТаблицаЧат, ПерваяТаблицыОбработкиТаблицаЧат, "",
                             true);
@@ -419,7 +419,7 @@ private Long МетодЗаписиНовогоСообщенияТольков�
         try {
             this.context=context;
             class_grud_sql_operations = new Class_GRUD_SQL_Operations(context);
-            modelДляФрагментаДляОперацииЗаписиНовгоСтатусаПрочитанного = new CoreBinessLogic(context);
+            modelДляФрагментаДляОперацииЗаписиНовгоСтатусаПрочитанного = new CoreBinessLogics(context);
             Class_Engine_SQLГдеНаходитьсяМенеджерПотоков = new BinessLogicPublicContent(context);
             recordNewErros =new RecordNewErros(context);
 
@@ -447,7 +447,7 @@ private Long МетодЗаписиНовогоСообщенияТольков�
                 contentValuesЗаписьНовогоСообщения_ТаблицыDATA_CHAT.put("current_table", РезультатУвеличинаяВерсияДАныхДатЧата);
                 if (СамоСообщенияНовоеДляЧата.length() > 0) {
                     contentValuesЗаписьНовогоСообщения_ТаблицыDATA_CHAT.put("message", СамоСообщенияНовоеДляЧата.trim());
-                    РезультатВставкиНовогоСообщениявТАблицы_Data_CHATS = new CoreBinessLogic(context).
+                    РезультатВставкиНовогоСообщениявТАблицы_Data_CHATS = new CoreBinessLogics(context).
                             ВставкаДанныхЧерезКонтейнерТолькоПриСозданииНСообщенияДЛЯЧата(ТаблицаВторойОбработкиДляТаблицыДата_Табеля,
                                     contentValuesЗаписьНовогоСообщения_ТаблицыDATA_CHAT, ТаблицаВторойОбработкиДляТаблицыДата_Табеля, "",
                                     true);
@@ -481,7 +481,7 @@ private Long МетодЗаписиНовогоСообщенияТольков�
         try {
             this.context=context;
             class_grud_sql_operations = new Class_GRUD_SQL_Operations(context);
-            modelДляФрагментаДляОперацииЗаписиНовгоСтатусаПрочитанного = new CoreBinessLogic(context);
+            modelДляФрагментаДляОперацииЗаписиНовгоСтатусаПрочитанного = new CoreBinessLogics(context);
             Class_Engine_SQLГдеНаходитьсяМенеджерПотоков = new BinessLogicPublicContent(context);
             recordNewErros =new RecordNewErros(context);
 
@@ -527,7 +527,7 @@ private Long МетодЗаписиНовогоСообщенияТольков�
         try {
             this.context=context;
             class_grud_sql_operations = new Class_GRUD_SQL_Operations(context);
-            modelДляФрагментаДляОперацииЗаписиНовгоСтатусаПрочитанного = new CoreBinessLogic(context);
+            modelДляФрагментаДляОперацииЗаписиНовгоСтатусаПрочитанного = new CoreBinessLogics(context);
             Class_Engine_SQLГдеНаходитьсяМенеджерПотоков = new BinessLogicPublicContent(context);
             recordNewErros =new RecordNewErros(context);
 
@@ -591,7 +591,7 @@ private Long МетодЗаписиНовогоСообщенияТольков�
         try {
             this.context=context;
             class_grud_sql_operations = new Class_GRUD_SQL_Operations(context);
-            modelДляФрагментаДляОперацииЗаписиНовгоСтатусаПрочитанного = new CoreBinessLogic(context);
+            modelДляФрагментаДляОперацииЗаписиНовгоСтатусаПрочитанного = new CoreBinessLogics(context);
             Class_Engine_SQLГдеНаходитьсяМенеджерПотоков = new BinessLogicPublicContent(context);
             recordNewErros =new RecordNewErros(context);
 
@@ -643,7 +643,7 @@ private Long МетодЗаписиНовогоСообщенияТольков�
 
             this.context=context;
             class_grud_sql_operations = new Class_GRUD_SQL_Operations(context);
-            modelДляФрагментаДляОперацииЗаписиНовгоСтатусаПрочитанного = new CoreBinessLogic(context);
+            modelДляФрагментаДляОперацииЗаписиНовгоСтатусаПрочитанного = new CoreBinessLogics(context);
             Class_Engine_SQLГдеНаходитьсяМенеджерПотоков = new BinessLogicPublicContent(context);
             recordNewErros =new RecordNewErros(context);
 
@@ -710,7 +710,7 @@ private Long МетодЗаписиНовогоСообщенияТольков�
         try {
             this.context=context;
             class_grud_sql_operations = new Class_GRUD_SQL_Operations(context);
-            modelДляФрагментаДляОперацииЗаписиНовгоСтатусаПрочитанного = new CoreBinessLogic(context);
+            modelДляФрагментаДляОперацииЗаписиНовгоСтатусаПрочитанного = new CoreBinessLogics(context);
             Class_Engine_SQLГдеНаходитьсяМенеджерПотоков = new BinessLogicPublicContent(context);
             recordNewErros =new RecordNewErros(context);
 

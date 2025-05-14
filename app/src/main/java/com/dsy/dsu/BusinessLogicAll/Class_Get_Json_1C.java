@@ -46,7 +46,7 @@ import okhttp3.Response;
 
 ///////////--------------------------TODO ЭТО ТРЕТИЙ  КОНТРОЛЛЕР ТОЛЬКО ДЛЯ ПОЛУЧЕНИЯ  ТОЛЬКО JSON ПОЛЕЙ  И СКОЛЬКО ТАБЛИЦ НУЖНО БЕЗ  СИНХРОНИЗАЦИИИ---
 
-public class Class_Get_Json_1C extends CoreBinessLogic {
+public class Class_Get_Json_1C extends CoreBinessLogics {
   private   Context context;
     private  String АдресСервера;
     public Class_Get_Json_1C(Context context, String АдресСервера) throws NoSuchPaddingException, NoSuchAlgorithmException, InvalidKeyException {

@@ -24,7 +24,7 @@ import androidx.core.content.FileProvider;
 
 
 import com.dsy.dsu.BootAndAsync.Model.DowloadUpdatePO.DeletingFiles.GetDeletingFilesJsonAndApk;
-import com.dsy.dsu.BusinessLogicAll.CoreBinessLogic;
+import com.dsy.dsu.BusinessLogicAll.CoreBinessLogics;
 import com.dsy.dsu.CnangeServers.BinessLogicPublicContent;
 
 import com.dsy.dsu.Errors.WriteErrorForAll.RecordNewErros;
@@ -353,7 +353,7 @@ public     void МетодСообщениеАнализПО( ) {
 
             // TODO: 08.01.2022 Полученм JSON File  для анализа
 
-            FileAPK = new CoreBinessLogic(context).
+            FileAPK = new CoreBinessLogics(context).
                     МетодЗагрузкиОбновлениеПОсСервера(new BinessLogicPublicContent(context).getСсылкаНаРежимСервераОбновлениеПО(),
                            context, ИмяСерверИзХранилица ,ПортСерверИзХранилица,
                             "FileAPKUpdatePO","update_dsu1.apk",

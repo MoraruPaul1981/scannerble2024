@@ -97,7 +97,7 @@ public class Class_Connections_Server  {
 
                 }else{
                     результатПрозвонаСокетом = false;
-                    Log.e(CoreBinessLogic.class.getName(), " ОШИБКА НЕТ СВЯЗИ С СЕВРЕРОМ  результатПрозвонаСокетом[0] " + результатПрозвонаСокетом);
+                    Log.e(CoreBinessLogics.class.getName(), " ОШИБКА НЕТ СВЯЗИ С СЕВРЕРОМ  результатПрозвонаСокетом[0] " + результатПрозвонаСокетом);
                 }
 
                 //todo old code
@@ -130,7 +130,7 @@ public class Class_Connections_Server  {
         // TODO: 12.01.2024
             // TODO: 10.11.2022  пинг к сервера
             БуферПолучениеДанныхРЕальныйСтатусРАботыSQLServer =
-                    new CoreBinessLogic(КонтекстКоторыйДляСинхронизации).
+                    new CoreBinessLogics(КонтекстКоторыйДляСинхронизации).
                             МетодУниверсальногоПинга(new String(), "application/gzip",
                                     "Хотим Получить Статус Реальной Работы SQL SERVER"
                                     ,0l,
@@ -215,7 +215,7 @@ public class Class_Connections_Server  {
 
             }else{
                 результатПрозвонаСокетом = false;
-                Log.e(CoreBinessLogic.class.getName(), " ОШИБКА НЕТ СВЯЗИ С СЕВРЕРОМ  результатПрозвонаСокетом[0] " + результатПрозвонаСокетом);
+                Log.e(CoreBinessLogics.class.getName(), " ОШИБКА НЕТ СВЯЗИ С СЕВРЕРОМ  результатПрозвонаСокетом[0] " + результатПрозвонаСокетом);
             }
 
             //todo old code

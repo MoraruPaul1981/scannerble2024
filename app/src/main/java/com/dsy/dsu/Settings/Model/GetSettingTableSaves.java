@@ -7,7 +7,7 @@ import android.util.Log;
 
 import androidx.annotation.NonNull;
 
-import com.dsy.dsu.BusinessLogicAll.CoreBinessLogic;
+import com.dsy.dsu.BusinessLogicAll.CoreBinessLogics;
 import com.dsy.dsu.BusinessLogicAll.GetPublicID.GetPublicID;
 import com.dsy.dsu.BusinessLogicAll.DATE.Class_Generation_Data;
 import com.dsy.dsu.BusinessLogicAll.VersionCurentTable;
@@ -49,7 +49,7 @@ public class GetSettingTableSaves implements com.dsy.dsu.Settings.Model.Model.IN
 
                 //////todo САМА НЕ ПОСТРЕДВСТВЕНА ЗАПИС ДАННЫХ В ТАБЛИЦУ НАСТЙКИ СИТЕМЫ
                 ResultNewPuvlicIdFronSettingTable =
-                      new CoreBinessLogic(context).
+                      new CoreBinessLogics(context).
                               wewillsetupanewPublicidaftersuccessfulsynchronizationSettingsTabels("settings_tabels",
                                 АдаптерВставкиПолученогоПубличногоID,PublicID);
 
@@ -107,7 +107,7 @@ public class GetSettingTableSaves implements com.dsy.dsu.Settings.Model.Model.IN
 
             //////todo САМА НЕ ПОСТРЕДВСТВЕНА ЗАПИС ДАННЫХ В ТАБЛИЦУ НАСТРОКИ СИСТЕМЫ
             ResultNewPuvlicIdFronSettingTable =
-                    new CoreBinessLogic(context).
+                    new CoreBinessLogics(context).
                             wewillsetupanewPublicidaftersuccessfulsynchronizationSettingsTabels("settings_tabels",
                                     АдаптерВставкиПолученогоПубличногоID,PublicID);
 

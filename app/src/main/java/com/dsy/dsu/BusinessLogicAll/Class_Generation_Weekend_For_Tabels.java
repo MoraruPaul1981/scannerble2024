@@ -54,14 +54,14 @@ public class Class_Generation_Weekend_For_Tabels {
             // TODO: 24.05.2021 КОД ДЛЯ АВТОМАТИЧЕСКОГО ВЫСТАВЛЕНИЯ ВЫХОДНЫХ ДНЕЙ В ТАБЕЛЬ
             if (РезультатКакойРежимЗаписанвБазеВЫходныеДни.contentEquals("Включить")) {
                 // TODO: 24.05.2021 вычисляем дни
-                ContentValues КонтрейнерДляВставкиВВыходныеДниМЕткиВыходные = new CoreBinessLogic(context)
+                ContentValues КонтрейнерДляВставкиВВыходныеДниМЕткиВыходные = new CoreBinessLogics(context)
                         .МетодВычисляемВыходныеДниПриСозданииНовогоТабеляАвтоРЕжим(context,
                                 МЕсяцПриВставкеНовогоСотрудника , ГодПриВставкеНовогоСотрудника);
                 // TODO: 24.05.2021 сама вставка  выходних дней
                 Log.d(this.getClass().getName()," КонтрейнерДляВставкиВВыходныеДниМЕткиВыходные " + КонтрейнерДляВставкиВВыходныеДниМЕткиВыходные);
 
                 // TODO: 25.03.2021 вставка табель
-                РезультатВставкиВЫходнихДнейЧерезКонтрейнерТаблицыТабель = new CoreBinessLogic(context)
+                РезультатВставкиВЫходнихДнейЧерезКонтрейнерТаблицыТабель = new CoreBinessLogics(context)
                         .ЛокальногоОбновлениеДанныхЧерезКонтейнерУниверсальная("data_tabels",
                                 КонтрейнерДляВставкиВВыходныеДниМЕткиВыходные,
                                 UUIDGeneratorINset,
@@ -80,7 +80,7 @@ public class Class_Generation_Weekend_For_Tabels {
         } catch (Exception e) {///////ошибки
             e.printStackTrace();
             ///метод запись ошибок в таблицу
-            Log.e(CoreBinessLogic.class.getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
+            Log.e(CoreBinessLogics.class.getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
                     " Линия  :" + Thread.currentThread().getStackTrace()[2].getLineNumber());
             // TODO: 01.09.2021 метод вызова
             new RecordNewErros(context).recordnewerror(e.toString(),
