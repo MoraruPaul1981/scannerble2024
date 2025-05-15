@@ -39,6 +39,7 @@ import androidx.work.WorkManager;
 
 import com.dsy.dsu.BusinessLogicAll.CoreBinessLogics.CoreBinessLogics;
 import com.dsy.dsu.BusinessLogicAll.Class_GRUD_SQL_Operations;
+import com.dsy.dsu.BusinessLogicAll.GetPublicID.GetPublicID;
 import com.dsy.dsu.BusinessLogicAll.GetPublicID.HiltInterfacesPublicID;
 import com.dsy.dsu.Errors.WriteErrorForAll.RecordNewErros;
 
@@ -189,7 +190,7 @@ public class Fragment_Writer_Read_ЧитатьПисатьЧата extends Fragm
             ПолученыйIDДляЧата = getArguments().getLong("ПолученыйIDДляЧата", 0);
             ПолученыйФИОIDДляЧата = new String();
             ПолученыйФИОIDДляЧата = getArguments().getString("ПолученыйФИОIDДляЧата", "");
-            ПубличныйIDДляФрагмента = EntryPoints.get(context, HiltInterfacesPublicID.class).getPublicIDAllApp();
+            ПубличныйIDДляФрагмента = new GetPublicID().getPublicIDAllApp(getApplicationContext());
             ПолученыйУжеСуществующийUUIDИзПерепискиДляЧата = getArguments().getLong("ПолученыйUUIDУжеСуществующийПерепискиПользоватлейДляЧата", 0);
 
 

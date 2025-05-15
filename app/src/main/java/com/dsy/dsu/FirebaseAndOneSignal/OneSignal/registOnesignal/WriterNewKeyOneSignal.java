@@ -43,7 +43,7 @@ class WriterNewKeyOneSignal {
         try {
             // TODO: 14.11.2021  ПОВТОРЫЙ ЗАПУСК ВОРК МЕНЕДЖЕР
             // TODO: 30.09.2021 МЕТОД ЗАПУСКА СИНХРОНИЗАЦИИ ЧАТА ПО РАСПИСАНИЮ , НЕ ВЗАВИСИМОСТИ ОТ СОЗДАВАЛ ЛИ СООБЩЕНИЕ ИЛИ НЕТ
-            Integer PublicId = EntryPoints.get(context, HiltInterfacesPublicID.class).getPublicIDAllApp();
+            Integer PublicId = new GetPublicID().getPublicIDAllApp(getApplicationContext());
             Log.d(this.getClass().getName(), "ПубличныйIDДляФрагмента  ИЗ ВСЕХ ТАБЕЛЕЙ PublicId "
                     + PublicId);
 

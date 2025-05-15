@@ -61,7 +61,7 @@ public class MainActivity_Settings extends AppCompatActivity {
     private FragmentManager fragmentManager;
     private FragmentTransaction fragmentTransaction;
     // TODO: 12.10.2021  Ссылка Менеджер Потоков
-    BinessLogicPublicContent Class_Engine_SQLГдеНаходитьсяМенеджерПотоков = null;
+    BinessLogicPublicContent binessLogicPublicContent = null;
 
 
     @Override
@@ -79,7 +79,7 @@ public class MainActivity_Settings extends AppCompatActivity {
 
 
             setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
-            Class_Engine_SQLГдеНаходитьсяМенеджерПотоков = new BinessLogicPublicContent(getApplicationContext());
+            binessLogicPublicContent = new BinessLogicPublicContent(getApplicationContext());
             getWindow().addFlags(WindowManager.LayoutParams.FLAG_DISMISS_KEYGUARD
                     | WindowManager.LayoutParams.FLAG_TURN_SCREEN_ON
                     | WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
@@ -88,7 +88,6 @@ public class MainActivity_Settings extends AppCompatActivity {
             getSupportActionBar().hide(); ///скрывать тул бар
             context = this;
             // TODO: 16.04.2025
-
             Log.d(context.getClass().getName(), "\n"
                     + " время: " + new Date() + "\n+" +
                     " Класс в процессе... " + this.getClass().getName() + "\n" +
@@ -97,9 +96,7 @@ public class MainActivity_Settings extends AppCompatActivity {
 
             setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LOCKED);
             imageViewСтрелкаВнутриНастроек = (MaterialButton) findViewById(R.id.imageViewСтрелкаВнутриНастроек);
-
             textViewВерсияПрограммы = (TextView) findViewById(R.id.textViewВерсияПрограммы);
-
             Log.d(this.getClass().getName(), "  textViewВерсияПрограммы " + textViewВерсияПрограммы.getText());
             textViewТекущийПользователь = (TextView) findViewById(R.id.textViewТекущийПользователь);
             String ПолученыйТекущееИмяПользователя = new CoreBinessLogics(getApplicationContext()).МетодПолучениеИмяСистемыДляСменыПользователя(getApplicationContext());
@@ -109,7 +106,6 @@ public class MainActivity_Settings extends AppCompatActivity {
             СвичДляWIFI = (Switch) findViewById(R.id.switchWIFI);
             switchАвтоЗаполенияВТАбелеВыходных = (Switch) findViewById(R.id.switchАвтоЗаполенияВТАбелеВыходных);
             switchСкрытыеПоляПолучениеМатериалов = (Switch) findViewById(R.id.switchСкрытыеПоляПолучениеМатериалов);
-
             switchsslcomunications = (Switch) findViewById(R.id.switchsslcomunications);
 
 
@@ -117,7 +113,6 @@ public class MainActivity_Settings extends AppCompatActivity {
                     + " время: " + new Date() + "\n+" +
                     " Класс в процессе... " + this.getClass().getName() + "\n" +
                     " метод в процессе... " + Thread.currentThread().getStackTrace()[2].getMethodName());
-
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -243,22 +238,13 @@ public class MainActivity_Settings extends AppCompatActivity {
         }
     }
 
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-
-
-    }
-
-
     private void МетодОбработкиСвичаДляWIFI() throws InterruptedException {
         try {
             String РезультатКакойРежимРаботыССетьюВыборWifiИлиMobile = null;
             // TODO: 14.05.2025
             String Текущаятаблицы = "SuccessLogin";
             ModuleQuety moduleQuety = new ModuleQuety(context);
-            Cursor КурсорУзнаемСохраненыйРежимРаботыССетьюВЫборWIFIИЛИMObile = moduleQuety.getModuleQuery(Текущаятаблицы, " SELECT mode_connection  FROM " + Текущаятаблицы + " AS D", null);
+            Cursor КурсорУзнаемСохраненыйРежимРаботыССетьюВЫборWIFIИЛИMObile = moduleQuety.getModuleQuery(Текущаятаблицы, " SELECT D.mode_connection  FROM " + Текущаятаблицы + " AS D", null);
             Log.d(this.getClass().getName(), "\n"
                     + " время: " + new Date() + "\n+" +
                     " Класс в процессе... " + this.getClass().getName() + "\n" +
@@ -367,7 +353,7 @@ public class MainActivity_Settings extends AppCompatActivity {
             // TODO: 14.05.2025
             String Текущаятаблицы = "SuccessLogin";
             ModuleQuety moduleQuety = new ModuleQuety(context);
-            Cursor КурсорУзнаемСохраненыйРежимРаботыССетьюВЫборWIFIИЛИMObile = moduleQuety.getModuleQuery(Текущаятаблицы, " SELECT mode_connection  FROM " + Текущаятаблицы + " AS D", null);
+            Cursor КурсорУзнаемСохраненыйРежимРаботыССетьюВЫборWIFIИЛИMObile = moduleQuety.getModuleQuery(Текущаятаблицы, " SELECT D.mode_connection  FROM " + Текущаятаблицы + " AS D", null);
             Log.d(this.getClass().getName(), "\n"
                     + " время: " + new Date() + "\n+" +
                     " Класс в процессе... " + this.getClass().getName() + "\n" +

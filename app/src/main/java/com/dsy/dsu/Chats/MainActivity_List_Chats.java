@@ -19,6 +19,7 @@ import androidx.work.WorkInfo;
 import androidx.work.WorkManager;
 
 import com.dsy.dsu.BusinessLogicAll.Class_GRUD_SQL_Operations;
+import com.dsy.dsu.BusinessLogicAll.GetPublicID.GetPublicID;
 import com.dsy.dsu.BusinessLogicAll.GetPublicID.HiltInterfacesPublicID;
 import com.dsy.dsu.CnangeServers.BinessLogicPublicContent;
 import com.dsy.dsu.Errors.WriteErrorForAll.RecordNewErros;
@@ -1060,7 +1061,7 @@ try{
 
         try {
             // TODO: 28.12.2021  ЗАПУСК ОДНОРАЗОВОЙ СЛУЖБЫ
-            Integer  ПубличныйIDДляОдноразовойСинхрониазции=   EntryPoints.get(context, HiltInterfacesPublicID.class).getPublicIDAllApp();
+            Integer  ПубличныйIDДляОдноразовойСинхрониазции=   new GetPublicID().getPublicIDAllApp(getApplicationContext());
             if (!WorkManager.getInstance(getApplicationContext()).getWorkInfosByTag(ИмяСлужбыСинхронизацииОдноразовая).get().isEmpty()) {
                 WorkInfoИнформацияОЗапущенойСлужбеОдноразовая =
                         WorkManager.getInstance(getApplicationContext().getApplicationContext()).getWorkInfosByTag(ИмяСлужбыСинхронизацииОдноразовая).get().get(0);

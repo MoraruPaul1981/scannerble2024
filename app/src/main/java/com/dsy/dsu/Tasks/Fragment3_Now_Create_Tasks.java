@@ -280,7 +280,7 @@ public class Fragment3_Now_Create_Tasks extends Fragment {
 
 
 // TODO: 02.03.2022
-            ПубличныйIDДляФрагмента = EntryPoints.get(getContext(), HiltInterfacesPublicID.class).getPublicIDAllApp();
+            ПубличныйIDДляФрагмента = new GetPublicID().getPublicIDAllApp(getApplicationContext());
             // TODO: 15.03.202
             Log.d(this.getClass().getName(), "ПубличныйIDДляФрагмента " +     ПубличныйIDДляФрагмента );
 

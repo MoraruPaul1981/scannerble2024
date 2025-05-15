@@ -37,6 +37,7 @@ import androidx.work.WorkInfo;
 import androidx.work.WorkManager;
 
 import com.dsy.dsu.BusinessLogicAll.Class_GRUD_SQL_Operations;
+import com.dsy.dsu.BusinessLogicAll.GetPublicID.GetPublicID;
 import com.dsy.dsu.BusinessLogicAll.GetPublicID.HiltInterfacesPublicID;
 import com.dsy.dsu.CnangeServers.BinessLogicPublicContent;
 import com.dsy.dsu.Errors.WriteErrorForAll.RecordNewErros;
@@ -207,7 +208,7 @@ public class Fragment1_One_Tasks extends Fragment {
     public void onStart() {
         super.onStart();
         try{
-            ПубличныйIDДляФрагмента = EntryPoints.get(getContext(), HiltInterfacesPublicID.class).getPublicIDAllApp();
+            ПубличныйIDДляФрагмента = new GetPublicID().getPublicIDAllApp(getApplicationContext());
             Курсор_ГлавныйКурсорДляЗадач=        subClassBuccessLogin_главныйКлассБизнесЛогикиФрагмент1.МетодПолучаемГлавныеДанныеДляЗадач(ПубличныйIDДляФрагмента);
             Log.d(this.getClass().getName(), "ПубличныйIDДляФрагмента " + ПубличныйIDДляФрагмента+ " Курсор_ГлавныйКурсорДляЗадач " +Курсор_ГлавныйКурсорДляЗадач);
             Курсор_ДляПолученияДАнныхТОлькоДляЗадачВработе=    subClassBuccessLogin_главныйКлассБизнесЛогикиФрагмент1.МетодПолученимТОлькоКоличествоЗадач(ПубличныйIDДляФрагмента);

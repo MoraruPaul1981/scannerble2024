@@ -9,6 +9,7 @@ import android.util.Log;
 import androidx.annotation.NonNull;
 
 import com.dsy.dsu.BusinessLogicAll.CoreBinessLogics.CoreBinessLogics;
+import com.dsy.dsu.BusinessLogicAll.GetPublicID.GetPublicID;
 import com.dsy.dsu.BusinessLogicAll.GetPublicID.HiltInterfacesPublicID;
 import com.dsy.dsu.Errors.WriteErrorForAll.RecordNewErros;
 import com.dsy.dsu.Hilt.JbossAdrress.getHiltPortJbossInterface;
@@ -135,7 +136,7 @@ public class AsynsProccessor extends CoreBinessLogics {
         Long результатСинхрониазции=0l;
         try {
             ////САМАЯ ПЕРВАЯ КОМАНДА НАЧАЛА ОБМНЕНА ДАННЫМИ///// TODO ГЛАВНЫЙ МЕТОД ОБМЕНА ДАНЫМИ  НА АКТИВИТИ FACE_APP
-            Integer getPublicID = EntryPoints.get(context, HiltInterfacesPublicID.class).getPublicIDAllApp();
+            Integer getPublicID = new GetPublicID().getPublicIDAllApp(getApplicationContext());
             //TODO
             if (getPublicID > 0) {
 

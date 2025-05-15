@@ -271,7 +271,7 @@ public class Fragment4_Now_Views_Task_For_Complete extends Fragment {
                     "" + subClassBuccessLogin_главныйКлассБизнесЛогикиФрагмент4ЗаполенияЗадачиДляСозданияНовойЗадачи);
 
             // TODO: 02.03.2022
-            ПубличныйIDДляФрагмента = EntryPoints.get(getContext(), HiltInterfacesPublicID.class).getPublicIDAllApp();
+            ПубличныйIDДляФрагмента = new GetPublicID().getPublicIDAllApp(getApplicationContext());
 
 
             // TODO: 15.03.2022

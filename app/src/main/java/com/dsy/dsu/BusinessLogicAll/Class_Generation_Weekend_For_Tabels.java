@@ -36,7 +36,7 @@ public class Class_Generation_Weekend_For_Tabels {
             // TODO: 14.05.2025
             String Текущаятаблицы="SuccessLogin";
             ModuleQuety moduleQuety=new ModuleQuety(context);
-            Cursor КурсорУзнаемСохраненыйРежимРаботыССетью= moduleQuety.getModuleQuery(Текущаятаблицы," SELECT mode_weekend FROM "+Текущаятаблицы+" AS D " ,null);
+            Cursor КурсорУзнаемСохраненыйРежимРаботыССетью= moduleQuety.getModuleQuery(Текущаятаблицы," SELECT  D.mode_weekend FROM "+Текущаятаблицы+" AS D " ,null);
             Log.d(this.getClass().getName(), "\n"
                     + " время: " + new Date() + "\n+" +
                     " Класс в процессе... " + this.getClass().getName() + "\n" +

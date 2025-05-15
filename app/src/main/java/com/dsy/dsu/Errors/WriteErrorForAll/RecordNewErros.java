@@ -166,7 +166,7 @@ public class RecordNewErros  implements RecordNewErrorsInterface {
             Long UUIDForError = (Long)
                     new Class_Generation_UUID(context).МетодГенерацииUUID();
      
-            //Integer getPublicIdForError = EntryPoints.get(context, HiltInterfacesPublicID.class).getPublicIDAllApp();
+
             Integer getPublicIdForError =   new GetPublicID().getPublicIDAllApp(context);
 
 
