@@ -967,105 +967,12 @@ private void МетодВозврещениеНаПредыдущуюАктив�
                         Thread.currentThread().getStackTrace()[2].getLineNumber());
             }
             return  РезультаВставкиВТАблицуФИО;
-
         }
-
-
-
-
-
-
-
-
-
-
-
-
-        // TODO: 22.09.2021  МЕТОД НЕПОСТРЕДВСТЕННОЙ ЗАПИСИ ДАННЫХ В ТАБЛИЦУ ФИО
-
-
-
-
     }
 
-// TODO: 22.09.2021
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
     // TODO: 22.09.2021   KLASS GENERATOR NEW CUSTOMERS  IN TABLE data_tabels
     // TODO: 22.09.2021   KLASS GENERATOR NEW CUSTOMERS  IN TABLE data_tabels
     // TODO: 22.09.2021   KLASS GENERATOR NEW CUSTOMERS  IN TABLE data_tabels
-
-
     class   Class_Generator_New_Customer_In_Table_Data_Tables   {
     // TODO: 22.09.2021  ТАБЛИЦА ДАТА_ТАБЕЛЬ
     // TODO: 22.09.2021  ЗАПИСЬ НОВОГО СОТДУНИКА ВТОРОЕ ДЕЙСТИЕ ЗАПИСЬВ ТАБЛИЦУ ДАТА_ТАБЕЛЯ
@@ -1113,7 +1020,11 @@ private void МетодВозврещениеНаПредыдущуюАктив�
                     ГодПриВставкеНовогоСотрудника,
                     МЕсяцПриВставкеНовогоСотрудника, UUidGeneratorDataTabels);/////TODO НОВЫЙ НУЖЕН НЕ ДЛЯ ВСТАВКИ А ДЛЯ ВТОРОГО ДЕЙСТВИЯ ЗАПОЛЕНИЯ ВЫХОДНЫМИ ЕСЛИ НВ НАСТРОЙКАХ ЕСТЬ КАКАЯ ФУЕНКЦИЯ И ОНА ВКЛЮЧЕН
 
-            Log.e(this.getClass().getName(), " РезультатВставкиВтаблицу_Дата_табеля" + РезультатВставкиВтаблицу_Дата_табеля);
+            Log.d(this.getClass().getName(), "\n"
+                    + " время: " + new Date() + "\n+" +
+                    " Класс в процессе... " + this.getClass().getName() + "\n" +
+                    " метод в процессе... " + Thread.currentThread().getStackTrace()[2].getMethodName()  + " РезультатВставкиВтаблицу_Дата_табеля " +РезультатВставкиВтаблицу_Дата_табеля);
+
 
         } catch (Exception e) {
             e.printStackTrace();
