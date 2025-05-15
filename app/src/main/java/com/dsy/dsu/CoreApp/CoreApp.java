@@ -2,14 +2,12 @@ package com.dsy.dsu.CoreApp;
 
 
 import android.app.Application;
-import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 
-import com.dsy.dsu.BusinessLogicAll.CoreBinessLogics.CoreBinessLogics;
+import com.dsy.dsu.BusinessLogicAll.CoreBinessLogic.CoreBinessLogics;
 import com.dsy.dsu.Errors.WriteErrorForAll.RecordNewErros;
 import com.dsy.dsu.R;
-import com.example.tabels.model.launtch.ModuleTabels;
 
 import java.util.Date;
 

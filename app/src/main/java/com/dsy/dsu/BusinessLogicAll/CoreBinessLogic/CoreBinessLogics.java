@@ -1,4 +1,4 @@
-package com.dsy.dsu.BusinessLogicAll.CoreBinessLogics;
+package com.dsy.dsu.BusinessLogicAll.CoreBinessLogic;
 
 import android.annotation.SuppressLint;
 import android.content.ContentValues;

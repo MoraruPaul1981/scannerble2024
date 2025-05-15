@@ -3,11 +3,9 @@ package com.dsy.dsu.BusinessLogicAll;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
-import android.database.sqlite.SQLiteCursor;
 import android.util.Log;
 
-import com.dsy.dsu.BusinessLogicAll.CoreBinessLogics.CoreBinessLogics;
-import com.dsy.dsu.CnangeServers.BinessLogicPublicContent;
+import com.dsy.dsu.BusinessLogicAll.CoreBinessLogic.CoreBinessLogics;
 import com.dsy.dsu.Errors.WriteErrorForAll.RecordNewErros;
 import com.sous.backasync.launch.ModuleQuety;
 

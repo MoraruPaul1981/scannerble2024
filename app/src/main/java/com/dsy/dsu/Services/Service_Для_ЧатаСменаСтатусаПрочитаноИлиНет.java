@@ -18,7 +18,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 
-import com.dsy.dsu.BusinessLogicAll.CoreBinessLogics.CoreBinessLogics;
+import com.dsy.dsu.BusinessLogicAll.CoreBinessLogic.CoreBinessLogics;
 import com.dsy.dsu.BusinessLogicAll.Class_GRUD_SQL_Operations;
 import com.dsy.dsu.BusinessLogicAll.DATE.Class_Generation_Data;
 import com.dsy.dsu.BusinessLogicAll.VersionCurentTable;
@@ -55,11 +55,10 @@ public class Service_Для_ЧатаСменаСтатусаПрочитаноИ
     // Random number generator
     private Context context;
 
-    private Class_GRUD_SQL_Operations    class_grud_sql_operations ;
 
 
-    @Inject
-    public   SQLiteDatabase sqLiteDatabase;
+
+
     private CoreBinessLogics modelДляФрагментаДляОперацииЗаписиНовгоСтатусаПрочитанного ;
     private BinessLogicPublicContent Class_Engine_SQLГдеНаходитьсяМенеджерПотоков ;
     private RecordNewErros recordNewErros;

@@ -79,8 +79,7 @@ public class Service_for_AdminissionMaterial extends IntentService {
     private Context context;
     private String ПолученныйПоследнийМесяцДляСортировкиЕгоВСпиноре;
 
-    @Inject
-    public   SQLiteDatabase sqLiteDatabase;
+
 
     public Service_for_AdminissionMaterial() {
         super(

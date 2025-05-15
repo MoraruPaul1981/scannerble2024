@@ -63,8 +63,7 @@ public class Service_For_Task_Для_Задания_СменаСатуса exten
     private Context context;
 
 
-    @Inject
-    public   SQLiteDatabase sqLiteDatabase;
+
 
     public Service_For_Task_Для_Задания_СменаСатуса() {
         //TODO

@@ -32,7 +32,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.dsy.dsu.BootAndAsync.View.MainActivityBootAndAsync;
 
-import com.dsy.dsu.BusinessLogicAll.CoreBinessLogics.CoreBinessLogics;
+import com.dsy.dsu.BusinessLogicAll.CoreBinessLogic.CoreBinessLogics;
 import com.dsy.dsu.BusinessLogicAll.Class_Clears_Tables;
 import com.dsy.dsu.BusinessLogicAll.GetPingServers.GetPingServerJboss;
 

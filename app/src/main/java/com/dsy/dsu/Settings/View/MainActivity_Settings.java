@@ -1,13 +1,11 @@
 package com.dsy.dsu.Settings.View;
 
 import android.annotation.SuppressLint;
-import android.content.ContentValues;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.pm.ActivityInfo;
 import android.content.pm.PackageInfo;
 import android.database.Cursor;
-import android.database.sqlite.SQLiteCursor;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -21,7 +19,7 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
-import com.dsy.dsu.BusinessLogicAll.CoreBinessLogics.CoreBinessLogics;
+import com.dsy.dsu.BusinessLogicAll.CoreBinessLogic.CoreBinessLogics;
 import com.dsy.dsu.CnangeServers.BinessLogicPublicContent;
 import com.dsy.dsu.Dashboard.Model.LaunchActivityDiaologSettings;
 import com.dsy.dsu.Errors.WriteErrorForAll.RecordNewErros;
@@ -203,6 +201,7 @@ public class MainActivity_Settings extends AppCompatActivity {
 
 // TODO: 02.06.2021 метод которыу вычислет и заполянет ДАТУПОСЛЕДНЕЙ СИНХРОНИЗАЦИИ С СЕРВЕРОМ
 
+    @SuppressLint("Range")
     protected void методВычисляетПоследнуюДатуСинхронищацииССервром() {
         // TODO: 15.05.2025
         Cursor Курсор_ВытаскиваемПоследнуюДатуСинхрониазииССерором = null;
@@ -211,7 +210,7 @@ public class MainActivity_Settings extends AppCompatActivity {
             // TODO: 14.05.2025
             String Текущаятаблицы = "MODIFITATION_Client";
             ModuleQuety moduleQuety = new ModuleQuety(context);
-            Cursor Курсор_ИщемПроведенЛиТАбельИлиНЕт = moduleQuety.getModuleQuery(Текущаятаблицы, "  (SELECT MAX(versionserveraandroid) FROM MODIFITATION_Client)  AND versionserveraandroid IS NOT NULL  ", null);
+            Cursor Курсор_ИщемПроведенЛиТАбельИлиНЕт = moduleQuety.getModuleQuery(Текущаятаблицы, "  (SELECT MAX(versionserveraandroid) AS MAX_R  FROM "+Текущаятаблицы+")  AND versionserveraandroid IS NOT NULL  ", null);
             Log.d(this.getClass().getName(), "\n"
                     + " время: " + new Date() + "\n+" +
                     " Класс в процессе... " + this.getClass().getName() + "\n" +
@@ -219,7 +218,7 @@ public class MainActivity_Settings extends AppCompatActivity {
             ////TODO   результат
             if (Курсор_ВытаскиваемПоследнуюДатуСинхрониазииССерором.getCount() > 0) {
                 Курсор_ВытаскиваемПоследнуюДатуСинхрониазииССерором.moveToFirst();////
-                ПоследнаяДата = Курсор_ВытаскиваемПоследнуюДатуСинхрониазииССерором.getString(0);
+                ПоследнаяДата = Курсор_ВытаскиваемПоследнуюДатуСинхрониазииССерором.getString(Курсор_ВытаскиваемПоследнуюДатуСинхрониазииССерором.getColumnIndex("MAX_R"));
                 Log.d(this.getClass().getName(), "ПоследнаяДата" + ПоследнаяДата);
             }
             if (ПоследнаяДата != null) {

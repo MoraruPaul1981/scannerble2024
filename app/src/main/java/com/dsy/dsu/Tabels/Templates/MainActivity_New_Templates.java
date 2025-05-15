@@ -11,7 +11,6 @@ import android.content.pm.ActivityInfo;
 import android.content.res.Configuration;
 import android.database.Cursor;
 import android.database.DataSetObserver;
-import android.database.sqlite.SQLiteCursor;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Rect;
@@ -47,9 +46,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 
 
-import com.dsy.dsu.BusinessLogicAll.CoreBinessLogics.CoreBinessLogics;
+import com.dsy.dsu.BusinessLogicAll.CoreBinessLogic.CoreBinessLogics;
 
-import com.dsy.dsu.CnangeServers.BinessLogicPublicContent;
 import com.dsy.dsu.Errors.WriteErrorForAll.RecordNewErros;
 import com.dsy.dsu.BusinessLogicAll.DATE.SubClassCursorLoader;
 import com.dsy.dsu.BusinessLogicAll.VersionCurentTable;
@@ -78,8 +76,6 @@ import java.util.concurrent.ExecutionException;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.TimeoutException;
 import java.util.concurrent.atomic.AtomicLong;
-import java.util.concurrent.locks.Condition;
-import java.util.concurrent.locks.ReentrantLock;
 import java.util.function.IntConsumer;
 import java.util.stream.IntStream;
 
@@ -88,7 +84,6 @@ import dagger.hilt.android.AndroidEntryPoint;
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
 import io.reactivex.rxjava3.core.Completable;
 import io.reactivex.rxjava3.functions.Action;
-import io.reactivex.rxjava3.functions.Predicate;
 import io.reactivex.rxjava3.schedulers.Schedulers;
 
 
@@ -192,7 +187,6 @@ public class MainActivity_New_Templates extends AppCompatActivity {
             /////todo данная настрока запрещает при запуке активти подскаваать клавиатуре вверх на компонеты eedittext
             activity=this;
 ///////TODO
-            sqLiteDatabase=    GetSQLiteDatabase.SqliteDatabase();
             ////todo запрещяет поворот экрана
             listActivityListPeoples = null; /////////TODO КОГДА НЕТ ДАННЫ
             ХэшФИОВсеСотурдникаТекущегоТабеля = Collections.synchronizedMap(new LinkedHashMap<Integer, Long>());
