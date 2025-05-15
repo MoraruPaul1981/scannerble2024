@@ -32,7 +32,7 @@ public class CreateSingleWorkManager {
 
         try{
             // TODO: 08.10.2023
-            Integer PublicId = new GetPublicID().getPublicIDAllApp(getApplicationContext());
+            Integer PublicId = new GetPublicID().getPublicIDAllApp(context);
 
             Data myDataSingleWorker = new Data.Builder()
                     .putInt("ПубличныйID", PublicId)
