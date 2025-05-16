@@ -77,7 +77,7 @@ public Integer getModuleInsert(@NonNull Bundle bundleModuleBack ){
 
     @SuppressLint("NewApi")
     @Override
-    public Integer getModuleInsert(@NonNull String Таблица,@NonNull ContentValues contentValuesModuleBackAsync ){
+    public Long getModuleInsert(@NonNull String Таблица, @NonNull ContentValues contentValuesModuleBackAsync ){
         Long InsertingBack = null;
         try{
             if (contentValuesModuleBackAsync!=null) {
