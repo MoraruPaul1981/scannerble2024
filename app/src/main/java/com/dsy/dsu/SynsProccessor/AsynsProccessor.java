@@ -35,11 +35,6 @@ public class AsynsProccessor extends CoreBinessLogics {
     public Context context;
 
 
-
-
-
-
-    public SQLiteDatabase sqLiteDatabase ;
     public SharedPreferences preferences;
     public Integer  ПубличныйIDДляФрагмента=0;
 
@@ -59,11 +54,10 @@ public class AsynsProccessor extends CoreBinessLogics {
         super(context);
         this.context=context;
         // TODO: 16.04.2025
-        sqLiteDatabase = EntryPoints.get(context, AppModuleSQLlite.class).getAppModuleSQLlite();
         Log.d(context.getClass().getName(), "\n"
                 + " время: " + new Date() + "\n+" +
                 " Класс в процессе... " + this.getClass().getName() + "\n" +
-                " метод в процессе... " + Thread.currentThread().getStackTrace()[2].getMethodName() + " sqLiteDatabase " +sqLiteDatabase);
+                " метод в процессе... " + Thread.currentThread().getStackTrace()[2].getMethodName());
         this.jsonGenerator=    jsonGenerator;
         this.getsslSocketFactory2=    getsslSocketFactory2;
         this.getHiltPublicId=    getHiltPublicId;

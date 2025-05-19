@@ -73,7 +73,6 @@ public class Fragment_Messages_СообщенияЧата extends Fragment {
     private TextView textViewФрагментСообщенияНазваниеЧАты;
     private View viewФрагментСообщенияНазваниеЧАты;
     private BinessLogicPublicContent Class_Engine_SQLГдеНаходитьсяМенеджерПотоков = null;///
-    private SQLiteDatabase sqLiteDatabase ;
     private Integer ПубличноеIDПолученныйИзСервлетаДляUUID = 0;
     private   String ФИОдляпервогоФрагмента;
     private   Long UUIDдляпервогоФрагментаДляСообщенияTagДляПередачиВоДругиеФрагменты;

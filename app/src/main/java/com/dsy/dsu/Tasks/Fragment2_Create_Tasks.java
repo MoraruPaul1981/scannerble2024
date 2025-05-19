@@ -108,8 +108,6 @@ public class Fragment2_Create_Tasks extends Fragment {
     private BottomNavigationItemView bottomNavigationПринудительныйОбмен;
 
 
-    private SQLiteDatabase sqLiteDatabase ;
-
     @SuppressLint("RestrictedApi")
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
@@ -164,11 +162,10 @@ public class Fragment2_Create_Tasks extends Fragment {
         super.onCreate(savedInstanceState);
  try{
      // TODO: 16.04.2025
-     sqLiteDatabase = EntryPoints.get(context, AppModuleSQLlite.class).getAppModuleSQLlite();
      Log.d(context.getClass().getName(), "\n"
              + " время: " + new Date() + "\n+" +
              " Класс в процессе... " + this.getClass().getName() + "\n" +
-             " метод в процессе... " + Thread.currentThread().getStackTrace()[2].getMethodName() + " sqLiteDatabase " +sqLiteDatabase);
+             " метод в процессе... " + Thread.currentThread().getStackTrace()[2].getMethodName() );
 
 
         // TODO: 02.08.2022 инициализация классовдля работы

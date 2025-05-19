@@ -112,7 +112,7 @@ public class Fragment3_Now_Create_Tasks extends Fragment {
     private BottomNavigationItemView bottomNavigationПринудительныйОбмен;
 
 
-    private SQLiteDatabase sqLiteDatabase ;
+
 
 
     @Override
@@ -120,11 +120,10 @@ public class Fragment3_Now_Create_Tasks extends Fragment {
         super.onCreate(savedInstanceState);
         try{
             // TODO: 16.04.2025
-            sqLiteDatabase = EntryPoints.get(getContext(), AppModuleSQLlite.class).getAppModuleSQLlite();
             Log.d(getContext().getClass().getName(), "\n"
                     + " время: " + new Date() + "\n+" +
                     " Класс в процессе... " + this.getClass().getName() + "\n" +
-                    " метод в процессе... " + Thread.currentThread().getStackTrace()[2].getMethodName() + " sqLiteDatabase " +sqLiteDatabase);
+                    " метод в процессе... " + Thread.currentThread().getStackTrace()[2].getMethodName());
 
 
 

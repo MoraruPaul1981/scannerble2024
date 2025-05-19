@@ -109,7 +109,6 @@ public class Fragment5_ViewcreatedTasks extends Fragment {
     private ServiceConnection connectionДляСменыСтатусаЗадач;
 
 
-    private SQLiteDatabase sqLiteDatabase ;
     @SuppressLint("RestrictedApi")
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
@@ -117,11 +116,10 @@ public class Fragment5_ViewcreatedTasks extends Fragment {
 
         try {
             // TODO: 16.04.2025
-            sqLiteDatabase = EntryPoints.get(context, AppModuleSQLlite.class).getAppModuleSQLlite();
             Log.d(context.getClass().getName(), "\n"
                     + " время: " + new Date() + "\n+" +
                     " Класс в процессе... " + this.getClass().getName() + "\n" +
-                    " метод в процессе... " + Thread.currentThread().getStackTrace()[2].getMethodName() + " sqLiteDatabase " +sqLiteDatabase);
+                    " метод в процессе... " + Thread.currentThread().getStackTrace()[2].getMethodName());
 
 
 
@@ -1592,7 +1590,6 @@ public class Fragment5_ViewcreatedTasks extends Fragment {
 
             private Integer МетодПослеУспешнойЗаписиЗначенияВТаблицуПоднимаемВерсиюДанных
                     (Class_GRUD_SQL_Operations classGrudSqlOperationsДляОперацииСозданеиНовойЗадачи,
-                     SQLiteDatabase sqLiteDatabaseДляНовгоЗадания,
                      Long РезультатУвеличинаяВерсияВнутриСамогоТабелСтрудника, String таблицаОбработкиПослеУспешнойВсатвкиНовойЗадачи) throws ExecutionException, InterruptedException {
 
                 // TODO: 21.03.2022

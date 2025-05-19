@@ -63,8 +63,7 @@ public class Fragment_Contacts_КонтактыЧата extends Fragment    {
     BinessLogicPublicContent Class_Engine_SQLГдеНаходитьсяМенеджерПотоков =null;
 
 
-    ///////TODO
-    private SQLiteDatabase sqLiteDatabase ;
+
 
 
     @Override
@@ -79,12 +78,10 @@ public class Fragment_Contacts_КонтактыЧата extends Fragment    {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         try {
-            // TODO: 16.04.2025
-            sqLiteDatabase = EntryPoints.get(context, AppModuleSQLlite.class).getAppModuleSQLlite();
             Log.d(getContext().getClass().getName(), "\n"
                     + " время: " + new Date() + "\n+" +
                     " Класс в процессе... " + this.getClass().getName() + "\n" +
-                    " метод в процессе... " + Thread.currentThread().getStackTrace()[2].getMethodName() + " sqLiteDatabase " +sqLiteDatabase);
+                    " метод в процессе... " + Thread.currentThread().getStackTrace()[2].getMethodName() );
     } catch (Exception e) {
         e.printStackTrace();
         Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +

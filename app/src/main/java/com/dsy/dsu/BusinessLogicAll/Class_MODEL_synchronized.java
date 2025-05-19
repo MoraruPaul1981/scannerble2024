@@ -80,7 +80,6 @@ import okio.BufferedSink;
     private  String ПубличноеПароль =   new String();
 
 
-    private SQLiteDatabase sqLiteDatabase ;
 
     private SharedPreferences preferencesJboss;
 
@@ -90,12 +89,10 @@ import okio.BufferedSink;
        try{
         //TODO контроль потоков
         Class_Engine_SQLГдеНаходитьсяМенеджерПотоков =new PUBLIC_CONTENT(context);
-        // TODO: 16.04.2025
-        sqLiteDatabase = EntryPoints.get(context, AppModuleSQLlite.class).getAppModuleSQLlite();
         Log.d(context.getClass().getName(), "\n"
                 + " время: " + new Date() + "\n+" +
                 " Класс в процессе... " + this.getClass().getName() + "\n" +
-                " метод в процессе... " + Thread.currentThread().getStackTrace()[2].getMethodName() + " sqLiteDatabase " +sqLiteDatabase);
+                " метод в процессе... " + Thread.currentThread().getStackTrace()[2].getMethodName() );
         // TODO: 06.10.2024
 
         preferencesJboss = context.getSharedPreferences("sharedPreferencesХранилище", Context.MODE_MULTI_PROCESS);
@@ -115,7 +112,6 @@ import okio.BufferedSink;
             //TODO контроль потоков
             Class_Engine_SQLГдеНаходитьсяМенеджерПотоков =new PUBLIC_CONTENT(context);
             // TODO: 16.04.2025
-           this.sqLiteDatabase=sqLiteDatabase;
             Log.d(context.getClass().getName(), "\n"
                     + " время: " + new Date() + "\n+" +
                     " Класс в процессе... " + this.getClass().getName() + "\n" +

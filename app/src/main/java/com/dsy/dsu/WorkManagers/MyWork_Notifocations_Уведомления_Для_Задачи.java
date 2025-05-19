@@ -65,7 +65,6 @@ public class MyWork_Notifocations_Уведомления_Для_Задачи ext
     private   WorkInfo ИнформацияОЗапущенойСлужбе_Уведомления_Одноразовая;
     private  Integer ОбщееКоличествоНЕпрочитанныхСтрок = 0;
     private NotificationCompat.Builder builder_Для_Задачи = null;
-    private SQLiteDatabase sqLiteDatabase ;
     private Class_GRUD_SQL_Operations class_grud_sql_operationsIDпользоввателяДляСлужб;
     private  SimpleDateFormat ФоорматДат ;
     private    int     ID_ТаблицаУвендомлений;
@@ -964,7 +963,6 @@ public class MyWork_Notifocations_Уведомления_Для_Задачи ext
 
     private Integer МетодПослеУспешнойЗаписиЗначенияВТаблицуПоднимаемВерсиюДанных
             (Class_GRUD_SQL_Operations classGrudSqlOperationsДляОперацииСозданеиНовойЗадачи,
-             SQLiteDatabase sqLiteDatabaseДляНовгоЗадания,
              Long РезультатУвеличинаяВерсияВнутриСамогоТабелСтрудника, String таблицаОбработкиПослеУспешнойВсатвкиНовойЗадачи) throws ExecutionException, InterruptedException {
 
         // TODO: 21.03.2022

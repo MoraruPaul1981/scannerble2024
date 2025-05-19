@@ -76,7 +76,6 @@ public class Fragment_Writer_Read_ЧитатьПисатьЧата extends Fragm
     protected FloatingActionButton floatingActionButtonВФагментеReadandWrite;
     protected EditText editTextТелоНаписаногоСообщенияДругимСотрудникам;
     protected Activity ActivityДляСинхронизацииОбмена = null;
-    private SQLiteDatabase sqLiteDatabase ;
     protected String ПолученыйФИОIDДляЧата = new String();
     protected CoreBinessLogics modelДляФрагментаДляОперацииЗаписиНовгоСтатусаПрочитанного;
     protected BinessLogicPublicContent Class_Engine_SQLГдеНаходитьсяМенеджерПотоков = null;
