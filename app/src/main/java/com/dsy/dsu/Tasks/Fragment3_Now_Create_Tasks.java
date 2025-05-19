@@ -64,6 +64,7 @@ import java.text.ParseException;
 import java.util.Date;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.LinkedBlockingQueue;
+import java.util.concurrent.atomic.AtomicInteger;
 
 import dagger.hilt.EntryPoints;
 
@@ -1684,7 +1685,7 @@ public class Fragment3_Now_Create_Tasks extends Fragment {
 
 
                                                     // TODO: 24.06.2022  создаем новую задачу
-                                                    Long ОперациСозданияНовойЗадания
+                                                    Integer ОперациСозданияНовойЗадания
                                                             = subClass_createNewTasksКлассДляСозданияНовойЗадачи.МетодЗаписиНовойЗадачи();
                                                     Log.d(this.getClass().getName(), "  ОперациСозданияНовойЗадания" + ОперациСозданияНовойЗадания);
                                                     if (ОперациСозданияНовойЗадания>0) {
@@ -1921,9 +1922,9 @@ public class Fragment3_Now_Create_Tasks extends Fragment {
             }
 
             // TODO: 21.03.2022  --метод записи новой задачи
-            Long МетодЗаписиНовойЗадачи() {
+            Integer МетодЗаписиНовойЗадачи() {
                 // TODO: 21.03.2022
-                Long[] Результат_ВставкиДанныхПриСозданииНовойЗадачи = {0l};
+            AtomicInteger Результат_ВставкиДанныхПриСозданииНовойЗадачи=new AtomicInteger(0);
                 try {
                     // TODO: 21.03.2022
                     LinkedBlockingQueue<String> linkedBlockingQueueДвеТаблицыСозданиеНовойЗадачи = new LinkedBlockingQueue();
@@ -2012,11 +2013,12 @@ public class Fragment3_Now_Create_Tasks extends Fragment {
                             // TODO: 14.05.2025  После заполенеие Вставка Данных
                             ModuleInserting moduleInserting=new ModuleInserting(context);
                             // TODO: 14.05.2025
-                            Результат_ВставкиДанныхПриСозданииНовойЗадачи[0]  =    moduleInserting.getModuleInsert(ТаблицаОбработки,contentValuesДляСозданияНовойЗадачиДляДвухТаблиц);
+                            Результат_ВставкиДанныхПриСозданииНовойЗадачи.getAndSet(moduleInserting.getModuleInsert(ТаблицаОбработки,contentValuesДляСозданияНовойЗадачиДляДвухТаблиц));
 
                             Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                                     " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                                    " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" + "     Результат_ВставкиДанныхПриСозданииНовойЗадачи[0]  "+    Результат_ВставкиДанныхПриСозданииНовойЗадачи[0]  );
+                                    " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" +
+                                    "     Результат_ВставкиДанныхПриСозданииНовойЗадачи.get()  "+    Результат_ВставкиДанныхПриСозданииНовойЗадачи.get()  );
 
 
                             // TODO: 21.03.2022
@@ -2042,16 +2044,6 @@ public class Fragment3_Now_Create_Tasks extends Fragment {
                     Log.d(this.getClass().getName(), " linkedBlockingQueueДвеТаблицыСозданиеНовойЗадачи " + linkedBlockingQueueДвеТаблицыСозданиеНовойЗадачи);
 
                     //TODO прегружаем внешний код после вставки нвой задачи
-
-
-                /*    Курсор_ГлавныйКурсорДляЗадач.deactivate();
-                    // TODO: 25.03.2022
-                    Курсор_ГлавныйКурсорДляЗадач.requery();
-
-                    // TODO: 13.03.2022
-
-                    onResume();*/
-
                     bottomNavigationViewДляTasks.requestLayout();
                     // TODO: 22.03.2022
                     recyclerView.requestLayout();
@@ -2065,15 +2057,13 @@ public class Fragment3_Now_Create_Tasks extends Fragment {
                     // TODO: 21.03.2022
                 } catch (Exception e) {
                     e.printStackTrace();
-                    ///метод запись ошибок в таблицу
                     Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
                             " Линия  :" + Thread.currentThread().getStackTrace()[2].getLineNumber());
                     new RecordNewErros(getContext()).recordnewerror(e.toString(), this.getClass().getName(),
                             Thread.currentThread().getStackTrace()[2].getMethodName(), Thread.currentThread().getStackTrace()[2].getLineNumber());
-                    //   mNotificationManagerДляЧАТА.cancel(1);///.cancelAll();
                 }
                 // TODO: 21.03.2022
-                return Результат_ВставкиДанныхПриСозданииНовойЗадачи[0];
+                return Результат_ВставкиДанныхПриСозданииНовойЗадачи.get();
             }
 
 
