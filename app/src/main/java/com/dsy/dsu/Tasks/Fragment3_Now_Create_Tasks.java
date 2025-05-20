@@ -6,7 +6,6 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteCursor;
-import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
@@ -44,11 +43,10 @@ import androidx.work.WorkManager;
 
 import com.dsy.dsu.BusinessLogicAll.DATE.Class_Generation_Data;
 import com.dsy.dsu.Errors.WriteErrorForAll.RecordNewErros;
-import com.dsy.dsu.BusinessLogicAll.GreatUuidGeneration;
+import com.dsy.dsu.BusinessLogicAll.GreatUuidGenerations.GreatUuidGeneration;
 import com.dsy.dsu.BusinessLogicAll.GetPublicID.GetPublicID;
 
 import com.dsy.dsu.BusinessLogicAll.VersionCurentTable;
-import com.dsy.dsu.Hilt.Sqlitehilt.AppModuleSQLlite;
 import com.dsy.dsu.R;
 import com.google.android.material.bottomnavigation.BottomNavigationItemView;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -65,8 +63,6 @@ import java.util.Date;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.LinkedBlockingQueue;
 import java.util.concurrent.atomic.AtomicInteger;
-
-import dagger.hilt.EntryPoints;
 
 
 public class Fragment3_Now_Create_Tasks extends Fragment {

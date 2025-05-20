@@ -8,7 +8,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.ServiceConnection;
 import android.database.sqlite.SQLiteCursor;
-import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.IBinder;
@@ -38,7 +37,6 @@ import androidx.work.WorkInfo;
 import androidx.work.WorkManager;
 
 import com.dsy.dsu.BusinessLogicAll.CoreBinessLogic.CoreBinessLogics;
-import com.dsy.dsu.BusinessLogicAll.Class_GRUD_SQL_Operations;
 import com.dsy.dsu.BusinessLogicAll.GetPublicID.GetPublicID;
 import com.dsy.dsu.Errors.WriteErrorForAll.RecordNewErros;
 
@@ -85,7 +83,7 @@ public class Fragment_Writer_Read_ЧитатьПисатьЧата extends Fragm
     protected SQLiteCursor КурсорДанныеДлязаписиичтнияЧата = null;
     protected Long ПолученыйIDДляЧата = 0l;
     protected Long ПолученыйУжеСуществующийUUIDИзПерепискиДляЧата = 0l;
-    protected Class_GRUD_SQL_Operations class_grud_sql_operations;
+
     protected Handler handlerФрагментЧитатьПисатьЧАТ;
     protected RecordNewErros recordNewErros;
     protected   ProgressBar progressBarДляЧатаЧитатьПисать;
@@ -102,11 +100,10 @@ public class Fragment_Writer_Read_ЧитатьПисатьЧата extends Fragm
         super.onCreate(savedInstanceState);
         try{
             // TODO: 16.04.2025
-            sqLiteDatabase = EntryPoints.get(context, AppModuleSQLlite.class).getAppModuleSQLlite();
             Log.d(getContext().getClass().getName(), "\n"
                     + " время: " + new Date() + "\n+" +
                     " Класс в процессе... " + this.getClass().getName() + "\n" +
-                    " метод в процессе... " + Thread.currentThread().getStackTrace()[2].getMethodName() + " sqLiteDatabase " +sqLiteDatabase);
+                    " метод в процессе... " + Thread.currentThread().getStackTrace()[2].getMethodName());
         Log.d(this.getClass().getName(), " " + " viewДляСообщений" + viewДляСообщенийЧата);
     } catch (Exception e) {
         e.printStackTrace();
@@ -177,7 +174,6 @@ public class Fragment_Writer_Read_ЧитатьПисатьЧата extends Fragm
     public void onStart() {
         super.onStart();
         try {
-            class_grud_sql_operations = new Class_GRUD_SQL_Operations(getContext());
             recordNewErros =new RecordNewErros(getContext());
 
             Class_Engine_SQLГдеНаходитьсяМенеджерПотоков = new BinessLogicPublicContent(getContext());
@@ -188,7 +184,7 @@ public class Fragment_Writer_Read_ЧитатьПисатьЧата extends Fragm
             ПолученыйIDДляЧата = getArguments().getLong("ПолученыйIDДляЧата", 0);
             ПолученыйФИОIDДляЧата = new String();
             ПолученыйФИОIDДляЧата = getArguments().getString("ПолученыйФИОIDДляЧата", "");
-            ПубличныйIDДляФрагмента = new GetPublicID().getPublicIDAllApp(getApplicationContext());
+            ПубличныйIDДляФрагмента = new GetPublicID().getPublicIDAllApp(getContext());
             ПолученыйУжеСуществующийUUIDИзПерепискиДляЧата = getArguments().getLong("ПолученыйUUIDУжеСуществующийПерепискиПользоватлейДляЧата", 0);
 
 
@@ -605,12 +601,8 @@ public class Fragment_Writer_Read_ЧитатьПисатьЧата extends Fragm
                     Thread.currentThread().getStackTrace()[2].getMethodName(), Thread.currentThread().getStackTrace()[2].getLineNumber());
         }
     }
-    protected Integer МетодСозданииНовогоСообщениявЧате() throws InterruptedException, ExecutionException {
-
+    protected Integer МетодСозданииНовогоСообщениявЧате()   {
         Integer РезультатВставки_ОбоихОперацийТОлькоДляДочернейТаблицыИлиДЛяОбеихИДочернейИРолдительской = 0;
-        Long РезультатВставкиПервогоСообщения = 0l;
-        Long РезультатВставкиВторогоСообщения = 0l;
-
         try {
             if (ПолученыйУжеСуществующийUUIDИзПерепискиДляЧата == 0) {
 
@@ -618,35 +610,9 @@ public class Fragment_Writer_Read_ЧитатьПисатьЧата extends Fragm
                         = new SubClass_RetryGEtRowInChatsКлассПроверемЕщеРАзПоявилосЛИПуббличныйUUIDМеждуУчасникамиЧата()
                         .МетодПовторноПроверетНеПовилосьЛиМеждеУчаникамиперепискиПубличныйUUID(getContext(),
                                 ПолученыйIDДляЧата,
-                                ПубличныйIDДляФрагмента
-                                , Class_Engine_SQLГдеНаходитьсяМенеджерПотоков.МенеджерПотоков,
-                                sqLiteDatabase);
+                                ПубличныйIDДляФрагмента);
             }
 
-  /*          if (ПолученыйУжеСуществующийUUIDИзПерепискиДляЧата > 0) {
-                Long РезультатВставки_ТолькоДочернуюТаблицуПотомуЧтоМеждуПользователямиУжеЕстьПереписка =
-                        МетодСозданиеНовогоСообщениявТаблицы_DATA_CHATS_КогдаМеждуУчастникамиУжеБылаПереписка(
-                                ПубличныйIDДляФрагмента, ПолученыйУжеСуществующийUUIDИзПерепискиДляЧата);
-                if (РезультатВставки_ТолькоДочернуюТаблицуПотомуЧтоМеждуПользователямиУжеЕстьПереписка > 0) {
-                    РезультатВставки_ОбоихОперацийТОлькоДляДочернейТаблицыИлиДЛяОбеихИДочернейИРолдительской++;
-                    editTextТелоНаписаногоСообщенияДругимСотрудникам.setText("");
-                }
-            } else {
-                Long НовыйUUIDДляОбеихТаблицЧАТиДАТАЧАТдляПоляPARENT_UUID =
-                        (Long) new Class_Generation_UUIDBack(getContext()).МетодГенерацииUUID(getContext());
-                Long МетодОперацииВставкиТолькоРодительскуюТаблицу_ЧАТ_КогдаУжесуществуетПерепискаМеждуПользователями =
-                        МетодЗаписиНовогоСообщенияТольковТаблицу_CHAT_КогдаЕщеМеждуПользователямиНетПереписки(
-                                ПубличныйIDДляФрагмента, НовыйUUIDДляОбеихТаблицЧАТиДАТАЧАТдляПоляPARENT_UUID);
-                if (МетодОперацииВставкиТолькоРодительскуюТаблицу_ЧАТ_КогдаУжесуществуетПерепискаМеждуПользователями > 0) {
-                    Long РезультатВставки_ТолькоДочернуюТаблицуПотомуЧтоМеждуПользователямиУжеЕстьПереписка =
-                            МетодСозданиеНовогоСообщениявТаблицы_DATA_CHATS_КогдаМеждуУчастникамиУжеБылаПереписка(
-                                    ПубличныйIDДляФрагмента, НовыйUUIDДляОбеихТаблицЧАТиДАТАЧАТдляПоляPARENT_UUID);
-                    if (РезультатВставки_ТолькоДочернуюТаблицуПотомуЧтоМеждуПользователямиУжеЕстьПереписка > 0) {
-                        РезультатВставки_ОбоихОперацийТОлькоДляДочернейТаблицыИлиДЛяОбеихИДочернейИРолдительской++;
-                        editTextТелоНаписаногоСообщенияДругимСотрудникам.setText("");
-                    }
-                }
-            }*/
 
         } catch (Exception e) {
             e.printStackTrace();

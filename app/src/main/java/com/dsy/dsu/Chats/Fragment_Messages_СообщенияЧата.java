@@ -6,7 +6,6 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.database.DataSetObserver;
 import android.database.sqlite.SQLiteCursor;
-import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
@@ -34,9 +33,7 @@ import androidx.lifecycle.Observer;
 import androidx.work.WorkInfo;
 import androidx.work.WorkManager;
 
-import com.dsy.dsu.BusinessLogicAll.Class_GRUD_SQL_Operations;
 import com.dsy.dsu.BusinessLogicAll.GetPublicID.GetPublicID;
-import com.dsy.dsu.BusinessLogicAll.GetPublicID.HiltInterfacesPublicID;
 import com.dsy.dsu.CnangeServers.BinessLogicPublicContent;
 import com.dsy.dsu.Errors.WriteErrorForAll.RecordNewErros;
 import com.dsy.dsu.BusinessLogicAll.SubClassGET_FIO;

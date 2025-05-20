@@ -44,7 +44,7 @@ import com.dsy.dsu.BusinessLogicAll.GetPublicID.GetPublicID;
 import com.dsy.dsu.BusinessLogicAll.DATE.Class_Generation_Data;
 import com.dsy.dsu.BusinessLogicAll.VersionCurentTable;
 import com.dsy.dsu.Errors.WriteErrorForAll.RecordNewErros;
-import com.dsy.dsu.BusinessLogicAll.GreatUuidGeneration;
+import com.dsy.dsu.BusinessLogicAll.GreatUuidGenerations.GreatUuidGeneration;
 import com.dsy.dsu.CnangeServers.BinessLogicPublicContent;
 import com.dsy.dsu.Services.Service_for_AdminissionMaterial;
 import com.dsy.dsu.R;

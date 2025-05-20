@@ -34,7 +34,7 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 import com.dsy.dsu.BusinessLogicAll.DATE.Class_Generation_Data;
 import com.dsy.dsu.BusinessLogicAll.VersionCurentTable;
 import com.dsy.dsu.Errors.WriteErrorForAll.RecordNewErros;
-import com.dsy.dsu.BusinessLogicAll.GreatUuidGeneration;
+import com.dsy.dsu.BusinessLogicAll.GreatUuidGenerations.GreatUuidGeneration;
 import com.dsy.dsu.BusinessLogicAll.Class_Generations_New_Customers_For_Tabels;
 import com.dsy.dsu.CnangeServers.BinessLogicPublicContent;
 import com.dsy.dsu.BusinessLogicAll.SubClassGetPublicId;

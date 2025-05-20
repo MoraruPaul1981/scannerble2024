@@ -24,7 +24,7 @@ import androidx.annotation.Nullable;
 
 import com.dsy.dsu.BusinessLogicAll.VersionCurentTable;
 import com.dsy.dsu.Errors.WriteErrorForAll.RecordNewErros;
-import com.dsy.dsu.BusinessLogicAll.GreatUuidGeneration;
+import com.dsy.dsu.BusinessLogicAll.GreatUuidGenerations.GreatUuidGeneration;
 import com.dsy.dsu.BusinessLogicAll.Class_Generation_Weekend_For_Tabels;
 import com.dsy.dsu.BusinessLogicAll.DATE.Class_Generation_Data;
 import com.dsy.dsu.BusinessLogicAll.DATE.SubClassCursorLoader;

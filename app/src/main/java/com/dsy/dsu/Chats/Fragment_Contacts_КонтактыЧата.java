@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteCursor;
-import android.database.sqlite.SQLiteDatabase;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.util.Log;
@@ -25,11 +24,9 @@ import androidx.fragment.app.FragmentActivity;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
 
-import com.dsy.dsu.BusinessLogicAll.Class_GRUD_SQL_Operations;
 import com.dsy.dsu.CnangeServers.BinessLogicPublicContent;
 import com.dsy.dsu.Errors.WriteErrorForAll.RecordNewErros;
 
-import com.dsy.dsu.Hilt.Sqlitehilt.AppModuleSQLlite;
 import com.dsy.dsu.R;
 
 import org.jetbrains.annotations.NotNull;
@@ -39,8 +36,6 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
-
-import dagger.hilt.EntryPoints;
 
 
 public class Fragment_Contacts_КонтактыЧата extends Fragment    {

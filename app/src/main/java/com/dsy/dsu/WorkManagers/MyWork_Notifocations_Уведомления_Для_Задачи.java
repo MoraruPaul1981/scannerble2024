@@ -13,7 +13,6 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
 import android.database.sqlite.SQLiteCursor;
-import android.database.sqlite.SQLiteDatabase;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.media.RingtoneManager;
@@ -33,7 +32,6 @@ import androidx.work.Worker;
 import androidx.work.WorkerParameters;
 
 
-import com.dsy.dsu.BusinessLogicAll.Class_GRUD_SQL_Operations;
 import com.dsy.dsu.BusinessLogicAll.VersionCurentTable;
 import com.dsy.dsu.Errors.WriteErrorForAll.RecordNewErros;
 import com.dsy.dsu.CnangeServers.PUBLIC_CONTENT;
