@@ -24,6 +24,7 @@ import com.dsy.dsu.CnangeServers.BinessLogicPublicContent;
 import com.dsy.dsu.Errors.WriteErrorForAll.RecordNewErros;
 import com.dsy.dsu.BusinessLogicAll.GreatUuidGenerations.GreatUuidGeneration;
 import com.google.android.material.button.MaterialButton;
+import com.sous.backasync.launch.ModuleQuety;
 
 import java.io.FileDescriptor;
 import java.io.PrintWriter;
@@ -57,7 +58,7 @@ public class Service_Для_ЧатаСменаСтатусаПрочитаноИ
 
 
     private CoreBinessLogics modelДляФрагментаДляОперацииЗаписиНовгоСтатусаПрочитанного ;
-    private BinessLogicPublicContent Class_Engine_SQLГдеНаходитьсяМенеджерПотоков ;
+
     private RecordNewErros recordNewErros;
 
 
@@ -218,9 +219,7 @@ public class Service_Для_ЧатаСменаСтатусаПрочитаноИ
         String ТаблицаОбработкиВнутриЧтатаПриУвеличсенииВерсииДаннвъКоглаПрочинаноСообещния = "data_chat";
 
         try {
-           class_grud_sql_operations = new Class_GRUD_SQL_Operations(context);
          modelДляФрагментаДляОперацииЗаписиНовгоСтатусаПрочитанного = new CoreBinessLogics(context);
-             Class_Engine_SQLГдеНаходитьсяМенеджерПотоков = new BinessLogicPublicContent(context);
             recordNewErros =new RecordNewErros(context);
 
             // TODO: 15.07.2022
@@ -239,9 +238,7 @@ public class Service_Для_ЧатаСменаСтатусаПрочитаноИ
                     ЛокальногоОбновлениеДанныхЧерезКонтейнерУниверсальная(ТаблицаОбработкиВнутриЧтатаПриУвеличсенииВерсииДаннвъКоглаПрочинаноСообещния,
                             contentValuesОбновленниВТАблицеКакПрочитанныйМеняемСтатусЗаписисВчатеПостлеПросмотра,
                             ПолученныйUUIDТекущейСтрочкиКоторуюПрочитали, СамоЗначенияИндифкатора);
-            // TODO: 18.06.2022 повышаем верисю после успегной смены статус
-            Log.d(this.getClass().getName(), "  РезультатОбновленияСтатусЧатаКакПрочитанный"
-                    + РезультатОбновленияСтатусЧатаКакПрочитанный+ " РезультатОбновленияСтатусЧатаКакПрочитанный " +РезультатОбновленияСтатусЧатаКакПрочитанный);
+
         } catch (Exception e) {
             e.printStackTrace();
             Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
@@ -250,9 +247,6 @@ public class Service_Для_ЧатаСменаСтатусаПрочитаноИ
                     this.getClass().getName(),
                     Thread.currentThread().getStackTrace()[2].getMethodName(), Thread.currentThread().getStackTrace()[2].getLineNumber());
         }
-        if (РезультатОбновленияСтатусЧатаКакПрочитанный > 0) {
-            РезультатОбновленияСтатусЧатаКакПрочитанный = Integer.parseInt(String.valueOf(РезультатУвеличинаяВерсияДАныхЧата));
-        }
         return РезультатОбновленияСтатусЧатаКакПрочитанный;   // TODO: 05.07.2021 вставка новго сообщения в деве таблоицы Code_For_Chats_КодДля_Чата and DATA_Chat
     }
 
@@ -260,42 +254,46 @@ public class Service_Для_ЧатаСменаСтатусаПрочитаноИ
     // TODO: 15.07.2022  ПОЛУЧЕНИЕ ДАННЫХ ДЛЯ ЧАТА
 
 
-  public   SQLiteCursor МетодГенерацияКурсораДляЧата(@NonNull Long ПолученыйУжеСуществующийUUIDИзПерепискиДляЧата,@NonNull Context context) throws ExecutionException, InterruptedException {
-        SQLiteCursor          КурсорДанныеДлязаписиичтнияЧата=null;
+  public    Cursor МетодГенерацияКурсораДляЧата(@NonNull Long ПолученыйУжеСуществующийUUIDИзПерепискиДляЧата,
+                                                     @NonNull Context context) {
+         Cursor          КурсорДанныеДлязаписиичтнияЧата=null;
         try {
             this.context=context;
-            class_grud_sql_operations = new Class_GRUD_SQL_Operations(context);
+
             modelДляФрагментаДляОперацииЗаписиНовгоСтатусаПрочитанного = new CoreBinessLogics(context);
-            Class_Engine_SQLГдеНаходитьсяМенеджерПотоков = new BinessLogicPublicContent(context);
             recordNewErros =new RecordNewErros(context);
 
             Log.i(context.getClass().getName(),
                     " ПолученыйУжеСуществующийUUIDИзПерепискиДляЧата    " +ПолученыйУжеСуществующийUUIDИзПерепискиДляЧата);//todo super.onBind(intent)
 
             if (ПолученыйУжеСуществующийUUIDИзПерепискиДляЧата > 0) {
-                class_grud_sql_operations.
-                        concurrentHashMapНабор.put("ПодЗапросНомер1",
+                // TODO: 15.05.202
+                String Текущаятаблицы="data_chat";
+                ModuleQuety moduleQuety=new ModuleQuety(getApplicationContext());
+                КурсорДанныеДлязаписиичтнияЧата= moduleQuety.getModuleQuery(Текущаятаблицы," SELECT   * FROM '"+Текущаятаблицы+"'  AS D "+
+                        " WHERE  chat_uuid  ='" + ПолученыйУжеСуществующийUUIDИзПерепискиДляЧата +"'"+
+                        "                                        \"  AND   D.message IS NOT NULL    \" +\n" +
+                        "                                        \" ORDER BY   D.date_update     ASC, D.id   ASC " ,null);
 
-                                " SELECT   * FROM data_chat  WHERE  chat_uuid  =" + ПолученыйУжеСуществующийUUIDИзПерепискиДляЧата +
-                                        "  AND   message IS NOT NULL    " +
-                                        " ORDER BY   date_update     ASC, id   ASC  ");// current_table    ///   date_update current_table     ASC
-                   /* " SELECT   * FROM data_chat  WHERE  chat_uuid  =" + ПолученыйУжеСуществующийUUIDИзПерепискиДляЧата +
-                            "  AND   message IS NOT NULL    " +
-                            " ORDER BY    date_update     ASC   ");// current_table    ///   date_update*/
-                // TODO: 19.06.2022  ГЛАВНЫЙ КУРСОР ЧАТ
+                Log.d(this.getClass().getName(), "\n"
+                        + " время: " + new Date() + "\n+" +
+                        " Класс в процессе... " + this.getClass().getName() + "\n" +
+                        " метод в процессе... " + Thread.currentThread().getStackTrace()[2].getMethodName()
+                        + " КурсорДанныеДлязаписиичтнияЧата " +КурсорДанныеДлязаписиичтнияЧата);
 
-                КурсорДанныеДлязаписиичтнияЧата = (SQLiteCursor) class_grud_sql_operations.
-                        new GetData(context).getdata(class_grud_sql_operations.
-                                concurrentHashMapНабор,
-                        Class_Engine_SQLГдеНаходитьсяМенеджерПотоков.МенеджерПотоков
-                        ,    sqLiteDatabase);
+
+
+
                 if (КурсорДанныеДлязаписиичтнияЧата != null) {
                     if (КурсорДанныеДлязаписиичтнияЧата.getCount() > 0) {
                         КурсорДанныеДлязаписиичтнияЧата.moveToFirst();
                     }
-                    Log.i(context.getClass().getName(),
-                            " void МетодПолучениеДанныхдляФрагментаЧитатьиПисатьЧат() throws ExecutionException, InterruptedException {" +
-                                    "    КурсорДанныеДлязаписиичтнияЧата    " +КурсорДанныеДлязаписиичтнияЧата);//todo super.onBind(intent)
+
+                    Log.d(this.getClass().getName(), "\n"
+                            + " время: " + new Date() + "\n+" +
+                            " Класс в процессе... " + this.getClass().getName() + "\n" +
+                            " метод в процессе... " + Thread.currentThread().getStackTrace()[2].getMethodName()
+                            + " КурсорДанныеДлязаписиичтнияЧата " +КурсорДанныеДлязаписиичтнияЧата);
                 }
             }
         } catch (Exception e) {
@@ -310,193 +308,41 @@ public class Service_Для_ЧатаСменаСтатусаПрочитаноИ
     }
 
 
-// TODO: 15.07.2022 метод создание нового сообщения только в одну таблицу
-private Long МетодЗаписиНовогоСообщенияТольковТаблицу_CHAT_КогдаЕщеМеждуПользователямиНетПереписки(
-        @NonNull Integer ПубличныйIDДляФрагмента,
-        @NonNull Long НовыйUUIDДляОбеихТаблицЧАТиДАТАЧАТдляПоляPARENT_UUID
-,@NonNull Context context
-,@NonNull Integer IDСкемПереписываюсь)
-        throws ExecutionException,
-        InterruptedException,
-        TimeoutException,
-        NoSuchPaddingException,
-        NoSuchAlgorithmException,
-        InvalidKeyException {
-    final Long[] РезультатВставки_НовойЗаписиРодительскуюТаблицыЧАТ = {0l};
-    final    String ПерваяТаблицыОбработкиТаблицаЧат = "chats";
-
-
-    try {
-        this.context=context;
-        class_grud_sql_operations = new Class_GRUD_SQL_Operations(context);
-        modelДляФрагментаДляОперацииЗаписиНовгоСтатусаПрочитанного = new CoreBinessLogics(context);
-        Class_Engine_SQLГдеНаходитьсяМенеджерПотоков = new BinessLogicPublicContent(context);
-        recordNewErros =new RecordNewErros(context);
-
-
-        LinkedBlockingQueue<Integer> linkedBlockingQueueДляЗаписиСразуДвестрокиЧатОДляКого = new LinkedBlockingQueue();
-    linkedBlockingQueueДляЗаписиСразуДвестрокиЧатОДляКого.offer(ПубличныйIDДляФрагмента);  //todo Я ---
-    linkedBlockingQueueДляЗаписиСразуДвестрокиЧатОДляКого.offer(Integer.parseInt(String.valueOf(IDСкемПереписываюсь)));//TODO КОМУ ПИШЕМ
-
-
-
-    // TODO: 15.07.2022 сама операция вставки
-    linkedBlockingQueueДляЗаписиСразуДвестрокиЧатОДляКого.forEach((ТекущееЗначениеДляЗаписиВЦиклеВДваСтлбика) -> {
-
-   try{
-
-            ContentValues contentValuesЗаписьНовогоСообщения_ТаблицаЧат = new ContentValues();
-            String СгенерированованныйДатаДляФрагмента = new Class_Generation_Data(context).ГлавнаяДатаИВремяОперацийСБазойДанных();
-            contentValuesЗаписьНовогоСообщения_ТаблицаЧат.put("date_update", СгенерированованныйДатаДляФрагмента);
-            contentValuesЗаписьНовогоСообщения_ТаблицаЧат.put("user_update", ПубличныйIDДляФрагмента);
-            contentValuesЗаписьНовогоСообщения_ТаблицаЧат.put("id_user", Integer.parseInt(ТекущееЗначениеДляЗаписиВЦиклеВДваСтлбика.toString()));////бышвий user_for     ПолученыйIDДляЧата
-           // contentValuesЗаписьНовогоСообщения_ТаблицаЧат.putNull("_id");////бышвий user_for
-
-       Long   ЛокльныйUUIDТОлькоДЛЯОднойТаблицыChats =
-                    (Long) new GreatUuidGeneration(context).greatUuidGeneration();
-            ЛокльныйUUIDТОлькоДЛЯОднойТаблицыChats = ЛокльныйUUIDТОлькоДЛЯОднойТаблицыChats + new Random().nextInt(10);
-
-            contentValuesЗаписьНовогоСообщения_ТаблицаЧат.put("uuid", ЛокльныйUUIDТОлькоДЛЯОднойТаблицыChats);// TODO Локальный Сгенерированый UUID
-
-            contentValuesЗаписьНовогоСообщения_ТаблицаЧат.put("uuid_parent", НовыйUUIDДляОбеихТаблицЧАТиДАТАЧАТдляПоляPARENT_UUID);// TODO Общий UUID
-
-       // TODO: 18.03.2023  получаем ВЕСИЮ ДАННЫХ
-       Long РезультатУвеличинаяВерсияДАныхЧата=
-               new VersionCurentTable(context).upVersionCurentTable(    ПерваяТаблицыОбработкиТаблицаЧат);
-       Log.d(this.getClass().getName(), " РезультатУвеличинаяВерсияДАныхЧата  " + РезультатУвеличинаяВерсияДАныхЧата);
-
-
-       // TODO: 18.11.2022
-            contentValuesЗаписьНовогоСообщения_ТаблицаЧат.put("current_table", РезультатУвеличинаяВерсияДАныхЧата);
-            РезультатВставки_НовойЗаписиРодительскуюТаблицыЧАТ[0] = new CoreBinessLogics(context)
-                    .ВставкаДанныхЧерезКонтейнерТолькоПриСозданииНСообщенияДЛЯЧата(ПерваяТаблицыОбработкиТаблицаЧат,
-                            contentValuesЗаписьНовогоСообщения_ТаблицаЧат, ПерваяТаблицыОбработкиТаблицаЧат, "",
-                            true);
-                contentValuesЗаписьНовогоСообщения_ТаблицаЧат.clear();
-            Object вЫКИДИВАЕМоТРАБТАННЫЙэЛЕМЕНТ = linkedBlockingQueueДляЗаписиСразуДвестрокиЧатОДляКого.take().longValue();
-
-    } catch (Exception e) {
-            e.printStackTrace();
-            Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
-                    " Линия  :" + Thread.currentThread().getStackTrace()[2].getLineNumber());
-            recordNewErros.recordnewerror(e.toString(),
-                    this.getClass().getName(),
-                    Thread.currentThread().getStackTrace()[2].getMethodName(), Thread.currentThread().getStackTrace()[2].getLineNumber());
-        }
-    });
-
-        Log.w(context.getClass().getName(),  " РезультатВставки_НовойЗаписиРодительскуюТаблицыЧАТ[0] " +РезультатВставки_НовойЗаписиРодительскуюТаблицыЧАТ[0]);
-
-    } catch (Exception e) {
-        e.printStackTrace();
-        Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
-                " Линия  :" + Thread.currentThread().getStackTrace()[2].getLineNumber());
-        recordNewErros.recordnewerror(e.toString(),
-                this.getClass().getName(),
-                Thread.currentThread().getStackTrace()[2].getMethodName(), Thread.currentThread().getStackTrace()[2].getLineNumber());
-    }
-
-    return РезультатВставки_НовойЗаписиРодительскуюТаблицыЧАТ[0];
-
-    // TODO: 15.07.2022 второй метод создания новго сообщения только для Таблицы DATA_CHAT когда между участниками уже есть переписка  
-
-}
-
-
-
-    private Long МетодСозданиеНовогоСообщениявТаблицы_DATA_CHATS_КогдаМеждуУчастникамиУжеБылаПереписка(
-            @NonNull Integer ПубличныйIDДляФрагмента,
-            @NonNull Long НовыйUUIDДляОбеихТаблицЧАТиДАТАЧАТдляПоляPARENT_UUID
-    , @NonNull String СамоСообщенияНовоеДляЧата
-    ,@NonNull Context context) {
-
-        Long РезультатВставкиНовогоСообщениявТАблицы_Data_CHATS= 0l;
-
-        try {
-            this.context=context;
-            class_grud_sql_operations = new Class_GRUD_SQL_Operations(context);
-            modelДляФрагментаДляОперацииЗаписиНовгоСтатусаПрочитанного = new CoreBinessLogics(context);
-            Class_Engine_SQLГдеНаходитьсяМенеджерПотоков = new BinessLogicPublicContent(context);
-            recordNewErros =new RecordNewErros(context);
-
-            final String ТаблицаВторойОбработкиДляТаблицыДата_Табеля = "data_chat";
-
-            Log.d(this.getClass().getName(), "  СамоСообщенияНовоеДляЧата "
-                    + СамоСообщенияНовоеДляЧата);
-            if (НовыйUUIDДляОбеихТаблицЧАТиДАТАЧАТдляПоляPARENT_UUID > 0) {
-
-                class_grud_sql_operations = new Class_GRUD_SQL_Operations(context);
-                ContentValues contentValuesЗаписьНовогоСообщения_ТаблицыDATA_CHAT = new ContentValues();
-                String СгенерированованныйДатаДляДаннойОперации = new Class_Generation_Data(context).ГлавнаяДатаИВремяОперацийСБазойДанных();
-                contentValuesЗаписьНовогоСообщения_ТаблицыDATA_CHAT.put("date_update", СгенерированованныйДатаДляДаннойОперации);
-                contentValuesЗаписьНовогоСообщения_ТаблицыDATA_CHAT.put("user_update", ПубличныйIDДляФрагмента);
-                contentValuesЗаписьНовогоСообщения_ТаблицыDATA_CHAT.put("chat_uuid", НовыйUUIDДляОбеихТаблицЧАТиДАТАЧАТдляПоляPARENT_UUID);
-                Long ЛокальныйUUIDДляТаблицыДатаЧатВтораяТаблица = (Long) new GreatUuidGeneration(context).greatUuidGeneration();
-                contentValuesЗаписьНовогоСообщения_ТаблицыDATA_CHAT.put("uuid", ЛокальныйUUIDДляТаблицыДатаЧатВтораяТаблица);
-
-                // TODO: 18.03.2023  получаем ВЕСИЮ ДАННЫХ
-                Long РезультатУвеличинаяВерсияДАныхДатЧата=
-                        new VersionCurentTable(context).upVersionCurentTable(    ТаблицаВторойОбработкиДляТаблицыДата_Табеля);
-                Log.d(this.getClass().getName(), " РезультатУвеличинаяВерсияДАныхДатЧата  " + РезультатУвеличинаяВерсияДАныхДатЧата);
-
-                // TODO: 18.11.2022
-                contentValuesЗаписьНовогоСообщения_ТаблицыDATA_CHAT.put("current_table", РезультатУвеличинаяВерсияДАныхДатЧата);
-                if (СамоСообщенияНовоеДляЧата.length() > 0) {
-                    contentValuesЗаписьНовогоСообщения_ТаблицыDATA_CHAT.put("message", СамоСообщенияНовоеДляЧата.trim());
-                    РезультатВставкиНовогоСообщениявТАблицы_Data_CHATS = new CoreBinessLogics(context).
-                            ВставкаДанныхЧерезКонтейнерТолькоПриСозданииНСообщенияДЛЯЧата(ТаблицаВторойОбработкиДляТаблицыДата_Табеля,
-                                    contentValuesЗаписьНовогоСообщения_ТаблицыDATA_CHAT, ТаблицаВторойОбработкиДляТаблицыДата_Табеля, "",
-                                    true);
-                    Log.d(this.getClass().getName(), "  РезультатВставки_ТолькоВДочернуюТаблицуТакаКакВСтрашойТАблицуУжеЕстьПереписка "
-                            + РезультатВставкиНовогоСообщениявТАблицы_Data_CHATS);
-
-                    contentValuesЗаписьНовогоСообщения_ТаблицыDATA_CHAT.clear();
-                }
-            }
-            Log.w(context.getClass().getName(),  " РезультатВставкиНовогоСообщениявТАблицы_Data_CHATS " +РезультатВставкиНовогоСообщениявТАблицы_Data_CHATS);
-        } catch (Exception e) {
-            e.printStackTrace();
-            Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
-                    " Линия  :" + Thread.currentThread().getStackTrace()[2].getLineNumber());
-            recordNewErros.recordnewerror(e.toString(),
-                    this.getClass().getName(),
-                    Thread.currentThread().getStackTrace()[2].getMethodName(), Thread.currentThread().getStackTrace()[2].getLineNumber());
-        }
-        return РезультатВставкиНовогоСообщениявТАблицы_Data_CHATS;
-    }
-
 
 
 
 
     // TODO: 15.07.2022  метод который  ВЫЧИСЛЯЕТ КЕМ БЫЛ НАПИСАНОЕ ТЕКУЩЕЕ СООБЩЕНИЕ
-
     String МетодКемБЫлоНАписаноСообщение(@NonNull  Integer ПолученноеФИОКемБылоНаписаноСообщение,@NonNull Context context) {
         String КтопанисалСообщениеФИО = new String();
 
         try {
             this.context=context;
-            class_grud_sql_operations = new Class_GRUD_SQL_Operations(context);
             modelДляФрагментаДляОперацииЗаписиНовгоСтатусаПрочитанного = new CoreBinessLogics(context);
-            Class_Engine_SQLГдеНаходитьсяМенеджерПотоков = new BinessLogicPublicContent(context);
             recordNewErros =new RecordNewErros(context);
-
-
-            // TODO: 15.07.2022
-            class_grud_sql_operations.concurrentHashMapНабор.put("НазваниеОбрабоатываемойТаблицы", "fio");
-            class_grud_sql_operations.concurrentHashMapНабор.put("СтолбцыОбработки", "name");
-            class_grud_sql_operations.concurrentHashMapНабор.put("ФорматПосика", "user_update = ? ");
-            class_grud_sql_operations.concurrentHashMapНабор.put("УсловиеПоиска1", ПолученноеФИОКемБылоНаписаноСообщение);
-            class_grud_sql_operations.concurrentHashMapНабор.put("УсловиеЛимита", "1");
-
             // TODO: 15.07.2022 ПОЛУЧАЕМ ФИО
-            SQLiteCursor   Курсор_соЗначениемФИО = (SQLiteCursor) class_grud_sql_operations.
-                    new GetData(context).getdata(class_grud_sql_operations.concurrentHashMapНабор,
-                    Class_Engine_SQLГдеНаходитьсяМенеджерПотоков.МенеджерПотоков,   sqLiteDatabase);
+                    String Текущаятаблицы="fio";
+            ModuleQuety moduleQuety=new ModuleQuety(getApplicationContext());
+            Cursor   Курсор_соЗначениемФИО = moduleQuety.getModuleQuery(Текущаятаблицы," SELECT   D.name FROM '"+Текущаятаблицы+"'  AS D "+
+                    " WHERE   D.user_update = '"+ПолученноеФИОКемБылоНаписаноСообщение+"'" ,null);
+
+            Log.d(this.getClass().getName(), "\n"
+                    + " время: " + new Date() + "\n+" +
+                    " Класс в процессе... " + this.getClass().getName() + "\n" +
+                    " метод в процессе... " + Thread.currentThread().getStackTrace()[2].getMethodName()
+                    + " Курсор_соЗначениемФИО " +Курсор_соЗначениемФИО);
+
+
             if (Курсор_соЗначениемФИО.getCount() > 0) {
                 Курсор_соЗначениемФИО.moveToFirst();
                 КтопанисалСообщениеФИО = Курсор_соЗначениемФИО.getString(0).trim();
             }
+
+            Log.d(this.getClass().getName(), "\n"
+                    + " время: " + new Date() + "\n+" +
+                    " Класс в процессе... " + this.getClass().getName() + "\n" +
+                    " метод в процессе... " + Thread.currentThread().getStackTrace()[2].getMethodName()
+                    + " КтопанисалСообщениеФИО " +КтопанисалСообщениеФИО);
 
         } catch (Exception e) {
             e.printStackTrace();

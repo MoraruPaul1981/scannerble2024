@@ -20,7 +20,7 @@ buildscript {
 }
 
 ext {
-    myValue = '.../certificates//dsu1_keys.jks'
+    myValue = '...\\certificates\\dsu1_keys.jks'
 }
 
 allprojects {

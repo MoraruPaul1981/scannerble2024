@@ -40,10 +40,9 @@ import com.dsy.dsu.BusinessLogicAll.CoreBinessLogic.CoreBinessLogics;
 import com.dsy.dsu.BusinessLogicAll.GetPublicID.GetPublicID;
 import com.dsy.dsu.Errors.WriteErrorForAll.RecordNewErros;
 
-import com.dsy.dsu.BusinessLogicAll.SubClass_RetryGEtRowInChatsКлассПроверемЕщеРАзПоявилосЛИПуббличныйUUIDМеждуУчасникамиЧата;
+import com.dsy.dsu.BusinessLogicAll.SubClassDiffentChats;
 
 import com.dsy.dsu.CnangeServers.BinessLogicPublicContent;
-import com.dsy.dsu.Hilt.Sqlitehilt.AppModuleSQLlite;
 import com.dsy.dsu.Services.Service_Для_ЧатаСменаСтатусаПрочитаноИлиНет;
 import com.dsy.dsu.R;
 import com.google.android.material.card.MaterialCardView;
@@ -61,8 +60,6 @@ import java.util.concurrent.ExecutionException;
 import java.util.concurrent.LinkedBlockingQueue;
 
 import javax.crypto.NoSuchPaddingException;
-
-import dagger.hilt.EntryPoints;
 
 
 public class Fragment_Writer_Read_ЧитатьПисатьЧата extends Fragment {
@@ -607,7 +604,7 @@ public class Fragment_Writer_Read_ЧитатьПисатьЧата extends Fragm
             if (ПолученыйУжеСуществующийUUIDИзПерепискиДляЧата == 0) {
 
                 ПолученыйУжеСуществующийUUIDИзПерепискиДляЧата
-                        = new SubClass_RetryGEtRowInChatsКлассПроверемЕщеРАзПоявилосЛИПуббличныйUUIDМеждуУчасникамиЧата()
+                        = new SubClassDiffentChats()
                         .МетодПовторноПроверетНеПовилосьЛиМеждеУчаникамиперепискиПубличныйUUID(getContext(),
                                 ПолученыйIDДляЧата,
                                 ПубличныйIDДляФрагмента);
