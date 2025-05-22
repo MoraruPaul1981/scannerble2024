@@ -5,7 +5,7 @@ import android.app.NotificationManager;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.Configuration;
-import android.database.sqlite.SQLiteCursor;
+import android.database.Cursor;
 import android.os.Binder;
 import android.os.Build;
 import android.os.Bundle;
@@ -25,6 +25,7 @@ import com.dsy.dsu.Errors.WriteErrorForAll.RecordNewErros;
 
 import com.dsy.dsu.BusinessLogicAll.SubClass_ДляСменыСтатусаНаЗадачиВыполненыйОтказОтмененный;
 import com.dsy.dsu.Tasks.MainActivity_Tasks;
+import com.sous.backasync.launch.ModuleQuety;
 
 import java.io.FileDescriptor;
 import java.io.PrintWriter;
@@ -35,7 +36,7 @@ import dagger.hilt.android.AndroidEntryPoint;
 
 
 @AndroidEntryPoint
-public class Service_For_Task_Для_Задания_СменаСатуса extends IntentService {////Service
+public class ServiceForTasks extends IntentService {////Service
 
     ////////
     private String PROCESS_ID;
@@ -55,15 +56,15 @@ public class Service_For_Task_Для_Задания_СменаСатуса exten
     // TODO: 24.03.2022
     private String ИмяСлужбыСинхронизацииОдноразовая = "WorkManager Synchronizasiy_Data Disposable";
 
-    private Service_For_Task_Для_Задания_СменаСатуса.LocalBinderДляСлужбыСменаСтатуса binder = new Service_For_Task_Для_Задания_СменаСатуса.LocalBinderДляСлужбыСменаСтатуса();
+    private ServiceForTasks.LocalBinderДляСлужбыСменаСтатуса binder = new ServiceForTasks.LocalBinderДляСлужбыСменаСтатуса();
     private Context context;
 
 
 
 
-    public Service_For_Task_Для_Задания_СменаСатуса() {
+    public ServiceForTasks() {
         //TODO
-        super("Service_For_Task_Для_Задания_СменаСатуса");
+        super("ServiceForTasks");
     }
 
 
@@ -75,7 +76,7 @@ public class Service_For_Task_Для_Задания_СменаСатуса exten
         Log.d(context.getClass().getName(), "\n"
                 + " время: " + new Date() + "\n+" +
                 " Класс в процессе... " + this.getClass().getName() + "\n" +
-                " метод в процессе... " + Thread.currentThread().getStackTrace()[2].getMethodName() + " sqLiteDatabase " +sqLiteDatabase);
+                " метод в процессе... " + Thread.currentThread().getStackTrace()[2].getMethodName() );
         Log.d(context.getClass().getName(), "\n"
                 + " время: " + new Date()+"\n+" +
                 " Класс в процессе... " +  this.getClass().getName()+"\n"+
@@ -124,9 +125,9 @@ public class Service_For_Task_Для_Задания_СменаСатуса exten
      * runs in the same process as its clients, we don't need to deal with IPC.
      */
     public class LocalBinderДляСлужбыСменаСтатуса extends Binder {
-        public Service_For_Task_Для_Задания_СменаСатуса getService() {
+        public ServiceForTasks getService() {
             // Return this instance of LocalService so clients can call public methods
-            return Service_For_Task_Для_Задания_СменаСатуса.this;
+            return ServiceForTasks.this;
         }
     }
 
@@ -378,20 +379,18 @@ public class Service_For_Task_Для_Задания_СменаСатуса exten
 
        private void МетодЗапускаOneSignalandFirebaseПослеУсепшнойСменаСтутсаЗадачи(@NonNull Context context) {
             try{
-                Log.i(context.getClass().getName(), "SubClass_FindПоискIDОтКогоЗаданияДляКогоЗапускатFirebase"+new Date());
-                Class_GRUD_SQL_Operations      class_grud_sql_operations = new Class_GRUD_SQL_Operations(getApplicationContext());
-                Class_Engine_SQLГдеНаходитьсяМенеджерПотоков=new BinessLogicPublicContent(getApplicationContext());
-                 class_grud_sql_operations.
-                         concurrentHashMapНабор.put("ПодЗапросНомер1",
-                                " SELECT  user_update FROM view_tasks   WHERE uuid  =" + UUIDДляЗапускСогласованияПришедшегоЗАДАНИЕ + " ;" );// current_table    ///   date_update current_table     ASC
-                // TODO: 19.06.2022  ГЛАВНЫЙ КУРСОР ЧАТА
-                SQLiteCursor      КурсорДанныеДлязаписиичтнияЧата=null;
+                // TODO: 15.05.202
+                String Текущаятаблицы="view_tasks";
+                ModuleQuety moduleQuety=new ModuleQuety(getApplicationContext());
+                Cursor КурсорДанныеДлязаписиичтнияЧата= moduleQuety.getModuleQuery(Текущаятаблицы, " SELECT  * FROM "+Текущаятаблицы+"  AS D  " +
+                        "  WHERE D.uuid  ='" + UUIDДляЗапускСогласованияПришедшегоЗАДАНИЕ + "' ;\" " ,null);
 
-                КурсорДанныеДлязаписиичтнияЧата = (SQLiteCursor) class_grud_sql_operations.
-                        new GetData(getApplicationContext()).getdata(class_grud_sql_operations.
-                                concurrentHashMapНабор,
-                        Class_Engine_SQLГдеНаходитьсяМенеджерПотоков.МенеджерПотоков
-                        , sqLiteDatabase);
+                Log.d(this.getClass().getName(), "\n"
+                        + " время: " + new Date() + "\n+" +
+                        " Класс в процессе... " + this.getClass().getName() + "\n" +
+                        " метод в процессе... " + Thread.currentThread().getStackTrace()[2].getMethodName()
+                        + " КурсорДанныеДлязаписиичтнияЧата " +КурсорДанныеДлязаписиичтнияЧата);
+
                 if (КурсорДанныеДлязаписиичтнияЧата != null) {
                     if (КурсорДанныеДлязаписиичтнияЧата.getCount() > 0) {
                         КурсорДанныеДлязаписиичтнияЧата.moveToFirst();

@@ -46,9 +46,9 @@ import dagger.hilt.android.AndroidEntryPoint;
  * helper methods.
  */
 @AndroidEntryPoint
-public class Service_For_Remote_Async_Binary extends IntentService {
+public class ServiceForRemoteAsyncBinary extends IntentService {
     protected LocalBinderAsync binderBinderRemoteAsync = new LocalBinderAsync();
-    private Service_For_Public.LocalBinderОбщий localBinderОбщий;
+    private ServiceForPublic.LocalBinderОбщий localBinderОбщий;
     private      Integer PublicID =0;
     @Inject
     ObjectMapper getHiltJaksonObjectMapper;
@@ -71,7 +71,7 @@ public class Service_For_Remote_Async_Binary extends IntentService {
 
 
 
-    public Service_For_Remote_Async_Binary() {
+    public ServiceForRemoteAsyncBinary() {
         super("Service_For_Remote_Async");
     }
     @SuppressLint("SuspiciousIndentation")
@@ -120,11 +120,11 @@ public class Service_For_Remote_Async_Binary extends IntentService {
      * runs in the same process as its clients, we don't need to deal with IPC.
      */
    public class LocalBinderAsync extends Binder {
-        public Service_For_Remote_Async_Binary getService() {
+        public ServiceForRemoteAsyncBinary getService() {
             Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                     " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
                     " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n");
-            return Service_For_Remote_Async_Binary.this;
+            return ServiceForRemoteAsyncBinary.this;
         }
 
         @Override
@@ -329,7 +329,7 @@ try{
     private void МетодПослеСинхрониазцииУдалениеСтатусаУдаленный(@NonNull Context context) {
         try {
             Intent intentПослеСинхроницииРегламентаняРаботаУдалениеДанных=new Intent();
-            intentПослеСинхроницииРегламентаняРаботаУдалениеДанных.setClass(context, Service_For_Public.class);
+            intentПослеСинхроницииРегламентаняРаботаУдалениеДанных.setClass(context, ServiceForPublic.class);
             intentПослеСинхроницииРегламентаняРаботаУдалениеДанных.setAction("ЗапускУдалениеСтатусаУдаленияСтрок");
             // TODO: 25.03.2023 дополнительное удаление после синхрониазции статус Удаленныц
             if (localBinderОбщий!=null) {
@@ -353,14 +353,14 @@ try{
 
     public void МетодБиндинuCлужбыPublic(@NonNull Context context) {
         try {
-            Intent intentЗапускPublicService = new Intent(context, Service_For_Public.class);
+            Intent intentЗапускPublicService = new Intent(context, ServiceForPublic.class);
             intentЗапускPublicService.setAction("ЗапускУдалениеСтатусаУдаленияСтрок");
          ServiceConnection connectionPUBLIC;       connectionPUBLIC=     new ServiceConnection() {
                      @Override
                      public void onServiceConnected(ComponentName name, IBinder service) {
                          try {
                              if (service.isBinderAlive()) {
-                                 localBinderОбщий = (Service_For_Public.LocalBinderОбщий) service;
+                                 localBinderОбщий = (ServiceForPublic.LocalBinderОбщий) service;
                                  // TODO: 16.11.2022
                                  Log.d(context.getClass().getName(), "\n"
                                          + " время: " + new Date() + "\n+" +

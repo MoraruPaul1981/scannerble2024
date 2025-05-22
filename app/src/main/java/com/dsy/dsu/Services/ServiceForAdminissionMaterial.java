@@ -60,16 +60,16 @@ import io.reactivex.rxjava3.schedulers.Schedulers;
  */
 
 @AndroidEntryPoint
-public class Service_for_AdminissionMaterial extends IntentService {
+public class ServiceForAdminissionMaterial extends IntentService {
     public LocalBinderДляПолучениеМатериалов binder = new LocalBinderДляПолучениеМатериалов();
     private Context context;
     private String ПолученныйПоследнийМесяцДляСортировкиЕгоВСпиноре;
 
 
 
-    public Service_for_AdminissionMaterial() {
+    public ServiceForAdminissionMaterial() {
         super(
-                "Service_for_AdminissionMaterial");
+                "ServiceForAdminissionMaterial");
     }
 
 
@@ -290,9 +290,9 @@ public class Service_for_AdminissionMaterial extends IntentService {
             return super.unlinkToDeath(recipient, flags);
         }
 
-        public Service_for_AdminissionMaterial getService() {
+        public ServiceForAdminissionMaterial getService() {
             // Return this instance of LocalService so clients can call public methods
-            return Service_for_AdminissionMaterial.this;
+            return ServiceForAdminissionMaterial.this;
         }
 
         public void linkToDeath(DeathRecipient deathRecipient) {

@@ -23,7 +23,7 @@ import java.util.HashMap;
 import java.util.concurrent.ExecutionException;
 
 
-public class Service_Notifocations_Для_Чата extends Service {////Service
+public class ServiceForNotifocations extends Service {////Service
 
     //TODO
     String ИмяСлужбыУведомленияДляЧата;
@@ -48,7 +48,7 @@ public class Service_Notifocations_Для_Чата extends Service {////Service
     @Override
     public void onCreate() {
         super.onCreate();
-        Log.d(getApplicationContext().getClass().getName(), " onCreate СЛУЖБА Service_Notifocations_Для_Чата  "
+        Log.d(getApplicationContext().getClass().getName(), " onCreate СЛУЖБА ServiceForNotifocations  "
                 + " время: "
                 + new Date());
 
@@ -60,7 +60,7 @@ public class Service_Notifocations_Для_Чата extends Service {////Service
 
         try {
 
-            Log.d(getApplicationContext().getClass().getName(), " onStartCommand СЛУЖБА Service_Notifocations_Для_Чата  "
+            Log.d(getApplicationContext().getClass().getName(), " onStartCommand СЛУЖБА ServiceForNotifocations  "
                     + " время: "
                     + new Date() + "intent.getAction().toString() " + intent.getAction());
 
@@ -98,7 +98,7 @@ public class Service_Notifocations_Для_Чата extends Service {////Service
                     ИмяСлужбыУведомленияДляЧата = intent.getStringExtra("НазваниеСлужбыВСлужбуЧата");
     
                     // TODO: 26.03.2022
-                    Log.d(getApplicationContext().getClass().getName(), " onStartCommand СЛУЖБА Service_Notifocations_Для_Чата  "
+                    Log.d(getApplicationContext().getClass().getName(), " onStartCommand СЛУЖБА ServiceForNotifocations  "
                             + " время: "
                             + new Date() + "intent.getAction().toString() " + intent.getAction().toString() + "bundleЧата " + ИмяСлужбыУведомленияДляЧата);
     
@@ -119,7 +119,7 @@ public class Service_Notifocations_Для_Чата extends Service {////Service
                     }
                     // TODO: 13.11.2021  ПОКАЗЫВАЕМ СТАТУС ПОСЛЕ ОТРАБОТАНГНЙО WORK MANAGER  ПРИ Уведомления для Чата         // TODO: 13.11.2021  ПОКАЗЫВАЕМ СТАТУС ПОСЛЕ ОТРАБОТАНГНЙО WORK MANAGER  ПРИ Уведомления для Чата
     
-                    Log.w(getApplicationContext().getClass().getName(), " После НАЖАТИЕ НА КНОПКУ ЗАКРЫТЬ  Выкючение в Service_Notifocations_Для_Чата Внутри СЛУЖБЫ " +
+                    Log.w(getApplicationContext().getClass().getName(), " После НАЖАТИЕ НА КНОПКУ ЗАКРЫТЬ  Выкючение в ServiceForNotifocations Внутри СЛУЖБЫ " +
                             " MyWork_Notifocations_Уведомления_Для_Задачи " + ИмяСлужбыУведомленияДляЧата + "\n"
                             + " getState  " +
                             ИнформацияОЗапущенойСлужбе.getState().name() + "\n" +
@@ -138,7 +138,7 @@ public class Service_Notifocations_Для_Чата extends Service {////Service
     
     
                     Log.i(getApplicationContext().getClass().getName(), " Закрываем   внутри служы ПОЛЬЗОВАТЛЬ НАДАЛ НАКПОКУ ЗАКРЫТЬ" +
-                            "Service_Notifocations_Для_Чата (intent.getAction()   СЛУЖБА" + (intent.getAction().toString()) + " время запуска  " + new Date());
+                            "ServiceForNotifocations (intent.getAction()   СЛУЖБА" + (intent.getAction().toString()) + " время запуска  " + new Date());
     
     
                     // TODO: 07.02.2022 задание КЛИВАЕМ НА СООБЩЕНИЕ ПЕРЕРХОДИМ НА ЧАТ
@@ -150,7 +150,7 @@ public class Service_Notifocations_Для_Чата extends Service {////Service
                 // TODO: 07.02.2022 задание КЛИВАЕМ НА СООБЩЕНИЕ ПЕРЕРХОДИМ НА ЧАТ
 
 
-                Log.d(getApplicationContext().getClass().getName(), " onStartCommand СЛУЖБА Service_Notifocations_Для_Чата  "
+                Log.d(getApplicationContext().getClass().getName(), " onStartCommand СЛУЖБА ServiceForNotifocations  "
                         + " время: "
                         + new Date() + "intent.getAction().toString() " + intent.getAction().toString());
 

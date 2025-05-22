@@ -64,15 +64,15 @@ import io.reactivex.rxjava3.schedulers.Schedulers;
 
 
 @AndroidEntryPoint
-public class Service_For_Public extends IntentService {
+public class ServiceForPublic extends IntentService {
     // TODO: Rename actions, choose action names that describe tasks that this
     public LocalBinderОбщий localBinderОбщий = new LocalBinderОбщий();
     protected Fillingfromlastmonth Getfillingfromlastmonth;
     private Context context;
     private  Intent intentОтActivityListPeoples;
 
-    public Service_For_Public() {
-        super("Service_For_Public");
+    public ServiceForPublic() {
+        super("ServiceForPublic");
     }
 
     @Override
@@ -149,11 +149,11 @@ public class Service_For_Public extends IntentService {
     }
 
     public class LocalBinderОбщий extends Binder {
-        public Service_For_Public getService() {
+        public ServiceForPublic getService() {
             Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                     " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
                     " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n");
-            return Service_For_Public.this;
+            return ServiceForPublic.this;
         }
 
         @Override

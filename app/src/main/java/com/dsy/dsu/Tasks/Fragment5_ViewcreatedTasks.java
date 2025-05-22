@@ -1,13 +1,11 @@
 package com.dsy.dsu.Tasks;
 
 import android.annotation.SuppressLint;
-import android.app.Activity;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.ServiceConnection;
 import android.database.Cursor;
-import android.database.sqlite.SQLiteCursor;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
@@ -35,10 +33,9 @@ import androidx.work.WorkInfo;
 import androidx.work.WorkManager;
 
 
-import com.dsy.dsu.CnangeServers.BinessLogicPublicContent;
 import com.dsy.dsu.Errors.WriteErrorForAll.RecordNewErros;
 import com.dsy.dsu.BusinessLogicAll.GetPublicID.GetPublicID;
-import com.dsy.dsu.Services.Service_For_Task_Для_Задания_СменаСатуса;
+import com.dsy.dsu.Services.ServiceForTasks;
 import com.dsy.dsu.R;
 import com.google.android.material.bottomnavigation.BottomNavigationItemView;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -99,7 +96,7 @@ public class Fragment5_ViewcreatedTasks extends Fragment {
     private BottomNavigationItemView bottomNavigationПринудительныйОбмен;
     // TODO: 06.07.2022
 
-    private Service_For_Task_Для_Задания_СменаСатуса service_for_task_для_задания_сменаСатуса;
+    private ServiceForTasks service_for_tasks;
     // TODO: 14.07.2022
 
 
@@ -1099,7 +1096,7 @@ public class Fragment5_ViewcreatedTasks extends Fragment {
                     intentДляЗапускаСлужбыСменыСменыСтатусаВсСлужбе.setAction("ЗапускаемИзмененияСатусазадачиВыполнил");
                     intentДляЗапускаСлужбыСменыСменыСтатусаВсСлужбе.putExtras(bundleДляПередачиВСлужбыСменыСтатуса);
 // TODO: 05.07.2022 меняет статус
-                    РезультатСменыСтатусаНаОзнакомленный=        service_for_task_для_задания_сменаСатуса.МетодpЗапускСлужбыДляЗадач(getContext(),intentДляЗапускаСлужбыСменыСменыСтатусаВсСлужбе);
+                    РезультатСменыСтатусаНаОзнакомленный=        service_for_tasks.МетодpЗапускСлужбыДляЗадач(getContext(),intentДляЗапускаСлужбыСменыСменыСтатусаВсСлужбе);
 
                     if (РезультатСменыСтатусаНаОзнакомленный == true) {
                         // TODO: 09.03.2022
@@ -1327,15 +1324,15 @@ public class Fragment5_ViewcreatedTasks extends Fragment {
             public void onServiceConnected(ComponentName name, IBinder service) {
                 try{
                     // We've bound to LocalService, cast the IBinder and get LocalService instance
-                    Service_For_Task_Для_Задания_СменаСатуса.LocalBinderДляСлужбыСменаСтатуса binder = (Service_For_Task_Для_Задания_СменаСатуса.LocalBinderДляСлужбыСменаСтатуса) service;
+                    ServiceForTasks.LocalBinderДляСлужбыСменаСтатуса binder = (ServiceForTasks.LocalBinderДляСлужбыСменаСтатуса) service;
 
-                    service_for_task_для_задания_сменаСатуса = binder.getService();
+                    service_for_tasks = binder.getService();
 
                     Log.d(context.getClass().getName(), "\n"
                             + " время: " + new Date()+"\n+" +
                             " Класс в процессе... " +  this.getClass().getName()+"\n"+
                             " метод в процессе... " + Thread.currentThread().getStackTrace()[2].getMethodName()
-                            +"    onServiceDisconnected  service_for_task_для_задания_сменаСатуса" +service_for_task_для_задания_сменаСатуса);
+                            +"    onServiceDisconnected  service_for_tasks" + service_for_tasks);
 
                 } catch (Exception e) {
                     //  Block of code to handle errors
@@ -1359,7 +1356,7 @@ public class Fragment5_ViewcreatedTasks extends Fragment {
                             + " время: " + new Date()+"\n+" +
                             " Класс в процессе... " +  this.getClass().getName()+"\n"+
                             " метод в процессе... " + Thread.currentThread().getStackTrace()[2].getMethodName()
-                            +"    onServiceDisconnected  service_for_task_для_задания_сменаСатуса" +service_for_task_для_задания_сменаСатуса);
+                            +"    onServiceDisconnected  service_for_tasks" + service_for_tasks);
                 } catch (Exception e) {
                     //  Block of code to handle errors
                     e.printStackTrace();

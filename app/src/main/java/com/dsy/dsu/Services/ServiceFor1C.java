@@ -28,7 +28,7 @@ import java.util.Date;
  * TODO: Customize class - update intent actions, extra parameters and static
  * helper methods.
  */
-public class Service_Get1C_ПолучениеДанныхОт1С extends IntentService {
+public class ServiceFor1C extends IntentService {
 
     // TODO: Rename actions, choose action names that describe tasks that this
 
@@ -38,8 +38,8 @@ public class Service_Get1C_ПолучениеДанныхОт1С extends IntentS
 
     private Context context;
 
-    public Service_Get1C_ПолучениеДанныхОт1С() {
-        super("Service_Get1C_ПолучениеДанныхОт1С");
+    public ServiceFor1C() {
+        super("ServiceFor1C");
     }
 
 
@@ -166,9 +166,9 @@ public class Service_Get1C_ПолучениеДанныхОт1С extends IntentS
      * runs in the same process as its clients, we don't need to deal with IPC.
      */
     public class LocalBinderДляПолучениеДанных1С extends Binder {
-        public Service_Get1C_ПолучениеДанныхОт1С getService() {
+        public ServiceFor1C getService() {
             // Return this instance of LocalService so clients can call public methods
-            return Service_Get1C_ПолучениеДанныхОт1С.this;
+            return ServiceFor1C.this;
         }
     }
 

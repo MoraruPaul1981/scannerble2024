@@ -2,12 +2,12 @@ package com.dsy.dsu.CnangeServers;
 import android.content.Context;
 import android.util.Log;
 
-import com.dsy.dsu.BusinessLogicAll.WorkerTables.GetWorkerTablesALl;
 
+import com.dsy.dsu.BusinessLogicAll.WorkerTables.SubClassCreatingMainAllTables;
 
 import java.util.Date;
 
-public  class BinessLogicPublicContent extends GetWorkerTablesALl {
+public  class BinessLogicPublicContent extends SubClassCreatingMainAllTables {
     private  Context context;
     public BinessLogicPublicContent(Context context) {
         this.context=context;

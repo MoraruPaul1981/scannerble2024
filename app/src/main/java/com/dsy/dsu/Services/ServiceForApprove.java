@@ -25,7 +25,7 @@ import javax.inject.Inject;
 import dagger.hilt.android.AndroidEntryPoint;
 
 @AndroidEntryPoint
-public class Service_Notificatios_Для_Согласования extends IntentService {////Service
+public class ServiceForApprove extends IntentService {////Service
     ////////
     private Integer PROCESS_IDСогласования;
     private  String ИмяСлужбыУведомленияДляСогласование;
@@ -42,15 +42,15 @@ public class Service_Notificatios_Для_Согласования extends Intent
     MutableLiveData<Intent> getHiltMutableLiveDataPay;
 
 
-    public Service_Notificatios_Для_Согласования() {
-        super("Service_Notificatios_Для_Согласования");
+    public ServiceForApprove() {
+        super("ServiceForApprove");
     }
     /**
      * Class used for the client Binder.  Because we know this service always
      * runs in the same process as its clients, we don't need to deal with IPC.
      */
     public class LocalBinderДляСогласования extends Binder {
-        public Service_Notificatios_Для_Согласования getService() {
+        public ServiceForApprove getService() {
             try {
                 Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                         " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
@@ -63,7 +63,7 @@ public class Service_Notificatios_Для_Согласования extends Intent
                         Thread.currentThread().getStackTrace()[2].getMethodName(), Thread.currentThread().getStackTrace()[2].getLineNumber());
                 Log.e(getApplicationContext().getClass().getName(), " Ошибка СЛУЖБА Service_ДляЗапускаодноразовойСинхронизации   ");
             }
-            return Service_Notificatios_Для_Согласования.this;
+            return ServiceForApprove.this;
         }
     }
     @Nullable
@@ -78,7 +78,7 @@ public class Service_Notificatios_Для_Согласования extends Intent
     @Override
     public void onCreate() {
         super.onCreate();
-        Log.d(   context.getClass().getName(), " onCreate СЛУЖБА Service_Notificatios_Для_Согласования "
+        Log.d(   context.getClass().getName(), " onCreate СЛУЖБА ServiceForApprove "
                 + " время: "
                 + new Date());
     }
@@ -86,7 +86,7 @@ public class Service_Notificatios_Для_Согласования extends Intent
     @Override
     public void onDestroy() {
         Log.i(   context.getClass().getName(), "  \n" +
-                "      onDestroy; Стоп Стоп  Стоп !!!!!!!!!!! СЛУЖБА Service_Notificatios_Для_Согласования   ДЛЯ ЧАТА onDestroy() время " + new Date());
+                "      onDestroy; Стоп Стоп  Стоп !!!!!!!!!!! СЛУЖБА ServiceForApprove   ДЛЯ ЧАТА onDestroy() время " + new Date());
         super.onDestroy();
     }
 
@@ -111,7 +111,7 @@ public class Service_Notificatios_Для_Согласования extends Intent
                 " Линия  :" + Thread.currentThread().getStackTrace()[2].getLineNumber());
         new RecordNewErros(   context).recordnewerror(e.toString(), this.getClass().getName(),
                 Thread.currentThread().getStackTrace()[2].getMethodName(), Thread.currentThread().getStackTrace()[2].getLineNumber());
-        Log.e(   context.getClass().getName(), " Ошиюбка СЛУЖБА Service_Notificatios_Для_Согласования onHandleWork Exception  PROCESS_ID   " + PROCESS_IDСогласования);
+        Log.e(   context.getClass().getName(), " Ошиюбка СЛУЖБА ServiceForApprove onHandleWork Exception  PROCESS_ID   " + PROCESS_IDСогласования);
 
     }
 
@@ -141,7 +141,7 @@ public class Service_Notificatios_Для_Согласования extends Intent
     public boolean stopService(Intent name) {
 
         Log.i(   context.getClass().getName(), "  \n" +
-                "        stopService  Стоп Стоп  Стоп !!!!!!!!!!! СЛУЖБА Service_Notificatios_Для_Согласования   ДЛЯ ЧАТА onDestroy() время " + new Date());
+                "        stopService  Стоп Стоп  Стоп !!!!!!!!!!! СЛУЖБА ServiceForApprove   ДЛЯ ЧАТА onDestroy() время " + new Date());
 
         /*  this.stopSelf();*/
         return super.stopService(name);
@@ -175,7 +175,7 @@ public class Service_Notificatios_Для_Согласования extends Intent
                 " Линия  :" + Thread.currentThread().getStackTrace()[2].getLineNumber());
         new RecordNewErros(context).recordnewerror(e.toString(), this.getClass().getName(),
                 Thread.currentThread().getStackTrace()[2].getMethodName(), Thread.currentThread().getStackTrace()[2].getLineNumber());
-        Log.e(context.getClass().getName(), " Ошиюбка СЛУЖБА Service_Notificatios_Для_Согласования onHandleWork Exception  PROCESS_ID   " + PROCESS_IDСогласования);
+        Log.e(context.getClass().getName(), " Ошиюбка СЛУЖБА ServiceForApprove onHandleWork Exception  PROCESS_ID   " + PROCESS_IDСогласования);
 
     }
         return  БуферРезультатаПолучаемОтветДанных;
@@ -218,7 +218,7 @@ public class Service_Notificatios_Для_Согласования extends Intent
                     " Линия  :" + Thread.currentThread().getStackTrace()[2].getLineNumber());
             new RecordNewErros(context).recordnewerror(e.toString(), this.getClass().getName(),
                     Thread.currentThread().getStackTrace()[2].getMethodName(), Thread.currentThread().getStackTrace()[2].getLineNumber());
-            Log.e(context.getClass().getName(), " Ошиюбка СЛУЖБА Service_Notificatios_Для_Согласования PROCESS_ID   " + PROCESS_IDСогласования);
+            Log.e(context.getClass().getName(), " Ошиюбка СЛУЖБА ServiceForApprove PROCESS_ID   " + PROCESS_IDСогласования);
         }
         ///TODO метод определяем стоит запускать и создвать службу напоминаний или нет
  return  БуферРезультатаПолучаемОтветДанных;
@@ -257,7 +257,7 @@ public class Service_Notificatios_Для_Согласования extends Intent
                     " Линия  :" + Thread.currentThread().getStackTrace()[2].getLineNumber());
             new RecordNewErros(context).recordnewerror(e.toString(), this.getClass().getName(),
                     Thread.currentThread().getStackTrace()[2].getMethodName(), Thread.currentThread().getStackTrace()[2].getLineNumber());
-            Log.e(context.getClass().getName(), " Ошиюбка СЛУЖБА Service_Notificatios_Для_Согласования PROCESS_ID   " + PROCESS_IDСогласования);
+            Log.e(context.getClass().getName(), " Ошиюбка СЛУЖБА ServiceForApprove PROCESS_ID   " + PROCESS_IDСогласования);
         }
         ///TODO метод определяем стоит запускать и создвать службу напоминаний или нет
         return  getFileNewOt1cPayCommit;

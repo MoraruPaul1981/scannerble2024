@@ -46,9 +46,9 @@ import javax.net.ssl.SSLSocketFactory;
 import dagger.hilt.android.AndroidEntryPoint;
 
 @AndroidEntryPoint
-public class ServiceUpdatePoОбновлениеПО extends IntentService {////Service
+public class ServiceUpdatesPO extends IntentService {////Service
 
-    public ServiceUpdatePoОбновлениеПО.localBinderОбновлениеПО binder = new ServiceUpdatePoОбновлениеПО.localBinderОбновлениеПО();
+    public ServiceUpdatesPO.localBinderОбновлениеПО binder = new ServiceUpdatesPO.localBinderОбновлениеПО();
     String ИмяСлужбыУведомленияДляОбновление = "WorkManager NOtofocationforUpdateSoft";
     private String PROCESS_IDSoftUpdate = "19";
     private  Integer ЛокальнаяВерсияПО = 0;
@@ -70,11 +70,11 @@ public class ServiceUpdatePoОбновлениеПО extends IntentService {////
      * Creates an IntentService.  Invoked by your subclass's constructor.
      *
      */
-    public ServiceUpdatePoОбновлениеПО() {
+    public ServiceUpdatesPO() {
         super("Binder_UpdatePO");
     }
 
-    public ServiceUpdatePoОбновлениеПО(String name) {
+    public ServiceUpdatesPO(String name) {
 
         super(name);
     }
@@ -83,7 +83,7 @@ public class ServiceUpdatePoОбновлениеПО extends IntentService {////
     public void onCreate() {
         super.onCreate();
         try{
-            Log.d(getApplicationContext().getClass().getName(), "ServiceUpdatePoОбновлениеПО "
+            Log.d(getApplicationContext().getClass().getName(), "ServiceUpdatesPO "
                     + " время: "
                     + new Date());
         } catch (Exception e) {
@@ -123,19 +123,19 @@ public class ServiceUpdatePoОбновлениеПО extends IntentService {////
         return   binder;
     }
     public class localBinderОбновлениеПО extends Binder {
-        public ServiceUpdatePoОбновлениеПО getService() {
+        public ServiceUpdatesPO getService() {
             // Return this instance of LocalService so clients can call public methods
             Log.d(getApplicationContext().getClass().getName(), "\n"
                     + " время: " + new Date()+"\n+" +
                     " Класс в процессе... " +  this.getClass().getName()+"\n"+
                     " метод в процессе... " + Thread.currentThread().getStackTrace()[2].getMethodName());
-            return ServiceUpdatePoОбновлениеПО.this;
+            return ServiceUpdatesPO.this;
         }
     }
     @Override
     protected void onHandleIntent(@Nullable Intent intent) {
         try{
-            Log.i(getApplicationContext().getClass().getName(), " ServiceUpdatePoОбновлениеПО  МетодГлавныйЗапускаОбновлениеПО  " + " время запуска  " + new Date());
+            Log.i(getApplicationContext().getClass().getName(), " ServiceUpdatesPO  МетодГлавныйЗапускаОбновлениеПО  " + " время запуска  " + new Date());
         } catch (Exception e) {
             e.printStackTrace();
             Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
