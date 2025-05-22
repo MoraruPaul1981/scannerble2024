@@ -72,12 +72,12 @@ public class CoreApp extends Application {
   protected SQLiteDatabase coreAppSqLiteDatabase ;
 
 
-   @Inject
+/*   @Inject
   protected CoreBinessLogics coreBinessLogics;
 
 
   @Inject
-  ModuleСalled moduleСalled;
+  ModuleСalled moduleСalled;*/
 
 
   @Override
