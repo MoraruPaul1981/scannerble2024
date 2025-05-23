@@ -1,4 +1,4 @@
-package com.dsy.dsu.Passwords;
+package com.dsy.dsu.Passwords.View;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
@@ -182,20 +182,9 @@ public class MainActivityPasswords extends AppCompatActivity {
                     .методОчисткаТаблицыSuccesslogin("settings_tabels", getApplicationContext());
 
 
-
-            // TODO: 12.04.2023  messageGet
-            messageGet();
-
-
-
-
-
             Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                     " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
                     " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n");
-
-
-
 
 
         } catch (Exception e) {
@@ -337,21 +326,7 @@ public class MainActivityPasswords extends AppCompatActivity {
     
     
     
-    // TODO: 12.04.2023
-    void messageGet() {
-        message = Message.obtain(new Handler(Looper.myLooper()), () -> {
-            try {
-                Bundle bundle = message.getData();
-            } catch (Exception e) {
-                e.printStackTrace();
-                Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
-                        " Линия  :" + Thread.currentThread().getStackTrace()[2].getLineNumber());
-                new RecordNewErros(getApplicationContext()).recordnewerror(e.toString(),
-                        this.getClass().getName(), Thread.currentThread().getStackTrace()[2].getMethodName(),
-                        Thread.currentThread().getStackTrace()[2].getLineNumber());
-            }
-        });
-    }
+
 
 
     private  Integer   методЗаписьВSuccesLogin(Integer ПолученинныйПубличныйID, View v) {

@@ -417,7 +417,7 @@
 
 
         <activity
-            android:name=".Passwords.MainActivityPasswords"
+            android:name=".Passwords.View.MainActivityPasswords"
             android:exported="true"
             android:label="Аунтификация ДСУ-1"
             android:grantUriPermissions="true"
