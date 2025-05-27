@@ -904,7 +904,7 @@ private void МетодВозврещениеНаПредыдущуюАктив�
                 String Текущаятаблицы="fio";
                 ModuleQuety moduleQuety=new ModuleQuety(getApplicationContext());
                 Cursor    Курсор_ИщемЕслиТАкойСнилсУже= moduleQuety.getModuleQuery(Текущаятаблицы," SELECT D.snils  FROM "+Текущаятаблицы+" AS D" +
-                        "   D.date_update DESC  LIMIT 1  " ,null);
+                        "  WHERE   D.snils  ='"+ПолученныйСНИЛСНовогоСотрудника+"' ORDER BY   D.date_update DESC  LIMIT 1  " ,null);
 
                 Log.d(this.getClass().getName(), "\n"
                         + " время: " + new Date() + "\n+" +
