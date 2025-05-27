@@ -23,6 +23,7 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SequenceWriter;
 import com.fasterxml.jackson.databind.module.SimpleModule;
+import com.sous.backasync.launch.ModuleQuety;
 
 import org.jetbrains.annotations.NotNull;
 import org.json.JSONException;
@@ -1398,44 +1399,47 @@ try{
     private Cursor методГлавныйGetDataForAsync( @NonNull  String Таблица,
                                                 @NonNull Long ВерсияДанныхДляСравения,
                                                 @NonNull Integer PublicId) {
-        Cursor  cursor=null;
+        Cursor  cursorSendJboss=null;
         try{
-          //  ПубличныйIDДляФрагмента = new Class_GenerationsBack_PUBLIC_CURRENT_ID().getPublicIDAllApp(context);
-
-            Uri uri = Uri.parse("content://com.dsy.dsu.providerdatabaseonlyasync/" + Таблица.trim() + "");
-            ContentResolver resolver = context.getContentResolver();
-            Bundle data=null;
-
+            ModuleQuety moduleQuety=new ModuleQuety(context);
             switch (Таблица.trim()) {
                 // TODO: 23.03.2023 ТАБЛИЦЫ С ПОЛЕМ ____ID    // TODO: 23.03.2023 ТАБЛИЦЫ С ПОЛЕМ ____ID    // TODO: 23.03.2023 ТАБЛИЦЫ С ПОЛЕМ ____ID
                 case "settings_tabels":
-                    data=new Bundle();
-                    data.putString("query","" +
-                            "  SELECT DISTINCT  * FROM settings_tabels   as gett  " +
-                            " WHERE   gett.current_table >   "+ВерсияДанныхДляСравения+" " +
-                            " AND gett.user_update = "+PublicId+" "+";" );
+                    cursorSendJboss   =moduleQuety.getModuleQuery(Таблица,
+                            "  SELECT DISTINCT  * FROM "+Таблица+"   as gett  " +
+                                    " WHERE   gett.current_table >   '"+ВерсияДанныхДляСравения+"' " +
+                                    " AND gett.user_update = '"+PublicId+"';" , null);
 
-                    Log.d(this.getClass().getName(), " Таблица Все остальные  _id " + Таблица);
+                    Log.d(this.getClass().getName(), "\n"
+                            + " время: " + new Date() + "\n+" +
+                            " Класс в процессе... " + this.getClass().getName() + "\n" +
+                            " метод в процессе... " + Thread.currentThread().getStackTrace()[2].getMethodName()+" Таблица "+Таблица);
+
                     break;
+                // TODO: 27.05.2025
                 case "data_notification":
-                    data=new Bundle();
-                    data.putString("query"," SELECT DISTINCT  * FROM " +Таблица+" as gett" +
-                            " WHERE   gett.current_table >  "+ВерсияДанныхДляСравения+""+";"  );
-                    Log.d(this.getClass().getName(), " Таблица Все остальные  _id " + Таблица);
+                    cursorSendJboss   =moduleQuety.getModuleQuery(Таблица,
+                            " SELECT DISTINCT  * FROM " +Таблица+" as gett" +
+                                    " WHERE   gett.current_table >  '"+ВерсияДанныхДляСравения+"' ;"  , null);
+
+
+                    Log.d(this.getClass().getName(), "\n"
+                            + " время: " + new Date() + "\n+" +
+                            " Класс в процессе... " + this.getClass().getName() + "\n" +
+                            " метод в процессе... " + Thread.currentThread().getStackTrace()[2].getMethodName()+" Таблица "+Таблица);
                     break;
                 // TODO: 23.03.2023 ТАБЛИЦЫ С ПОЛЕМ ID   // TODO: 23.03.2023 ТАБЛИЦЫ С ПОЛЕМ ID // TODO: 23.03.2023 ТАБЛИЦЫ С ПОЛЕМ ID // TODO: 23.03.2023 ТАБЛИЦЫ С ПОЛЕМ ID
                 // TODO: 23.03.2023 ТАБЛИЦЫ С ПОЛЕМ ID // TODO: 23.03.2023 ТАБЛИЦЫ С ПОЛЕМ ID // TODO: 23.03.2023 ТАБЛИЦЫ С ПОЛЕМ ID // TODO: 23.03.2023 ТАБЛИЦЫ С ПОЛЕМ ID
                 default:
-                    data=new Bundle();
-                    data.putString("query"," SELECT DISTINCT  * FROM " +Таблица+" as gett" +
-                            " WHERE   gett.current_table >  "+ВерсияДанныхДляСравения+
-                            " AND gett.user_update = "+PublicId + ""+";" );
+                    cursorSendJboss   =moduleQuety.getModuleQuery(Таблица,
+                            " SELECT DISTINCT  * FROM " +Таблица+" as gett" +
+                                    " WHERE   gett.current_table >  '"+ВерсияДанныхДляСравения+"'" +
+                                    " AND gett.user_update = '"+PublicId + "' ;" , null);
+                    Log.d(this.getClass().getName(), "\n"
+                            + " время: " + new Date() + "\n+" +
+                            " Класс в процессе... " + this.getClass().getName() + "\n" +
+                            " метод в процессе... " + Thread.currentThread().getStackTrace()[2].getMethodName()+" Таблица "+Таблица);
                     break;
-            }
-            // TODO: 08.08.2023 ГЛАВНОЕ ПОЛУЧЕНИЕ ДАННЫХ  ДЛя ОТПРАВКИ НА СЕРВЕР
-            // TODO: 16.05.2023
-            if (data.size()>0) {
-                cursor = resolver.query(uri,new String[]{"*"},data,null);// TODO: 13.10.2022 ,"Удаленная"
             }
 
             Log.d(this.getClass().getName(), "\n" + " class " +
@@ -1443,8 +1447,7 @@ try{
                     + "\n" +
                     " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
                     " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"+
-                    "cursor   " + cursor  + "  Таблица " +Таблица
-                            + " data.size() " +data.size());
+                    "cursorSendJboss   " + cursorSendJboss );
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -1454,7 +1457,7 @@ try{
             new RecordNewErros(context).recordnewerror(e.toString(), this.getClass().getName(),
                     Thread.currentThread().getStackTrace()[2].getMethodName(), Thread.currentThread().getStackTrace()[2].getLineNumber());
         }
-        return cursor;
+        return cursorSendJboss;
     }
 
 // TODO: 07.04.2024
