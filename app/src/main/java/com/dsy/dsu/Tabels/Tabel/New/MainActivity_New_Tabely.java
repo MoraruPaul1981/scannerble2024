@@ -377,12 +377,13 @@ public class MainActivity_New_Tabely extends AppCompatActivity {
             // TODO: 14.05.2025
             String Текущаятаблицы="tabel";
             ModuleQuety moduleQuety=new ModuleQuety(getApplicationContext());
-            Cursor    Курсор_ПроверяемЕслиТакоеНазваниеТабеляУжеЕстьИлиНет= moduleQuety.getModuleQuery(Текущаятаблицы," SELECT D.cfo, D.month_tabels ,D.year_tabels FROM "+Текущаятаблицы+" AS D" +
-                    "  WHERE D.cfo= "+UUIDНазваниеЦФО
-                    +" AND D.month_tabels="+МесяцДляАнализаиВставкиЕслиТакогоНет
-                    +" AND D.year_tabels="+ГодляАнализаиВставкиЕслиТакогоНет+
-                    "   AND D.status_send!=Удаленная" +
-                    "   D.date_update DESC   " ,null);
+            Cursor    Курсор_ПроверяемЕслиТакоеНазваниеТабеляУжеЕстьИлиНет=
+                    moduleQuety.getModuleQuery(Текущаятаблицы," SELECT D.cfo, D.month_tabels ,D.year_tabels FROM "+Текущаятаблицы+" AS D" +
+                    "  WHERE D.cfo= '"+UUIDНазваниеЦФО +"'" +
+                            " AND D.month_tabels= '"+МесяцДляАнализаиВставкиЕслиТакогоНет +"'" +
+                            " AND D.year_tabels= '"+ГодляАнализаиВставкиЕслиТакогоНет+ "'" +
+                            "   AND D.status_send!='Удаленная'" +
+                    " ORDER BY   D.date_update DESC   " ,null);
 
             Log.d(this.getClass().getName(), "\n"
                     + " время: " + new Date() + "\n+" +

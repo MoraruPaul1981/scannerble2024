@@ -96,8 +96,7 @@ public class ProccesorparallelSynch   {
             // TODO: 20.01.2025 сама синхрониаиця
             switch (РежимЗапускаСинхронизации){
 // TODO: 20.01.2025 сама синхрониаиця
-                case "ПовторныйЗапускСинхронизации":
-              //  case  "СамыйПервыйЗапускСинхронизации":
+                case  "СамыйПервыйЗапускСинхронизации":
                     Flowable.fromIterable(getBufferFromJbossServerAllTables)
                             .parallel().runOn(Schedulers.io())
                             .doOnNext(new Consumer<ConcurrentHashMap<String, String>>() {
@@ -158,8 +157,7 @@ public class ProccesorparallelSynch   {
                     break;
 
                 // TODO: 20.01.2025 сама синхрониаиця
-               // case "ПовторныйЗапускСинхронизации":
-                case  "СамыйПервыйЗапускСинхронизации":
+                 case "ПовторныйЗапускСинхронизации":
 // TODO: 20.01.2025 сама синхрониаиця
                     Flowable.fromIterable(getBufferFromJbossServerAllTables)
                             .onBackpressureBuffer(1)
