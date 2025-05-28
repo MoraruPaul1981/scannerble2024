@@ -98,6 +98,18 @@ public class GeneratorJSONSerializer extends JsonSerializer<Cursor> {
                                                             " Getprof " +Getprof);
                                                     break;
 
+                                                case    "current_organization":
+                                                    Integer GetcurrentOrganization= КурсорДляОтправкиДанныхНаСерверОтАндройда
+                                                            .getInt(КурсорДляОтправкиДанныхНаСерверОтАндройда.getColumnIndex(НазваниеСтолбикаJson)) ;
+                                                    //TODO Само Полученое содеожимое столбика Value
+                                                    if (GetcurrentOrganization>0) {
+                                                        serializers.defaultSerializeField(НазваниеСтолбикаJson,GetcurrentOrganization, jsonGenerator);
+                                                    } else {
+                                                        serializers.defaultSerializeField(НазваниеСтолбикаJson,null, jsonGenerator);
+                                                    }
+                                                    Log.d(this.getClass().getName(), " НазваниеСтолбикаJson ::    " + НазваниеСтолбикаJson +
+                                                            " GetcurrentOrganization " +GetcurrentOrganization);
+                                                    break;
 
                                                 case "image":
                                                     byte[] GetBlobImage= КурсорДляОтправкиДанныхНаСерверОтАндройда

@@ -58,10 +58,10 @@ public class ModulePortJboss {
                  break;
          }
 
-            // TODO: 28.05.2025  DEBUG
+        /*    // TODO: 28.05.2025  DEBUG
             HiltJbossBinessLogicIntarface   hiltJbossBinessLogicIntarfaceDebug=new JbossLinktoDebug();
             // TODO: 06.10.2024 ответ  сам адрес с чем подкбчаться
-            getJbossPort=   hiltJbossBinessLogicIntarfaceDebug.selectingLinkJbossAdress(preferencesJboss,context,getModeTrasport,8080);
+            getJbossPort=   hiltJbossBinessLogicIntarfaceDebug.selectingLinkJbossAdress(preferencesJboss,context,getModeTrasport,8080);*/
 
             Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                     " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
