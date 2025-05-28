@@ -1,36 +1,31 @@
-package com.dsy.dsu.Hilt.JbossAdrress.reliesadress;
+package com.dsy.dsu.JbossAdress;
 
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.util.Log;
 
 import com.dsy.dsu.Errors.WriteErrorForAll.RecordNewErros;
-import com.dsy.dsu.Hilt.JbossAdrress.intarfaces.HiltJbossBinessLogicIntarface;
+import com.dsy.dsu.JbossAdress.JbossHilt.intarfaces.HiltJbossBinessLogicIntarface;
 
 import org.jetbrains.annotations.NotNull;
 
 import java.util.LinkedHashMap;
 
-public class HiltJbossBinessLogic implements HiltJbossBinessLogicIntarface {
+public class JbossLinktoRelease implements HiltJbossBinessLogicIntarface {
 
 
     /**
      *
      */
     @Override
-    public LinkedHashMap<Integer,String>   selectenableforSslrequests(@NotNull SharedPreferences preferencesJboss, @NotNull Context context) {
+    public LinkedHashMap<Integer,String> selectingLinkJbossAdress(@NotNull SharedPreferences preferencesJboss,
+                                                                  @NotNull Context context,  String   getModeTrasport,@NotNull Integer  getPost) {
         LinkedHashMap<Integer,String> getJbossPort= new LinkedHashMap();
         try{
             SharedPreferences.Editor editor = preferencesJboss.edit();
-
-
             // TODO: 18.03.2023 московский сервер
-            getJbossPort.putIfAbsent(8888,"base.dsu1.ru");// TODO: <без SSL
-            //getJbossPort.putIfAbsent(8888,"80.70.108.165");// TODO: <без SSL
-
-            // TODO: 18.03.2023 debug сервер
-        ///   getJbossPort.putIfAbsent( 8080,"192.168.3.4");//
-            editor.putString("enablesll","http");
+            getJbossPort.putIfAbsent(getPost,"base.dsu1.ru");// TODO: <без SSL
+            editor.putString("enablesll",getModeTrasport);
             editor.commit();
             Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                     " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +

@@ -45,7 +45,7 @@ import com.dsy.dsu.BusinessLogicAll.DATE.Class_Generation_Data;
 import com.dsy.dsu.BusinessLogicAll.VersionCurentTable;
 import com.dsy.dsu.Errors.WriteErrorForAll.RecordNewErros;
 import com.dsy.dsu.BusinessLogicAll.GreatUuidGenerations.GreatUuidGeneration;
-import com.dsy.dsu.CnangeServers.BinessLogicPublicContent;
+import com.dsy.dsu.JbossAdress.JbossContext;
 import com.dsy.dsu.Services.ServiceForAdminissionMaterial;
 import com.dsy.dsu.R;
 import com.dsy.dsu.Tabels.Tabel.CompleteTabel.MainActivity_List_Tabels;
@@ -73,7 +73,7 @@ public class MainActivity_New_Tabely extends AppCompatActivity {
     private Button КнопкаСозданиеТабеля;
     private  Button КнопкаНазадПриСозданииНовогоТабеля;
     private  Context Контекст;
-    private BinessLogicPublicContent Class_Engine_SQLГдеНаходитьсяМенеджерПотоков = null;
+    private JbossContext Class_Engine_SQLГдеНаходитьсяМенеджерПотоков = null;
     private  ServiceForAdminissionMaterial.LocalBinderДляПолучениеМатериалов binderДляПолучениеМатериалов;
     private   Cursor CursorДляСпиноровЦФО;
     private  Handler handler;
@@ -97,7 +97,7 @@ public class MainActivity_New_Tabely extends AppCompatActivity {
             setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LOCKED);
             getSupportActionBar().hide(); ///скрывать тул бар
             Контекст=this;
-            Class_Engine_SQLГдеНаходитьсяМенеджерПотоков =new BinessLogicPublicContent(getApplicationContext());
+            Class_Engine_SQLГдеНаходитьсяМенеджерПотоков =new JbossContext(getApplicationContext());
             getWindow().addFlags(WindowManager.LayoutParams.FLAG_DISMISS_KEYGUARD
                     | WindowManager.LayoutParams.FLAG_TURN_SCREEN_ON
                     | WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);

@@ -7,7 +7,6 @@ import android.content.Intent;
 import android.content.Context;
 import android.content.res.Configuration;
 import android.database.Cursor;
-import android.database.sqlite.SQLiteCursor;
 import android.os.Binder;
 import android.os.Bundle;
 import android.os.IBinder;
@@ -19,18 +18,12 @@ import androidx.annotation.Nullable;
 
 import com.dsy.dsu.BusinessLogicAll.CoreBinessLogic.CoreBinessLogics;
 import com.dsy.dsu.BusinessLogicAll.VersionCurentTable;
-import com.dsy.dsu.CnangeServers.BinessLogicPublicContent;
 import com.dsy.dsu.Errors.WriteErrorForAll.RecordNewErros;
-import com.google.android.material.button.MaterialButton;
 import com.sous.backasync.launch.ModuleQuety;
 
 import java.io.FileDescriptor;
 import java.io.PrintWriter;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.Locale;
-import java.util.TimeZone;
 
 import dagger.hilt.android.AndroidEntryPoint;
 

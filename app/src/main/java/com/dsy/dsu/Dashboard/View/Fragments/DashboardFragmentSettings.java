@@ -45,7 +45,7 @@ import com.dsy.dsu.Dashboard.Model.bl_launchFragmentSettingsandDashbord.LaunchAc
 import com.dsy.dsu.Errors.WriteErrorForAll.RecordNewErros;
 
 import com.dsy.dsu.Errors.model.BinessLogicLaunchFragmenrError;
-import com.dsy.dsu.Hilt.JbossAdrress.qualifiers.QualifierJbossServer3;
+import com.dsy.dsu.JbossAdress.JbossHilt.intarfaces.QualifierJbossServer3;
 import com.dsy.dsu.Hilt.getSSLSocketFactory2.QualifiergetsslSocketFactory2;
 import com.dsy.dsu.Services.ServiceUpdatesPO;
 import com.dsy.dsu.Tabels.Templates.MainActivity_New_Templates;

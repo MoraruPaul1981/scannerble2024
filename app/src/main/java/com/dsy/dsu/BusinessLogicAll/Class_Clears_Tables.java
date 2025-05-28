@@ -18,7 +18,8 @@ import androidx.annotation.NonNull;
 import com.dsy.dsu.BusinessLogicAll.DATE.Class_Generation_Data;
 
 import com.dsy.dsu.BusinessLogicAll.SharedPreferences.GetSharedPreferences;
-import com.dsy.dsu.CnangeServers.BinessLogicPublicContent;
+import com.dsy.dsu.BusinessLogicAll.WorkerTables.SubClassCreatingMainAllTables;
+import com.dsy.dsu.JbossAdress.JbossContext;
 import com.dsy.dsu.Errors.WriteErrorForAll.RecordNewErros;
 import com.dsy.dsu.Passwords.View.MainActivityPasswords;
 
@@ -63,7 +64,7 @@ public class Class_Clears_Tables {
     public Integer методСменаДанныхПользователя(Context context,
                                                 Activity activity) {
 
-        CopyOnWriteArrayList<String> ИменаТаблицыОтАндройда=    new BinessLogicPublicContent(context).getWorkerTablesALl(context);
+        CopyOnWriteArrayList<String> ИменаТаблицыОтАндройда=    new SubClassCreatingMainAllTables().getWorkerTablesALl(context);
         ИменаТаблицыОтАндройда.add("successlogin");
         ИменаТаблицыОтАндройда.add("settings_tabels");
         ИменаТаблицыОтАндройда.add("errordsu1");

@@ -36,13 +36,13 @@ import com.dsy.dsu.BusinessLogicAll.GetPingServers.GetPingServerJboss;
 import com.dsy.dsu.BusinessLogicAll.CreateFolderBinatySave.ClassDeleteErrorFile;
 import com.dsy.dsu.BusinessLogicAll.GetConnectivityManagerAndroid;
 import com.dsy.dsu.BusinessLogicAll.Permissions.GrandPermissions;
-import com.dsy.dsu.CnangeServers.BinessLogicPublicContent;
+import com.dsy.dsu.JbossAdress.JbossContext;
 import com.dsy.dsu.CoreApp.Model.BunessLogicCoreApp;
 import com.dsy.dsu.Errors.WriteErrorForAll.RecordNewErros;
 
 import com.dsy.dsu.BusinessLogicAll.SubClassWriterPUBLICIDtoDatabase;
 
-import com.dsy.dsu.Hilt.JbossAdrress.qualifiers.QualifierJbossServer3;
+import com.dsy.dsu.JbossAdress.JbossHilt.intarfaces.QualifierJbossServer3;
 import com.dsy.dsu.Hilt.getSSLSocketFactory2.QualifiergetsslSocketFactory2;
 import com.dsy.dsu.R;
 
@@ -81,7 +81,7 @@ public class MainActivityPasswords extends AppCompatActivity {
     private Activity activity;
 
     private Context КонтекстСинхроДляАунтификации;
-    private BinessLogicPublicContent Class_Engine_SQLГдеНаходитьсяМенеджерПотоков = null;
+    private JbossContext Class_Engine_SQLГдеНаходитьсяМенеджерПотоков = null;
     private String ПубличноеЛогин = new String();
     private String ПубличноеПароль = new String();
     private SharedPreferences preferences;
@@ -116,7 +116,7 @@ public class MainActivityPasswords extends AppCompatActivity {
             activity = this;
             ((Activity) КонтекстСинхроДляАунтификации).setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
             ((Activity) КонтекстСинхроДляАунтификации).setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LOCKED);
-            Class_Engine_SQLГдеНаходитьсяМенеджерПотоков = new BinessLogicPublicContent(getApplicationContext());
+            Class_Engine_SQLГдеНаходитьсяМенеджерПотоков = new JbossContext(getApplicationContext());
 
 
 

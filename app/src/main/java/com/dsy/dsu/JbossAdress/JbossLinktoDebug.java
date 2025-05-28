@@ -1,35 +1,33 @@
-package com.dsy.dsu.Hilt.JbossAdrress.reliesadress;
+package com.dsy.dsu.JbossAdress;
 
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.util.Log;
 
 import com.dsy.dsu.Errors.WriteErrorForAll.RecordNewErros;
-import com.dsy.dsu.Hilt.JbossAdrress.intarfaces.HiltJbossBinessLogicIntarface;
+import com.dsy.dsu.JbossAdress.JbossHilt.intarfaces.HiltJbossBinessLogicIntarface;
 
 import org.jetbrains.annotations.NotNull;
 
 import java.util.LinkedHashMap;
 
-public class HiltJbossBinessLogicSSl implements HiltJbossBinessLogicIntarface {
+public class JbossLinktoDebug implements HiltJbossBinessLogicIntarface {
 
 
     /**
      *
      */
     @Override
-    public LinkedHashMap<Integer,String>   selectenableforSslrequests(@NotNull SharedPreferences preferencesJboss, @NotNull Context context) {
+    public LinkedHashMap<Integer,String> selectingLinkJbossAdress(@NotNull SharedPreferences preferencesJboss,
+                                                                  @NotNull Context context ,
+                                                                  @NotNull  String   getModeTrasport,
+                                                                  @NotNull  Integer  getPost) {
         LinkedHashMap<Integer,String> getJbossPort= new LinkedHashMap();
    try{
        SharedPreferences.Editor editor = preferencesJboss.edit();
-
-
-       // TODO: 18.03.2023 московский сервер
-         getJbossPort.putIfAbsent(8890,"base.dsu1.ru");// TODO: 10.11.2022
-       // getJbossPort.putIfAbsent(8890,"80.70.108.165");// TODO: 10.11.2022
        // TODO: 18.03.2023 debug сервер
-      // getJbossPort.putIfAbsent( 8080,"192.168.3.4");//
-       editor.putString("enablesll","https");
+      getJbossPort.putIfAbsent( getPost,"192.168.50.21");//
+       editor.putString("enablesll",getModeTrasport);
        editor.commit();
 
        Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +

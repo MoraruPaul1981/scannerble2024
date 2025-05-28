@@ -49,7 +49,7 @@ import androidx.fragment.app.FragmentTransaction;
 
 import com.dsy.dsu.BusinessLogicAll.CoreBinessLogic.CoreBinessLogics;
 
-import com.dsy.dsu.CnangeServers.BinessLogicPublicContent;
+import com.dsy.dsu.JbossAdress.JbossContext;
 import com.dsy.dsu.Dashboard.Model.bl_launchFragmentSettingsandDashbord.LaunchActivityDashboard;
 import com.dsy.dsu.Errors.WriteErrorForAll.RecordNewErros;
 import com.dsy.dsu.BusinessLogicAll.DATE.SubClassCursorLoader;
@@ -59,14 +59,11 @@ import com.dsy.dsu.Tabels.Peoples.MainActivity_List_Peoples;
 import com.dsy.dsu.Tabels.Tabel.New.MainActivity_New_Tabely;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.textview.MaterialTextView;
-import com.sous.backasync.launch.ModuleQuety;
 
 
 import org.jetbrains.annotations.NotNull;
 
-import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -115,7 +112,7 @@ public class MainActivity_List_Tabels extends AppCompatActivity  {
     private  Activity activity;
     private   Integer   ПубличноеIDПолученныйИзСервлетаДляUUID=0;
 
-    private BinessLogicPublicContent Class_Engine_SQLГдеНаходитьсяМенеджерПотоков ;
+    private JbossContext Class_Engine_SQLГдеНаходитьсяМенеджерПотоков ;
     private Long MainParentUUIDFromTabel =0l;
     private SharedPreferences sharedPreferencesХранилище;
     private  Animation     animation;

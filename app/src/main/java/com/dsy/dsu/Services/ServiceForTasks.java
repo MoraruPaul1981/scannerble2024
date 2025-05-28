@@ -20,7 +20,7 @@ import androidx.work.WorkInfo;
 import androidx.work.WorkManager;
 
 
-import com.dsy.dsu.CnangeServers.BinessLogicPublicContent;
+import com.dsy.dsu.JbossAdress.JbossContext;
 import com.dsy.dsu.Errors.WriteErrorForAll.RecordNewErros;
 
 import com.dsy.dsu.BusinessLogicAll.SubClass_ДляСменыСтатусаНаЗадачиВыполненыйОтказОтмененный;
@@ -44,7 +44,7 @@ public class ServiceForTasks extends IntentService {////Service
     // TODO: 07.02.2022
     private    HashMap<String, String> hashMapХэшДляЗапоминиялUUID = new HashMap();
     // TODO: 12.10.2021  Ссылка Менеджер Потоков
-    private BinessLogicPublicContent Class_Engine_SQLГдеНаходитьсяМенеджерПотоков = null;
+    private JbossContext Class_Engine_SQLГдеНаходитьсяМенеджерПотоков = null;
     // TODO: 07.02.2022
     private  Long UUIDДляЗапускСогласованияПришедшегоЗАДАНИЕ;
     // TODO: 07.02.2022

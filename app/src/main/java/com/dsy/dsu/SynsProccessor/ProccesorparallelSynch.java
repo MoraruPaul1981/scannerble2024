@@ -1216,7 +1216,7 @@ try{
         try {
             Log.d(this.getClass().getName(), " имяТаблицаAsync " + имяТаблицаAsync + " БуферGetByteJson " +БуферGetByteJson.length );
             //TODO БУфер JSON от Сервера
-            //  ObjectMapper jsonGenerator = new BinessLogicPublicContent(context).getGeneratorJackson();
+            //  ObjectMapper jsonGenerator = new JbossContext(context).getGeneratorJackson();
 
             final JsonParser jsonParser= jsonGenerator.createParser(БуферGetByteJson,0,БуферGetByteJson.length);
             JsonNode jsonNodeParentMAP= jsonParser.readValueAsTree();
@@ -1327,7 +1327,7 @@ try{
                             + " КурсорДляОтправкиДанныхНаСерверОтАндройда "+КурсорДляОтправкиДанныхНаСерверОтАндройда.getCount() );
 
 
-                    //   ObjectMapper jsonGenerator = new BinessLogicPublicContent(context).getGeneratorJackson();
+                    //   ObjectMapper jsonGenerator = new JbossContext(context).getGeneratorJackson();
                     SimpleModule module = new SimpleModule();
                     // TODO: 11.09.2023  какая текущапя таблица
                     if (Таблицы.equalsIgnoreCase("materials_databinary")

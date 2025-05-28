@@ -1,4 +1,4 @@
-package com.dsy.dsu.Hilt.JbossAdrress.qualifiers;
+package com.dsy.dsu.JbossAdress.JbossHilt.intarfaces;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;

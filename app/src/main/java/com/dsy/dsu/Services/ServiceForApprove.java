@@ -14,7 +14,7 @@ import androidx.lifecycle.MutableLiveData;
 
 import com.dsy.dsu.Errors.WriteErrorForAll.RecordNewErros;
 import com.dsy.dsu.BusinessLogicAll.Class_Get_Json_1C;
-import com.dsy.dsu.CnangeServers.BinessLogicPublicContent;
+import com.dsy.dsu.JbossAdress.JbossContext;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import java.util.Date;
@@ -30,7 +30,7 @@ public class ServiceForApprove extends IntentService {////Service
     private Integer PROCESS_IDСогласования;
     private  String ИмяСлужбыУведомленияДляСогласование;
     private  HashMap<String, String> hashMapХэшДляЗапоминиялUUID = new HashMap();
-    private BinessLogicPublicContent Class_Engine_SQLГдеНаходитьсяМенеджерПотоков = null;
+    private JbossContext Class_Engine_SQLГдеНаходитьсяМенеджерПотоков = null;
 
     public LocalBinderДляСогласования localBinderДляСогласования = new LocalBinderДляСогласования();
     private  Context context;

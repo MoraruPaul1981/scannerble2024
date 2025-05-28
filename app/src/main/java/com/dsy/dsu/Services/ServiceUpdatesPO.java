@@ -24,7 +24,7 @@ import com.dsy.dsu.BootAndAsync.Model.DowloadUpdatePO.DeletingFiles.GetDeletingF
 import com.dsy.dsu.BootAndAsync.Model.EventsBus.MessageEvensBusNetworkStatuses;
 import com.dsy.dsu.BusinessLogicAll.CoreBinessLogic.CoreBinessLogics;
 import com.dsy.dsu.Errors.WriteErrorForAll.RecordNewErros;
-import com.dsy.dsu.CnangeServers.BinessLogicPublicContent;
+import com.dsy.dsu.JbossAdress.JbossContext;
 import com.dsy.dsu.Hilt.getSSLSocketFactory2.QualifiergetsslSocketFactory2;
 
 import org.greenrobot.eventbus.EventBus;
@@ -321,7 +321,7 @@ public class ServiceUpdatesPO extends IntentService {////Service
 
             // TODO: 08.01.2022 Полученм JSON File  для анализа
             File ФайлJsonОтСервера = new CoreBinessLogics(getApplicationContext()).
-                    МетодЗагрузкиОбновлениеПОсСервера(new BinessLogicPublicContent(getApplicationContext()).getСсылкаНаРежимСервераОбновлениеПО(),
+                    МетодЗагрузкиОбновлениеПОсСервера(new JbossContext(getApplicationContext()).getСсылкаНаРежимСервераОбновлениеПО(),
                             getApplicationContext(), ИмяСерверИзХранилица ,ПортСерверИзХранилица,"FileJsonUpdatePO",
                             "update_dsu1.json","application/json",getsslSocketFactory2);
 

@@ -1,4 +1,4 @@
-package com.dsy.dsu.CnangeServers;
+package com.dsy.dsu.JbossAdress;
 import android.content.Context;
 import android.util.Log;
 
@@ -7,9 +7,9 @@ import com.dsy.dsu.BusinessLogicAll.WorkerTables.SubClassCreatingMainAllTables;
 
 import java.util.Date;
 
-public  class BinessLogicPublicContent extends SubClassCreatingMainAllTables {
+public  class JbossContext   {
     private  Context context;
-    public BinessLogicPublicContent(Context context) {
+    public JbossContext(Context context) {
         this.context=context;
         Log.d(context.getClass().getName(), "\n"
                 + " время: " + new Date() + "\n+" +
@@ -21,11 +21,9 @@ public  class BinessLogicPublicContent extends SubClassCreatingMainAllTables {
     private   String  СсылкаНаРежимСервера;
     // TODO: 19.02.2024
     private   String  СсылкаСервераТип="jboss-1.0-SNAPSHOT";
-   /// private   String  СсылкаСервераТип="jbossbackend-1.0-SNAPSHOT";//todo ТИР backend  Gradle
+
 
     public String getСсылкаНаРежимСервераТабель() {
-    //   СсылкаНаРежимСервера="dsu1.glassfish.atomic";//TODO РЕЛИЗ
-        //СсылкаНаРежимСервера="jboss-1.0-SNAPSHOT/dsu1.glassfish.atomic";//TODO РЕЛИЗ
         СсылкаНаРежимСервера=СсылкаСервераТип+"/sous.jboss.tabel";//TODO РЕЛИЗ
         return СсылкаНаРежимСервера.trim();
     }
@@ -37,8 +35,6 @@ public  class BinessLogicPublicContent extends SubClassCreatingMainAllTables {
 
     private   String  СсылкаНаРежимСервераRuntime;
     public String getСсылкаНаРежимСервераRuntime() {
-        //   СсылкаНаРежимСервера="dsu1.glassfish.atomic";//TODO РЕЛИЗ
-        //СсылкаНаРежимСервера="jboss-1.0-SNAPSHOT/dsu1.glassfish.atomic";//TODO РЕЛИЗ
         СсылкаНаРежимСервераRuntime=СсылкаСервераТип+"/sous.jboss.runtimejboss";//TODO РЕЛИЗ
         return СсылкаНаРежимСервераRuntime.trim();
     }

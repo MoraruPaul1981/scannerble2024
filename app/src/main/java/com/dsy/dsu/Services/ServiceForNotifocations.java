@@ -14,7 +14,7 @@ import androidx.annotation.Nullable;
 import androidx.work.WorkInfo;
 import androidx.work.WorkManager;
 
-import com.dsy.dsu.CnangeServers.BinessLogicPublicContent;
+import com.dsy.dsu.JbossAdress.JbossContext;
 import com.dsy.dsu.Errors.WriteErrorForAll.RecordNewErros;
 import com.dsy.dsu.Chats.MainActivity_List_Chats;
 
@@ -29,7 +29,7 @@ public class ServiceForNotifocations extends Service {////Service
     String ИмяСлужбыУведомленияДляЧата;
     HashMap<String, String> hashMapХэшДляЗапоминиялUUID = new HashMap();
     // TODO: 07.02.2022
-    BinessLogicPublicContent Class_Engine_SQLГдеНаходитьсяМенеджерПотоков = null;
+    JbossContext Class_Engine_SQLГдеНаходитьсяМенеджерПотоков = null;
     // TODO: 12.10.2021  Ссылка Менеджер Потоков
     Long UUIDДляЗапускСогласованияПришедшегоЗАДАНИЕ;
 
@@ -120,7 +120,7 @@ public class ServiceForNotifocations extends Service {////Service
                     // TODO: 13.11.2021  ПОКАЗЫВАЕМ СТАТУС ПОСЛЕ ОТРАБОТАНГНЙО WORK MANAGER  ПРИ Уведомления для Чата         // TODO: 13.11.2021  ПОКАЗЫВАЕМ СТАТУС ПОСЛЕ ОТРАБОТАНГНЙО WORK MANAGER  ПРИ Уведомления для Чата
     
                     Log.w(getApplicationContext().getClass().getName(), " После НАЖАТИЕ НА КНОПКУ ЗАКРЫТЬ  Выкючение в ServiceForNotifocations Внутри СЛУЖБЫ " +
-                            " MyWork_Notifocations_Уведомления_Для_Задачи " + ИмяСлужбыУведомленияДляЧата + "\n"
+                            " MyWork_NotifocationsForTasks " + ИмяСлужбыУведомленияДляЧата + "\n"
                             + " getState  " +
                             ИнформацияОЗапущенойСлужбе.getState().name() + "\n" +
                             " isFinished  " +
