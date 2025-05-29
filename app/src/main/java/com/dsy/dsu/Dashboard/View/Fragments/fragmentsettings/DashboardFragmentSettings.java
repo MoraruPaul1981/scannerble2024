@@ -82,45 +82,31 @@ import kotlin.Unit;
 @AndroidEntryPoint
 public class DashboardFragmentSettings extends  DialogFragment {
     // TODO: Rename parameter arguments, choose names that match
-
     private  ClassBiznesLogikaSettings classBiznesLogikaSettings;
-
 
     private FragmentManager fragmentManager;
     private FragmentTransaction fragmentTransaction;
-
     private AlertDialog DialogBox=null;
     private  Handler handlerAsync;
-    private MaterialButton КнопкаоСистеме, КнопкаПользователи ,  КнопкаОбменДанными, КнопкаОбновление,КнопкаОшибки,КнопкаШаблоны;
+    private MaterialButton КнопкаоСистеме, КнопкаПользователи ,  КнопкаОбменДанными, КнопкаОбновлениеПО,КнопкаОшибки,КнопкаШаблоны;
     private Animation  animation6;
     private TextView TextViewLogo;
     private LifecycleOwner lifecycleOwner;
     private MaterialButton bottonBack;
-
     private ServiceUpdatesPO.localBinderОбновлениеПО localBinderОбновлениеПО;//TODO новаЯ
-
     private Subject<ServiceUpdatesPO.localBinderОбновлениеПО> UpdatePublish;
-
-
     private   ServiceConnection  connectionОбновлениеПО;
-
-
-
-
-    GetComponentActivityBootService blInnerMainActivityBootAndAsync;
+    protected   GetComponentActivityBootService blInnerMainActivityBootAndAsync;
     @Inject
-    StartServiceBootAndAsync startServiceBootAndAsync;
-
-
+    protected StartServiceBootAndAsync startServiceBootAndAsync;
     @Inject
     @QualifiergetsslSocketFactory2
-    SSLSocketFactory getsslSocketFactory2;
-
-
+    protected   SSLSocketFactory getsslSocketFactory2;
 
     @Inject
     @QualifierJbossServer3
-    public LinkedHashMap<Integer,String> getHiltPortJboss;
+    protected LinkedHashMap<Integer,String> getHiltPortJboss;
+
 
 
 
@@ -220,7 +206,7 @@ public class DashboardFragmentSettings extends  DialogFragment {
             КнопкаоСистеме   = (MaterialButton) materialcardview_settings.findViewById(R.id.КнопкаоСистеме); /////КНОПКА ТАБЕЛЬНОГО УЧЕТА
             КнопкаПользователи         = (MaterialButton) materialcardview_settings.findViewById(R.id.КнопкаПользователи); /////КНОПКА ТАБЕЛЬНОГО УЧЕТА
             КнопкаОбменДанными         = (MaterialButton) materialcardview_settings.findViewById(R.id.КнопкаОбменДанными); /////КНОПКА ТАБЕЛЬНОГО УЧЕТА
-            КнопкаОбновление = (MaterialButton) materialcardview_settings.findViewById(R.id.Кнопкаобновление); /////КНОПКА ТАБЕЛЬНОГО УЧЕТА
+            КнопкаОбновлениеПО = (MaterialButton) materialcardview_settings.findViewById(R.id.Кнопкаобновление); /////КНОПКА ТАБЕЛЬНОГО УЧЕТА
             КнопкаОшибки          = (MaterialButton) materialcardview_settings.findViewById(R.id.КнопкаОшибки); /////КНОПКА ТАБЕЛЬНОГО УЧЕТА
             КнопкаШаблоны          = (MaterialButton) materialcardview_settings.findViewById(R.id.КнопкаШаблоны); /////КНОПКА ТАБЕЛЬНОГО УЧЕТА
             TextViewLogo      = (TextView) materialcardview_settings.findViewById(R.id.TextViewLogo); /////КНОПКА ТАБЕЛЬНОГО УЧЕТА
@@ -798,7 +784,7 @@ public class DashboardFragmentSettings extends  DialogFragment {
             class  ClassUpdatePO{
            void методОбновлениеПО(){
                try{
-               RxView.clicks(КнопкаОбновление)
+               RxView.clicks(КнопкаОбновлениеПО)
                        .throttleFirst(3, TimeUnit.SECONDS)
                        .filter(s -> !s.toString().isEmpty())
                        .map(new Function<Unit, Object>() {
@@ -807,7 +793,7 @@ public class DashboardFragmentSettings extends  DialogFragment {
                                Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                                        " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
                                        " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" );
-                               return    КнопкаОбновление;
+                               return КнопкаОбновлениеПО;
                            }
                        })
                        .doOnError(new io.reactivex.rxjava3.functions.Consumer<Throwable>() {
@@ -848,7 +834,7 @@ public class DashboardFragmentSettings extends  DialogFragment {
                            if (СтатусРаботыСервера) {
                                startServiceBootAndAsync.startServiceBootAndAsync("lanchUpdatePO");
                            } else {
-                               Snackbar.make(КнопкаОбновление, "Нет сети !!!",Snackbar.LENGTH_LONG).setAction("Action",null).show();
+                               Snackbar.make(КнопкаОбновлениеПО, "Нет сети !!!",Snackbar.LENGTH_LONG).setAction("Action",null).show();
                            }
 
                            Log.i(this.getClass().getName(), " Из меню установкаОбновление ПО "

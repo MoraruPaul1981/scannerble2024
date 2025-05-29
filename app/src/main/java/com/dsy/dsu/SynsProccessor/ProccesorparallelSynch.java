@@ -174,8 +174,7 @@ public class ProccesorparallelSynch   {
                                     getstartingAsyncParallels.addAndGet(getLooTablesPOSTANDGET(operationSingle));
                                     // TODO: 30.09.2024
                                     // TODO: 15.09.2023
-                                    Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
-                                            " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                                    Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +" metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
                                             " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"
                                             + " getBufferFromJbossServerAllTables.size() " + getBufferFromJbossServerAllTables.size()
                                             +"\n" +" POOL NAMES "+Thread.currentThread().getName()+"\n"+

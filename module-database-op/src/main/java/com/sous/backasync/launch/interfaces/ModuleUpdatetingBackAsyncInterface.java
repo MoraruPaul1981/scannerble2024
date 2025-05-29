@@ -14,7 +14,7 @@ public interface ModuleUpdatetingBackAsyncInterface {
     Integer getModuleUpdate(@NonNull String Таблица,@NonNull ContentValues contentValuesModuleBackAsync);
 
     @SuppressLint("NewApi")
-    Integer getModuleSystemUpdate(@NonNull String Таблица,@NonNull ContentValues contentValuesModuleBackAsync);
+    Integer getModuleSystemUpdate(@NonNull String Таблица, @NonNull ContentValues contentValuesModuleBack,String selection,  String[] selectionArgs);
 
 
 }

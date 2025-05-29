@@ -22,6 +22,8 @@ import com.dsy.dsu.BusinessLogicAll.WorkerTables.SubClassCreatingMainAllTables;
 import com.dsy.dsu.JbossAdress.JbossContext;
 import com.dsy.dsu.Errors.WriteErrorForAll.RecordNewErros;
 import com.dsy.dsu.Passwords.View.MainActivityPasswords;
+import com.sous.backasync.launch.ModuleDeleting;
+import com.sous.backasync.launch.ModuleUpdating;
 
 
 import java.security.InvalidKeyException;
@@ -192,11 +194,11 @@ public class Class_Clears_Tables {
 //
         Integer СменаДанных = 0;
         try {
-            Uri uri = Uri.parse("content://com.dsy.dsu.providerdatabasecurrentoperations/"+ИмяТаблицы+"");
             Log.d(this.getClass().getName(), "  ИмяТаблицы "+ИмяТаблицы+"" );
-
-            ContentResolver contentResolver=context.getContentResolver();
-            СменаДанных=  contentResolver.delete(uri,null,null);
+            // TODO: 14.05.2025
+            ModuleDeleting moduleDeleting = new ModuleDeleting(context);
+            // TODO: 03.02.2025 update new back
+            СменаДанных=    moduleDeleting.getModuleSystemDelete(ИмяТаблицы, null,new String[]{null,null});
             Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                     ///
                     Log.d(context.getClass().getName(), " РезультатУдалениеОчисткиТаблиц" + "--" + СменаДанных));/////
@@ -247,31 +249,28 @@ public class Class_Clears_Tables {
     }
 
     // TODO: 09.09.2021 delete data for tabels
-    protected Integer методСменыДанныхMODIFITATION_Client(String ИмяТаблицы, Context context) {
+    protected Integer методСменыДанныхMODIFITATION_Client(String ТекущееИмяТаблицы, Context context) {
 //
-        Integer РезультатУдалениеОчисткиТаблиц = 0;
+        Integer РезультатОбновлениеОчисткиТаблиц = 0;
         try {
-            Uri uri = Uri.parse("content://com.dsy.dsu.providerdatabasecurrentoperations/MODIFITATION_Client ");
-            Log.d(this.getClass().getName(), "  ИмяТаблицы MODIFITATION_Client  " );
+
+            String getTableRoot= "MODIFITATION_Client";
+            ModuleUpdating moduleUpdating = new ModuleUpdating(context);
             ContentValues contentValuesСменаДанных=new ContentValues();
-            String Дата =     new Class_Generation_Data(context).ГлавнаяДатаИВремяОперацийСБазойДанныхДОП();
-
-
-            contentValuesСменаДанных.put("localversionandroid", "1901-01-10 00:00:00");
-            contentValuesСменаДанных.put("versionserveraandroid", "1901-01-10 00:00:00");
+            contentValuesСменаДанных.put("localversionandroid", "2000-01-10 00:00:00");
+            contentValuesСменаДанных.put("versionserveraandroid", "2000-01-10 00:00:00");
 
             contentValuesСменаДанных.put("localversionandroid_version", 0);
             contentValuesСменаДанных.put("versionserveraandroid_version", 0);
 
-
-            ContentResolver contentResolver=context.getContentResolver();
-          Integer  СменаДанных=  contentResolver.update(uri, contentValuesСменаДанных,"name=?",new String[]{String.valueOf(ИмяТаблицы)});
+            // TODO: 03.02.2025 update new back
+            РезультатОбновлениеОчисткиТаблиц=
+                    moduleUpdating.getModuleSystemUpdate(getTableRoot,contentValuesСменаДанных,"name=?",new String[]{ТекущееИмяТаблицы});
             Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
-            ///
-            Log.d(context.getClass().getName(), " РезультатУдалениеОчисткиТаблиц" + "--" + РезультатУдалениеОчисткиТаблиц));/////
+                    " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                    " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" + " РезультатОбновлениеОчисткиТаблиц "+РезультатОбновлениеОчисткиТаблиц );
         } catch (SQLException e) {
             e.printStackTrace();
-            ///метод запись ошибок в таблицу
             Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() + " Линия  :"
                     + Thread.currentThread().getStackTrace()[2].getLineNumber());
             // TODO: 01.09.2021 метод вызова
@@ -279,7 +278,7 @@ public class Class_Clears_Tables {
                     this.getClass().getName(), Thread.currentThread().getStackTrace()[2].getMethodName(),
                     Thread.currentThread().getStackTrace()[2].getLineNumber());
         }
-        return РезультатУдалениеОчисткиТаблиц;
+        return РезультатОбновлениеОчисткиТаблиц;
     }
 
 

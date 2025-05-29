@@ -118,14 +118,14 @@ public class ModuleUpdating implements ModuleUpdatetingBackAsyncInterface {
 
     @SuppressLint("NewApi")
     @Override
-    public Integer getModuleSystemUpdate(@NonNull String Таблица, @NonNull ContentValues contentValuesModuleBack) {
+    public Integer getModuleSystemUpdate(@NonNull String Таблица, @NonNull ContentValues contentValuesModuleBack,String selection,  String[] selectionArgs) {
         int UpdatingBack = 0;
         try{
             if (contentValuesModuleBack!=null) {
                 Uri uri = Uri.parse("content://"+getNameProviderSystem+"/" + Таблица + "");
                 // TODO: 28.01.2025
                 ContentResolver contentProviderUpdate=context.getContentResolver();
-                UpdatingBack= contentProviderUpdate.acquireContentProviderClient(uri).update(uri,contentValuesModuleBack,null,null);
+                UpdatingBack= contentProviderUpdate.acquireContentProviderClient(uri).update(uri,contentValuesModuleBack,selection,selectionArgs);
 
                 Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                         " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
