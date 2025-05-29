@@ -707,7 +707,7 @@ public class DashboardFragmentSettings extends  DialogFragment {
                                                         handlerAsync,
                                                         prograssbarСменаДанныхПользователя);
 
-                                                  class_clears_tables.методСменаДанныхПользователя(getActivity(), getActivity());
+                                                  class_clears_tables.методСменаДанныхWorkerПользователя(getActivity(), getActivity());
 
                                             Log.d(this.getClass().getName(), "\n" + " class " +
                                                     Thread.currentThread().getStackTrace()[2].getClassName()

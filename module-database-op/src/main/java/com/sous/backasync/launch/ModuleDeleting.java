@@ -122,14 +122,14 @@ public class ModuleDeleting implements ModuleDeletingBackAsyncInterface {
 
     @SuppressLint("NewApi")
     @Override
-    public Integer getModuleSystemDelete(@NonNull String Таблица, @NonNull String selection,  @NonNull String[] selectionArgs) {
+    public Integer getModuleSystemDelete(@NonNull String Таблица ) {
         Integer getDeletingBack=0;
         try{
             if (Таблица!=null) {
                 Uri uri = Uri.parse("content://"+getNameProviderSystem+"/" + Таблица + "");
                 // TODO: 28.01.2025
                 ContentResolver contentProviderInsert=context.getContentResolver();
-                getDeletingBack= contentProviderInsert.acquireContentProviderClient(uri).delete(uri,selection,selectionArgs);
+                getDeletingBack= contentProviderInsert.acquireContentProviderClient(uri).delete(uri,null,null);
 
 
                 getDeletingBack=

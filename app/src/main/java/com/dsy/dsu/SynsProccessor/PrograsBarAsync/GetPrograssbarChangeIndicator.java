@@ -10,8 +10,7 @@ import androidx.annotation.NonNull;
 
 import com.dsy.dsu.BootAndAsync.Model.EventsBus.MessageEvensBusPrograssBar;
 import com.dsy.dsu.BusinessLogicAll.Class_Visible_Processing_Async;
-import com.dsy.dsu.BusinessLogicAll.WorkerTables.SubClassCreatingMainAllTables;
-import com.dsy.dsu.JbossAdress.JbossContext;
+import com.dsy.dsu.BusinessLogicAll.WorkerTables.GetWorkerAndSystemTables;
 import com.dsy.dsu.Errors.WriteErrorForAll.RecordNewErros;
 
 import org.greenrobot.eventbus.EventBus;
@@ -30,7 +29,7 @@ Context context;
         try {
 
             //TODO Таблицы ОТ  Андройда
-            CopyOnWriteArrayList<String> getMainTabelAllAndroid=    new SubClassCreatingMainAllTables().getWorkerTablesALl(context);
+            CopyOnWriteArrayList<String> getMainTabelAllAndroid=    new GetWorkerAndSystemTables().getWorkerTablesALl(context);
 
             int Проценты;
             Integer ПозицияТекущейТаблицы=      getMainTabelAllAndroid.indexOf(имяТаблицаAsync)+1;

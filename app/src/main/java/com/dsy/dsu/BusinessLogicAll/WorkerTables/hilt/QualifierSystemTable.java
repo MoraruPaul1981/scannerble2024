@@ -1,4 +1,4 @@
-package com.dsy.dsu.BusinessLogicAll.WorkerTables;
+package com.dsy.dsu.BusinessLogicAll.WorkerTables.hilt;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
@@ -10,4 +10,4 @@ import javax.inject.Qualifier;
 @Qualifier
 @Retention(RetentionPolicy.RUNTIME)
 @Target({ElementType.FIELD, ElementType.METHOD, ElementType.TYPE, ElementType.PARAMETER})
-public @interface QualifierWorkerTable {}
+public @interface QualifierSystemTable {}

@@ -19,13 +19,16 @@ import androidx.annotation.Nullable;
 
 import com.dsy.dsu.AllDatabases.bl_SettingandSucceesLogin.SettingAndLoginBinesslogicSettingsTabels;
 import com.dsy.dsu.AllDatabases.bl_SettingandSucceesLogin.SettingAndLoginBinesslogicSuccessLogin;
+import com.dsy.dsu.BusinessLogicAll.WorkerTables.hilt.HiltSystemTableCoreApp;
 import com.dsy.dsu.Errors.WriteErrorForAll.RecordNewErros;
 import com.dsy.dsu.Hilt.Sqlitehilt.AppModuleSQLlite;
+import com.sous.backasync.businesslogic.hill.HiltWorkerTableBarckAync;
 
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Optional;
 import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.function.Consumer;
 import java.util.function.Supplier;
 import java.util.stream.Stream;
@@ -36,6 +39,7 @@ public class ContentProviderForSystemTables extends ContentProvider  {
     private   UriMatcher uriMatcherДЛяПровайдераКонтентБазаДанных;
 
     private  SQLiteDatabase sqlite;
+    private Integer ТекущаяСтрокаПриДОбавлениииURL=0;
 
     public ContentProviderForSystemTables() throws InterruptedException {
         try{
@@ -61,13 +65,20 @@ public class ContentProviderForSystemTables extends ContentProvider  {
         try{
             // TODO: 13.05.2025 ПРОВАЙДЕР
             sqlite = EntryPoints.get(getContext(), AppModuleSQLlite.class).getAppModuleSQLlite();
-
-            uriMatcherДЛяПровайдераКонтентБазаДанных=new UriMatcher(2);
-
-            uriMatcherДЛяПровайдераКонтентБазаДанных.addURI("com.dsy.dsu.providerforsystemtables","successlogin",0);
-            uriMatcherДЛяПровайдераКонтентБазаДанных.addURI("com.dsy.dsu.providerforsystemtables","settings_tabels",1);
-            uriMatcherДЛяПровайдераКонтентБазаДанных.addURI("com.dsy.dsu.providerforsystemtables","MODIFITATION_Client",2);
-
+            // TODO: 17.01.2025
+            CopyOnWriteArrayList<String> getSystemTablesALl=     EntryPoints.get(getContext(), HiltSystemTableCoreApp.class).getSystemTablesALl();
+            Log.d(this.getClass().getName(), " getSystemTablesALl "+getSystemTablesALl );
+            uriMatcherДЛяПровайдераКонтентБазаДанных=new UriMatcher(getSystemTablesALl.size());
+            getSystemTablesALl.forEach(new java.util.function.Consumer<String>() {
+                @Override
+                public void accept(String ЭлементТаблица) {
+                    uriMatcherДЛяПровайдераКонтентБазаДанных.addURI("com.dsy.dsu.providerforsystemtables",
+                            ЭлементТаблица.toString(),ТекущаяСтрокаПриДОбавлениииURL);
+                    Log.d(this.getClass().getName(), " ЭлементТаблица "+ЭлементТаблица
+                            + " ТекущаяСтрокаПриДОбавлениииURL " +ТекущаяСтрокаПриДОбавлениииURL);
+                    ТекущаяСтрокаПриДОбавлениииURL++;
+                }
+            });
             if (sqlite!=null) {
                 Log.d(this.getClass().getName(),"\n"
                         + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
