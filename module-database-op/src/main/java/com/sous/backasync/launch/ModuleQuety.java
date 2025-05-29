@@ -32,15 +32,10 @@ import dagger.hilt.components.SingletonComponent;
 @Module
 @InstallIn(SingletonComponent.class)
 public class ModuleQuety implements ModuleQueryBackAsyncInterface {
-
-
-
-    Context context;
-
+  private   final String getNameProvider="com.sous.backasync.provider";
+    private  Context context;
     public @Inject ModuleQuety(@ApplicationContext Context context) {
-
         this.context=context;
-
         Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                 " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
                 " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n");

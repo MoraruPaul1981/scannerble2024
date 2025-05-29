@@ -28,8 +28,8 @@ import dagger.hilt.components.SingletonComponent;
 @Module
 @InstallIn(SingletonComponent.class)
 public class ModuleDeleting implements ModuleDeletingBackAsyncInterface {
-
-    Context context;
+    private final String getNameProvider="com.sous.backasync.provider";
+  private   Context context;
     public @Inject ModuleDeleting(@ApplicationContext Context context) {
         this.context=context;
         Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +

@@ -30,9 +30,8 @@ import dagger.hilt.components.SingletonComponent;
 @Module
 @InstallIn(SingletonComponent.class)
 public class ModuleСalled implements ModuleСalledBackAsyncInterface {
-
-    Context context;
-
+  private   Context context;
+    private   final String getNameProvider="com.sous.backasync.provider";
     public @Inject ModuleСalled(@ApplicationContext Context context) {
         this.context = context;
         Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +

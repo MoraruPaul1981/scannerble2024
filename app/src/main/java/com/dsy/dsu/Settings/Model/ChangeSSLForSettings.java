@@ -148,7 +148,7 @@ public class ChangeSSLForSettings {
                   contentValuesChangeModeSLL.put("mode_ssl",getchangeMode);
                   contentValuesChangeModeSLL.put("date_update",getNewDateForError);
                   // TODO: 03.02.2025 update new back
-                  recordingShiftdSSLconnectionMode=        moduleUpdating.getModuleUpdate(ИмяТаблицы,contentValuesChangeModeSLL);
+                  recordingShiftdSSLconnectionMode=        moduleUpdating.getModuleSystemUpdate(ИмяТаблицы,contentValuesChangeModeSLL);
                   Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                           " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
                           " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" + " recordingShiftdSSLconnectionMode "+recordingShiftdSSLconnectionMode );
