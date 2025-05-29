@@ -48,13 +48,13 @@ public class ModulePortJboss {
                  // TODO: 28.05.2025 release
                  HiltJbossBinessLogicIntarface     hiltJbossBinessLogicIntarfaceRelease=new JbossLinktoRelease();
                  // TODO: 06.10.2024 ответ  сам адрес с чем подкбчаться
-                 getJbossPort=   hiltJbossBinessLogicIntarfaceRelease.selectingLinkJbossAdress(preferencesJboss,context,getModeTrasport,8888);
+                 getJbossPort=   hiltJbossBinessLogicIntarfaceRelease.selectingLinkJbossAdress(preferencesJboss,context,getModeTrasport,8888); //TODO РЕЛИЗ  на Обычный СЕРВЕР JBOSS
                  break;
              case "https":
                  // TODO: 28.05.2025 release
                  HiltJbossBinessLogicIntarface     hiltJbossBinessLogicIntarfaceReleaseSSL=new JbossLinktoRelease();
                  // TODO: 06.10.2024 ответ  сам адрес с чем подкбчаться
-                 getJbossPort=   hiltJbossBinessLogicIntarfaceReleaseSSL.selectingLinkJbossAdress(preferencesJboss,context,getModeTrasport,8889);
+                 getJbossPort=   hiltJbossBinessLogicIntarfaceReleaseSSL.selectingLinkJbossAdress(preferencesJboss,context,getModeTrasport,8890); //TODO РЕЛИЗ на SSL СЕРВЕР JBOSS
                  break;
          }
 

@@ -46,7 +46,7 @@ public class MainActivity_Settings extends AppCompatActivity {
     private int ЕстьСтроки;
     private MaterialButton imageViewСтрелкаВнутриНастроек, КнопкаСохранениеОрганизации;
 
-    private Switch СвичДляWIFI, switchАвтоЗаполенияВТАбелеВыходных, switchСкрытыеПоляПолучениеМатериалов, switchsslcomunications;
+    private Switch СвичДляWIFI, switchАвтоЗаполенияВТАбелеВыходных, switchСкрытыеПоляПолучениеМатериалов, switchJbossЗащищеный;
     private Context context;
     private TextView textViewИмяПрограммы;
     private TextView textViewВерсияПрограммы;
@@ -104,7 +104,7 @@ public class MainActivity_Settings extends AppCompatActivity {
             СвичДляWIFI = (Switch) findViewById(R.id.switchWIFI);
             switchАвтоЗаполенияВТАбелеВыходных = (Switch) findViewById(R.id.switchАвтоЗаполенияВТАбелеВыходных);
             switchСкрытыеПоляПолучениеМатериалов = (Switch) findViewById(R.id.switchСкрытыеПоляПолучениеМатериалов);
-            switchsslcomunications = (Switch) findViewById(R.id.switchsslcomunications);
+            switchJbossЗащищеный = (Switch) findViewById(R.id.switchsslcomunications);
 
 
             Log.d(getApplicationContext().getClass().getName(), "\n"
@@ -133,7 +133,7 @@ public class MainActivity_Settings extends AppCompatActivity {
             settheCurrentVersionoftheProgramVersion();
 
             // TODO: 08.10.2024 SSL
-            ChangeSSLForSettings sslForSettings = new ChangeSSLForSettings(switchsslcomunications, getApplicationContext());
+            ChangeSSLForSettings sslForSettings = new ChangeSSLForSettings(switchJbossЗащищеный, getApplicationContext());
 
             sslForSettings.changeSwitcSllSimple();
             sslForSettings.changeSwitcSllSimpleLister();
@@ -204,21 +204,23 @@ public class MainActivity_Settings extends AppCompatActivity {
     @SuppressLint("Range")
     protected void методВычисляетПоследнуюДатуСинхронищацииССервром() {
         // TODO: 15.05.2025
-        Cursor Курсор_ВытаскиваемПоследнуюДатуСинхрониазииССерором = null;
+        Cursor CursorlastDateAsync = null;
         try {
             String ПоследнаяДата = null;
             // TODO: 14.05.2025
             String Текущаятаблицы = "MODIFITATION_Client";
             ModuleQuety moduleQuety = new ModuleQuety(context);
-            Cursor Курсор_ИщемПроведенЛиТАбельИлиНЕт = moduleQuety.getModuleQuery(Текущаятаблицы, "  (SELECT MAX(versionserveraandroid) AS MAX_R  FROM "+Текущаятаблицы+")  AND versionserveraandroid IS NOT NULL  ", null);
+            CursorlastDateAsync = moduleQuety.getModuleQuery(Текущаятаблицы,
+                    " SELECT MAX ( D.versionserveraandroid  ) " +
+                            "AS MAX_R  FROM " +  Текущаятаблицы.trim()+" AS D" , null);
             Log.d(this.getClass().getName(), "\n"
                     + " время: " + new Date() + "\n+" +
                     " Класс в процессе... " + this.getClass().getName() + "\n" +
-                    " метод в процессе... " + Thread.currentThread().getStackTrace()[2].getMethodName() + " Курсор_ИщемПроведенЛиТАбельИлиНЕт " + Курсор_ИщемПроведенЛиТАбельИлиНЕт);
+                    " метод в процессе... " + Thread.currentThread().getStackTrace()[2].getMethodName() + " CursorlastDateAsync " + CursorlastDateAsync);
             ////TODO   результат
-            if (Курсор_ВытаскиваемПоследнуюДатуСинхрониазииССерором.getCount() > 0) {
-                Курсор_ВытаскиваемПоследнуюДатуСинхрониазииССерором.moveToFirst();////
-                ПоследнаяДата = Курсор_ВытаскиваемПоследнуюДатуСинхрониазииССерором.getString(Курсор_ВытаскиваемПоследнуюДатуСинхрониазииССерором.getColumnIndex("MAX_R"));
+            if (CursorlastDateAsync.getCount() > 0) {
+                CursorlastDateAsync.moveToFirst();////
+                ПоследнаяДата = CursorlastDateAsync.getString(CursorlastDateAsync.getColumnIndex("MAX_R"));
                 Log.d(this.getClass().getName(), "ПоследнаяДата" + ПоследнаяДата);
             }
             if (ПоследнаяДата != null) {

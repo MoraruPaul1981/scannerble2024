@@ -38,6 +38,7 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.CopyOnWriteArrayList;
+import java.util.concurrent.Executors;
 import java.util.concurrent.atomic.AtomicLong;
 import java.util.function.IntPredicate;
 import java.util.function.LongBinaryOperator;
@@ -100,7 +101,7 @@ public class ProccesorparallelSynch   {
                // case  "СамыйПервыйЗапускСинхронизации":
                 case "ПовторныйЗапускСинхронизации2":
                     Flowable.fromIterable(getBufferFromJbossServerAllTables)
-                            .parallel().runOn(Schedulers.io())
+                            .parallel().runOn(Schedulers.from(Executors.newFixedThreadPool(2)))
                             .doOnNext(new Consumer<ConcurrentHashMap<String, String>>() {
                                 @Override
                                 public void accept(ConcurrentHashMap<String, String> operationMulti) throws Throwable {

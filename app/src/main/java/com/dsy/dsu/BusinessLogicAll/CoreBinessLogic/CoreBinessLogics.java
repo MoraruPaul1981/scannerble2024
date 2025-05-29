@@ -1295,11 +1295,11 @@ import okio.BufferedSink;
             // TODO: 14.05.2025  получение данных
             ModuleQuety moduleQuety=new ModuleQuety(context);
             Cursor Курсор_ПолучаемИмяСотрудникаИзТаблицыФИО   =moduleQuety.getModuleQuery(Текущаятаблицы,
-                    "  SELECT D.success_users,D.success_login  FROM "+Текущаятаблицы+" AS D  ORDER BY date_update DESC " , null);
+                    "  SELECT D.success_users,D.success_login  FROM "+Текущаятаблицы+" AS D  ORDER BY D.date_update DESC " , null);
 
             if(Курсор_ПолучаемИмяСотрудникаИзТаблицыФИО.getCount()>0){
                 Курсор_ПолучаемИмяСотрудникаИзТаблицыФИО.moveToFirst();
-                getSuccess_Users =           Курсор_ПолучаемИмяСотрудникаИзТаблицыФИО.getString(2).trim();
+                getSuccess_Users =           Курсор_ПолучаемИмяСотрудникаИзТаблицыФИО.getString(0).trim();
 
             }
             Курсор_ПолучаемИмяСотрудникаИзТаблицыФИО.close();
