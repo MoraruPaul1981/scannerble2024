@@ -1,4 +1,4 @@
-package com.dsy.dsu.BusinessLogicAll.WorkerTables.hilt;
+package com.dsy.dsu.BusinessLogicAll.WorkerTables;
 
 import java.util.concurrent.CopyOnWriteArrayList;
 
@@ -9,9 +9,7 @@ import dagger.hilt.components.SingletonComponent;
 
 @EntryPoint
 @InstallIn(SingletonComponent.class)
-public interface HiltSystemTableCoreApp {
+public interface HiltWorkerTableCoreApp {
     // TODO: 13.05.2025
-
-@QualifierSystemTable
-    CopyOnWriteArrayList<String> getSystemTablesALl();
+    CopyOnWriteArrayList<String> getWorkerTablesALl();
 }

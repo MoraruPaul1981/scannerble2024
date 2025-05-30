@@ -9,8 +9,6 @@ public interface ModuleInsertingBackAsyncInterface {
 
     // TODO: 28.01.2025
 
-
-
     Integer getModuleInsert(@NonNull Bundle bundleModuleBack);
     // TODO: 28.01.2025
     Integer getModuleInsert(@NonNull String Таблица, @NonNull ContentValues contentValuesModuleBackAsync);

@@ -9,10 +9,6 @@ import androidx.annotation.Nullable;
 public interface ModuleСalledBackAsyncInterface {
 
     // TODO: 28.01.2025
-
-
-
-
     @SuppressLint("NewApi")
     Bundle getModuleСalled(@NonNull String method, @Nullable String table, @Nullable Bundle extras);
 

@@ -31,7 +31,8 @@ import dagger.hilt.components.SingletonComponent;
 @InstallIn(SingletonComponent.class)
 public class ModuleСalled implements ModuleСalledBackAsyncInterface {
   private   Context context;
-    private   final String getNameProvider="com.sous.backasync.provider";
+    private    final  String getNameProvider="com.sous.backasync.provider";
+    private    final  String getNameProviderSystem="com.dsy.dsu.providerforsystemtables";
     public @Inject ModuleСalled(@ApplicationContext Context context) {
         this.context = context;
         Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +

@@ -8,13 +8,15 @@ import androidx.annotation.NonNull;
 public interface ModuleUpdatetingBackAsyncInterface {
     // TODO: 28.01.2025
     @SuppressLint("NewApi")
-    Integer getModuleUpdate(@NonNull String Таблица, @NonNull  ContentValues contentValuesModuleBack ,  @NonNull String selection,  @NonNull String[] selectionArgs);
+    Integer getModuleUpdate(@NonNull String Таблица, @NonNull  ContentValues contentValuesModuleBack ,
+                            @NonNull String selection,  @NonNull String[] selectionArgs);
 
     @SuppressLint("NewApi")
     Integer getModuleUpdate(@NonNull String Таблица,@NonNull ContentValues contentValuesModuleBackAsync);
 
     @SuppressLint("NewApi")
-    Integer getModuleSystemUpdate(@NonNull String Таблица, @NonNull ContentValues contentValuesModuleBack,String selection,  String[] selectionArgs);
+    Integer getModuleSystemUpdate(@NonNull String Таблица, @NonNull ContentValues contentValuesModuleBack,
+                                  @NonNull String selection, @NonNull String[] selectionArgs);
     Integer getModuleSystemUpdate(@NonNull String Таблица, @NonNull ContentValues contentValuesModuleBack );
 
 

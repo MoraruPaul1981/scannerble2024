@@ -39,7 +39,7 @@ import com.dsy.dsu.BootAndAsync.Model.BinesslogicActivityBoot.GetComponentActivi
 
 
 import com.dsy.dsu.BusinessLogicAll.CoreBinessLogic.CoreBinessLogics;
-import com.dsy.dsu.BusinessLogicAll.Class_Clears_Tables;
+import com.dsy.dsu.BusinessLogicAll.GetClearDataUserAnCnahgeData;
 import com.dsy.dsu.BusinessLogicAll.GetPingServers.GetPingServerJboss;
 import com.dsy.dsu.Dashboard.Model.bl_launchFragmentSettingsandDashbord.LaunchActivityDashboard;
 import com.dsy.dsu.Errors.WriteErrorForAll.RecordNewErros;
@@ -702,12 +702,12 @@ public class DashboardFragmentSettings extends  DialogFragment {
                                             prograssbarСменаДанныхПользователя.setCanceledOnTouchOutside(false);
                                             prograssbarСменаДанныхПользователя.setMessage("в процессе...");
                                             prograssbarСменаДанныхПользователя.show();
-                                            // TODO: 17.05.2025  Запускаем
-                                                Class_Clears_Tables class_clears_tables=     new Class_Clears_Tables(getActivity(),
-                                                        handlerAsync,
-                                                        prograssbarСменаДанныхПользователя);
 
-                                                  class_clears_tables.методСменаДанныхWorkerПользователя(getActivity(), getActivity());
+
+
+                                            // TODO: 17.05.2025  Запускаем
+                                            new GetClearDataUserAnCnahgeData(getActivity())
+                                                    .методСменаДанныхWorkerПользователя(getContext(),getActivity(),prograssbarСменаДанныхПользователя );
 
                                             Log.d(this.getClass().getName(), "\n" + " class " +
                                                     Thread.currentThread().getStackTrace()[2].getClassName()
