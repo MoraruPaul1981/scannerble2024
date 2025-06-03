@@ -45,7 +45,7 @@ import com.dsy.dsu.Dashboard.Model.bl_launchFragmentSettingsandDashbord.LaunchAc
 import com.dsy.dsu.Errors.WriteErrorForAll.RecordNewErros;
 
 import com.dsy.dsu.Errors.model.BinessLogicLaunchFragmenrError;
-import com.dsy.dsu.JbossAdress.JbossHilt.intarfaces.QualifierJbossServer3;
+import com.dsy.dsu.JbossAdress.JbossHilt.intarfaces.QualifierPortJboss;
 import com.dsy.dsu.Hilt.getSSLSocketFactory2.QualifiergetsslSocketFactory2;
 import com.dsy.dsu.Services.ServiceUpdatesPO;
 import com.dsy.dsu.Tabels.Templates.MainActivity_New_Templates;
@@ -104,7 +104,7 @@ public class DashboardFragmentSettings extends  DialogFragment {
     protected   SSLSocketFactory getsslSocketFactory2;
 
     @Inject
-    @QualifierJbossServer3
+    @QualifierPortJboss
     protected LinkedHashMap<Integer,String> getHiltPortJboss;
 
 
@@ -342,7 +342,7 @@ public class DashboardFragmentSettings extends  DialogFragment {
         try{
 
 
-            blInnerMainActivityBootAndAsync   .getEventBusUpdatePo(messageEvensBusUpdatePO);
+            blInnerMainActivityBootAndAsync   .getEventBusUpdatePo(messageEvensBusUpdatePO,getHiltPortJboss);
 
             Log.d(getContext().getClass().getName(), "\n"
                     + " время: " + new Date() + "\n+" +
@@ -705,9 +705,9 @@ public class DashboardFragmentSettings extends  DialogFragment {
 
 
 
-                                            // TODO: 17.05.2025  Запускаем
-                                            new GetClearDataUserAnCnahgeData(getActivity())
-                                                    .методСменаДанныхWorkerПользователя(getContext(),getActivity(),prograssbarСменаДанныхПользователя );
+                                            // TODO: 17.05.2025  Запускае
+                                            Integer ИменаТаблицыWorkerAndSystem=     new GetClearDataUserAnCnahgeData(getActivity())
+                                                    .changeTableWorkerUsers(getContext(),getActivity(),prograssbarСменаДанныхПользователя );
 
                                             Log.d(this.getClass().getName(), "\n" + " class " +
                                                     Thread.currentThread().getStackTrace()[2].getClassName()
