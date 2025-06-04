@@ -873,7 +873,7 @@ public class DashboardFragmentSettings extends  DialogFragment {
                                 // TODO Запусукаем  Фрагмент Главный Экран
                                 BinessLogicLaunchFragmenrError binessLogicLaunchFragmenrError =new BinessLogicLaunchFragmenrError( fragmentManager,getContext());
                                 // TODO: 27.03.2024 в зависомсти кто вызвает
-                                binessLogicLaunchFragmenrError.     launchErrorFragment(localBinderОбновлениеПО);
+                                binessLogicLaunchFragmenrError.     launchErrorFragment();
 
                                 Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                                         " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
