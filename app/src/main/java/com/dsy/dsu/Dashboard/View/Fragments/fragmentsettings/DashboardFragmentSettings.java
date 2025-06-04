@@ -903,12 +903,15 @@ public class DashboardFragmentSettings extends  DialogFragment {
             @Override
             public void onClick(View v) {
                 try {
-                    Intent Интент_BackВозвращаемАктивти = new Intent();
+                  /*  Intent Интент_BackВозвращаемАктивти = new Intent();
                     Интент_BackВозвращаемАктивти.setClass(getContext(), MainActivity_New_Templates.class); //
                     Интент_BackВозвращаемАктивти.setAction("FromFragmentSettings.class");
                     Интент_BackВозвращаемАктивти.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK   );
                     Интент_BackВозвращаемАктивти.putExtra("ЗапускШаблоновFaceAppБлокировкаКнопкиДа", true);
-                     startActivity(Интент_BackВозвращаемАктивти);
+                     startActivity(Интент_BackВозвращаемАктивти);*/
+
+                    Snackbar.make(v, " В разработке !!! ",Snackbar.LENGTH_LONG).setAction("Action",null).show();
+
                     Log.d(this.getClass().getName(), "" +
                             "                     case R.id.шабоны:");
                 } catch (Exception e) {
