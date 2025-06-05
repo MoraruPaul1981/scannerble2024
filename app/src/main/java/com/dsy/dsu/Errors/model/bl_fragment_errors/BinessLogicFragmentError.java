@@ -290,6 +290,7 @@ public class BinessLogicFragmentError {
         try{
             materialButtonОтправка.setClickable(false);
             materialButtonОтправка.setFocusable(false);
+            materialButtonОтправка.setVisibility(View.INVISIBLE);
             materialButtonОтправка.requestLayout();
             materialButtonОтправка.refreshDrawableState();
             Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
