@@ -44,7 +44,7 @@ public class ModuleDeleting implements ModuleDeletingBackAsyncInterface {
     public Integer getModuleDelete(@NonNull String Таблица, @NonNull String selection,  @NonNull String[] selectionArgs) {
         Integer getDeletingBack=0;
         try{
-            if (selection!=null) {
+            if (Таблица!=null) {
                 Uri uri = Uri.parse("content://"+getNameProvider+"/" + Таблица + "");
                 // TODO: 28.01.2025
                 ContentResolver contentProviderInsert=context.getContentResolver();

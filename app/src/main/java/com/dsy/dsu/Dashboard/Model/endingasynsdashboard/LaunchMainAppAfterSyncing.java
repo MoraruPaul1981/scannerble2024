@@ -21,14 +21,12 @@ import java.util.Date;
 public class LaunchMainAppAfterSyncing {
 
 private Activity activity;
-private FragmentManager fragmentManager;
 
-    public LaunchMainAppAfterSyncing(Activity activity, @NonNull FragmentManager fragmentManager) {
+    public LaunchMainAppAfterSyncing(Activity activity) {
         this.activity = activity;
-        this.fragmentManager = fragmentManager;
     }
 
-    public void appAfterSyncingDashboard( ){
+    public void appAfterSyncingDashboard( @NonNull FragmentManager fragmentManager ){
         try {
           LaunchActivityDashboard launchActivityDashboard=new LaunchActivityDashboard( fragmentManager,activity);
             // TODO: 27.03.2024 в зависомсти кто вызвает
@@ -57,8 +55,9 @@ private FragmentManager fragmentManager;
 
 
 
-    public void appAfterSyncingPassword( ) {
+    public void appAfterSyncingActivityPassword( @NonNull Activity activity,@NonNull String stepAsync) {
         try{
+            /////TODO ЗАПУСКАМ ОБНОЛВЕНИЕ ДАННЫХ С СЕРВЕРА ПЕРЕРД ЗАПУСКОМ ПРИЛОЖЕНИЯ ВСЕ ПРИЛОЖЕНИЯ ДСУ-1
             Uri uri = Uri.parse("package:" + BuildConfig.APPLICATION_ID);
             Intent Интент_ЗапускаетPasswords = new Intent(Settings.ACTION_MANAGE_APP_ALL_FILES_ACCESS_PERMISSION, uri);
             Интент_ЗапускаетPasswords.setClass(activity, MainActivityPasswords.class);
@@ -68,9 +67,11 @@ private FragmentManager fragmentManager;
             Интент_ЗапускаетPasswords.  addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
             Интент_ЗапускаетPasswords.  addFlags(Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
             Интент_ЗапускаетPasswords.setAction("MainActivityPasswords.class");
+            Интент_ЗапускаетPasswords.putExtra("stepAsync",stepAsync);
+            // TODO: 05.06.2025
             activity.startActivity(Интент_ЗапускаетPasswords);//tso
             // TODO: 11.04.2025 exit
-            activity.finish();
+            activity.finishAffinity();
 
             Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                     " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
