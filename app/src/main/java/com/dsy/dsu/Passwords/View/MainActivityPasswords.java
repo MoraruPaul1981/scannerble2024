@@ -6,14 +6,18 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.ActivityInfo;
+import android.content.pm.PackageManager;
 import android.content.res.Configuration;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Environment;
 import android.os.Message;
 import android.os.VibrationEffect;
 import android.os.Vibrator;
+import android.provider.Settings;
 import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
@@ -22,8 +26,14 @@ import android.widget.Button;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
+import androidx.activity.result.ActivityResult;
+import androidx.activity.result.ActivityResultCallback;
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
+import androidx.multidex.BuildConfig;
 
 
 import com.dsy.dsu.BootAndAsync.View.MainActivityBootAndAsync;
@@ -180,7 +190,27 @@ public class MainActivityPasswords extends AppCompatActivity {
                     " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
                     " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"
                     + " ИменаТаблицыWorkerAndSystem " +ИменаТаблицыWorkerAndSystem);
+            // TODO: 05.06.2025
 
+            // TODO: 05.06.2025
+            if( ContextCompat.checkSelfPermission(getApplicationContext(),
+                    "Manifest.permission.MANAGE_EXTERNAL_STORAGE")
+                    == PackageManager.PERMISSION_GRANTED){
+                Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                        " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                        " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"
+                        + " ИменаТаблицыWorkerAndSystem " +ИменаТаблицыWorkerAndSystem);
+
+            }else {
+                Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                        " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                        " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"
+                        + " ИменаТаблицыWorkerAndSystem " +ИменаТаблицыWorkerAndSystem);
+            }
+            Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                    " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                    " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"
+                    + " ИменаТаблицыWorkerAndSystem " +ИменаТаблицыWorkerAndSystem);
 
         } catch (Exception e) {
             Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
@@ -356,7 +386,8 @@ public class MainActivityPasswords extends AppCompatActivity {
     private void exitForActivityPassword(@NonNull Integer PublicID) {
         try {
             // TODO: 01.12.2022 записываем режим синъронизации
-                Intent IntentStartFaceApp = new Intent();
+                Uri uri = Uri.parse("package:" + BuildConfig.APPLICATION_ID);
+                Intent IntentStartFaceApp = new Intent(Settings.ACTION_MANAGE_APP_ALL_FILES_ACCESS_PERMISSION, uri);
                 IntentStartFaceApp.putExtra("ID", PublicID);
                 IntentStartFaceApp.putExtra("ПубличноеИмяПользовательДлСервлета", ПубличноеЛогин);
                 IntentStartFaceApp.putExtra("ПубличноеПарольДлСервлета", ПубличноеПароль);
@@ -364,7 +395,7 @@ public class MainActivityPasswords extends AppCompatActivity {
                 IntentStartFaceApp.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP|Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(IntentStartFaceApp);
                // TODO: 11.04.2025 exit
-               finishAffinity();
+               finish();
             Log.d(getApplicationContext().getClass().getName(), "\n"
                     + " время: " + new Date()+"\n+" +
                     " Класс в процессе... " +  this.getClass().getName()+"\n"+

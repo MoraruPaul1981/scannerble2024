@@ -2,11 +2,14 @@ package com.dsy.dsu.Dashboard.Model.endingasynsdashboard;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
+import android.provider.Settings;
 import android.util.Log;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.FragmentManager;
+import androidx.multidex.BuildConfig;
 
 import com.dsy.dsu.Dashboard.Model.bl_launchFragmentSettingsandDashbord.LaunchActivityDashboard;
 import com.dsy.dsu.Errors.WriteErrorForAll.RecordNewErros;
@@ -56,7 +59,8 @@ private FragmentManager fragmentManager;
 
     public void appAfterSyncingPassword( ) {
         try{
-            Intent Интент_ЗапускаетPasswords=new Intent();
+            Uri uri = Uri.parse("package:" + BuildConfig.APPLICATION_ID);
+            Intent Интент_ЗапускаетPasswords = new Intent(Settings.ACTION_MANAGE_APP_ALL_FILES_ACCESS_PERMISSION, uri);
             Интент_ЗапускаетPasswords.setClass(activity, MainActivityPasswords.class);
             Интент_ЗапускаетPasswords.setFlags( Intent.FLAG_ACTIVITY_SINGLE_TOP|Intent.FLAG_ACTIVITY_CLEAR_TOP);
             Bundle bundle=new Bundle();
@@ -66,7 +70,7 @@ private FragmentManager fragmentManager;
             Интент_ЗапускаетPasswords.setAction("MainActivityPasswords.class");
             activity.startActivity(Интент_ЗапускаетPasswords);//tso
             // TODO: 11.04.2025 exit
-            activity.finishAffinity();
+            activity.finish();
 
             Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                     " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
