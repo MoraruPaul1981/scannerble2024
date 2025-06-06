@@ -43,14 +43,12 @@ import com.dsy.dsu.BusinessLogicAll.CoreBinessLogic.CoreBinessLogics;
 import com.dsy.dsu.BusinessLogicAll.GetClearDataUserAnCnahgeData;
 import com.dsy.dsu.BusinessLogicAll.GetPingServers.GetPingServerJboss;
 import com.dsy.dsu.Dashboard.Model.bl_launchFragmentSettingsandDashbord.LaunchActivityDashboard;
-import com.dsy.dsu.Dashboard.Model.endingasynsdashboard.LaunchMainAppAfterSyncing;
 import com.dsy.dsu.Errors.WriteErrorForAll.RecordNewErros;
 
 import com.dsy.dsu.Errors.model.BinessLogicLaunchFragmenrError;
 import com.dsy.dsu.JbossAdress.JbossHilt.intarfaces.QualifierPortJboss;
 import com.dsy.dsu.Hilt.getSSLSocketFactory2.QualifiergetsslSocketFactory2;
 import com.dsy.dsu.Services.ServiceUpdatesPO;
-import com.dsy.dsu.Tabels.Templates.MainActivity_New_Templates;
 import com.dsy.dsu.Settings.View.MainActivity_Settings;
 import com.dsy.dsu.R;
 import com.google.android.material.button.MaterialButton;
@@ -90,7 +88,7 @@ public class DashboardFragmentSettings extends  DialogFragment {
     private FragmentTransaction fragmentTransaction;
     private AlertDialog DialogBox=null;
     private  Handler handlerAsync;
-    private MaterialButton КнопкаоСистеме, КнопкаПользователи ,  КнопкаОбменДанными, КнопкаОбновлениеПО,КнопкаОшибки,КнопкаШаблоны;
+    private MaterialButton КнопкаоСистеме, КнопкаСменыПользователи,  КнопкаОбменДанными, КнопкаОбновлениеПО,КнопкаОшибки,КнопкаШаблоны;
     private Animation  animation6;
     private TextView TextViewLogo;
     private LifecycleOwner lifecycleOwner;
@@ -206,7 +204,7 @@ public class DashboardFragmentSettings extends  DialogFragment {
          // TODO: 19.02.2025
             MaterialCardView  materialcardview_settings         = (MaterialCardView) view.findViewById(R.id.materialcardview_settings); /////КНОПКА ТАБЕЛЬНОГО УЧЕТА
             КнопкаоСистеме   = (MaterialButton) materialcardview_settings.findViewById(R.id.КнопкаоСистеме); /////КНОПКА ТАБЕЛЬНОГО УЧЕТА
-            КнопкаПользователи         = (MaterialButton) materialcardview_settings.findViewById(R.id.КнопкаПользователи); /////КНОПКА ТАБЕЛЬНОГО УЧЕТА
+            КнопкаСменыПользователи = (MaterialButton) materialcardview_settings.findViewById(R.id.КнопкаПользователи); /////КНОПКА ТАБЕЛЬНОГО УЧЕТА
             КнопкаОбменДанными         = (MaterialButton) materialcardview_settings.findViewById(R.id.КнопкаОбменДанными); /////КНОПКА ТАБЕЛЬНОГО УЧЕТА
             КнопкаОбновлениеПО = (MaterialButton) materialcardview_settings.findViewById(R.id.Кнопкаобновление); /////КНОПКА ТАБЕЛЬНОГО УЧЕТА
             КнопкаОшибки          = (MaterialButton) materialcardview_settings.findViewById(R.id.КнопкаОшибки); /////КНОПКА ТАБЕЛЬНОГО УЧЕТА
@@ -674,7 +672,7 @@ public class DashboardFragmentSettings extends  DialogFragment {
             class SubClassChangeDataUsers{
                 @UiThread
                 protected void методСменыДанныхПользователя() {
-                    КнопкаПользователи.setOnClickListener(new View.OnClickListener() {
+                    КнопкаСменыПользователи.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
                             try {
@@ -708,23 +706,25 @@ public class DashboardFragmentSettings extends  DialogFragment {
 
 
                                             // TODO: 17.05.2025  Запускае Очистка таблиц
-                                            GetClearDataUserAnCnahgeData clearDataUserAnCnahgeData      =      new GetClearDataUserAnCnahgeData(getActivity());
-
-                                            clearDataUserAnCnahgeData .changeTableWorkerUsers(getContext(),getActivity(),prograssbarСменаДанныхПользователя );
-
-                                            // TODO: 29.05.2025  Очистка Системных Таблиц
-                                            Integer ИменаТаблицыSystem=      clearDataUserAnCnahgeData.  changeTableSystemUsers(getContext());
+                                            GetClearDataUserAnCnahgeData clearDataUserAnCnahgeDataWorkerTable      =      new GetClearDataUserAnCnahgeData(getActivity());
+                                            clearDataUserAnCnahgeDataWorkerTable .clearTableWorkerUsers(getContext(),getActivity(),prograssbarСменаДанныхПользователя );
 
 
-                                            // TODO: 05.06.2025  После Очисты Данных ЗАпускаем Активити Password
-                                            LaunchMainAppAfterSyncing launchMainAppaftersyncing =new LaunchMainAppAfterSyncing(getActivity());
-                                            launchMainAppaftersyncing.appAfterSyncingActivityPassword(getActivity(), "ПовторныйЗапускСинхронизации");
+
+
+//                                            // TODO: 29.05.2025  Очистка Системных Таблиц
+//                                            GetClearDataUserAnCnahgeData clearDataUserAnCnahgeDataТаблицыSystem      =      new GetClearDataUserAnCnahgeData(getActivity());
+//                                            Integer ИменаТаблицыSystem=      clearDataUserAnCnahgeDataТаблицыSystem.clearTableSystemUsers(getContext());
+
+
+//                                            // TODO: 05.06.2025  После Очисты Данных ЗАпускаем Активити Password
+//                                            LaunchMainAppAfterSyncing launchMainAppaftersyncing =new LaunchMainAppAfterSyncing(getActivity());
+//                                            launchMainAppaftersyncing.appAfterSyncingActivityPassword(getActivity(), "ПовторныйЗапускСинхронизации");
 
 
                                             Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                                                     " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                                                    " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"
-                                                    + " ИменаТаблицыSystem " +ИменаТаблицыSystem);
+                                                    " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n");
 
                                             Log.d(this.getClass().getName(), "\n" + " class " +
                                                     Thread.currentThread().getStackTrace()[2].getClassName()

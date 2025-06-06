@@ -2,24 +2,15 @@ package com.dsy.dsu.BusinessLogicAll;
 
 import android.app.Activity;
 import android.app.ProgressDialog;
-import android.content.ContentResolver;
 import android.content.ContentValues;
 import android.content.Context;
-import android.content.Intent;
 import android.database.SQLException;
-import android.net.Uri;
-import android.os.Bundle;
-import android.provider.Settings;
 import android.util.Log;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.multidex.BuildConfig;
 
-import com.dsy.dsu.BusinessLogicAll.SharedPreferences.GetSharedPreferences;
 import com.dsy.dsu.BusinessLogicAll.WorkerTables.GetWorkerAndSystemTables;
 import com.dsy.dsu.Errors.WriteErrorForAll.RecordNewErros;
-import com.dsy.dsu.Passwords.View.MainActivityPasswords;
 import com.sous.backasync.launch.ModuleDeleting;
 import com.sous.backasync.launch.ModuleUpdating;
 
@@ -50,39 +41,24 @@ public class GetClearDataUserAnCnahgeData {
 
 
     // TODO: 24.04.2023 Метод Семны ДАнных Пользователя
-    public Integer changeTableWorkerUsers(Context context,
-                                          Activity activity,
-                                          ProgressDialog progressDialogДляУдалениеТаблиц) {
+    public Integer clearTableWorkerUsers(Context context,
+                                         Activity activity,
+                                         ProgressDialog progressDialogДляУдалениеТаблиц) {
         ArrayList<Integer>   РезультатWorkerСменыДанных=new ArrayList<>();
               try {
-                  CopyOnWriteArrayList<String> ИменаТаблицыWorker=    new GetWorkerAndSystemTables().getWorkerTablesALl(context);
+                  CopyOnWriteArrayList<String> copyOnWriteArrayListSystemtables=    new GetWorkerAndSystemTables().getSystemTablesALl(context);
 
-                  Observable.fromIterable(ИменаТаблицыWorker)
+                  Observable.fromIterable(copyOnWriteArrayListSystemtables)
                           .subscribeOn(Schedulers.single())
                           .observeOn(AndroidSchedulers.mainThread())
-                          .filter(e->!e.equalsIgnoreCase("fio"))
-                          .filter(e->!e.equalsIgnoreCase("cfo"))
-                          .filter(e->!e.equalsIgnoreCase("organization"))
-                          .filter(e->!e.equalsIgnoreCase("depatment"))
-                          .filter(e->!e.equalsIgnoreCase("region"))
-                          .filter(e->!e.equalsIgnoreCase("nomen_vesov"))
-                          .filter(e->!e.equalsIgnoreCase("type_materials"))
-                          .filter(e->!e.equalsIgnoreCase("track"))
-                          .filter(e->!e.equalsIgnoreCase("company"))
-                          .filter(e->!e.equalsIgnoreCase("prof"))
-                          .filter(e->!e.equalsIgnoreCase("type_materials"))
-                          .filter(e->!e.equalsIgnoreCase("nomen_vesov"))
-                          .filter(e->!e.equalsIgnoreCase("view_onesignal"))
-                          .filter(e->!e.equalsIgnoreCase("vid_tc"))
+                          .filter(e->!e.equalsIgnoreCase("MODIFITATION_Client"))
                           .concatMap(i -> Observable.just(i).delay(50, TimeUnit.MILLISECONDS))
                           .doOnNext(new Consumer<String>() {
                               @Override
                               public void accept(String текущаяТаблицаДляУдваления) throws Throwable {
 
                                   // TODO: 29.05.2025  Очистка Рабочих Таблиц
-                                  Integer РезультатУдалениеДанных=
-                                          методСменыДанныхПользователя( текущаяТаблицаДляУдваления.toString().trim(),
-                                                  context);
+                                  Integer РезультатУдалениеДанных=clearWorkerTablesDeletes( текущаяТаблицаДляУдваления.toString().trim(), context);
 
                                   РезультатWorkerСменыДанных.add(РезультатУдалениеДанных);
 
@@ -97,7 +73,7 @@ public class GetClearDataUserAnCnahgeData {
                               public void accept(String string) throws Throwable {
                                   // TODO: 24.04.2023 Конец Цикла
                                   activity.runOnUiThread(()->{
-                                      progressDialogДляУдалениеТаблиц.setMessage("Удаление рабочих таблиц ..."+string + " ("+РезультатWorkerСменыДанных.size()+")");
+                                      progressDialogДляУдалениеТаблиц.setMessage("Удаление таблиц ..."+РезультатWorkerСменыДанных.size() + " ("+copyOnWriteArrayListSystemtables.size()+")");
                                   });
 
                                   Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
@@ -134,75 +110,6 @@ public class GetClearDataUserAnCnahgeData {
         return   РезультатWorkerСменыДанных.size();
     }
 
-    // TODO: 24.04.2023 Метод Семны ДАнных Пользователя2
-    public Integer changeTableWorkerUsers(@NonNull  Context context,@NonNull  Activity activity) {
-        ArrayList<Integer>   РезультатWorkerСменыДанных=new ArrayList<>();
-        try {
-            CopyOnWriteArrayList<String> ИменаТаблицыWorker=    new GetWorkerAndSystemTables().getWorkerTablesALl(context);
-
-            Observable.fromIterable(ИменаТаблицыWorker)
-                    .subscribeOn(Schedulers.single())
-                    .observeOn(AndroidSchedulers.mainThread())
-                    .filter(e->!e.equalsIgnoreCase("fio"))
-                    .filter(e->!e.equalsIgnoreCase("cfo"))
-                    .filter(e->!e.equalsIgnoreCase("organization"))
-                    .filter(e->!e.equalsIgnoreCase("depatment"))
-                    .filter(e->!e.equalsIgnoreCase("region"))
-                    .filter(e->!e.equalsIgnoreCase("nomen_vesov"))
-                    .filter(e->!e.equalsIgnoreCase("type_materials"))
-                    .filter(e->!e.equalsIgnoreCase("track"))
-                    .filter(e->!e.equalsIgnoreCase("company"))
-                    .filter(e->!e.equalsIgnoreCase("prof"))
-                    .filter(e->!e.equalsIgnoreCase("type_materials"))
-                    .filter(e->!e.equalsIgnoreCase("nomen_vesov"))
-                    .filter(e->!e.equalsIgnoreCase("view_onesignal"))
-                    .filter(e->!e.equalsIgnoreCase("vid_tc"))
-                    .concatMap(i -> Observable.just(i).delay(50, TimeUnit.MILLISECONDS))
-                    .doOnNext(new Consumer<String>() {
-                        @Override
-                        public void accept(String текущаяТаблицаДляУдваления) throws Throwable {
-
-                            // TODO: 29.05.2025  Очистка Рабочих Таблиц
-                            Integer РезультатУдалениеДанных=
-                                    методСменыДанныхПользователя( текущаяТаблицаДляУдваления.toString().trim(),
-                                            context);
-
-                            РезультатWorkerСменыДанных.add(РезультатУдалениеДанных);
-
-                            Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
-                                    " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                                    " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"
-                                    + " РезультатWorkerСменыДанных " +РезультатWorkerСменыДанных);
-
-
-
-                            Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
-                                    " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                                    " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n");
-                        }
-                    }) .doOnComplete(new Action() {
-                        @Override
-                        public void run() throws Throwable {
-                            // TODO: 19.02.2025
-                            Log.d(this.getClass().getName(), "\n" + " class "
-                                    + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
-                                    " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                                    " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n");
-                        }
-                    }).subscribe();
-
-        } catch (Exception e) {
-            e.printStackTrace();
-            Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() + " Линия  :"
-                    + Thread.currentThread().getStackTrace()[2].getLineNumber());
-            new RecordNewErros(context).recordnewerror(e.toString(),
-                    this.getClass().getName(), Thread.currentThread().getStackTrace()[2].getMethodName(),
-                    Thread.currentThread().getStackTrace()[2].getLineNumber());
-
-        }
-        return   РезультатWorkerСменыДанных.size();
-    }
-
 
 
 
@@ -245,7 +152,7 @@ public class GetClearDataUserAnCnahgeData {
 
 
     // TODO: 24.04.2023 Метод Семны ДАнных Пользователя
-    public Integer changeTableSystemUsers(Context context) {
+    public Integer clearTableSystemUsers(Context context) {
         ArrayList<Integer>   РезультатСменыДанныхSystem=new ArrayList<>();
         try {
             CopyOnWriteArrayList<String> ИменаТаблицыSystem=    new GetWorkerAndSystemTables().getSystemTablesALl(context);
@@ -256,13 +163,12 @@ public class GetClearDataUserAnCnahgeData {
                         @Override
                         public void accept(String текущаяСистемнаяТаблица) throws Throwable {
                             // TODO: 09.09.2021 DELETE УДАЛЕНИЕ ТАБЛИЦ ПЕРЕД УМЕНЫ ПОЛЬЗОВАТЕЛЯ
-                            Integer РезультатУдалениеДанных=
-                                    методСменыДанныхMODIFITATION_Client( текущаяСистемнаяТаблица, context);
+                            Integer clearSystemTablesUpdates= clearSystemTablesUpdates( текущаяСистемнаяТаблица, context);
 
-                            Log.d(this.getClass().getName(), "РезультатУдалениеДанных " + РезультатУдалениеДанных+ " текущаяСистемнаяТаблица "
+                            Log.d(this.getClass().getName(), "clearSystemTablesUpdates " + clearSystemTablesUpdates+ " текущаяСистемнаяТаблица "
                                     +текущаяСистемнаяТаблица);
                             // TODO: 09.09.2021  действие второе добалянеим дату
-                            РезультатСменыДанныхSystem.add(РезультатУдалениеДанных);
+                            РезультатСменыДанныхSystem.add(clearSystemTablesUpdates);
 
                             Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                                     " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
@@ -299,7 +205,7 @@ public class GetClearDataUserAnCnahgeData {
 
 
     // TODO: 09.09.2021 delete data for tabels
-    protected Integer методСменыДанныхПользователя(String ИмяТаблицы, Context context) {
+    protected Integer clearWorkerTablesDeletes(String ИмяТаблицы, Context context) {
 //
         Integer СменаДанных = 0;
         try {
@@ -307,7 +213,7 @@ public class GetClearDataUserAnCnahgeData {
             // TODO: 14.05.2025
             ModuleDeleting moduleDeleting = new ModuleDeleting(context);
             // TODO: 03.02.2025 update new back
-            СменаДанных=    moduleDeleting.getModuleDelete(ИмяТаблицы ,null,null);
+            СменаДанных=    moduleDeleting.getModuleSystemDelete(ИмяТаблицы );
             Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                     ///
                     Log.d(context.getClass().getName(), " РезультатУдалениеОчисткиТаблиц" + "--" + СменаДанных));/////
@@ -327,7 +233,7 @@ public class GetClearDataUserAnCnahgeData {
 
 
     // TODO: 09.09.2021 delete data for tabels
-    protected Integer методСменыДанныхMODIFITATION_Client(String ТекущееИмяТаблицы, Context context) {
+    protected Integer clearSystemTablesUpdates(String ТекущееИмяТаблицы, Context context) {
 //
         Integer РезультатОбновлениеОчисткиТаблиц = 0;
         try {
@@ -340,6 +246,7 @@ public class GetClearDataUserAnCnahgeData {
 
             contentValuesСменаДанных.put("localversionandroid_version", 0);
             contentValuesСменаДанных.put("versionserveraandroid_version", 0);
+            contentValuesСменаДанных.put("name", ТекущееИмяТаблицы);
 
             // TODO: 03.02.2025 update new back
             РезультатОбновлениеОчисткиТаблиц=

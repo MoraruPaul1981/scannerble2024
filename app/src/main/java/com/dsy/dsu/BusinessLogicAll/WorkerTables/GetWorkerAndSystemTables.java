@@ -81,9 +81,24 @@ public class GetWorkerAndSystemTables {
     public CopyOnWriteArrayList<String> getSystemTablesALl(@ApplicationContext Context context )  {
         CopyOnWriteArrayList<String> getSystemTablesALl = new CopyOnWriteArrayList();
         try {
-            getSystemTablesALl.add("successlogin");
-            getSystemTablesALl.add("settings_tabels");
             getSystemTablesALl.add("MODIFITATION_Client");
+            getSystemTablesALl.addIfAbsent("settings_tabels");
+            getSystemTablesALl.addIfAbsent("successlogin");
+            // TODO: 06.06.2025 еще добавил
+            getSystemTablesALl.addIfAbsent("errordsu1");
+            getSystemTablesALl.addIfAbsent("notifications");
+            getSystemTablesALl.addIfAbsent("templates");
+            getSystemTablesALl.addIfAbsent("fio_template");
+            getSystemTablesALl.addIfAbsent("chat_users");
+            getSystemTablesALl.addIfAbsent("chats");
+            getSystemTablesALl.addIfAbsent("data_chat");
+            getSystemTablesALl.addIfAbsent("tabel");
+            getSystemTablesALl.addIfAbsent("data_tabels");
+            getSystemTablesALl.addIfAbsent("data_notification");
+            getSystemTablesALl.addIfAbsent("get_materials_data");
+            getSystemTablesALl.addIfAbsent("order_tc");
+            getSystemTablesALl.addIfAbsent("vid_tc");
+            getSystemTablesALl.addIfAbsent("materials_databinary");
 
             Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                     " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
