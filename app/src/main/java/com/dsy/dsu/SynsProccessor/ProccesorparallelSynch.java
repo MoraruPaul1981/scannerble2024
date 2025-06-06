@@ -63,7 +63,7 @@ public class ProccesorparallelSynch   {
 
     protected Integer PublicID;
 
-    @NonNull LinkedHashMap<Integer,String> getHiltPortJboss;
+    protected  @NonNull LinkedHashMap<Integer,String> getHiltPortJboss;
 
     private SharedPreferences preferences;
 
@@ -94,7 +94,7 @@ public class ProccesorparallelSynch   {
         try{
             // TODO: 30.09.2024
             preferences =context. getSharedPreferences("sharedPreferencesХранилище", Context.MODE_MULTI_PROCESS);
-             РежимЗапускаСинхронизации = preferences.getString("РежимЗапускаСинхронизации","СамыйПервыйЗапускСинхронизации");
+             РежимЗапускаСинхронизации = preferences.getString("РежимЗапускаСинхронизации" ,null);
             // TODO: 20.01.2025 сама синхрониаиця
             switch (РежимЗапускаСинхронизации){
 // TODO: 20.01.2025 сама синхрониаиця
