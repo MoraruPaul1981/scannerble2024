@@ -442,9 +442,9 @@ public class ContentProviderForSystemTables extends ContentProvider  {
                         // TODO: 08.10.2024
                         GetClearsMODIFITATION_Client getClearsMODIFITATIONClient
                                 =  new GetClearsMODIFITATION_Client(getContext(), sqlite);
-
+                        // TODO: 06.06.2025
                         SQLiteStatement sqLiteStatementMODIFITATIONClient=
-                                getClearsMODIFITATIONClient.sqLiteStatementUpdateMODIFITATION_Client(table,values);
+                                getClearsMODIFITATIONClient.sqLiteStatementUpdateMODIFITATION_Client(table,values   );
                         // TODO: 08.10.2024
 
                         РезультатUpdates=      sqLiteStatementMODIFITATIONClient.executeUpdateDelete();
@@ -464,9 +464,11 @@ public class ContentProviderForSystemTables extends ContentProvider  {
                         }
 
                             // TODO: 08.10.2024
-                            sqlite.setTransactionSuccessful();
+                if (РезультатUpdates>0) {
+                    sqlite.setTransactionSuccessful();
+                }
 
-                        if (sqlite.inTransaction()) {
+                if (sqlite.inTransaction()) {
                             sqlite.endTransaction();
                         }
                 }

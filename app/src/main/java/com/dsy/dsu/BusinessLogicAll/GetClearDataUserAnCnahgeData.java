@@ -153,12 +153,13 @@ public class GetClearDataUserAnCnahgeData {
 
     // TODO: 24.04.2023 Метод Семны ДАнных Пользователя
     public Integer clearTableSystemUsers(Context context) {
-        ArrayList<Integer>   РезультатСменыДанныхSystem=new ArrayList<>();
+        ArrayList<Integer>   clearSystemTables=new ArrayList<>();
         try {
             CopyOnWriteArrayList<String> ИменаТаблицыSystem=    new GetWorkerAndSystemTables().getSystemTablesALl(context);
 
             Observable.fromIterable(ИменаТаблицыSystem)
                     .concatMap(i -> Observable.just(i).delay(50, TimeUnit.MILLISECONDS))
+                    .filter(e->!e.equalsIgnoreCase("MODIFITATION_Client"))
                     .doOnNext(new Consumer<String>() {
                         @Override
                         public void accept(String текущаяСистемнаяТаблица) throws Throwable {
@@ -168,11 +169,13 @@ public class GetClearDataUserAnCnahgeData {
                             Log.d(this.getClass().getName(), "clearSystemTablesUpdates " + clearSystemTablesUpdates+ " текущаяСистемнаяТаблица "
                                     +текущаяСистемнаяТаблица);
                             // TODO: 09.09.2021  действие второе добалянеим дату
-                            РезультатСменыДанныхSystem.add(clearSystemTablesUpdates);
+                            if (clearSystemTablesUpdates>0) {
+                                clearSystemTables.add(clearSystemTablesUpdates);
+                            }
 
                             Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                                     " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                                    " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n");
+                                    " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" + " clearSystemTables " +clearSystemTables.size());
                         }
                     }).doOnError(new Consumer<Throwable>() {
                         @Override
@@ -196,7 +199,7 @@ public class GetClearDataUserAnCnahgeData {
                     Thread.currentThread().getStackTrace()[2].getLineNumber());
 
         }
-        return   РезультатСменыДанныхSystem.size();
+        return   clearSystemTables.size();
     }
 
 

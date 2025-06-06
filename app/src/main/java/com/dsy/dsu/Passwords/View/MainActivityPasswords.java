@@ -32,6 +32,7 @@ import androidx.multidex.BuildConfig;
 import com.dsy.dsu.BootAndAsync.View.MainActivityBootAndAsync;
 
 import com.dsy.dsu.BusinessLogicAll.CoreBinessLogic.CoreBinessLogics;
+import com.dsy.dsu.BusinessLogicAll.GetClearDataUserAnCnahgeData;
 import com.dsy.dsu.BusinessLogicAll.GetPingServers.GetPingServerJboss;
 
 import com.dsy.dsu.BusinessLogicAll.CreateFolderBinatySave.ClassDeleteErrorFile;
@@ -144,11 +145,6 @@ public class MainActivityPasswords extends AppCompatActivity {
                     + " время: " + new Date() + "\n+" +
                     " Класс в процессе... " + this.getClass().getName() + "\n" +
                     " метод в процессе... " + Thread.currentThread().getStackTrace()[2].getMethodName());
-
-
-
-
-
 
 
             Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
