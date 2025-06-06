@@ -40,6 +40,7 @@ import java.util.Collections;
 import java.util.Date;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicInteger;
+import java.util.concurrent.atomic.AtomicReference;
 import java.util.stream.Stream;
 
 import dagger.hilt.android.AndroidEntryPoint;
@@ -255,28 +256,29 @@ public Cursor МетодПолучениеДанныхЧерезCursorLoader(@No
                     String getCurrentTabel="viewtabel";
                             //TODO ВЫЧИСЛЯЕМ ДАННЫЕ КОТОРЫЕ НА ВСТАВИТЬ
                             // TODO: 24.02.2025 внтрений
-                            final Cursor[] Курсор_ВытаскиваемПоследнийМесяцТабеля = {null};
+             AtomicReference<Cursor>    Курсор_ВытаскиваемПоследнийМесяцТабеля =new AtomicReference<>();
                             Flowable.range(1,12)
                                     .filter(f->f.intValue()<МЕсяцТабелейИзТабеля)
                                     //.filter(f->f.intValue()<9)
                             .sorted(Collections.reverseOrder()).delay(1000,TimeUnit.MILLISECONDS)
-                            .onBackpressureBuffer().doOnNext(new Consumer<Integer>() {
+                            .onBackpressureBuffer()
+                                    .doOnNext(new Consumer<Integer>() {
                                         @Override
                                         public void accept(Integer getmonthagofordatasearch) throws Throwable {
                                             // TODO: 15.05.202
                                             ModuleQuety moduleQuety=new ModuleQuety(getApplicationContext());
-                                            Cursor   Курсор_ВытаскиваемПоследнийМесяцТабеля= moduleQuety.getModuleQuery(getCurrentTabel," SELECT *  FROM "+getCurrentTabel+" AS D" +
-                                                    "  WHERE D.year_tabels= "+ГодТабелейИзТабеля
-                                                    +" AND D.month_tabels="+getmonthagofordatasearch
-                                                    +" AND D.cfo="+DigitalNameCFO+
-                                                    "   AND D.status_send!=Удаленная" +
-                                                    "   ORDER BY date_update DESC  " ,null);
+                                            Курсор_ВытаскиваемПоследнийМесяцТабеля.getAndSet( moduleQuety.getModuleQuery(getCurrentTabel," SELECT *  FROM "+getCurrentTabel+" AS D" +
+                                                    "  WHERE D.year_tabels= '"+ГодТабелейИзТабеля +"'" +
+                                                    " AND D.month_tabels='"+getmonthagofordatasearch +"'" +
+                                                    " AND D.cfo='"+DigitalNameCFO+ "'" +
+                                                    "   AND D.status_send!='Удаленная'" +
+                                                    "   ORDER BY D.date_update DESC  " ,null));
 
                                             Log.d(this.getClass().getName(), "\n"
                                                     + " время: " + new Date() + "\n+" +
                                                     " Класс в процессе... " + this.getClass().getName() + "\n" +
                                                     " метод в процессе... " + Thread.currentThread().getStackTrace()[2].getMethodName()
-                                                    + " Курсор_ВытаскиваемПоследнийМесяцТабеля " +Курсор_ВытаскиваемПоследнийМесяцТабеля);
+                                                    + " Курсор_ВытаскиваемПоследнийМесяцТабеля " +Курсор_ВытаскиваемПоследнийМесяцТабеля.get());
 
                                         }
                                     })
@@ -285,8 +287,8 @@ public Cursor МетодПолучениеДанныхЧерезCursorLoader(@No
                                 public boolean test(Integer getmonthagofordatasearch) throws Throwable {
                                     // TODO: 24.02.2025
                                     Integer  getmonthagofordatasearchtakeWhile=0;
-                                    if (Курсор_ВытаскиваемПоследнийМесяцТабеля[0]!=null) {
-                                        getmonthagofordatasearchtakeWhile=   Курсор_ВытаскиваемПоследнийМесяцТабеля[0].getCount();
+                                    if (Курсор_ВытаскиваемПоследнийМесяцТабеля.get()!=null) {
+                                        getmonthagofordatasearchtakeWhile=  Курсор_ВытаскиваемПоследнийМесяцТабеля.get().getCount();
                                     }
                                     Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                                             " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
@@ -312,11 +314,11 @@ public Cursor МетодПолучениеДанныхЧерезCursorLoader(@No
                                                 @Override
                                                 public void run() throws Throwable {
 
-                                                    if (Курсор_ВытаскиваемПоследнийМесяцТабеля[0]!=null) {
-                                                        if (Курсор_ВытаскиваемПоследнийМесяцТабеля[0].getCount()>0) {
+                                                    if (Курсор_ВытаскиваемПоследнийМесяцТабеля.get()!=null) {
+                                                        if (Курсор_ВытаскиваемПоследнийМесяцТабеля.get().getCount()>0) {
                                                             // TODO: 16.02.2023 сама вставка
                                                             atomicIntegerBeforeMothCopyTabel.set( copyDataTabelwithNewTabel(context, ГодТабелейИзТабеля, МЕсяцТабелейИзТабеля,
-                                                                    Курсор_ВытаскиваемПоследнийМесяцТабеля[0],
+                                                                    Курсор_ВытаскиваемПоследнийМесяцТабеля.get(),
                                                                     progressDialog,MainParentUUID));
                                                             Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                                                                     " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
@@ -366,10 +368,11 @@ public Cursor МетодПолучениеДанныхЧерезCursorLoader(@No
                                             Bundle bundleПолучаемДанных =(Bundle)  intent.getExtras();
                                             MainParentUUID=    bundleПолучаемДанных.getLong("MainParentUUID", 0l);
                                             DigitalNameCFO=   bundleПолучаемДанных.getInt("DigitalNameCFO", 0);
-                                            ГодТабелейИзТабеля= getYear();
-                                            //ГодТабелейИзТабеля=  bundleПолучаемДанных.getInt("ГодТабелей", 0);
-                                            //    МЕсяцТабелейИзТабеля=  bundleПолучаемДанных.getInt("МЕсяцТабелей",0);
-                                            МЕсяцТабелейИзТабеля=     getMoth();
+//                                            ГодТабелейИзТабеля= getYear();
+//                                            МЕсяцТабелейИзТабеля=     getMoth();
+                                            ГодТабелейИзТабеля=  bundleПолучаемДанных.getInt("ГодТабелей", 0);
+                                                МЕсяцТабелейИзТабеля=  bundleПолучаемДанных.getInt("МЕсяцТабелей",0);
+
 
                                             Log.d(this.getClass().getName(), "\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                                                     " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
