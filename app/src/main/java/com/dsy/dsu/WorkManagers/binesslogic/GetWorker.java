@@ -106,7 +106,7 @@ public class GetWorker {
                             String actionSingleWorker =  "lanchAsync" ;
                             intentSingleWorker.setAction(actionSingleWorker);
                             intentSingleWorker.setData(Uri.parse(actionSingleWorker));
-
+// TODO: 06.06.2025  запускам public work managers
                             getlocalBinderBootSerice.getService().startingServicePublicWorkManger(intentSingleWorker, getHiltPortJboss);
 
                         }
