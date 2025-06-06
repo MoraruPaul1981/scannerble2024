@@ -94,7 +94,7 @@ public class CoreApp extends Application {
               " \n" +
               " STARTED    COREAPP    " +" BREMY " +new Date().toLocaleString());
 
-     // new BunessLogicCoreApp(getApplicationContext()).getBunessLogicCoreApp();
+     // new GetCreateFilesApp(getApplicationContext()).getBunessLogicCoreApp();
 
 
       ///  getBinderAsync = EntryPoints.get(getApplicationContext(), HiltInterfaceBinderAsync.class).metodBinderAsync();

@@ -436,8 +436,9 @@ public class ContentProviderForSystemTables extends ContentProvider  {
 
 
                         break;
-                    case  "MODIFITATION_Client":
 
+                    // TODO: 06.06.2025 все остальные таблицы
+                    default:{
                         // TODO: 08.10.2024
                         GetClearsMODIFITATION_Client getClearsMODIFITATIONClient
                                 =  new GetClearsMODIFITATION_Client(getContext(), sqlite);
@@ -448,12 +449,17 @@ public class ContentProviderForSystemTables extends ContentProvider  {
 
                         РезультатUpdates=      sqLiteStatementMODIFITATIONClient.executeUpdateDelete();
 
-                            // TODO: 08.10.2024
+                        // TODO: 08.10.2024
                         Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                                 " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
                                 " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"+ "  recordingShiftdSSLconnectionMode " +РезультатUpdates);
 
+                        // TODO: 08.10.2024
+                        Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                                " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                                " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"+ "  recordingShiftdSSLconnectionMode " +РезультатUpdates);
                         break;
+                    }
 
                         }
 

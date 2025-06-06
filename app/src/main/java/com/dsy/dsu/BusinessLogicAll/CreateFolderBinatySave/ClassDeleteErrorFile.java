@@ -11,8 +11,7 @@ public class ClassDeleteErrorFile extends  ClassDeleteFiles{
         super(context);
     }
 
-    @Override
-    public void МетодDeleteFolders() {
+    public void getDeleteFolderErrros() {
      fileName = "Sous-Avtodor-ERROR.txt";
     patchFileName="SousAvtoFile";
         // TODO: 25.03.2023

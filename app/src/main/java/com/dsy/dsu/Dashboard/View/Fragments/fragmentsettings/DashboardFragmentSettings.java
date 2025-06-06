@@ -705,16 +705,16 @@ public class DashboardFragmentSettings extends  DialogFragment {
 
 
 
-                                            // TODO: 17.05.2025  Запускае Очистка таблиц
-                                            GetClearDataUserAnCnahgeData clearDataUserAnCnahgeDataWorkerTable      =      new GetClearDataUserAnCnahgeData(getActivity());
-                                            clearDataUserAnCnahgeDataWorkerTable .clearTableWorkerUsers(getContext(),getActivity(),prograssbarСменаДанныхПользователя );
+//                                            // TODO: 17.05.2025  Запускае Очистка таблиц
+//                                            GetClearDataUserAnCnahgeData clearDataUserAnCnahgeDataWorkerTable      =      new GetClearDataUserAnCnahgeData(getActivity());
+//                                            clearDataUserAnCnahgeDataWorkerTable .clearTableWorkerUsers(getContext(),getActivity(),prograssbarСменаДанныхПользователя );
 
 
 
 
-//                                            // TODO: 29.05.2025  Очистка Системных Таблиц
-//                                            GetClearDataUserAnCnahgeData clearDataUserAnCnahgeDataТаблицыSystem      =      new GetClearDataUserAnCnahgeData(getActivity());
-//                                            Integer ИменаТаблицыSystem=      clearDataUserAnCnahgeDataТаблицыSystem.clearTableSystemUsers(getContext());
+                                            // TODO: 29.05.2025  Очистка Системных Таблиц
+                                            GetClearDataUserAnCnahgeData clearDataUserAnCnahgeDataТаблицыSystem      =      new GetClearDataUserAnCnahgeData(getActivity());
+                                            Integer ИменаТаблицыSystem=      clearDataUserAnCnahgeDataТаблицыSystem.clearTableSystemUsers(getContext());
 
 
 //                                            // TODO: 05.06.2025  После Очисты Данных ЗАпускаем Активити Password

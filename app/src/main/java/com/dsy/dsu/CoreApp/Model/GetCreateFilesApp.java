@@ -11,12 +11,12 @@ import com.dsy.dsu.Errors.WriteErrorForAll.RecordNewErros;
 import com.dsy.dsu.Errors.model.creatingfileerrors.CreatingAFileForApp;
 import com.dsy.dsu.Errors.model.interfaces.GetWorkerErrosInterface;
 
-public class BunessLogicCoreApp {
+public class GetCreateFilesApp {
 
     private Context context;
 
 
-    public BunessLogicCoreApp(Context context) {
+    public GetCreateFilesApp(Context context) {
         this.context = context;
     }
 
