@@ -48,7 +48,7 @@ import com.dsy.dsu.BusinessLogicPublic.GreatUuidGenerations.GreatUuidGeneration;
 import com.dsy.dsu.JbossAdress.JbossContext;
 import com.dsy.dsu.Services.ServiceForAdminissionMaterial;
 import com.dsy.dsu.R;
-import com.dsy.dsu.Tabels.Tabel.CompleteTabel.MainActivity_List_Tabels;
+import com.dsy.dsu.Tabels.Tabel.ListTabels.MainActivity_List_Tabels;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.android.material.snackbar.Snackbar;
@@ -67,8 +67,8 @@ import dagger.hilt.android.AndroidEntryPoint;
 
 
 @AndroidEntryPoint
-//класс активити MainActivity_New_Tabely
-public class MainActivity_New_Tabely extends AppCompatActivity {
+//класс активити MainActivityNewTabels
+public class MainActivityNewTabels extends AppCompatActivity {
     private MaterialTextView СпинерВыборЦФО,СпинерВыборДата;
     private Button КнопкаСозданиеТабеля;
     private  Button КнопкаНазадПриСозданииНовогоТабеля;
@@ -90,7 +90,7 @@ public class MainActivity_New_Tabely extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         try {
-            Log.d(this.getClass().getName(), "Запуск onCreate..  в MainActivity_New_Tabely ");
+            Log.d(this.getClass().getName(), "Запуск onCreate..  в MainActivityNewTabels ");
                 super.onCreate(savedInstanceState);
             setContentView(R.layout.activitymain_createtablesavehistory);
             setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);

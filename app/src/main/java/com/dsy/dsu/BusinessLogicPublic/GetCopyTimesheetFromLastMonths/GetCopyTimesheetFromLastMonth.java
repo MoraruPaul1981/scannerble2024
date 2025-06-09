@@ -15,7 +15,7 @@ import com.dsy.dsu.BusinessLogicPublic.DATE.Class_Generation_Data;
 import com.dsy.dsu.BusinessLogicPublic.GreatUuidGenerations.GreatUuidGeneration;
 import com.dsy.dsu.BusinessLogicPublic.VersionCurentTable;
 import com.dsy.dsu.Errors.WriteErrorForAll.RecordNewErros;
-import com.dsy.dsu.Tabels.Tabel.CompleteTabel.MainActivity_List_Tabels;
+import com.dsy.dsu.Tabels.Tabel.ListTabels.MainActivity_List_Tabels;
 import com.sous.backasync.launch.ModuleInserting;
 import com.sous.backasync.launch.ModuleQuety;
 import org.reactivestreams.Subscription;

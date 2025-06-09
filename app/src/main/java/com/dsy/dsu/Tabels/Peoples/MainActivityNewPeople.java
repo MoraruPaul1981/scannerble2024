@@ -68,7 +68,7 @@ import io.reactivex.rxjava3.schedulers.Schedulers;
 
 
 @AndroidEntryPoint
-public class MainActivity_New_People extends AppCompatActivity implements DatePickerDialog.OnDateSetListener  {
+public class MainActivityNewPeople extends AppCompatActivity implements DatePickerDialog.OnDateSetListener  {
     ////todo переменные для новго сотрдуника при создание на  активтик
     private Button КнопкаСозданиеНовогоСотрудника;
     private EditText ЗначениеФИОСозданиеСотрудника,  ЗначениеСНИЛССозданиеСотрудника;
@@ -675,7 +675,7 @@ private void МетодВозврещениеНаПредыдущуюАктив�
     private void методBackActivityListPeoples() {
         try{
             Intent ИнтентBackActivityListPeoples = new Intent();
-            ИнтентBackActivityListPeoples.setClass(this, MainActivity_List_Peoples.class);
+            ИнтентBackActivityListPeoples.setClass(this, MainActivityListPeoples.class);
             Bundle dataBackActivityListPeoples=new Bundle();
             dataBackActivityListPeoples.putLong("MainParentUUID", MainParentUUID);
             dataBackActivityListPeoples.putInt("Position",    Position);

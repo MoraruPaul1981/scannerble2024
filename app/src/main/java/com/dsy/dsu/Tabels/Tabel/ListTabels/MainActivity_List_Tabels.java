@@ -1,4 +1,4 @@
-package com.dsy.dsu.Tabels.Tabel.CompleteTabel;
+package com.dsy.dsu.Tabels.Tabel.ListTabels;
 
 import static java.util.Locale.setDefault;
 
@@ -54,11 +54,12 @@ import com.dsy.dsu.Dashboard.Model.bl_launchFragmentSettingsandDashbord.LaunchAc
 import com.dsy.dsu.Errors.WriteErrorForAll.RecordNewErros;
 import com.dsy.dsu.BusinessLogicPublic.DATE.SubClassCursorLoader;
 import com.dsy.dsu.R;
-import com.dsy.dsu.Tabels.Peoples.MainActivity_List_Peoples;
-import com.dsy.dsu.Tabels.Tabel.New.MainActivity_New_Tabely;
+import com.dsy.dsu.Tabels.Peoples.MainActivityListPeoples;
+import com.dsy.dsu.Tabels.Tabel.New.MainActivityNewTabels;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.textview.MaterialTextView;
+import com.sous.backasync.launch.ModuleQuety;
 
 
 import org.jetbrains.annotations.NotNull;
@@ -370,17 +371,17 @@ public class MainActivity_List_Tabels extends AppCompatActivity  {
 
 
     private Cursor МетодПолучениеДанныхДляИхУдаления(@NonNull Context context ,@NonNull Long СамоЗначениеUUID) {
-        Cursor cursor=null;
+        Cursor cursorForDelete=null;
         try{
-            Bundle bundle=new Bundle();
-            bundle.putString("СамЗапрос","  SELECT uuid FROM  data_tabels  WHERE uuid_tabel=?     AND status_send!=?");
-            bundle.putStringArray("УсловияВыборки" ,new String[]{String.valueOf(СамоЗначениеUUID),"Удаленная"});
-            bundle.putString("Таблица","data_tabels");
-            Intent intent=new Intent("ДляУдаление");
-            intent.putExtras(bundle);
-            ServiceForPublic service_for_public=new ServiceForPublic();
-        cursor=  service_for_public.МетодПолучениеДанныхЧерезCursorLoader(context,intent);
-            Log.d(this.getClass().getName(), " cursor " + cursor);
+            // TODO: 14.05.2025
+            String Текущаятаблицы="data_tabels";
+            ModuleQuety moduleQuety=new ModuleQuety(context);
+            cursorForDelete= moduleQuety.getModuleQuery(Текущаятаблицы,"  SELECT uuid FROM  "+Текущаятаблицы+" AS D  WHERE uuid_tabel='"+String.valueOf(СамоЗначениеUUID)+"'     AND status_send!='Удаленная' " ,null);
+            // TODO: 09.06.2025  
+            Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                    " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                    " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n");
+
     } catch (Exception e) {
         e.printStackTrace();
         Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
@@ -389,7 +390,7 @@ public class MainActivity_List_Tabels extends AppCompatActivity  {
                 this.getClass().getName(),
                 Thread.currentThread().getStackTrace()[2].getMethodName(), Thread.currentThread().getStackTrace()[2].getLineNumber());
     }
-        return cursor;
+        return cursorForDelete;
     }
 
     private void методМассивДляВыбораВСпинерДата() {
@@ -968,7 +969,7 @@ public class MainActivity_List_Tabels extends AppCompatActivity  {
     /////TODO метод запуска кода при однократорм нажатии просто загузка сотрудников табель
     private void МетодПереходMainActivity_List_Peoples(@NonNull  MaterialTextView textView) {
         try{
-            Intent    ИнтентпереходВMainActivityList_Peoples=new Intent(getApplicationContext(), MainActivity_List_Peoples.class);
+            Intent    ИнтентпереходВMainActivityList_Peoples=new Intent(getApplicationContext(), MainActivityListPeoples.class);
             Bundle bundleИзMAinActivbity_List_Tabels=(Bundle) textView.getTag();
             ИнтентпереходВMainActivityList_Peoples.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             ИнтентпереходВMainActivityList_Peoples      .putExtras(bundleИзMAinActivbity_List_Tabels);
@@ -1175,7 +1176,7 @@ public class MainActivity_List_Tabels extends AppCompatActivity  {
             int НовыйМесяц = МетодПолучениниеНовогоМесяцДляЗАписивОднуКолонку(ФинальнаяМЕсяцДляНовогоТабеля);
             int НовыйГод = МетодПолучениниеНовыйГодДляЗАписивОднуКолонку(ПолученныйГодДляНовогоТабеля);
             ///TODO  ПОСЛЕ ВСТАКИ ПЕРЕХОДИМ НА АКТИВТИ С ВЫБОРО И СОЗДАНИЕМ САМОГО ТАБЕЛЯ НОВОГО
-            Intent Интент_НовыйТабель = new Intent(getApplicationContext(), MainActivity_New_Tabely.class);
+            Intent Интент_НовыйТабель = new Intent(getApplicationContext(), MainActivityNewTabels.class);
             Bundle     bundleСозданиеНовогоТабеля=new Bundle();
             if (НовыйГод>0 && НовыйМесяц>0 ) {
                 bundleСозданиеНовогоТабеля.putString("ИмесяцвИГодСразу", ИмесяцвИГодСразу);

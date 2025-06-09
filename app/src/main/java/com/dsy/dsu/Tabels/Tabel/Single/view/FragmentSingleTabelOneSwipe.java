@@ -68,7 +68,7 @@ import com.dsy.dsu.Errors.WriteErrorForAll.RecordNewErros;
 import com.dsy.dsu.BusinessLogicPublic.GetPublicID.GetPublicID;
 import com.dsy.dsu.BusinessLogicPublic.DATE.Class_Generation_Data;
 import com.dsy.dsu.BusinessLogicPublic.DATE.SubClassCursorLoader;
-import com.dsy.dsu.Tabels.Peoples.MainActivity_List_Peoples;
+import com.dsy.dsu.Tabels.Peoples.MainActivityListPeoples;
 import com.dsy.dsu.R;
 import com.dsy.dsu.Tabels.Tabel.Single.model.BunesslogicSingleTabel;
 import com.google.android.material.button.MaterialButton;
@@ -627,7 +627,7 @@ public class FragmentSingleTabelOneSwipe extends Fragment {
             try{
                 ////TODO ИНТРЕНТ КОТОРЫЙ СОЗДАЕТ НОВГО СОТРУДНИКА
                 Intent Интент_ПереходаMainActivity_List_Peoples = new Intent();
-                Интент_ПереходаMainActivity_List_Peoples.setClass(getContext(), MainActivity_List_Peoples.class);
+                Интент_ПереходаMainActivity_List_Peoples.setClass(getContext(), MainActivityListPeoples.class);
                 Bundle bundleИзMainActitivy_List_Tables=getArguments();
                 Интент_ПереходаMainActivity_List_Peoples.putExtras(bundleИзMainActitivy_List_Tables);
                 // TODO: 28.06.2023 clear

@@ -38,7 +38,7 @@ import com.dsy.dsu.OrdersTransports.Window.MainActivityOrdersTransports;
 import com.dsy.dsu.PaysCommit.View.Window.MainActivity_CommitPay;
 import com.dsy.dsu.R;
 import com.dsy.dsu.Services.ServiceUpdatesPO;
-import com.dsy.dsu.Tabels.Tabel.CompleteTabel.MainActivity_List_Tabels;
+import com.dsy.dsu.Tabels.Tabel.ListTabels.MainActivity_List_Tabels;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.card.MaterialCardView;
 
