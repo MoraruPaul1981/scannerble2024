@@ -812,15 +812,19 @@ public class MainActivity_List_Tabels extends AppCompatActivity  {
 
     @SuppressLint("Range")
     @NonNull
-    private String getingNameCurrentZFOWithID(@NonNull  SubClassCursorLoader subClassCursorLoader1ПОсикНазваниеЦФО) {
+    private String getingNameCurrentZFOWithID( ) {
         try{
             // TODO: 18.04.2023 Название ЦФО
-            Bundle bundleНазваниеЦФО=new Bundle();
-            bundleНазваниеЦФО.putString("СамЗапрос","  SELECT * FROM  cfo WHERE    _id=? ");
-            bundleНазваниеЦФО.putStringArray("УсловияВыборки" ,new String[]{  String.valueOf(DigitalNameCFOFromTabel)});
-            bundleНазваниеЦФО.putString("Таблица","cfo");
             // TODO: 07.06.2023 вытаскиваем названеи ЦФО
-            Cursor КурсорПОискНазваниеЦФО = (Cursor)    subClassCursorLoader1ПОсикНазваниеЦФО. CursorLoaders(context, bundleНазваниеЦФО);//TODO ЗАПРОС К ТАБЛИЦЕ CFO
+            String Текущаятаблицы="cfo";
+            ModuleQuety moduleQuety=new ModuleQuety(getApplicationContext());
+            Cursor КурсорПОискНазваниеЦФО=   moduleQuety.getModuleQuery(Текущаятаблицы,"  SELECT * FROM  "+Текущаятаблицы+ " AS D " +
+                    " WHERE    D._id= '"+ String.valueOf(DigitalNameCFOFromTabel)+"' ",null);
+            // TODO: 09.06.2025
+            Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                    " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                    " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n");
+
 
             // TODO: 09.10.2024  Получаем Название ЦФО  для отображения
             if (КурсорПОискНазваниеЦФО.getCount()>0) {
@@ -843,8 +847,6 @@ public class MainActivity_List_Tabels extends AppCompatActivity  {
             new RecordNewErros(getApplicationContext()).recordnewerror(e.toString(), this.getClass().getName(), Thread.currentThread().getStackTrace()[2].getMethodName(),
                     Thread.currentThread().getStackTrace()[2].getLineNumber());
         }
-
-
         return FullNameCFO;
     }
 
