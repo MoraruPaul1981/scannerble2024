@@ -6,7 +6,6 @@ import android.content.ContentValues;
 import android.content.Intent;
 import android.content.Context;
 import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
 import android.os.Binder;
 import android.os.Bundle;
@@ -20,11 +19,10 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 
-import com.dsy.dsu.BusinessLogicAll.VersionCurentTable;
+import com.dsy.dsu.BusinessLogicPublic.VersionCurentTable;
 import com.dsy.dsu.Errors.WriteErrorForAll.RecordNewErros;
-import com.dsy.dsu.BusinessLogicAll.DATE.Class_Generation_Data;
-import com.dsy.dsu.BusinessLogicAll.DATE.SubClassCursorLoader;
-import com.dsy.dsu.Hilt.Sqlitehilt.AppModuleSQLlite;
+import com.dsy.dsu.BusinessLogicPublic.DATE.Class_Generation_Data;
+import com.dsy.dsu.BusinessLogicPublic.DATE.SubClassCursorLoader;
 import com.google.firebase.annotations.concurrent.Background;
 
 import java.text.SimpleDateFormat;
@@ -37,8 +35,6 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.Optional;
 import java.util.Random;
-
-import dagger.hilt.EntryPoints;
 
 /**
  * An {@link IntentService} subclass for handling asynchronous task requests in

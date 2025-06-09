@@ -19,7 +19,7 @@ import androidx.annotation.Nullable;
 
 
 import com.dsy.dsu.BootAndAsync.Model.Service.bl_service_boot.BinessLogicIntentServiceBoot;
-import com.dsy.dsu.BusinessLogicAll.GetPublicID.QualifierPublicID;
+import com.dsy.dsu.BusinessLogicPublic.GetPublicID.QualifierPublicID;
 import com.dsy.dsu.Errors.WriteErrorForAll.RecordNewErros;
 
 import com.dsy.dsu.Hilt.getSSLSocketFactory2.QualifiergetsslSocketFactory2;
@@ -48,7 +48,7 @@ import dagger.hilt.android.AndroidEntryPoint;
 @AndroidEntryPoint
 public class ServiceForRemoteAsyncBinary extends IntentService {
     protected LocalBinderAsync binderBinderRemoteAsync = new LocalBinderAsync();
-    private ServiceForPublic.LocalBinderОбщий localBinderОбщий;
+
     private      Integer PublicID =0;
     @Inject
     ObjectMapper getHiltJaksonObjectMapper;
@@ -328,17 +328,18 @@ try{
 
     private void МетодПослеСинхрониазцииУдалениеСтатусаУдаленный(@NonNull Context context) {
         try {
-            Intent intentПослеСинхроницииРегламентаняРаботаУдалениеДанных=new Intent();
-            intentПослеСинхроницииРегламентаняРаботаУдалениеДанных.setClass(context, ServiceForPublic.class);
-            intentПослеСинхроницииРегламентаняРаботаУдалениеДанных.setAction("ЗапускУдалениеСтатусаУдаленияСтрок");
-            // TODO: 25.03.2023 дополнительное удаление после синхрониазции статус Удаленныц
-            if (localBinderОбщий!=null) {
+
                 localBinderОбщий.getService().МетодГлавныйPublicPO(context,intentПослеСинхроницииРегламентаняРаботаУдалениеДанных,
-                        null);
-            }
+//                        null);
+
+
+
+
+
+
             Log.d(context.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                     " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
-                    " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n" +   "  localBinderОбщий  " +localBinderОбщий);
+                    " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"  );
 
         } catch (Exception e) {
         e.printStackTrace();

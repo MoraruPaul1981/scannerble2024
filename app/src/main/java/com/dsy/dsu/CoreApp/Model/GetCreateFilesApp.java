@@ -5,8 +5,8 @@ import android.util.Log;
 
 
 import com.dsy.dsu.BootAndAsync.Model.DowloadUpdatePO.ClassCreateFolderUpdatePO;
-import com.dsy.dsu.BusinessLogicAll.CreateFolderBinatySave.ClassCreateFolderBinatyMatrilal;
-import com.dsy.dsu.BusinessLogicAll.CreateFolderBinatySave.ClassCreateFolderCommitPays1C;
+import com.dsy.dsu.BusinessLogicPublic.CreateFolderBinatySave.ClassCreateFolderBinatyMatrilal;
+import com.dsy.dsu.BusinessLogicPublic.CreateFolderBinatySave.ClassCreateFolderCommitPays1C;
 import com.dsy.dsu.Errors.WriteErrorForAll.RecordNewErros;
 import com.dsy.dsu.Errors.model.creatingfileerrors.CreatingAFileForApp;
 import com.dsy.dsu.Errors.model.interfaces.GetWorkerErrosInterface;

@@ -10,7 +10,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentManager;
 
 import com.dsy.dsu.BootAndAsync.Model.BinesslogicActivityBoot.LaunchActivityFragmentBoot;
-import com.dsy.dsu.BusinessLogicAll.Permissions.GrandPermissions;
+import com.dsy.dsu.BusinessLogicPublic.Permissions.GrandPermissions;
 import com.dsy.dsu.Errors.WriteErrorForAll.RecordNewErros;
 import com.dsy.dsu.R;
 

@@ -4,7 +4,7 @@ package com.dsy.dsu.Hilt.PublicId;
 import android.content.Context;
 import android.util.Log;
 
-import com.dsy.dsu.BusinessLogicAll.GetPublicID.GetPublicID;
+import com.dsy.dsu.BusinessLogicPublic.GetPublicID.GetPublicID;
 import com.dsy.dsu.Errors.WriteErrorForAll.RecordNewErros;
 
 import dagger.Module;
