@@ -39,8 +39,6 @@ import androidx.work.WorkManager;
 import com.dsy.dsu.BusinessLogicPublic.CoreBinessLogic.CoreBinessLogics;
 import com.dsy.dsu.Errors.WriteErrorForAll.RecordNewErros;
 
-import com.dsy.dsu.BusinessLogicPublic.GetPublicID.GetPublicID;
-
 import com.dsy.dsu.R;
 import com.google.android.material.bottomnavigation.BottomNavigationItemView;
 import com.google.android.material.bottomnavigation.BottomNavigationView;

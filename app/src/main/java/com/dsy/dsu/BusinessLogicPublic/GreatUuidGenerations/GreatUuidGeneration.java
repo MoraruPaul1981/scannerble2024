@@ -49,7 +49,7 @@ public class GreatUuidGeneration {
                 // TODO: 14.05.2025  получение данных
                 ModuleQuety moduleQuety=new ModuleQuety(context);
                 Cursor Курсор_Получаемsuccesslogin   =moduleQuety.getModuleQuery(Текущаятаблицы,
-                        "  SELECT D.id  FROM "+Текущаятаблицы+" AS D  ORDER BY date_update DESC ; " , null);
+                        "  SELECT D.id  FROM "+Текущаятаблицы+" AS D  ORDER BY D.date_update DESC ; " , null);
 
                 if(Курсор_Получаемsuccesslogin.getCount()>0){
                     Курсор_Получаемsuccesslogin.moveToFirst();

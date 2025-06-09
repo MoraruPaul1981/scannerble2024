@@ -8,7 +8,6 @@ import android.util.Log;
 import androidx.annotation.NonNull;
 
 import com.dsy.dsu.BusinessLogicPublic.CoreBinessLogic.CoreBinessLogics;
-import com.dsy.dsu.BusinessLogicPublic.GetPublicID.GetPublicID;
 import com.dsy.dsu.Errors.WriteErrorForAll.RecordNewErros;
 import com.dsy.dsu.JbossAdress.JbossHilt.intarfaces.getHiltPortJbossInterface;
 import com.fasterxml.jackson.core.type.TypeReference;

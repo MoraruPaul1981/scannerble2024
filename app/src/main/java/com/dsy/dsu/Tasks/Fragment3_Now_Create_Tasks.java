@@ -44,7 +44,6 @@ import androidx.work.WorkManager;
 import com.dsy.dsu.BusinessLogicPublic.DATE.Class_Generation_Data;
 import com.dsy.dsu.Errors.WriteErrorForAll.RecordNewErros;
 import com.dsy.dsu.BusinessLogicPublic.GreatUuidGenerations.GreatUuidGeneration;
-import com.dsy.dsu.BusinessLogicPublic.GetPublicID.GetPublicID;
 
 import com.dsy.dsu.BusinessLogicPublic.VersionCurentTable;
 import com.dsy.dsu.R;

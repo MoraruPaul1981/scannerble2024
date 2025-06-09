@@ -37,7 +37,6 @@ import com.dsy.dsu.Errors.WriteErrorForAll.RecordNewErros;
 import com.dsy.dsu.BusinessLogicPublic.GreatUuidGenerations.GreatUuidGeneration;
 import com.dsy.dsu.BusinessLogicPublic.Class_Generations_New_Customers_For_Tabels;
 import com.dsy.dsu.JbossAdress.JbossContext;
-import com.dsy.dsu.BusinessLogicPublic.SubClassGetPublicId;
 import com.dsy.dsu.R;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.android.material.snackbar.Snackbar;
@@ -500,7 +499,7 @@ private void МетодВозврещениеНаПредыдущуюАктив�
                             " ЗначениеСНИЛССозданиеСотрудника  " +ЗначениеСНИЛССозданиеСотрудника);
                     // TODO: 09.08.2022 создаем новго сотрудника
                     int ТекущаяПозиция=СпинерВыборОрганизацииПриСозданииНовогоСотрудника.getSelectedItemPosition();
-                    Integer ПубличноеID=    new SubClassGetPublicId().ПубличныйID(getApplicationContext());
+                    Integer ПубличноеID=    new GettingPublicID().gettingPublicID(getApplicationContext());
                     ПолученноеТекущееЗначениеСпинераОрганизация=( СпинерВыборОрганизацииПриСозданииНовогоСотрудника.getItemAtPosition(ТекущаяПозиция).toString());
                     Log.d(this.getClass().getName(), " ПолученноеТекущееЗначениеСпинераОрганизация  "+ ПолученноеТекущееЗначениеСпинераОрганизация);
 

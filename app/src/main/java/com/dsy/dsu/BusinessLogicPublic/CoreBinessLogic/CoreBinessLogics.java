@@ -20,7 +20,6 @@ import com.dsy.dsu.BusinessLogicPublic.DownloadsJBOSS.BunessLogicDownloadFiles.G
 import com.dsy.dsu.BusinessLogicPublic.DATE.Class_Generation_Data;
 
 import com.dsy.dsu.BusinessLogicPublic.DeviceName.ModulegetDeviceName;
-import com.dsy.dsu.BusinessLogicPublic.GetPublicID.GetPublicID;
 import com.dsy.dsu.JbossAdress.JbossContext;
 import com.dsy.dsu.Errors.WriteErrorForAll.RecordNewErros;
 import com.dsy.dsu.JbossAdress.JbossHilt.intarfaces.getHiltPortJbossInterface;
@@ -307,7 +306,7 @@ import okio.BufferedSink;
                             // TODO: 14.05.2025  получение данных
                             ModuleQuety moduleQuety=new ModuleQuety(context);
                             Cursor Курсор_ПолучаемИмяСотрудникаИзТаблицыФИО   =moduleQuety.getModuleQuery(Текущаятаблицы,
-                                    "  SELECT D.success_users,D.success_login  FROM "+Текущаятаблицы+" AS D ORDER BY date_update DESC " , null);
+                                    "  SELECT D.success_users,D.success_login  FROM "+Текущаятаблицы+" AS D ORDER BY D.date_update DESC " , null);
 
                             if(Курсор_ПолучаемИмяСотрудникаИзТаблицыФИО.getCount()>0){
                                 Курсор_ПолучаемИмяСотрудникаИзТаблицыФИО.moveToFirst();
@@ -470,7 +469,7 @@ import okio.BufferedSink;
                             // TODO: 14.05.2025  получение данных
                             ModuleQuety moduleQuety=new ModuleQuety(context);
                             Cursor Курсор_ПолучаемИмяСотрудникаИзТаблицыФИО   =moduleQuety.getModuleQuery(Текущаятаблицы,
-                                    "  SELECT D.success_users,D.success_login  FROM "+Текущаятаблицы+" AS D  ORDER BY date_update DESC " , null);
+                                    "  SELECT D.success_users,D.success_login  FROM "+Текущаятаблицы+" AS D  ORDER BY D.date_update DESC " , null);
 
                             if(Курсор_ПолучаемИмяСотрудникаИзТаблицыФИО.getCount()>0){
                                 Курсор_ПолучаемИмяСотрудникаИзТаблицыФИО.moveToFirst();
@@ -616,7 +615,7 @@ import okio.BufferedSink;
                                     // TODO: 14.05.2025  получение данных
                                     ModuleQuety moduleQuety=new ModuleQuety(context);
                                     Cursor Курсор_ПолучаемИмяСотрудникаИзТаблицыФИО   =moduleQuety.getModuleQuery(Текущаятаблицы,
-                                            "  SELECT D.success_users,D.success_login  FROM "+Текущаятаблицы+" AS D  ORDER BY date_update DESC " , null);
+                                            "  SELECT D.success_users,D.success_login  FROM "+Текущаятаблицы+" AS D  ORDER BY D.date_update DESC " , null);
 
                                     if(Курсор_ПолучаемИмяСотрудникаИзТаблицыФИО.getCount()>0){
                                         Курсор_ПолучаемИмяСотрудникаИзТаблицыФИО.moveToFirst();

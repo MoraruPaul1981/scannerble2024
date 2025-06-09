@@ -45,10 +45,9 @@ import androidx.fragment.app.FragmentTransaction;
 
 import com.dsy.dsu.Errors.WriteErrorForAll.RecordNewErros;
 import com.dsy.dsu.BusinessLogicPublic.GreatUuidGenerations.GreatUuidGeneration;
-import com.dsy.dsu.BusinessLogicPublic.GetPublicID.GetPublicID;
 
 import com.dsy.dsu.BusinessLogicPublic.DATE.Class_Generation_Data;
-import com.dsy.dsu.BusinessLogicPublic.DATE.SubClassCursorLoader;
+
 import com.dsy.dsu.BusinessLogicPublic.VersionCurentTable;
 import com.dsy.dsu.OrdersTransports.Background.ServiceOrserTransportService;
 import com.dsy.dsu.R;

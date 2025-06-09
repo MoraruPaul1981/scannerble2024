@@ -22,7 +22,6 @@ import androidx.annotation.Nullable;
 import com.dsy.dsu.BusinessLogicPublic.VersionCurentTable;
 import com.dsy.dsu.Errors.WriteErrorForAll.RecordNewErros;
 import com.dsy.dsu.BusinessLogicPublic.DATE.Class_Generation_Data;
-import com.dsy.dsu.BusinessLogicPublic.DATE.SubClassCursorLoader;
 import com.google.firebase.annotations.concurrent.Background;
 
 import java.text.SimpleDateFormat;

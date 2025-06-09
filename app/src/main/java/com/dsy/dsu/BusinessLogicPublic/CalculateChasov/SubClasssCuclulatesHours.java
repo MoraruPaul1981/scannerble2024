@@ -1,11 +1,13 @@
 package com.dsy.dsu.BusinessLogicPublic.CalculateChasov;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.util.Log;
 
 import com.dsy.dsu.Errors.WriteErrorForAll.RecordNewErros;
+import com.sous.backasync.launch.ModuleQuety;
 
 
 import java.util.concurrent.ExecutionException;
@@ -19,18 +21,23 @@ private Context context;
     }
 
     //TODO Метод ПОДЧСЧЕТА ЧАСОВ ПО ВСЕМ ТАБЕЛЯМ СРАЗУ
-    private Integer  методПодстчетЧасовФИО(Long finalПолученныйUUID)
-            throws InterruptedException, ExecutionException {
+    private Integer  методПодстчетЧасовФИО(Long finalПолученныйUUID) {
         Integer     ЧасыСотрудникаТекущегоТабеля=0; //TODO РЕзультат
         try {
-            Bundle bundleПосикФИО=new Bundle();
-            bundleПосикФИО.putString("СамЗапрос","  SELECT *  FROM  vietabel WHERE   uuid=?" +
-                    "  AND fio IS NOT NULL   ORDER BY fio  LIMIT   1  ");
-            bundleПосикФИО.putStringArray("УсловияВыборки" ,new String[]{String.valueOf(finalПолученныйUUID)});
-            bundleПосикФИО.putString("Таблица","fio");
-            Cursor КурсорПосчётЧасов=      (Cursor)    new SubClassCursorLoader(). CursorLoaders(context, bundleПосикФИО);
+            // TODO: 14.05.2025
+            String Текущаятаблицы="vietabel";
+            ModuleQuety moduleQuety=new ModuleQuety(context);
+            Cursor КурсорПосчётЧасов=   moduleQuety.getModuleQuery(Текущаятаблицы,"   SELECT *  FROM   "+Текущаятаблицы+" AS D " +
+                    "  WHERE   D.uuid='"+String.valueOf(finalПолученныйUUID)+"'  AND D.fio IS NOT NULL   ORDER BY D.fio  LIMIT   1  " ,null);
+            // TODO: 09.06.2025
+            Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                    " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                    " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n");
+
+
             //TODO Считаем Сумму часов по всем табелям
             ЧасыСотрудникаТекущегоТабеля = МетодПосчётаЧасовПоСотрудникуДляЗагрузкиСотрудников(КурсорПосчётЧасов);
+
             Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                     " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
                     " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"
@@ -46,18 +53,26 @@ private Context context;
 
     }
 
-    ////////////////////
+
+
+    @SuppressLint("Range")
     protected int МетодПосчётаЧасовПоСотрудникуДляЗагрузкиСотрудников(Cursor курсор_ЗагружаемТабеляСозданный) {
         int СуммаЧасов = 0;
         try{
             do {
                 for (int ИндексДляИзмененияДней = 1; ИндексДляИзмененияДней < 32; ИндексДляИзмененияДней++) {
-                    int ЧассыСотрудника = курсор_ЗагружаемТабеляСозданный.getInt(курсор_ЗагружаемТабеляСозданный.getColumnIndex("d" + ИндексДляИзмененияДней));
+               int ЧассыСотрудника = курсор_ЗагружаемТабеляСозданный.getInt(курсор_ЗагружаемТабеляСозданный.getColumnIndex("d" + ИндексДляИзмененияДней));
                     СуммаЧасов = СуммаЧасов + ЧассыСотрудника;
                     Log.d(this.getClass().getName(), "    СуммаЧасов " + СуммаЧасов);
                 }///TODO END FOR  ПО СТОЛБЦАМ БЕЖИМ
             } while (курсор_ЗагружаемТабеляСозданный.moveToNext());
+            // TODO: 09.06.2025
             курсор_ЗагружаемТабеляСозданный.close();
+
+            Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                    " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                    " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n"
+                    + " курсор_ЗагружаемТабеляСозданный " +курсор_ЗагружаемТабеляСозданный);
         } catch (Exception e) {
             e.printStackTrace();
             Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +

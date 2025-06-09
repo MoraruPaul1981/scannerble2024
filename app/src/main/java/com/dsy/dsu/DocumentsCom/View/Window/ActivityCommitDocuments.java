@@ -11,7 +11,6 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
 
-import com.dsy.dsu.BusinessLogicPublic.GetPublicID.QualifierPublicID;
 import com.dsy.dsu.Errors.WriteErrorForAll.RecordNewErros;
 
 import com.dsy.dsu.R;

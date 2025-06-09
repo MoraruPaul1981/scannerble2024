@@ -8,7 +8,6 @@ import android.widget.Switch;
 
 import androidx.annotation.NonNull;
 
-import com.dsy.dsu.BusinessLogicPublic.GetPublicID.GetPublicID;
 import com.dsy.dsu.Errors.WriteErrorForAll.RecordNewErros;
 import com.sous.backasync.businesslogic.dates.Class_GenerationBack_Data;
 import com.sous.backasync.launch.ModuleUpdating;

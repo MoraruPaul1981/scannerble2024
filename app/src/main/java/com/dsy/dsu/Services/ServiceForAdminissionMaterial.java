@@ -25,7 +25,6 @@ import androidx.loader.content.AsyncTaskLoader;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
 
-import com.dsy.dsu.BusinessLogicPublic.GetPublicID.GetPublicID;
 import com.dsy.dsu.BusinessLogicPublic.VersionCurentTable;
 import com.dsy.dsu.Errors.WriteErrorForAll.RecordNewErros;
 import com.dsy.dsu.BusinessLogicPublic.GreatUuidGenerations.GreatUuidGeneration;

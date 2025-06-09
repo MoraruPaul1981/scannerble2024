@@ -13,7 +13,6 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.ViewModelProvider;
 
-import com.dsy.dsu.BusinessLogicPublic.GetPublicID.QualifierPublicID;
 import com.dsy.dsu.CommitPrices.ViewModel.ModelComminingPrisesByte;
 import com.dsy.dsu.CommitPrices.ViewModel.ModelComminingPrisesString;
 import com.dsy.dsu.CommitPrices.ViewModel.ModelFactory;

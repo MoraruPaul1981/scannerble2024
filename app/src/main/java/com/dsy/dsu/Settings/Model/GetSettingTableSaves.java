@@ -8,7 +8,6 @@ import android.util.Log;
 import androidx.annotation.NonNull;
 
 import com.dsy.dsu.BusinessLogicPublic.CoreBinessLogic.CoreBinessLogics;
-import com.dsy.dsu.BusinessLogicPublic.GetPublicID.GetPublicID;
 import com.dsy.dsu.BusinessLogicPublic.DATE.Class_Generation_Data;
 import com.dsy.dsu.BusinessLogicPublic.VersionCurentTable;
 import com.dsy.dsu.Errors.WriteErrorForAll.RecordNewErros;

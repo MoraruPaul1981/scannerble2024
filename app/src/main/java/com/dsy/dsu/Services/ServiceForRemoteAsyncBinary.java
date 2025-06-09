@@ -2,13 +2,9 @@ package com.dsy.dsu.Services;
 
 import android.annotation.SuppressLint;
 import android.app.IntentService;
-import android.content.ComponentName;
-import android.content.ContentResolver;
 import android.content.Context;
 import android.content.Intent;
-import android.content.ServiceConnection;
 import android.content.SharedPreferences;
-import android.net.Uri;
 import android.os.Binder;
 import android.os.IBinder;
 import android.os.Parcel;
@@ -22,7 +18,6 @@ import androidx.annotation.Nullable;
 
 import com.dsy.dsu.BootAndAsync.Model.Service.bl_service_boot.BinessLogicIntentServiceBoot;
 import com.dsy.dsu.BusinessLogicPublic.AfterSynchRemoveDeletedStatus.GetAfterSynchRemoveDeletedStatus;
-import com.dsy.dsu.BusinessLogicPublic.GetPublicID.QualifierPublicID;
 import com.dsy.dsu.Errors.WriteErrorForAll.RecordNewErros;
 
 import com.dsy.dsu.Hilt.getSSLSocketFactory2.QualifiergetsslSocketFactory2;
@@ -33,7 +28,6 @@ import com.google.firebase.annotations.concurrent.Background;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Date;
-import java.util.stream.Stream;
 
 import javax.inject.Inject;
 import javax.net.ssl.SSLSocketFactory;

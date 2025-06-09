@@ -8,7 +8,6 @@ import androidx.annotation.NonNull;
 
 
 import com.dsy.dsu.BusinessLogicPublic.GreatUuidGenerations.GreatUuidGeneration;
-import com.dsy.dsu.BusinessLogicPublic.GetPublicID.GetPublicID;
 import com.dsy.dsu.BusinessLogicPublic.DATE.Class_Generation_Data;
 import com.dsy.dsu.BusinessLogicPublic.DeviceName.ModulegetDeviceName;
 import com.dsy.dsu.BusinessLogicPublic.VersionCurentTable;

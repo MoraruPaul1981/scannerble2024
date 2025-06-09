@@ -52,7 +52,7 @@ import com.dsy.dsu.BusinessLogicPublic.CoreBinessLogic.CoreBinessLogics;
 import com.dsy.dsu.JbossAdress.JbossContext;
 import com.dsy.dsu.Dashboard.Model.bl_launchFragmentSettingsandDashbord.LaunchActivityDashboard;
 import com.dsy.dsu.Errors.WriteErrorForAll.RecordNewErros;
-import com.dsy.dsu.BusinessLogicPublic.DATE.SubClassCursorLoader;
+
 import com.dsy.dsu.R;
 import com.dsy.dsu.Tabels.Peoples.MainActivityListPeoples;
 import com.dsy.dsu.Tabels.Tabel.New.MainActivityNewTabels;
@@ -126,7 +126,6 @@ public class MainActivity_List_Tabels extends AppCompatActivity  {
     private  LinkedList< String> МассивДляВыбораВСпинерДатаArray=new  LinkedList< String>();
     private  LinkedList< Long> МассивДляВыбораВСпинореMainUUID=new  LinkedList< Long>();
     private  Message message;
-    private      SubClassCursorLoader subClassCursorLoader;
     private    DatePickerDialog ДатаДляКалендаря;
 
 
@@ -148,7 +147,6 @@ public class MainActivity_List_Tabels extends AppCompatActivity  {
             activity=this;
             context =this;
             getSupportActionBar().hide(); ///скрывать тул бар
-            subClassCursorLoader=      new SubClassCursorLoader();
             // TODO: 16.04.2025
             Log.d(context.getClass().getName(), "\n"
                     + " время: " + new Date() + "\n+" +
@@ -376,7 +374,8 @@ public class MainActivity_List_Tabels extends AppCompatActivity  {
             // TODO: 14.05.2025
             String Текущаятаблицы="data_tabels";
             ModuleQuety moduleQuety=new ModuleQuety(context);
-            cursorForDelete= moduleQuety.getModuleQuery(Текущаятаблицы,"  SELECT uuid FROM  "+Текущаятаблицы+" AS D  WHERE uuid_tabel='"+String.valueOf(СамоЗначениеUUID)+"'     AND status_send!='Удаленная' " ,null);
+            cursorForDelete= moduleQuety.getModuleQuery(Текущаятаблицы,"  SELECT D.uuid FROM  "+Текущаятаблицы+" AS D " +
+                    " WHERE D.uuid_tabel='"+String.valueOf(СамоЗначениеUUID)+"'     AND D.status_send!='Удаленная' " ,null);
             // TODO: 09.06.2025  
             Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
                     " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
@@ -577,16 +576,17 @@ public class MainActivity_List_Tabels extends AppCompatActivity  {
         Cursor Курсор_ДанныеСпиннера = null;
         try{
             // TODO: 09.04.2023  курсор самим создаваемых табеляПОСИК ДАННЫХ ЧЕРЕЗ UUID
-            Bundle bundleListTabels=new Bundle();
-            bundleListTabels.putString("СамЗапрос","  SELECT * FROM  tabel WHERE status_send!=?  " +
-                    "  AND month_tabels IS NOT NULL " +
-                    " AND year_tabels IS NOT NULL" +  "" +
-                    " GROUP BY month_tabels, year_tabels HAVING count(year_tabels )>0  "+
-                    " ORDER BY year_tabels DESC ,month_tabels DESC LIMIT 6  ");
-            bundleListTabels.putStringArray("УсловияВыборки" ,new String[]{String.valueOf("Удаленная")});
-            bundleListTabels.putString("Таблица","tabel");
-            Курсор_ДанныеСпиннера=      (Cursor)    new SubClassCursorLoader(). CursorLoaders(context, bundleListTabels);
-            Log.d(this.getClass().getName(), "Курсор_ДанныеСпиннера "+Курсор_ДанныеСпиннера  );
+            String Текущаятаблицы="tabel";
+            ModuleQuety moduleQuety=new ModuleQuety(getApplicationContext());
+            Курсор_ДанныеСпиннера=   moduleQuety.getModuleQuery(Текущаятаблицы,"   SELECT * FROM  "+Текущаятаблицы+" AS D  WHERE D.status_send!='Удаленная'  \" +\n" +
+                    "                    \"  AND D.month_tabels IS NOT NULL \" +\n" +
+                    "                    \" AND D.year_tabels IS NOT NULL\" +  \"\" +\n" +
+                    "                    \" GROUP BY D.month_tabels, D.year_tabels HAVING count(D.year_tabels )>0  \"+\n" +
+                    "                    \" ORDER BY D.year_tabels DESC ,D.month_tabels DESC LIMIT 6  ",null);
+            // TODO: 09.06.2025
+            Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                    " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                    " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n");
         } catch (Exception e) {
             e.printStackTrace();
             Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
@@ -601,18 +601,18 @@ public class MainActivity_List_Tabels extends AppCompatActivity  {
         Cursor Курсор_Main_ListTabels = null;
         try{
             // TODO: 09.04.2023  курсор самим создаваемых табеляПОСИК ДАННЫХ ЧЕРЕЗ UUID
-            Bundle bundleListTabels=new Bundle();
-            bundleListTabels.putString("СамЗапрос","  SELECT * FROM  tabel WHERE status_send!=? AND uuid=? " +
-                    "  AND month_tabels IS NOT NULL " +
-                    " AND year_tabels IS NOT NULL" +
-                    " ORDER BY year_tabels DESC ,month_tabels DESC LIMIT 6  ");
-            bundleListTabels.putStringArray("УсловияВыборки"
-                    ,new String[]{String.valueOf("Удаленная"),String.valueOf(MainParentUUID)});
-            bundleListTabels.putString("Таблица","tabel");
-            Курсор_Main_ListTabels=      (Cursor)    subClassCursorLoader. CursorLoaders(context, bundleListTabels);
-            Log.d(this.getClass().getName(), "GetData "+Курсор_Main_ListTabels  );
-
-            Log.d(this.getClass().getName(), " Курсор_Main_ListTabels.getCount() " +    Курсор_Main_ListTabels.getCount());
+            String Текущаятаблицы="tabel";
+            ModuleQuety moduleQuety=new ModuleQuety(getApplicationContext());
+            Курсор_Main_ListTabels=   moduleQuety.getModuleQuery(Текущаятаблицы,"   SELECT * FROM  "+Текущаятаблицы+" AS D  " +
+                    " WHERE D.status_send!='Удаленная'" +
+                    " AND D.uuid='"+String.valueOf(MainParentUUID)+"' \" +\n" +
+                    "                    \"  AND D.month_tabels IS NOT NULL \" +\n" +
+                    "                    \" AND D.year_tabels IS NOT NULL\" +\n" +
+                    "                    \" ORDER BY D.year_tabels DESC ,D.month_tabels DESC LIMIT 6 ",null);
+            // TODO: 09.06.2025
+            Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                    " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                    " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n");
         } catch (Exception e) {
             e.printStackTrace();
             Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
@@ -628,16 +628,18 @@ public class MainActivity_List_Tabels extends AppCompatActivity  {
         Cursor Курсор_Main_ListTabels = null;
         try{
             // TODO: 09.04.2023  курсор самим создаваемых табеляПОСИК ДАННЫХ ЧЕРЕЗ UUID
-            Bundle bundleListTabels=new Bundle();
-            bundleListTabels.putString("СамЗапрос","  SELECT * FROM tabel" +
-                    " WHERE status_send!=? AND month_tabels =?  AND year_tabels =? " +
-                    " ORDER BY year_tabels DESC ,month_tabels DESC LIMIT 6  ");
-            bundleListTabels.putStringArray("УсловияВыборки" ,new String[]{String.valueOf("Удаленная"),String.valueOf(МЕсяцТабелей),String.valueOf(ГодТабелей)});
-            bundleListTabels.putString("Таблица","tabel");
-            Курсор_Main_ListTabels=      (Cursor)    subClassCursorLoader. CursorLoaders(context, bundleListTabels);
-            Log.d(this.getClass().getName(), "GetData "+Курсор_Main_ListTabels  );
+            String Текущаятаблицы="tabel";
+            ModuleQuety moduleQuety=new ModuleQuety(getApplicationContext());
+            Курсор_Main_ListTabels=   moduleQuety.getModuleQuery(Текущаятаблицы,"   SELECT * FROM "+Текущаятаблицы + "  AS D " +
+                    "  WHERE D.status_send!='Удаленная' " +
+                    " AND D.month_tabels ='"+МЕсяцТабелей+"'  " +
+                    "AND D.year_tabels ='"+ГодТабелей+"' " +
+                    " ORDER BY D.year_tabels DESC ,D.month_tabels DESC LIMIT 6 ",null);
 
-            Log.d(this.getClass().getName(), " Курсор_Main_ListTabels.getCount() " +    Курсор_Main_ListTabels.getCount());
+            // TODO: 09.06.2025
+            Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                    " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                    " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n");
         } catch (Exception e) {
             e.printStackTrace();
             Log.e(this.getClass().getName(), "Ошибка " + e + " Метод :" + Thread.currentThread().getStackTrace()[2].getMethodName() +
@@ -654,7 +656,6 @@ public class MainActivity_List_Tabels extends AppCompatActivity  {
     @SuppressLint("Range")
     private void методзаполненияSimplrCursor(Cursor Курсор_Main_ListTabels) {
         try {
-            SubClassCursorLoader subClassCursorLoader1ПОсикНазваниеЦФО=      new SubClassCursorLoader();
             simpleCursorAdapterAllTAbels =
                     new SimpleCursorAdapter(getApplicationContext(), R.layout.list_item_all_customer_tabel3,
                     Курсор_Main_ListTabels, new String[]{"_id","cfo"}, new int[]{android.R.id.text1,android.R.id.text2},
@@ -670,11 +671,11 @@ public class MainActivity_List_Tabels extends AppCompatActivity  {
                                 DigitalNameCFOFromTabel = cursor.getInt(cursor.getColumnIndex("cfo"));//TODO ЗАПРОС К ТАБЛИЦЕ TABEL
 
 
-                                FullNameCFO = getingNameCurrentZFOWithUUID(subClassCursorLoader1ПОсикНазваниеЦФО);
+                                FullNameCFO = getingNameCurrentZFOWithUUID();
 
                           if( FullNameCFO.equalsIgnoreCase("Нет ЦФО !!!")  )  {
 
-                              FullNameCFO = getingNameCurrentZFOWithID(subClassCursorLoader1ПОсикНазваниеЦФО);
+                              FullNameCFO = getingNameCurrentZFOWithID();
                           }
 
                                 // TODO: 19.06.2023 close
@@ -770,15 +771,17 @@ public class MainActivity_List_Tabels extends AppCompatActivity  {
 
     @SuppressLint("Range")
     @NonNull
-    private String getingNameCurrentZFOWithUUID(@NonNull  SubClassCursorLoader subClassCursorLoader1ПОсикНазваниеЦФО) {
+    private String getingNameCurrentZFOWithUUID() {
         try{
         // TODO: 18.04.2023 Название ЦФО
-        Bundle bundleНазваниеЦФО=new Bundle();
-        bundleНазваниеЦФО.putString("СамЗапрос","  SELECT * FROM  cfo WHERE    uuid=? ");
-        bundleНазваниеЦФО.putStringArray("УсловияВыборки" ,new String[]{  String.valueOf(DigitalNameCFOFromTabel)});
-        bundleНазваниеЦФО.putString("Таблица","cfo");
-        // TODO: 07.06.2023 вытаскиваем названеи ЦФО
-        Cursor КурсорПОискНазваниеЦФО = (Cursor)    subClassCursorLoader1ПОсикНазваниеЦФО. CursorLoaders(context, bundleНазваниеЦФО);//TODO ЗАПРОС К ТАБЛИЦЕ CFO
+            String Текущаятаблицы="cfo";
+            ModuleQuety moduleQuety=new ModuleQuety(getApplicationContext());
+            Cursor КурсорПОискНазваниеЦФО =   moduleQuety.getModuleQuery(Текущаятаблицы,"   SELECT *  FROM   "+Текущаятаблицы+" AS D " +
+                    " WHERE D.uuid='"+String.valueOf(DigitalNameCFOFromTabel)+"'"+";",null);
+            // TODO: 09.06.2025
+            Log.d(this.getClass().getName(),"\n" + " class " + Thread.currentThread().getStackTrace()[2].getClassName() + "\n" +
+                    " metod " + Thread.currentThread().getStackTrace()[2].getMethodName() + "\n" +
+                    " line " + Thread.currentThread().getStackTrace()[2].getLineNumber() + "\n");
 
         // TODO: 09.10.2024  Получаем Название ЦФО  для отображения
         if (КурсорПОискНазваниеЦФО.getCount()>0) {

@@ -11,7 +11,6 @@ import android.widget.EditText;
 
 import androidx.annotation.NonNull;
 
-import com.dsy.dsu.BusinessLogicPublic.GetPublicID.GetPublicID;
 import com.dsy.dsu.Errors.WriteErrorForAll.RecordNewErros;
 import com.dsy.dsu.BusinessLogicPublic.DATE.Class_Generation_Data;
 import com.dsy.dsu.BusinessLogicPublic.VersionCurentTable;
